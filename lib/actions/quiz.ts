@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getUser } from "@/lib/auth";
 import { scoreQuiz, getModuleQuiz } from "@/lib/quizzes";
 import { revalidatePath } from "next/cache";
+import { awardXP, awardBadge, updateStreak } from "@/lib/actions/gamification";
 
 export async function submitQuiz(
   moduleId: number,
@@ -30,6 +31,23 @@ export async function submitQuiz(
   });
 
   if (error) throw error;
+
+  // Award XP and badges for passing
+  if (result.passed) {
+    const xpReward = result.score === 100 ? 150 : 100; // Bonus for perfect score
+    await awardXP(user.id, xpReward);
+
+    // Award badge for first quiz passed
+    await awardBadge(user.id, "first_quiz_passed").catch(() => {});
+
+    // Award perfect score badge
+    if (result.score === 100) {
+      await awardBadge(user.id, "perfect_quiz").catch(() => {});
+    }
+
+    // Update streak
+    await updateStreak(user.id, true).catch(() => {});
+  }
 
   revalidatePath(`/course/${moduleId}/quiz`);
   return result;

@@ -26,12 +26,20 @@ export default async function CoursePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-12">
-          <h1 className="text-5xl font-bold text-white mb-4">Course Map</h1>
-          <p className="text-xl text-slate-400">
-            Learn to build with AI, step by step. 16 modules, from setup to
-            production-ready apps.
-          </p>
+        {/* Navigation */}
+        <div className="flex justify-between items-center mb-12">
+          <div>
+            <h1 className="text-5xl font-bold text-white mb-4">Course Map</h1>
+            <p className="text-xl text-slate-400">
+              Learn to build with AI, step by step. 16 modules, from setup to
+              production-ready apps.
+            </p>
+          </div>
+          <div className="flex gap-4">
+            <Link href="/dashboard" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
+              📊 Dashboard
+            </Link>
+          </div>
         </div>
 
         <div className="space-y-4">
