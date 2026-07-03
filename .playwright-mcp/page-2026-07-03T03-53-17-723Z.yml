@@ -1,0 +1,329 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - link "← Back to Course Preview" [ref=e5] [cursor=pointer]:
+        - /url: /demo
+      - generic [ref=e6]:
+        - generic [ref=e7]: Module 0
+        - heading "Setup & Accounts" [level=1] [ref=e8]
+    - generic [ref=e11]:
+      - 'heading "Module 0: Setup & Accounts" [level=1] [ref=e12]'
+      - paragraph [ref=e13]:
+        - strong [ref=e14]: "Stage:"
+        - text: "Stage: Onboarding ·"
+        - strong [ref=e15]: "Level:"
+        - text: "Level: Beginner / All ·"
+        - strong [ref=e16]: "Duration:"
+        - text: "Duration: ~2 contact hours (0.2 CEU)"
+      - paragraph [ref=e17]:
+        - strong [ref=e18]: "Prerequisites:"
+        - text: "Prerequisites: None — this comes before Module 1. A computer and an internet connection are all that's assumed."
+      - blockquote [ref=e19]:
+        - paragraph [ref=e20]: Setup friction is where beginners quietly give up. This module installs and *verifies* every account and tool once, up front, so no later lesson stalls on "it won't install." It also gives learners the map of the whole stack before they touch any of it.
+        - paragraph
+        - paragraph
+        - paragraph [ref=e21]:
+          - strong [ref=e22]: "📸 Screenshots:"
+          - text: "📸 Screenshots: Items marked"
+          - img "nextjs starter" [ref=e23]
+          - text: nextjs starter/screenshots/m00/m00-01-nextjs-starter.png are placeholders — capture them live when recording (install screens, dashboards, the hello-world app running).
+        - paragraph
+        - paragraph
+      - heading "Learning objectives" [level=2] [ref=e24]
+      - paragraph [ref=e25]: "By the end of this module, the learner can:"
+      - paragraph [ref=e26]:
+        - text: "1."
+        - strong [ref=e27]: Set up
+        - text: Set up all required accounts and tools for the course. *(Apply)*
+      - paragraph [ref=e28]:
+        - text: "2."
+        - strong [ref=e29]: Explain
+        - text: Explain what each tool in the stack is for and how the pieces connect. *(Understand)*
+      - paragraph [ref=e30]:
+        - text: "3."
+        - strong [ref=e31]: Verify
+        - text: Verify the full toolchain works with a hello-world check. *(Apply)*
+      - paragraph [ref=e32]: "---"
+      - heading "Lesson 0.1 — The stack, before you touch it (~20 min)" [level=2] [ref=e33]
+      - paragraph [ref=e34]: "Give learners the whole map first, so every tool has a place to land. Each maps to a later module:"
+      - table [ref=e35]:
+        - rowgroup [ref=e36]:
+          - row "Tool What it's for First used in…" [ref=e37]:
+            - columnheader "Tool" [ref=e38]
+            - columnheader "What it's for" [ref=e39]
+            - columnheader "First used in…" [ref=e40]
+        - rowgroup [ref=e41]:
+          - row "Node.js Runs your app locally Module 4" [ref=e42]:
+            - cell "Node.js" [ref=e43]
+            - cell "Runs your app locally" [ref=e44]
+            - cell "Module 4" [ref=e45]
+          - row "Cursor AI code editor (in-editor flow) Module 4" [ref=e46]:
+            - cell "Cursor" [ref=e47]
+            - cell "AI code editor (in-editor flow)" [ref=e48]
+            - cell "Module 4" [ref=e49]
+          - row "Claude Code Terminal AI agent (agentic flow) Module 5" [ref=e50]:
+            - cell "Claude Code" [ref=e51]
+            - cell "Terminal AI agent (agentic flow)" [ref=e52]
+            - cell "Module 5" [ref=e53]
+          - row "Supabase Database + auth + security Module 7" [ref=e54]:
+            - cell "Supabase" [ref=e55]
+            - cell "Database + auth + security" [ref=e56]
+            - cell "Module 7" [ref=e57]
+          - row "GitHub Version control + code hosting Module 9" [ref=e58]:
+            - cell "GitHub" [ref=e59]
+            - cell "Version control + code hosting" [ref=e60]
+            - cell "Module 9" [ref=e61]
+          - row "Vercel Deploys your app to a public URL Module 10" [ref=e62]:
+            - cell "Vercel" [ref=e63]
+            - cell "Deploys your app to a public URL" [ref=e64]
+            - cell "Module 10" [ref=e65]
+      - paragraph [ref=e66]:
+        - strong [ref=e67]: "The one-sentence flow:"
+        - text: "The one-sentence flow: you *write* code in Cursor/Claude Code, make it *look good* (Module 6), *power* it with Supabase, *store* it on GitHub, and *ship* it on Vercel — with Node running it locally along the way."
+      - paragraph [ref=e68]: "---"
+      - heading "Lesson 0.2 — Install the editors and runtime (~30 min)" [level=2] [ref=e69]
+      - paragraph [ref=e70]:
+        - text: "-"
+        - strong [ref=e71]: Node.js
+        - text: Node.js — install the LTS version from
+        - link "nodejs.org" [ref=e72] [cursor=pointer]:
+          - /url: http://nodejs.org
+        - text: "nodejs.orghttp://nodejs.org. Verify in a terminal:"
+      - code [ref=e74]: node --version npm --version
+      - paragraph [ref=e75]:
+        - text: "-"
+        - strong [ref=e76]: Cursor
+        - text: Cursor — download from
+        - link "cursor.com" [ref=e77] [cursor=pointer]:
+          - /url: http://cursor.com
+        - text: cursor.comhttp://cursor.com, install, and sign in. (It's a VS Code fork, so it'll feel familiar if you've used VS Code.)
+      - paragraph [ref=e78]:
+        - text: "-"
+        - strong [ref=e79]: Claude Code
+        - text: "Claude Code — install and sign in per the current instructions, then confirm it launches:"
+      - code [ref=e81]: claude --version
+      - paragraph [ref=e82]:
+        - img "m00 cursor welcome" [ref=e83]
+        - text: m00 cursor welcome/screenshots/m00/m00-cursor-welcome.png
+      - blockquote [ref=e84]:
+        - paragraph [ref=e85]:
+          - strong [ref=e86]: "Instructor note:"
+          - text: "Instructor note: Do these live and slowly — version/PATH issues are the most common blocker."
+        - paragraph
+        - paragraph
+      - paragraph [ref=e87]: "---"
+      - heading "Lesson 0.3 — Create your accounts (~30 min)" [level=2] [ref=e88]
+      - paragraph [ref=e89]: Sign up for all three now so nothing blocks you later. Use the same email for consistency.
+      - paragraph [ref=e90]:
+        - text: "-"
+        - strong [ref=e91]: GitHub
+        - text: GitHub —
+        - link "github.com" [ref=e92] [cursor=pointer]:
+          - /url: http://github.com
+        - text: github.comhttp://github.com (you'll create your first repo in Module 9).
+      - paragraph [ref=e93]:
+        - text: "-"
+        - strong [ref=e94]: Supabase
+        - text: Supabase —
+        - link "supabase.com" [ref=e95] [cursor=pointer]:
+          - /url: http://supabase.com
+        - text: supabase.comhttp://supabase.com (you'll create a project in Module 7).
+      - paragraph [ref=e96]:
+        - text: "-"
+        - strong [ref=e97]: Vercel
+        - text: Vercel —
+        - link "vercel.com" [ref=e98] [cursor=pointer]:
+          - /url: http://vercel.com
+        - text: vercel.comhttp://vercel.com, and connect it to your GitHub account (this link enables auto-deploy in Module 10).
+      - paragraph [ref=e99]:
+        - img "m00 terminal versions" [ref=e100]
+        - text: m00 terminal versions/screenshots/m00/m00-terminal-versions.png
+      - paragraph [ref=e101]: "---"
+      - heading "Lesson 0.4 — Costs & free tiers (~15 min)" [level=2] [ref=e102]
+      - paragraph [ref=e103]: "Set expectations honestly so nobody is surprised by a bill:"
+      - paragraph [ref=e104]:
+        - text: "-"
+        - strong [ref=e105]: Node.js, GitHub, Supabase, Vercel
+        - text: Node.js, GitHub, Supabase, Vercel — all have free tiers that comfortably cover this course.
+      - paragraph [ref=e106]:
+        - text: "-"
+        - strong [ref=e107]: Cursor & Claude Code
+        - text: Cursor & Claude Code — free/trial tiers, with paid plans (commonly around $20/month each) for heavier use. Learners can complete the course on modest usage.
+      - blockquote [ref=e108]:
+        - paragraph [ref=e109]: Pricing changes often — point learners to each tool's current pricing page rather than memorizing numbers.
+        - paragraph
+        - paragraph
+      - paragraph [ref=e110]:
+        - strong [ref=e111]: "Managing spend (so the bill doesn't surprise you):"
+        - text: "Managing spend (so the bill doesn't surprise you): AI coding tools bill by usage/credits, and heavy agentic runs (big multi-file builds, long sessions) burn faster than in-editor autocomplete. Habits: start on free/trial tiers; prefer scoped, specific prompts over \"rebuild everything\"; use `/compact` and fresh sessions to avoid paying for bloated context; and check your usage dashboard weekly at first to learn your own burn rate."
+      - paragraph [ref=e112]: "---"
+      - heading "Lesson 0.5 — Verify everything works (~25 min)" [level=2] [ref=e113]
+      - paragraph [ref=e114]: "Prove the whole toolchain runs *before* Module 1. Create a throwaway hello-world Next.js app:"
+      - code [ref=e116]: npx create-next-app@latest hello-check cd hello-check npm run dev
+      - paragraph [ref=e117]:
+        - text: Open
+        - link "http://localhost:3000" [ref=e118] [cursor=pointer]:
+          - /url: http://localhost:3000
+        - text: "http://localhost:3000http://localhost:3000 — if the starter page loads, Node + npm + your editor work. Then confirm you can sign in to Cursor, launch Claude Code in that folder, and that you're logged in to GitHub, Supabase, and Vercel. Delete the `hello-check` folder afterward."
+      - generic [ref=e120]:
+        - generic [ref=e121]: 📸
+        - generic [ref=e122]:
+          - paragraph [ref=e123]: Screenshot
+          - paragraph [ref=e124]: the Next.js starter page running at [localhost:3000
+      - blockquote [ref=e125]:
+        - paragraph [ref=e126]:
+          - strong [ref=e127]: "Version note (pin + concept):"
+          - text: "Version note (pin + concept): the course's reference build uses"
+          - strong [ref=e128]: Next.js 16 + Tailwind v4
+          - text: Next.js 16 + Tailwind v4 (Tailwind v4 has
+          - strong [ref=e129]: "no `tailwind.config.js`"
+          - text: "no `tailwind.config.js` — config lives in CSS via `@import \"tailwindcss\"` + `@theme`). These tools move fast: pin your project's versions, learn the concept, and check current docs."
+        - paragraph
+        - paragraph
+      - paragraph [ref=e130]: "---"
+      - heading "Readiness checklist" [level=2] [ref=e131]
+      - paragraph [ref=e132]: "Tick every box before starting Module 1:"
+      - table [ref=e133]:
+        - rowgroup [ref=e134]:
+          - row "Item Done when…" [ref=e135]:
+            - columnheader "Item" [ref=e136]
+            - columnheader "Done when…" [ref=e137]
+        - rowgroup [ref=e138]:
+          - 'row "Node.js `node --version` prints a version" [ref=e139]':
+            - cell "Node.js" [ref=e140]
+            - 'cell "`node --version` prints a version" [ref=e141]'
+          - row "Cursor Installed and signed in" [ref=e142]:
+            - cell "Cursor" [ref=e143]
+            - cell "Installed and signed in" [ref=e144]
+          - row "Claude Code Launches from the terminal" [ref=e145]:
+            - cell "Claude Code" [ref=e146]
+            - cell "Launches from the terminal" [ref=e147]
+          - row "GitHub Account created, logged in" [ref=e148]:
+            - cell "GitHub" [ref=e149]
+            - cell "Account created, logged in" [ref=e150]
+          - row "Supabase Account created, logged in" [ref=e151]:
+            - cell "Supabase" [ref=e152]
+            - cell "Account created, logged in" [ref=e153]
+          - row "Vercel Account created, connected to GitHub" [ref=e154]:
+            - cell "Vercel" [ref=e155]
+            - cell "Account created, connected to GitHub" [ref=e156]
+          - row "Hello-world A create-next-app ran at localhost:3000localhost:3000http://localhost:3000" [ref=e157]:
+            - cell "Hello-world" [ref=e158]
+            - cell "A create-next-app ran at localhost:3000localhost:3000http://localhost:3000" [ref=e159]:
+              - text: A create-next-app ran at
+              - link "localhost:3000" [ref=e160] [cursor=pointer]:
+                - /url: http://localhost:3000
+              - text: localhost:3000http://localhost:3000
+      - paragraph [ref=e161]: "---"
+      - heading "Troubleshooting (common blockers)" [level=2] [ref=e162]
+      - paragraph [ref=e163]:
+        - text: "-"
+        - strong [ref=e164]: "`command not found` after install"
+        - text: "`command not found` after install — close and reopen the terminal (PATH updates on restart); reinstall if it persists."
+      - paragraph [ref=e165]:
+        - text: "-"
+        - strong [ref=e166]: "`create-next-app` fails"
+        - text: "`create-next-app` fails — usually an old Node version; install the current LTS."
+      - paragraph [ref=e167]:
+        - text: "-"
+        - strong [ref=e168]: "`create-next-app` refuses to run in a non-empty folder"
+        - text: "`create-next-app` refuses to run in a non-empty folder — even one stray file (or a hidden `.DS_Store`) blocks it. Start in an empty folder, or let it create a fresh subfolder."
+      - paragraph [ref=e169]:
+        - text: "-"
+        - strong [ref=e170]: Port 3000 in use
+        - text: Port 3000 in use — stop the other process or let Next.js use the next port it offers.
+      - paragraph [ref=e171]:
+        - text: "-"
+        - strong [ref=e172]: Can't sign in to a tool
+        - text: Can't sign in to a tool — check you're using the same email and that pop-ups/OAuth aren't blocked.
+      - paragraph [ref=e173]: "---"
+      - heading "Knowledge check (mapped to objectives)" [level=2] [ref=e174]
+      - paragraph [ref=e175]:
+        - strong [ref=e176]: "Objective 1 — Set up tools/accounts:"
+        - text: "Objective 1 — Set up tools/accounts: submit your completed readiness checklist (screenshots of each)."
+      - paragraph [ref=e177]:
+        - strong [ref=e178]: "Objective 2 — Explain the stack:"
+        - text: "Objective 2 — Explain the stack: in one sentence each, say what Cursor, GitHub, Supabase, and Vercel do."
+      - paragraph [ref=e179]:
+        - strong [ref=e180]: "Objective 3 — Verify the toolchain:"
+        - text: "Objective 3 — Verify the toolchain: show a screenshot of a create-next-app running at"
+        - link "localhost:3000" [ref=e181] [cursor=pointer]:
+          - /url: http://localhost:3000
+        - text: localhost:3000http://localhost:3000.
+      - paragraph [ref=e182]: "*This module is pass/complete (checklist done) rather than quiz-graded — it gates entry to Module 1.*"
+      - paragraph [ref=e183]: "---"
+      - heading "Tools & alternatives (this module)" [level=2] [ref=e184]
+      - paragraph [ref=e185]: These are the course defaults; alternatives are discussed in their modules and consolidated in Module 15 (Landscape). A learner already on an alternative editor (VS Code + Copilot) can follow along, but the step-by-step screenshots assume the defaults — recommend beginners use them to avoid divergence.
+      - paragraph [ref=e186]: "---"
+      - heading "Key takeaways" [level=2] [ref=e187]
+      - paragraph [ref=e188]: "- Set up and verify everything once, up front — don't let install friction derail a later lesson."
+      - paragraph [ref=e189]: "- Know the stack map: write (Cursor/Claude Code) → design (Module 6) → power (Supabase) → store (GitHub) → ship (Vercel)."
+      - paragraph [ref=e190]: "- Free tiers cover the course; AI tools are metered, so heavy use costs more."
+      - paragraph [ref=e191]: "- You're ready for Module 1 when every box on the readiness checklist is ticked."
+      - paragraph [ref=e192]:
+        - link "Accredited Vibe Coding Course" [ref=e193] [cursor=pointer]:
+          - /url: ../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md
+        - text: Accredited Vibe Coding Course../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md
+    - generic [ref=e194]:
+      - heading "📝 Sample Quiz" [level=2] [ref=e195]
+      - paragraph [ref=e197]: ℹ️ This is a demo quiz. Answers are shown but won't be saved. Sign up for full access to submit real quizzes.
+      - generic [ref=e198]:
+        - generic [ref=e199]:
+          - paragraph [ref=e200]: 1. In the stack, what is Vercel's job?
+          - generic [ref=e201]:
+            - generic [ref=e203] [cursor=pointer]:
+              - generic [ref=e204]: A
+              - paragraph [ref=e205]: editing code
+            - generic [ref=e207] [cursor=pointer]:
+              - generic [ref=e208]: B
+              - paragraph [ref=e209]: storing the database
+            - generic [ref=e211] [cursor=pointer]:
+              - generic [ref=e212]: C
+              - paragraph [ref=e213]: deploying the app to a public URL
+              - generic [ref=e214]: ✓
+            - generic [ref=e216] [cursor=pointer]:
+              - generic [ref=e217]: D
+              - paragraph [ref=e218]: version control
+          - button "Show Explanation" [ref=e219]
+        - generic [ref=e220]:
+          - paragraph [ref=e221]: 2. Which tool runs your Next.js app locally?
+          - generic [ref=e222]:
+            - generic [ref=e224] [cursor=pointer]:
+              - generic [ref=e225]: A
+              - paragraph [ref=e226]: GitHub
+            - generic [ref=e228] [cursor=pointer]:
+              - generic [ref=e229]: B
+              - paragraph [ref=e230]: Node.js
+              - generic [ref=e231]: ✓
+            - generic [ref=e233] [cursor=pointer]:
+              - generic [ref=e234]: C
+              - paragraph [ref=e235]: Supabase
+            - generic [ref=e237] [cursor=pointer]:
+              - generic [ref=e238]: D
+              - paragraph [ref=e239]: Cursor
+          - button "Show Explanation" [ref=e240]
+        - generic [ref=e241]:
+          - paragraph [ref=e242]: 3. Which pairing is correct?
+          - generic [ref=e243]:
+            - generic [ref=e245] [cursor=pointer]:
+              - generic [ref=e246]: A
+              - paragraph [ref=e247]: Supabase = deployment
+            - generic [ref=e249] [cursor=pointer]:
+              - generic [ref=e250]: B
+              - paragraph [ref=e251]: GitHub = database
+            - generic [ref=e253] [cursor=pointer]:
+              - generic [ref=e254]: C
+              - paragraph [ref=e255]: Cursor = AI code editor
+              - generic [ref=e256]: ✓
+            - generic [ref=e258] [cursor=pointer]:
+              - generic [ref=e259]: D
+              - paragraph [ref=e260]: Vercel = version control
+          - button "Show Explanation" [ref=e261]
+        - generic [ref=e262]:
+          - paragraph [ref=e263]: Quiz Summary
+          - paragraph [ref=e264]: This quiz has 3 questions. In the full course, you need to score 80% or higher to pass and unlock the next module.
+    - link "Next Module →" [ref=e266] [cursor=pointer]:
+      - /url: /demo/module/1
+  - button "Open Next.js Dev Tools" [ref=e272] [cursor=pointer]:
+    - img [ref=e273]
+  - alert [ref=e276]

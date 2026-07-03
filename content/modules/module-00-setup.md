@@ -5,10 +5,6 @@
 **Prerequisites:** None — this comes before Module 1. A computer and an internet connection are all that's assumed.
 
 > Setup friction is where beginners quietly give up. This module installs and *verifies* every account and tool once, up front, so no later lesson stalls on "it won't install." It also gives learners the map of the whole stack before they touch any of it.
-> 
-
-> **📸 Screenshots:** Items marked ![nextjs starter](/screenshots/m00/m00-01-nextjs-starter.png) are placeholders — capture them live when recording (install screens, dashboards, the hello-world app running).
-> 
 
 ## Learning objectives
 
@@ -55,9 +51,6 @@ claude --version
 
 ![m00 cursor welcome](/screenshots/m00/m00-cursor-welcome.png)
 
-> **Instructor note:** Do these live and slowly — version/PATH issues are the most common blocker.
-> 
-
 ---
 
 ## Lesson 0.3 — Create your accounts (~30 min)
@@ -77,10 +70,9 @@ Sign up for all three now so nothing blocks you later. Use the same email for co
 Set expectations honestly so nobody is surprised by a bill:
 
 - **Node.js, GitHub, Supabase, Vercel** — all have free tiers that comfortably cover this course.
-- **Cursor & Claude Code** — free/trial tiers, with paid plans (commonly around $20/month each) for heavier use. Learners can complete the course on modest usage.
+- **Cursor & Claude Code** — free/trial tiers, with paid plans (commonly around $20/month each) for heavier use. You can complete the course on modest usage.
 
-> Pricing changes often — point learners to each tool's current pricing page rather than memorizing numbers.
-> 
+Since pricing changes often, visit each tool's current pricing page to understand the free tier limits and what happens if you exceed them.
 
 **Managing spend (so the bill doesn't surprise you):** AI coding tools bill by usage/credits, and heavy agentic runs (big multi-file builds, long sessions) burn faster than in-editor autocomplete. Habits: start on free/trial tiers; prefer scoped, specific prompts over "rebuild everything"; use `/compact` and fresh sessions to avoid paying for bloated context; and check your usage dashboard weekly at first to learn your own burn rate.
 
@@ -98,10 +90,9 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) — if the starter page loads, Node + npm + your editor work. Then confirm you can sign in to Cursor, launch Claude Code in that folder, and that you're logged in to GitHub, Supabase, and Vercel. Delete the `hello-check` folder afterward.
 
-*[SCREENSHOT: the Next.js starter page running at [localhost:3000](http://localhost:3000).]*
+![Next.js starter page](/screenshots/m00/m00-01-nextjs-starter.png)
 
-> **Version note (pin + concept):** the course's reference build uses **Next.js 16 + Tailwind v4** (Tailwind v4 has **no `tailwind.config.js`** — config lives in CSS via `@import "tailwindcss"` + `@theme`). These tools move fast: pin your project's versions, learn the concept, and check current docs.
-> 
+This course's reference build uses **Next.js 16 + Tailwind v4**. Note: Tailwind v4 has **no `tailwind.config.js`** — configuration lives in CSS via `@import "tailwindcss"` and `@theme` directives instead. These frameworks evolve quickly, so when you start your own project, pin specific versions, understand the core concepts, and refer to the latest documentation for any surprises.
 
 ---
 

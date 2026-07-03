@@ -5,6 +5,7 @@ import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import Link from "next/link";
 import DemoQuizViewer from "@/components/DemoQuizViewer";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
 interface DemoModulePageProps {
   params: Promise<{ moduleId: string }>;
@@ -14,6 +15,21 @@ export async function generateStaticParams() {
   return Array.from({ length: 16 }, (_, i) => ({
     moduleId: String(i),
   }));
+}
+
+export async function generateMetadata({ params }: DemoModulePageProps): Promise<Metadata> {
+  const { moduleId } = await params;
+  const id = parseInt(moduleId);
+
+  if (isNaN(id) || id < 0 || id > 15) {
+    return { title: "Module not found" };
+  }
+
+  const meta = getModuleMetadata(id);
+  return {
+    title: `${meta.title} — Learn to Vibe Code`,
+    description: meta.description,
+  };
 }
 
 export default async function DemoModulePage({ params }: DemoModulePageProps) {

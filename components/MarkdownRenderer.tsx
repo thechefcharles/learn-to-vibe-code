@@ -208,33 +208,20 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
 }
 
 function renderInline(text: string): React.ReactNode {
-  // Handle [SCREENSHOT: ...] placeholders
-  if (text.includes("[SCREENSHOT:")) {
-    text = text.replace(
-      /\[SCREENSHOT:\s*([^\]]+)\]/g,
-      (match, alt) =>
-        `<img src="/placeholder.svg" alt="${alt}" class="w-full rounded-lg mb-4 border border-slate-600" />`
-    );
-  }
-
-  const parts: React.ReactNode[] = [];
-  let lastIndex = 0;
-
-  // Bold
-  const boldRegex = /\*\*([^*]+)\*\*/g;
-  let match;
-
   const processedText = text
     .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (m, alt, url) => `__IMAGE_START__${alt}__IMAGE_SEP__${url}__IMAGE_END__`)
     .replace(/\*\*([^*]+)\*\*/g, (m, content) => `__BOLD_START__${content}__BOLD_END__`)
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, text, url) => `__LINK_START__${text}__LINK_SEP__${url}__LINK_END__`);
 
   const segments = processedText.split(/(__[A-Z_]+__|__)/);
+  const processed = new Set<number>();
 
   return segments.map((segment, idx) => {
-    if (!segment) return null;
+    if (processed.has(idx) || !segment) return null;
 
     if (segment === "__BOLD_START__") {
+      processed.add(idx + 1);
+      processed.add(idx + 2);
       const content = segments[idx + 1];
       return (
         <strong key={idx} className="font-bold text-white">
@@ -243,11 +230,11 @@ function renderInline(text: string): React.ReactNode {
       );
     }
 
-    if (segment === "__BOLD_END__") {
-      return null;
-    }
-
     if (segment === "__IMAGE_START__") {
+      processed.add(idx + 1);
+      processed.add(idx + 2);
+      processed.add(idx + 3);
+      processed.add(idx + 4);
       const alt = segments[idx + 1];
       const url = segments[idx + 3];
       return (
@@ -260,11 +247,11 @@ function renderInline(text: string): React.ReactNode {
       );
     }
 
-    if (segment === "__IMAGE_END__") {
-      return null;
-    }
-
     if (segment === "__LINK_START__") {
+      processed.add(idx + 1);
+      processed.add(idx + 2);
+      processed.add(idx + 3);
+      processed.add(idx + 4);
       const content = segments[idx + 1];
       const url = segments[idx + 3];
       return (
