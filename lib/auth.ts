@@ -34,8 +34,7 @@ export async function getUserProfile() {
 export async function signUp(
   email: string,
   password: string,
-  name: string,
-  role: "learner" | "instructor" = "learner"
+  name: string
 ) {
   const supabase = await createClient();
 
@@ -47,12 +46,12 @@ export async function signUp(
   if (error) throw error;
   if (!data.user) throw new Error("Failed to create user");
 
-  // Create profile
+  // Create profile — role is always "learner" for sign-ups
   const { error: profileError } = await supabase.from("profiles").insert({
     id: data.user.id,
     name,
     email,
-    role,
+    role: "learner",
   });
 
   if (profileError) throw profileError;

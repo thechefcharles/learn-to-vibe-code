@@ -108,14 +108,22 @@ create policy "Instructors can view all quiz attempts"
   );
 
 -- DELIVERABLES TABLE POLICIES
--- Learners can view/insert their own deliverables
+-- Learners can view their own deliverables
 create policy "Users can view their own deliverables"
   on deliverables for select
   using (auth.uid() = user_id);
 
+-- Learners can insert their own deliverables with safe defaults only
 create policy "Users can insert their own deliverables"
   on deliverables for insert
-  with check (auth.uid() = user_id);
+  with check (
+    auth.uid() = user_id
+    and status = 'pending'
+    and reviewed_by is null
+    and reviewed_at is null
+    and notes is null
+    and auto_checks is null
+  );
 
 -- Instructors can view all deliverables and update (review) them
 create policy "Instructors can view all deliverables"
@@ -137,14 +145,21 @@ create policy "Instructors can review deliverables"
   );
 
 -- CAPSTONE SUBMISSIONS TABLE POLICIES
--- Learners can view/insert their own submissions
+-- Learners can view their own submissions
 create policy "Users can view their own capstone submission"
   on capstone_submissions for select
   using (auth.uid() = user_id);
 
+-- Learners can insert their own submission with safe defaults only
 create policy "Users can insert their own capstone submission"
   on capstone_submissions for insert
-  with check (auth.uid() = user_id);
+  with check (
+    auth.uid() = user_id
+    and result is null
+    and graded_by is null
+    and graded_at is null
+    and rubric_scores is null
+  );
 
 -- Instructors can view and grade
 create policy "Instructors can view all capstone submissions"
