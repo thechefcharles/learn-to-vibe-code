@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { submitDeliverable, getDeliverable } from "@/lib/actions/deliverable";
-import { getModuleMetadata } from "@/lib/content";
+import { getModuleMetadata } from "@/lib/module-metadata";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 

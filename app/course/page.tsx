@@ -1,7 +1,7 @@
 import { getAllModuleProgress, isModuleUnlocked } from "@/lib/actions/course";
 import { getUser } from "@/lib/auth";
 import Link from "next/link";
-import { getModuleMetadata } from "@/lib/content";
+import { getModuleMetadata } from "@/lib/module-metadata";
 import { redirect } from "next/navigation";
 
 export default async function CoursePage() {

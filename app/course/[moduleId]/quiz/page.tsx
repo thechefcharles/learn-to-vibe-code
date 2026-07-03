@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { submitQuiz, getQuizAttempts } from "@/lib/actions/quiz";
-import { getModuleQuiz, getModuleMetadata } from "@/lib/quizzes";
+import { getModuleQuiz } from "@/lib/quizzes";
+import { getModuleMetadata } from "@/lib/module-metadata";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 

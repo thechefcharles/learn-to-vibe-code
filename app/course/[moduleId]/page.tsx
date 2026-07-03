@@ -1,6 +1,7 @@
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { ModuleChecklist } from "@/components/ModuleChecklist";
-import { getModule, getModuleMetadata } from "@/lib/content";
+import { getModule } from "@/lib/content";
+import { getModuleMetadata } from "@/lib/module-metadata";
 import {
   getChecklistItems,
   isModuleUnlocked,
