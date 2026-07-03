@@ -8,6 +8,7 @@ export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -15,6 +16,17 @@ export default function SignUp() {
   async function handleSignUp(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -24,7 +36,7 @@ export default function SignUp() {
       } else {
         setSuccess(true);
         setTimeout(() => {
-          window.location.href = "/auth/sign-in";
+          window.location.href = "/dashboard";
         }, 2000);
       }
     } catch (err) {
@@ -56,7 +68,7 @@ export default function SignUp() {
             </div>
             <h2 className="text-2xl font-bold text-white mb-2">Welcome!</h2>
             <p className="text-slate-400 mb-4">
-              Your account has been created. Redirecting to sign in...
+              Your account has been created. Redirecting to your dashboard...
             </p>
           </div>
         </div>
@@ -114,6 +126,20 @@ export default function SignUp() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-200 mb-2">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
                 placeholder="••••••••"
                 required
