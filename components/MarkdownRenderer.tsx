@@ -225,6 +225,7 @@ function renderInline(text: string): React.ReactNode {
   let match;
 
   const processedText = text
+    .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (m, alt, url) => `__IMAGE_START__${alt}__IMAGE_SEP__${url}__IMAGE_END__`)
     .replace(/\*\*([^*]+)\*\*/g, (m, content) => `__BOLD_START__${content}__BOLD_END__`)
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (m, text, url) => `__LINK_START__${text}__LINK_SEP__${url}__LINK_END__`);
 
@@ -243,6 +244,23 @@ function renderInline(text: string): React.ReactNode {
     }
 
     if (segment === "__BOLD_END__") {
+      return null;
+    }
+
+    if (segment === "__IMAGE_START__") {
+      const alt = segments[idx + 1];
+      const url = segments[idx + 3];
+      return (
+        <img
+          key={idx}
+          src={url}
+          alt={alt}
+          className="w-full rounded-lg mb-4 border border-slate-600"
+        />
+      );
+    }
+
+    if (segment === "__IMAGE_END__") {
       return null;
     }
 

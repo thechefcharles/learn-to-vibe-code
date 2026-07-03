@@ -1,0 +1,29 @@
+# Test run — Thu Jul  2 00:07:20 CDT 2026
+
+## Unit tests (vitest)
+
+> nextapp@0.1.0 test
+> vitest run
+
+
+ RUN  v4.1.9 /Users/admin/Charlie Foreman/My Projects/Accredited Vibe Coding Course/vibe-coding-course-demo
+
+
+ Test Files  3 passed (3)
+      Tests  9 passed (9)
+   Start at  00:07:20
+   Duration  141ms (transform 58ms, setup 0ms, import 80ms, tests 33ms, environment 0ms)
+
+
+## E2E tests (playwright)
+
+> nextapp@0.1.0 test:e2e
+> playwright test
+
+
+Running 2 tests using 2 workers
+
+  ✓  1 [chromium] › e2e/create-client.spec.ts:23:5 › overdue reminders require human approval before send (628ms)
+  ✓  2 [chromium] › e2e/create-client.spec.ts:3:5 › create a client: fill the form and see confirmation (651ms)
+
+  2 passed (3.1s)
