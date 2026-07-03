@@ -56,29 +56,27 @@ export async function signUp(
 
   if (profileError) throw profileError;
 
-  // Create enrollment
-  if (role === "learner") {
-    const { error: enrollmentError } = await supabase
-      .from("enrollments")
-      .insert({
-        user_id: data.user.id,
-      });
-
-    if (enrollmentError) throw enrollmentError;
-
-    // Initialize XP and streaks
-    await supabase.from("xp").insert({
+  // Create enrollment (always for learners)
+  const { error: enrollmentError } = await supabase
+    .from("enrollments")
+    .insert({
       user_id: data.user.id,
-      points: 0,
-      level: 1,
     });
 
-    await supabase.from("streaks").insert({
-      user_id: data.user.id,
-      current: 0,
-      longest: 0,
-    });
-  }
+  if (enrollmentError) throw enrollmentError;
+
+  // Initialize XP and streaks
+  await supabase.from("xp").insert({
+    user_id: data.user.id,
+    points: 0,
+    level: 1,
+  });
+
+  await supabase.from("streaks").insert({
+    user_id: data.user.id,
+    current: 0,
+    longest: 0,
+  });
 
   return data;
 }
