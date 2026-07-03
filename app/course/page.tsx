@@ -10,7 +10,7 @@ export default async function CoursePage() {
     redirect("/auth/sign-in");
   }
 
-  const progress = await getAllModuleProgress(user.id);
+  const progress = await getAllModuleProgress();
   const unlockedModules: Record<number, boolean> = {};
 
   for (let i = 0; i <= 15; i++) {

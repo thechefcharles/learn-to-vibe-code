@@ -25,6 +25,25 @@ export async function markModuleComplete(moduleId: number) {
 
   const supabase = await createClient();
 
+  // Verify all checklist items are completed
+  const { data: items } = await supabase
+    .from("checklist_items")
+    .select("item_key, checked")
+    .eq("user_id", user.id)
+    .eq("module_id", moduleId);
+
+  const requiredKeys = ["watched", "exercise", "quiz", "deliverable"];
+  const allChecked = requiredKeys.every((key) =>
+    items?.find((i: any) => i.item_key === key && i.checked)
+  );
+
+  if (!allChecked) {
+    throw new Error(
+      "Cannot mark complete: all checklist items must be checked"
+    );
+  }
+
+  // Mark module complete
   const { error } = await supabase
     .from("module_progress")
     .update({
@@ -110,12 +129,15 @@ export async function isModuleUnlocked(moduleId: number): Promise<boolean> {
   return prevProgress.status === "completed";
 }
 
-export async function getAllModuleProgress(userId: string) {
+export async function getAllModuleProgress() {
+  const user = await getUser();
+  if (!user) return [];
+
   const supabase = await createClient();
   const { data } = await supabase
     .from("module_progress")
     .select()
-    .eq("user_id", userId)
+    .eq("user_id", user.id)
     .order("module_id");
 
   return data || [];
