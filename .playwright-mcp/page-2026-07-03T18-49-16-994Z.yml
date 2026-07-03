@@ -1,0 +1,63 @@
+- generic [ref=f32e1]:
+  - generic [active]:
+    - generic [ref=f32e4]:
+      - generic [ref=f32e5]:
+        - generic [ref=f32e6]:
+          - navigation [ref=f32e7]:
+            - button "previous" [disabled] [ref=f32e8]:
+              - img "previous" [ref=f32e9]
+            - generic [ref=f32e11]:
+              - generic [ref=f32e12]: 1/
+              - text: "1"
+            - button "next" [disabled] [ref=f32e13]:
+              - img "next" [ref=f32e14]
+          - img
+        - generic [ref=f32e16]:
+          - generic [ref=f32e17]:
+            - img [ref=f32e18]
+            - generic "Latest available version is detected (16.2.10)." [ref=f32e20]: Next.js 16.2.10
+            - generic [ref=f32e21]: Turbopack
+          - img
+      - generic [ref=f32e22]:
+        - dialog "Runtime Error" [ref=f32e23]:
+          - generic [ref=f32e27]:
+            - generic [ref=f32e28]:
+              - generic [ref=f32e29]:
+                - generic [ref=f32e30]: Runtime Error
+                - generic [ref=f32e31]: Server
+              - generic [ref=f32e32]:
+                - button "Copy Error Info" [ref=f32e33] [cursor=pointer]:
+                  - img [ref=f32e34]
+                - button "No related documentation found" [disabled] [ref=f32e36]:
+                  - img [ref=f32e37]
+                - button "Attach Node.js inspector" [ref=f32e39] [cursor=pointer]:
+                  - img [ref=f32e40]
+            - generic [ref=f32e49]: "{code: \"42P17\", details: Null, hint: ..., message: ...}"
+          - generic [ref=f32e50]: "1"
+          - generic [ref=f32e51]: "2"
+        - contentinfo [ref=f32e52]:
+          - region "Error feedback" [ref=f32e53]:
+            - paragraph [ref=f32e54]:
+              - link "Was this helpful?" [ref=f32e55] [cursor=pointer]:
+                - /url: https://nextjs.org/telemetry#error-feedback
+            - button "Mark as helpful" [ref=f32e56] [cursor=pointer]:
+              - img [ref=f32e57]
+            - button "Mark as not helpful" [ref=f32e60] [cursor=pointer]:
+              - img [ref=f32e61]
+    - generic [ref=f32e67] [cursor=pointer]:
+      - button "Open Next.js Dev Tools" [ref=f32e68]:
+        - img [ref=f32e69]
+      - generic [ref=f32e72]:
+        - button "Open issues overlay" [ref=f32e73]:
+          - generic [ref=f32e74]:
+            - generic [ref=f32e75]: "0"
+            - generic [ref=f32e76]: "1"
+          - generic [ref=f32e77]: Issue
+        - button "Collapse issues badge" [ref=f32e78]:
+          - img [ref=f32e79]
+  - generic [ref=f32e82]:
+    - img [ref=f32e83]
+    - heading "This page couldn’t load" [level=1] [ref=f32e85]
+    - paragraph [ref=f32e86]: A server error occurred. Reload to try again.
+    - button "Reload" [ref=f32e89] [cursor=pointer]
+  - paragraph [ref=f32e90]: ERROR 1846450350@E394
