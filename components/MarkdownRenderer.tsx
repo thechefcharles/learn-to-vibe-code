@@ -161,6 +161,30 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
       continue;
     }
 
+    // Screenshot placeholder
+    if (line.includes("[SCREENSHOT:")) {
+      const screenshotMatch = line.match(/\[SCREENSHOT:\s*([^\]]+)\]/);
+      if (screenshotMatch) {
+        const description = screenshotMatch[1].trim();
+        elements.push(
+          <div
+            key={`screenshot-${i}`}
+            className="bg-amber-500/10 border-2 border-amber-500/30 rounded-lg p-6 mb-4"
+          >
+            <div className="flex items-start gap-4">
+              <div className="text-4xl">📸</div>
+              <div className="flex-1">
+                <p className="font-bold text-amber-400 mb-2">Screenshot</p>
+                <p className="text-slate-300 text-sm italic">{description}</p>
+              </div>
+            </div>
+          </div>
+        );
+      }
+      i++;
+      continue;
+    }
+
     // Empty line
     if (line.trim() === "") {
       elements.push(<div key={`empty-${i}`} className="mb-2" />);
