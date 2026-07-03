@@ -4,13 +4,6 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
       <div className="max-w-4xl mx-auto">
-        {/* Maintenance Banner */}
-        <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 mb-12">
-          <p className="text-yellow-400 text-center font-medium">
-            ⚠️ New account creation temporarily unavailable due to infrastructure maintenance
-          </p>
-        </div>
-
         {/* Hero */}
         <div className="text-center mb-12">
           <h1 className="text-6xl font-bold text-white mb-4">Learn to Vibe Code</h1>

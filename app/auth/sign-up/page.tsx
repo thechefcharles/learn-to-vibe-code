@@ -1,45 +1,139 @@
 "use client";
 
+import { useState } from "react";
+import { signUpAction } from "@/lib/actions/auth";
 import Link from "next/link";
 
 export default function SignUp() {
-  // Account creation temporarily disabled due to Supabase maintenance
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  async function handleSignUp(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+    setLoading(true);
+
+    try {
+      const result = await signUpAction(email, password, name);
+      if (result.error) {
+        setError(result.error);
+      } else {
+        setSuccess(true);
+        setTimeout(() => {
+          window.location.href = "/auth/sign-in";
+        }, 2000);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Sign up failed");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (success) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800">
+        <div className="w-full max-w-md">
+          <div className="bg-slate-800 rounded-lg shadow-xl p-8 text-center">
+            <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg
+                className="w-6 h-6 text-green-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-white mb-2">Welcome!</h2>
+            <p className="text-slate-400 mb-4">
+              Your account has been created. Redirecting to sign in...
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
-      <div className="max-w-md mx-auto">
-        <div className="bg-slate-800 rounded-lg p-8 border border-slate-700">
-          <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 mb-6">
-            <p className="text-yellow-400 text-sm font-medium">⚠️ Temporarily Offline</p>
-          </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800">
+      <div className="w-full max-w-md">
+        <div className="bg-slate-800 rounded-lg shadow-xl p-8">
+          <h1 className="text-3xl font-bold text-white mb-2">Get Started</h1>
+          <p className="text-slate-400 mb-8">Create your account to begin learning</p>
 
-          <h1 className="text-3xl font-bold text-white mb-4">Account Creation Paused</h1>
-          <p className="text-slate-400 mb-6">
-            Our authentication provider is currently under maintenance. New account creation is temporarily unavailable.
-          </p>
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-6">
+              <p className="text-red-400 text-sm">{error}</p>
+            </div>
+          )}
 
-          <div className="bg-slate-700 rounded-lg p-4 mb-6">
-            <p className="text-sm text-slate-300 mb-2">✓ We're actively working on this</p>
-            <p className="text-sm text-slate-300 mb-2">✓ Check back in 30 minutes</p>
-            <p className="text-sm text-slate-300">✓ Existing accounts can still sign in</p>
-          </div>
+          <form onSubmit={handleSignUp} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-200 mb-2">
+                Full Name
+              </label>
+              <input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                placeholder="John Doe"
+                required
+              />
+            </div>
 
-          <div className="space-y-3">
-            <Link
-              href="/auth/sign-in"
-              className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition text-center"
+            <div>
+              <label className="block text-sm font-medium text-slate-200 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                placeholder="your@email.com"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-200 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-medium py-2 rounded-lg transition"
             >
-              Sign In →
-            </Link>
-            <Link
-              href="/"
-              className="block w-full bg-slate-700 hover:bg-slate-600 text-white font-medium py-2 px-4 rounded-lg transition text-center"
-            >
-              Back Home
-            </Link>
-          </div>
+              {loading ? "Creating account..." : "Sign Up"}
+            </button>
+          </form>
 
-          <p className="text-slate-500 text-xs text-center mt-6">
-            Questions? Check our status page or come back later.
+          <p className="text-slate-400 text-sm mt-6 text-center">
+            Already have an account?{" "}
+            <Link href="/auth/sign-in" className="text-blue-400 hover:text-blue-300">
+              Sign in
+            </Link>
           </p>
         </div>
       </div>
