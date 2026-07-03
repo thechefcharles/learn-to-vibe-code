@@ -3,25 +3,33 @@
 import { createClient } from "@/lib/supabase/server";
 import { getUser } from "@/lib/auth";
 import { getPublicIpForUrl } from "@/lib/actions/deliverable";
+import { issueCertificate } from "@/lib/certificate";
 
-export interface CapstoneSubmission {
-  id: string;
-  user_id: string;
-  title: string;
-  description: string;
-  repo_url: string;
-  live_url: string;
-  status: "pending" | "in_review" | "approved" | "rejected";
-  instructor_feedback?: string;
-  submitted_at: string;
-  reviewed_at?: string;
+export interface RubricScores {
+  [criterion: string]: number; // 0-3 per criterion
 }
 
-export async function submitCapstone(data: {
-  title: string;
-  description: string;
+export interface CapstoneSubmission {
+  id?: string;
+  user_id: string;
   repo_url: string;
   live_url: string;
+  writeup?: string;
+  defense_video_url?: string;
+  result?: "pending" | "pass" | "fail";
+  rubric_scores?: RubricScores;
+  graded_by?: string;
+  submitted_at?: string;
+}
+
+/**
+ * Submit capstone project (learner action)
+ */
+export async function submitCapstone(data: {
+  repo_url: string;
+  live_url: string;
+  writeup?: string;
+  defense_video_url?: string;
 }): Promise<CapstoneSubmission> {
   const user = await getUser();
   if (!user) throw new Error("Not authenticated");
@@ -44,15 +52,15 @@ export async function submitCapstone(data: {
     .single();
 
   if (existing) {
-    // Update existing submission
+    // Update existing submission (revert to pending)
     const { data: updated, error } = await supabase
       .from("capstone_submissions")
       .update({
-        title: data.title,
-        description: data.description,
         repo_url: data.repo_url,
         live_url: data.live_url,
-        status: "pending",
+        writeup: data.writeup || null,
+        defense_video_url: data.defense_video_url || null,
+        result: "pending",
         submitted_at: new Date().toISOString(),
       })
       .eq("user_id", user.id)
@@ -67,11 +75,11 @@ export async function submitCapstone(data: {
       .from("capstone_submissions")
       .insert({
         user_id: user.id,
-        title: data.title,
-        description: data.description,
         repo_url: data.repo_url,
         live_url: data.live_url,
-        status: "pending",
+        writeup: data.writeup || null,
+        defense_video_url: data.defense_video_url || null,
+        result: "pending",
         submitted_at: new Date().toISOString(),
       })
       .select()
@@ -82,6 +90,9 @@ export async function submitCapstone(data: {
   }
 }
 
+/**
+ * Get learner's capstone submission
+ */
 export async function getCapstoneSubmission(): Promise<CapstoneSubmission | null> {
   const user = await getUser();
   if (!user) return null;
@@ -96,10 +107,14 @@ export async function getCapstoneSubmission(): Promise<CapstoneSubmission | null
   return data || null;
 }
 
-export async function updateCapstoneStatus(
-  capstoneId: string,
-  status: "in_review" | "approved" | "rejected",
-  feedback?: string
+/**
+ * Grade capstone and issue certificate if passed (instructor action)
+ * Rubric scoring: 10 criteria, each 0-3 points
+ * Pass: all criteria >= 2/3 AND total >= 80%
+ */
+export async function updateCapstoneGrade(
+  userId: string,
+  rubricScores: RubricScores
 ): Promise<CapstoneSubmission> {
   const user = await getUser();
   if (!user) throw new Error("Not authenticated");
@@ -113,24 +128,44 @@ export async function updateCapstoneStatus(
     .single();
 
   if (profile?.role !== "instructor") {
-    throw new Error("Only instructors can review submissions");
+    throw new Error("Only instructors can grade submissions");
   }
 
+  // Calculate result: all criteria must be >= 2, total >= 80%
+  const scores = Object.values(rubricScores) as number[];
+  const allMeet = scores.every((s) => s >= 2);
+  const total = scores.length > 0 ? (scores.reduce((a, b) => a + b, 0) / (scores.length * 3)) * 100 : 0;
+  const result = allMeet && total >= 80 ? "pass" : "fail";
+
+  // Update capstone
   const { data, error } = await supabase
     .from("capstone_submissions")
     .update({
-      status,
-      instructor_feedback: feedback,
-      reviewed_at: new Date().toISOString(),
+      result,
+      rubric_scores: rubricScores,
+      graded_by: user.id,
     })
-    .eq("id", capstoneId)
+    .eq("user_id", userId)
     .select()
     .single();
 
   if (error) throw error;
+
+  // Auto-issue certificate if passed
+  if (result === "pass") {
+    try {
+      await issueCertificate(userId, data.user_id);
+    } catch (certError) {
+      console.error("Certificate issuance failed (non-blocking):", certError);
+    }
+  }
+
   return data;
 }
 
+/**
+ * Get all capstone submissions for instructor review
+ */
 export async function getCapstoneSubmissionsForReview(): Promise<CapstoneSubmission[]> {
   const user = await getUser();
   if (!user) return [];
