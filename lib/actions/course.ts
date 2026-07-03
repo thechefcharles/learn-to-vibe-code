@@ -3,6 +3,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { getUser } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { hasPassedQuiz } from "./quiz";
+import { hasSubmittedDeliverable } from "./deliverable";
 
 export async function getUserModuleProgress(moduleId: number) {
   const user = await getUser();
@@ -112,21 +114,15 @@ export async function isModuleUnlocked(moduleId: number): Promise<boolean> {
   const user = await getUser();
   if (!user) return false;
 
-  const supabase = await createClient();
+  const prevModuleId = moduleId - 1;
 
-  // Check if previous module is completed
-  const { data: prevProgress } = await supabase
-    .from("module_progress")
-    .select()
-    .eq("user_id", user.id)
-    .eq("module_id", moduleId - 1)
-    .single();
+  // Check unlock gates for previous module:
+  // 1. Quiz passed
+  // 2. Deliverable submitted
+  const quizPassed = await hasPassedQuiz(prevModuleId);
+  const deliverableSubmitted = await hasSubmittedDeliverable(prevModuleId);
 
-  if (!prevProgress) return false;
-
-  // For now, just check if previous module is completed
-  // Later: add quiz pass + deliverable submit requirement
-  return prevProgress.status === "completed";
+  return quizPassed && deliverableSubmitted;
 }
 
 export async function getAllModuleProgress() {

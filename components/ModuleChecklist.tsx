@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { toggleChecklistItem, markModuleComplete } from "@/lib/actions/course";
 import { hasPassedQuiz } from "@/lib/actions/quiz";
+import { hasSubmittedDeliverable } from "@/lib/actions/deliverable";
 import Link from "next/link";
 
 interface ChecklistItem {
@@ -16,14 +17,17 @@ interface ModuleChecklistProps {
   onComplete?: () => void;
 }
 
-const getChecklistItems = (moduleId: number, quizPassed: boolean): ChecklistItem[] => [
+const getChecklistItems = (moduleId: number, quizPassed: boolean, deliverableSubmitted: boolean): ChecklistItem[] => [
   { key: "watched", label: "Watched the lesson" },
   { key: "exercise", label: "Completed the hands-on exercise" },
   {
     key: "quiz",
     label: quizPassed ? "✓ Passed the quiz" : "Take the quiz"
   },
-  { key: "deliverable", label: "Submitted the deliverable" },
+  {
+    key: "deliverable",
+    label: deliverableSubmitted ? "✓ Submitted the deliverable" : "Submit your project"
+  },
 ];
 
 export function ModuleChecklist({
@@ -35,9 +39,11 @@ export function ModuleChecklist({
   const [saving, setSaving] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [quizPassed, setQuizPassed] = useState(false);
+  const [deliverableSubmitted, setDeliverableSubmitted] = useState(false);
 
   useEffect(() => {
     hasPassedQuiz(moduleId).then(setQuizPassed);
+    hasSubmittedDeliverable(moduleId).then(setDeliverableSubmitted);
   }, [moduleId]);
 
   const checkCount = Object.values(checked).filter(Boolean).length;
@@ -80,12 +86,20 @@ export function ModuleChecklist({
       <h3 className="text-lg font-bold text-white mb-4">Module Checklist</h3>
 
       <div className="space-y-3 mb-6">
-        {getChecklistItems(moduleId, quizPassed).map((item) => (
+        {getChecklistItems(moduleId, quizPassed, deliverableSubmitted).map((item) => (
           <div key={item.key}>
             {item.key === "quiz" && !quizPassed ? (
               <Link
                 href={`/course/${moduleId}/quiz`}
                 className="flex items-center gap-3 p-3 rounded-lg bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500 text-blue-400 transition"
+              >
+                <span>→</span>
+                <span>{item.label}</span>
+              </Link>
+            ) : item.key === "deliverable" && !deliverableSubmitted ? (
+              <Link
+                href={`/course/${moduleId}/submit`}
+                className="flex items-center gap-3 p-3 rounded-lg bg-green-600/10 hover:bg-green-600/20 border border-green-500 text-green-400 transition"
               >
                 <span>→</span>
                 <span>{item.label}</span>
