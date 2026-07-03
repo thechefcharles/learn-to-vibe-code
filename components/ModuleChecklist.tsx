@@ -46,8 +46,9 @@ export function ModuleChecklist({
     hasSubmittedDeliverable(moduleId).then(setDeliverableSubmitted);
   }, [moduleId]);
 
+  const checklistItems = getChecklistItems(moduleId, quizPassed, deliverableSubmitted);
   const checkCount = Object.values(checked).filter(Boolean).length;
-  const isComplete = checkCount === CHECKLIST_ITEMS.length;
+  const isComplete = checkCount === checklistItems.length;
 
   useEffect(() => {
     setCompleted(isComplete);
@@ -122,7 +123,7 @@ export function ModuleChecklist({
 
       <div className="flex items-center justify-between">
         <div className="text-sm text-slate-400">
-          Progress: {checkCount} of {CHECKLIST_ITEMS.length} completed
+          Progress: {checkCount} of {checklistItems.length} completed
         </div>
         <button
           onClick={handleMarkComplete}

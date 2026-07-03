@@ -94,5 +94,5 @@ export async function hasPassedQuiz(moduleId: number): Promise<boolean> {
     .eq("passed", true)
     .limit(1);
 
-  return data && data.length > 0;
+  return (data && data.length > 0) ?? false;
 }

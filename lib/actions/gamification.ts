@@ -22,58 +22,58 @@ export interface UserStreak {
   longest: number;
 }
 
-export async function getUserXP(userId?: string): Promise<UserXP> {
+export async function getUserXP(): Promise<UserXP> {
   const supabase = await createClient();
-  const user = userId ? null : await getUser();
-  const id = userId || user?.id;
-
-  if (!id) throw new Error("Not authenticated");
+  const user = await getUser();
+  if (!user) throw new Error("Not authenticated");
 
   const { data, error } = await supabase
     .from("xp")
     .select("points, level")
-    .eq("user_id", id)
+    .eq("user_id", user.id)
     .single();
 
   if (error) throw error;
-  return { user_id: id, points: data.points, level: data.level };
+  return { user_id: user.id, points: data.points, level: data.level };
 }
 
-export async function getUserBadges(userId?: string): Promise<UserBadge[]> {
+export async function getUserBadges(): Promise<UserBadge[]> {
   const supabase = await createClient();
-  const user = userId ? null : await getUser();
-  const id = userId || user?.id;
-
-  if (!id) throw new Error("Not authenticated");
+  const user = await getUser();
+  if (!user) throw new Error("Not authenticated");
 
   const { data, error } = await supabase
     .from("badges")
     .select("id, user_id, badge_id, earned_at")
-    .eq("user_id", id)
+    .eq("user_id", user.id)
     .order("earned_at", { ascending: false });
 
   if (error) throw error;
   return data || [];
 }
 
-export async function getUserStreak(userId?: string): Promise<UserStreak> {
+export async function getUserStreak(): Promise<UserStreak> {
   const supabase = await createClient();
-  const user = userId ? null : await getUser();
-  const id = userId || user?.id;
-
-  if (!id) throw new Error("Not authenticated");
+  const user = await getUser();
+  if (!user) throw new Error("Not authenticated");
 
   const { data, error } = await supabase
     .from("streaks")
     .select("current, longest")
-    .eq("user_id", id)
+    .eq("user_id", user.id)
     .single();
 
   if (error) throw error;
-  return { user_id: id, current: data.current, longest: data.longest };
+  return { user_id: user.id, current: data.current, longest: data.longest };
 }
 
+// Internal functions - only callable from quiz submission
 export async function awardXP(userId: string, points: number): Promise<UserXP> {
+  const user = await getUser();
+  if (!user || user.id !== userId) {
+    throw new Error("Unauthorized");
+  }
+
   const supabase = await createClient();
 
   const { data: current } = await supabase
@@ -101,6 +101,11 @@ export async function awardXP(userId: string, points: number): Promise<UserXP> {
 }
 
 export async function awardBadge(userId: string, badgeId: string): Promise<UserBadge> {
+  const user = await getUser();
+  if (!user || user.id !== userId) {
+    throw new Error("Unauthorized");
+  }
+
   const supabase = await createClient();
 
   // Check if badge already exists
@@ -130,6 +135,11 @@ export async function awardBadge(userId: string, badgeId: string): Promise<UserB
 }
 
 export async function updateStreak(userId: string, increment: boolean = true): Promise<UserStreak> {
+  const user = await getUser();
+  if (!user || user.id !== userId) {
+    throw new Error("Unauthorized");
+  }
+
   const supabase = await createClient();
 
   const { data: current } = await supabase

@@ -11,9 +11,9 @@ export default async function DashboardPage() {
   }
 
   const [xp, badges, streak, progress] = await Promise.all([
-    getUserXP(user.id),
-    getUserBadges(user.id),
-    getUserStreak(user.id),
+    getUserXP(),
+    getUserBadges(),
+    getUserStreak(),
     getAllModuleProgress(),
   ]);
 
