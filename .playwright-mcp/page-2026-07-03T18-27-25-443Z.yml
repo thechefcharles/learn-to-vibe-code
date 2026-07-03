@@ -1,0 +1,22 @@
+- generic [active] [ref=f24e1]:
+  - generic [ref=f24e4]:
+    - heading "Get Started" [level=1] [ref=f24e5]
+    - paragraph [ref=f24e6]: Create your account to begin learning
+    - generic [ref=f24e7]:
+      - generic [ref=f24e8]:
+        - generic [ref=f24e9]: Full Name
+        - textbox "John Doe" [ref=f24e10]
+      - generic [ref=f24e11]:
+        - generic [ref=f24e12]: Email
+        - textbox "your@email.com" [ref=f24e13]
+      - generic [ref=f24e14]:
+        - generic [ref=f24e15]: Password
+        - textbox "••••••••" [ref=f24e16]
+      - button "Sign Up" [ref=f24e17]
+    - paragraph [ref=f24e18]:
+      - text: Already have an account?
+      - link "Sign in" [ref=f24e19] [cursor=pointer]:
+        - /url: /auth/sign-in
+  - button "Open Next.js Dev Tools" [ref=f24e25] [cursor=pointer]:
+    - img [ref=f24e26]
+  - alert [ref=f24e29]

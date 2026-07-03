@@ -1,0 +1,8 @@
+- generic [active] [ref=f25e1]:
+  - generic [ref=f25e4]:
+    - img [ref=f25e35]
+    - heading "Welcome!" [level=2] [ref=f25e37]
+    - paragraph [ref=f25e38]: Your account has been created. Redirecting to sign in...
+  - button "Open Next.js Dev Tools" [ref=f25e25] [cursor=pointer]:
+    - img [ref=f25e26]
+  - alert [ref=f25e29]
