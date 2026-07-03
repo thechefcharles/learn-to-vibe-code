@@ -124,7 +124,7 @@ function isValidUrl(url: string): boolean {
   }
 }
 
-async function getPublicIpForUrl(urlString: string): Promise<string> {
+export async function getPublicIpForUrl(urlString: string): Promise<string> {
   const url = new URL(urlString);
 
   // Only allow http and https
