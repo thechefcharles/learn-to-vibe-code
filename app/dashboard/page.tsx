@@ -79,9 +79,9 @@ export default async function DashboardPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {badges.map((badge) => (
                 <div key={badge.id} className="bg-slate-800 rounded-lg p-6 border border-slate-700 text-center">
-                  <div className="text-4xl mb-3">{getBadgeEmoji(badge.badge_id)}</div>
-                  <h3 className="font-bold text-white mb-2">{getBadgeName(badge.badge_id)}</h3>
-                  <p className="text-sm text-slate-400">{getBadgeDescription(badge.badge_id)}</p>
+                  <div className="text-4xl mb-3">{getBadgeEmoji(badge.badge_key)}</div>
+                  <h3 className="font-bold text-white mb-2">{getBadgeName(badge.badge_key)}</h3>
+                  <p className="text-sm text-slate-400">{getBadgeDescription(badge.badge_key)}</p>
                   <p className="text-xs text-slate-500 mt-3">
                     Earned {new Date(badge.earned_at).toLocaleDateString()}
                   </p>

@@ -12,7 +12,7 @@ export interface UserXP {
 export interface UserBadge {
   id: string;
   user_id: string;
-  badge_id: string;
+  badge_key: string;
   earned_at: string;
 }
 
@@ -44,7 +44,7 @@ export async function getUserBadges(): Promise<UserBadge[]> {
 
   const { data, error } = await supabase
     .from("badges")
-    .select("id, user_id, badge_id, earned_at")
+    .select("id, user_id, badge_key, earned_at")
     .eq("user_id", user.id)
     .order("earned_at", { ascending: false });
 
@@ -113,7 +113,7 @@ export async function awardBadge(userId: string, badgeId: string): Promise<UserB
     .from("badges")
     .select("id")
     .eq("user_id", userId)
-    .eq("badge_id", badgeId)
+    .eq("badge_key", badgeId)
     .single();
 
   if (existing) {
@@ -124,7 +124,7 @@ export async function awardBadge(userId: string, badgeId: string): Promise<UserB
     .from("badges")
     .insert({
       user_id: userId,
-      badge_id: badgeId,
+      badge_key: badgeId,
       earned_at: new Date().toISOString(),
     })
     .select()
