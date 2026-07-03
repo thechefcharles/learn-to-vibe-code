@@ -40,6 +40,16 @@ export async function GET(req: NextRequest) {
 
     if (enrollError) throw enrollError;
 
+    // CSV-safe escaping: prevent formula injection by escaping =, +, -, @, etc.
+    function csvSafe(value: any): string {
+      const s = String(value ?? "");
+      let escaped = s.replace(/"/g, '""'); // Escape quotes by doubling
+      if (/^[=+\-@\t\r]/.test(escaped)) {
+        escaped = "'" + escaped; // Prefix formula-like chars with quote
+      }
+      return `"${escaped}"`; // Always quote for safety
+    }
+
     // Build CSV rows
     const csvRows: string[] = [
       [
@@ -79,15 +89,13 @@ export async function GET(req: NextRequest) {
 
       const row = [
         enrollment.user_id,
-        `"${profile.email}"`,
-        `"${profile.name}"`,
+        csvSafe(profile.email),
+        csvSafe(profile.name),
         new Date(enrollment.enrolled_at).toISOString().split("T")[0],
-        `"${moduleStatuses.join("|")}"`,
-        `"${quizScores.join("|')}"`,
+        csvSafe(moduleStatuses.join("|")),
+        csvSafe(quizScores.join("|")),
         capstone?.result || "not_submitted",
-        capstone?.rubric_scores
-          ? `"${JSON.stringify(capstone.rubric_scores)}"`
-          : "",
+        capstone?.rubric_scores ? csvSafe(JSON.stringify(capstone.rubric_scores)) : '""',
         cert?.cert_id || "",
         cert?.issued_at
           ? new Date(cert.issued_at).toISOString().split("T")[0]

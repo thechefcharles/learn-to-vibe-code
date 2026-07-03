@@ -1,3 +1,4 @@
+import { randomBytes } from "crypto";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -185,8 +186,8 @@ function escapeHtml(text: string): string {
  */
 export async function issueCertificate(userId: string, userName: string) {
   try {
-    // Generate unique cert ID
-    const certId = `LVCC-${Date.now()}-${Math.random().toString(36).substring(7).toUpperCase()}`;
+    // Generate cryptographically secure cert ID (128 bits of entropy)
+    const certId = `LVCC-${randomBytes(16).toString("base64url").toUpperCase()}`;
     const completionDate = new Date().toISOString();
 
     // Check if learner already has a certificate
