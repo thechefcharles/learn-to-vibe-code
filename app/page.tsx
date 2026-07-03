@@ -18,7 +18,7 @@ export default function Home() {
             Master AI-powered application development from setup to production
           </p>
 
-          <div className="flex gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Link
               href="/auth/sign-in"
               className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition"
@@ -30,6 +30,12 @@ export default function Home() {
               className="bg-slate-700 hover:bg-slate-600 text-white font-bold py-3 px-8 rounded-lg transition"
             >
               Create Account
+            </Link>
+            <Link
+              href="/demo"
+              className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition"
+            >
+              📖 Preview Course
             </Link>
           </div>
         </div>
