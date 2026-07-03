@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signUp } from "@/lib/auth";
+import { signUpAction } from "@/lib/actions/auth";
 import Link from "next/link";
 
 export default function SignUp() {
@@ -18,11 +18,15 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      await signUp(email, password, name, "learner");
-      setSuccess(true);
-      setTimeout(() => {
-        window.location.href = "/auth/sign-in";
-      }, 2000);
+      const result = await signUpAction(email, password, name);
+      if (result.error) {
+        setError(result.error);
+      } else {
+        setSuccess(true);
+        setTimeout(() => {
+          window.location.href = "/auth/sign-in";
+        }, 2000);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign up failed");
     } finally {

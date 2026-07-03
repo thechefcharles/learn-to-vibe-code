@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "@/lib/auth";
+import { signInAction } from "@/lib/actions/auth";
 import Link from "next/link";
 
 export default function SignIn() {
@@ -16,8 +16,12 @@ export default function SignIn() {
     setLoading(true);
 
     try {
-      await signIn(email, password);
-      window.location.href = "/dashboard";
+      const result = await signInAction(email, password);
+      if (result.error) {
+        setError(result.error);
+      } else {
+        window.location.href = "/dashboard";
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Sign in failed");
     } finally {
