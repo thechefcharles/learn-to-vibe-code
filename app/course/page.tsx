@@ -1,20 +1,27 @@
-"use client";
-
-import { useEffect, useState } from "react";
+import { getAllModuleProgress, isModuleUnlocked } from "@/lib/actions/course";
+import { getUser } from "@/lib/auth";
 import Link from "next/link";
 import { getModuleMetadata } from "@/lib/content";
+import { redirect } from "next/navigation";
 
-export default function CoursePage() {
-  const [modules, setModules] = useState<Array<{ id: number; title: string }>>([]);
+export default async function CoursePage() {
+  const user = await getUser();
+  if (!user) {
+    redirect("/auth/sign-in");
+  }
 
-  useEffect(() => {
-    const mods = [];
-    for (let i = 0; i <= 15; i++) {
-      const meta = getModuleMetadata(i);
-      mods.push({ id: i, title: meta.title });
-    }
-    setModules(mods);
-  }, []);
+  const progress = await getAllModuleProgress(user.id);
+  const unlockedModules: Record<number, boolean> = {};
+
+  for (let i = 0; i <= 15; i++) {
+    unlockedModules[i] = await isModuleUnlocked(i);
+  }
+
+  const modules = [];
+  for (let i = 0; i <= 15; i++) {
+    const meta = getModuleMetadata(i);
+    modules.push({ id: i, title: meta.title });
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
@@ -28,38 +35,49 @@ export default function CoursePage() {
         </div>
 
         <div className="space-y-4">
-          {modules.map((module, idx) => {
-            const isLocked = idx > 0; // Only module 0 unlocked initially
-            const isCapstone = idx === 16;
+          {modules.map((module) => {
+            const isUnlocked = unlockedModules[module.id];
+            const moduleProgress = progress.find((p: any) => p.module_id === module.id);
+            const isCompleted = moduleProgress?.status === "completed";
 
             return (
               <Link
                 key={module.id}
-                href={`/course/${module.id}`}
+                href={isUnlocked ? `/course/${module.id}` : "#"}
                 className={`block p-6 rounded-lg border-2 transition ${
-                  isLocked
+                  !isUnlocked
                     ? "border-slate-700 bg-slate-800/50 opacity-60 cursor-not-allowed"
+                    : isCompleted
+                    ? "border-green-500 bg-slate-800 hover:bg-slate-700"
                     : "border-blue-500 bg-slate-800 hover:bg-slate-700 hover:shadow-lg hover:shadow-blue-500/20 cursor-pointer"
                 }`}
               >
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 rounded-full bg-blue-600/20 flex items-center justify-center text-blue-400 font-bold">
-                        {String(module.id).padStart(2, "0")}
+                      <div
+                        className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
+                          isCompleted
+                            ? "bg-green-600/20 text-green-400"
+                            : "bg-blue-600/20 text-blue-400"
+                        }`}
+                      >
+                        {isCompleted ? "✓" : String(module.id).padStart(2, "0")}
                       </div>
                       <h3 className="text-xl font-bold text-white">
                         {module.title}
                       </h3>
                     </div>
                     <p className="text-slate-400 text-sm">
-                      {idx === 0
+                      {isCompleted
+                        ? "✓ Completed"
+                        : isUnlocked
                         ? "🔓 Unlocked"
-                        : `🔒 Unlock by completing Module ${idx - 1}`}
+                        : `🔒 Complete Module ${module.id - 1} to unlock`}
                     </p>
                   </div>
                   <div className="text-3xl">
-                    {idx === 0 ? "→" : "🔒"}
+                    {isCompleted ? "✓" : isUnlocked ? "→" : "🔒"}
                   </div>
                 </div>
               </Link>

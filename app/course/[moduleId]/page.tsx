@@ -1,7 +1,14 @@
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
+import { ModuleChecklist } from "@/components/ModuleChecklist";
 import { getModule, getModuleMetadata } from "@/lib/content";
+import {
+  getChecklistItems,
+  isModuleUnlocked,
+  getUserModuleProgress,
+} from "@/lib/actions/course";
+import { getUser } from "@/lib/auth";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 export async function generateStaticParams() {
   return Array.from({ length: 16 }, (_, i) => ({
@@ -31,8 +38,13 @@ export default async function LessonPage(props: LessonPageProps) {
     notFound();
   }
 
-  const module = await getModule(moduleId);
+  // Check if module is unlocked
+  const unlocked = await isModuleUnlocked(moduleId);
+  if (!unlocked) {
+    redirect("/course");
+  }
 
+  const module = await getModule(moduleId);
   if (!module) {
     notFound();
   }
@@ -40,6 +52,17 @@ export default async function LessonPage(props: LessonPageProps) {
   const meta = getModuleMetadata(moduleId);
   const prevModule = moduleId > 0 ? moduleId - 1 : null;
   const nextModule = moduleId < 15 ? moduleId + 1 : null;
+
+  // Load user data
+  const user = await getUser();
+  const checklistItems = user ? await getChecklistItems(moduleId) : [];
+  const progress = user ? await getUserModuleProgress(moduleId) : null;
+
+  // Convert checklist items to checked object
+  const checked: Record<string, boolean> = {};
+  checklistItems.forEach((item: any) => {
+    checked[item.item_key] = item.checked;
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
@@ -106,39 +129,21 @@ export default async function LessonPage(props: LessonPageProps) {
         </div>
 
         {/* Checklist */}
-        <div className="mt-12 p-6 bg-slate-800 border border-slate-700 rounded-lg">
-          <h3 className="text-lg font-bold text-white mb-4">Module Checklist</h3>
-          <div className="space-y-3">
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                className="w-5 h-5 rounded bg-slate-700 border-slate-600"
-              />
-              <span className="text-slate-300">Watched the lesson</span>
-            </label>
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                className="w-5 h-5 rounded bg-slate-700 border-slate-600"
-              />
-              <span className="text-slate-300">Completed the hands-on exercise</span>
-            </label>
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                className="w-5 h-5 rounded bg-slate-700 border-slate-600"
-              />
-              <span className="text-slate-300">Passed the quiz</span>
-            </label>
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                className="w-5 h-5 rounded bg-slate-700 border-slate-600"
-              />
-              <span className="text-slate-300">Submitted the deliverable</span>
-            </label>
+        {user ? (
+          <ModuleChecklist
+            moduleId={moduleId}
+            initialChecked={checked}
+          />
+        ) : (
+          <div className="mt-12 p-6 bg-slate-800 border border-slate-700 rounded-lg">
+            <p className="text-slate-400 text-center">
+              <Link href="/auth/sign-in" className="text-blue-400 hover:text-blue-300">
+                Sign in
+              </Link>{" "}
+              to track your progress
+            </p>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

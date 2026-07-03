@@ -1,0 +1,122 @@
+"use server";
+
+import { createClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/auth";
+import { revalidatePath } from "next/cache";
+
+export async function getUserModuleProgress(moduleId: number) {
+  const user = await getUser();
+  if (!user) return null;
+
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("module_progress")
+    .select()
+    .eq("user_id", user.id)
+    .eq("module_id", moduleId)
+    .single();
+
+  return data;
+}
+
+export async function markModuleComplete(moduleId: number) {
+  const user = await getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("module_progress")
+    .update({
+      status: "completed",
+      completed_at: new Date().toISOString(),
+    })
+    .eq("user_id", user.id)
+    .eq("module_id", moduleId);
+
+  if (error) throw error;
+
+  revalidatePath(`/course/${moduleId}`);
+  revalidatePath("/course");
+  return true;
+}
+
+export async function toggleChecklistItem(
+  moduleId: number,
+  itemKey: string,
+  checked: boolean
+) {
+  const user = await getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  const supabase = await createClient();
+
+  // Upsert the checklist item
+  const { error } = await supabase
+    .from("checklist_items")
+    .upsert(
+      {
+        user_id: user.id,
+        module_id: moduleId,
+        item_key: itemKey,
+        checked,
+      },
+      {
+        onConflict: "user_id,module_id,item_key",
+      }
+    );
+
+  if (error) throw error;
+
+  revalidatePath(`/course/${moduleId}`);
+  return true;
+}
+
+export async function getChecklistItems(moduleId: number) {
+  const user = await getUser();
+  if (!user) return [];
+
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("checklist_items")
+    .select()
+    .eq("user_id", user.id)
+    .eq("module_id", moduleId);
+
+  return data || [];
+}
+
+export async function isModuleUnlocked(moduleId: number): Promise<boolean> {
+  // Module 0 is always unlocked
+  if (moduleId === 0) return true;
+
+  const user = await getUser();
+  if (!user) return false;
+
+  const supabase = await createClient();
+
+  // Check if previous module is completed
+  const { data: prevProgress } = await supabase
+    .from("module_progress")
+    .select()
+    .eq("user_id", user.id)
+    .eq("module_id", moduleId - 1)
+    .single();
+
+  if (!prevProgress) return false;
+
+  // For now, just check if previous module is completed
+  // Later: add quiz pass + deliverable submit requirement
+  return prevProgress.status === "completed";
+}
+
+export async function getAllModuleProgress(userId: string) {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("module_progress")
+    .select()
+    .eq("user_id", userId)
+    .order("module_id");
+
+  return data || [];
+}
