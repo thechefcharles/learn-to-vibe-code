@@ -42,15 +42,20 @@ export async function submitDeliverable(
   const autoChecks: Record<string, boolean> = {};
 
   try {
-    // Validate that URL resolves to a public IP (prevent SSRF)
-    await assertPublicUrl(liveUrl);
+    // Validate that URL resolves to a public IP and get the safe IP to use
+    const safeIp = await getPublicIpForUrl(liveUrl);
 
     // Fetch with timeout and no automatic redirect following
+    // Use the resolved IP directly to prevent DNS rebinding attacks
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 5000);
 
-    const liveResponse = await fetch(liveUrl, {
+    const url = new URL(liveUrl);
+    const fetchUrl = liveUrl.replace(url.hostname, safeIp);
+
+    const liveResponse = await fetch(fetchUrl, {
       method: "HEAD",
+      headers: { Host: url.hostname }, // Preserve original hostname in Host header
       redirect: "manual",
       signal: controller.signal,
     });
@@ -119,7 +124,7 @@ function isValidUrl(url: string): boolean {
   }
 }
 
-async function assertPublicUrl(urlString: string): Promise<void> {
+async function getPublicIpForUrl(urlString: string): Promise<string> {
   const url = new URL(urlString);
 
   // Only allow http and https
@@ -127,17 +132,23 @@ async function assertPublicUrl(urlString: string): Promise<void> {
     throw new Error("URL must use http or https");
   }
 
-  // Resolve hostname to IP address
-  let address: string;
+  // Resolve hostname to ALL possible IP addresses
+  let addresses: Array<{ address: string; family: number }>;
   try {
-    const result = await lookup(url.hostname);
-    address = result.address;
+    addresses = await lookup(url.hostname, {
+      all: true,
+      verbatim: true,
+    });
   } catch {
     throw new Error("Could not resolve hostname");
   }
 
-  // Reject private/loopback/link-local/unspecified IPs
-  const isPrivate = (ip: string) => {
+  if (addresses.length === 0) {
+    throw new Error("Hostname resolved to no addresses");
+  }
+
+  // Check if address is private/loopback/link-local/unspecified
+  const isPrivateOrLoopback = (ip: string): boolean => {
     // IPv4 patterns
     if (
       /^127\./.test(ip) || // loopback 127.x.x.x
@@ -149,14 +160,32 @@ async function assertPublicUrl(urlString: string): Promise<void> {
     ) {
       return true;
     }
-    // IPv6 loopback/private patterns
-    if (/^::1$|^fc|^fd|^fe80/.test(ip)) {
+
+    // IPv6 patterns (comprehensive)
+    if (
+      /^::1$/.test(ip) || // loopback ::1
+      /^::$/.test(ip) || // unspecified ::
+      /^::0$/.test(ip) || // unspecified ::0
+      /^fc/.test(ip) || // unique local fc00::/7
+      /^fd/.test(ip) || // unique local fd00::/8
+      /^fe80/.test(ip) || // link-local fe80::/10
+      /^::ffff:/.test(ip) // IPv4-mapped IPv6
+    ) {
       return true;
     }
+
     return false;
   };
 
-  if (isPrivate(address)) {
-    throw new Error("URL must not point to a private or loopback address");
+  // Find first public address
+  const publicAddress = addresses.find(
+    (addr) => !isPrivateOrLoopback(addr.address)
+  );
+  if (!publicAddress) {
+    throw new Error(
+      "URL must not point to a private, loopback, or link-local address"
+    );
   }
+
+  return publicAddress.address;
 }
