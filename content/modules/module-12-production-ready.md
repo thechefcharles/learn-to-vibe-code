@@ -43,7 +43,7 @@ AI writes tests well — give it a function and ask for unit tests covering norm
 npm run test
 ```
 
-*[SCREENSHOT: a passing test run (green checks).]*
+![loading](/screenshots/m12/m12-01-loading.png)
 
 > **Common gotchas (build-verified):** (1) `@playwright/test` (runner) ≠ `playwright` (library) — install the right one. (2) Vitest and Playwright **double-collect** each other's specs unless you scope `include`/`testDir` — keep them in separate folders. (3) Once auth gates routes, **E2E/screenshot scripts must sign in first**, or every test hits a 302 to login. Seed a demo user and log in at the start.
 > 
@@ -56,7 +56,7 @@ Continues Objective 2. Real apps hit failures. Every data-driven screen needs th
 
 In code: wrap risky operations (DB calls, the agent workflow) in try/catch, handle the error path, never show raw errors to users. In Next.js, use error boundaries and loading files. Ask AI to "add loading, empty, and error states to this component" — then verify each triggers.
 
-*[SCREENSHOT: the clients page showing a friendly empty state and an error state.]*
+![empty](/screenshots/m12/m12-02-empty.png)
 
 ---
 
@@ -89,7 +89,7 @@ Run a quick audit (browser Lighthouse / axe) and fix the top issues. A component
 
 **Performance (Core Web Vitals)** — measure before optimizing. Watch **LCP** (load speed), **INP** (responsiveness), **CLS** (layout stability) via Lighthouse. Common wins: don't fetch everything client-side (use server components), paginate large lists, and size images. Set a simple budget and check it.
 
-*[SCREENSHOT: a Lighthouse report showing accessibility and performance scores.]*
+![error](/screenshots/m12/m12-03-error.png)
 
 > **AI caveat:** AI rarely adds a11y or thinks about performance unless you ask. Prompt for them explicitly ("make this accessible: labels, keyboard, contrast") and verify with a real audit.
 > 

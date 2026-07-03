@@ -7,7 +7,7 @@
 > Module 4 taught in-editor flow — you drive, the AI assists edit-by-edit. This module teaches the *agentic* flow — you describe a goal and an agent plans and executes across the whole repo from the terminal. Same skills (context, prompting, verification), bigger unit of work. The example advances: learners add the **invoices** feature (which depends on clients, per the Module 3 build order), still on mock data. The app gets styled in Module 6 and wired to Supabase in Module 7.
 > 
 
-> **📸 Screenshots:** Items marked *[SCREENSHOT: …]* — the Claude Code terminal is a manual capture.
+> **📸 Screenshots:** Items marked ![invoices table](/screenshots/m05/m05-01-invoices-table.png) — the Claude Code terminal is a manual capture.
 > 
 
 > **Version note (pin + concept):** Claude Code updates frequently. Teach the concepts — persistent project context, plan-before-execute, review-the-diff, permissions — so the skill survives CLI changes. Commands are current as of 2026.
@@ -34,7 +34,7 @@ cd invoice-tracker
 claude
 ```
 
-*[SCREENSHOT: the Claude Code welcome prompt in the terminal.]*
+![invoice form](/screenshots/m05/m05-02-invoice-form.png)
 
 **The mindset shift:** in Cursor you think in *edits*; in Claude Code you think in *goals*. Instead of "change this line," you say "add an invoices feature that lists and creates invoices tied to clients." The agent figures out which files to touch. Your job moves up a level: describe intent clearly, then review what it did.
 
@@ -67,7 +67,7 @@ The single most important agentic habit for beginners. Before a big change, use 
 
 **Flow:** describe the goal → agent returns a plan (files it will create/change, in order) → you check it against your intent and the Module 3 build order → approve or refine (Module 2's critique-and-refine, applied to a plan) → agent executes.
 
-*[SCREENSHOT: Claude Code in plan mode listing proposed steps before making changes.]*
+![m05 claude md](/screenshots/m05/m05-claude-md.png)
 
 > **Instructor note:** Show a plan you *reject* and refine, not just a happy path. Steering the plan is the skill.
 > 
@@ -86,7 +86,7 @@ This delivers Objective 1. Build the **invoices** feature agentically — it spa
 
 **Step 4 — Iterate** with follow-ups. The habit is unchanged: **goal → plan → execute → verify → next.**
 
-*[SCREENSHOT: the terminal showing the multi-file diff for the invoices feature.]*
+![m05 claude multifile diff](/screenshots/m05/m05-claude-multifile-diff.png)
 
 The payoff vs. Module 4: you described one feature and the agent handled the whole set of files.
 
@@ -101,7 +101,7 @@ This delivers Objective 2. Two habits:
 
 **Permissions:** Claude Code asks before sensitive actions (running commands, editing files); control the rules with `/permissions`. For beginners, keep approvals on. Useful: `/context` (see the window) and `/compact` (summarize a long session so the agent doesn't lose earlier detail — the Module 1 "lost detail" risk).
 
-*[SCREENSHOT: a Claude Code permission prompt.]*
+![m05 claude permission](/screenshots/m05/m05-claude-permission.png)
 
 ---
 

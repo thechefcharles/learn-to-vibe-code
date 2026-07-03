@@ -7,7 +7,7 @@
 > Setup friction is where beginners quietly give up. This module installs and *verifies* every account and tool once, up front, so no later lesson stalls on "it won't install." It also gives learners the map of the whole stack before they touch any of it.
 > 
 
-> **📸 Screenshots:** Items marked *[SCREENSHOT: …]* are placeholders — capture them live when recording (install screens, dashboards, the hello-world app running).
+> **📸 Screenshots:** Items marked ![nextjs starter](/screenshots/m00/m00-01-nextjs-starter.png) are placeholders — capture them live when recording (install screens, dashboards, the hello-world app running).
 > 
 
 ## Learning objectives
@@ -53,7 +53,7 @@ npm --version
 claude --version
 ```
 
-*[SCREENSHOT: a terminal showing successful node, npm, and claude version checks.]*
+![m00 cursor welcome](/screenshots/m00/m00-cursor-welcome.png)
 
 > **Instructor note:** Do these live and slowly — version/PATH issues are the most common blocker.
 > 
@@ -68,7 +68,7 @@ Sign up for all three now so nothing blocks you later. Use the same email for co
 - **Supabase** — [supabase.com](http://supabase.com) (you'll create a project in Module 7).
 - **Vercel** — [vercel.com](http://vercel.com), and connect it to your GitHub account (this link enables auto-deploy in Module 10).
 
-*[SCREENSHOT: the Vercel sign-up connecting to a GitHub account.]*
+![m00 terminal versions](/screenshots/m00/m00-terminal-versions.png)
 
 ---
 

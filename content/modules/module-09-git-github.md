@@ -62,7 +62,7 @@ git remote add origin https://github.com/YOU/invoice-tracker.git
 git push -u origin main
 ```
 
-*[SCREENSHOT: the GitHub repository page showing the pushed code.]*
+![github repo](/screenshots/m09/m09-01-github-repo.png)
 
 Commit small, logical chunks with clear messages ("Add invoice status filter," not "stuff"). Good history is a capstone rubric criterion.
 
@@ -80,7 +80,7 @@ git push -u origin add-invoice-filter
 
 On GitHub, open a PR from that branch into `main`. The PR shows the diff, lets you (or a teammate) review, and merges when approved. This is where Vercel posts preview deploys (Module 10).
 
-*[SCREENSHOT: a GitHub pull request showing the diff and merge button.]*
+![pr diff](/screenshots/m09/m09-02-pr-diff.png)
 
 **Why branches + PRs even solo:** `main` stays working, each change is isolated and reviewable, and you build the exact habit employers expect.
 
@@ -102,7 +102,7 @@ Resolve by editing to the version you want and removing the marker lines, then c
 
 **Collaboration basics:** pull others' changes before starting (`git pull`), work on your own branch, open a PR, resolve conflicts if they arise.
 
-*[SCREENSHOT: a merge conflict shown in the editor with markers.]*
+![m09 merge conflict](/screenshots/m09/m09-merge-conflict.png)
 
 ---
 

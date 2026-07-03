@@ -40,7 +40,7 @@ This begins Objective 1.
 
 **Step 1 — Create a Supabase project** at [supabase.com](http://supabase.com). Copy your project URL and **publishable key** from API settings.
 
-*[SCREENSHOT: the Supabase dashboard API settings.]*
+![signed out](/screenshots/m07/m07-01-signed-out.png)
 
 **Step 2 — Store them in `.env.local`** (never hard-code keys — previews Module 10's env handling):
 
@@ -96,7 +96,7 @@ create table invoices (
 
 Note `user_id ... default auth.uid()` so inserts populate ownership automatically. The relationships mirror the Module 3 build order.
 
-*[SCREENSHOT: the two tables in the Supabase Table Editor.]*
+![signed in clients](/screenshots/m07/m07-02-signed-in-clients.png)
 
 ---
 
@@ -139,7 +139,7 @@ async function signIn(email: string, password: string) {
 
 Once signed in, Supabase stores the session in a cookie (why `@supabase/ssr` matters) and every request carries *who* is making it. That identity is the key to the next lesson.
 
-*[SCREENSHOT: the Supabase Auth users list after a test signup.]*
+![m07 supabase api keys](/screenshots/m07/m07-supabase-api-keys.png)
 
 ---
 
@@ -161,7 +161,7 @@ create policy "users manage own clients"
 > **Watch-out:** an AI will happily write app code that forgets RLS. Confirm it's enabled and test with two accounts — log in as A, then B, and verify they can't see each other's data.
 > 
 
-*[SCREENSHOT: an RLS policy on the clients table.]*
+![m07 supabase auth users](/screenshots/m07/m07-supabase-auth-users.png)
 
 ---
 

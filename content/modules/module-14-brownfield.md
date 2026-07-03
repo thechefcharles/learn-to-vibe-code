@@ -10,7 +10,7 @@
 > **📦 Practice repo:** this module uses a purpose-built, deliberately-messy repo — **`brownfield-practice-repo/`** (a small Next.js + TypeScript "Reading List" with a seeded bug and a feature ticket). See its `README.md` and `TICKET.md`. Because brownfield needs an *unfamiliar* codebase, learners practice here, not on the invoice-tracker.
 > 
 
-> **📸 Screenshots:** Items marked *[SCREENSHOT: …]* are manual (terminal/editor views of a real repo).
+> **📸 Screenshots:** Items marked ![m14 architecture summary](/screenshots/m14/m14-architecture-summary.png) are manual (terminal/editor views of a real repo).
 > 
 
 ## Learning objectives

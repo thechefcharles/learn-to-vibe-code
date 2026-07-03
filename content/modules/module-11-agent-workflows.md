@@ -7,7 +7,7 @@
 > Important distinction up front: Module 5 was **using an agent to build your app**. This module is **building an agent workflow as a feature** — software that uses an LLM plus tools to automate a real, multi-step task on its own. This is where "AI app developer" becomes "AI automation engineer." The running example: an assistant that drafts reminder emails for overdue invoices, with a human approving before anything sends.
 > 
 
-> **📸 Screenshots:** Items marked *[SCREENSHOT: …]* — the approval-queue UI is auto-capturable; a live workflow run is manual.
+> **📸 Screenshots:** Items marked ![approval queue](/screenshots/m11/m11-01-approval-queue.png) — the approval-queue UI is auto-capturable; a live workflow run is manual.
 > 
 
 ## Learning objectives

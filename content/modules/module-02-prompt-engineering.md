@@ -7,7 +7,7 @@
 > Module 1 taught *why* context matters. This module teaches the skill of supplying it. Prompt engineering is the highest-leverage beginner skill in the course — prompt well and you get correct code on the first pass; prompt poorly and you fight the tool all day. Everything from Module 4 on assumes this.
 > 
 
-> **📸 Screenshots:** Items marked *[SCREENSHOT: …]* are placeholders — capture from a live AI session (manual).
+> **📸 Screenshots:** Items marked ![m02 image prompt](/screenshots/m02/m02-image-prompt.png) are placeholders — capture from a live AI session (manual).
 > 
 
 ## Learning objectives
@@ -51,7 +51,7 @@ The strong prompt isn't longer for its own sake — every clause removes a wrong
 > **Instructor demo:** Run the weak and strong prompts live, side by side. The output gap sells the lesson in two minutes.
 > 
 
-*[SCREENSHOT: side-by-side outputs from the weak "make a login form" prompt vs. the strong five-ingredient prompt.]*
+![m02 mockup source](/screenshots/m02/m02-mockup-source.png)
 
 ---
 
@@ -87,7 +87,7 @@ This delivers Objective 3. The first response is rarely perfect — that's norma
 
 Also teach *when to stop and re-scope*: if three rounds haven't converged, the prompt was under-specified or the task too big — go back to decomposition (Lesson 2.3) instead of piling on patches.
 
-*[SCREENSHOT: a refinement exchange — the flawed first output, a specific feedback prompt, and the corrected result.]*
+![m02 refinement](/screenshots/m02/m02-refinement.png)
 
 ---
 
@@ -120,7 +120,7 @@ This delivers Objective 4 and unlocks a faster path than describing everything i
 > **Aside — voice / dictation:** you can also *speak* your prompts. Built-in dictation (macOS) or a tool like Whisper turns talk into text — handy for long, exploratory prompts where typing is the bottleneck. Same prompt-engineering rules apply; you're just inputting faster.
 > 
 
-*[SCREENSHOT: a mockup pasted into Claude Code/Cursor next to the generated UI.]*
+![m02 weak vs strong 1 weak](/screenshots/m02/m02-weak-vs-strong-1-weak.png)
 
 ---
 
