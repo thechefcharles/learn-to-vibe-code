@@ -38,13 +38,20 @@ export async function signUp(
 ) {
   const supabase = await createClient();
 
+  console.log("[signUp] Starting signup for", email);
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
   });
 
-  if (error) throw error;
+  if (error) {
+    console.error("[signUp] Auth error:", error);
+    throw error;
+  }
   if (!data.user) throw new Error("Failed to create user");
+
+  console.log("[signUp] User created:", data.user.id);
 
   // Create profile — role is always "learner" for sign-ups
   const { error: profileError } = await supabase.from("profiles").insert({
@@ -54,7 +61,12 @@ export async function signUp(
     role: "learner",
   });
 
-  if (profileError) throw profileError;
+  if (profileError) {
+    console.error("[signUp] Profile insert error:", profileError);
+    throw profileError;
+  }
+
+  console.log("[signUp] Profile created");
 
   // Create enrollment (always for learners)
   const { error: enrollmentError } = await supabase
@@ -63,7 +75,12 @@ export async function signUp(
       user_id: data.user.id,
     });
 
-  if (enrollmentError) throw enrollmentError;
+  if (enrollmentError) {
+    console.error("[signUp] Enrollment insert error:", enrollmentError);
+    throw enrollmentError;
+  }
+
+  console.log("[signUp] Enrollment created");
 
   // Initialize XP and streaks
   await supabase.from("xp").insert({
@@ -77,6 +94,8 @@ export async function signUp(
     current: 0,
     longest: 0,
   });
+
+  console.log("[signUp] XP and streaks initialized");
 
   return data;
 }

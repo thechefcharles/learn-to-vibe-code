@@ -25,8 +25,8 @@ export async function signUpAction(
     await supabaseSignUp(email, password, name);
     return {};
   } catch (error) {
-    return {
-      error: error instanceof Error ? error.message : "Sign up failed",
-    };
+    const message = error instanceof Error ? error.message : "Sign up failed";
+    console.error("[signUpAction] Error:", message, error);
+    return { error: message };
   }
 }
