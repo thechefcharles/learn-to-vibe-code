@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { toggleChecklistItem, markModuleComplete } from "@/lib/actions/course";
+import { hasPassedQuiz } from "@/lib/actions/quiz";
+import Link from "next/link";
 
 interface ChecklistItem {
   key: string;
@@ -14,10 +16,13 @@ interface ModuleChecklistProps {
   onComplete?: () => void;
 }
 
-const CHECKLIST_ITEMS: ChecklistItem[] = [
+const getChecklistItems = (moduleId: number, quizPassed: boolean): ChecklistItem[] => [
   { key: "watched", label: "Watched the lesson" },
   { key: "exercise", label: "Completed the hands-on exercise" },
-  { key: "quiz", label: "Passed the quiz" },
+  {
+    key: "quiz",
+    label: quizPassed ? "✓ Passed the quiz" : "Take the quiz"
+  },
   { key: "deliverable", label: "Submitted the deliverable" },
 ];
 
@@ -29,6 +34,11 @@ export function ModuleChecklist({
   const [checked, setChecked] = useState(initialChecked);
   const [saving, setSaving] = useState(false);
   const [completed, setCompleted] = useState(false);
+  const [quizPassed, setQuizPassed] = useState(false);
+
+  useEffect(() => {
+    hasPassedQuiz(moduleId).then(setQuizPassed);
+  }, [moduleId]);
 
   const checkCount = Object.values(checked).filter(Boolean).length;
   const isComplete = checkCount === CHECKLIST_ITEMS.length;
@@ -70,17 +80,29 @@ export function ModuleChecklist({
       <h3 className="text-lg font-bold text-white mb-4">Module Checklist</h3>
 
       <div className="space-y-3 mb-6">
-        {CHECKLIST_ITEMS.map((item) => (
-          <label key={item.key} className="flex items-center gap-3 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={checked[item.key] || false}
-              onChange={() => handleToggle(item.key)}
-              disabled={saving}
-              className="w-5 h-5 rounded bg-slate-700 border-slate-600 cursor-pointer"
-            />
-            <span className="text-slate-300">{item.label}</span>
-          </label>
+        {getChecklistItems(moduleId, quizPassed).map((item) => (
+          <div key={item.key}>
+            {item.key === "quiz" && !quizPassed ? (
+              <Link
+                href={`/course/${moduleId}/quiz`}
+                className="flex items-center gap-3 p-3 rounded-lg bg-blue-600/10 hover:bg-blue-600/20 border border-blue-500 text-blue-400 transition"
+              >
+                <span>→</span>
+                <span>{item.label}</span>
+              </Link>
+            ) : (
+              <label className="flex items-center gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={checked[item.key] || false}
+                  onChange={() => handleToggle(item.key)}
+                  disabled={saving}
+                  className="w-5 h-5 rounded bg-slate-700 border-slate-600 cursor-pointer"
+                />
+                <span className="text-slate-300">{item.label}</span>
+              </label>
+            )}
+          </div>
         ))}
       </div>
 
