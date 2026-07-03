@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getUserXP, getUserBadges, getUserStreak } from "@/lib/actions/gamification";
 import { getAllModuleProgress } from "@/lib/actions/course";
+import { signOutAction } from "@/lib/actions/auth";
 
 export default async function DashboardPage() {
   const user = await getUser();
@@ -25,9 +26,19 @@ export default async function DashboardPage() {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-5xl font-bold text-white mb-2">Dashboard</h1>
-          <p className="text-slate-400">Welcome back, {user.user_metadata?.name || user.email}! 👋</p>
+        <div className="mb-12 flex justify-between items-start">
+          <div>
+            <h1 className="text-5xl font-bold text-white mb-2">Dashboard</h1>
+            <p className="text-slate-400">Welcome back, {user.user_metadata?.name || user.email}! 👋</p>
+          </div>
+          <form action={signOutAction}>
+            <button
+              type="submit"
+              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition"
+            >
+              Sign Out
+            </button>
+          </form>
         </div>
 
         {/* Stats Grid */}
