@@ -55,7 +55,7 @@ This begins Objective 2. Beginners paste code at the AI and say "fix it." The be
 
 A stack trace reads top-down: the top line is usually *what* went wrong, and the file:line tells you *where*. Extract those two facts first.
 
-![error overlay](/screenshots/m08/m08-01-error-overlay.png)
+*[SCREENSHOT: a Next.js error overlay with the message and file:line highlighted.]*
 
 ---
 
@@ -81,7 +81,7 @@ This delivers Objective 3. AI is excellent at debugging — *if* you give it con
 
 **Multimodal tip (Module 2):** you can also *paste a screenshot* of the broken screen or the error overlay — the AI reads the visual directly, which is often faster than describing what's wrong.
 
-![m08 debugging chat](/screenshots/m08/m08-debugging-chat.png)
+*[SCREENSHOT: a debugging chat where the pasted error + @-mentioned file yields a root-cause explanation.]*
 
 ---
 

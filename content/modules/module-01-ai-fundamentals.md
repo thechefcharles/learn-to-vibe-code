@@ -7,7 +7,7 @@
 > This module builds the mental model everything else rests on. Learners who skip "how the model actually works" over-trust AI output later and get stuck. The goal isn't to code yet — it's to understand the tool well enough to use it wisely.
 > 
 
-> **📸 Screenshots:** Items marked ![m01 hallucination](/screenshots/m01/m01-hallucination.png) are placeholders — capture from a live AI session (these are genuinely manual).
+> **📸 Screenshots:** Items marked *[SCREENSHOT: …]* are placeholders — capture from a live AI session (these are genuinely manual).
 > 
 
 ## Learning objectives
@@ -64,7 +64,7 @@ Two consequences fall out of this mechanism:
 > **Instructor demo:** Run the same request twice and show the two outputs; then add one line of context ("we're using TypeScript") and show how the answer changes. Makes "context is everything" concrete in three minutes.
 > 
 
-![m01 same prompt twice](/screenshots/m01/m01-same-prompt-twice.png)
+*[SCREENSHOT: the same prompt run twice showing two outputs, then the changed output after adding the TypeScript context line.]*
 
 ---
 

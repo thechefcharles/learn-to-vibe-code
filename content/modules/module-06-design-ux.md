@@ -31,7 +31,7 @@ Show the tells: default system fonts, everything the same size and weight, no br
 > **Aside — developing taste:** the fastest way to get a designer's eye is to study products you admire (Linear, Stripe, Notion) and notice their restraint: generous spacing, few font sizes, a tiny color palette. Copy the *principles*, not the pixels.
 > 
 
-![clients styled](/screenshots/m06/m06-01-clients-styled.png)
+*[SCREENSHOT: the plain invoice-tracker /clients page from Module 4 — the "before."]*
 
 ---
 
@@ -60,7 +60,7 @@ npx shadcn@latest add button input table card
 
 Why a library beats hand-styling for beginners: consistency for free, accessibility built in (previews Module 12), a professional baseline you can theme, and it drops real code into your repo — so it pairs with Cursor/Claude Code editing. (Theming/dark mode is a natural next step shadcn supports.)
 
-![clients mobile](/screenshots/m06/m06-02-clients-mobile.png)
+*[SCREENSHOT: shadcn/ui components rendered in the invoice tracker.]*
 
 ---
 
@@ -72,7 +72,7 @@ Do it AI-assisted but *directed*: give Cursor/Claude Code the design direction f
 
 **Tip (multimodal, Module 2):** paste a screenshot of a design you like (or a competitor's UI) and ask the AI to match it — a picture guides the styling far better than words.
 
-![invoices mobile](/screenshots/m06/m06-03-invoices-mobile.png)
+*[SCREENSHOT: the restyled /clients page — the "after," side by side with the before.]*
 
 ---
 
@@ -89,7 +89,7 @@ The essentials:
 
 Test by resizing the browser or using DevTools device mode at ~375px. And **prompt for it explicitly**: "make this responsive — stack columns on mobile, readable tap targets, no horizontal scroll," because the AI usually won't unless asked. shadcn/Tailwind make this straightforward.
 
-![m06 claude design home](/screenshots/m06/m06-claude-design-home.png)
+*[SCREENSHOT: the app at ~375px (mobile) beside the desktop view.]*
 
 ---
 
@@ -122,7 +122,7 @@ Both end in the same place — a styled, real app; a design-first tool just lets
 > **Version note:** Claude Design is in beta and moving fast; features (design-system import, Claude Code hand-off, exports) evolve — check current docs.
 > 
 
-![m06 claude design prototype](/screenshots/m06/m06-claude-design-prototype.png)
+*[SCREENSHOT: the Claude Design home ("What will you design today?") and a generated prototype.]*
 
 ---
 

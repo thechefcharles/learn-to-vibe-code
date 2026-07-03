@@ -7,7 +7,7 @@
 > The "AI automation engineer" module. So far learners *used* Claude Code to write code. Here they turn it into an operator that can commit, open PRs, run migrations, deploy, and read logs to debug — all from the terminal, with guardrails. The highest-leverage setup in the course and the clearest differentiator for a graduate.
 > 
 
-> **📸 Screenshots:** Items marked ![automated pr deploy](/screenshots/m13/m13-01-automated-pr-deploy.png) — MCP list, plugin install, and terminal shots are manual; an automated PR/deploy is auto-capturable.
+> **📸 Screenshots:** Items marked *[SCREENSHOT: …]* — MCP list, plugin install, and terminal shots are manual; an automated PR/deploy is auto-capturable.
 > 
 
 > **⚡ Version note:** the fastest-moving area in the course. Teach the *concepts and setup pattern*; point learners to current docs for exact syntax. Commands are representative as of 2026.
@@ -62,7 +62,7 @@ Confirm with `claude mcp list`.
 
 **Notion as your project's source of truth:** after connecting Notion (run `/mcp` for the OAuth flow, then share the pages you want Claude to access), Claude Code can **read a feature checklist, tick items off as it ships them, and write specs/decisions back** — so your plan (Module 3) and your automation live in one place. Great for a solo builder keeping a living TODO the agent actually maintains.
 
-![m13 mcp list](/screenshots/m13/m13-mcp-list.png)
+*[SCREENSHOT: `claude mcp list` showing supabase, github, and vercel connected.]*
 
 **MCP vs. CLI — both matter:** MCP for interactive read/act (inspect a schema, check a deploy, comment on a PR); the matching **CLIs** (`gh`, `supabase`, `vercel`) for versioned, scripted operations, which Claude Code runs via its shell. Rule: **MCP for current-state, CLI for migrations/history.** Teach both; they're complementary.
 
@@ -126,7 +126,7 @@ Completes Objective 2. A **plugin** packages skills + MCP + subagents + commands
 
 You can also *author* a plugin (a repo with a `.claude-plugin/marketplace.json` manifest) to standardize your team's setup — everyone installs one plugin and gets the same skills, subagents, and MCP config. The endgame: your automated pipeline, packaged.
 
-![m13 notion checklist](/screenshots/m13/m13-notion-checklist.png)
+*[SCREENSHOT: `/plugin install` adding a plugin.]*
 
 ---
 
@@ -143,7 +143,7 @@ Delivers Objective 3 — the payoff. Have Claude Code take a feature from idea t
 5. **Deploy** — merge triggers the Vercel deploy (Module 10); Claude monitors build status via the Vercel MCP.
 6. **Debug** — if it fails, Claude reads Vercel/Supabase logs via MCP and loops — the Module 8 debugging loop, automated.
 
-![m13 plugin install](/screenshots/m13/m13-plugin-install.png)
+*[SCREENSHOT: Claude Code opening a PR and reporting a successful deploy from the terminal.]*
 
 One instruction, a full pipeline — but you stayed in control at the migration and merge gates. That balance is the whole skill.
 

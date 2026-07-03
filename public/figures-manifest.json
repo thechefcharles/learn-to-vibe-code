@@ -1,0 +1,212 @@
+{
+  "screenshots": {
+    "m00-nextjs-starter": {
+      "path": "/figures/m00/m00-01-nextjs-starter.png",
+      "alt": "Next.js starter page running at localhost:3000"
+    },
+    "m00-cursor-welcome": {
+      "path": "/figures/m00/m00-cursor-welcome.png",
+      "alt": "Cursor welcome screen after sign-in"
+    },
+    "m00-terminal-versions": {
+      "path": "/figures/m00/m00-terminal-versions.png",
+      "alt": "Terminal showing node, npm, and claude version checks"
+    },
+    "m01-same-prompt-twice": {
+      "path": "/figures/m01/m01-same-prompt-twice.png",
+      "alt": "Same prompt run twice showing two different outputs"
+    },
+    "m01-hallucination": {
+      "path": "/figures/m01/m01-hallucination.png",
+      "alt": "AI confidently calling a made-up library function"
+    },
+    "m02-weak-vs-strong": {
+      "path": "/figures/m02/m02-weak-vs-strong-1-weak.png",
+      "alt": "Weak prompt output side-by-side with strong prompt output"
+    },
+    "m02-refinement": {
+      "path": "/figures/m02/m02-refinement.png",
+      "alt": "Refinement exchange showing flawed first output and corrected result"
+    },
+    "m02-mockup-source": {
+      "path": "/figures/m02/m02-mockup-source.png",
+      "alt": "Mockup pasted into Claude Code with generated UI output"
+    },
+    "m04-clients-table": {
+      "path": "/figures/m04/m04-01-clients-table.png",
+      "alt": "Clients page rendering the client table"
+    },
+    "m04-create-form": {
+      "path": "/figures/m04/m04-02-create-form.png",
+      "alt": "Create client form page"
+    },
+    "m04-cursor-cmdk": {
+      "path": "/figures/m04/m04-cursor-cmdk-diff.png",
+      "alt": "Cursor Cmd+K inline-edit box showing accept/reject diff"
+    },
+    "m04-cursor-at-mention": {
+      "path": "/figures/m04/m04-cursor-at-mention.png",
+      "alt": "@-mention menu open in Cursor chat panel"
+    },
+    "m04-cursor-composer": {
+      "path": "/figures/m04/m04-cursor-composer-diff.png",
+      "alt": "Cursor Composer unified diff spanning multiple files"
+    },
+    "m05-invoices-table": {
+      "path": "/figures/m05/m05-01-invoices-table.png",
+      "alt": "Invoices list page"
+    },
+    "m05-invoice-form": {
+      "path": "/figures/m05/m05-02-invoice-form.png",
+      "alt": "Create invoice form"
+    },
+    "m05-claude-welcome": {
+      "path": "/figures/m05/m05-claude-welcome.png",
+      "alt": "Claude Code welcome prompt in the terminal"
+    },
+    "m05-claude-md": {
+      "path": "/figures/m05/m05-claude-md.png",
+      "alt": "CLAUDE.md file showing project conventions"
+    },
+    "m05-claude-plan-mode": {
+      "path": "/figures/m05/m05-claude-plan-mode.png",
+      "alt": "Claude Code in plan mode listing proposed steps"
+    },
+    "m05-claude-multifile": {
+      "path": "/figures/m05/m05-claude-multifile-diff.png",
+      "alt": "Terminal showing multi-file diff for invoices feature"
+    },
+    "m05-claude-permission": {
+      "path": "/figures/m05/m05-claude-permission.png",
+      "alt": "Claude Code permission prompt for executing operations"
+    },
+    "m06-clients-styled": {
+      "path": "/figures/m06/m06-01-clients-styled.png",
+      "alt": "Restyled clients page with design improvements"
+    },
+    "m06-clients-mobile": {
+      "path": "/figures/m06/m06-02-clients-mobile.png",
+      "alt": "Clients page at mobile breakpoint (375px)"
+    },
+    "m06-invoices-mobile": {
+      "path": "/figures/m06/m06-03-invoices-mobile.png",
+      "alt": "Invoices page at mobile breakpoint"
+    },
+    "m06-claude-design-home": {
+      "path": "/figures/m06/m06-claude-design-home.png",
+      "alt": "Claude Design home screen"
+    },
+    "m06-claude-design-prototype": {
+      "path": "/figures/m06/m06-claude-design-prototype.png",
+      "alt": "Claude Design generated prototype"
+    },
+    "m07-signed-out": {
+      "path": "/figures/m07/m07-01-signed-out.png",
+      "alt": "App sign-out state showing login prompt"
+    },
+    "m07-signed-in": {
+      "path": "/figures/m07/m07-02-signed-in-clients.png",
+      "alt": "App signed-in state with client data visible"
+    },
+    "m07-supabase-api-keys": {
+      "path": "/figures/m07/m07-supabase-api-keys.png",
+      "alt": "Supabase dashboard showing API keys"
+    },
+    "m07-supabase-table-editor": {
+      "path": "/figures/m07/m07-supabase-table-editor.png",
+      "alt": "Supabase Table Editor for database schema"
+    },
+    "m07-supabase-auth-users": {
+      "path": "/figures/m07/m07-supabase-auth-users.png",
+      "alt": "Supabase Auth users list"
+    },
+    "m07-supabase-rls-policy": {
+      "path": "/figures/m07/m07-supabase-rls-policy.png",
+      "alt": "Supabase RLS policy editor"
+    },
+    "m08-error-overlay": {
+      "path": "/figures/m08/m08-01-error-overlay.png",
+      "alt": "Next.js error overlay with message and file:line highlighted"
+    },
+    "m08-debugging-chat": {
+      "path": "/figures/m08/m08-debugging-chat.png",
+      "alt": "Debugging chat where error and code yield root-cause explanation"
+    },
+    "m09-github-repo": {
+      "path": "/figures/m09/m09-01-github-repo.png",
+      "alt": "GitHub repository page"
+    },
+    "m09-pr-diff": {
+      "path": "/figures/m09/m09-02-pr-diff.png",
+      "alt": "GitHub pull request diff view"
+    },
+    "m10-live-clients": {
+      "path": "/figures/m10/m10-01-live-clients.png",
+      "alt": "App deployed to production on Vercel"
+    },
+    "m10-vercel-import": {
+      "path": "/figures/m10/m10-vercel-import.png",
+      "alt": "Vercel import repository screen"
+    },
+    "m10-vercel-env": {
+      "path": "/figures/m10/m10-vercel-env.png",
+      "alt": "Vercel environment variables configuration"
+    },
+    "m10-vercel-deployments": {
+      "path": "/figures/m10/m10-vercel-deployments.png",
+      "alt": "Vercel deployments history"
+    },
+    "m10-vercel-preview-link": {
+      "path": "/figures/m10/m10-vercel-preview-link.png",
+      "alt": "Vercel preview link for pull request"
+    },
+    "m10-supabase-prod-auth": {
+      "path": "/figures/m10/m10-supabase-prod-auth-urls.png",
+      "alt": "Supabase Auth configuration with production URLs"
+    },
+    "m11-approval-queue": {
+      "path": "/figures/m11/m11-01-approval-queue.png",
+      "alt": "Approval queue UI showing AI-drafted reminders"
+    },
+    "m12-loading": {
+      "path": "/figures/m12/m12-01-loading.png",
+      "alt": "Loading state variant of clients page"
+    },
+    "m12-empty": {
+      "path": "/figures/m12/m12-02-empty.png",
+      "alt": "Empty state variant of clients page"
+    },
+    "m12-error": {
+      "path": "/figures/m12/m12-03-error.png",
+      "alt": "Error state variant of clients page"
+    },
+    "m12-lighthouse": {
+      "path": "/figures/m12/m12-lighthouse.png",
+      "alt": "Lighthouse performance and accessibility report"
+    },
+    "m13-automated-pr-deploy": {
+      "path": "/figures/m13/m13-01-automated-pr-deploy.png",
+      "alt": "Automated PR and deploy pipeline"
+    },
+    "m13-mcp-list": {
+      "path": "/figures/m13/m13-mcp-list.png",
+      "alt": "Claude mcp list output showing connected providers"
+    },
+    "m13-skill-install": {
+      "path": "/figures/m13/m13-skill-install.png",
+      "alt": "SKILL.md file and skill installation from GitHub"
+    },
+    "m13-plugin-install": {
+      "path": "/figures/m13/m13-plugin-install.png",
+      "alt": "/plugin install adding a plugin to Claude Code"
+    },
+    "m13-notion-checklist": {
+      "path": "/figures/m13/m13-notion-checklist.png",
+      "alt": "Notion feature-checklist page"
+    },
+    "m14-architecture-summary": {
+      "path": "/figures/m14/m14-architecture-summary.png",
+      "alt": "AI-generated architecture summary with file tree"
+    }
+  }
+}

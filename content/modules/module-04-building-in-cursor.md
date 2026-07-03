@@ -7,7 +7,7 @@
 > The first hands-on build module and the workhorse of the course. Learners install real tools and ship a real feature. The running example is the **invoice tracker** planned in Module 3; here we build the first slice — managing clients — as UI only, on mock data. The app gets styled in Module 6 and wired to a real database in Module 7, so this module stays focused on the editor workflow.
 > 
 
-> **📸 Screenshots:** Items marked ![clients table](/screenshots/m04/m04-01-clients-table.png) — capture from a live Cursor session (Cursor's own desktop UI is manual; the rendered app pages are auto-capturable from the reference app).
+> **📸 Screenshots:** Items marked *[SCREENSHOT: …]* — capture from a live Cursor session (Cursor's own desktop UI is manual; the rendered app pages are auto-capturable from the reference app).
 > 
 
 > **Version note (pin + concept):** shortcuts are current as of 2026 (Mac; use Ctrl on Windows/Linux), and the reference build uses **Next.js 16** — where `searchParams`/`params` are **async** in server components (you `await` them) and route groups like `(dashboard)` organize shared layout. Cursor and Next both move fast; pin your versions, learn the concepts, check the docs.
@@ -56,7 +56,7 @@ npm run dev
 
 **Mental model:** Tab for keystrokes, Cmd+K for a block, Chat for thinking, Composer for a whole feature.
 
-![create form](/screenshots/m04/m04-02-create-form.png)
+*[SCREENSHOT: the Cmd+K inline-edit box showing an accept/reject diff.]*
 
 ---
 
@@ -74,7 +74,7 @@ Use server components by default; only "use client" when needed.
 Keep components small and typed.
 ```
 
-![m04 cursor agent mode](/screenshots/m04/m04-cursor-agent-mode.png)
+*[SCREENSHOT: the @-mention menu open in the chat panel.]*
 
 > **Cross-tool note ([AGENTS.md](http://AGENTS.md)):** `.cursorrules` is Cursor's file; there's also an emerging vendor-neutral convention, **`AGENTS.md`**, that many AI tools read (create-next-app now scaffolds one). Same idea, different filename per tool. You'll meet Claude Code's counterpart, `CLAUDE.md`, in Module 5.
 > 
@@ -97,7 +97,7 @@ export type Client = { id: string; name: string; email: string };
 
 At each step: read the generated code, run it, use Cmd+K to fix anything off. You are the engineer (Module 1).
 
-![m04 cursor at mention](/screenshots/m04/m04-cursor-at-mention.png)
+*[SCREENSHOT: the /clients page rendering the client table.]*
 
 ---
 
@@ -107,7 +107,7 @@ This delivers Objective 2. Real features touch multiple files. Composer (Cmd+I) 
 
 **Worked example:** "Add a nav link to `/clients` in the site header, create the header component if it doesn't exist, and include it in the root layout." Add `@` context (e.g. `@app/layout.tsx`). **Step through the diff file by file** and accept deliberately — never blind-accept.
 
-![m04 cursor cmdk diff](/screenshots/m04/m04-cursor-cmdk-diff.png)
+*[SCREENSHOT: the Composer unified diff spanning multiple files.]*
 
 **When to use which:** Cmd+K for one block, Composer for a change spanning files.
 

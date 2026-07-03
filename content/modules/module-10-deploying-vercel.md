@@ -34,7 +34,7 @@ Begins Objective 1.
 
 **Step 2 — Import your repo.** Vercel detects Next.js and configures the build — no config files (why Next.js + Vercel is the default).
 
-![live clients](/screenshots/m10/m10-01-live-clients.png)
+*[SCREENSHOT: the Vercel "Import Project" screen detecting the repo.]*
 
 **Step 3 — Deploy.** In a minute or two you get a live URL. The build succeeds but the app won't fully work yet — no database keys in production. Deliberate teaching moment: **your local `.env.local` did not go to Vercel** (gitignored in Module 9), so production has no secrets until you add them.
 
@@ -54,7 +54,7 @@ Then redeploy. Principle: **secrets live in the platform, never in the repo.** S
 > **Build-verified note:** `NEXT_PUBLIC_*` variables are **inlined at build time**, so they must exist in Vercel *before* the deploy that uses them — add them first, then trigger a fresh deploy, or the built app breaks in production with no error locally.
 > 
 
-![m10 supabase prod auth urls](/screenshots/m10/m10-supabase-prod-auth-urls.png)
+*[SCREENSHOT: the Vercel Environment Variables settings with the Supabase keys added.]*
 
 ---
 
@@ -67,7 +67,7 @@ Completes the CI/CD half of Objectives 1–2 and pays off Module 9's branch/PR h
 3. Test the preview; merge when good.
 4. Merge to `main` → Vercel deploys to **production** automatically.
 
-![m10 vercel deployments](/screenshots/m10/m10-vercel-deployments.png)
+*[SCREENSHOT: a GitHub PR with the Vercel preview-deployment link.]*
 
 You never test experiments in production, and every change is verifiable in a real environment first — the Module 1 verification principle at deployment scale.
 
@@ -81,7 +81,7 @@ Completes Objective 2. Two things turn the deploy into a real product:
 
 **Production auth config (the step beginners miss)** — Supabase Auth needs your production URL or logins/redirects fail on the live site even though they worked locally. In the Supabase dashboard, set the **Site URL** and add your domain to the **redirect URLs**. A classic "works on [localhost](http://localhost), breaks in prod" trap.
 
-![m10 vercel env](/screenshots/m10/m10-vercel-env.png)
+*[SCREENSHOT: the Supabase Auth URL configuration with the production Site URL and redirect URLs.]*
 
 > **Beyond the basics (awareness — not required for the capstone):** as a project grows you'll meet a few more Vercel features. (1) **Per-environment env vars** — Vercel scopes variables to Production / Preview / Development separately, so preview deploys can point at a *separate* Supabase project instead of touching real data. (2) **Instant rollback** — the Deployments list can promote a previous build back to production in one click when a deploy breaks. (3) **Staging branch → its own domain** — map a long-lived branch (e.g. `staging`) to a fixed URL for a stable pre-prod environment. (4) **Preview protection** — password-protect or auth-gate preview URLs so they aren't public. You don't need these to pass — just know they exist for when an app outgrows one-env-one-database.
 > 
