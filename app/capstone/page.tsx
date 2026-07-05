@@ -99,32 +99,16 @@ export default async function CapstonePage() {
             </div>
 
             {/* Status Badge */}
-            <div className="flex items-center gap-3 p-4 bg-slate-700 rounded-lg mb-6">
-              <div className="flex-1">
-                <p className="text-sm text-slate-400">Status</p>
-                <p className="font-bold text-white capitalize">
-                  {submission.status === "pending" && "⏳ Pending Review"}
-                  {submission.status === "in_review" && "👀 Under Review"}
-                  {submission.status === "approved" && "✅ Approved"}
-                  {submission.status === "rejected" && "❌ Needs Revision"}
-                </p>
-              </div>
-            </div>
-
-            {/* Feedback */}
-            {submission.instructor_feedback && (
-              <div className="bg-slate-700 rounded-lg p-4 mb-6">
-                <p className="text-sm text-slate-400 mb-2">Instructor Feedback</p>
-                <p className="text-white">{submission.instructor_feedback}</p>
-              </div>
-            )}
-
-            {submission.status === "rejected" && (
-              <div className="text-center">
-                <p className="text-slate-400 mb-4">Ready to revise and resubmit?</p>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg">
-                  Resubmit Capstone
-                </button>
+            {submission.result && (
+              <div className="flex items-center gap-3 p-4 bg-slate-700 rounded-lg mb-6">
+                <div className="flex-1">
+                  <p className="text-sm text-slate-400">Grading Status</p>
+                  <p className="font-bold text-white capitalize">
+                    {submission.result === "pending" && "⏳ Pending Review"}
+                    {submission.result === "pass" && "✅ Passed"}
+                    {submission.result === "fail" && "❌ Did Not Pass"}
+                  </p>
+                </div>
               </div>
             )}
 
