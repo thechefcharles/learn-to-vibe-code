@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ReactNode, useState } from "react";
 import { AnimatedCounter } from "./AnimatedCounter";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { InfoTooltip } from "./InfoTooltip";
+import { FlipCard } from "./FlipCard";
 
 interface AnimatedStatCardProps {
   label: string;
@@ -112,9 +112,9 @@ export function AnimatedStatCard({
 
   if (tooltipTitle && tooltipDescription) {
     return (
-      <InfoTooltip title={tooltipTitle} description={tooltipDescription}>
+      <FlipCard tooltipTitle={tooltipTitle} tooltipDescription={tooltipDescription}>
         {cardContent}
-      </InfoTooltip>
+      </FlipCard>
     );
   }
 
