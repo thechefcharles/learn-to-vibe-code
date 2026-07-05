@@ -82,6 +82,8 @@ export function AnimatedDashboard({ data }: AnimatedDashboardProps) {
           value={data.xpLevel}
           glowColor="violet"
           index={0}
+          tooltipTitle="Your Level"
+          tooltipDescription="Earn XP by completing modules, passing quizzes, and maintaining streaks. Level up every 1,000 XP. Progress toward mastery!"
         >
           <ProgressBar
             current={data.xpPoints}
@@ -97,6 +99,8 @@ export function AnimatedDashboard({ data }: AnimatedDashboardProps) {
           glowColor="orange"
           icon="🔥"
           index={1}
+          tooltipTitle="Your Streak"
+          tooltipDescription="Days in a row you've actively participated in the course. Maintain consistency to build momentum and earn streak badges!"
         >
           <div className="text-xs text-slate mt-2">Best: {data.streakLongest}</div>
         </AnimatedStatCard>
@@ -107,6 +111,8 @@ export function AnimatedDashboard({ data }: AnimatedDashboardProps) {
           maxValue={data.totalModules}
           glowColor="lime"
           index={2}
+          tooltipTitle="Course Progress"
+          tooltipDescription="16 modules from foundations to production-ready deployment. Complete quizzes and deliverables to unlock the next module and access the capstone."
         >
           <div className="mt-6 flex justify-center">
             <AnimatedProgressRing current={data.completedModules} max={data.totalModules} size={80} />
@@ -119,6 +125,8 @@ export function AnimatedDashboard({ data }: AnimatedDashboardProps) {
           glowColor="pink"
           icon="🏆"
           index={3}
+          tooltipTitle="Achievements"
+          tooltipDescription="Earn badges for milestones: first quiz passed, completing modules, perfect scores, streaks, and more. Collect them all!"
         />
       </motion.div>
 

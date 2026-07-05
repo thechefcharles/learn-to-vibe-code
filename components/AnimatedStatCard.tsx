@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ReactNode, useState } from "react";
 import { AnimatedCounter } from "./AnimatedCounter";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { InfoTooltip } from "./InfoTooltip";
 
 interface AnimatedStatCardProps {
   label: string;
@@ -13,6 +14,8 @@ interface AnimatedStatCardProps {
   glowColor: "violet" | "orange" | "lime" | "pink";
   index: number;
   children?: ReactNode;
+  tooltipTitle?: string;
+  tooltipDescription?: string;
 }
 
 const glowColorMap = {
@@ -53,12 +56,14 @@ export function AnimatedStatCard({
   glowColor,
   index,
   children,
+  tooltipTitle,
+  tooltipDescription,
 }: AnimatedStatCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const colors = glowColorMap[glowColor];
   const prefersReducedMotion = useReducedMotion();
 
-  return (
+  const cardContent = (
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -155,4 +160,14 @@ export function AnimatedStatCard({
       </motion.div>
     </motion.div>
   );
+
+  if (tooltipTitle && tooltipDescription) {
+    return (
+      <InfoTooltip title={tooltipTitle} description={tooltipDescription}>
+        {cardContent}
+      </InfoTooltip>
+    );
+  }
+
+  return cardContent;
 }
