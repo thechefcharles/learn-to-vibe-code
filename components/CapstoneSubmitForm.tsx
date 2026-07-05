@@ -4,8 +4,7 @@ import { useState } from "react";
 import { submitCapstone } from "@/lib/actions/capstone";
 
 export default function CapstoneSubmitForm() {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [writeup, setWriteup] = useState("");
   const [repoUrl, setRepoUrl] = useState("");
   const [liveUrl, setLiveUrl] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,10 +18,9 @@ export default function CapstoneSubmitForm() {
 
     try {
       await submitCapstone({
-        title,
-        description,
         repo_url: repoUrl,
         live_url: liveUrl,
+        writeup: writeup || undefined,
       });
       setSubmitted(true);
     } catch (err) {
@@ -61,26 +59,13 @@ export default function CapstoneSubmitForm() {
       )}
 
       <div>
-        <label className="block text-sm font-bold text-white mb-2">Project Title *</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="e.g., AI-Powered Content Generator"
-          className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
-          required
-        />
-      </div>
-
-      <div>
-        <label className="block text-sm font-bold text-white mb-2">Project Description *</label>
+        <label className="block text-sm font-bold text-white mb-2">Project Writeup (Optional)</label>
         <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={writeup}
+          onChange={(e) => setWriteup(e.target.value)}
           placeholder="Describe your project, the problem it solves, and what AI features you implemented..."
           rows={5}
           className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
-          required
         />
         <p className="text-xs text-slate-400 mt-2">Be specific about your AI integration and technical decisions</p>
       </div>
