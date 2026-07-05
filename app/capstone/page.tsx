@@ -112,7 +112,7 @@ export default async function CapstonePage() {
               </div>
             )}
 
-            {submission.status === "approved" && (
+            {submission.result === "pass" && (
               <div className="text-center">
                 <p className="text-green-400 text-lg font-bold mb-4">🎉 Congratulations!</p>
                 <p className="text-slate-400 mb-6">You've completed the course. Your certificate has been generated.</p>
