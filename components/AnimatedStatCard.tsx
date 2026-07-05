@@ -74,7 +74,7 @@ export function AnimatedStatCard({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: index * 0.1 + 0.3, duration: 0.4 }}
-        className="relative z-10"
+        className="relative z-10 w-full"
       >
         <motion.div
           className="text-white text-sm mb-3 font-medium flex items-center gap-2"

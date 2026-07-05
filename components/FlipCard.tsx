@@ -24,7 +24,7 @@ export function FlipCard({
 
   return (
     <div
-      className="relative w-full h-full"
+      className="relative w-full"
       style={{ perspective: "1000px" }}
       onMouseEnter={() => setIsFlipped(true)}
       onMouseLeave={() => setIsFlipped(false)}

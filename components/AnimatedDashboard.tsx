@@ -74,7 +74,8 @@ export function AnimatedDashboard({ data }: AnimatedDashboardProps) {
 
       {/* Stats Grid */}
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12"
+        className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12 auto-cols-fr"
+        style={{ gridAutoColumns: "1fr" }}
         variants={containerVariants}
       >
         <AnimatedStatCard
