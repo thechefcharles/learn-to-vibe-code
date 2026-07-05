@@ -75,14 +75,6 @@ export default async function CapstonePage() {
 
             <div className="space-y-4 mb-6">
               <div>
-                <label className="text-sm text-slate-400">Project Title</label>
-                <p className="text-white font-mono">{submission.title}</p>
-              </div>
-              <div>
-                <label className="text-sm text-slate-400">Description</label>
-                <p className="text-white">{submission.description}</p>
-              </div>
-              <div>
                 <label className="text-sm text-slate-400">Repository</label>
                 <a
                   href={submission.repo_url}
