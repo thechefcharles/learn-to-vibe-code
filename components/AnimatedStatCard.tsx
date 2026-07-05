@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ReactNode, useState } from "react";
 import { AnimatedCounter } from "./AnimatedCounter";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface AnimatedStatCardProps {
   label: string;
@@ -55,21 +56,26 @@ export function AnimatedStatCard({
 }: AnimatedStatCardProps) {
   const [isHovered, setIsHovered] = useState(false);
   const colors = glowColorMap[glowColor];
+  const prefersReducedMotion = useReducedMotion();
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{
-        duration: 0.6,
-        delay: index * 0.1,
+        duration: prefersReducedMotion ? 0.2 : 0.6,
+        delay: prefersReducedMotion ? 0 : index * 0.1,
         ease: "easeOut",
       }}
-      whileHover={{
-        y: -10,
-        scale: 1.02,
-        transition: { duration: 0.3 },
-      }}
+      whileHover={
+        prefersReducedMotion
+          ? {}
+          : {
+              y: -10,
+              scale: 1.02,
+              transition: { duration: 0.3 },
+            }
+      }
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       className={`
@@ -88,7 +94,7 @@ export function AnimatedStatCard({
         animate={{
           opacity: isHovered ? 0.8 : 0.3,
         }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: prefersReducedMotion ? 0.1 : 0.3 }}
       />
 
       {/* Glow line effect */}

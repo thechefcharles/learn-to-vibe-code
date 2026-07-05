@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { RippleEffect } from "./RippleEffect";
 import { MagneticButton } from "./MagneticButton";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface AnimatedActionButtonProps {
   href: string;
@@ -27,20 +28,26 @@ export function AnimatedActionButton({
   variant = "primary",
   index,
 }: AnimatedActionButtonProps) {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        duration: 0.6,
-        delay: 0.6 + index * 0.1,
+        duration: prefersReducedMotion ? 0.2 : 0.6,
+        delay: prefersReducedMotion ? 0 : 0.6 + index * 0.1,
         ease: "easeOut",
       }}
-      whileHover={{
-        scale: 1.04,
-        transition: { duration: 0.2 },
-      }}
-      whileTap={{ scale: 0.96 }}
+      whileHover={
+        prefersReducedMotion
+          ? {}
+          : {
+              scale: 1.04,
+              transition: { duration: 0.2 },
+            }
+      }
+      whileTap={prefersReducedMotion ? {} : { scale: 0.96 }}
       className="w-full"
     >
       <MagneticButton>

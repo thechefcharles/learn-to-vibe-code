@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useRef } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface MagneticButtonProps {
   children: React.ReactNode;
@@ -13,9 +14,10 @@ export function MagneticButton({ children, onClick, className = "" }: MagneticBu
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const buttonRef = useRef<HTMLDivElement>(null);
+  const prefersReducedMotion = useReducedMotion();
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!buttonRef.current || !isHovering) return;
+    if (!buttonRef.current || !isHovering || prefersReducedMotion) return;
 
     const rect = buttonRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;

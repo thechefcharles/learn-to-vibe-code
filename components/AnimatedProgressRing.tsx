@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface AnimatedProgressRingProps {
   current: number;
@@ -15,6 +16,7 @@ export function AnimatedProgressRing({
   size = 100,
   strokeWidth = 6,
 }: AnimatedProgressRingProps) {
+  const prefersReducedMotion = useReducedMotion();
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
   const progress = Math.min(current / max, 1);
@@ -47,8 +49,8 @@ export function AnimatedProgressRing({
             initial={{ strokeDashoffset: circumference }}
             animate={{ strokeDashoffset: offset }}
             transition={{
-              duration: 2.5,
-              delay: 0.8,
+              duration: prefersReducedMotion ? 0.2 : 2.5,
+              delay: prefersReducedMotion ? 0 : 0.8,
               ease: "easeOut",
             }}
             style={{

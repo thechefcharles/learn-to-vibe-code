@@ -6,6 +6,10 @@ import { AnimatedStatCard } from "./AnimatedStatCard";
 import { AnimatedActionButton } from "./AnimatedActionButton";
 import { AnimatedProgressRing } from "./AnimatedProgressRing";
 import { ProgressBar } from "./ProgressBar";
+import { CursorTrail } from "./CursorTrail";
+import { FloatingOrbs } from "./FloatingOrbs";
+import { AnimatedGradientBg } from "./AnimatedGradientBg";
+import { Confetti } from "./Confetti";
 
 interface DashboardData {
   userName: string;
@@ -42,12 +46,18 @@ export function AnimatedDashboard({ data, onSignOut }: AnimatedDashboardProps) {
   };
 
   return (
-    <motion.div
-      className="w-full flex-1 py-12 px-4"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
+    <>
+      <AnimatedGradientBg />
+      <FloatingOrbs />
+      <CursorTrail />
+      <Confetti />
+
+      <motion.div
+        className="w-full flex-1 py-12 px-4 relative z-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -220,7 +230,8 @@ export function AnimatedDashboard({ data, onSignOut }: AnimatedDashboardProps) {
           </div>
         </motion.div>
       )}
-    </motion.div>
+      </motion.div>
+    </>
   );
 }
 
