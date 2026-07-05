@@ -25,6 +25,7 @@ interface DashboardData {
     badge_key: string;
     earned_at: string;
   }>;
+  capstoneUnlocked?: boolean;
 }
 
 interface AnimatedDashboardProps {
@@ -145,10 +146,12 @@ export function AnimatedDashboard({ data, onSignOut }: AnimatedDashboardProps) {
         transition={{ delay: 0.8, duration: 0.6 }}
       >
         <h2 className="text-2xl font-bold font-display text-ink mb-6">Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className={`grid gap-6 ${data.capstoneUnlocked ? "grid-cols-1 md:grid-cols-3" : "grid-cols-1 md:grid-cols-2"}`}>
           <AnimatedActionButton href="/course" label="Continue Learning →" variant="primary" index={0} />
-          <AnimatedActionButton href="/capstone" label="🎓 Capstone Project" variant="secondary" index={1} />
-          <AnimatedActionButton href="/support" label="Support ❤️" variant="outline" index={2} />
+          {data.capstoneUnlocked && (
+            <AnimatedActionButton href="/capstone" label="🎓 Capstone Project" variant="secondary" index={1} />
+          )}
+          <AnimatedActionButton href="/support" label="Support ❤️" variant={data.capstoneUnlocked ? "outline" : "secondary"} index={data.capstoneUnlocked ? 2 : 1} />
         </div>
       </motion.div>
 

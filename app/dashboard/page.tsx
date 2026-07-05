@@ -21,6 +21,7 @@ export default async function DashboardPage() {
 
   const nextLevelXP = (xp.level + 1) * 1000;
   const completedModules = progress.filter((p) => p.status === "completed").length;
+  const capstoneUnlocked = completedModules >= 15;
 
   const dashboardData = {
     userName: user.user_metadata?.name || user.email,
@@ -33,6 +34,7 @@ export default async function DashboardPage() {
     totalModules: 16,
     badgeCount: badges.length,
     badges,
+    capstoneUnlocked,
   };
 
   return (
