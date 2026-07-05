@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
 function SupportContent() {
   const searchParams = useSearchParams();
@@ -10,7 +12,9 @@ function SupportContent() {
   const cancelled = searchParams.get("cancelled");
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
+    <div className="min-h-screen flex flex-col bg-paper">
+      <Header />
+      <div className="flex-1 bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
       <div className="max-w-4xl mx-auto">
         {/* Success Message */}
         {success && (
@@ -47,9 +51,9 @@ function SupportContent() {
         )}
 
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 bg-gradient-to-br from-violet-500/10 to-indigo-500/10 rounded-lg p-8 border border-violet-500/20">
           <h1 className="text-5xl font-bold text-white mb-4">Support & Donate</h1>
-          <p className="text-xl text-slate-400">
+          <p className="text-xl text-slate-300">
             Help keep this course free and accessible for everyone
           </p>
         </div>
@@ -228,6 +232,8 @@ function SupportContent() {
           </div>
         </div>
       </div>
+      </div>
+      <Footer />
     </div>
   );
 }

@@ -1,3 +1,6 @@
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
+
 export const metadata = {
   title: "Refund Policy - Learn to Vibe Code",
   description: "Refund Policy for Learn to Vibe Code course platform",
@@ -5,7 +8,9 @@ export const metadata = {
 
 export default function RefundPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
+    <div className="min-h-screen flex flex-col bg-paper">
+      <Header />
+      <div className="flex-1 bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
       <div className="max-w-3xl mx-auto">
         {/* DRAFT BANNER */}
         <div className="mb-8 p-4 bg-red-500/20 border-l-4 border-red-500">
@@ -108,6 +113,8 @@ export default function RefundPage() {
           </div>
         </div>
       </div>
+      </div>
+      <Footer />
     </div>
   );
 }
