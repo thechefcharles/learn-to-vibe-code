@@ -12,8 +12,8 @@ export default async function CertificatePage() {
 
   const capstone = await getCapstoneSubmission();
 
-  // Only show certificate if capstone is approved
-  if (!capstone || capstone.status !== "approved") {
+  // Only show certificate if capstone passed
+  if (!capstone || capstone.result !== "pass") {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
         <div className="max-w-2xl mx-auto">
@@ -78,8 +78,8 @@ export default async function CertificatePage() {
 
             {/* Capstone */}
             <div className="bg-white bg-opacity-60 rounded p-4 mb-8 inline-block">
-              <p className="text-sm text-gray-600 mb-1">Capstone Project:</p>
-              <p className="text-lg font-bold text-gray-800">{capstone.title}</p>
+              <p className="text-sm text-gray-600 mb-1">Capstone Project Submitted</p>
+              <p className="text-sm text-gray-700">{capstone.repo_url}</p>
             </div>
 
             {/* Footer */}
