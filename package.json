@@ -6,7 +6,10 @@
     "dev": "next dev -p 3008",
     "build": "next build",
     "start": "next start",
-    "test": "playwright test",
+    "test": "playwright test && vitest run",
+    "test:unit": "vitest run",
+    "test:unit:ui": "vitest --ui",
+    "test:e2e": "playwright test",
     "test:ui": "playwright test --ui",
     "test:headed": "playwright test --headed",
     "setup:db": "bash scripts/setup-db.sh"
@@ -28,7 +31,9 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/ui": "^4.1.9",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.9"
   }
 }
