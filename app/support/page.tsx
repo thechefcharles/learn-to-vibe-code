@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function SupportPage() {
+function SupportContent() {
   const searchParams = useSearchParams();
   const success = searchParams.get("success");
   const cancelled = searchParams.get("cancelled");
@@ -228,5 +229,13 @@ export default function SupportPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SupportPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800" />}>
+      <SupportContent />
+    </Suspense>
   );
 }
