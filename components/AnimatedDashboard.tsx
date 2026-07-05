@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { AnimatedStatCard } from "./AnimatedStatCard";
 import { AnimatedActionButton } from "./AnimatedActionButton";
+import { AnimatedProgressRing } from "./AnimatedProgressRing";
 import { ProgressBar } from "./ProgressBar";
 
 interface DashboardData {
@@ -113,7 +114,11 @@ export function AnimatedDashboard({ data, onSignOut }: AnimatedDashboardProps) {
           maxValue={data.totalModules}
           glowColor="lime"
           index={2}
-        />
+        >
+          <div className="mt-6 flex justify-center">
+            <AnimatedProgressRing current={data.completedModules} max={data.totalModules} size={80} />
+          </div>
+        </AnimatedStatCard>
 
         <AnimatedStatCard
           label="Badges"
@@ -152,29 +157,64 @@ export function AnimatedDashboard({ data, onSignOut }: AnimatedDashboardProps) {
             {data.badges.map((badge, idx) => (
               <motion.div
                 key={badge.id}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{
                   delay: 1.1 + idx * 0.1,
                   duration: 0.5,
                   ease: "easeOut",
                 }}
-                whileHover={{ y: -4 }}
+                whileHover={{
+                  y: -8,
+                  scale: 1.05,
+                  transition: { duration: 0.2 },
+                }}
                 className="
-                  bg-white/10 backdrop-blur-xl rounded-xl p-6
-                  border border-violet/40 hover:border-violet/60
+                  relative
+                  bg-white/10 backdrop-blur-2xl rounded-xl p-6
+                  border-2 border-violet/40 hover:border-violet/80
                   text-center transition-all duration-300
-                  hover:shadow-lg hover:shadow-violet/30
+                  hover:shadow-2xl hover:shadow-violet/50
+                  hover:bg-white/20
+                  overflow-hidden
                 "
               >
-                <div className="text-4xl mb-3">{getBadgeEmoji(badge.badge_key)}</div>
-                <h3 className="font-bold font-display text-ink mb-2">
+                {/* Animated glow background */}
+                <motion.div
+                  className="absolute inset-0 rounded-xl bg-gradient-to-br from-violet-500/20 via-transparent to-transparent pointer-events-none"
+                  whileHover={{ opacity: 0.8 }}
+                  transition={{ duration: 0.3 }}
+                />
+
+                {/* Glow line effect */}
+                <motion.div
+                  className="absolute top-0 left-0 h-1 bg-gradient-to-r from-transparent via-violet/60 to-transparent pointer-events-none"
+                  whileHover={{ opacity: 1, height: 2 }}
+                  initial={{ opacity: 0.3, height: 1 }}
+                  transition={{ duration: 0.3 }}
+                  style={{ width: "100%" }}
+                />
+
+                <motion.div
+                  className="text-4xl mb-3 inline-block"
+                  whileHover={{ scale: 1.3, rotate: 12 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {getBadgeEmoji(badge.badge_key)}
+                </motion.div>
+
+                <h3 className="font-bold font-display text-ink mb-2 relative z-10">
                   {getBadgeName(badge.badge_key)}
                 </h3>
-                <p className="text-sm text-slate">{getBadgeDescription(badge.badge_key)}</p>
-                <p className="text-xs text-slate-500 mt-3">
+                <p className="text-sm text-slate relative z-10">{getBadgeDescription(badge.badge_key)}</p>
+                <motion.p
+                  className="text-xs text-slate-500 mt-3 relative z-10"
+                  initial={{ opacity: 0.6 }}
+                  whileHover={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                >
                   Earned {new Date(badge.earned_at).toLocaleDateString()}
-                </p>
+                </motion.p>
               </motion.div>
             ))}
           </div>

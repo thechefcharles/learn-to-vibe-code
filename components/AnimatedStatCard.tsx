@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { AnimatedCounter } from "./AnimatedCounter";
 
 interface AnimatedStatCardProps {
@@ -15,10 +15,26 @@ interface AnimatedStatCardProps {
 }
 
 const glowColorMap = {
-  violet: "border-violet/60 hover:border-violet shadow-lg hover:shadow-violet/40",
-  orange: "border-orange-400/60 hover:border-orange-400 shadow-lg hover:shadow-orange-400/40",
-  lime: "border-lime/60 hover:border-lime shadow-lg hover:shadow-lime/40",
-  pink: "border-pink-400/60 hover:border-pink-400 shadow-lg hover:shadow-pink-400/40",
+  violet: {
+    border: "border-violet/60",
+    hoverBorder: "hover:border-violet",
+    shadow: "hover:shadow-violet/60",
+  },
+  orange: {
+    border: "border-orange-400/60",
+    hoverBorder: "hover:border-orange-400",
+    shadow: "hover:shadow-orange-400/60",
+  },
+  lime: {
+    border: "border-lime/60",
+    hoverBorder: "hover:border-lime",
+    shadow: "hover:shadow-lime/60",
+  },
+  pink: {
+    border: "border-pink-400/60",
+    hoverBorder: "hover:border-pink-400",
+    shadow: "hover:shadow-pink-400/60",
+  },
 };
 
 const textColorMap = {
@@ -37,6 +53,9 @@ export function AnimatedStatCard({
   index,
   children,
 }: AnimatedStatCardProps) {
+  const [isHovered, setIsHovered] = useState(false);
+  const colors = glowColorMap[glowColor];
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30, scale: 0.9 }}
@@ -47,18 +66,41 @@ export function AnimatedStatCard({
         ease: "easeOut",
       }}
       whileHover={{
-        y: -8,
+        y: -10,
+        scale: 1.02,
         transition: { duration: 0.3 },
       }}
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
       className={`
         relative
         bg-white/10 backdrop-blur-2xl rounded-xl p-6
-        border transition-all duration-300
-        ${glowColorMap[glowColor]}
-        hover:bg-white/15
+        border-2 transition-all duration-300
+        ${colors.border} ${colors.hoverBorder}
+        shadow-lg hover:shadow-2xl ${colors.shadow}
+        hover:bg-white/20
+        overflow-hidden
       `}
     >
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-violet-500/5 to-transparent pointer-events-none" />
+      {/* Animated glow background */}
+      <motion.div
+        className="absolute inset-0 rounded-xl bg-gradient-to-br from-violet-500/10 via-transparent to-transparent pointer-events-none"
+        animate={{
+          opacity: isHovered ? 0.8 : 0.3,
+        }}
+        transition={{ duration: 0.3 }}
+      />
+
+      {/* Glow line effect */}
+      <motion.div
+        className={`absolute top-0 left-0 h-px bg-gradient-to-r from-transparent via-${glowColor}/50 to-transparent pointer-events-none`}
+        animate={{
+          opacity: isHovered ? 1 : 0.3,
+          height: isHovered ? 2 : 1,
+        }}
+        transition={{ duration: 0.3 }}
+        style={{ width: "100%" }}
+      />
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -66,13 +108,40 @@ export function AnimatedStatCard({
         transition={{ delay: index * 0.1 + 0.3, duration: 0.4 }}
         className="relative z-10"
       >
-        <div className="text-slate text-sm mb-3 font-medium flex items-center gap-2">
-          {icon && <span className="text-lg">{icon}</span>}
+        <motion.div
+          className="text-slate text-sm mb-3 font-medium flex items-center gap-2"
+          animate={{
+            scale: isHovered ? 1.05 : 1,
+            color: isHovered ? `var(--color-${glowColor})` : undefined,
+          }}
+          transition={{ duration: 0.2 }}
+        >
+          {icon && (
+            <motion.span
+              className="text-lg"
+              animate={{
+                scale: isHovered ? 1.2 : 1,
+                rotate: isHovered ? 12 : 0,
+              }}
+              transition={{ duration: 0.3 }}
+            >
+              {icon}
+            </motion.span>
+          )}
           {label}
-        </div>
+        </motion.div>
 
         <div className={`text-5xl font-bold font-display ${textColorMap[glowColor]} mb-4`}>
-          <AnimatedCounter from={0} to={value} duration={2} />
+          <motion.span
+            animate={{
+              textShadow: isHovered
+                ? `0 0 20px rgba(124, 58, 237, 0.6), 0 0 40px rgba(124, 58, 237, 0.3)`
+                : "0 0 0px rgba(124, 58, 237, 0)",
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            <AnimatedCounter from={0} to={value} duration={2} />
+          </motion.span>
           {maxValue && <span className="text-xl text-slate ml-1">/{maxValue}</span>}
         </div>
 
