@@ -9,7 +9,6 @@ import { ProgressBar } from "./ProgressBar";
 import { CursorTrail } from "./CursorTrail";
 import { FloatingOrbs } from "./FloatingOrbs";
 import { AnimatedGradientBg } from "./AnimatedGradientBg";
-import { Confetti } from "./Confetti";
 
 interface DashboardData {
   userName: string;
@@ -50,7 +49,6 @@ export function AnimatedDashboard({ data, onSignOut }: AnimatedDashboardProps) {
       <AnimatedGradientBg />
       <FloatingOrbs />
       <CursorTrail />
-      <Confetti />
 
       <motion.div
         className="w-full flex-1 py-12 px-4 relative z-10"
