@@ -34,7 +34,7 @@ export default async function CertificatePage() {
     );
   }
 
-  const completionDate = new Date(capstone.reviewed_at || capstone.submitted_at).toLocaleDateString(
+  const completionDate = new Date(capstone.graded_at || capstone.submitted_at).toLocaleDateString(
     "en-US",
     { year: "numeric", month: "long", day: "numeric" }
   );
