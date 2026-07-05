@@ -48,13 +48,13 @@ test.describe("Learn to Vibe Code - Core Platform", () => {
   test("should have styled pages (Tailwind loaded)", async ({ page }) => {
     await page.goto("/auth/sign-in");
 
-    // Check for Tailwind classes
+    // Check for brand color classes
     const body = await page.locator("body").getAttribute("class");
     expect(body).toBeTruthy(); // Body should have classes
 
-    // Check for styled elements
-    const styledElements = await page.locator("[class*='text-white']").count();
-    expect(styledElements).toBeGreaterThan(0);
+    // Check for brand-colored elements (violet, indigo, etc.)
+    const brandElements = await page.locator("[class*='bg-violet'], [class*='bg-indigo'], [class*='text-ink']").count();
+    expect(brandElements).toBeGreaterThan(0);
   });
 
   test("should render without JavaScript errors", async ({ page }) => {
