@@ -1,26 +1,49 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Brand colors */
+  --color-indigo: #1E1B4B;
+  --color-violet: #7C3AED;
+  --color-violet-light: #A78BFA;
+  --color-lime: #C4F542; /* reward moments only */
+  --color-ink: #12121A;
+  --color-slate: #5F5E5A;
+  --color-paper: #F5F5F8;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-danger: #EF4444;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Layout */
+  --background: var(--color-paper);
+  --foreground: var(--color-ink);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--color-indigo);
+    --foreground: var(--color-paper);
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter, system-ui, sans-serif);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+/* Respect motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Code blocks */
+code {
+  font-family: var(--font-jetbrains-mono, ui-monospace, monospace);
 }

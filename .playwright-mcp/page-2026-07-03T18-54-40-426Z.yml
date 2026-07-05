@@ -1,0 +1,36 @@
+- generic [active] [ref=f36e1]:
+  - generic [ref=f36e3]:
+    - generic [ref=f36e4]:
+      - generic [ref=f36e5]:
+        - heading "Dashboard" [level=1] [ref=f36e6]
+        - paragraph [ref=f36e7]: Welcome back, charliesuccess@example.com! 👋
+      - button "Sign Out" [ref=f36e9]
+    - generic [ref=f36e10]:
+      - generic [ref=f36e11]:
+        - generic [ref=f36e12]: Level
+        - generic [ref=f36e13]: "1"
+        - generic [ref=f36e15]:
+          - generic [ref=f36e16]: 0 XP
+          - generic [ref=f36e17]: 2000 XP
+      - generic [ref=f36e19]:
+        - generic [ref=f36e20]: 🔥 Streak
+        - generic [ref=f36e21]: "0"
+        - generic [ref=f36e22]: "Best: 0"
+      - generic [ref=f36e23]:
+        - generic [ref=f36e24]: Modules
+        - generic [ref=f36e25]: 0/16
+      - generic [ref=f36e26]:
+        - generic [ref=f36e27]: 🏆 Badges
+        - generic [ref=f36e28]: "0"
+    - generic [ref=f36e29]:
+      - heading "Quick Actions" [level=2] [ref=f36e30]
+      - generic [ref=f36e31]:
+        - link "Continue Learning →" [ref=f36e32] [cursor=pointer]:
+          - /url: /course
+        - link "🎓 Capstone Project" [ref=f36e33] [cursor=pointer]:
+          - /url: /capstone
+        - link "Settings ⚙️" [ref=f36e34] [cursor=pointer]:
+          - /url: /settings
+  - button "Open Next.js Dev Tools" [ref=f36e40] [cursor=pointer]:
+    - img [ref=f36e41]
+  - alert [ref=f36e44]

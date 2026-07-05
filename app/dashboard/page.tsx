@@ -4,6 +4,8 @@ import Link from "next/link";
 import { getUserXP, getUserBadges, getUserStreak } from "@/lib/actions/gamification";
 import { getAllModuleProgress } from "@/lib/actions/course";
 import { signOutAction } from "@/lib/actions/auth";
+import { ProgressBar } from "@/components/ProgressBar";
+import { Footer } from "@/components/Footer";
 
 export default async function DashboardPage() {
   const user = await getUser();
@@ -23,18 +25,18 @@ export default async function DashboardPage() {
   const completedModules = progress.filter((p) => p.status === "completed").length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-paper flex flex-col">
+      <div className="max-w-6xl mx-auto w-full flex-1 py-12 px-4">
         {/* Header */}
         <div className="mb-12 flex justify-between items-start">
           <div>
-            <h1 className="text-5xl font-bold text-white mb-2">Dashboard</h1>
-            <p className="text-slate-400">Welcome back, {user.user_metadata?.name || user.email}! 👋</p>
+            <h1 className="text-5xl font-bold font-display text-ink mb-2">Dashboard</h1>
+            <p className="text-slate">Welcome back, {user.user_metadata?.name || user.email}! 👋</p>
           </div>
           <form action={signOutAction}>
             <button
               type="submit"
-              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition"
+              className="bg-danger hover:bg-red-700 text-paper font-medium py-2 px-4 rounded-lg transition"
             >
               Sign Out
             </button>
@@ -44,55 +46,46 @@ export default async function DashboardPage() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
           {/* Level Card */}
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <div className="text-slate-400 text-sm mb-2">Level</div>
-            <div className="text-4xl font-bold text-blue-400">{xp.level}</div>
+          <div className="bg-white rounded-lg p-6 border border-violet-light/20">
+            <div className="text-slate text-sm mb-2 font-medium">Level</div>
+            <div className="text-4xl font-bold font-display text-violet">{xp.level}</div>
             <div className="mt-4">
-              <div className="flex justify-between text-xs text-slate-400 mb-2">
-                <span>{xp.points} XP</span>
-                <span>{nextLevelXP} XP</span>
-              </div>
-              <div className="w-full bg-slate-700 rounded-full h-2">
-                <div
-                  className="bg-blue-500 h-2 rounded-full transition-all"
-                  style={{ width: `${progressPercent}%` }}
-                ></div>
-              </div>
+              <ProgressBar current={xp.points} max={nextLevelXP} size="sm" showPercentage={false} />
             </div>
           </div>
 
           {/* Streak Card */}
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <div className="text-slate-400 text-sm mb-2">🔥 Streak</div>
-            <div className="text-4xl font-bold text-orange-400">{streak.current}</div>
-            <div className="text-xs text-slate-400 mt-2">Best: {streak.longest}</div>
+          <div className="bg-white rounded-lg p-6 border border-violet-light/20">
+            <div className="text-slate text-sm mb-2 font-medium">🔥 Streak</div>
+            <div className="text-4xl font-bold font-display text-lime">{streak.current}</div>
+            <div className="text-xs text-slate mt-2">Best: {streak.longest}</div>
           </div>
 
           {/* Modules Card */}
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <div className="text-slate-400 text-sm mb-2">Modules</div>
-            <div className="text-4xl font-bold text-green-400">
-              {completedModules}<span className="text-slate-400">/16</span>
+          <div className="bg-white rounded-lg p-6 border border-violet-light/20">
+            <div className="text-slate text-sm mb-2 font-medium">Modules</div>
+            <div className="text-4xl font-bold font-display text-success">
+              {completedModules}<span className="text-slate">/16</span>
             </div>
           </div>
 
           {/* Badges Card */}
-          <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-            <div className="text-slate-400 text-sm mb-2">🏆 Badges</div>
-            <div className="text-4xl font-bold text-purple-400">{badges.length}</div>
+          <div className="bg-white rounded-lg p-6 border border-violet-light/20">
+            <div className="text-slate text-sm mb-2 font-medium">🏆 Badges</div>
+            <div className="text-4xl font-bold font-display text-violet">{badges.length}</div>
           </div>
         </div>
 
         {/* Badges Section */}
         {badges.length > 0 && (
           <div className="mb-12">
-            <h2 className="text-2xl font-bold text-white mb-6">Your Badges</h2>
+            <h2 className="text-2xl font-bold font-display text-ink mb-6">Your Badges</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {badges.map((badge) => (
-                <div key={badge.id} className="bg-slate-800 rounded-lg p-6 border border-slate-700 text-center">
+                <div key={badge.id} className="bg-white rounded-lg p-6 border border-violet-light/20 text-center hover:border-violet/40 transition">
                   <div className="text-4xl mb-3">{getBadgeEmoji(badge.badge_key)}</div>
-                  <h3 className="font-bold text-white mb-2">{getBadgeName(badge.badge_key)}</h3>
-                  <p className="text-sm text-slate-400">{getBadgeDescription(badge.badge_key)}</p>
+                  <h3 className="font-bold font-display text-ink mb-2">{getBadgeName(badge.badge_key)}</h3>
+                  <p className="text-sm text-slate">{getBadgeDescription(badge.badge_key)}</p>
                   <p className="text-xs text-slate-500 mt-3">
                     Earned {new Date(badge.earned_at).toLocaleDateString()}
                   </p>
@@ -104,29 +97,31 @@ export default async function DashboardPage() {
 
         {/* Quick Actions */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-white mb-6">Quick Actions</h2>
+          <h2 className="text-2xl font-bold font-display text-ink mb-6">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <Link
               href="/course"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-4 px-6 rounded-lg transition text-center"
+              className="bg-violet hover:bg-violet-light text-paper font-medium py-4 px-6 rounded-lg transition text-center"
             >
               Continue Learning →
             </Link>
             <Link
               href="/capstone"
-              className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-4 px-6 rounded-lg transition text-center"
+              className="bg-indigo hover:bg-violet text-paper font-medium py-4 px-6 rounded-lg transition text-center"
             >
               🎓 Capstone Project
             </Link>
             <Link
-              href="/settings"
-              className="bg-slate-700 hover:bg-slate-600 text-white font-medium py-4 px-6 rounded-lg transition text-center"
+              href="/support"
+              className="border-2 border-violet text-violet hover:bg-violet/5 font-medium py-4 px-6 rounded-lg transition text-center"
             >
-              Settings ⚙️
+              Support ❤️
             </Link>
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }
