@@ -114,8 +114,8 @@ export function AnimatedDashboard({ data }: AnimatedDashboardProps) {
           tooltipTitle="Course Progress"
           tooltipDescription="16 modules from foundations to production-ready deployment. Complete quizzes and deliverables to unlock the next module and access the capstone."
         >
-          <div className="mt-6 flex justify-center">
-            <AnimatedProgressRing current={data.completedModules} max={data.totalModules} size={80} />
+          <div className="mt-3 flex justify-center">
+            <AnimatedProgressRing current={data.completedModules} max={data.totalModules} size={60} />
           </div>
         </AnimatedStatCard>
 

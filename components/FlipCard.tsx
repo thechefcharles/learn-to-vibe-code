@@ -68,10 +68,10 @@ export function FlipCard({
           pointerEvents: isFlipped ? "auto" : "none",
         }}
         transition={{ delay: isFlipped ? 0.6 : 0, duration: 0.2 }}
-        className="absolute inset-0 flex flex-col justify-center items-center text-center p-6 text-white"
+        className="absolute inset-0 flex flex-col justify-center items-center text-center p-5 text-white overflow-hidden"
       >
-        <p className="font-bold text-lg mb-2">{tooltipTitle}</p>
-        <p className="text-sm leading-relaxed">{tooltipDescription}</p>
+        <p className="font-bold text-base mb-3 leading-tight">{tooltipTitle}</p>
+        <p className="text-xs leading-relaxed line-clamp-6">{tooltipDescription}</p>
       </motion.div>
     </div>
   );

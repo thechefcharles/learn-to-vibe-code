@@ -62,11 +62,11 @@ export function AnimatedStatCard({
       onHoverEnd={() => setIsHovered(false)}
       className={`
         relative
-        ${bgColor} rounded-xl p-8
+        ${bgColor} rounded-xl p-6
         transition-all duration-300
         shadow-lg hover:shadow-2xl
         overflow-hidden
-        min-h-48 flex flex-col justify-center
+        h-56 flex flex-col justify-center
       `}
     >
 
