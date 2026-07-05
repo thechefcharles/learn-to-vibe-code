@@ -88,4 +88,33 @@ test.describe("Learn to Vibe Code - Core Platform", () => {
 
     await mobileContext.close();
   });
+
+  test("should have about page", async ({ page }) => {
+    const response = await page.goto("/about");
+    expect(response?.status()).toBeLessThan(400);
+
+    // Check for author content
+    const content = await page.textContent("body");
+    expect(content).toContain("About the Author");
+    expect(content).toContain("Charles Foreman");
+    expect(content).toContain("vibe coding");
+  });
+
+  test("should have support/donate page", async ({ page }) => {
+    const response = await page.goto("/support");
+    expect(response?.status()).toBeLessThan(400);
+
+    // Check for donation content
+    const content = await page.textContent("body");
+    expect(content).toContain("Donate");
+  });
+
+  test("should have legal pages", async ({ page }) => {
+    const legalPages = ["/legal/terms", "/legal/privacy", "/legal/refund"];
+
+    for (const page_path of legalPages) {
+      const response = await page.goto(page_path);
+      expect(response?.status()).toBeLessThan(400);
+    }
+  });
 });

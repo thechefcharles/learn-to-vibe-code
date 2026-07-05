@@ -42,6 +42,11 @@ export function Footer() {
             <h3 className="font-display font-bold text-paper mb-4">Support</h3>
             <ul className="space-y-2 text-sm">
               <li>
+                <Link href="/about" className="text-violet-light hover:text-lime transition">
+                  About
+                </Link>
+              </li>
+              <li>
                 <Link href="/support" className="text-violet-light hover:text-lime transition">
                   Donate
                 </Link>

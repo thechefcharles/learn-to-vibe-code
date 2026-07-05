@@ -9,6 +9,9 @@ export function Header() {
           <Logo variant="primary" size="sm" />
         </Link>
         <nav className="flex gap-8 items-center">
+          <Link href="/about" className="text-ink hover:text-violet transition text-sm font-medium">
+            About
+          </Link>
           <Link href="/course" className="text-ink hover:text-violet transition text-sm font-medium">
             Course
           </Link>
