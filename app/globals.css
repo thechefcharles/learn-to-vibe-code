@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  /* Brand colors */
+  /* Brand colors - exact hex values */
   --color-indigo: #1E1B4B;
   --color-violet: #7C3AED;
   --color-violet-light: #A78BFA;
-  --color-lime: #C4F542; /* reward moments only */
+  --color-lime: #C4F542;
   --color-ink: #12121A;
   --color-slate: #5F5E5A;
   --color-paper: #F5F5F8;
@@ -17,6 +17,28 @@
   --background: var(--color-paper);
   --foreground: var(--color-ink);
 }
+
+/* Explicit text color utilities (fallback if Tailwind fails) */
+.text-ink { color: #12121A !important; }
+.text-slate { color: #5F5E5A !important; }
+.text-paper { color: #F5F5F8 !important; }
+.text-violet { color: #7C3AED !important; }
+.text-violet-light { color: #A78BFA !important; }
+.text-indigo { color: #1E1B4B !important; }
+.text-lime { color: #C4F542 !important; }
+.text-success { color: #22C55E !important; }
+.text-danger { color: #EF4444 !important; }
+
+/* Background utilities */
+.bg-ink { background-color: #12121A !important; }
+.bg-slate { background-color: #5F5E5A !important; }
+.bg-paper { background-color: #F5F5F8 !important; }
+.bg-violet { background-color: #7C3AED !important; }
+.bg-violet-light { background-color: #A78BFA !important; }
+.bg-indigo { background-color: #1E1B4B !important; }
+.bg-lime { background-color: #C4F542 !important; }
+.bg-success { background-color: #22C55E !important; }
+.bg-danger { background-color: #EF4444 !important; }
 
 @media (prefers-color-scheme: dark) {
   :root {
