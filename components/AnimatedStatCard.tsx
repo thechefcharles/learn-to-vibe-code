@@ -18,34 +18,11 @@ interface AnimatedStatCardProps {
   tooltipDescription?: string;
 }
 
-const glowColorMap = {
-  violet: {
-    border: "border-violet/60",
-    hoverBorder: "hover:border-violet",
-    shadow: "hover:shadow-violet/60",
-  },
-  orange: {
-    border: "border-orange-400/60",
-    hoverBorder: "hover:border-orange-400",
-    shadow: "hover:shadow-orange-400/60",
-  },
-  lime: {
-    border: "border-lime/60",
-    hoverBorder: "hover:border-lime",
-    shadow: "hover:shadow-lime/60",
-  },
-  pink: {
-    border: "border-pink-400/60",
-    hoverBorder: "hover:border-pink-400",
-    shadow: "hover:shadow-pink-400/60",
-  },
-};
-
-const textColorMap = {
-  violet: "text-violet",
-  orange: "text-orange-400",
-  lime: "text-lime",
-  pink: "text-pink-400",
+const solidColorMap = {
+  violet: "bg-violet-600 hover:bg-violet-700",
+  orange: "bg-orange-500 hover:bg-orange-600",
+  lime: "bg-lime-500 hover:bg-lime-600",
+  pink: "bg-pink-500 hover:bg-pink-600",
 };
 
 export function AnimatedStatCard({
@@ -60,7 +37,7 @@ export function AnimatedStatCard({
   tooltipDescription,
 }: AnimatedStatCardProps) {
   const [isHovered, setIsHovered] = useState(false);
-  const colors = glowColorMap[glowColor];
+  const bgColor = solidColorMap[glowColor];
   const prefersReducedMotion = useReducedMotion();
 
   const cardContent = (
@@ -85,33 +62,13 @@ export function AnimatedStatCard({
       onHoverEnd={() => setIsHovered(false)}
       className={`
         relative
-        bg-white/10 backdrop-blur-2xl rounded-xl p-6
-        border-2 transition-all duration-300
-        ${colors.border} ${colors.hoverBorder}
-        shadow-lg hover:shadow-2xl ${colors.shadow}
-        hover:bg-white/20
+        ${bgColor} rounded-xl p-8
+        transition-all duration-300
+        shadow-lg hover:shadow-2xl
         overflow-hidden
+        min-h-48 flex flex-col justify-center
       `}
     >
-      {/* Animated glow background */}
-      <motion.div
-        className="absolute inset-0 rounded-xl bg-gradient-to-br from-violet-500/10 via-transparent to-transparent pointer-events-none"
-        animate={{
-          opacity: isHovered ? 0.8 : 0.3,
-        }}
-        transition={{ duration: prefersReducedMotion ? 0.1 : 0.3 }}
-      />
-
-      {/* Glow line effect */}
-      <motion.div
-        className={`absolute top-0 left-0 h-px bg-gradient-to-r from-transparent via-${glowColor}/50 to-transparent pointer-events-none`}
-        animate={{
-          opacity: isHovered ? 1 : 0.3,
-          height: isHovered ? 2 : 1,
-        }}
-        transition={{ duration: 0.3 }}
-        style={{ width: "100%" }}
-      />
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -120,10 +77,9 @@ export function AnimatedStatCard({
         className="relative z-10"
       >
         <motion.div
-          className="text-slate text-sm mb-3 font-medium flex items-center gap-2"
+          className="text-white text-sm mb-3 font-medium flex items-center gap-2"
           animate={{
             scale: isHovered ? 1.05 : 1,
-            color: isHovered ? `var(--color-${glowColor})` : undefined,
           }}
           transition={{ duration: 0.2 }}
         >
@@ -142,18 +98,11 @@ export function AnimatedStatCard({
           {label}
         </motion.div>
 
-        <div className={`text-5xl font-bold font-display ${textColorMap[glowColor]} mb-4`}>
-          <motion.span
-            animate={{
-              textShadow: isHovered
-                ? `0 0 20px rgba(124, 58, 237, 0.6), 0 0 40px rgba(124, 58, 237, 0.3)`
-                : "0 0 0px rgba(124, 58, 237, 0)",
-            }}
-            transition={{ duration: 0.3 }}
-          >
+        <div className="text-5xl font-bold font-display text-white mb-4">
+          <motion.span>
             <AnimatedCounter from={0} to={value} duration={2} />
           </motion.span>
-          {maxValue && <span className="text-xl text-slate ml-1">/{maxValue}</span>}
+          {maxValue && <span className="text-xl text-white/80 ml-1">/{maxValue}</span>}
         </div>
 
         {children}
