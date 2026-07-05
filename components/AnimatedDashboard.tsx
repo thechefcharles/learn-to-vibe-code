@@ -3,12 +3,13 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { AnimatedStatCard } from "./AnimatedStatCard";
-import { AnimatedActionButton } from "./AnimatedActionButton";
 import { AnimatedProgressRing } from "./AnimatedProgressRing";
 import { ProgressBar } from "./ProgressBar";
 import { CursorTrail } from "./CursorTrail";
 import { FloatingOrbs } from "./FloatingOrbs";
 import { AnimatedGradientBg } from "./AnimatedGradientBg";
+import { PlayButton } from "./PlayButton";
+import { BackgroundFlair } from "./BackgroundFlair";
 
 interface DashboardData {
   userName: string;
@@ -30,10 +31,9 @@ interface DashboardData {
 
 interface AnimatedDashboardProps {
   data: DashboardData;
-  onSignOut: () => Promise<void>;
 }
 
-export function AnimatedDashboard({ data, onSignOut }: AnimatedDashboardProps) {
+export function AnimatedDashboard({ data }: AnimatedDashboardProps) {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -50,6 +50,7 @@ export function AnimatedDashboard({ data, onSignOut }: AnimatedDashboardProps) {
       <AnimatedGradientBg />
       <FloatingOrbs />
       <CursorTrail />
+      <BackgroundFlair />
 
       <motion.div
         className="w-full flex-1 py-12 px-4 relative z-10"
@@ -57,36 +58,19 @@ export function AnimatedDashboard({ data, onSignOut }: AnimatedDashboardProps) {
         initial="hidden"
         animate="visible"
       >
-      {/* Header */}
+      {/* Welcome Section */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="mb-12 flex justify-between items-start"
+        className="mb-12 text-center"
       >
-        <div>
-          <h1 className="text-5xl font-bold font-display text-ink mb-2">Dashboard</h1>
-          <p className="text-slate text-lg">Welcome back, {data.userName}! 👋</p>
-        </div>
-        <motion.form
-          action={onSignOut}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          <button
-            type="submit"
-            className="
-              bg-gradient-to-r from-red-600 to-red-700
-              hover:from-red-700 hover:to-red-800
-              text-paper font-medium py-2 px-6 rounded-lg
-              transition-all duration-300
-              shadow-md hover:shadow-lg
-            "
-          >
-            Sign Out
-          </button>
-        </motion.form>
+        <h1 className="text-5xl font-bold font-display text-ink mb-2">Dashboard</h1>
+        <p className="text-slate text-lg">Welcome back, {data.userName}! 👋</p>
       </motion.div>
+
+      {/* Play Button */}
+      <PlayButton hasStarted={data.completedModules > 0} />
 
       {/* Stats Grid */}
       <motion.div
@@ -138,22 +122,6 @@ export function AnimatedDashboard({ data, onSignOut }: AnimatedDashboardProps) {
         />
       </motion.div>
 
-      {/* Quick Actions */}
-      <motion.div
-        className="mb-12"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.6 }}
-      >
-        <h2 className="text-2xl font-bold font-display text-ink mb-6">Quick Actions</h2>
-        <div className={`grid gap-6 ${data.capstoneUnlocked ? "grid-cols-1 md:grid-cols-3" : "grid-cols-1 md:grid-cols-2"}`}>
-          <AnimatedActionButton href="/course" label="Continue Learning →" variant="primary" index={0} />
-          {data.capstoneUnlocked && (
-            <AnimatedActionButton href="/capstone" label="🎓 Capstone Project" variant="secondary" index={1} />
-          )}
-          <AnimatedActionButton href="/support" label="Support ❤️" variant={data.capstoneUnlocked ? "outline" : "secondary"} index={data.capstoneUnlocked ? 2 : 1} />
-        </div>
-      </motion.div>
 
       {/* Badges Section */}
       {data.badges.length > 0 && (
