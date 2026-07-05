@@ -8,12 +8,14 @@ interface FlipCardProps {
   children: React.ReactNode;
   tooltipTitle: string;
   tooltipDescription: string;
+  textColorClass?: string;
 }
 
 export function FlipCard({
   children,
   tooltipTitle,
   tooltipDescription,
+  textColorClass = "text-white",
 }: FlipCardProps) {
   const [isFlipped, setIsFlipped] = useState(false);
   const prefersReducedMotion = useReducedMotion();
@@ -66,7 +68,7 @@ export function FlipCard({
             right: 0,
             bottom: 0,
           }}
-          className="w-full h-full flex flex-col justify-center items-center text-center p-5 text-white overflow-hidden"
+          className={`w-full h-full flex flex-col justify-center items-center text-center p-5 ${textColorClass} overflow-hidden`}
         >
           <p className="font-bold text-base mb-3 leading-tight">{tooltipTitle}</p>
           <p className="text-xs leading-relaxed line-clamp-6">{tooltipDescription}</p>

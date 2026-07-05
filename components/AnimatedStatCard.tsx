@@ -111,8 +111,19 @@ export function AnimatedStatCard({
   );
 
   if (tooltipTitle && tooltipDescription) {
+    const textColorClass = {
+      violet: "text-violet-600",
+      orange: "text-orange-500",
+      lime: "text-lime-600",
+      pink: "text-pink-600",
+    }[glowColor];
+
     return (
-      <FlipCard tooltipTitle={tooltipTitle} tooltipDescription={tooltipDescription}>
+      <FlipCard
+        tooltipTitle={tooltipTitle}
+        tooltipDescription={tooltipDescription}
+        textColorClass={textColorClass}
+      >
         {cardContent}
       </FlipCard>
     );
