@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { updateCapstoneStatus } from "@/lib/actions/capstone";
+import { updateCapstoneGrade } from "@/lib/actions/capstone";
 import type { CapstoneSubmission } from "@/lib/actions/capstone";
 
 interface CapstoneReviewCardProps {
@@ -17,7 +17,7 @@ export default function CapstoneReviewCard({ submission }: CapstoneReviewCardPro
     setSaving(true);
     setError("");
     try {
-      await updateCapstoneStatus(submission.id, "approved", feedback);
+      await updateCapstoneGrade(submission.id, "pass", feedback);
       window.location.reload();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update status");
@@ -33,7 +33,7 @@ export default function CapstoneReviewCard({ submission }: CapstoneReviewCardPro
     setSaving(true);
     setError("");
     try {
-      await updateCapstoneStatus(submission.id, "rejected", feedback);
+      await updateCapstoneGrade(submission.id, "fail", feedback);
       window.location.reload();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to update status");

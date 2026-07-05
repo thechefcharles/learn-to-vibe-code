@@ -44,9 +44,14 @@ export default async function CapstoneReviewsPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-12">
-          <Link href="/dashboard" className="text-blue-400 hover:text-blue-300 text-sm mb-6 inline-block">
-            ← Back to Dashboard
-          </Link>
+          <div className="flex justify-between items-start mb-6">
+            <Link href="/dashboard" className="text-blue-400 hover:text-blue-300 text-sm inline-block">
+              ← Back to Dashboard
+            </Link>
+            <Link href="/admin/records" className="text-blue-400 hover:text-blue-300 text-sm inline-block">
+              📊 Export Records
+            </Link>
+          </div>
           <h1 className="text-5xl font-bold text-white mb-2">📋 Capstone Reviews</h1>
           <p className="text-slate-400">Review and grade student capstone projects</p>
         </div>
