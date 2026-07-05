@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { signUpAction } from "@/lib/actions/auth";
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -48,12 +49,12 @@ export default function SignUp() {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800">
+      <div className="min-h-screen flex items-center justify-center bg-indigo py-12 px-4">
         <div className="w-full max-w-md">
-          <div className="bg-slate-800 rounded-lg shadow-xl p-8 text-center">
-            <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="bg-white rounded-lg shadow-lg p-8 text-center border border-violet-light/20">
+            <div className="w-12 h-12 bg-success/20 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg
-                className="w-6 h-6 text-green-400"
+                className="w-6 h-6 text-success"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -66,8 +67,8 @@ export default function SignUp() {
                 />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">Welcome!</h2>
-            <p className="text-slate-400 mb-4">
+            <h2 className="text-2xl font-bold font-display text-ink mb-2">Welcome!</h2>
+            <p className="text-slate mb-4">
               Your account has been created. Redirecting to your dashboard...
             </p>
           </div>
@@ -77,70 +78,78 @@ export default function SignUp() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800">
+    <div className="min-h-screen flex items-center justify-center bg-indigo py-12 px-4">
       <div className="w-full max-w-md">
-        <div className="bg-slate-800 rounded-lg shadow-xl p-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Get Started</h1>
-          <p className="text-slate-400 mb-8">Create your account to begin learning</p>
+        {/* Logo */}
+        <div className="text-center mb-8">
+          <Link href="/" className="inline-block hover:opacity-80 transition">
+            <Logo variant="tagline" size="lg" />
+          </Link>
+        </div>
+
+        {/* Form Card */}
+        <div className="bg-white rounded-lg shadow-lg p-8 border border-violet-light/20">
+          <h1 className="text-3xl font-bold font-display text-ink mb-2">Get Started</h1>
+          <p className="text-slate mb-8">Create your account to begin learning</p>
 
           {error && (
-            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 mb-6">
-              <p className="text-red-400 text-sm">{error}</p>
+            <div className="bg-danger/10 border border-danger/30 rounded-lg p-4 mb-6">
+              <p className="text-danger text-sm font-medium">{error}</p>
             </div>
           )}
 
           <form onSubmit={handleSignUp} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-200 mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Full Name
               </label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 bg-paper border border-violet-light/30 rounded-lg text-ink placeholder-slate focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/20 transition"
                 placeholder="John Doe"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-200 mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Email
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 bg-paper border border-violet-light/30 rounded-lg text-ink placeholder-slate focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/20 transition"
                 placeholder="your@email.com"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-200 mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Password
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 bg-paper border border-violet-light/30 rounded-lg text-ink placeholder-slate focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/20 transition"
                 placeholder="••••••••"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-200 mb-2">
+              <label className="block text-sm font-medium text-ink mb-2">
                 Confirm Password
               </label>
               <input
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 bg-paper border border-violet-light/30 rounded-lg text-ink placeholder-slate focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/20 transition"
                 placeholder="••••••••"
                 required
               />
@@ -149,15 +158,15 @@ export default function SignUp() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-medium py-2 rounded-lg transition"
+              className="w-full bg-violet hover:bg-violet-light disabled:opacity-60 text-paper font-bold py-2 rounded-lg transition"
             >
               {loading ? "Creating account..." : "Sign Up"}
             </button>
           </form>
 
-          <p className="text-slate-400 text-sm mt-6 text-center">
+          <p className="text-slate text-sm mt-6 text-center">
             Already have an account?{" "}
-            <Link href="/auth/sign-in" className="text-blue-400 hover:text-blue-300">
+            <Link href="/auth/sign-in" className="text-violet hover:text-violet-light font-medium">
               Sign in
             </Link>
           </p>
