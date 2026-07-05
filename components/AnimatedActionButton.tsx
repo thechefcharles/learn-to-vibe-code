@@ -1,0 +1,62 @@
+"use client";
+
+import { motion } from "framer-motion";
+import Link from "next/link";
+
+interface AnimatedActionButtonProps {
+  href: string;
+  label: string;
+  variant?: "primary" | "secondary" | "outline";
+  index: number;
+}
+
+const variantClasses = {
+  primary: "bg-gradient-to-r from-violet to-violet-light hover:shadow-lg hover:shadow-violet/50 text-paper",
+  secondary: "bg-gradient-to-r from-indigo to-violet hover:shadow-lg hover:shadow-indigo/50 text-paper",
+  outline:
+    "border-2 border-violet text-violet hover:bg-violet/10 hover:shadow-lg hover:shadow-violet/30",
+};
+
+export function AnimatedActionButton({
+  href,
+  label,
+  variant = "primary",
+  index,
+}: AnimatedActionButtonProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.6,
+        delay: 0.6 + index * 0.1,
+        ease: "easeOut",
+      }}
+      whileHover={{
+        scale: 1.03,
+        transition: { duration: 0.2 },
+      }}
+      whileTap={{ scale: 0.98 }}
+      className="w-full"
+    >
+      <Link
+        href={href}
+        className={`
+          block
+          font-medium py-4 px-6 rounded-lg
+          transition-all duration-300
+          overflow-hidden relative
+          ${variantClasses[variant]}
+        `}
+      >
+        <motion.div
+          className="absolute inset-0 bg-white/10 rounded-lg"
+          initial={{ x: "-100%" }}
+          whileHover={{ x: "100%" }}
+          transition={{ duration: 0.6 }}
+        />
+        <span className="relative">{label}</span>
+      </Link>
+    </motion.div>
+  );
+}
