@@ -26,6 +26,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto px-4 py-12 w-full">
           {/* Hero */}
           <div className="text-center mb-12">
+            <h1 className="sr-only">Learn To Vibe Code — Accredited Course</h1>
             <div className="mb-8">
               <Logo variant="tagline" size="lg" className="mx-auto" />
             </div>

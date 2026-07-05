@@ -32,6 +32,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitest/ui": "^4.1.9",
+    "axe-core": "^4.12.1",
+    "axe-playwright": "^2.2.2",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.9"
