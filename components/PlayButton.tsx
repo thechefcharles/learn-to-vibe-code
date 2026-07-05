@@ -10,7 +10,7 @@ interface PlayButtonProps {
 }
 
 export function PlayButton({ hasStarted }: PlayButtonProps) {
-  const label = hasStarted ? "Resume" : "Play";
+  const label = hasStarted ? "Resume" : "Start";
   const icon = hasStarted ? "▶" : "▶";
 
   return (
