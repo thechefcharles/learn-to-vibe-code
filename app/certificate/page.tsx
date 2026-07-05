@@ -34,10 +34,10 @@ export default async function CertificatePage() {
     );
   }
 
-  const completionDate = new Date(capstone.submitted_at).toLocaleDateString(
-    "en-US",
-    { year: "numeric", month: "long", day: "numeric" }
-  );
+  const completionDate = (capstone.submitted_at
+    ? new Date(capstone.submitted_at)
+    : new Date()
+  ).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
