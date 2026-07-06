@@ -1,15 +1,20 @@
 import { getUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { isModuleUnlocked } from "@/lib/actions/course";
+import { isModuleUnlocked, getUserEnrolledVersion } from "@/lib/actions/course";
 import { getCapstoneSubmission, submitCapstone } from "@/lib/actions/capstone";
 import CapstoneSubmitForm from "@/components/CapstoneSubmitForm";
 import Link from "next/link";
+import type { Version } from "@/lib/VersionContext";
 
 export default async function CapstonePage() {
   const user = await getUser();
   if (!user) {
     redirect("/auth/sign-in");
   }
+
+  // Get user's enrolled version
+  const version = await getUserEnrolledVersion();
+  const isKids = version === "kids";
 
   // Check if all modules are unlocked (must complete Module 15)
   const moduleUnlocked = await isModuleUnlocked(15);
@@ -18,9 +23,11 @@ export default async function CapstonePage() {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
         <div className="max-w-2xl mx-auto">
           <div className="bg-slate-800 rounded-lg p-8 border border-slate-700">
-            <h1 className="text-3xl font-bold text-white mb-4">🎓 Capstone Project</h1>
+            <h1 className="text-3xl font-bold text-white mb-4">
+              {isKids ? "🎮 Build Your Project!" : "🎓 Capstone Project"}
+            </h1>
             <p className="text-slate-400 mb-6">
-              You must complete Module 15 before submitting your capstone project.
+              You must complete Module 15 before submitting your project.
             </p>
             <Link
               href="/course/15"
@@ -44,24 +51,42 @@ export default async function CapstonePage() {
           <Link href="/dashboard" className="text-blue-400 hover:text-blue-300 text-sm mb-6 inline-block">
             ← Back to Dashboard
           </Link>
-          <h1 className="text-5xl font-bold text-white mb-2">🎓 Capstone Project</h1>
+          <h1 className="text-5xl font-bold text-white mb-2">
+            {isKids ? "🎮 Build Your Project!" : "🎓 Capstone Project"}
+          </h1>
           <p className="text-slate-400 text-lg">
-            Build and submit your final project to earn your certificate
+            {isKids
+              ? "Build your own app and show what you've learned!"
+              : "Build and submit your final project to earn your certificate"}
           </p>
         </div>
 
-        {/* Info Box */}
-        <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-6 mb-8">
-          <h2 className="font-bold text-white mb-3">What's the Capstone?</h2>
+        {/* Info Box - Version-Aware */}
+        <div className={`${isKids ? "bg-purple-500/10 border-purple-500/20" : "bg-blue-500/10 border-blue-500/20"} border rounded-lg p-6 mb-8`}>
+          <h2 className="font-bold text-white mb-3">
+            {isKids ? "🎯 Your Project Challenge" : "What's the Capstone?"}
+          </h2>
           <p className="text-slate-300 mb-4">
-            Design and build a complete AI-powered application using everything you've learned.
-            Show us your best work! Your project will be reviewed by our instructor team.
+            {isKids
+              ? "Pick an idea you like (pet tracker, game list, habit tracker, etc.) and build it from scratch. You've learned everything you need!"
+              : "Design and build a complete AI-powered application using everything you've learned. Show us your best work! Your project will be reviewed by our instructor team."}
           </p>
           <div className="space-y-2 text-sm text-slate-300">
-            <p>✓ Demonstrate your AI integration skills</p>
-            <p>✓ Deploy to a production environment</p>
-            <p>✓ Get feedback from experienced developers</p>
-            <p>✓ Earn your course completion certificate</p>
+            {isKids ? (
+              <>
+                <p>✓ Pick a project idea you're excited about</p>
+                <p>✓ Use AI (Cursor/Claude Code) to build faster</p>
+                <p>✓ Deploy it to the internet so everyone can use it</p>
+                <p>✓ Record a video walkthrough of your app</p>
+              </>
+            ) : (
+              <>
+                <p>✓ Demonstrate your AI integration skills</p>
+                <p>✓ Deploy to a production environment</p>
+                <p>✓ Get feedback from experienced developers</p>
+                <p>✓ Earn your course completion certificate</p>
+              </>
+            )}
           </div>
         </div>
 

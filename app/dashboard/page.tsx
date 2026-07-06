@@ -1,7 +1,7 @@
 import { getUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { getUserXP, getUserBadges, getUserStreak } from "@/lib/actions/gamification";
-import { getAllModuleProgress } from "@/lib/actions/course";
+import { getAllModuleProgress, getUserEnrolledVersion } from "@/lib/actions/course";
 import { signOutAction } from "@/lib/actions/auth";
 import { AnimatedDashboard } from "@/components/AnimatedDashboard";
 import { DashboardHeader } from "@/components/DashboardHeader";
@@ -14,11 +14,12 @@ export default async function DashboardPage() {
     redirect("/auth/sign-in");
   }
 
-  const [xp, badges, streak, progress] = await Promise.all([
+  const [xp, badges, streak, progress, version] = await Promise.all([
     getUserXP(),
     getUserBadges(),
     getUserStreak(),
     getAllModuleProgress(),
+    getUserEnrolledVersion(),
   ]);
 
   const nextLevelXP = (xp.level + 1) * 1000;
@@ -37,6 +38,7 @@ export default async function DashboardPage() {
     badgeCount: badges.length,
     badges,
     capstoneUnlocked,
+    version,
   };
 
   return (

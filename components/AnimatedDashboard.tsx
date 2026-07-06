@@ -10,6 +10,7 @@ import { FloatingOrbs } from "./FloatingOrbs";
 import { AnimatedGradientBg } from "./AnimatedGradientBg";
 import { PlayButton } from "./PlayButton";
 import { BackgroundFlair } from "./BackgroundFlair";
+import type { Version } from "@/lib/VersionContext";
 
 interface DashboardData {
   userName: string;
@@ -27,11 +28,36 @@ interface DashboardData {
     earned_at: string;
   }>;
   capstoneUnlocked?: boolean;
+  version?: Version;
 }
 
 interface AnimatedDashboardProps {
   data: DashboardData;
 }
+
+// Version-aware badge label mapping
+const getBadgeLabel = (badgeKey: string, version?: Version): string => {
+  if (version === "kids") {
+    const kidsBadges: Record<string, string> = {
+      first_quiz_passed: "🎮 Quiz Champion",
+      rls_locked_down: "🔐 Security Expert",
+      went_live: "🚀 Launch Master",
+      automation_engineer: "🤖 Automation Wizard",
+      capstone: "🏆 Master Builder",
+    };
+    return kidsBadges[badgeKey] || badgeKey;
+  }
+
+  // Adult version badge labels
+  const adultBadges: Record<string, string> = {
+    first_quiz_passed: "Quiz Pass",
+    rls_locked_down: "RLS Mastery",
+    went_live: "Deployment",
+    automation_engineer: "Automation",
+    capstone: "Capstone",
+  };
+  return adultBadges[badgeKey] || badgeKey;
+};
 
 export function AnimatedDashboard({ data }: AnimatedDashboardProps) {
   const containerVariants = {
@@ -192,7 +218,7 @@ export function AnimatedDashboard({ data }: AnimatedDashboardProps) {
                 </motion.div>
 
                 <h3 className="font-bold font-display text-ink mb-2 relative z-10">
-                  {getBadgeName(badge.badge_key)}
+                  {getBadgeName(badge.badge_key, data.version)}
                 </h3>
                 <p className="text-sm text-slate relative z-10">{getBadgeDescription(badge.badge_key)}</p>
                 <motion.p
@@ -225,8 +251,20 @@ function getBadgeEmoji(badgeId: string): string {
   return emojis[badgeId] || "🏆";
 }
 
-function getBadgeName(badgeId: string): string {
-  const names: Record<string, string> = {
+function getBadgeName(badgeId: string, version?: Version): string {
+  if (version === "kids") {
+    const kidsNames: Record<string, string> = {
+      first_quiz_passed: "🎮 Quiz Champion",
+      five_modules_complete: "⭐ Level 5 Master",
+      all_modules_complete: "👑 Course Hero",
+      perfect_quiz: "💯 Perfect Run",
+      streak_7: "🔥 7-Day Warrior",
+      streak_30: "🌟 Legend Status",
+    };
+    return kidsNames[badgeId] || "Achievement";
+  }
+
+  const adultNames: Record<string, string> = {
     first_quiz_passed: "Quiz Master",
     five_modules_complete: "Dedicated Learner",
     all_modules_complete: "Course Champion",
@@ -234,7 +272,7 @@ function getBadgeName(badgeId: string): string {
     streak_7: "Week Warrior",
     streak_30: "Consistency King",
   };
-  return names[badgeId] || "Achievement";
+  return adultNames[badgeId] || "Achievement";
 }
 
 function getBadgeDescription(badgeId: string): string {
