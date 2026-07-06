@@ -669,6 +669,426 @@ export const quizzes: Record<number, ModuleQuiz> = {
   },
 };
 
+// Kids version quizzes (simplified language, same learning objectives)
+export const kidsQuizzes: Record<number, ModuleQuiz> = {
+  0: {
+    moduleId: 0,
+    questions: [
+      {
+        id: "k0-1",
+        text: "What does Vercel do?",
+        options: ["Edits your code", "Stores your database", "Shows your app to the world (on the internet!)", "Saves your code on GitHub"],
+        correctAnswer: 2,
+        explanation: "Vercel puts your app online so anyone can use it!",
+      },
+      {
+        id: "k0-2",
+        text: "Which tool runs your app on your computer while you're building it?",
+        options: ["GitHub", "Node.js", "Supabase", "Cursor"],
+        correctAnswer: 1,
+        explanation: "Node.js is the engine that runs your code locally.",
+      },
+      {
+        id: "k0-3",
+        text: "Which pairing is correct?",
+        options: ["Supabase = puts your app on the internet", "GitHub = stores your code and backs it up", "Cursor = database", "Vercel = version control"],
+        correctAnswer: 1,
+        explanation: "GitHub is where you save and backup your code!",
+      },
+    ],
+  },
+  1: {
+    moduleId: 1,
+    questions: [
+      {
+        id: "k1-1",
+        text: "What is an AI model really doing when it writes code?",
+        options: ["Copying it from the internet", "Guessing the next word/token over and over (like autocomplete!)", "Thinking like a human engineer", "Looking it up in a book"],
+        correctAnswer: 1,
+        explanation: "AI works by predicting what comes next, one piece at a time!",
+      },
+      {
+        id: "k1-2",
+        text: "What's 'hallucination' in AI?",
+        options: ["The AI sees things that aren't there on screen", "The AI makes up code that sounds real but doesn't exist (confidently!)", "The AI refuses to work", "The AI forgets your question"],
+        correctAnswer: 1,
+        explanation: "Hallucination means the AI invents things that seem real but aren't!",
+      },
+      {
+        id: "k1-3",
+        text: "'Vibe coding done right' means:",
+        options: ["Never read the code, just vibes", "Use AI to code fast, BUT understand everything before it goes live", "Only use one tool", "Skip testing"],
+        correctAnswer: 1,
+        explanation: "You're the boss—use AI to code fast, but always check your work!",
+      },
+    ],
+  },
+  2: {
+    moduleId: 2,
+    questions: [
+      {
+        id: "k2-1",
+        text: "The five ingredients of a strong prompt are: task, context, constraints, examples, and...?",
+        options: ["The AI's temperature setting", "Output format", "Emojis", "Your mood"],
+        correctAnswer: 1,
+        explanation: "Output format tells the AI how you want the answer.",
+      },
+      {
+        id: "k2-2",
+        text: "Why does a strong prompt work better?",
+        options: ["It's longer (more words = better)", "It removes guessing — tells the AI exactly what you want", "It uses big fancy words", "It repeats the same thing multiple times"],
+        correctAnswer: 1,
+        explanation: "Be specific! The clearer you are, the better the AI does.",
+      },
+      {
+        id: "k2-3",
+        text: "Your AI code is wrong. What's the best way to fix it?",
+        options: ["Say 'try again'", "Tell it specifically what's wrong and what you want instead", "Start a completely new conversation", "Give up"],
+        correctAnswer: 1,
+        explanation: "Specific feedback gets specific fixes!",
+      },
+    ],
+  },
+  3: {
+    moduleId: 3,
+    questions: [
+      {
+        id: "k3-1",
+        text: "Why should you plan before building, even with super-fast AI?",
+        options: ["It's the law", "The faster you can build, the worse a bad plan hurts", "It slows you down intentionally", "AI can't code without a plan"],
+        correctAnswer: 1,
+        explanation: "A bad plan leads to more fixing later—plan first!",
+      },
+      {
+        id: "k3-2",
+        text: "What should a plan NOT include?",
+        options: ["The problem you're solving", "The exact color of every button pixel-perfect", "Your core features", "What features are coming later (not now)"],
+        correctAnswer: 1,
+        explanation: "Don't get stuck on pixel-perfect details—focus on functionality!",
+      },
+      {
+        id: "k3-3",
+        text: "A 'dependency' means:",
+        options: ["An npm package", "Something that has to exist before another thing can work", "A bug", "A team member"],
+        correctAnswer: 1,
+        explanation: "A dependency is when one task needs another task done first.",
+      },
+    ],
+  },
+  4: {
+    moduleId: 4,
+    questions: [
+      {
+        id: "k4-1",
+        text: "Cursor is best at:",
+        options: ["Making changes to many files at once", "Small tweaks to one file (editing what you can see)", "Deploying your app", "Finding bugs in other people's code"],
+        correctAnswer: 1,
+        explanation: "Cursor works in the editor for quick, focused fixes.",
+      },
+      {
+        id: "k4-2",
+        text: "What does a `.cursorrules` file do?",
+        options: ["Formats your code automatically", "Tells the AI about your project so it remembers on every chat", "Deploys your app", "Runs your tests"],
+        correctAnswer: 1,
+        explanation: "Rules files give the AI context about your project!",
+      },
+      {
+        id: "k4-3",
+        text: "The `@` symbol in Cursor lets you:",
+        options: ["Tag teammates", "Pin specific files/links into the AI's memory", "Add comments", "Undo changes"],
+        correctAnswer: 1,
+        explanation: "@-mentions pin context so the AI doesn't forget it.",
+      },
+    ],
+  },
+  5: {
+    moduleId: 5,
+    questions: [
+      {
+        id: "k5-1",
+        text: "Claude Code works differently from Cursor because it thinks in:",
+        options: ["Edits first, goals second", "Goals first, then figures out the edits", "Files first, folders second", "Tests first"],
+        correctAnswer: 1,
+        explanation: "Claude Code is agentic—you describe the goal, it figures out the steps.",
+      },
+      {
+        id: "k5-2",
+        text: "`CLAUDE.md` in Claude Code is like:",
+        options: ["package.json", "A Cursor rules file", ".gitignore", "A comment"],
+        correctAnswer: 1,
+        explanation: "CLAUDE.md gives Claude Code context about your project.",
+      },
+      {
+        id: "k5-3",
+        text: "Why use plan mode?",
+        options: ["It's faster", "So the AI shows you its plan before changing code (you can say yes/no)", "It saves tokens", "It's required by law"],
+        correctAnswer: 1,
+        explanation: "Plan mode lets you review before the AI makes changes!",
+      },
+    ],
+  },
+  6: {
+    moduleId: 6,
+    questions: [
+      {
+        id: "k6-1",
+        text: "Why do AI-designed UIs often look boring?",
+        options: ["The AI picks the most common designs from its training", "AI doesn't like design", "Tailwind CSS is ugly", "They're always broken"],
+        correctAnswer: 0,
+        explanation: "AI learns from common patterns—you have to ask for cool design!",
+      },
+      {
+        id: "k6-2",
+        text: "Which is NOT a design principle?",
+        options: ["Hierarchy (what's most important?)", "Spacing (breathing room)", "Database indexing", "Color palette (colors that work together)"],
+        correctAnswer: 2,
+        explanation: "Database indexing is a backend concept, not design!",
+      },
+      {
+        id: "k6-3",
+        text: "Tailwind CSS is useful because:",
+        options: ["It replaces Next.js", "You add classes to HTML instead of writing CSS from scratch", "It's only for designers", "It works on the backend"],
+        correctAnswer: 1,
+        explanation: "Tailwind lets you style with classes—no CSS file needed!",
+      },
+    ],
+  },
+  7: {
+    moduleId: 7,
+    questions: [
+      {
+        id: "k7-1",
+        text: "A backend database does everything EXCEPT:",
+        options: ["Save your data permanently", "Create user accounts", "Control who can see what data", "Make your typing faster"],
+        correctAnswer: 3,
+        explanation: "Databases don't speed up typing—they store data!",
+      },
+      {
+        id: "k7-2",
+        text: "With RLS security on and NO rules set, what happens?",
+        options: ["Everyone can see everything", "Nobody can see anything (locked by default, safe!)", "Only new data shows", "You get an error"],
+        correctAnswer: 1,
+        explanation: "RLS defaults to denying access—super safe!",
+      },
+      {
+        id: "k7-3",
+        text: "In a security rule, `auth.uid()` gives you:",
+        options: ["A random ID", "The logged-in user's unique ID", "The table name", "The API key"],
+        correctAnswer: 1,
+        explanation: "auth.uid() tells you who's logged in!",
+      },
+    ],
+  },
+  8: {
+    moduleId: 8,
+    questions: [
+      {
+        id: "k8-1",
+        text: "When your code breaks, the first thing to do is:",
+        options: ["Ask the AI to fix it immediately", "Read the error message (it tells you what went wrong!)", "Rewrite everything", "Restart your computer"],
+        correctAnswer: 1,
+        explanation: "Error messages are your best friend!",
+      },
+      {
+        id: "k8-2",
+        text: "If you can't explain a line of AI code after reading it carefully, you should:",
+        options: ["Ship it anyway", "Don't ship it yet — simplify it or ask for a version you understand", "Delete the whole file", "Ignore it"],
+        correctAnswer: 1,
+        explanation: "Never ship code you don't understand!",
+      },
+      {
+        id: "k8-3",
+        text: "If the AI 'fixes' a problem by removing security (like RLS), that's:",
+        options: ["A good fix", "Dangerous (it hides the real problem)", "The only way", "Fine"],
+        correctAnswer: 1,
+        explanation: "That's a band-aid, not a real fix!",
+      },
+    ],
+  },
+  9: {
+    moduleId: 9,
+    questions: [
+      {
+        id: "k9-1",
+        text: "A commit is best described as:",
+        options: ["A deployed app", "A save point with a message (checkpoint in a game!)", "A branch", "A backup server"],
+        correctAnswer: 1,
+        explanation: "Commits are like game save points!",
+      },
+      {
+        id: "k9-2",
+        text: "Why use branches even when coding solo?",
+        options: ["Required", "So main stays working, and each change is safe and reviewable", "Faster typing", "It deletes old code"],
+        correctAnswer: 1,
+        explanation: "Branches protect your working code!",
+      },
+      {
+        id: "k9-3",
+        text: "A merge conflict is:",
+        options: ["Unfixable", "Git asking you to choose between two changes", "A deployment failure", "A virus"],
+        correctAnswer: 1,
+        explanation: "Merge conflicts just need you to pick which change to keep!",
+      },
+    ],
+  },
+  10: {
+    moduleId: 10,
+    questions: [
+      {
+        id: "k10-1",
+        text: "What does 'CI/CD' mean here?",
+        options: ["Manual uploads", "Push to GitHub → auto-build and auto-deploy", "Copying files manually", "Email code to a server"],
+        correctAnswer: 1,
+        explanation: "CI/CD automates testing and deployment!",
+      },
+      {
+        id: "k10-2",
+        text: "Your app works at home but breaks on Vercel because:",
+        options: ["Restart your laptop", "You forgot to set environment variables on Vercel", "Rewrite it", "Buy a domain"],
+        correctAnswer: 1,
+        explanation: "Env vars tell Vercel about your secrets!",
+      },
+      {
+        id: "k10-3",
+        text: "A 'preview deploy' is:",
+        options: ["The live production app", "A test version of a branch/PR before merging", "A screenshot", "Your local computer"],
+        correctAnswer: 1,
+        explanation: "Preview deploys let you test before going live!",
+      },
+    ],
+  },
+  11: {
+    moduleId: 11,
+    questions: [
+      {
+        id: "k11-1",
+        text: "An AI agent is different from a function because:",
+        options: ["It's Python", "The agent decides which steps to take (within a goal)", "It never fails", "It needs no code"],
+        correctAnswer: 1,
+        explanation: "Agents are AI that figures out the steps themselves!",
+      },
+      {
+        id: "k11-2",
+        text: "Why put AI calls behind a stable interface?",
+        options: ["Make it slower", "Test it without real AI, swap models later without changing the app", "Skip the AI", "Avoid coding"],
+        correctAnswer: 1,
+        explanation: "A stable interface lets you swap tools later!",
+      },
+      {
+        id: "k11-3",
+        text: "Before a big action (send money, delete data), the safest thing is:",
+        options: ["Use more agents", "Have a human check/approve it first", "Use a bigger AI model", "Run it faster"],
+        correctAnswer: 1,
+        explanation: "Human approval is the best safety net!",
+      },
+    ],
+  },
+  12: {
+    moduleId: 12,
+    questions: [
+      {
+        id: "k12-1",
+        text: "Production-ready code means tested, resilient, secure, maintainable, and:",
+        options: ["Colorful", "Accessible (everyone can use it) & fast", "Cheap", "Quick to type"],
+        correctAnswer: 1,
+        explanation: "Production code must work for everyone!",
+      },
+      {
+        id: "k12-2",
+        text: "When AI writes tests, what should you do?",
+        options: ["Run them blindly", "Review them — they can pass while checking the wrong thing", "Never run them", "Delete them"],
+        correctAnswer: 1,
+        explanation: "Check the tests—they can be wrong too!",
+      },
+      {
+        id: "k12-3",
+        text: "What does AI usually skip unless you ask?",
+        options: ["Variable names", "Accessibility & performance", "Syntax", "Comments"],
+        correctAnswer: 1,
+        explanation: "AI forgets accessibility and performance—you have to ask!",
+      },
+    ],
+  },
+  13: {
+    moduleId: 13,
+    questions: [
+      {
+        id: "k13-1",
+        text: "What lets Claude Code act on GitHub/Supabase/Vercel?",
+        options: ["CLAUDE.md", "A skill", "MCP (tool connectors)", "A comment"],
+        correctAnswer: 2,
+        explanation: "MCPs are connectors to external tools!",
+      },
+      {
+        id: "k13-2",
+        text: "A skill is best for:",
+        options: ["Storing secrets", "Procedural know-how that kicks in by context", "Hosting", "Database queries"],
+        correctAnswer: 1,
+        explanation: "Skills are on-demand procedural help!",
+      },
+      {
+        id: "k13-3",
+        text: "The safe rule for automation is:",
+        options: ["Automate everything", "Automate the reversible, protect the irreversible", "Never automate", "Skip permissions"],
+        correctAnswer: 1,
+        explanation: "Automate safe stuff, gate the dangerous stuff!",
+      },
+    ],
+  },
+  14: {
+    moduleId: 14,
+    questions: [
+      {
+        id: "k14-1",
+        text: "The brownfield golden rule is:",
+        options: ["Rewrite it all your way", "Change minimum, match the code around it, prove you didn't break anything", "Never use tests", "Don't read the code"],
+        correctAnswer: 1,
+        explanation: "Respect existing code—make minimal, safe changes!",
+      },
+      {
+        id: "k14-2",
+        text: "Before changing existing code, assess:",
+        options: ["Its color scheme", "The blast radius (what depends on it)", "File size only", "Who wrote it"],
+        correctAnswer: 1,
+        explanation: "Know what could break before you change anything!",
+      },
+      {
+        id: "k14-3",
+        text: "If an AI tries to reformat 40 files for a one-line fix, you should:",
+        options: ["Accept it", "Reject scope creep — keep the change tiny", "Delete the repo", "Disable tests"],
+        correctAnswer: 1,
+        explanation: "One-line fixes shouldn't touch 40 files!",
+      },
+    ],
+  },
+  15: {
+    moduleId: 15,
+    questions: [
+      {
+        id: "k15-1",
+        text: "Why tools don't define your skill:",
+        options: ["All tools are the same", "Skills last forever; tools come and go", "You only need one tool", "Tools never change"],
+        correctAnswer: 1,
+        explanation: "The skills you learn transfer to any tool!",
+      },
+      {
+        id: "k15-2",
+        text: "A real criterion to evaluate tools:",
+        options: ["Its logo color", "How trapped you are (can you switch later?)", "Founder's name", "Release date only"],
+        correctAnswer: 1,
+        explanation: "Avoid getting locked into one tool!",
+      },
+      {
+        id: "k15-3",
+        text: "'It depends' is a good answer when:",
+        options: ["You stop there", "You name what it depends on AND decide", "You pick randomly", "You avoid choosing"],
+        correctAnswer: 1,
+        explanation: "After 'it depends', explain what it depends on!",
+      },
+    ],
+  },
+};
+
 export function getModuleQuiz(moduleId: number): ModuleQuiz | null {
   return quizzes[moduleId] || null;
 }
@@ -697,12 +1117,12 @@ export function scoreQuiz(
 }
 
 // Version-aware quiz loader
-// Currently both versions use adult quizzes; kids quizzes will be added in Phase 2a
 export function getModuleQuizByVersion(
   moduleId: number,
   version: Version = "adult"
 ): ModuleQuiz | null {
-  // TODO: Create separate kidsQuizzes object when Phase 2a (kids content) is implemented
-  // For now, both versions share adult quizzes
-  return getModuleQuiz(moduleId);
+  if (version === "kids") {
+    return kidsQuizzes[moduleId] || null;
+  }
+  return quizzes[moduleId] || null;
 }
