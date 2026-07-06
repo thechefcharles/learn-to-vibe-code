@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Logo } from "./Logo";
 
 interface DashboardHeaderProps {
   onSignOut: () => Promise<void>;
@@ -11,9 +10,9 @@ interface DashboardHeaderProps {
 export function DashboardHeader({ onSignOut }: DashboardHeaderProps) {
   return (
     <header className="bg-paper border-b border-violet-light/20 sticky top-0 z-50">
-      <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-        <Link href="/" className="hover:opacity-80 transition">
-          <Logo variant="primary" size="sm" />
+      <div className="max-w-6xl mx-auto px-4 py-2 flex justify-between items-center">
+        <Link href="/" className="hover:opacity-90 transition block">
+          <img src="/logo-playful.svg" alt="Learn To Vibe Code" className="h-24 w-auto" />
         </Link>
 
         <div className="flex gap-4 items-center">
