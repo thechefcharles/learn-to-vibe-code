@@ -4,6 +4,8 @@ import "./globals.css";
 import "./globals-theme.css";
 import { ThemeProvider } from "@/lib/ThemeContext";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { VersionProvider } from "@/lib/VersionContext";
+import { VersionToggle } from "@/components/VersionToggle";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -39,10 +41,13 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <ThemeProvider>
-          <ThemeSwitcher />
-          {children}
-        </ThemeProvider>
+        <VersionProvider>
+          <ThemeProvider>
+            <ThemeSwitcher />
+            <VersionToggle />
+            {children}
+          </ThemeProvider>
+        </VersionProvider>
       </body>
     </html>
   );

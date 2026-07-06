@@ -4,12 +4,14 @@ import { useState } from "react";
 import { signUpAction } from "@/lib/actions/auth";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
+import type { Version } from "@/lib/VersionContext";
 
 export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [version, setVersion] = useState<Version>("adult");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -31,11 +33,13 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      const result = await signUpAction(email, password, name);
+      const result = await signUpAction(email, password, name, version);
       if (result.error) {
         setError(result.error);
       } else {
         setSuccess(true);
+        // Set version in localStorage for immediate UI update
+        localStorage.setItem("version", version);
         setTimeout(() => {
           window.location.href = "/dashboard";
         }, 2000);
@@ -90,7 +94,48 @@ export default function SignUp() {
         {/* Form Card */}
         <div className="bg-white rounded-lg shadow-lg p-8 border border-violet-light/20">
           <h1 className="text-3xl font-bold font-display text-ink mb-2">Get Started</h1>
-          <p className="text-slate mb-8">Create your account to begin learning</p>
+          <p className="text-slate mb-6">Choose your learning path</p>
+
+          {/* Version Selection */}
+          <div className="grid grid-cols-2 gap-4 mb-8">
+            <label
+              className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                version === "kids"
+                  ? "border-violet-600 bg-violet-50"
+                  : "border-slate-200 hover:border-slate-300"
+              }`}
+            >
+              <input
+                type="radio"
+                name="version"
+                value="kids"
+                checked={version === "kids"}
+                onChange={(e) => setVersion(e.target.value as Version)}
+                className="mr-2"
+              />
+              <span className="font-bold text-ink">🎮 Kids</span>
+              <p className="text-xs text-slate mt-1">Fun, gamified learning</p>
+            </label>
+
+            <label
+              className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                version === "adult"
+                  ? "border-violet-600 bg-violet-50"
+                  : "border-slate-200 hover:border-slate-300"
+              }`}
+            >
+              <input
+                type="radio"
+                name="version"
+                value="adult"
+                checked={version === "adult"}
+                onChange={(e) => setVersion(e.target.value as Version)}
+                className="mr-2"
+              />
+              <span className="font-bold text-ink">💼 Professional</span>
+              <p className="text-xs text-slate mt-1">Job-ready credential</p>
+            </label>
+          </div>
 
           {error && (
             <div className="bg-danger/10 border border-danger/30 rounded-lg p-4 mb-6">

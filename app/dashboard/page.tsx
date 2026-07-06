@@ -5,6 +5,7 @@ import { getAllModuleProgress } from "@/lib/actions/course";
 import { signOutAction } from "@/lib/actions/auth";
 import { AnimatedDashboard } from "@/components/AnimatedDashboard";
 import { DashboardHeader } from "@/components/DashboardHeader";
+import { DashboardBackground } from "@/components/DashboardBackground";
 import { Footer } from "@/components/Footer";
 
 export default async function DashboardPage() {
@@ -39,7 +40,8 @@ export default async function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-paper flex flex-col">
+    <div className="min-h-screen flex flex-col">
+      <DashboardBackground />
       <DashboardHeader onSignOut={signOutAction} />
       <div className="max-w-6xl mx-auto w-full flex-1">
         <AnimatedDashboard data={dashboardData} />

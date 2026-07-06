@@ -38,8 +38,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.style.setProperty("--color-card-border", theme.cardBorder);
   }, [currentTheme, mounted]);
 
-  if (!mounted) return <>{children}</>;
-
   return (
     <ThemeContext.Provider value={{ currentTheme, theme: themes[currentTheme], setTheme: setCurrentTheme }}>
       {children}

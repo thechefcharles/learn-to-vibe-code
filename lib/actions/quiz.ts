@@ -2,9 +2,10 @@
 
 import { createClient } from "@/lib/supabase/server";
 import { getUser } from "@/lib/auth";
-import { scoreQuiz, getModuleQuiz } from "@/lib/quizzes";
+import { scoreQuiz, getModuleQuizByVersion } from "@/lib/quizzes";
 import { revalidatePath } from "next/cache";
 import { awardXP, awardBadge, updateStreak } from "@/lib/actions/gamification";
+import type { Version } from "@/lib/VersionContext";
 
 export async function submitQuiz(
   moduleId: number,
@@ -13,21 +14,31 @@ export async function submitQuiz(
   const user = await getUser();
   if (!user) throw new Error("Not authenticated");
 
+  const supabase = await createClient();
+
+  // Get user's enrolled version
+  const { data: enrollment } = await supabase
+    .from("enrollments")
+    .select("enrolled_version")
+    .eq("user_id", user.id)
+    .single();
+
+  const version = (enrollment?.enrolled_version as Version) || "adult";
+
   // Get quiz and score it server-side (NEVER trust client scoring)
-  const quiz = getModuleQuiz(moduleId);
+  const quiz = getModuleQuizByVersion(moduleId, version);
   if (!quiz) throw new Error("Quiz not found");
 
   const result = scoreQuiz(responses, quiz);
 
-  const supabase = await createClient();
-
-  // Store attempt
+  // Store attempt with version tracking
   const { error } = await supabase.from("quiz_attempts").insert({
     user_id: user.id,
     module_id: moduleId,
     score: result.score,
     passed: result.passed,
     attempt_no: await getNextAttemptNumber(user.id, moduleId),
+    target_audience: version,
   });
 
   if (error) throw error;

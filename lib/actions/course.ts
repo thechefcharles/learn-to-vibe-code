@@ -5,6 +5,22 @@ import { getUser } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { hasPassedQuiz } from "./quiz";
 import { hasSubmittedDeliverable } from "./deliverable";
+import type { Version } from "@/lib/VersionContext";
+
+// Helper to get user's enrolled version
+export async function getUserEnrolledVersion(): Promise<Version> {
+  const user = await getUser();
+  if (!user) return "adult";
+
+  const supabase = await createClient();
+  const { data: enrollment } = await supabase
+    .from("enrollments")
+    .select("enrolled_version")
+    .eq("user_id", user.id)
+    .single();
+
+  return (enrollment?.enrolled_version as Version) || "adult";
+}
 
 export async function getUserModuleProgress(moduleId: number) {
   const user = await getUser();

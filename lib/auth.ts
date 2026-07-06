@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import type { Version } from "@/lib/VersionContext";
 
 export async function getSession() {
   const supabase = await createClient();
@@ -34,11 +35,12 @@ export async function getUserProfile() {
 export async function signUp(
   email: string,
   password: string,
-  name: string
+  name: string,
+  version: Version = "adult"
 ) {
   const supabase = await createClient();
 
-  console.log("[signUp] Starting signup for", email);
+  console.log("[signUp] Starting signup for", email, "version:", version);
 
   const { data, error } = await supabase.auth.signUp({
     email,
@@ -68,11 +70,12 @@ export async function signUp(
 
   console.log("[signUp] Profile created");
 
-  // Create enrollment (always for learners)
+  // Create enrollment with version selection
   const { error: enrollmentError } = await supabase
     .from("enrollments")
     .insert({
       user_id: data.user.id,
+      enrolled_version: version,
     });
 
   if (enrollmentError) {
@@ -80,7 +83,7 @@ export async function signUp(
     throw enrollmentError;
   }
 
-  console.log("[signUp] Enrollment created");
+  console.log("[signUp] Enrollment created with version:", version);
 
   // Initialize XP and streaks
   await supabase.from("xp").insert({

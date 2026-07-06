@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ReactNode, useState } from "react";
 import { AnimatedCounter } from "./AnimatedCounter";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { useVersion } from "@/lib/VersionContext";
 import { FlipCard } from "./FlipCard";
 
 interface AnimatedStatCardProps {
@@ -37,8 +38,10 @@ export function AnimatedStatCard({
   tooltipDescription,
 }: AnimatedStatCardProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const { version } = useVersion();
   const bgColor = solidColorMap[glowColor];
   const prefersReducedMotion = useReducedMotion();
+  const isKids = version === "kids";
 
   const cardContent = (
     <motion.div
@@ -62,11 +65,11 @@ export function AnimatedStatCard({
       onHoverEnd={() => setIsHovered(false)}
       className={`
         relative
-        ${bgColor} rounded-xl p-6
+        ${bgColor} ${isKids ? "rounded-2xl p-8" : "rounded-xl p-6"}
         transition-all duration-300
         shadow-lg hover:shadow-2xl
         overflow-hidden
-        h-56 flex flex-col justify-center
+        ${isKids ? "h-72" : "h-56"} flex flex-col justify-center
       `}
     >
 
@@ -77,7 +80,7 @@ export function AnimatedStatCard({
         className="relative z-10 w-full"
       >
         <motion.div
-          className="text-white text-sm mb-3 font-medium flex items-center gap-2"
+          className={`text-white ${isKids ? "text-lg" : "text-sm"} mb-3 font-medium flex items-center gap-2`}
           animate={{
             scale: isHovered ? 1.05 : 1,
           }}
@@ -85,7 +88,7 @@ export function AnimatedStatCard({
         >
           {icon && (
             <motion.span
-              className="text-lg"
+              className={isKids ? "text-2xl" : "text-lg"}
               animate={{
                 scale: isHovered ? 1.2 : 1,
                 rotate: isHovered ? 12 : 0,
@@ -98,11 +101,11 @@ export function AnimatedStatCard({
           {label}
         </motion.div>
 
-        <div className="text-5xl font-bold font-display text-white mb-4">
+        <div className={`${isKids ? "text-7xl" : "text-5xl"} font-bold font-display text-white mb-4`}>
           <motion.span>
             <AnimatedCounter from={0} to={value} duration={2} />
           </motion.span>
-          {maxValue && <span className="text-xl text-white/80 ml-1">/{maxValue}</span>}
+          {maxValue && <span className={`${isKids ? "text-3xl" : "text-xl"} text-white/80 ml-1`}>/{maxValue}</span>}
         </div>
 
         {children}

@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { submitQuiz, getQuizAttempts } from "@/lib/actions/quiz";
-import { getModuleQuiz } from "@/lib/quizzes";
+import { getModuleQuizByVersion } from "@/lib/quizzes";
 import { getModuleMetadata } from "@/lib/module-metadata";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import type { Version } from "@/lib/VersionContext";
 
 interface QuizResult {
   score: number;
@@ -25,7 +26,11 @@ export default function QuizPage() {
   const [attempts, setAttempts] = useState<any[]>([]);
 
   useEffect(() => {
-    const q = getModuleQuiz(moduleId);
+    // Get version from localStorage (set during signup/toggle)
+    const version = (localStorage.getItem("version") as Version) || "adult";
+
+    // Load version-aware quiz
+    const q = getModuleQuizByVersion(moduleId, version);
     setQuiz(q);
 
     // Load previous attempts

@@ -1,3 +1,5 @@
+import type { Version } from "@/lib/VersionContext";
+
 export interface QuizQuestion {
   id: string;
   text: string;
@@ -692,4 +694,15 @@ export function scoreQuiz(
     percentage,
     passed,
   };
+}
+
+// Version-aware quiz loader
+// Currently both versions use adult quizzes; kids quizzes will be added in Phase 2a
+export function getModuleQuizByVersion(
+  moduleId: number,
+  version: Version = "adult"
+): ModuleQuiz | null {
+  // TODO: Create separate kidsQuizzes object when Phase 2a (kids content) is implemented
+  // For now, both versions share adult quizzes
+  return getModuleQuiz(moduleId);
 }
