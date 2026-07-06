@@ -13,7 +13,7 @@ test.describe("Kids Version E2E - Complete Dual-Version Flow", () => {
 
     // 1. Navigate to landing page
     await page.goto("/");
-    await expect(page).toHaveTitle(/Learn To Vibe Code/);
+    await expect(page).toHaveTitle(/Learn to Vibe Code/i);
 
     // 2. Verify version toggle exists in top-left
     const versionToggle = page.locator("text=🎮 Kids").first();

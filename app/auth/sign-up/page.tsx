@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signUpAction } from "@/lib/actions/auth";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
@@ -15,6 +15,14 @@ export default function SignUp() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  // Initialize version from localStorage if it exists (from version toggle on landing page)
+  useEffect(() => {
+    const storedVersion = localStorage.getItem("version") as Version;
+    if (storedVersion && (storedVersion === "kids" || storedVersion === "adult")) {
+      setVersion(storedVersion);
+    }
+  }, []);
 
   async function handleSignUp(e: React.FormEvent) {
     e.preventDefault();
