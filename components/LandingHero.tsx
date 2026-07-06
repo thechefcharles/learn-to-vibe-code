@@ -5,15 +5,15 @@ import Link from "next/link";
 
 export function LandingHero() {
   return (
-    <div className="relative py-20 px-4 overflow-hidden">
+    <div className="relative py-20 px-4 overflow-hidden" style={{ backgroundImage: "var(--color-bg)" }}>
+      {/* Animated background gradient */}
       <motion.div
-        className="absolute inset-0 -z-10"
+        className="absolute inset-0 -z-10 opacity-50"
+        style={{
+          backgroundImage: "var(--color-bg)",
+        }}
         animate={{
-          background: [
-            "linear-gradient(45deg, rgba(124, 58, 237, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%)",
-            "linear-gradient(225deg, rgba(236, 72, 153, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%)",
-            "linear-gradient(45deg, rgba(124, 58, 237, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%)",
-          ],
+          opacity: [0.5, 0.7, 0.5],
         }}
         transition={{ duration: 8, repeat: Infinity }}
       />
@@ -33,8 +33,9 @@ export function LandingHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
           className="text-5xl md:text-6xl font-bold font-display text-ink mb-4"
+          style={{ color: "var(--color-accent)" }}
         >
-          Learn to <span className="bg-gradient-to-r from-violet-600 to-pink-600 bg-clip-text text-transparent">Vibe Code</span>
+          Learn to <span style={{ color: "var(--color-accent-light)" }}>Vibe Code</span>
         </motion.h1>
 
         <motion.p
@@ -52,7 +53,7 @@ export function LandingHero() {
           transition={{ delay: 0.6, duration: 0.8 }}
           className="text-lg text-slate mb-8"
         >
-          16 modules • 93 hours • 9.3 CEUs • <span className="font-bold text-violet-600">100% free</span>
+          16 modules • 93 hours • 9.3 CEUs • <span className="font-bold" style={{ color: "var(--color-accent)" }}>100% free</span>
         </motion.p>
 
         <motion.div
@@ -63,18 +64,26 @@ export function LandingHero() {
         >
           <Link
             href="/auth/sign-up"
-            className="bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white font-bold py-4 px-10 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
+            className="text-white font-bold py-4 px-10 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
+            style={{ backgroundColor: "var(--color-accent)" }}
           >
             Start Learning Free
           </Link>
           <Link
             href="/demo"
-            className="bg-white border-2 border-violet-600 text-violet-600 hover:bg-violet-50 font-bold py-4 px-10 rounded-lg transition-all duration-300 text-lg"
+            className="font-bold py-4 px-10 rounded-lg transition-all duration-300 text-lg"
+            style={{
+              backgroundColor: "var(--color-card-bg)",
+              borderColor: "var(--color-accent)",
+              color: "var(--color-accent)",
+              border: "2px solid",
+            }}
           >
             Try 2 Free Modules
           </Link>
         </motion.div>
 
+        {/* Trust badges */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

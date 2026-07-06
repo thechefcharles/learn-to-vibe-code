@@ -1,0 +1,55 @@
+export const themes = {
+  violet: {
+    name: "Violet",
+    accent: "#7c3aed",
+    accentLight: "#a78bfa",
+    bg: "linear-gradient(135deg, #1e1b4b 0%, #2d1b69 50%, #312e81 100%)",
+    text: "#ffffff",
+    textMuted: "#e0e7ff",
+    cardBg: "rgba(124, 58, 237, 0.1)",
+    cardBorder: "rgba(167, 139, 250, 0.3)",
+  },
+  dark: {
+    name: "Dark",
+    accent: "#1f2937",
+    accentLight: "#374151",
+    bg: "linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #2d2d2d 100%)",
+    text: "#ffffff",
+    textMuted: "#d1d5db",
+    cardBg: "rgba(31, 41, 55, 0.1)",
+    cardBorder: "rgba(75, 85, 99, 0.3)",
+  },
+  sage: {
+    name: "Sage",
+    accent: "#65a30d",
+    accentLight: "#84cc16",
+    bg: "linear-gradient(135deg, #dcfce7 0%, #bbf7d0 50%, #a7f3d0 100%)",
+    text: "#1b4332",
+    textMuted: "#2d6a4f",
+    cardBg: "rgba(132, 204, 22, 0.1)",
+    cardBorder: "rgba(132, 204, 22, 0.3)",
+  },
+  sunset: {
+    name: "Sunset",
+    accent: "#ea580c",
+    accentLight: "#fb923c",
+    bg: "linear-gradient(135deg, #7c2d12 0%, #92400e 50%, #b45309 100%)",
+    text: "#ffffff",
+    textMuted: "#fed7aa",
+    cardBg: "rgba(234, 88, 12, 0.1)",
+    cardBorder: "rgba(251, 146, 60, 0.3)",
+  },
+  ocean: {
+    name: "Ocean",
+    accent: "#0369a1",
+    accentLight: "#0ea5e9",
+    bg: "linear-gradient(135deg, #0c2d48 0%, #164e63 50%, #1e5a8e 100%)",
+    text: "#ffffff",
+    textMuted: "#bae6fd",
+    cardBg: "rgba(3, 105, 161, 0.1)",
+    cardBorder: "rgba(14, 165, 233, 0.3)",
+  },
+};
+
+export type ThemeName = keyof typeof themes;
+export type Theme = (typeof themes)[ThemeName];
