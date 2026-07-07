@@ -87,6 +87,36 @@ Tools: Vercel dashboard, Supabase dashboard, error tracking (Sentry).
 
 ---
 
+## Quiz Questions (Preview)
+
+Here are your three quiz questions. Study these!
+
+**Q13-k1:** What lets Claude Code act on GitHub/Supabase/Vercel?
+- (a) CLAUDE.md
+- (b) A skill
+- (c) **MCP (tool connectors)** ✓
+- (d) A comment
+
+*Why:* MCPs are special connectors that let Claude Code talk to external systems (GitHub, Supabase, Vercel, etc.). Think of them as bridges—Claude Code on one side, the service on the other.
+
+**Q13-k2:** A skill is best for:
+- (a) Storing secrets
+- (b) **Procedural know-how that kicks in by context** ✓
+- (c) Hosting
+- (d) Database queries
+
+*Why:* Skills are step-by-step instructions for how to do things. When Claude Code sees you need those steps, it loads the skill automatically. Like having a recipe book it can pull from!
+
+**Q13-k3:** The safe rule for automation is:
+- (a) Automate everything
+- (b) **Automate the reversible, protect the irreversible** ✓
+- (c) Never automate
+- (d) Skip permissions
+
+*Why:* Automate things you can undo (run tests, format code, build). Gate things you can't (deploying to production, deleting data, spending money). You always review the dangerous stuff before it happens.
+
+---
+
 ## Knowledge Check (Quiz)
 
 1. **What's CI/CD? Explain in your own words.**

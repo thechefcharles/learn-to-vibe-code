@@ -186,6 +186,44 @@ Secures Objective 3. Automation without guardrails is how you drop a production 
 
 ---
 
+## Quiz questions (preview)
+
+These are the four questions you'll see on the quiz. Study these to prepare:
+
+**Q13-1:** A pipeline automates all EXCEPT:
+- (a) running tests
+- (b) deploying
+- (c) **understanding the business need** ✓
+- (d) linting code
+
+*Why:* Pipelines are for technical automation: test runs, lints, builds, migrations, deploys. Understanding *why* you're building something is a human job — no tool can do that for you.
+
+**Q13-2:** GitHub Actions runs on:
+- (a) your laptop
+- (b) **GitHub's servers** ✓
+- (c) your database
+- (d) Vercel
+
+*Why:* GitHub Actions (and CI/CD in general) run on remote infrastructure, triggered by events (push, PR). Your laptop just kicks it off. That's why you can walk away and the build finishes without your machine being on.
+
+**Q13-3:** A pipeline failing before deploy is:
+- (a) a disaster
+- (b) **good — it prevented pushing broken code** ✓
+- (c) slow
+- (d) expensive
+
+*Why:* Pipeline failures are *success*. The whole point is to catch bugs before they ship. A failure that stops a broken deploy to production is exactly what you want.
+
+**Q13-4:** You want Claude Code to export GitHub data on every build. You should use:
+- (a) a CLAUDE.md instruction
+- (b) a skill (reusable, needs testing)
+- (c) **an MCP server (connects Claude to GitHub's API)** ✓
+- (d) a GitHub Action (different tool entirely)
+
+*Why:* MCPs give Claude Code hands-on access to external systems. CLAUDE.md is for project rules, skills for reusable know-how. MCP is the right tool for "connect to a system's API."
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Configure:** show `claude mcp list` with all three connected, and when you'd use each server's MCP vs. its CLI.
