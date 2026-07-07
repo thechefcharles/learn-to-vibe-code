@@ -40,7 +40,13 @@ This begins Objective 1.
 
 **Step 1 — Create a Supabase project** at [supabase.com](http://supabase.com). Copy your project URL and **publishable key** from API settings.
 
-*[SCREENSHOT: the Supabase dashboard API settings.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Supabase API Settings]**
+
+Dashboard showing: Project URL, Publishable API Key, Secret Key. Proof: credentials are visible and copyable.
+
+---
 
 **Step 2 — Store them in `.env.local`** (never hard-code keys — previews Module 10's env handling):
 
@@ -96,7 +102,13 @@ create table invoices (
 
 Note `user_id ... default auth.uid()` so inserts populate ownership automatically. The relationships mirror the Module 3 build order.
 
-*[SCREENSHOT: the two tables in the Supabase Table Editor.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Tables in Supabase Editor]**
+
+Table Editor showing: clients and invoices tables with columns (id, user_id, name, email, amount, due_date, status, created_at). Proof: schema is created and visible.
+
+---
 
 ---
 

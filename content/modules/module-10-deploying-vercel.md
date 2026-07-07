@@ -34,7 +34,13 @@ Begins Objective 1.
 
 **Step 2 — Import your repo.** Vercel detects Next.js and configures the build — no config files (why Next.js + Vercel is the default).
 
-*[SCREENSHOT: the Vercel "Import Project" screen detecting the repo.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Vercel Import Project]**
+
+Vercel dashboard showing: import flow detecting Next.js repo, configuration preview, deploy button. Proof: Vercel auto-detected framework.
+
+---
 
 **Step 3 — Deploy.** In a minute or two you get a live URL. The build succeeds but the app won't fully work yet — no database keys in production. Deliberate teaching moment: **your local `.env.local` did not go to Vercel** (gitignored in Module 9), so production has no secrets until you add them.
 
@@ -54,7 +60,13 @@ Then redeploy. Principle: **secrets live in the platform, never in the repo.** S
 > **Build-verified note:** `NEXT_PUBLIC_*` variables are **inlined at build time**, so they must exist in Vercel *before* the deploy that uses them — add them first, then trigger a fresh deploy, or the built app breaks in production with no error locally.
 > 
 
-*[SCREENSHOT: the Vercel Environment Variables settings with the Supabase keys added.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Vercel Env Vars Settings]**
+
+Settings page showing: Environment Variables section with key-value pairs (NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY). Proof: secrets are configured for production.
+
+---
 
 ---
 
@@ -67,7 +79,13 @@ Completes the CI/CD half of Objectives 1–2 and pays off Module 9's branch/PR h
 3. Test the preview; merge when good.
 4. Merge to `main` → Vercel deploys to **production** automatically.
 
-*[SCREENSHOT: a GitHub PR with the Vercel preview-deployment link.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: GitHub PR with Preview Link]**
+
+GitHub PR page showing: Vercel bot comment with "Preview Ready" and link to live preview URL. Proof: PR has a testable preview deploy.
+
+---
 
 You never test experiments in production, and every change is verifiable in a real environment first — the Module 1 verification principle at deployment scale.
 

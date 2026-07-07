@@ -62,7 +62,13 @@ git remote add origin https://github.com/YOU/invoice-tracker.git
 git push -u origin main
 ```
 
-*[SCREENSHOT: the GitHub repository page showing the pushed code.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: GitHub Repo Page]**
+
+GitHub showing: repo name, file tree (app/, lib/, package.json, etc.), commit history on the left. Proof: code is pushed and visible on GitHub.
+
+---
 
 Commit small, logical chunks with clear messages ("Add invoice status filter," not "stuff"). Good history is a capstone rubric criterion.
 
