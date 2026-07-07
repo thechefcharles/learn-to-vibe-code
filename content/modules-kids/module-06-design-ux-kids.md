@@ -58,6 +58,34 @@ Instead of writing CSS, you add classes.
 - `p-4`, `m-8` = padding & margins (spacing)
 - `rounded-lg`, `rounded-full` = rounded corners
 
+**Concrete examples — before and after:**
+
+```tsx
+// ❌ BEFORE — boring, cramped, no style
+export default function PetCard({ pet }) {
+  return (
+    <div style={{ border: '1px solid gray', padding: '5px' }}>
+      <h3>{pet.name}</h3>
+      <p>{pet.breed}</p>
+      <button>View</button>
+    </div>
+  );
+}
+
+// ✅ AFTER — colorful, spacious, styled with Tailwind
+export default function PetCard({ pet }) {
+  return (
+    <div className="border-2 border-blue-300 rounded-lg p-6 bg-blue-50 hover:shadow-lg transition">
+      <h3 className="text-xl font-bold text-blue-900">{pet.name}</h3>
+      <p className="text-sm text-slate-600 mt-2">{pet.breed}</p>
+      <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+        View
+      </button>
+    </div>
+  );
+}
+```
+
 **The hack:** Ask Cursor or Claude Code: *"Make this button look better with Tailwind. Use blue colors, add padding, round the corners, and center the text."*
 
 It applies Tailwind classes.
@@ -123,11 +151,68 @@ AI adjusts.
 
 ## Activity: Redesign Your App 🎨
 
-Pick one page from your pet tracker and redesign it:
-- Pick a color palette (Coolors.co or ask AI)
-- Apply Tailwind classes to make it look modern
-- Check accessibility (high contrast, readable fonts)
-- Submit a before/after screenshot
+Pick one page from your pet tracker and redesign it. Here's the step-by-step:
+
+### Step 1: Capture a "before" screenshot (5 min)
+1. Run your app: `npm run dev`
+2. Open `http://localhost:3000/pets` (or your pet list page)
+3. Take a screenshot of how it looks RIGHT NOW (boring!)
+4. Save it — you'll show this as your "before"
+
+### Step 2: Pick a color palette (5 min)
+
+**Option A:** Visit [Coolors.co](https://coolors.co/), click "Generate," and pick a palette you like.
+
+**Option B:** Use AI. Ask Claude Code:
+```
+Suggest a fun color palette for a pet tracker (3-4 colors).
+Include hex codes. Make it playful and kid-friendly.
+```
+
+Example palette:
+- Primary: `#FF6B9D` (pink) → use for buttons, headings
+- Accent: `#4ECDC4` (teal) → use for hover states
+- Neutral: `#F7F7F7` (light gray) → use for backgrounds
+
+### Step 3: Restyle one component (20 min)
+
+Use **Cursor** with this prompt:
+
+```
+Redesign the PetCard component using Tailwind CSS:
+- Use a blue/teal color scheme (bg-blue-50, text-blue-900, bg-blue-500 for buttons)
+- Add spacing (p-6 for padding, mt-4 for gaps between elements)
+- Make it look modern and clean
+- Add hover effects (hover:shadow-lg, hover:bg-blue-600)
+- Keep it simple and readable
+- Use large font sizes (text-lg, text-xl for titles)
+```
+
+Review the diff:
+- ✅ Does it use Tailwind classes? (`p-6`, `text-xl`, `bg-blue-500`, etc.)
+- ✅ Does the color scheme feel consistent?
+- ✅ Is there enough spacing (no cramped look)?
+- ✅ Are buttons big and clickable?
+
+### Step 4: Test accessibility (5 min)
+1. Open your app in the browser
+2. Check:
+   - Can you read all text clearly? (contrast is good)
+   - Are buttons big enough to click? (~44px tall)
+   - Do hover states work? (buttons change color when you hover)
+
+### Step 5: Take an "after" screenshot (5 min)
+Same page, same view. Now compare!
+
+### Step 6: Optional — style another page
+- Repeat steps 3-5 for `/clients` or your invoices page
+- Keep using the same colors (consistency!)
+
+### Deliverable:
+- Before screenshot (boring/plain)
+- After screenshot (styled with Tailwind)
+- 2-3 sentence explanation of what you changed
+  - *Example:* "I added padding (p-6) for breathing room, used blue colors for hierarchy, and made buttons bigger with hover effects. The app looks modern now instead of plain."*
 
 ---
 
@@ -161,11 +246,59 @@ Here are the three questions on your quiz. Study these first!
 
 ---
 
-## Knowledge Check (Quiz)
+## Knowledge Check (Quiz & Scenarios)
+
+### Written checks:
 
 1. **List 3 design principles and give an example of each.**
+   - *Example answer:* "Hierarchy: make the title (h1) bigger than the description. Spacing: add p-6 padding around content. Color: use one main color (blue) + neutral (gray)."
+
 2. **Why does contrast matter? What happens with low contrast?**
+   - *Example answer:* "Low contrast makes text hard to read. Light gray text on white = you can't see it. High contrast (dark text on light background) = easy to read and accessible to everyone."
+
 3. **Write a Tailwind class list to make a button: blue, bold, big padding, rounded.**
+   - *Example answer:* `className="px-6 py-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600"`
+
+### Scenario-based judgment checks:
+
+*For each scenario, explain what's wrong and how to fix it.*
+
+- **(a) Colors everywhere:** Your page has 8 different colors (purple, orange, pink, green, red, yellow, blue, gray). It looks chaotic.
+  - ✅ **Fix:** Restrain your palette. Pick 1 main color + 1 accent + 1 neutral. Change: Use only `bg-blue-500` for buttons, `text-slate-900` for text, and `bg-slate-100` for backgrounds.
+  - ❌ **Avoid:** Adding more colors to make it "fun." Too many colors = confusing.
+
+- **(b) No breathing room:** Your cards have `p-1` (1px padding) and feel cramped even on a big screen.
+  - ✅ **Fix:** Add spacing. Change: `p-1` to `p-6` (24px padding). Add gaps: `gap-4` between elements.
+  - ❌ **Avoid:** Cramped = unprofessional. Generous spacing = better!
+
+- **(c) Text is too small:** Your body text is `text-xs` and people say it hurts their eyes.
+  - ✅ **Fix:** Increase font size. Change: `text-xs` to `text-base` or `text-lg`. Check contrast (dark text on light background).
+  - ❌ **Avoid:** Making it smaller to "save space." Readability > compactness.
+
+- **(d) No hierarchy:** All headings, text, and buttons are the same size (text-base). People don't know where to look.
+  - ✅ **Fix:** Vary sizes and boldness. Change: Title to `text-3xl font-bold`, section headers to `text-xl font-semibold`, body to `text-base`.
+  - ❌ **Avoid:** Making everything the same. Hierarchy = bigger/bolder for important stuff.
+
+- **(e) Button is hard to click:** Your button is `px-2 py-1` (tiny). People miss it on phones.
+  - ✅ **Fix:** Make it bigger. Change: `px-2 py-1` to `px-4 py-2` or `px-6 py-3`. Aim for ~44px tall.
+  - ❌ **Avoid:** Small buttons. They're frustrating!
+
+---
+
+**Rubric checklist (before you submit):**
+
+| Checkmark | What to check |
+|-----------|---------------|
+| ✅ | Before screenshot shows plain/boring styling |
+| ✅ | After screenshot shows Tailwind classes applied (colors, spacing, rounded corners) |
+| ✅ | Color palette is consistent (1 main color, 1 accent, 1 neutral) |
+| ✅ | Spacing is generous (at least `p-4` or `p-6`, gaps between elements) |
+| ✅ | Text is readable (good contrast, not too small) |
+| ✅ | Buttons are big and easy to click (~44px) |
+| ✅ | Page has clear hierarchy (headings are bigger/bolder than body text) |
+| ✅ | You can explain 2-3 changes you made and why |
+
+*Pass mark: 80% and before/after screenshots with explanation submitted.*
 
 ---
 
