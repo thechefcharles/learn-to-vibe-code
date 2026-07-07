@@ -242,6 +242,7 @@ function renderInline(text: string): React.ReactNode {
           key={idx}
           src={url}
           alt={alt}
+          loading="lazy"
           className="w-full rounded-lg mb-4 border border-slate-600"
         />
       );

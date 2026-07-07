@@ -66,6 +66,7 @@ export function LandingHero() {
           <img
             src="/logo-playful.svg"
             alt="Learn To Vibe Code"
+            loading="lazy"
             className={`mx-auto ${version === "kids" ? "h-40" : "h-32"}`}
           />
         </motion.div>

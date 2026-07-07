@@ -16,7 +16,7 @@ export function DashboardHeader({ onSignOut }: DashboardHeaderProps) {
     <header className="bg-paper border-b border-violet-light/20 sticky top-0 z-50">
       <div className="max-w-6xl mx-auto px-4 py-2 flex justify-between items-center">
         <Link href="/" className="hover:opacity-90 transition block">
-          <img src="/logo-playful.svg" alt="Learn To Vibe Code" className={`${isKids ? "h-32" : "h-24"} w-auto`} />
+          <img src="/logo-playful.svg" alt="Learn To Vibe Code" loading="lazy" className={`${isKids ? "h-32" : "h-24"} w-auto`} />
         </Link>
 
         <div className={`flex gap-${isKids ? "6" : "4"} items-center`}>
