@@ -45,7 +45,21 @@ export default async function LessonPage(props: LessonPageProps) {
     redirect("/course");
   }
 
-  const module = await getModule(moduleId);
+  // Get user's enrolled version
+  const user = await getUser();
+  let userVersion: "kids" | "adult" = "adult";
+  if (user) {
+    const { data: enrollment } = await (await import("@/lib/supabase/server")).createClient()
+      .from("enrollments")
+      .select("enrolled_version")
+      .eq("user_id", user.id)
+      .single();
+    if (enrollment?.enrolled_version) {
+      userVersion = enrollment.enrolled_version as "kids" | "adult";
+    }
+  }
+
+  const module = await getModule(moduleId, userVersion);
   if (!module) {
     notFound();
   }
@@ -55,7 +69,6 @@ export default async function LessonPage(props: LessonPageProps) {
   const nextModule = moduleId < 15 ? moduleId + 1 : null;
 
   // Load user data
-  const user = await getUser();
   const checklistItems = user ? await getChecklistItems(moduleId) : [];
   const progress = user ? await getUserModuleProgress(moduleId) : null;
 

@@ -8,19 +8,20 @@ export interface Module {
   slug: string;
 }
 
-const MODULES_DIR = path.join(process.cwd(), "content/modules");
-
-export async function getModule(moduleId: number): Promise<Module | null> {
+export async function getModule(moduleId: number, version: "kids" | "adult" = "adult"): Promise<Module | null> {
   try {
-    const filename = `module-${String(moduleId).padStart(2, "0")}-*.md`;
-    const files = fs.readdirSync(MODULES_DIR);
+    const modulesDir = version === "kids"
+      ? path.join(process.cwd(), "content/modules-kids")
+      : path.join(process.cwd(), "content/modules");
+
+    const files = fs.readdirSync(modulesDir);
     const moduleFile = files.find((f) =>
       f.match(new RegExp(`^module-${String(moduleId).padStart(2, "0")}-`))
     );
 
     if (!moduleFile) return null;
 
-    const filePath = path.join(MODULES_DIR, moduleFile);
+    const filePath = path.join(modulesDir, moduleFile);
     const content = fs.readFileSync(filePath, "utf-8");
 
     // Extract title from first heading
@@ -42,11 +43,11 @@ export async function getModule(moduleId: number): Promise<Module | null> {
   }
 }
 
-export async function getAllModules(): Promise<Module[]> {
+export async function getAllModules(version: "kids" | "adult" = "adult"): Promise<Module[]> {
   const modules: Module[] = [];
 
   for (let i = 0; i <= 15; i++) {
-    const module = await getModule(i);
+    const module = await getModule(i, version);
     if (module) {
       modules.push(module);
     }
