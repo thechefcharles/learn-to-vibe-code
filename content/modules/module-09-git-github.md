@@ -55,12 +55,36 @@ git add .
 git commit -m "Initial commit: invoice tracker with clients, invoices, auth"
 ```
 
+**What you'll see:**
+```
+[main (root-commit) a1b2c3d] Initial commit: invoice tracker with clients, invoices, auth
+ 15 files changed, 450 insertions(+)
+ create mode 100644 app/clients/page.tsx
+ create mode 100644 app/invoices/page.tsx
+ ...
+```
+
 **Step 3 — Create a repo on GitHub and push:**
 
-```bash
-git remote add origin https://github.com/YOU/invoice-tracker.git
-git push -u origin main
+1. Go to [github.com/new](https://github.com/new) and create a repo (name: `invoice-tracker`, no README)
+2. Copy the commands GitHub shows
+3. Run them in your terminal:
+   ```bash
+   git remote add origin https://github.com/YOU/invoice-tracker.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+**What you'll see:**
 ```
+Enumerating objects: 15, done.
+Counting objects: 100% (15/15), done.
+...
+ * [new branch]      main -> main
+Branch 'main' set up to track remote branch 'main' from 'origin'.
+```
+
+Then on GitHub, refresh the repo page—your code is there! ✅
 
 ---
 
@@ -96,19 +120,50 @@ On GitHub, open a PR from that branch into `main`. The PR shows the diff, lets y
 
 This delivers Objective 3. A **merge conflict** happens when two changes touch the same lines and Git can't decide. Not an error — Git asking you to choose. Routine, not scary.
 
+**Concrete example — a conflict:**
+
+You're on `main` and it has:
+```javascript
+const status = "unpaid";
+```
+
+You create a branch `add-filter` and change it to:
+```javascript
+const status = "pending";
+```
+
+Meanwhile, on `main`, someone else also changed it to:
+```javascript
+const status = "overdue";
+```
+
+When you try to merge `add-filter` into `main`, Git says "I don't know which version you want!" and marks it:
+
 ```
 <<<<<<< HEAD
-const status = "unpaid";
+const status = "overdue";
 =======
 const status = "pending";
->>>>>>> add-invoice-filter
+>>>>>>> add-filter
 ```
 
-Resolve by editing to the version you want and removing the marker lines, then commit. A great spot for AI: paste the conflict and ask it to explain both sides and propose a resolution — but *you* decide, since only you know the intended behavior (Module 1).
+**Resolve it:**
+
+1. Open the file and look at the markers
+2. Decide which version you want (or combine them)
+3. Edit to your choice:
+   ```javascript
+   const status = "overdue";  // You chose the main version
+   ```
+4. Remove the conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`)
+5. Save the file
+6. Commit: `git add . && git commit -m "Resolve conflict: keep overdue status from main"`
+
+Now the merge is complete! ✅
+
+**Using AI to help (safely):** You can paste the conflict and ask the AI to explain both sides—but *you* decide which version is correct, since only you know the intended behavior.
 
 **Collaboration basics:** pull others' changes before starting (`git pull`), work on your own branch, open a PR, resolve conflicts if they arise.
-
-*[SCREENSHOT: a merge conflict shown in the editor with markers.]*
 
 ---
 
@@ -123,7 +178,110 @@ Resolve by editing to the version you want and removing the marker lines, then c
 
 ## Hands-on activity (~50 min, folded in)
 
-**"Ship a change the professional way."** (1) Confirm secrets are gitignored, (2) push the invoice-tracker to a new GitHub repo, (3) create a branch, make a small improvement, commit, (4) open a PR and merge it, (5) deliberately create and resolve one merge conflict. Deliverable: a GitHub repo with clean history, a merged PR, and no secrets committed.
+**"Ship a change the professional way."** Follow these steps to practice the full Git/GitHub workflow.
+
+### Step 1: Check `.gitignore` (2 min)
+Confirm secrets won't be committed:
+
+1. Open `.gitignore` in your editor
+2. Verify it has:
+   ```
+   .env*.local
+   node_modules
+   .next
+   ```
+3. If missing, add them
+
+### Step 2: Initialize Git and push to GitHub (10 min)
+
+**2a. Create a repo on GitHub:**
+1. Go to [github.com/new](https://github.com/new)
+2. Name it `invoice-tracker`
+3. Leave "Initialize with README" unchecked
+4. Click "Create Repository"
+5. Copy the commands GitHub shows (you'll need them in 2b)
+
+**2b. Initialize locally and push:**
+```bash
+cd invoice-tracker  # your local project
+git init
+git add .
+git commit -m "Initial commit: invoice tracker with clients, invoices, auth, Supabase"
+git branch -M main
+git remote add origin https://github.com/YOUR-USERNAME/invoice-tracker.git
+git push -u origin main
+```
+
+Check GitHub—your code is there! ✅
+
+### Step 3: Create a branch and make a change (8 min)
+
+**3a. Create a feature branch:**
+```bash
+git checkout -b add-invoice-sort
+```
+
+**3b. Make a small improvement:**
+- Open `/invoices` page
+- Add sorting by due date
+- Test it works locally
+
+**3c. Commit the change:**
+```bash
+git add app/invoices/page.tsx
+git commit -m "Add sorting by due date on invoices list"
+```
+
+**3d. Push the branch:**
+```bash
+git push -u origin add-invoice-sort
+```
+
+### Step 4: Open and merge a PR (10 min)
+
+**4a. Open a PR on GitHub:**
+1. Go to your repo on GitHub
+2. You'll see a banner: "Your recently pushed branches" with a green "Compare & pull request" button
+3. Click it
+4. Add a description: "Sorts invoices by due date for easier tracking"
+5. Click "Create Pull Request"
+
+**4b. Merge the PR:**
+1. Look for the green "Merge pull request" button
+2. Click it
+3. Click "Confirm merge"
+4. Click "Delete branch" (clean up)
+
+You've shipped a change the professional way! ✅
+
+### Step 5: Create and resolve a merge conflict (10 min)
+
+**5a. Create a conflict intentionally:**
+
+1. On `main`, go to `/clients` page and change the title from "Clients" to "Client List"
+2. Commit: `git add app/clients/page.tsx && git commit -m "Rename to Client List"`
+3. Create a branch: `git checkout -b improve-clients`
+4. On the branch, change the same title to "All Clients"
+5. Commit: `git add app/clients/page.tsx && git commit -m "Improve label for clarity"`
+6. Try to merge back to main: `git checkout main && git merge improve-clients`
+
+Git will say: **CONFLICT!**
+
+**5b. Resolve it:**
+1. Open `/clients/page.tsx` in your editor
+2. Find the conflict markers (<<<<<<, =======, >>>>>>>)
+3. Decide which version you want (or combine: "Clients - View All")
+4. Delete the markers
+5. Save
+6. Commit: `git add app/clients/page.tsx && git commit -m "Resolve conflict: use 'Clients' title"`
+
+Conflict resolved! ✅
+
+### Deliverable:
+- GitHub repo link with your code
+- Screenshot showing a merged PR
+- Screenshot of your commit history (at least 3-4 commits)
+- One-sentence explanation of what you learned about conflicts
 
 ---
 
@@ -165,7 +323,49 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 **Objective 3 — Resolve a conflict:** given a file with conflict markers, produce the correctly resolved file and explain your choice.
 
-*Pass mark: 80% and a GitHub repo with a merged PR submitted.*
+---
+
+**Scenario-based judgment checks:**
+
+*For each scenario, explain what you'd do.*
+
+- **(a) You committed `.env.local` and pushed.** You realize you pushed secrets to GitHub. What's your next step?
+  - ✅ **Correct:** Rotate your Supabase keys immediately (assume they're compromised). Then use `git rm --cached .env.local`, commit, and push again to remove it from history. Treat as a real incident.
+  - ❌ **Avoid:** Ignoring it. Secrets in public repos are a real risk.
+
+- **(b) You're on `main` and want to make a small fix.** What's the professional workflow?
+  - ✅ **Correct:** Create a branch (`git checkout -b fix-typo`), make the change, commit, push, open a PR, review it, merge it.
+  - ❌ **Avoid:** Committing directly to `main`. Branches protect `main` from half-baked changes.
+
+- **(c) You have uncommitted changes and want to switch branches.** What happens if you just switch?
+  - ✅ **Correct:** Git may warn or refuse (if changes conflict with the other branch). Safe: commit first or `git stash` to save changes, then switch.
+  - ❌ **Avoid:** Forcing a switch and losing work. Be deliberate.
+
+- **(d) You see a merge conflict marker.** You don't understand which version is right. What do you do?
+  - ✅ **Correct:** Don't guess. Ask a teammate or read the context. Understanding the conflict is half the fix.
+  - ❌ **Avoid:** Picking randomly. You might break logic or lose important code.
+
+- **(e) Your commit history is messy: "wip", "asdf", "fix", "fix 2", "fix 3".** The capstone rubric looks for clean history. How do you avoid this?
+  - ✅ **Correct:** Commit frequently with meaningful messages ("Add filter dropdown", "Fix auth bug on sign-in"). Aim for ~1 commit per logical change.
+  - ❌ **Avoid:** Lazy commit messages. They matter. Future-you and reviewers will read them.
+
+---
+
+**Rubric checklist (self-review before submission):**
+
+| Criterion | Check (✅ = pass) |
+|-----------|-------------|
+| **Secrets protected** | `.gitignore` includes `.env*.local` and `.env.local` is never in commit history |
+| **Initial commit** | Repo created on GitHub; all code pushed with clean initial commit |
+| **Feature branch** | Created a branch (not working on `main`); named descriptively (e.g., `add-invoice-sort`) |
+| **Commits are meaningful** | Each commit message describes what changed and why (not "fix", not "asdf") |
+| **PR opened** | Branch pushed; PR created with a description explaining the change |
+| **PR merged** | PR reviewed (even if self-reviewed) and merged; branch deleted after merge |
+| **Conflict resolved** | Deliberately created a conflict, resolved it, committed the resolution |
+| **Commit history is clean** | 4+ commits visible; messages are clear; no "wip" or throwaway commits |
+| **No secrets in repo** | Verify: run `git log -p` and grep for NEXT_PUBLIC or sensitive strings—should be none |
+
+*Pass mark: 80% and a GitHub repo with clean history, merged PR, and resolved conflict submitted.*
 
 ---
 
