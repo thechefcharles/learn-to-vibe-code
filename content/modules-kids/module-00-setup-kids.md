@@ -123,11 +123,17 @@ All done? You're ready for Module 1! 🎮
 
 ---
 
-## Quick Quiz (Check Yourself)
+## Knowledge Check 🎯
 
-1. **Name 3 tools in your toolkit and what each one does.**
-2. **What does it mean when you see a version number in the terminal?** (Hint: it means the tool is installed!)
-3. **Why did we test everything before moving forward?** (Hint: because it's way easier to fix it now than later!)
+**Objective 1 — Set up tools:**
+- Quiz Q0-1, Q0-2, Q0-3 test your setup knowledge
+- *Practical:* Show all 8 checkboxes ticked ✅ and your test app running at localhost:3000
+
+**Objective 2 — Understand the toolkit:**
+- *Practical:* In your own words, explain 2 tools and how they fit together. Example: "Node.js runs my code, Cursor is my AI helper inside the code editor"
+
+**Objective 3 — Verify everything works:**
+- *Practical:* Screenshot of terminal showing all version checks passed (node, npm, claude). Screenshot of localhost:3000 showing Next.js starter page
 
 ---
 
