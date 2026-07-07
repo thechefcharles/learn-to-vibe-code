@@ -46,6 +46,17 @@ Before you start: a **terminal** is a text-based interface to your computer. Ins
 - **Mac:** Open Spotlight (Cmd+Space), type "Terminal", press Enter.
 - **Windows:** Press Win+R, type "powershell", press Enter.
 
+---
+
+**[SCREENSHOT PLACEHOLDER: Terminal Windows]**
+
+**What this screenshot should show:**
+- Left side: Mac Terminal window open (showing the black/white terminal with a command prompt, after searching "Terminal" in Spotlight)
+- Right side: Windows PowerShell window open (showing the blue PowerShell interface after typing "powershell" in Win+R)
+- Both should show the terminal is ready for commands (prompt visible, no errors)
+
+---
+
 ### Installing Node.js
 
 Node.js is the runtime that runs JavaScript on your computer (instead of just in a browser).
@@ -64,6 +75,19 @@ npm --version
 ```
 
 You should see two version numbers (e.g., `v22.12.0` and `10.5.0`). If you see them, you're done — Node works.
+
+---
+
+**[SCREENSHOT PLACEHOLDER: Node.js Version Output]**
+
+**What this screenshot should show:**
+- Terminal window (Mac or Windows)
+- Visible commands: `node --version` and `npm --version`
+- Output showing version numbers (e.g., `v22.12.0` and `10.5.0`)
+- Proof that both commands ran successfully with no errors
+- The terminal prompt ready for the next command
+
+---
 
 **If you see `command not found`:** Close the terminal window completely and reopen it. Sometimes PATH updates need a fresh terminal. If it still fails, reinstall Node.
 
@@ -197,6 +221,19 @@ You'll be asked questions. Answer as follows:
 
 This will take 2-3 minutes. Wait for it to finish.
 
+---
+
+**[SCREENSHOT PLACEHOLDER: create-next-app Running]**
+
+**What this screenshot should show:**
+- Terminal window showing the output of `npx create-next-app@latest hello-check`
+- Visible prompts and user responses (the questions asked, and `No`/`Yes` answers)
+- Bottom of output showing "✓ Created hello-check" or similar success message
+- The folder was created and dependencies are installed
+- The prompt is ready for the next command (`cd hello-check`)
+
+---
+
 ### Step 3: Start the app
 
 Run these commands in the terminal:
@@ -231,6 +268,20 @@ If you see this, your Node + npm + editor setup works. Congratulations!
 2. Go to File → Open Folder
 3. Navigate to and select the `hello-check` folder
 4. You should see the project files on the left side
+
+---
+
+**[SCREENSHOT PLACEHOLDER: Cursor with Project Open]**
+
+**What this screenshot should show:**
+- Cursor window is open
+- Left sidebar shows the file tree of the hello-check project (folders: `app`, `node_modules`, `public`, etc.)
+- Main editor area is visible (even if no file is open, just the sidebar is key)
+- Cursor is signed in (no sign-in prompt visible)
+- Title bar shows "hello-check" or the project path
+- Proof that Cursor can open and work with the project
+
+---
 
 **Claude Code in Terminal:**
 1. In the same terminal (or a new one), navigate to `hello-check` and run:
