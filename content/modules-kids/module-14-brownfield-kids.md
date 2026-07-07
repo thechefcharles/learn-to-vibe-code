@@ -61,11 +61,32 @@ Then it helps you add the feature without breaking anything.
 
 ## Activity: Add a Feature to Existing Code 🏗️
 
-1. Find an existing project (your pet tracker)
-2. Pick a feature to add (export pets, search, sort by name)
-3. Use Claude Code to understand the codebase
-4. Ask it to help you add the feature
-5. Test and push to GitHub
+### Step 1: Pick a feature (2 min)
+Choose from your pet tracker:
+- Export pets as CSV
+- Search by pet name  
+- Sort by breed
+- Add age calculator
+
+### Step 2: Understand the codebase (10 min)
+Prompt Claude Code: *"Explain the architecture of my pet tracker. Where would I add an export-to-CSV feature?"*
+
+Claude reads the whole project and tells you what files change.
+
+### Step 3: Add the feature (15 min)
+1. Create a branch: `git checkout -b add-export-csv`
+2. Ask Claude Code: *"Add export-to-CSV button to my pet list."*
+3. Test it: button appears, click it, file downloads ✓
+
+### Step 4: Test and push (8 min)
+1. `npm test` (still passes ✓)
+2. `git commit -m "Add pet export to CSV" && git push`
+3. Open a PR on GitHub
+
+### Deliverable:
+- Screenshot of the feature working
+- GitHub PR screenshot  
+- Commit message shown
 
 ---
 
@@ -99,11 +120,44 @@ Here are your three quiz questions. Study these!
 
 ---
 
-## Knowledge Check (Quiz)
+## Knowledge Check (Quiz & Scenarios)
+
+### Written checks:
 
 1. **How do you start understanding an existing codebase?**
+   - *Example answer:* "Find the entry point (App.tsx), trace data flow, ask AI to summarize architecture, follow one feature end-to-end."
+
 2. **Why work on a branch when adding features?**
+   - *Example answer:* "Branches keep main safe. You can test, commit multiple times, fix mistakes. If something breaks, main is still working."
+
 3. **How can AI help you understand foreign code?**
+   - *Example answer:* "Ask it to explain architecture, find where to add features, show data flow, identify patterns. AI reads faster than you."
+
+### Scenario checks:
+
+- **(a) AI wants to reformat the whole codebase while adding your feature.**
+  - ✅ **Say:** "Focus on the feature. Refactoring is a separate PR."
+
+- **(b) You changed a function, and a feature in another file broke.**
+  - ✅ **Check:** Who uses this function? Is there a test? Fix carefully.
+  - ❌ **Avoid:** Shipping without testing.
+
+- **(c) You don't understand the existing code.**
+  - ✅ **Do:** Read it, ask AI, add comments, trace it. Understand before changing.
+
+---
+
+**Rubric:**
+| ✅ | Check |
+|----|---|
+| ✅ | Asked AI or read docs to understand codebase |
+| ✅ | Worked on a branch |
+| ✅ | Tested locally |
+| ✅ | Tests pass (no broken code) |
+| ✅ | PR is focused (only your changes) |
+| ✅ | Feature works |
+
+*Pass mark: 80% and a working feature PR submitted.*
 
 ---
 
