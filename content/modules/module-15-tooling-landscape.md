@@ -109,11 +109,44 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Analyze:** for two options at one layer (e.g. Supabase vs. Firebase), compare across cost, lock-in, performance, ecosystem.
+### Written checks:
 
-**Objective 2 — Recommend & defend:** given a project brief, recommend a full stack and justify each layer, with at least one deliberate deviation from the default and why.
+**Objective 1 — Analyze:** Compare Supabase vs. Firebase across cost, lock-in, performance, and ecosystem.
+- *Example answer:* "Supabase: Postgres-based, lower cost at scale, easy to export (low lock-in). Firebase: NoSQL, realtime-first, vendor lock-in higher. Choose Supabase for SQL-heavy apps, Firebase for mobile + realtime."
 
-*Pass mark: 80% and a defensible stack recommendation submitted.*
+**Objective 2 — Recommend & defend:** Given a realtime collaboration app brief, recommend a full stack with justifications and one deviation from default.
+- *Example answer:* 
+  - In-editor: Cursor (default, good)
+  - Framework: **SvelteKit** (not Next.js — better reactivity for realtime, lower JS overhead)
+  - Database: **Firebase** (not Supabase — realtime is built-in, essential for collaboration)
+  - Deployment: Vercel (default — works with SvelteKit)
+  - Justification: Realtime is the constraint; Firebase + SvelteKit fit better than default stack.
+
+### Scenario-based judgment checks:
+
+- **(a) You have Django expertise. Should you use the course stack?**
+  - ✅ **Depends:** For a quick MVP, yes (learn Next.js). For production with deep Django needs, your team's expertise wins — use Django + Postgres.
+
+- **(b) Cost is the primary constraint.** Student project, $0 budget.
+  - ✅ **Recommend:** VS Code + Copilot (free), Vite + React (free), Firebase free tier (free), GitHub (free), Netlify free (free).
+
+- **(c) Your company already uses AWS and is risk-averse about vendors.**
+  - ✅ **Recommend:** AWS EC2 / ECS for the app, RDS for Postgres, Amplify or custom deploy, GitHub (industry standard).
+
+---
+
+**Rubric:**
+
+| Criterion | Check (✅ = pass) |
+|-----------|-------------|
+| **Understands trade-offs** | Can name cost/lock-in/performance for ≥2 layers |
+| **Evaluates, doesn't memorize** | Reasons through fit for a project, not "best tool" |
+| **Defends a recommendation** | Stack choice + 1-2 sentence justification per layer |
+| **Acknowledges context** | "It depends on X" + names what X is |
+| **One deliberate deviation** | Chose non-default for valid reason |
+| **Feasible stack** | Tools actually work together |
+
+*Pass mark: 80% and a defensible stack recommendation with justifications submitted.*
 
 ---
 
