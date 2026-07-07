@@ -161,6 +161,44 @@ Screen 2: Claude Design canvas showing a generated UI prototype (dashboard, form
 
 ---
 
+## Quiz questions (preview)
+
+These are the four questions you'll see on the quiz. Study these to prepare:
+
+**Q6-1:** Why do AI-generated UIs look generic?
+- (a) **the model outputs the most common markup** ✓
+- (b) AI dislikes design
+- (c) Tailwind is ugly
+- (d) they're always broken
+
+*Why:* AI models trained on web data default to common patterns (Module 1's principle). The fix isn't better AI—it's **you** providing specific design direction (hierarchy, spacing, typography, color).
+
+**Q6-2:** Which is NOT one of the four design levers?
+- (a) hierarchy
+- (b) spacing
+- (c) **database indexing** ✓
+- (d) typography
+
+*Why:* The four design levers are hierarchy (what's most important?), spacing (breathing room), typography (fonts and sizes), and color (palette). Database indexing is backend, not design.
+
+**Q6-3:** shadcn/ui is notable because:
+- (a) it's a paid black box
+- (b) **it installs component code into your own repo that you own** ✓
+- (c) it replaces Next.js
+- (d) it's backend-only
+
+*Why:* shadcn/ui copies component code into your repo, giving you full ownership and control. You can modify, theme, and maintain it yourself—not locked into a vendor.
+
+**Q6-4:** What's the benefit of design-first prototyping (e.g. Claude Design) before coding?
+- (a) it's faster than coding
+- (b) the AI can't make mistakes in design
+- (c) **you see the visual intent *before* writing code, avoiding re-layout later** ✓
+- (d) it replaces the need for CSS
+
+*Why:* Design-first prototyping locks down layout and visual hierarchy before code, saving you from building the wrong layout and having to rework it all later. It's a planning tool (Module 3's principle, applied to design).
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Apply design principles (Quiz Q6-1, Q6-2):**

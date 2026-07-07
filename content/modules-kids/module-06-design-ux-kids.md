@@ -131,6 +131,36 @@ Pick one page from your pet tracker and redesign it:
 
 ---
 
+## Quiz Questions (Preview)
+
+Here are the three questions on your quiz. Study these first!
+
+**Q6-k1:** Why do AI-designed UIs often look boring?
+- (a) **The AI picks the most common designs from its training** ✓
+- (b) AI doesn't like design
+- (c) Tailwind CSS is ugly
+- (d) They're always broken
+
+*Why:* AI learns patterns from tons of code and websites. Most websites look similar, so AI copies that default pattern. YOU have to ask for something different!
+
+**Q6-k2:** Which is NOT a design principle?
+- (a) Hierarchy (what's most important?)
+- (b) Spacing (breathing room)
+- (c) **Database indexing** ✓
+- (d) Color palette (colors that work together)
+
+*Why:* Hierarchy, spacing, alignment, and color are all design principles. Database indexing is a backend programming thing—totally different!
+
+**Q6-k3:** Tailwind CSS is useful because:
+- (a) It replaces Next.js
+- (b) **You add classes to HTML instead of writing CSS from scratch** ✓
+- (c) It's only for designers
+- (d) It works on the backend
+
+*Why:* Instead of writing tons of CSS code, you just add classes like `text-xl`, `bg-blue-500`, `p-4`. Way faster and easier!
+
+---
+
 ## Knowledge Check (Quiz)
 
 1. **List 3 design principles and give an example of each.**
