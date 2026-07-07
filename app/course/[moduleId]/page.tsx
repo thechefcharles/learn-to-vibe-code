@@ -8,6 +8,7 @@ import {
   getUserModuleProgress,
 } from "@/lib/actions/course";
 import { getUser } from "@/lib/auth";
+import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
@@ -49,7 +50,8 @@ export default async function LessonPage(props: LessonPageProps) {
   const user = await getUser();
   let userVersion: "kids" | "adult" = "adult";
   if (user) {
-    const { data: enrollment } = await (await import("@/lib/supabase/server")).createClient()
+    const supabase = await createClient();
+    const { data: enrollment } = await supabase
       .from("enrollments")
       .select("enrolled_version")
       .eq("user_id", user.id)
