@@ -145,6 +145,36 @@ Submit a comparison (1-2 pages).
 
 ---
 
+## Quiz Questions (Preview)
+
+Here are your three quiz questions. Study these!
+
+**Q15-k1:** Why tools don't define your skill:
+- (a) All tools are the same
+- (b) **Skills last forever; tools come and go** ✓
+- (c) You only need one tool
+- (d) Tools never change
+
+*Why:* Tools get replaced, rebrand, get bought, or fade. But the skills—planning, reading code, debugging, testing, securing—those last your whole career. Learn the skills; tools will follow.
+
+**Q15-k2:** A real criterion to evaluate tools:
+- (a) Its logo color
+- (b) **How trapped you are (can you switch later?)** ✓
+- (c) Founder's name
+- (d) Release date only
+
+*Why:* "Lock-in" is huge! If you use it and want to switch, can you? Is your data stuck in it forever? A tool that lets you leave is safer than one that traps you.
+
+**Q15-k3:** 'It depends' is a good answer when:
+- (a) You stop there
+- (b) **You name what it depends on AND decide** ✓
+- (c) You pick randomly
+- (d) You avoid choosing
+
+*Why:* "It depends" without deciding is lazy. "It depends on whether you need real-time data (use Firebase) or can use a regular DB (use Supabase)—for this project, I'd choose Supabase" is *smart*. Always back it up with a choice.
+
+---
+
 ## Knowledge Check (Quiz)
 
 1. **List the tools in our stack and why each one.**

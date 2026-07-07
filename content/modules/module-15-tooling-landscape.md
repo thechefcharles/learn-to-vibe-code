@@ -77,6 +77,36 @@ For each, state a recommendation *and the reasons*, referencing the 15.3 criteri
 
 ---
 
+## Quiz questions (preview)
+
+These are the three questions you'll see on the quiz. Study these to prepare:
+
+**Q15-1:** The purpose of learning the tooling landscape is:
+- (a) to memorize every tool
+- (b) **to understand which tool solves which problem** ✓
+- (c) to pick one and ignore others
+- (d) tools don't matter
+
+*Why:* You're not memorizing a static list — you're learning to think. "Which tool fits this project?" beats "know all tools." The landscape changes; judgment transfers.
+
+**Q15-2:** Which is NOT a reason to pick a tool?
+- (a) it solves your problem
+- (b) your team knows it
+- (c) **everyone else uses it** ✓
+- (d) it's free
+
+*Why:* Popularity is not a reason. Real reasons: it solves your actual problem, your team can use it, the cost is right, and you can adopt it fast. "Everyone uses it" is herd mentality, not strategy.
+
+**Q15-3:** After this course, the best way to stay current is:
+- (a) stop learning
+- (b) **follow release notes and communities for tools you use** ✓
+- (c) memorize docs
+- (d) use only old tools
+
+*Why:* You'll use a tool stack; stay tuned to its evolution (GitHub, Vercel, Supabase news, their communities). You can't stay current on *everything* — that's exhausting and pointless. Stay current on what you ship with.
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Analyze:** for two options at one layer (e.g. Supabase vs. Firebase), compare across cost, lock-in, performance, ecosystem.
