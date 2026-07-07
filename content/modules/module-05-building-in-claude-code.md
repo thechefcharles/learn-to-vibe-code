@@ -34,7 +34,17 @@ cd invoice-tracker
 claude
 ```
 
-*[SCREENSHOT: the Claude Code welcome prompt in the terminal.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Claude Code Welcome]**
+
+**What this screenshot should show:**
+- Terminal window with `claude` command output
+- Welcome message from Claude Code (version, session start)
+- Cursor ready for user input (e.g., `You:`)
+- Proof that Claude Code is installed and running
+
+---
 
 **The mindset shift:** in Cursor you think in *edits*; in Claude Code you think in *goals*. Instead of "change this line," you say "add an invoices feature that lists and creates invoices tied to clients." The agent figures out which files to touch. Your job moves up a level: describe intent clearly, then review what it did.
 
@@ -57,7 +67,17 @@ Pointing the agent at existing code (`app/clients`) makes new features match wha
 > **Cross-tool note ([AGENTS.md](http://AGENTS.md)):** `CLAUDE.md` is Claude Code's file; `.cursorrules` (Module 4) is Cursor's. There's also a vendor-neutral standard, **`AGENTS.md`**, that many tools read (create-next-app scaffolds both). Keep them consistent, or treat `AGENTS.md` as the shared source.
 > 
 
-*[SCREENSHOT: a [CLAUDE.md](http://CLAUDE.md) file showing project conventions.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: CLAUDE.md File]**
+
+**What this screenshot should show:**
+- Editor window with CLAUDE.md open
+- 5-10 lines of project conventions (framework, language, patterns, style)
+- Example content: "Next.js App Router, TypeScript, Tailwind CSS, follow patterns in app/clients"
+- Proof: persistent context file is created and editable
+
+---
 
 ---
 
@@ -67,7 +87,18 @@ The single most important agentic habit for beginners. Before a big change, use 
 
 **Flow:** describe the goal → agent returns a plan (files it will create/change, in order) → you check it against your intent and the Module 3 build order → approve or refine (Module 2's critique-and-refine, applied to a plan) → agent executes.
 
-*[SCREENSHOT: Claude Code in plan mode listing proposed steps before making changes.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Plan Mode Output]**
+
+**What this screenshot should show:**
+- Terminal showing Claude Code's response to `/plan` command
+- Numbered list of steps (e.g., "1. Create types/invoice.ts", "2. Create app/invoices/page.tsx", etc.)
+- Each step describes a file and its purpose
+- No changes have been made yet (just a proposal)
+- Proof: agent proposes before executing
+
+---
 
 > **Instructor note:** Show a plan you *reject* and refine, not just a happy path. Steering the plan is the skill.
 > 
@@ -86,7 +117,18 @@ This delivers Objective 1. Build the **invoices** feature agentically — it spa
 
 **Step 4 — Iterate** with follow-ups. The habit is unchanged: **goal → plan → execute → verify → next.**
 
-*[SCREENSHOT: the terminal showing the multi-file diff for the invoices feature.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Multi-File Diff]**
+
+**What this screenshot should show:**
+- Terminal showing Claude Code's diff output
+- Multiple files listed (e.g., `types/invoice.ts`, `app/invoices/page.tsx`, `app/invoices/form.tsx`)
+- For each file: red lines (removed), green lines (added)
+- Accept/reject prompt at the end
+- Proof: agent changed multiple files coherently in one operation
+
+---
 
 The payoff vs. Module 4: you described one feature and the agent handled the whole set of files.
 
@@ -101,7 +143,18 @@ This delivers Objective 2. Two habits:
 
 **Permissions:** Claude Code asks before sensitive actions (running commands, editing files); control the rules with `/permissions`. For beginners, keep approvals on. Useful: `/context` (see the window) and `/compact` (summarize a long session so the agent doesn't lose earlier detail — the Module 1 "lost detail" risk).
 
-*[SCREENSHOT: a Claude Code permission prompt.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Permission Prompt]**
+
+**What this screenshot should show:**
+- Terminal showing Claude Code asking for permission
+- Prompt: "I will run `npm install`. Approve? (yes/no)"
+- Or: "I will edit 3 files. Review the diff first? (yes/no)"
+- Shows the safeguard mechanism at work
+- User is in control (can deny or require review)
+
+---
 
 ---
 
@@ -126,11 +179,30 @@ This delivers Objective 3. Not competitors — complementary; skilled builders u
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Orchestrate:** submit the goal prompt and a screenshot of the multi-file result for a feature you built.
+**Objective 1 — Orchestrate (Quiz Q5-1):**
+- Q5-1: "The key mindset shift from Cursor to Claude Code is thinking in:" ✅ edits → goals
+- *Practical check:* Submit the goal prompt you used + screenshot of the working `/invoices` page (proof of multi-file orchestration)
 
-**Objective 2 — Direct & review:** show a plan the agent proposed, your refinement, and one thing you caught reviewing the diff.
+**Objective 2 — Direct & review (Quiz Q5-2, Q5-3):**
+- Q5-2: Test understanding of CLAUDE.md
+- Q5-3: Test understanding of plan mode and review discipline
+- *Practical check:* Show a plan the agent proposed for a feature, your refinement (if any), and one thing you caught reviewing the diff.
+  - **SAMPLE:** "Agent proposed renaming `client_id` to `clientId` everywhere. I refined it to only rename in new code (types/invoice.ts) to avoid breaking old clients table. Reviewing the diff, I caught that it missed updating the validation schema — I asked it to add that before accepting."
 
-**Objective 3 — Choose the workflow:** for four tasks (rename `Client` to `Customer` everywhere; adjust one button's color; add a settings page; fix a heading typo), label each Cursor or Claude Code and justify in one line.
+**Objective 3 — Choose workflow (Lesson 5.6 knowledge):**
+- *Practical check:* For four tasks, label Cursor or Claude Code and justify:
+  - (a) Rename `Invoice` to `Payment` everywhere (Cursor? Claude Code?) → **Claude Code** (cross-cutting, affects many files)
+  - (b) Adjust one button's color (Cursor? Claude Code?) → **Cursor** (local, focused change)
+  - (c) Add a whole notification system feature (Cursor? Claude Code?) → **Claude Code** (large, multi-file)
+  - (d) Fix a typo in one component (Cursor? Claude Code?) → **Cursor** (micro-task)
+
+---
+
+**Scenario-based judgment checks:**
+
+- (a) You ask Claude Code to add a feature, it proposes a 10-file plan. You don't understand step 3. What do you do?
+- (b) The agent's diff looks good but renamed 50 variables. How do you verify it didn't miss any?
+- (c) You want to try two different approaches to a feature. Which tool would you use to test both quickly?
 
 *Pass mark: 80% and a working agentic feature submitted.*
 

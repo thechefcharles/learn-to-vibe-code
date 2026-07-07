@@ -31,7 +31,11 @@ Show the tells: default system fonts, everything the same size and weight, no br
 > **Aside — developing taste:** the fastest way to get a designer's eye is to study products you admire (Linear, Stripe, Notion) and notice their restraint: generous spacing, few font sizes, a tiny color palette. Copy the *principles*, not the pixels.
 > 
 
-*[SCREENSHOT: the plain invoice-tracker /clients page from Module 4 — the "before."]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Plain UI ("Before")]**
+
+Browser at `/clients`: bare table, default fonts, cramped spacing, no visual hierarchy. Shows what "AI-generated" looks like.
 
 ---
 
@@ -60,7 +64,13 @@ npx shadcn@latest add button input table card
 
 Why a library beats hand-styling for beginners: consistency for free, accessibility built in (previews Module 12), a professional baseline you can theme, and it drops real code into your repo — so it pairs with Cursor/Claude Code editing. (Theming/dark mode is a natural next step shadcn supports.)
 
-*[SCREENSHOT: shadcn/ui components rendered in the invoice tracker.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: shadcn/ui Components]**
+
+Components from shadcn/ui rendered: Button, Input, Table, Card in context of the invoice tracker. Shows polished, accessible baseline.
+
+---
 
 ---
 
@@ -72,7 +82,13 @@ Do it AI-assisted but *directed*: give Cursor/Claude Code the design direction f
 
 **Tip (multimodal, Module 2):** paste a screenshot of a design you like (or a competitor's UI) and ask the AI to match it — a picture guides the styling far better than words.
 
-*[SCREENSHOT: the restyled /clients page — the "after," side by side with the before.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Restyled UI ("After")]**
+
+Side-by-side: plain `/clients` (left) and restyled version (right). Shows hierarchy, consistent spacing, professional typography, accent color. Desktop view.
+
+---
 
 ---
 
@@ -89,7 +105,13 @@ The essentials:
 
 Test by resizing the browser or using DevTools device mode at ~375px. And **prompt for it explicitly**: "make this responsive — stack columns on mobile, readable tap targets, no horizontal scroll," because the AI usually won't unless asked. shadcn/Tailwind make this straightforward.
 
-*[SCREENSHOT: the app at ~375px (mobile) beside the desktop view.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Responsive Mobile View]**
+
+Side-by-side: restyled `/clients` at desktop width (left) and ~375px mobile width (right). Shows table stacking to card layout, readable tap targets, no horizontal scroll. Proves responsiveness works.
+
+---
 
 ---
 
@@ -122,7 +144,14 @@ Both end in the same place — a styled, real app; a design-first tool just lets
 > **Version note:** Claude Design is in beta and moving fast; features (design-system import, Claude Code hand-off, exports) evolve — check current docs.
 > 
 
-*[SCREENSHOT: the Claude Design home ("What will you design today?") and a generated prototype.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Claude Design Prototype]**
+
+Screen 1: Claude Design home with prompt "What will you design today?" visible.
+Screen 2: Claude Design canvas showing a generated UI prototype (dashboard, form, or flow). Shows design-first workflow output.
+
+---
 
 ---
 
@@ -134,11 +163,33 @@ Both end in the same place — a styled, real app; a design-first tool just lets
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Apply design principles:** submit a before/after of a screen you improved, naming the hierarchy/spacing/type/color/responsive changes.
+**Objective 1 — Apply design principles (Quiz Q6-1, Q6-2):**
+- Q6-1: Tests hierarchy/spacing/typography knowledge
+- Q6-2: Tests responsive design understanding
+- *Practical check:* Submit before/after screenshots of `/clients` page. For the "after," name 4 changes (e.g., "Increased heading size for hierarchy, added 16px gap between sections, used single font Geist, applied blue accent to action buttons").
 
-**Objective 2 — Use a component library:** show a screen rebuilt with shadcn/ui (or similar) components.
+**Objective 2 — Use component library (Quiz Q6-3):**
+- Q6-3: "shadcn/ui installs component code..." ✅ Tests library understanding
+- *Practical check:* Show the restyled screen built with shadcn/ui components. List which components you used (Button, Input, Table, Card, etc.).
 
-**Objective 3 — Critique & fix:** given a generic UI, list three concrete problems (including a responsive one) and the fix for each.
+**Objective 3 — Critique & fix (Lesson 6.6 knowledge):**
+- *Practical check:* Given a generic screenshot, identify 3 problems and fixes:
+  - **SAMPLE ANSWER:**
+    1. Problem: "No focal point" → Fix: "Make the page title larger (h1) and give it color"
+    2. Problem: "Cramped spacing on mobile" → Fix: "Increase padding from 4px to 12px, stack columns vertically below 768px"
+    3. Problem: "Too many link colors" → Fix: "Limit to one accent color for all links and buttons"
+
+**Objective 4 — Design-first tools (Q6-4):**
+- Q6-4: "What's the benefit of design-first prototyping?" ✅ Tests Claude Design/design-first approach understanding
+- *Practical check:* Describe a scenario where design-first (Claude Design) would help vs. code-first (Cursor/Claude Code). Example: "Using Claude Design for a complex dashboard layout helps me see the flow before coding. Once stakeholders approve, I hand the prototype to Claude Code to implement."
+
+---
+
+**Scenario-based judgment checks:**
+
+- (a) Your page looks professional on desktop but text overlaps on phones. What did you miss?
+- (b) You're building a settings page. Would you prototype in Claude Design or code directly in Cursor? Why?
+- (c) Your colors pass contrast checks but feel jarring. What principle might help?
 
 *Pass mark: 80% and a restyled, responsive screen submitted.*
 
