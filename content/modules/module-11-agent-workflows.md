@@ -132,6 +132,44 @@ Delivers Objective 4 — what separates a demo from a product. Anticipate each f
 
 ---
 
+## Quiz questions (preview)
+
+These are the four questions you'll see on the quiz. Study these to prepare:
+
+**Q11-1:** An agent workflow differs from a normal function because:
+- (a) it's Python
+- (b) **the agent decides which tools to use within the goal** ✓
+- (c) it never fails
+- (d) it needs no code
+
+*Why:* A function does exactly what you coded. An agent receives a goal and tools, then *decides* which tools to call and in what order. That autonomy is the power (handles messy inputs) and the risk (it can decide wrong) — which is why reliability matters.
+
+**Q11-2:** Putting the AI call behind a stable interface lets you:
+- (a) make it slower
+- (b) **stub it in tests and swap models later without changing the UI** ✓
+- (c) skip the AI
+- (d) avoid writing code
+
+*Why:* When the AI call is behind an interface (like `draftReminder(...)`), tests can stub it (no live model), and you can swap models/implementations without touching the UI. Testability and maintainability.
+
+**Q11-3:** The single most important safeguard before a consequential action (send/spend/delete):
+- (a) more agents
+- (b) **a human-in-the-loop approval** ✓
+- (c) a bigger model
+- (d) faster hardware
+
+*Why:* No guardrail beats human review before the agent sends an email, charges a card, or deletes data. Always require approval for the irreversible.
+
+**Q11-4:** Your workflow calls an external API that fails 10% of the time. What do you add?
+- (a) nothing — accept the 10% failure rate
+- (b) **retry logic + logging so failures are detectable and the loop can recover** ✓
+- (c) delete the workflow — it's unreliable
+- (d) a prayer
+
+*Why:* Build workflows that degrade gracefully. Assess failure modes (API down, timeouts, wrong responses) and add defensive patterns: retries, exponential backoff, circuit breakers, logging so you can debug and audit. A 90% reliable workflow is only 90% reliable if you can recover.
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Build a workflow:** demonstrate a multi-step agent workflow with its tools and the human checkpoint.

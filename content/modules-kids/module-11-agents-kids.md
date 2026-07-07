@@ -69,6 +69,36 @@ Add one of these to your pet tracker:
 
 ---
 
+## Quiz Questions (Preview)
+
+Here are your three quiz questions. Study these!
+
+**Q11-k1:** An AI agent is different from a function because:
+- (a) It's Python
+- (b) **The agent decides which steps to take (within a goal)** ✓
+- (c) It never fails
+- (d) It needs no code
+
+*Why:* A function does exactly what you tell it to do (step 1, step 2, step 3 — always in the same order). An agent is smarter: you give it a goal and tools, and it decides the best steps to reach that goal. That's the power of agents!
+
+**Q11-k2:** Why put AI calls behind a stable interface?
+- (a) Make it slower
+- (b) **Test it without real AI, swap models later without changing the app** ✓
+- (c) Skip the AI
+- (d) Avoid coding
+
+*Why:* Behind an interface (like `generateTips()`), you can swap the AI implementation without breaking the rest of your app. In tests, you can use a fake version; in production, use the real AI. The app doesn't care—it just calls the interface!
+
+**Q11-k3:** Before a big action (send money, delete data), the safest thing is:
+- (a) Use more agents
+- (b) **Have a human check/approve it first** ✓
+- (c) Use a bigger AI model
+- (d) Run it faster
+
+*Why:* No guardrail beats human approval! If your agent is about to send an email, charge a card, or delete data, a human should review it first. AI can make mistakes—you're the final check.
+
+---
+
 ## Knowledge Check (Quiz)
 
 1. **What's the difference between a function and an agent?**
