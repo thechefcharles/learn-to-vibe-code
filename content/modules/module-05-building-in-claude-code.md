@@ -111,11 +111,81 @@ This delivers Objective 1. Build the **invoices** feature agentically — it spa
 
 **Step 1 — State the goal** (feature-level five-ingredient prompt): "Add an invoices feature. Create an `Invoice` type (id, clientId, amount, dueDate, status). Add a page at `app/invoices` that lists invoices in a Tailwind table, and a form to create one referencing an existing client. Use mock data and follow the patterns in `app/clients`. Show me a plan first."
 
-**Step 2 — Review the plan**; confirm it creates the type, list page, and form, reusing the clients patterns.
+Here's what a strong prompt looks like (five ingredients: task, context, constraints, tone, examples):
 
-**Step 3 — Let it execute**, then review the diff across files. Run `npm run dev` and confirm `/invoices` works.
+```
+Task: Add an invoices feature to the invoice-tracker.
+Context: The app has a clients feature (app/clients) with mock data. I've built it with Next.js App Router, TypeScript, and Tailwind.
+Constraints: Mock data (no database yet—that's Module 7). Follow the folder structure and patterns of app/clients. Each invoice references a clientId.
+Tone: Be professional and skip explanations—I'll review the plan first.
+Examples: Invoice type should have fields: id (uuid), clientId (string), amount (number), dueDate (Date), status ('draft' | 'sent' | 'paid').
+Plan first, then execute.
+```
 
-**Step 4 — Iterate** with follow-ups. The habit is unchanged: **goal → plan → execute → verify → next.**
+**Step 2 — Review the plan**; confirm it creates:
+- `types/invoice.ts` (the `Invoice` type)
+- `app/invoices/page.tsx` (list page with Tailwind table)
+- `app/invoices/form.tsx` (create form, reusing clients patterns)
+- Mock data in `lib/mock-invoices.ts`
+
+**Step 3 — Let it execute**, then review the diff across files. Run `npm run dev` and confirm `/invoices` works. The diff should show files added/modified, with green (new code) and red (removed code) clearly visible. Check:
+- Type matches your spec
+- Form has proper client dropdown
+- List page shows all invoices
+- No console errors in the browser
+
+**Step 4 — Iterate** with follow-ups (add filtering, sorting, etc.). The habit is unchanged: **goal → plan → execute → verify → next.**
+
+---
+
+**Concrete code example** — what the Invoice type might look like after Claude Code generates it:
+
+```typescript
+// types/invoice.ts
+export interface Invoice {
+  id: string;
+  clientId: string;
+  amount: number;
+  dueDate: Date;
+  status: 'draft' | 'sent' | 'paid';
+  createdAt: Date;
+}
+```
+
+And a stub for the form component:
+
+```tsx
+// app/invoices/form.tsx
+'use client';
+import { useState } from 'react';
+import { Invoice } from '@/types/invoice';
+
+export default function InvoiceForm() {
+  const [formData, setFormData] = useState({
+    clientId: '',
+    amount: '',
+    dueDate: '',
+    status: 'draft',
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Claude Code will add: create invoice, redirect, etc.
+    console.log('Submit:', formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label>Client</label>
+        <select value={formData.clientId} onChange={(e) => setFormData({ ...formData, clientId: e.target.value })} />
+      </div>
+      {/* Amount, Due Date, Status fields */}
+      <button type="submit">Create Invoice</button>
+    </form>
+  );
+}
+```
 
 ---
 
@@ -173,7 +243,53 @@ This delivers Objective 3. Not competitors — complementary; skilled builders u
 
 ## Hands-on activity (~60 min, folded in)
 
-**"Ship the invoices feature agentically."** Using Claude Code with a maintained [CLAUDE.md](http://CLAUDE.md), add the invoices feature: (1) use plan mode and refine the plan at least once, (2) let the agent execute a multi-file change, (3) review the diff before accepting. Deliverable: a running `/invoices` page tied to clients. Then write one sentence on which task you'd have done in Cursor instead, and why.
+**"Ship the invoices feature agentically."** Using Claude Code with a maintained [CLAUDE.md](http://CLAUDE.md), add the invoices feature. Here's the step-by-step:
+
+### Step-by-step walkthrough:
+
+1. **Start Claude Code** in your `invoice-tracker` folder:
+   ```bash
+   claude
+   ```
+
+2. **Paste the goal** (from Lesson 5.4; include the five-ingredient format for best results):
+   ```
+   Add an invoices feature. Create an Invoice type (id, clientId, amount, dueDate, status). 
+   Add a page at app/invoices that lists invoices in a Tailwind table, and a form to create 
+   one referencing an existing client. Use mock data and follow the patterns in app/clients. 
+   Show me a plan first.
+   ```
+
+3. **Review the plan** Claude Code returns. It should list:
+   - `types/invoice.ts` (type definition)
+   - `app/invoices/page.tsx` (list view)
+   - `app/invoices/form.tsx` (form component)
+   - `lib/mock-invoices.ts` (mock data)
+   
+   **If the plan is off**, refine it: "Don't create a separate form component—put it on the same page for now" or "Add a delete button in the table."
+
+4. **Approve execution** after reviewing. Claude Code will show a diff. Check:
+   - New files are TypeScript-correct (no syntax errors)
+   - Form has a client dropdown (not hardcoded)
+   - Table displays all invoice fields
+   - Mock data has 3–5 sample invoices
+
+5. **Run the app** locally:
+   ```bash
+   npm run dev
+   ```
+   Visit `http://localhost:3000/invoices` and test: create an invoice, see it in the list, refresh and it's still there (mock data persists during the session).
+
+6. **Iterate** (optional):
+   - "Add a status badge (Tailwind colors: draft=gray, sent=blue, paid=green)"
+   - "Sort invoices by dueDate descending"
+   - "Add a search filter by client name"
+
+### Deliverable:
+- A running `/invoices` page with list + create form, tied to clients
+- Screenshot of the working page
+- One sentence on which task you'd have done in Cursor instead, and why
+  - *Example:* "If the form styling was off, I'd use Cursor to adjust the Tailwind classes interactively, not re-generate the whole component."
 
 ---
 
@@ -230,9 +346,36 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 **Scenario-based judgment checks:**
 
-- (a) You ask Claude Code to add a feature, it proposes a 10-file plan. You don't understand step 3. What do you do?
-- (b) The agent's diff looks good but renamed 50 variables. How do you verify it didn't miss any?
-- (c) You want to try two different approaches to a feature. Which tool would you use to test both quickly?
+*For each scenario, state your action and reasoning.*
+
+- **(a) Confusing plan:** You ask Claude Code to add a feature, it proposes a 10-file plan. You don't understand step 3. What do you do?
+  - ✅ **Correct:** Ask Claude Code: "Explain step 3 in more detail. Why are you creating that file and what does it do?" This is refining the plan (Module 2 critique-and-refine).
+  - ❌ **Avoid:** Just approving and hoping it works, or rejecting the whole plan and starting over.
+
+- **(b) Verification:** The agent's diff looks good but renamed 50 variables from camelCase to snake_case everywhere. How do you verify it didn't miss any?
+  - ✅ **Correct:** Ask Claude Code: "Search the codebase for any remaining camelCase versions of these variable names. Did I miss any references?" Then review the grep results.
+  - ❌ **Avoid:** Accepting the diff without checking for missed references (could break the app).
+
+- **(c) Tool choice:** You want to try two different UI approaches to the invoice form (side-by-side layout vs. stacked). Which tool would you use to test both quickly?
+  - ✅ **Correct:** Cursor. You can toggle between the two approaches locally, see them in the browser immediately, without multi-file coordination.
+  - ❌ **Avoid:** Claude Code for this — it's a single-file, visual iteration; agentic overkill.
+
+- **(d) Error handling:** The agent creates a form but doesn't validate that amount > 0. You catch this in the review. Do you:
+  - ✅ **Correct:** Reject the diff, ask Claude Code: "Add validation: amount must be positive, dueDate must be in the future." Then review the next diff.
+  - ❌ **Avoid:** Accepting and adding validation later (you want validation in place before shipping).
+
+---
+
+**Rubric checklist (self-review before submission):**
+
+| Criterion | Evidence |
+|-----------|----------|
+| **Goal clarity** | You wrote a five-ingredient prompt (task, context, constraints, tone, examples) |
+| **Plan review** | You reviewed the agent's plan and refined it at least once (e.g., "Don't do X, do Y instead") |
+| **Diff inspection** | You read the full diff before accepting (no blind accepts) |
+| **Working app** | `/invoices` page loads, you can create + list invoices, form ties to clients |
+| **Pattern reuse** | New code follows the same style/structure as `app/clients` |
+| **Judgment call** | You identified one small task you'd do in Cursor instead, with reasoning |
 
 *Pass mark: 80% and a working agentic feature submitted.*
 
