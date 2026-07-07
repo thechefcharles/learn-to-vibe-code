@@ -35,32 +35,83 @@ Every coder has tools, just like every gamer has gear. Here's yours, and which "
 
 ## Lesson 0.2 — Install the Tools (~30 min)
 
-**Node.js:** The engine that runs your code.
-- Go to [nodejs.org](https://nodejs.org), download the LTS version (it's the safe one)
-- Open your Terminal (Mac) or PowerShell (Windows)
-- Paste this to check it worked:
+### What is a Terminal? 💻
+
+First things first: a **terminal** is a text-based way to talk to your computer. Instead of clicking buttons, you type commands. It's easier than it sounds — we'll just copy-paste commands.
+
+**Mac:** Open Spotlight (Cmd+Space), type "Terminal", press Enter.
+**Windows:** Press Win+R, type "powershell", press Enter.
+
+---
+
+**[SCREENSHOT PLACEHOLDER: Terminal Windows]**
+Left: Mac Terminal open. Right: Windows PowerShell open. Both showing a command prompt ready for input.
+
+---
+
+### Installing Node.js
+
+Node.js is the engine that runs your code on your computer.
+
+**Step 1:** Go to [https://nodejs.org](https://nodejs.org)
+
+**Step 2:** Download the **LTS version** (it's the safe, stable one). Click the big green button.
+
+**Step 3:** Run the installer. Accept all the defaults.
+
+**Step 4:** Open your Terminal (Mac) or PowerShell (Windows) and run:
 
 ```bash
 node --version
 npm --version
 ```
 
-You should see version numbers. Boom! 🎉
+**You should see version numbers like `v22.12.0` and `10.5.0`.** If you see them, you're done! 🎉
 
-**Cursor:** Your first AI coding buddy.
-- Download from [cursor.com](https://cursor.com)
-- Install it like any app
-- Sign in and take it for a spin
+**Troubleshooting:** If you see `command not found`, close the terminal completely and reopen it. If it still doesn't work, reinstall Node.
 
-**Claude Code:** Your second AI buddy (works in the terminal).
-- Install it and sign in
-- Check it's working:
+---
+
+**[SCREENSHOT PLACEHOLDER: Node.js Version Output]**
+Terminal showing `node --version` and `npm --version` commands with version numbers displayed.
+
+---
+
+### Installing Cursor
+
+Cursor is your AI code editor. It's based on VS Code and super friendly.
+
+**Step 1:** Go to [https://cursor.com](https://cursor.com)
+
+**Step 2:** Click "Download" and pick your operating system (Mac or Windows).
+
+**Step 3:** Run the installer. Follow the prompts.
+
+**Step 4:** Open Cursor. You'll see a welcome screen. Click "Sign in with GitHub" (we'll set up GitHub next).
+
+**Step 5:** Follow the sign-in flow. Done! ✅
+
+### Installing Claude Code
+
+Claude Code is your second AI buddy — it works in the terminal to help with bigger tasks.
+
+**Step 1:** Go to [https://claude.com/download](https://claude.com/download) and follow the install for your OS (Mac or Windows).
+
+**Step 2:** Open your Terminal/PowerShell and run:
 
 ```bash
 claude --version
 ```
 
-You should see a version number!
+**You should see a version number like `0.5.2`.** If yes, you're done with this part.
+
+**Step 3:** Sign in by running:
+
+```bash
+claude login
+```
+
+Follow the link, copy your API token from your Claude account, and paste it into the terminal. Now you're connected! 🔗
 
 ---
 
@@ -77,32 +128,101 @@ That's it! All free. 🎁
 
 ---
 
-## Lesson 0.4 — About Costs (~15 min)
+## Lesson 0.4 — Costs & Free Tiers (~15 min)
 
-Good news: **everything you need is free!**
+Great news: **you can complete the entire course on free tiers!** Here's the breakdown:
 
-- Node.js, GitHub, Supabase, Vercel = all free for this course
-- Cursor & Claude Code = free tier exists, paid tiers ($20/month) if you want more after the course
+**Always free:**
+- Node.js — free forever
+- GitHub — unlimited repos on free tier
+- Supabase — 500MB database + 5GB storage (plenty for this course)
+- Vercel — unlimited deployments for free
 
-**Pro tip:** These tools track how much you use them. Check your usage dashboard every week so there are no surprises. (Usually there won't be!)
+**Freemium (free tier exists, paid optional):**
+- **Cursor** — 2 slow requests/day free; $20/month for unlimited fast requests
+- **Claude Code** — free trial; then ~$5-50/month depending on how much you use it
+
+**How to avoid surprise bills:**
+1. **Use free tiers first** — don't upgrade unless you hit limits
+2. **Check your usage weekly** — takes 2 minutes, just go to account settings on each tool
+3. **Set spending alerts** if available (Vercel has them)
+
+Most learners stay under $10-20/month total for AI helpers if they're just learning. You're good! 💰
 
 ---
 
-## Lesson 0.5 — Test Drive Everything (~25 min)
+## Lesson 0.5 — Verify Everything Works (~25 min)
 
-Let's make sure everything works together. You're gonna create a tiny "Hello, World!" app, then delete it. Just proving the chain works.
+Time to prove everything works together! We're gonna create a tiny test app, verify it runs, then delete it. This proves the whole chain works.
+
+**Step 1:** Open a Terminal/PowerShell and run:
 
 ```bash
 npx create-next-app@latest my-test-app
+```
+
+Answer the prompts:
+- "Would you like to use TypeScript?" → `No`
+- "Would you like to use ESLint?" → `No`
+- "Would you like to use Tailwind CSS?" → `Yes`
+- Accept defaults for everything else
+
+This takes 2-3 minutes. Wait for it to finish.
+
+---
+
+**[SCREENSHOT PLACEHOLDER: create-next-app Running]**
+Terminal showing the `npx create-next-app@latest my-test-app` command with prompts and responses, ending with "✓ Created my-test-app" or similar success message.
+
+---
+
+**Step 2:** Start the app:
+
+```bash
 cd my-test-app
 npm run dev
 ```
 
-Open your browser to [http://localhost:3000](http://localhost:3000) — you should see a page! 🚀
+**You should see:**
+```
+▲ Next.js 16.2.10
+- Local:         http://localhost:3000
+```
 
-Then sign in to Cursor, launch Claude Code in that folder, and check that you're logged into GitHub, Supabase, and Vercel.
+**Step 3:** Open your browser and go to [http://localhost:3000](http://localhost:3000)
 
-Finally, close the terminal and delete the `my-test-app` folder. You're done with the test!
+**You should see a Next.js starter page with a logo.** If yes, your setup works! 🚀
+
+---
+
+**[SCREENSHOT PLACEHOLDER: Cursor with Project Open]**
+Cursor window showing the my-test-app project: left sidebar displays the file tree (app/, node_modules/, public/, etc.), main editor area visible, window title shows "my-test-app".
+
+---
+
+**Step 4:** Test the AI helpers:
+- Open Cursor and click File → Open Folder → select `my-test-app`
+- In Terminal, run `claude --version` — should show a version number
+- Check that you're logged into GitHub, Supabase, and Vercel (just go to their websites)
+
+**Step 5:** Clean up:
+- Close the terminal (Ctrl+C to stop the app first)
+- Delete the `my-test-app` folder (drag it to Trash)
+
+**You're done!** 🎉
+
+### Troubleshooting 🔧
+
+**`command not found: npx`** — Node didn't install properly. Close terminal, reinstall Node, then reopen terminal.
+
+**`create-next-app` takes forever** — It's slow on first run. That's normal. Give it 3-5 minutes.
+
+**Port 3000 already in use** — Another app is using it. Either close that app or run:
+```bash
+npm run dev -- -p 3001
+```
+
+**Browser shows "Cannot connect"** — Make sure the terminal says "Local: http://localhost:3000" with no errors. Wait 10 seconds and refresh.
 
 ---
 
