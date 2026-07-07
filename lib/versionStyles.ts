@@ -79,11 +79,11 @@ export const badgeNames = {
     capstone: "Ultimate Master",
   },
   adult: {
-    first_quiz_passed: "first_quiz_passed",
-    rls_locked_down: "rls_locked_down",
-    went_live: "went_live",
-    automation_engineer: "automation_engineer",
-    capstone: "capstone",
+    first_quiz_passed: "Assessment Pass",
+    rls_locked_down: "Security Hardening",
+    went_live: "Production Deployment",
+    automation_engineer: "Pipeline Automation",
+    capstone: "Capstone Completion",
   },
 };
 
