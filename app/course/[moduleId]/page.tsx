@@ -12,11 +12,8 @@ import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
-export async function generateStaticParams() {
-  return Array.from({ length: 16 }, (_, i) => ({
-    moduleId: String(i),
-  }));
-}
+// Render dynamically based on user's enrolled version
+export const dynamic = "force-dynamic";
 
 interface LessonPageProps {
   params: Promise<{ moduleId: string }>;
