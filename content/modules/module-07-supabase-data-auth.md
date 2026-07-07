@@ -198,6 +198,36 @@ This delivers Objective 3.
 
 ---
 
+## Quiz questions (preview)
+
+These are the three questions you'll see on the quiz. Study these to prepare:
+
+**Q7-1:** A backend provides all EXCEPT:
+- (a) persistence
+- (b) accounts
+- (c) authorization
+- (d) **faster typing** ✓
+
+*Why:* Backends solve three real problems: data persists, users log in, and access is controlled. Typing speed has nothing to do with it. (That's an IDE/editor job.)
+
+**Q7-2:** With RLS enabled and no policy, how many rows are returned?
+- (a) all
+- (b) **zero — it's default-deny** ✓
+- (c) only the newest
+- (d) an error
+
+*Why:* This is the critical security principle: RLS defaults to **deny everything unless you explicitly allow it**. No policy = nobody reads anything. Safe by default.
+
+**Q7-3:** In a policy, `auth.uid()` gives you:
+- (a) a random id
+- (b) **the logged-in user's id from their session** ✓
+- (c) the table name
+- (d) the API key
+
+*Why:* `auth.uid()` is how you identify the current user in your RLS policy. It's the bridge between "who's logged in" and "what rows can they see."
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Model & connect:** show your schema and a working query reading real data into a page.

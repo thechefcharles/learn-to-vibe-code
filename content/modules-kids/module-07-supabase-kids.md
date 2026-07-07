@@ -118,6 +118,36 @@ Supabase has a built-in auth system (email/password). You can use it.
 
 ---
 
+## Quiz Questions (Preview)
+
+Here are your three quiz questions. Study them now!
+
+**Q7-k1:** A database does everything EXCEPT:
+- (a) Save your data permanently
+- (b) Create user accounts
+- (c) Control who can see what data
+- (d) **Make your typing faster** ✓
+
+*Why:* Databases store data, manage users, and control access. But they don't make you type faster—that's your editor's job! This is about what databases DO vs don't do.
+
+**Q7-k2:** With RLS security on and NO rules set, what happens?
+- (a) Everyone can see everything
+- (b) **Nobody can see anything (locked by default, safe!)** ✓
+- (c) Only new data shows
+- (d) You get an error
+
+*Why:* RLS defaults to LOCKED. Super safe! Nothing works until you say "allow this." You can't accidentally expose data.
+
+**Q7-k3:** In a security rule, `auth.uid()` gives you:
+- (a) A random ID
+- (b) **The logged-in user's unique ID** ✓
+- (c) The table name
+- (d) The API key
+
+*Why:* `auth.uid()` is the magic function that says "who's logged in right now?" That's how Supabase knows which user should see which data.
+
+---
+
 ## Knowledge Check (Quiz)
 
 1. **What's a database? How is it like a spreadsheet?**
