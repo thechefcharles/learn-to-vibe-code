@@ -177,6 +177,36 @@ This delivers Objective 3. Not competitors — complementary; skilled builders u
 
 ---
 
+## Quiz questions (preview)
+
+These are the three questions you'll see on the quiz. Study these to prepare:
+
+**Q5-1:** The key mindset shift from Cursor to Claude Code is thinking in:
+- (a) **edits → goals** ✓
+- (b) goals → edits
+- (c) files → folders
+- (d) tests → bugs
+
+*Why:* Cursor is edit-focused ("change this line"); Claude Code is goal-focused ("add an invoices feature"). You describe the outcome, the agent plans the steps.
+
+**Q5-2:** `CLAUDE.md` is the agentic equivalent of:
+- (a) package.json
+- (b) **a Cursor rules file** ✓
+- (c) .gitignore
+- (d) README
+
+*Why:* CLAUDE.md serves the same role as Cursor's `.cursorrules` (or `AGENTS.md`)—persistent project context that the agent reads on every session.
+
+**Q5-3:** Why use plan mode before a big change?
+- (a) it's faster
+- (b) **so the agent proposes an approach you can review before it edits anything** ✓
+- (c) it saves tokens
+- (d) it's required
+
+*Why:* Plan mode (`/plan`) lets you review the agent's proposed approach and approve before it modifies files. This prevents the agent from confidently doing the wrong thing across many files.
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Orchestrate (Quiz Q5-1):**

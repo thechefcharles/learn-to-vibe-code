@@ -218,6 +218,36 @@ Submit a screenshot showing the new feature working + one example of a plan you 
 
 ---
 
+## Quiz Questions (Preview)
+
+These are the three questions on your quiz. Study these first!
+
+**Q5-k1:** Claude Code works differently from Cursor because it thinks in:
+- (a) Edits first, goals second
+- (b) **Goals first, then figures out the edits** ✓
+- (c) Files first, folders second
+- (d) Tests first
+
+*Why:* Claude Code is agentic — you describe the GOAL (like "add a favorites feature"), and it figures out all the steps and files needed. Cursor makes you guide every edit manually.
+
+**Q5-k2:** `CLAUDE.md` in Claude Code is like:
+- (a) package.json
+- (b) **A Cursor rules file** ✓
+- (c) .gitignore
+- (d) A comment
+
+*Why:* CLAUDE.md tells Claude Code your project's rules and conventions, just like `.cursorrules` does in Cursor. It's the AI's memory of your stack and patterns.
+
+**Q5-k3:** Why use plan mode?
+- (a) It's faster
+- (b) **So the AI shows you its plan before changing code (you can say yes/no)** ✓
+- (c) It saves tokens
+- (d) It's required by law
+
+*Why:* Plan mode (`/plan`) is your safety net! The AI proposes what it will do, you review it, and only THEN does it make changes. No more surprises!
+
+---
+
 ## Knowledge Check (Mapped to Your Objectives)
 
 **Objective 1 — Orchestrate multi-file features (Quiz Q5-k1):**
