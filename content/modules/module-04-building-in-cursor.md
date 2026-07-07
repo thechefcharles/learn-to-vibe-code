@@ -250,6 +250,44 @@ This delivers Objective 3.
 
 ---
 
+## Quiz questions (preview)
+
+These are the four questions you'll see on the quiz. Study these to prepare:
+
+**Q4-1:** Which Cursor mode is best for a change spanning multiple files?
+- (a) Tab
+- (b) Cmd+K inline edit
+- (c) **Composer/Agent** ✓
+- (d) find-and-replace
+
+*Why:* Composer/Agent mode handles multi-file changes and cross-file context. Cmd+K is for single blocks; Tab is autocomplete; find-and-replace is a last resort.
+
+**Q4-2:** What does a project rules file (e.g. `AGENTS.md`) do?
+- (a) Formats code
+- (b) **Injects persistent project context into every AI interaction** ✓
+- (c) Deploys the app
+- (d) Runs tests
+
+*Why:* Rules files become system prompts for the AI, setting project norms and conventions. This is exactly the `.cursorrules` pattern from Lesson 4.3.
+
+**Q4-3:** `@`-mentions are used to:
+- (a) Tag teammates
+- (b) **Pin specific context (files/docs/web) into the model's window** ✓
+- (c) Comment code
+- (d) Undo changes
+
+*Why:* @-mentions let you include specific files or web pages as context for the AI, reducing the need to repeat yourself.
+
+**Q4-4:** You're building a React list component that fetches data from an API. Which Cursor mode is best?
+- (a) Tab autocomplete (just keep typing)
+- (b) Cmd+K inline edit (describe changes to a block)
+- (c) Cmd+L chat (ask questions about the code)
+- (d) **Cmd+I Composer (build the whole component)** ✓
+
+*Why:* Composer (Cmd+I) is best for building a complete feature—it orchestrates the component, imports, and wiring together. This is a feature-level task, not an edit.
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Build a working feature (Quiz Q4-4):**
