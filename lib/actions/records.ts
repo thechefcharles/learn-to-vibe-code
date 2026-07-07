@@ -159,16 +159,23 @@ export async function exportCapstoneRecordsCSV(): Promise<string> {
 
   if (error) throw error;
 
-  const submissions = data?.map((sub: any) => ({
-    "Learner ID": sub.user_id,
-    "Learner Name": sub.profiles?.name || "Unknown",
-    "Repository URL": sub.repo_url,
-    "Live URL": sub.live_url,
-    Result: sub.result,
-    "Graded Date": sub.graded_by ? new Date(sub.submitted_at).toLocaleDateString() : "Pending",
-    Version: sub.target_audience,
-    "Total Score": sub.rubric_scores ? (Object.values(sub.rubric_scores).reduce((a: any, b: any) => a + b, 0) / (Object.keys(sub.rubric_scores).length * 3) * 100).toFixed(0) : "N/A",
-  })) || [];
+  const submissions = data?.map((sub: any) => {
+    const rubricScores = sub.rubric_scores as Record<string, number> | null;
+    const totalScore = rubricScores
+      ? (Object.values(rubricScores).reduce((a: number, b: number) => a + b, 0) / (Object.keys(rubricScores).length * 3) * 100).toFixed(0)
+      : "N/A";
+
+    return {
+      "Learner ID": sub.user_id,
+      "Learner Name": sub.profiles?.name || "Unknown",
+      "Repository URL": sub.repo_url,
+      "Live URL": sub.live_url,
+      Result: sub.result,
+      "Graded Date": sub.graded_by ? new Date(sub.submitted_at).toLocaleDateString() : "Pending",
+      Version: sub.target_audience,
+      "Total Score": totalScore,
+    };
+  }) || [];
 
   const headers = ["Learner ID", "Learner Name", "Repository URL", "Live URL", "Result", "Graded Date", "Version", "Total Score"];
   return convertToCSV(submissions, headers);
