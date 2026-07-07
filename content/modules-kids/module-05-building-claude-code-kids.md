@@ -4,15 +4,16 @@
 
 **What you need:** Modules 0-4
 
-> **Why this matters:** Claude Code is the "agentic" way to build — you describe a goal at a high level, and the AI plans and executes across your whole project. It's faster for bigger tasks than Cursor's in-editor flow. This module teaches you when to use which tool.
+> **Why this matters:** Claude Code is the "agentic" way to build — you describe a goal at a high level, and the AI plans and executes across your whole project. It's faster for bigger tasks than Cursor's in-editor flow. This module teaches you when to use which tool and how to direct AI safely.
 
 ## What You'll Learn
 
 By the end of this module, you'll be able to:
 
-1. **Use Claude Code** from the terminal
-2. **Build features across multiple files**
-3. **Understand in-editor vs. agentic flows**
+1. **Orchestrate** features across multiple files using Claude Code (agentic flow)
+2. **Use CLAUDE.md** and Plan mode to guide the AI safely
+3. **Choose Cursor vs Claude Code** for different tasks
+4. **Review AI-generated code** before accepting changes
 
 ---
 
@@ -46,7 +47,51 @@ Use Cursor for edits, Claude Code for building new features.
 
 ---
 
-## Lesson 5.2 — The Agentic Workflow (~45 min)
+## Lesson 5.2 — CLAUDE.md: Your Project Memory (~30 min)
+
+Just like `.cursorrules` in Cursor (Module 4), Claude Code reads a file called **CLAUDE.md** at the start of every session. This tells the AI your project's rules and conventions.
+
+**Create a CLAUDE.md file at your project root:**
+
+```markdown
+# CLAUDE.md
+
+This is a Next.js (App Router) + TypeScript + Tailwind app.
+Use server components by default.
+Keep components small and focused.
+Follow the existing patterns in app/components/ for new code.
+```
+
+Now the AI always remembers your stack and patterns. No more repeating "I'm using Next.js and TypeScript!"
+
+**Pro tip:** Update CLAUDE.md as your project grows. It's the AI's memory.
+
+---
+
+## Lesson 5.3 — Plan Mode: Propose Before Doing (~30 min)
+
+Before Claude Code makes big changes, use **Plan mode** to see what it *plans* to do before it does it.
+
+Type `/plan` and describe your goal:
+
+*"/plan Add a favorites system to the pet tracker. Users click a heart to favorite pets. Show favorite count on each card. Sort favorites first."*
+
+Claude Code responds with a numbered plan:
+
+```
+1. Add a "favorite" field to the Pet type
+2. Create a FavoriteButton component  
+3. Update the list to sort by favorite status
+4. Wire up the click handler
+```
+
+**Review the plan.** Does it make sense? If not, say so and it refines it.
+
+Only after you approve does it actually make the changes!
+
+---
+
+## Lesson 5.4 — The Agentic Workflow (~45 min)
 
 The pattern:
 
@@ -66,11 +111,19 @@ Claude Code would:
 - Wire up localStorage persistence
 - All in one go.
 
-**Key difference from Module 4:** You don't guide every edit. You describe the end goal and the AI figures out the steps.
+**Key difference from Module 4 (Cursor):** In Cursor, you guide every edit. In Claude Code, you describe the end goal and the AI figures out all the steps across multiple files.
+
+The agentic flow:
+1. Describe your goal (high-level, not step-by-step)
+2. Claude Code reads your whole project
+3. Use `/plan` to see what it proposes
+4. Approve the plan (or refine it)
+5. It makes all the changes
+6. Review the diffs and test
 
 ---
 
-## Lesson 5.3 — Prompting for Claude Code (~60 min)
+## Lesson 5.5 — Prompting for Claude Code (~60 min)
 
 The prompts are different from Cursor. They're higher-level, more about goals than implementation.
 
@@ -86,7 +139,7 @@ The prompts are different from Cursor. They're higher-level, more about goals th
 
 ---
 
-## Lesson 5.4 — Build a Feature With Claude Code (~90 min)
+## Lesson 5.6 — Build a Feature With Claude Code (~90 min)
 
 Let's upgrade your pet tracker with Claude Code.
 
@@ -114,7 +167,7 @@ Claude Code fixes it.
 
 ---
 
-## Lesson 5.5 — Debugging at Scale (~30 min)
+## Lesson 5.7 — Debugging at Scale (~30 min)
 
 With a whole project changing, things can break. When they do:
 
@@ -126,33 +179,91 @@ With a whole project changing, things can break. When they do:
 
 ---
 
+## Lesson 5.8 — Cursor vs Claude Code: Which Tool for Which Task? (~45 min)
+
+Don't think of Cursor and Claude Code as competitors — use both for different jobs:
+
+| Use Cursor... | Use Claude Code... |
+| --- | --- |
+| Tweaking one component | Adding a whole feature |
+| Fixing one function | Renaming a concept everywhere |
+| Styling a page | Big refactors |
+| Local, focused changes | Cross-file, large changes |
+
+**Rule of thumb:** Small and local → Cursor. Large and spread out → Claude Code.
+
+**Alternatives:** VS Code + Copilot Agent, Zed with AI, Windsurf. They all have agentic modes. The skill (goal → plan → review) works everywhere.
+
+---
+
 ## Activity: Upgrade Your Pet Tracker 🐕
 
-Use Claude Code to add one new feature (pick one):
+Use Claude Code with a CLAUDE.md file to add a new feature (pick one):
 
 - Favorite system (heart to mark favorites)
 - Categories (group pets by type)
 - Birthday reminders
 - Photo gallery (multiple photos per pet)
 
-Submit a screenshot showing the new feature working.
+### Step-by-step:
+
+1. **Create CLAUDE.md** at your project root with your stack info
+2. **Run `claude`** in your project terminal
+3. **Use `/plan`** to see Claude Code's approach before it executes
+4. **Describe your goal** at a high level (not step-by-step)
+5. **Review the changes** before accepting
+6. **Test your app** — does the new feature work?
+
+Submit a screenshot showing the new feature working + one example of a plan you refined before executing.
 
 ---
 
-## Knowledge Check (Quiz)
+## Knowledge Check (Mapped to Your Objectives)
 
-1. **When would you use Cursor vs. Claude Code?**
-2. **Write a high-level goal for Claude Code (not step-by-step).**
-3. **Your Claude Code output broke something. Write a debugging prompt.**
+**Objective 1 — Orchestrate multi-file features (Quiz Q5-k1):**
+- Q5-k1: "The mindset shift from Cursor to Claude Code is thinking in:" ✅ edits vs. goals
+- **Written check:** Submit your goal prompt for adding a feature + screenshot of it working
+
+**Objective 2 — Use CLAUDE.md and Plan mode (Quiz Q5-k2, Q5-k3):**
+- Q5-k2: "What should go in CLAUDE.md?" ✅ Tests understanding of persistent context
+- Q5-k3: "What does `/plan` do?" ✅ Tests understanding of plan mode
+- **Written check:** Show a plan Claude Code proposed, any refinement you made, and why
+
+**Objective 3 — Choose the right tool (Lesson 5.8 knowledge):**
+- **Practical check:** For four tasks, pick Cursor or Claude Code and explain:
+  - (a) Rename a type everywhere (Cursor? Claude Code?)
+  - (b) Adjust one button's color (Cursor? Claude Code?)
+  - (c) Add a whole new feature (Cursor? Claude Code?)
+  - (d) Fix a typo in one file (Cursor? Claude Code?)
+
+**Scenario-based judgment checks:**
+- What's better: one prompt to Claude Code or multiple Cursor edits? Why?
+- When would you use both tools on the same feature?
+
+---
+
+## Tools & Alternatives (This Module)
+
+**Claude Code is the default agentic tool**, but alternatives exist:
+
+| Tool | Best when |
+| --- | --- |
+| **Claude Code** (what we use) | You want terminal-native, repo-wide automation |
+| VS Code + GitHub Copilot Agent | You won't switch editors / team uses VS Code |
+| Zed (agentic mode) | You prioritize editor speed |
+| Windsurf | You like another AI-native interface |
+
+The skill transfers: write a clear goal, let the agent propose a plan, review before accepting. You're learning the *technique*, not just one tool.
 
 ---
 
 ## Key Takeaways
 
 - Claude Code is an agentic AI that plans across your whole project 🤖
+- Create CLAUDE.md to give the AI persistent context about your project
+- Use `/plan` to see what Claude Code will do before it does it
 - Prompts are high-level goals, not step-by-step
 - Use Cursor for small edits, Claude Code for new features
-- It reads your whole project to understand context
-- Test after, then debug if needed
+- Review every diff before accepting — you own all the code
 
 **Next:** Module 6 — Design & UX (Make It Look Cool!)
