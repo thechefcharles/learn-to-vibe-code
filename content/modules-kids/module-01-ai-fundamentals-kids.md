@@ -68,6 +68,18 @@ Here's the step-by-step:
 
 ---
 
+**[SCREENSHOT PLACEHOLDER: Prompt Context Effect]**
+
+**What this screenshot should show:**
+- Left: A prompt like "Write a function to validate email" run in Claude/ChatGPT
+- Middle: The same prompt run again, showing a **different output** (different code implementation)
+- Right: The prompt run a third time with one added line: "We're using TypeScript and Next.js"
+  - Shows how the output **changes significantly** based on context
+- All three outputs visible for comparison
+- **Proves:** context is everything; same question + different context = wildly different answers 🤯
+
+---
+
 ## Lesson 1.3 — Where AI Gets Confused (~60 min)
 
 This is the **most important lesson** because the AI fails in predictable ways. Know these, and you'll never get stuck:
@@ -93,6 +105,19 @@ This is the **most important lesson** because the AI fails in predictable ways. 
 - **Fix:** Always verify, especially on stuff you're unsure about.
 
 **The truth:** These aren't bugs to fix. They're just how AI works. Skilled coders expect them and check their work. That's your job.
+
+---
+
+**[SCREENSHOT PLACEHOLDER: Hallucination Example]**
+
+**What this screenshot should show:**
+- A prompt asking to use a specific library (e.g., "Use the 'fancyString' library to validate email")
+- AI response that confidently uses `fancyString.validate()` or similar
+- **Key proof:** Show that 'fancyString' library does NOT actually exist
+  - Screenshot of npm.org search showing no results
+  - OR a terminal showing "npm install fancyString" → "404 not found"
+- **Shows:** AI invented a plausible library that doesn't exist, with TOTAL confidence
+- **Lesson:** Even when AI sounds 100% sure, it might be hallucinating 🚨
 
 ---
 
@@ -142,24 +167,112 @@ This is the real skill: knowing when to trust AI and when to double-check.
 
 ## Activity: Spot the AI Mistake! 🎯
 
-Your instructor will give you 3 code snippets. For each one, you pick:
-- ✅ **Trust it** — this looks good
-- ❌ **Verify it** — this needs checking
-- 🚨 **Nope** — this is totally wrong
+Here are 3 code snippets an AI gave me. For each one, decide:
+- ✅ **TRUST** — use it as-is
+- ⚠️ **VERIFY** — check this first
+- 🚨 **WRONG** — don't use this
 
-Then check your answers. This trains your "AI BS detector." 
+Then check the answer key below!
 
 ---
 
-## Knowledge Check (Quiz Coming Up!)
+**Snippet 1** — Request: "Validate an email using regex"
 
-1. **In 2-3 sentences, explain to a 10-year-old how AI writes code.**
-2. **Name 3 ways AI gets confused, with an example for each.**
-3. **For each scenario, decide: TRUST or VERIFY?**
-   - Scenario A: Quick script to rename files
-   - Scenario B: Code that handles user passwords
-   - Scenario C: A function using a brand-new library
-   - Scenario D: Boilerplate for a normal form
+```javascript
+function isValidEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+```
+
+**Your call:** ✅ TRUST / ⚠️ VERIFY / 🚨 WRONG?
+
+---
+
+**Snippet 2** — Request: "Check if a password is strong using a library"
+
+```javascript
+const PasswordValidator = require('passwordStrength-pro');
+
+const validator = new PasswordValidator({
+  minLength: 12,
+  requireSymbols: true,
+  requireNumbers: true,
+});
+
+function checkPassword(pwd) {
+  return validator.isStrong(pwd);
+}
+```
+
+**Your call:** ✅ TRUST / ⚠️ VERIFY / 🚨 WRONG?
+
+---
+
+**Snippet 3** — Request: "Create a React component using Hooks"
+
+```javascript
+import React from 'react';
+
+class UserProfile extends React.Component {
+  render() {
+    return <div>User Profile</div>;
+  }
+}
+
+export default UserProfile;
+```
+
+**Your call:** ✅ TRUST / ⚠️ VERIFY / 🚨 WRONG?
+
+---
+
+### Answer Key 🔑
+
+**Snippet 1:** ✅ **TRUST** — standard regex pattern, widely used, easy to test locally. Confidence: HIGH.
+
+**Snippet 2:** ⚠️ **VERIFY** — the library `passwordStrength-pro` **doesn't exist on npm**. The AI hallucinated a plausible library name! When you try to `npm install` it, you get "404 not found." **This is the hallucination failure mode in action.** Confidence: NONE until verified.
+
+**Snippet 3:** ⚠️ **VERIFY** — it works, but it's outdated. Modern React uses **functional components + Hooks**, not class components. This is the "outdated knowledge" failure mode. The AI gave you last year's pattern. Confidence: MEDIUM, but needs modernization.
+
+---
+
+**The lesson:** AI sounds confident about all three. But Snippet 2 is invented, and Snippet 3 is old. **Your job is to catch this, not the AI's job to warn you.** That's why you verify. 🔍 
+
+---
+
+## Knowledge Check (Mapped to Your Learning Objectives)
+
+**Objective 1 — Explain how AI works & fails:**
+- Quiz questions Q1-k1-2 test this
+- **Written check:** In 2–3 sentences, explain to a 10-year-old how an AI writes code. Then name 3 failure modes (hallucination, outdated knowledge, forgot your prompt) with one-line examples.
+
+**Objective 2 — What AI is good/bad at:**
+- Quiz question Q1-k1-4 tests this
+- **Written check:** For each stage below, should you trust the AI a lot or verify carefully?
+  - Planning what to build
+  - Writing code
+  - Fixing broken code
+  - Handling passwords/security
+
+**Objective 3 — Trust vs. verify:**
+- Quiz question Q1-k1-3 tests this
+- Activity "Spot the AI Mistake!" gives you practice
+- **Scenario check:** For each, decide **TRUST** or **VERIFY** in one sentence why:
+  - (a) Quick script to rename files on your computer
+  - (b) Code that handles user login and password storage
+  - (c) A function using a brand-new library from last month
+  - (d) Boilerplate for a normal login form (everyone builds these)
+
+---
+
+## Tools & Alternatives (This Module)
+
+**This module is tool-agnostic on purpose.** The concepts (how LLMs work, why they fail, when to trust/verify) apply to **any** AI coding assistant — Cursor, Claude Code, GitHub Copilot, ChatGPT, and others.
+
+You haven't installed anything yet. That happens in Module 4. The goal here: understand *how AI thinks* so you can use it wisely, no matter which tool you pick later.
+
+**Key idea:** the same mental model works everywhere. Once you get hallucination, you spot it in any tool.
 
 ---
 
