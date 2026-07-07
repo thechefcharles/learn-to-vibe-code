@@ -28,6 +28,27 @@ Cursor is VS Code + AI built in. It's a code editor that can suggest code, expla
 
 **Different from Claude Code:** Cursor works *within a single file or folder*, while Claude Code works *at a terminal level on the whole project*.
 
+**Four ways to use Cursor:**
+
+| Mode | What you do | Best for |
+| --- | --- | --- |
+| **Tab** | Type code, AI autocompletes your next line | Small quick completions |
+| **Cmd+K** (Mac) or Ctrl+K (Windows) | Select a block, describe a change, get a diff | Fixing one section of code |
+| **Cmd+L** (Chat) | Ask the AI questions in a sidebar | Planning, debugging, asking why |
+| **Cmd+I** (Composer) | Describe a change that touches many files, AI does them all | Building multi-file features |
+
+**Mental model:** Tab for quick stuff, Cmd+K for one block, Chat for thinking, Composer for whole features.
+
+---
+
+**[SCREENSHOT PLACEHOLDER: Next.js Starter Page]**
+
+**What this screenshot should show:**
+- Browser window at http://localhost:3000
+- Default Next.js starter page visible (logo, "Get started by editing..." text)
+- Proof that Node, npm, and Cursor are all working together
+- No errors visible
+
 ---
 
 ## Lesson 4.2 — Your First Project Setup (~30 min)
@@ -56,6 +77,39 @@ npm run dev
 ```
 
 You should see the starter page at localhost:3000. That's your baseline.
+
+---
+
+## Lesson 4.2b — Setting Up Context with .cursorrules (~20 min)
+
+Create a file called `.cursorrules` at the root of your project. This file tells Cursor "remember these rules for every prompt."
+
+```
+# .cursorrules
+This is a Next.js app using the App Router.
+Use TypeScript for all new files.
+Use Tailwind CSS for styling.
+Keep components small and focused.
+```
+
+Now whenever you ask Cursor a question, it reads this file first. No more repeating "I'm using Next.js and TypeScript" every time!
+
+**Pro tip:** `.cursorrules` is like permanent context. It saves you typing.
+
+---
+
+**[SCREENSHOT PLACEHOLDER: Cmd+K Inline Edit]**
+
+**What this screenshot should show:**
+- A code block is selected in Cursor
+- The Cmd+K dialog is open with a prompt
+- Below: a unified diff showing:
+  - Red lines (code being removed)
+  - Green lines (new code added)
+  - Accept button (checkmark)
+  - Reject button (X)
+- Shows the changes clearly before accepting
+- **Proves:** Cmd+K lets you see changes before you accept them ✓
 
 ---
 
@@ -100,7 +154,66 @@ Cursor reads your code + your error and suggests a fix.
 
 ---
 
-## Lesson 4.6 — Next Steps: Add a Database (~60 min)
+## Lesson 4.5b — Using @-Mentions for Context (~20 min)
+
+In Cursor chat, you can type `@` to pin specific files or folders. Example:
+
+```
+@app/page.tsx add a heading to this page
+@components make all components export TypeScript interfaces
+```
+
+This tells Cursor "here's the exact file I'm talking about" without having to explain the path.
+
+**Pro tip:** Use `@filename` to be super specific. It helps Cursor understand your project better.
+
+---
+
+**[SCREENSHOT PLACEHOLDER: @-Mention Menu in Cursor Chat]**
+
+**What this screenshot should show:**
+- Cursor chat panel is open (Cmd+L)
+- User typed "@" in the chat input
+- A dropdown menu appears showing:
+  - File suggestions (app/page.tsx, components/PetCard.tsx, etc.)
+  - Folder suggestions (app/, components/, lib/)
+- One file is being selected/highlighted
+- **Shows:** how @-mentions let you pin specific context 📌
+
+---
+
+---
+
+## Lesson 4.6 — Using Composer for Multi-File Changes (~30 min)
+
+For bigger changes that touch multiple files, use **Composer (Cmd+I)** instead of Cmd+K.
+
+**Example:** "Add a header with a nav link to the app. Create a Header component. Import it in the main layout."
+
+Composer will:
+1. Create the header component
+2. Update the main layout
+3. Show you ALL changes in one diff
+4. Let you review each file before accepting
+
+**This is powerful** because one prompt can fix multiple files at once. No more "oh, I also need to update this file too."
+
+---
+
+**[SCREENSHOT PLACEHOLDER: Composer Multi-File Diff]**
+
+**What this screenshot should show:**
+- Composer panel after entering a multi-file prompt
+- A unified diff showing changes across 2+ files:
+  - File 1: New `app/components/Header.tsx` with nav link
+  - File 2: `app/layout.tsx` with Header imported and rendered
+- Red lines (removed), green lines (added)
+- Clear file separation showing what changes in each
+- **Shows:** Composer groups changes across files into one coherent view 📄
+
+---
+
+## Lesson 4.7 — Next Steps: Add a Database (~60 min)
 
 Once your app works in memory (in React state), it's time to save pets permanently.
 
@@ -112,27 +225,94 @@ Cursor would guide you through the changes. This is still Modules 4-5 territory.
 
 ## Activity: Build the Pet Tracker 🐕
 
-Follow the lessons and build the pet tracker. Submit a screenshot of your working app showing:
-- The form
-- At least 2 pets in the list
-- The page running at localhost:3000
+Follow the lessons step by step and build the pet tracker.
+
+### Step-by-step instructions:
+
+**Step 1: Create `.cursorrules`** at the root of your project with:
+```
+# .cursorrules
+This is a Next.js App Router + TypeScript + Tailwind app.
+Use server components by default.
+Keep components small and focused.
+Mock data goes in lib/mockData.ts.
+```
+
+**Step 2: Open `app/page.tsx` and clear it.** Use Cmd+L chat to ask:
+```
+Create a page component for a pet tracker with:
+- A form to add a pet (name, breed, photo URL)
+- A grid showing all pets
+- Each pet card has: photo, name, breed, delete button
+Use TypeScript, Tailwind CSS, React state for now (no database yet).
+```
+
+**Step 3: Review the code** Cursor generates. Read it carefully. Does it look good?
+
+**Step 4: Test it** — save, look at localhost:3000, try adding a pet.
+
+**Step 5: If something's wrong**, use Cmd+L to ask:
+```
+The delete button doesn't work. Here's the error: [paste error].
+The pet stays in the list. What's wrong?
+```
+
+**Step 6: Iterate** — keep refining with Cmd+K and Cmd+L until it works perfectly.
+
+### Submission:
+- Screenshot of your working pet tracker showing:
+  - The add form visible
+  - At least 2 pets in the grid
+  - Running at localhost:3000
+- List 2 prompts you used (and what they fixed)
+- Which Cursor mode (Tab, Cmd+K, Chat, Composer) was most useful?
 
 ---
 
-## Knowledge Check (Quiz)
+## Knowledge Check (Mapped to Your Objectives)
 
-1. **What's the difference between Cursor and Claude Code?**
-2. **Write a prompt for Cursor to add a "favorite" button to each pet.**
-3. **You get an error. Write a prompt asking Cursor to fix it (include the error message).**
+**Objective 1 — Build with Cursor:**
+- **Quiz Q4-k1:** "What's the difference between Cursor and Claude Code?" ✅
+- **Quiz Q4-k2:** "Cmd+K is best for..." ✅
+- **Written check:** Show your working pet tracker and explain one prompt you used.
+
+**Objective 2 — Use context and @-mentions:**
+- **Quiz Q4-k3:** "What should you put in `.cursorrules`?" ✅
+- **Written check:** Write a `.cursorrules` file for a Next.js + Tailwind app you're building.
+
+**Objective 3 — Debug and iterate:**
+- **Quiz Q4-k4:** "When you get an error, you should..." ✅
+- **Written check:** Write a prompt asking Cursor to fix a specific error (include the error message).
+
+**Scenario-based checks:**
+- (a) You're building a form. Should you use Cmd+K or Composer? Why?
+- (b) You want to add a header component to multiple files. What Cursor mode is best?
+- (c) You keep forgetting to tell Cursor your tech stack. What's the solution?
+- (d) Cursor's suggestion looks wrong. What should you do before accepting it?
+
+---
+
+## Tools & Alternatives (This Module)
+
+**Cursor is the default**, but there are alternatives:
+
+| Tool | Best when |
+| --- | --- |
+| **Cursor** (what we use) | You want the most integrated AI in your editor |
+| VS Code + GitHub Copilot | You won't switch editors / team uses VS Code |
+| Zed | You want a fast editor |
+
+The skills (prompting, testing, debugging) work in all of them. You're learning the *technique*, not just the tool.
 
 ---
 
 ## Key Takeaways
 
-- Cursor is AI in your editor 💻
+- Cursor is AI in your editor — use all four modes (Tab, Cmd+K, Chat, Composer) 💻
+- Set up `.cursorrules` once, save yourself from repeating context
 - The flow: prompt → read → test → refine
-- Test after every change
-- Use error messages to debug
-- You build incrementally, not all at once
+- Use Cmd+K for one block, Composer for multi-file changes
+- Test after every change; use errors to debug
+- You build incrementally, one verified step at a time
 
 **Next:** Module 5 — Building in Claude Code (The Agentic Flow!)
