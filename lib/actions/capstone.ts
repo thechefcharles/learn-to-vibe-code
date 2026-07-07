@@ -20,6 +20,9 @@ export interface CapstoneSubmission {
   rubric_scores?: RubricScores;
   graded_by?: string;
   submitted_at?: string;
+  target_audience?: "kids" | "adult";
+  learner_name?: string;
+  learner_email?: string;
 }
 
 /**
@@ -164,7 +167,7 @@ export async function updateCapstoneGrade(
 }
 
 /**
- * Get all capstone submissions for instructor review
+ * Get all capstone submissions for instructor review with version and learner info
  */
 export async function getCapstoneSubmissionsForReview(): Promise<CapstoneSubmission[]> {
   const user = await getUser();
@@ -182,10 +185,36 @@ export async function getCapstoneSubmissionsForReview(): Promise<CapstoneSubmiss
     return [];
   }
 
-  const { data } = await supabase
+  const { data: submissions } = await supabase
     .from("capstone_submissions")
     .select("*")
     .order("submitted_at", { ascending: false });
 
-  return data || [];
+  if (!submissions) return [];
+
+  // Enrich with learner info and enrolled version
+  const enriched = await Promise.all(
+    submissions.map(async (submission: any) => {
+      const { data: learner } = await supabase
+        .from("profiles")
+        .select("name, email")
+        .eq("id", submission.user_id)
+        .single();
+
+      const { data: enrollment } = await supabase
+        .from("enrollments")
+        .select("enrolled_version")
+        .eq("user_id", submission.user_id)
+        .single();
+
+      return {
+        ...submission,
+        learner_name: learner?.name,
+        learner_email: learner?.email,
+        target_audience: enrollment?.enrolled_version || "adult",
+      };
+    })
+  );
+
+  return enriched;
 }

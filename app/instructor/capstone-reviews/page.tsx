@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getCapstoneSubmissionsForReview } from "@/lib/actions/capstone";
 import CapstoneReviewCard from "@/components/CapstoneReviewCard";
+import CapstoneReviewsList from "@/components/CapstoneReviewsList";
 
 export default async function CapstoneReviewsPage() {
   const user = await getUser();
@@ -77,18 +78,7 @@ export default async function CapstoneReviewsPage() {
         </div>
 
         {/* Submissions */}
-        <div className="space-y-6">
-          <h2 className="text-2xl font-bold text-white">Submissions</h2>
-          {submissions.length === 0 ? (
-            <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 text-center">
-              <p className="text-slate-400">No capstone submissions yet</p>
-            </div>
-          ) : (
-            submissions.map((submission) => (
-              <CapstoneReviewCard key={submission.id} submission={submission} />
-            ))
-          )}
-        </div>
+        <CapstoneReviewsList submissions={submissions} />
       </div>
     </div>
   );
