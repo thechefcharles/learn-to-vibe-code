@@ -61,9 +61,11 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxx
 npm install @supabase/supabase-js @supabase/ssr
 ```
 
+**Browser client** (for client components & auth):
 ```tsx
-// lib/supabase/client.ts (browser)
+// lib/supabase/client.ts
 import { createBrowserClient } from "@supabase/ssr";
+
 export const createClient = () =>
   createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -71,7 +73,34 @@ export const createClient = () =>
   );
 ```
 
-> **Tip:** a perfect agentic task (Module 5) — ask Claude Code to "set up Supabase browser and server clients using @supabase/ssr" and review the diff. The server client + cookie handling is boilerplate the agent does well; you verify it.
+**Server client** (for server components, reads RLS-protected data):
+```tsx
+// lib/supabase/server.ts
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
+
+export const createClient = async () => {
+  const cookieStore = await cookies(); // ⚠️ async in Next 15+
+  return createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    {
+      cookies: {
+        getAll: () => cookieStore.getAll(),
+        setAll: (cookiesToSet) => {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options)
+          );
+        },
+      },
+    }
+  );
+};
+```
+
+The **key difference:** browser clients are used in `"use client"` components and handle auth state; server clients run on the server and attach the user session to queries, so RLS can filter rows.
+
+> **Tip:** a perfect agentic task (Module 5) — ask Claude Code to "set up Supabase browser and server clients using @supabase/ssr, with async cookies handling for Next.js 15+" and review the diff. The boilerplate is complex; let the agent handle it, but verify the structure.
 > 
 
 ---
@@ -131,7 +160,70 @@ export default async function ClientsPage() {
 }
 ```
 
-**Write** happens in a form action calling `supabase.from("clients").insert({ name, email })`. Wire both, then confirm data survives a refresh — the moment the app feels real. Verify: add a record, reload, and check the row in the Table Editor.
+**Write** happens in a form action calling `supabase.from("clients").insert({ name, email })`. Wire both, then confirm data survives a refresh — the moment the app feels real.
+
+**Concrete example — form action:**
+
+```tsx
+// app/clients/actions.ts (server action)
+"use server";
+import { createClient } from "@/lib/supabase/server";
+import { revalidatePath } from "next/cache";
+
+export async function addClient(name: string, email: string) {
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("clients")
+    .insert({ name, email }); // user_id auto-filled by auth.uid() in SQL
+  
+  if (error) throw error;
+  revalidatePath("/clients"); // refresh the page
+}
+```
+
+```tsx
+// app/clients/form.tsx (client component)
+"use client";
+import { addClient } from "./actions";
+import { useState } from "react";
+
+export default function ClientForm() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      await addClient(name, email);
+      setName("");
+      setEmail("");
+    } catch (err) {
+      alert("Error adding client: " + err.message);
+    }
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <input
+        type="text"
+        placeholder="Client name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <button type="submit">Add Client</button>
+    </form>
+  );
+}
+```
+
+**Verify:** add a record via the form, reload the page, and check the row in Supabase Table Editor. It's still there. The app feels real.
 
 ---
 
@@ -194,7 +286,122 @@ This delivers Objective 3.
 
 ## Hands-on activity (~60 min, folded in)
 
-**"Make it real."** (1) Create a Supabase project and connect it, (2) create the `clients`/`invoices` tables, (3) replace mock data with live reads/writes, (4) add email/password sign-in, (5) enable RLS with per-user policies and verify isolation with two accounts. Deliverable: a running app where data persists and two users can't see each other's data.
+**"Make it real."** Follow these steps to wire Supabase fully into your invoice tracker.
+
+### Step 1: Create a Supabase project and get credentials (5 min)
+1. Go to [supabase.com](https://supabase.com) and sign in
+2. Create a new project (give it a name, set a password)
+3. Wait for it to spin up
+4. In the project dashboard, go to **Settings → API**
+5. Copy your **Project URL** and **Publishable API Key**
+6. Add them to `.env.local`:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://YOUR-PROJECT.supabase.co
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_pub_xxx
+   ```
+7. Save and restart your dev server (`npm run dev`)
+
+### Step 2: Install Supabase SDK (2 min)
+```bash
+npm install @supabase/supabase-js @supabase/ssr
+```
+
+### Step 3: Create Supabase client files (5 min)
+Create two files in `lib/supabase/`:
+- `client.ts` (browser client, from the snippet above)
+- `server.ts` (server client, from the snippet above)
+
+Tip: This is perfect for Claude Code (Module 5). Prompt: "Set up Supabase browser and server clients using @supabase/ssr with async cookies for Next.js 15+"
+
+### Step 4: Create database tables (5 min)
+1. In Supabase dashboard, go to **SQL Editor**
+2. Create a new query and paste:
+   ```sql
+   create table clients (
+     id uuid primary key default gen_random_uuid(),
+     user_id uuid not null default auth.uid() references auth.users(id),
+     name text not null,
+     email text,
+     created_at timestamptz default now()
+   );
+
+   create table invoices (
+     id uuid primary key default gen_random_uuid(),
+     user_id uuid not null default auth.uid() references auth.users(id),
+     client_id uuid not null references clients(id),
+     amount numeric not null,
+     due_date date,
+     status text default 'unpaid',
+     created_at timestamptz default now()
+   );
+   ```
+3. Click **Run** and confirm both tables exist in the **Table Editor**
+
+### Step 5: Replace mock data with live reads (10 min)
+1. Update `app/clients/page.tsx` to query Supabase:
+   ```tsx
+   import { createClient } from "@/lib/supabase/server";
+   
+   export default async function ClientsPage() {
+     const supabase = await createClient();
+     const { data: clients } = await supabase.from("clients").select();
+     
+     return (
+       <table className="w-full">
+         <thead><tr><th>Name</th><th>Email</th></tr></thead>
+         <tbody>
+           {clients?.map((c) => (
+             <tr key={c.id}><td>{c.name}</td><td>{c.email}</td></tr>
+           ))}
+         </tbody>
+       </table>
+     );
+   }
+   ```
+2. Create a form action for writing (see "Write" example above)
+3. Test: add a client via the form, refresh the page—it's still there!
+
+### Step 6: Enable authentication (5 min)
+1. In Supabase dashboard, go to **Authentication → Providers**
+2. Ensure **Email** is enabled
+3. Go to **Authentication → Auth Policies → Email Templates**
+4. For a course/demo, toggle **Enable Auto Confirm** so new users don't need email verification
+5. Create a sign-in page using `supabase.auth.signInWithPassword({ email, password })`
+
+### Step 7: Enable Row Level Security (10 min)
+1. Go to **SQL Editor** and run:
+   ```sql
+   alter table clients enable row level security;
+   
+   create policy "users manage own clients"
+     on clients for all
+     using (auth.uid() = user_id)
+     with check (auth.uid() = user_id);
+   
+   alter table invoices enable row level security;
+   
+   create policy "users manage own invoices"
+     on invoices for all
+     using (auth.uid() = user_id)
+     with check (auth.uid() = user_id);
+   ```
+2. Verify in the **Table Editor**: policies are listed under each table
+
+### Step 8: Test isolation with two accounts (10 min)
+1. Sign up as **User A** (email: alice@example.com)
+2. Add a client as User A
+3. Sign out
+4. Sign up as **User B** (email: bob@example.com)
+5. Check the clients list—User A's client is NOT visible
+6. Add a client as User B
+7. Sign in again as User A—you see only your client
+8. ✅ Isolation works!
+
+### Deliverable:
+- Screenshots showing:
+  - User A's clients list (only their data)
+  - User B's clients list (only their data, different from A)
+  - Supabase Table Editor showing all rows (proof both exist in DB)
 
 ---
 
@@ -231,10 +438,54 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Model & connect:** show your schema and a working query reading real data into a page.
+- *Practical evidence:* Screenshot of Supabase Table Editor showing `clients` and `invoices` tables with columns; screenshot of your `/clients` page displaying real data (not mock).
 
 **Objective 2 — Auth & RLS:** demonstrate sign-in and show your RLS policy plus two-account evidence of isolation.
+- *Practical evidence:* Screenshots of User A's view and User B's view showing different data; SQL query of your RLS policy (`using (auth.uid() = user_id)`); Supabase Table Editor showing all rows exist but queries return only each user's.
 
 **Objective 3 — Compare:** recommend Supabase, Firebase, or Postgres + Prisma for a given scenario and justify in 3–4 sentences.
+- *Example scenario:* "You're building a real-time collaborative whiteboard app with mobile clients."
+  - ✅ **Correct:** Firebase. You need real-time data sync and mobile SDKs; Firestore's document model is natural for collaborative edits; you trade SQL expertise for simplicity.
+  - ❌ **Avoid:** Supabase here (no native mobile real-time). Postgres + Prisma (no out-of-box real-time).
+
+---
+
+**Scenario-based judgment checks:**
+
+- **(a) Silent empty data:** User logs in and their `/clients` page shows an empty table. You added 3 clients via the form. What went wrong?
+  - ✅ **Likely cause:** RLS is on but the policy is wrong or missing. Fix: Check that `auth.uid() = user_id` is in the policy's `using` clause. Test with two accounts.
+  - ❌ **Avoid:** Assuming your code is wrong before checking RLS.
+
+- **(b) Security oops:** You write a query like `supabase.from("clients").select().eq("user_id", userId)` to filter by user in your app code.
+  - ✅ **Better approach:** Rely on RLS. Query `select()` with no filter; let the database enforce `auth.uid() = user_id` in the policy. It's safer (can't be bypassed).
+  - ❌ **Avoid:** App-level filtering. The database must be the source of truth.
+
+- **(c) Relationship broken:** You try to add an invoice with a `client_id` from a different user. The insert fails. Why?
+  - ✅ **Correct:** RLS on the `invoices` table checks `auth.uid() = user_id`. You're trying to write a row owned by someone else. That's the security working as designed.
+  - ❌ **Avoid:** Removing RLS to make it work. The error is catching a real threat.
+
+- **(d) Data model:** You're modeling a multi-user expense app. Each user has expenses; each expense has tags. Where do you put `user_id`?
+  - ✅ **Correct:** On `expenses` and `tags`. Each row is owned by a user; RLS protects both tables independently.
+  - ❌ **Avoid:** Putting `user_id` only on expenses and leaving tags unprotected. A user could see other users' tags if you forget the policy.
+
+- **(e) Env vars:** You hard-code your Supabase URL in `client.ts` instead of using `.env.local`.
+  - ✅ **Fix:** Use `process.env.NEXT_PUBLIC_SUPABASE_URL!` and restart dev server. It reads from `.env.local`.
+  - ❌ **Avoid:** Hard-coding. Makes it easy to leak (or change) by accident, and doesn't scale to production.
+
+---
+
+**Rubric checklist (self-review before submission):**
+
+| Criterion | Check (✅ = pass) |
+|-----------|-------------|
+| **Tables created** | `clients` and `invoices` tables exist in Supabase with correct columns (id, user_id, name, email, amount, etc.) |
+| **Foreign keys** | `invoices.client_id` references `clients.id`; both have `user_id` foreign key to `auth.users(id)` |
+| **Live queries** | App reads from `supabase.from("clients").select()` (not mock data) |
+| **Write path** | Form creates new clients via `supabase.from("clients").insert({ name, email })` |
+| **Auth enabled** | Users can sign up/sign in; session is stored in cookies |
+| **RLS enabled** | Both tables have `enable row level security` and `auth.uid() = user_id` policies |
+| **Isolation tested** | Two accounts show different data; screenshots prove isolation |
+| **Env vars used** | Credentials in `.env.local`, not hard-coded in code |
 
 *Pass mark: 80% and a working app with auth + RLS submitted.*
 
