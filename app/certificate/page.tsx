@@ -1,8 +1,12 @@
-import { getUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import { getCapstoneSubmission } from "@/lib/actions/capstone";
 import Link from "next/link";
-import DonationCard from "@/components/DonationCard";
+import { getUser } from "@/lib/auth";
+import { getCertificateHTML } from "@/lib/certificate";
+
+export const metadata = {
+  title: "Certificate — Learn to Vibe Code",
+  description: "View and share your Accredited Vibe Code Certificate.",
+};
 
 export default async function CertificatePage() {
   const user = await getUser();
@@ -10,23 +14,42 @@ export default async function CertificatePage() {
     redirect("/auth/sign-in");
   }
 
-  const capstone = await getCapstoneSubmission();
+  let certificateHtml: string | null = null;
+  let error: string | null = null;
 
-  // Only show certificate if capstone passed
-  if (!capstone || capstone.result !== "pass") {
+  try {
+    certificateHtml = await getCertificateHTML(user.id);
+    if (!certificateHtml) {
+      error = "Certificate not yet issued. Complete and pass the capstone to earn your certificate.";
+    }
+  } catch (err) {
+    error = err instanceof Error ? err.message : "Failed to load certificate";
+  }
+
+  if (error || !certificateHtml) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-4xl mx-auto">
+          <Link href="/dashboard" className="text-blue-400 hover:text-blue-300 mb-8 inline-block">
+            ← Back to Dashboard
+          </Link>
           <div className="bg-slate-800 rounded-lg p-8 border border-slate-700">
-            <h1 className="text-3xl font-bold text-white mb-4">🎓 Certificate</h1>
-            <p className="text-slate-400">
-              Your capstone project must be approved before you can access your certificate.
-            </p>
-            <Link
-              href="/capstone"
-              className="mt-6 inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg"
-            >
-              Check Capstone Status →
+            <h1 className="text-3xl font-bold text-white mb-4">📜 Your Certificate</h1>
+            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 text-yellow-200">
+              <p>{error}</p>
+            </div>
+            <div className="mt-8 space-y-4">
+              <p className="text-slate-400">To earn your certificate, you need to:</p>
+              <ol className="text-slate-400 space-y-2 list-decimal list-inside">
+                <li>Complete all 16 modules</li>
+                <li>Pass all quizzes (80%+ score)</li>
+                <li>Submit and pass all module deliverables</li>
+                <li>Submit your capstone project</li>
+                <li>Have your capstone graded as "pass" by an instructor</li>
+              </ol>
+            </div>
+            <Link href="/capstone" className="mt-8 inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition">
+              → Go to Capstone
             </Link>
           </div>
         </div>
@@ -34,117 +57,56 @@ export default async function CertificatePage() {
     );
   }
 
-  const completionDate = (capstone.submitted_at
-    ? new Date(capstone.submitted_at)
-    : new Date()
-  ).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
       <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="mb-12">
-          <Link href="/dashboard" className="text-blue-400 hover:text-blue-300 text-sm mb-6 inline-block">
+        <div className="mb-8">
+          <Link href="/dashboard" className="text-blue-400 hover:text-blue-300 mb-4 inline-block">
             ← Back to Dashboard
           </Link>
-          <h1 className="text-5xl font-bold text-white mb-2">🎓 Your Certificate</h1>
-          <p className="text-slate-400">Congratulations on completing Learn to Vibe Code!</p>
+          <h1 className="text-4xl font-bold text-white mb-2">📜 Your Certificate</h1>
+          <p className="text-slate-400">Congratulations on completing the Accredited Vibe Coding Course!</p>
         </div>
 
-        {/* Certificate Display */}
-        <div className="bg-gradient-to-br from-yellow-100 to-orange-100 rounded-lg p-12 mb-12 border-4 border-yellow-400">
-          <div className="text-center">
-            {/* Certificate Header */}
-            <div className="mb-8">
-              <p className="text-sm text-gray-600 tracking-widest uppercase mb-2">Certificate of Completion</p>
-              <h2 className="text-4xl font-bold text-gray-800 mb-2">Learn to Vibe Code</h2>
-              <p className="text-gray-600">AI-Powered Application Development Course</p>
-            </div>
-
-            {/* Divider */}
-            <div className="border-t-2 border-gray-800 my-8"></div>
-
-            {/* Body */}
-            <div className="mb-8">
-              <p className="text-gray-700 mb-4">This is to certify that</p>
-              <p className="text-3xl font-bold text-gray-800 mb-4">{user.user_metadata?.name || user.email}</p>
-              <p className="text-gray-700 mb-2">has successfully completed the</p>
-              <p className="text-xl font-bold text-gray-800 mb-4">Learn to Vibe Code Course</p>
-              <p className="text-gray-700 mb-2">demonstrating comprehensive knowledge of</p>
-              <p className="text-gray-700">
-                AI fundamentals, prompt engineering, building with AI, and deploying production-ready applications
-              </p>
-            </div>
-
-            {/* Capstone */}
-            <div className="bg-white bg-opacity-60 rounded p-4 mb-8 inline-block">
-              <p className="text-sm text-gray-600 mb-1">Capstone Project Submitted</p>
-              <p className="text-sm text-gray-700">{capstone.repo_url}</p>
-            </div>
-
-            {/* Footer */}
-            <div className="border-t-2 border-gray-800 pt-8">
-              <p className="text-gray-700 mb-2">Date of Completion</p>
-              <p className="text-xl font-bold text-gray-800">{completionDate}</p>
-              <p className="text-xs text-gray-600 mt-4">
-                Certificate ID: {user.id.slice(0, 8).toUpperCase()}
-              </p>
-            </div>
-          </div>
+        <div className="bg-white rounded-lg p-8 mb-8 shadow-lg">
+          <iframe
+            srcDoc={certificateHtml}
+            style={{
+              width: "100%",
+              height: "600px",
+              border: "none",
+              borderRadius: "4px",
+            }}
+            title="Certificate Preview"
+          />
         </div>
 
-        {/* Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <button
             onClick={() => window.print()}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg transition text-center"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition"
           >
-            🖨️ Print / Save as PDF
+            🖨️ Print / Download PDF
           </button>
-          <Link
-            href="/dashboard"
-            className="bg-slate-700 hover:bg-slate-600 text-white font-bold py-4 px-6 rounded-lg transition text-center"
+          <button
+            onClick={() => {
+              const shareUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/certificate`;
+              navigator.clipboard.writeText(shareUrl);
+              alert("Certificate link copied to clipboard!");
+            }}
+            className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-3 px-4 rounded-lg transition"
           >
-            Back to Dashboard
-          </Link>
+            🔗 Copy Share Link
+          </button>
         </div>
 
-        {/* Donation Section */}
-        <DonationCard />
-
-        {/* Share Section */}
-        <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 mt-12">
-          <h2 className="text-2xl font-bold text-white mb-4">Share Your Achievement 🎉</h2>
-          <p className="text-slate-400 mb-6">
-            Let the world know you completed Learn to Vibe Code!
-          </p>
-          <div className="flex flex-wrap gap-4">
-            <button
-              onClick={() => {
-                const text = `I just completed Learn to Vibe Code! 🚀 A comprehensive course on AI-powered app development. Check it out: https://learn-to-vibe-code.vercel.app`;
-                window.open(
-                  `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`,
-                  "twitter-share",
-                  "width=550,height=420"
-                );
-              }}
-              className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition"
-            >
-              Share on Twitter/X 𝕏
-            </button>
-            <button
-              onClick={() => {
-                const text = `I just completed Learn to Vibe Code! Check out this amazing free course on building AI-powered applications.`;
-                window.open(
-                  `https://www.linkedin.com/sharing/share-offsite/?url=https://learn-to-vibe-code.vercel.app`,
-                  "linkedin-share",
-                  "width=550,height=420"
-                );
-              }}
-              className="bg-blue-700 hover:bg-blue-800 text-white font-medium py-2 px-4 rounded-lg transition"
-            >
-              Share on LinkedIn
-            </button>
+        <div className="mt-8 bg-slate-800 rounded-lg p-6 border border-slate-700">
+          <h2 className="text-lg font-bold text-white mb-4">About Your Certificate</h2>
+          <div className="space-y-2 text-slate-400 text-sm">
+            <p>✅ <strong>Verifiable:</strong> Your certificate ID is registered in our database.</p>
+            <p>✅ <strong>Professional:</strong> Suitable for LinkedIn, resumes, and professional portfolios.</p>
+            <p>✅ <strong>Accreditation-Ready:</strong> 93 contact hours, 9.3 CEUs.</p>
+            <p>✅ <strong>Permanent:</strong> Your certificate is saved and accessible anytime.</p>
           </div>
         </div>
       </div>

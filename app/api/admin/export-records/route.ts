@@ -1,118 +1,149 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "@/lib/supabase/server";
 import { getUser } from "@/lib/auth";
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
-/**
- * GET /api/admin/export-records
- * Export learner records as CSV for CPD/IACET audits
- * Instructor-only endpoint
- */
 export async function GET(req: NextRequest) {
   try {
-    // Check instructor auth
     const user = await getUser();
-    if (!user || user.role !== "instructor") {
+    if (!user) {
       return NextResponse.json(
-        { error: "Unauthorized - instructor only" },
+        { error: "Not authenticated" },
+        { status: 401 }
+      );
+    }
+
+    const supabase = await createClient();
+
+    // Verify instructor role
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+
+    if (profile?.role !== "instructor") {
+      return NextResponse.json(
+        { error: "Only instructors can export records" },
         { status: 403 }
       );
     }
 
-    // Fetch all enrollments with related data
-    const { data: enrollments, error: enrollError } = await supabase
-      .from("enrollments")
-      .select(
-        `
-        user_id,
-        enrolled_at,
-        profiles:profiles(id, name, email),
-        module_progress:module_progress(module_id, status, completed_at),
-        quiz_attempts:quiz_attempts(module_id, score, passed, attempt_no, taken_at),
-        capstone_submissions:capstone_submissions(result, rubric_scores, submitted_at, graded_by),
-        certificates:certificates(cert_id, issued_at)
-      `
+    // Fetch all learner data
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("id, name, email, created_at")
+      .eq("role", "learner")
+      .order("created_at", { ascending: false });
+
+    if (!profiles || profiles.length === 0) {
+      return NextResponse.json(
+        { error: "No learner records found" },
+        { status: 404 }
       );
-
-    if (enrollError) throw enrollError;
-
-    // CSV-safe escaping: prevent formula injection by escaping =, +, -, @, etc.
-    function csvSafe(value: any): string {
-      const s = String(value ?? "");
-      let escaped = s.replace(/"/g, '""'); // Escape quotes by doubling
-      if (/^[=+\-@\t\r]/.test(escaped)) {
-        escaped = "'" + escaped; // Prefix formula-like chars with quote
-      }
-      return `"${escaped}"`; // Always quote for safety
     }
 
-    // Build CSV rows
-    const csvRows: string[] = [
-      [
-        "User ID",
-        "Email",
-        "Name",
-        "Enrollment Date",
-        "Module 0-15 Status",
-        "Quiz Scores (Module 0-15)",
-        "Capstone Result",
-        "Capstone Rubric Scores",
-        "Certificate ID",
-        "Certificate Issue Date",
-      ].join(","),
+    // For each learner, fetch their progress data
+    const records = await Promise.all(
+      profiles.map(async (learner) => {
+        // Get enrollments
+        const { data: enrollments } = await supabase
+          .from("enrollments")
+          .select("enrolled_at, status")
+          .eq("user_id", learner.id)
+          .single();
+
+        // Get module progress (count completed)
+        const { data: moduleProgress } = await supabase
+          .from("module_progress")
+          .select("*")
+          .eq("user_id", learner.id);
+
+        const modulesCompleted = moduleProgress?.filter((m) => m.completed_at).length || 0;
+
+        // Get quiz attempts (latest score per module)
+        const { data: quizAttempts } = await supabase
+          .from("quiz_attempts")
+          .select("module_id, score, passed")
+          .eq("user_id", learner.id)
+          .order("taken_at", { ascending: false });
+
+        const quizPassCount = quizAttempts?.filter((q) => q.passed).length || 0;
+
+        // Get capstone submission
+        const { data: capstone } = await supabase
+          .from("capstone_submissions")
+          .select("result, submitted_at")
+          .eq("user_id", learner.id)
+          .single();
+
+        // Get certificate (if issued)
+        const { data: cert } = await supabase
+          .from("certificates")
+          .select("cert_id, issued_at")
+          .eq("user_id", learner.id)
+          .single();
+
+        return {
+          learner_id: learner.id,
+          learner_name: learner.name,
+          learner_email: learner.email,
+          enrolled_at: enrollments?.enrolled_at || "",
+          enrollment_status: enrollments?.status || "inactive",
+          modules_completed: modulesCompleted,
+          quizzes_passed: quizPassCount,
+          capstone_result: capstone?.result || "not_submitted",
+          capstone_submitted_at: capstone?.submitted_at || "",
+          certificate_issued: cert ? "yes" : "no",
+          certificate_id: cert?.cert_id || "",
+          certificate_issued_at: cert?.issued_at || "",
+          account_created_at: learner.created_at,
+        };
+      })
+    );
+
+    // Generate CSV
+    const headers = [
+      "Learner ID",
+      "Name",
+      "Email",
+      "Enrolled At",
+      "Enrollment Status",
+      "Modules Completed",
+      "Quizzes Passed",
+      "Capstone Result",
+      "Capstone Submitted At",
+      "Certificate Issued",
+      "Certificate ID",
+      "Certificate Issued At",
+      "Account Created At",
     ];
 
-    enrollments.forEach((enrollment: any) => {
-      const profile = enrollment.profiles[0];
-      const capstone = enrollment.capstone_submissions?.[0];
-      const cert = enrollment.certificates?.[0];
+    const csvRows = records.map((record) => [
+      record.learner_id,
+      `"${record.learner_name}"`,
+      `"${record.learner_email}"`,
+      record.enrolled_at,
+      record.enrollment_status,
+      record.modules_completed,
+      record.quizzes_passed,
+      record.capstone_result,
+      record.capstone_submitted_at,
+      record.certificate_issued,
+      record.certificate_id,
+      record.certificate_issued_at,
+      record.account_created_at,
+    ]);
 
-      // Build module status string (e.g., "complete,complete,locked,...")
-      const moduleStatuses = Array.from({ length: 16 }, (_, i) => {
-        const prog = enrollment.module_progress?.find(
-          (p: any) => p.module_id === i
-        );
-        return prog?.status || "not_started";
-      });
+    const csvContent = [
+      headers.join(","),
+      ...csvRows.map((row) => row.join(",")),
+    ].join("\n");
 
-      // Build quiz scores string (e.g., "85%,92%,78%,...")
-      const quizScores = Array.from({ length: 16 }, (_, i) => {
-        const attempt = enrollment.quiz_attempts?.find(
-          (q: any) => q.module_id === i
-        );
-        return attempt ? `${attempt.score}%` : "not_attempted";
-      });
-
-      const row = [
-        enrollment.user_id,
-        csvSafe(profile.email),
-        csvSafe(profile.name),
-        new Date(enrollment.enrolled_at).toISOString().split("T")[0],
-        csvSafe(moduleStatuses.join("|")),
-        csvSafe(quizScores.join("|")),
-        capstone?.result || "not_submitted",
-        capstone?.rubric_scores ? csvSafe(JSON.stringify(capstone.rubric_scores)) : '""',
-        cert?.cert_id || "",
-        cert?.issued_at
-          ? new Date(cert.issued_at).toISOString().split("T")[0]
-          : "",
-      ];
-
-      csvRows.push(row.join(","));
-    });
-
-    const csvContent = csvRows.join("\n");
-
-    // Return as downloadable CSV
-    return new Response(csvContent, {
+    return new NextResponse(csvContent, {
+      status: 200,
       headers: {
-        "Content-Type": "text/csv; charset=utf-8",
-        "Content-Disposition":
-          'attachment; filename="learn-to-vibe-course-records.csv"',
+        "Content-Type": "text/csv",
+        "Content-Disposition": `attachment; filename="learner-records-${new Date().toISOString().split("T")[0]}.csv"`,
       },
     });
   } catch (error) {

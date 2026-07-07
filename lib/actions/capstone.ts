@@ -157,7 +157,15 @@ export async function updateCapstoneGrade(
   // Auto-issue certificate if passed
   if (result === "pass") {
     try {
-      await issueCertificate(userId, data.user_id);
+      const { data: learner } = await supabase
+        .from("profiles")
+        .select("name")
+        .eq("id", userId)
+        .single();
+
+      if (learner?.name) {
+        await issueCertificate(userId, learner.name);
+      }
     } catch (certError) {
       console.error("Certificate issuance failed (non-blocking):", certError);
     }

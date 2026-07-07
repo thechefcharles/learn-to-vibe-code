@@ -1,105 +1,111 @@
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import Link from "next/link";
 
 export const metadata = {
-  title: "Terms of Service - Learn to Vibe Code",
-  description: "Terms of Service for Learn to Vibe Code course platform",
+  title: "Terms of Service — Learn to Vibe Code",
+  description: "Terms of Service for the Accredited Vibe Coding Course.",
 };
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-paper">
-      <Header />
-      <div className="flex-1 bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
       <div className="max-w-3xl mx-auto">
-        {/* DRAFT BANNER */}
-        <div className="mb-8 p-4 bg-red-500/20 border-l-4 border-red-500">
-          <p className="text-red-400 font-bold">
-            ⚠️ DRAFT — Pending Attorney Review
-          </p>
-          <p className="text-red-300 text-sm mt-2">
-            These Terms of Service are pending legal review and should not be
-            considered final or binding. Do not use in production until
-            attorney approval is obtained.
-          </p>
-        </div>
+        <Link href="/" className="text-blue-400 hover:text-blue-300 mb-8 inline-block">
+          ← Back to Home
+        </Link>
 
-        <div className="prose prose-invert max-w-none">
+        <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 text-slate-100">
           <h1 className="text-4xl font-bold text-white mb-8">Terms of Service</h1>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">1. Course Use</h2>
-          <p className="text-slate-300 mb-4">
-            Learn to Vibe Code (the "Course") is provided as-is for educational purposes. By
-            enrolling, you agree to use the Course only for your personal educational
-            benefit and in compliance with all applicable laws.
-          </p>
+          <div className="space-y-6 text-sm leading-relaxed">
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">1. Acceptance of Terms</h2>
+              <p>
+                By accessing and using the Learn to Vibe Code platform ("Service"), you accept and agree to be bound by the
+                terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">2. Free Access & Donations</h2>
-          <p className="text-slate-300 mb-4">
-            The Course is offered at no cost. Optional donations are voluntary and
-            non-refundable. Donations support the maintenance and improvement of the
-            course material.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">2. Use License</h2>
+              <p>
+                Permission is granted to temporarily download one copy of the materials (information or software) on Learn to
+                Vibe Code for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of
+                title, and under this license you may not:
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>Modifying or copying the materials</li>
+                <li>Using the materials for any commercial purpose or for any public display</li>
+                <li>Attempting to decompile or reverse engineer any software contained on the Service</li>
+                <li>Removing any copyright or other proprietary notations from the materials</li>
+                <li>Transferring the materials to another person or "mirroring" the materials on any other server</li>
+              </ul>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">3. Learner Responsibility</h2>
-          <p className="text-slate-300 mb-4">
-            You are responsible for:
-          </p>
-          <ul className="list-disc list-inside text-slate-300 mb-4 space-y-2">
-            <li>Ensuring your own computer meets system requirements</li>
-            <li>Maintaining confidentiality of your login credentials</li>
-            <li>Submitting only work that is your own (AI assistance is expected and allowed,
-              but you must understand and be able to explain every line you ship)</li>
-          </ul>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">3. Disclaimer</h2>
+              <p>
+                The materials on Learn to Vibe Code are provided on an "as is" basis. Learn to Vibe Code makes no warranties,
+                expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied
+                warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual
+                property or other violation of rights.
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">4. Intellectual Property</h2>
-          <p className="text-slate-300 mb-4">
-            You retain ownership of any projects, code, or work you create during the Course.
-            Course materials (lessons, quizzes, rubrics) are copyrighted and licensed for
-            educational use only. You may not redistribute, resell, or use them commercially
-            without written permission.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">4. Limitations</h2>
+              <p>
+                In no event shall Learn to Vibe Code or its suppliers be liable for any damages (including, without limitation,
+                damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the
+                materials on Learn to Vibe Code.
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">5. Certificates</h2>
-          <p className="text-slate-300 mb-4">
-            Upon passing the capstone project (≥80% on the rubric), you will receive a
-            digital Certificate of Completion. Certificates are non-transferable and
-            represent your achievement of the course's learning objectives.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">5. Accuracy of Materials</h2>
+              <p>
+                The materials appearing on Learn to Vibe Code could include technical, typographical, or photographic errors. Learn
+                to Vibe Code does not warrant that any of the materials on the Service are accurate, complete, or current. Learn to
+                Vibe Code may make changes to the materials contained on the Service at any time without notice.
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">6. Limitation of Liability</h2>
-          <p className="text-slate-300 mb-4">
-            The Course is provided "as-is" without warranty. The course creators are not
-            liable for any damages, losses, or issues arising from your use of the Course,
-            including (but not limited to) technical problems, data loss, or reliance on
-            course material.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">6. Links</h2>
+              <p>
+                Learn to Vibe Code has not reviewed all of the sites linked to its website and is not responsible for the contents
+                of any such linked site. The inclusion of any link does not imply endorsement by Learn to Vibe Code of the site. Use
+                of any such linked website is at the user's own risk.
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">7. Changes & Termination</h2>
-          <p className="text-slate-300 mb-4">
-            The course creators reserve the right to modify or discontinue the Course at any
-            time without notice. Access may be terminated if you violate these terms.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">7. Modifications</h2>
+              <p>
+                Learn to Vibe Code may revise these Terms of Service at any time without notice. By using this Service, you are
+                agreeing to be bound by the then current version of these Terms of Service.
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">8. Governing Law</h2>
-          <p className="text-slate-300 mb-4">
-            These terms are governed by applicable law. For disputes, you agree to seek
-            resolution through good-faith communication first.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">8. Governing Law</h2>
+              <p>
+                These Terms and Conditions are governed by and construed in accordance with the laws of the jurisdiction in which
+                Learn to Vibe Code operates, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.
+              </p>
+            </section>
 
-          <div className="mt-12 p-6 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-            <p className="text-blue-400 text-sm">
-              <strong>Last updated:</strong> {new Date().toLocaleDateString()}
-            </p>
-            <p className="text-blue-300 text-sm mt-2">
-              These terms are subject to change. Continued use of the Course after changes
-              constitutes acceptance.
-            </p>
+            <section className="border-t border-slate-600 pt-6">
+              <p className="text-slate-400">
+                Last updated: {new Date().toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+            </section>
           </div>
         </div>
       </div>
-      </div>
-      <Footer />
     </div>
   );
 }

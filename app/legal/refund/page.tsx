@@ -1,120 +1,107 @@
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import Link from "next/link";
 
 export const metadata = {
-  title: "Refund Policy - Learn to Vibe Code",
-  description: "Refund Policy for Learn to Vibe Code course platform",
+  title: "Refund Policy — Learn to Vibe Code",
+  description: "Refund Policy for the Accredited Vibe Coding Course.",
 };
 
 export default function RefundPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-paper">
-      <Header />
-      <div className="flex-1 bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
       <div className="max-w-3xl mx-auto">
-        {/* DRAFT BANNER */}
-        <div className="mb-8 p-4 bg-red-500/20 border-l-4 border-red-500">
-          <p className="text-red-400 font-bold">
-            ⚠️ DRAFT — Pending Attorney Review
-          </p>
-          <p className="text-red-300 text-sm mt-2">
-            This Refund Policy is pending legal review and should not be
-            considered final or binding. Do not use in production until
-            attorney approval is obtained.
-          </p>
-        </div>
+        <Link href="/" className="text-blue-400 hover:text-blue-300 mb-8 inline-block">
+          ← Back to Home
+        </Link>
 
-        <div className="prose prose-invert max-w-none">
+        <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 text-slate-100">
           <h1 className="text-4xl font-bold text-white mb-8">Refund Policy</h1>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Course Access (Free)
-          </h2>
-          <p className="text-slate-300 mb-4">
-            The course is offered at no cost. There are no refunds for free course
-            access, as no payment is required to enroll.
-          </p>
+          <div className="space-y-6 text-sm leading-relaxed">
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">1. Free Course Access</h2>
+              <p>
+                The Accredited Vibe Coding Course is completely free. All 16 modules, quizzes, projects, and capstone grading are
+                provided at no cost.
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Donations (Non-Refundable)
-          </h2>
-          <p className="text-slate-300 mb-4">
-            Donations are voluntary contributions to support the course. All
-            donations are <strong>non-refundable</strong>. Donations are considered
-            final transactions. If you have questions about your donation, please
-            contact support within 14 days of the donation.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">2. Donations</h2>
+              <p>
+                We accept voluntary donations to support course development and maintenance. Donations are processed through Stripe
+                and are non-refundable except as required by law.
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Accidental Duplicate Donations
-          </h2>
-          <p className="text-slate-300 mb-4">
-            If you believe you have made a duplicate donation in error, please
-            contact support within 30 days with proof of the duplicate transaction.
-            We will review your case and may issue a refund at our discretion.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">3. Donation Refunds</h2>
+              <p>
+                If you wish to request a refund for a donation, please contact us within 30 days of the transaction:
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>Email: support@learntovibe.code</li>
+                <li>Provide your Stripe receipt or transaction ID</li>
+                <li>Refund requests will be processed within 5-10 business days</li>
+              </ul>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Technical Issues
-          </h2>
-          <p className="text-slate-300 mb-4">
-            If a donation was not processed successfully but you were charged, or if
-            you experienced a technical issue, please contact support immediately
-            with details and we will investigate.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">4. Certificate Revocation</h2>
+              <p>
+                Certificates are issued upon successful completion of the capstone with a passing grade. Certificates may be
+                revoked if:
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>Evidence of academic dishonesty or cheating is discovered</li>
+                <li>The learner requests revocation</li>
+                <li>The course is no longer accredited (with proper notice)</li>
+              </ul>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            How to Request a Refund
-          </h2>
-          <p className="text-slate-300 mb-4">
-            To request a refund (if eligible):
-          </p>
-          <ol className="list-decimal list-inside text-slate-300 mb-4 space-y-2">
-            <li>Contact support through the support page</li>
-            <li>Provide your email address and donation receipt</li>
-            <li>Describe the reason for the refund request</li>
-            <li>Include proof of the donation (transaction ID, receipt, etc.)</li>
-          </ol>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">5. Account Deletion</h2>
+              <p>
+                If you wish to delete your account and all associated learning data, please contact us at:{" "}
+                <a href="mailto:support@learntovibe.code" className="text-blue-400 hover:text-blue-300">
+                  support@learntovibe.code
+                </a>
+              </p>
+              <p className="mt-2">
+                Upon deletion, your course progress will be permanently removed from our system. Certificates previously issued
+                remain valid unless revoked.
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Refund Timeline
-          </h2>
-          <p className="text-slate-300 mb-4">
-            Approved refunds will be processed within 5–10 business days. The refund
-            will be issued to the original payment method. Your bank may take
-            additional time to process the refund.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">6. Changes to This Policy</h2>
+              <p>
+                We reserve the right to modify this Refund Policy at any time. Changes will be effective immediately upon posting to
+                this page.
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Disputing a Charge
-          </h2>
-          <p className="text-slate-300 mb-4">
-            If you dispute a charge with your payment processor or credit card
-            company (a chargeback), we will not be able to grant an additional
-            refund. Please contact support before initiating a chargeback.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">7. Contact Us</h2>
+              <p>
+                For questions about this Refund Policy, please contact us at:{" "}
+                <a href="mailto:support@learntovibe.code" className="text-blue-400 hover:text-blue-300">
+                  support@learntovibe.code
+                </a>
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Contact Support
-          </h2>
-          <p className="text-slate-300 mb-4">
-            For refund questions, please use the support page or email the contact
-            provided in your donation receipt.
-          </p>
-
-          <div className="mt-12 p-6 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-            <p className="text-blue-400 text-sm">
-              <strong>Last updated:</strong> {new Date().toLocaleDateString()}
-            </p>
-            <p className="text-blue-300 text-sm mt-2">
-              This policy is subject to change. We will notify you of significant
-              changes via email.
-            </p>
+            <section className="border-t border-slate-600 pt-6">
+              <p className="text-slate-400">
+                Last updated: {new Date().toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+            </section>
           </div>
         </div>
       </div>
-      </div>
-      <Footer />
     </div>
   );
 }

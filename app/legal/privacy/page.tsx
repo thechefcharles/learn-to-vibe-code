@@ -1,135 +1,97 @@
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
+import Link from "next/link";
 
 export const metadata = {
-  title: "Privacy Policy - Learn to Vibe Code",
-  description: "Privacy Policy for Learn to Vibe Code course platform",
+  title: "Privacy Policy — Learn to Vibe Code",
+  description: "Privacy Policy for the Accredited Vibe Coding Course.",
 };
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-paper">
-      <Header />
-      <div className="flex-1 bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
       <div className="max-w-3xl mx-auto">
-        {/* DRAFT BANNER */}
-        <div className="mb-8 p-4 bg-red-500/20 border-l-4 border-red-500">
-          <p className="text-red-400 font-bold">
-            ⚠️ DRAFT — Pending Attorney Review
-          </p>
-          <p className="text-red-300 text-sm mt-2">
-            This Privacy Policy is pending legal review and should not be considered
-            final or binding. Do not use in production until attorney approval is
-            obtained.
-          </p>
-        </div>
+        <Link href="/" className="text-blue-400 hover:text-blue-300 mb-8 inline-block">
+          ← Back to Home
+        </Link>
 
-        <div className="prose prose-invert max-w-none">
+        <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 text-slate-100">
           <h1 className="text-4xl font-bold text-white mb-8">Privacy Policy</h1>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Information We Collect
-          </h2>
-          <p className="text-slate-300 mb-4">
-            When you enroll, we collect:
-          </p>
-          <ul className="list-disc list-inside text-slate-300 mb-4 space-y-2">
-            <li>Name and email address</li>
-            <li>Password (hashed and salted)</li>
-            <li>Course progress and quiz scores</li>
-            <li>Capstone project submissions and defense video URLs</li>
-            <li>Certificate information</li>
-          </ul>
+          <div className="space-y-6 text-sm leading-relaxed">
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">1. Introduction</h2>
+              <p>
+                Learn to Vibe Code ("we," "us," "our," or "Company") is committed to protecting your privacy. This Privacy Policy
+                explains how we collect, use, disclose, and safeguard your information when you visit our website and use our
+                services.
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            How We Use Your Information
-          </h2>
-          <p className="text-slate-300 mb-4">
-            Your data is used to:
-          </p>
-          <ul className="list-disc list-inside text-slate-300 mb-4 space-y-2">
-            <li>Deliver course content and track your progress</li>
-            <li>Assess your work (quizzes, capstone projects)</li>
-            <li>Issue certificates upon completion</li>
-            <li>Maintain accreditation records (CPD/IACET requirements)</li>
-            <li>Improve course material and user experience</li>
-          </ul>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">2. Information We Collect</h2>
+              <p>
+                We may collect information about you in a variety of ways. The information we may collect on the Site includes:
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li><strong>Personal Data:</strong> Name, email address, password</li>
+                <li><strong>Learning Data:</strong> Course progress, quiz scores, module completion</li>
+                <li><strong>Technical Data:</strong> IP address, browser type, pages visited</li>
+                <li><strong>Payment Data:</strong> Stripe processes all payments (we do not store card data)</li>
+              </ul>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Data Security
-          </h2>
-          <p className="text-slate-300 mb-4">
-            Your personal information is stored securely using encryption and
-            access controls. Passwords are hashed and never stored in plain text.
-            We use Supabase for secure data storage with Row-Level Security (RLS)
-            to ensure only authorized access.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">3. Use of Your Information</h2>
+              <p>Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the Site to:</p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li>Track course progress and generate completion certificates</li>
+                <li>Send you newsletters and updates about your course</li>
+                <li>Evaluate course effectiveness through learning analytics</li>
+                <li>Respond to your inquiries and fulfill your requests</li>
+              </ul>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Data Retention
-          </h2>
-          <p className="text-slate-300 mb-4">
-            We retain your enrollment and course progress data for accreditation
-            purposes as required by CPD and IACET standards (typically 7 years).
-            You may request deletion of personal data subject to legal obligations.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">4. Disclosure of Your Information</h2>
+              <p>
+                We may share your information with third parties in the following circumstances:
+              </p>
+              <ul className="list-disc list-inside mt-2 space-y-1">
+                <li><strong>Stripe:</strong> For payment processing (no card data stored by us)</li>
+                <li><strong>Supabase:</strong> For data storage and authentication</li>
+                <li><strong>Legal Compliance:</strong> When required by law or to protect rights</li>
+              </ul>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Third-Party Services
-          </h2>
-          <p className="text-slate-300 mb-4">
-            We use third-party services for:
-          </p>
-          <ul className="list-disc list-inside text-slate-300 mb-4 space-y-2">
-            <li>
-              <strong>Supabase:</strong> Database and authentication
-            </li>
-            <li>
-              <strong>Vercel:</strong> Hosting and deployment
-            </li>
-            <li>
-              <strong>Stripe:</strong> Payment processing (donations only)
-            </li>
-          </ul>
-          <p className="text-slate-300 mb-4">
-            These services have their own privacy policies. We encourage you to
-            review them.
-          </p>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">5. Security of Your Information</h2>
+              <p>
+                We use administrative, technical, and physical security measures to protect your personal information. All data is
+                transmitted via secure HTTPS connections, and sensitive data is encrypted in our Supabase database.
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Your Rights
-          </h2>
-          <p className="text-slate-300 mb-4">
-            You have the right to:
-          </p>
-          <ul className="list-disc list-inside text-slate-300 mb-4 space-y-2">
-            <li>Access your personal data</li>
-            <li>Correct inaccurate data</li>
-            <li>Request deletion (subject to legal obligations)</li>
-            <li>Opt-out of marketing communications</li>
-          </ul>
+            <section>
+              <h2 className="text-xl font-bold text-white mb-3">6. Contact Us Regarding Privacy</h2>
+              <p>
+                If you have questions or comments about this Privacy Policy, please contact us at:{" "}
+                <a href="mailto:privacy@learntovibe.code" className="text-blue-400 hover:text-blue-300">
+                  privacy@learntovibe.code
+                </a>
+              </p>
+            </section>
 
-          <h2 className="text-2xl font-bold text-white mt-8 mb-4">
-            Contact Us
-          </h2>
-          <p className="text-slate-300 mb-4">
-            If you have questions about this Privacy Policy or your data, please
-            contact us through the support page.
-          </p>
-
-          <div className="mt-12 p-6 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-            <p className="text-blue-400 text-sm">
-              <strong>Last updated:</strong> {new Date().toLocaleDateString()}
-            </p>
-            <p className="text-blue-300 text-sm mt-2">
-              This policy is subject to change. Continued use of the course after
-              changes constitutes acceptance.
-            </p>
+            <section className="border-t border-slate-600 pt-6">
+              <p className="text-slate-400">
+                Last updated: {new Date().toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+            </section>
           </div>
         </div>
       </div>
-      </div>
-      <Footer />
     </div>
   );
 }
