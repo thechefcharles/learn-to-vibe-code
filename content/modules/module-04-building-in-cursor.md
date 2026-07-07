@@ -40,7 +40,17 @@ npm run dev
 
 **Step 4 — Open** [http://localhost:3000](http://localhost:3000) to confirm the starter app runs.
 
-*[SCREENSHOT: the default Next.js starter page at [localhost:3000](http://localhost:3000).]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Next.js Starter Page]**
+
+**What this screenshot should show:**
+- Browser window at http://localhost:3000
+- Default Next.js starter page visible (logo, "Get started by editing..." text, links to documentation)
+- Proof that Node, npm, and Cursor are all working together
+- No errors in the page or terminal visible
+
+---
 
 > **Instructor note:** Get everyone to a running [localhost](http://localhost) before moving on — setup failures here derail the module.
 > 
@@ -56,7 +66,22 @@ npm run dev
 
 **Mental model:** Tab for keystrokes, Cmd+K for a block, Chat for thinking, Composer for a whole feature.
 
-*[SCREENSHOT: the Cmd+K inline-edit box showing an accept/reject diff.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Cmd+K Inline Edit Diff]**
+
+**What this screenshot should show:**
+- A code block is selected in Cursor editor
+- The Cmd+K dialog is open with a prompt (e.g., "Add error handling and return type annotation")
+- Below the prompt: a unified diff showing:
+  - Red lines (removed code)
+  - Green lines (added code)
+  - Accept button (checkmark)
+  - Reject button (X)
+- Shows the diff clearly so user can review before accepting
+- Proves: Cmd+K shows changes visually before applying them
+
+---
 
 ---
 
@@ -74,7 +99,22 @@ Use server components by default; only "use client" when needed.
 Keep components small and typed.
 ```
 
-*[SCREENSHOT: the @-mention menu open in the chat panel.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: @-Mention Menu]**
+
+**What this screenshot should show:**
+- Cursor chat panel is open (Cmd+L)
+- User has typed "@" in the chat input
+- A dropdown menu appears showing options:
+  - @filename (specific file suggestions like `app/layout.tsx`, `lib/utils.ts`)
+  - @folder (folder suggestions like `app/`, `lib/`, `components/`)
+  - @Docs (link to documentation)
+  - @Web (web search)
+- One mention is being selected/highlighted
+- Shows: how @-mentions let you pin specific context without typing full paths
+
+---
 
 > **Cross-tool note ([AGENTS.md](http://AGENTS.md)):** `.cursorrules` is Cursor's file; there's also an emerging vendor-neutral convention, **`AGENTS.md`**, that many AI tools read (create-next-app now scaffolds one). Same idea, different filename per tool. You'll meet Claude Code's counterpart, `CLAUDE.md`, in Module 5.
 > 
@@ -97,7 +137,19 @@ export type Client = { id: string; name: string; email: string };
 
 At each step: read the generated code, run it, use Cmd+K to fix anything off. You are the engineer (Module 1).
 
-*[SCREENSHOT: the /clients page rendering the client table.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: /Clients Page with Table]**
+
+**What this screenshot should show:**
+- Browser at http://localhost:3000/clients
+- A Tailwind-styled table is visible with:
+  - Header row: "Name" and "Email" columns
+  - 3–5 sample rows with mock client data (e.g., "Acme Corp", "acme@example.com")
+  - Clean, readable table styling (no generic AI look)
+- Proof that: prompt → ran → works
+
+---
 
 ---
 
@@ -107,7 +159,23 @@ This delivers Objective 2. Real features touch multiple files. Composer (Cmd+I) 
 
 **Worked example:** "Add a nav link to `/clients` in the site header, create the header component if it doesn't exist, and include it in the root layout." Add `@` context (e.g. `@app/layout.tsx`). **Step through the diff file by file** and accept deliberately — never blind-accept.
 
-*[SCREENSHOT: the Composer unified diff spanning multiple files.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Composer Unified Diff (Multi-File)]**
+
+**What this screenshot should show:**
+- Composer panel is open (after pressing Cmd+I and entering a multi-file prompt)
+- A unified diff displays changes across multiple files:
+  - File 1: `app/components/Header.tsx` (created or modified)
+    - Shows new `<nav>` with link to `/clients`
+  - File 2: `app/layout.tsx` (modified)
+    - Shows `<Header />` component imported and rendered
+- Red lines (removed), green lines (added)
+- Accept/Reject buttons at the bottom
+- Shows: Composer groups changes across files into one coherent diff
+- Proves: step-through-the-diff workflow prevents blind-accepting
+
+---
 
 **When to use which:** Cmd+K for one block, Composer for a change spanning files.
 
@@ -132,17 +200,83 @@ This delivers Objective 3.
 
 ## Hands-on activity (~60 min, folded in)
 
-**"Ship the clients feature."** Build the clients slice: the `Client` type, a list page, a working create form — using at least three of Cursor's four modes and a `.cursorrules` file, with Composer used at least once. Deliverable: a running app on [localhost](http://localhost) with the feature working.
+**"Ship the clients feature."** Build the invoice tracker's clients slice using Cursor's editing modes and multi-file workflow.
+
+### Step-by-step instructions:
+
+1. **Create `.cursorrules`** at the project root:
+   ```
+   # .cursorrules
+   This is a Next.js App Router + TypeScript + Tailwind app.
+   Use server components by default.
+   Components go in app/components/.
+   Mock data in lib/mockData.ts.
+   Keep components small and focused.
+   ```
+
+2. **Define the Client type** (use Cmd+L to ask: "Create a Client type in types/client.ts with fields: id, name, email")
+
+3. **Build the list page** (use Cmd+L with `@types/client.ts` context):
+   ```
+   Create a server component at app/clients/page.tsx that:
+   - Imports the Client type
+   - Creates a mock array of 5 clients
+   - Renders them in a Tailwind table
+   - Shows name and email columns
+   ```
+
+4. **Add a create form** (use Cmd+K inline edit on a selected component block):
+   - Select a placeholder `{/* form goes here */}` comment
+   - Cmd+K: "Add a form with name and email inputs, basic validation, a submit button"
+   - Review the diff and accept
+
+5. **Use Composer for multi-file header** (Cmd+I):
+   ```
+   Add a header with a nav link to /clients.
+   Create a Header component in app/components/Header.tsx.
+   Import and render it in app/layout.tsx.
+   ```
+
+6. **Test everything:**
+   - `npm run dev` and visit http://localhost:3000/clients
+   - Verify the table shows mock clients
+   - Verify the form validates input (try submitting empty)
+   - Verify the nav link is in the header
+
+### Submission:
+- Provide a screenshot or recording of the /clients page showing the working list + form
+- Paste the prompts you used for steps 2, 3, 4, 5
+- In 2 sentences, explain which Cursor mode (Tab, Cmd+K, Chat, Composer) was most useful and why
 
 ---
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Build a feature:** screenshot/recording of a working list + form feature you built, plus the prompts used.
+**Objective 1 — Build a working feature (Quiz Q4-4):**
+- Q4-4: "You're building a React list component that fetches from an API. Which mode is best?" ✅ Tests feature-building judgment
+- *Practical check:* Screenshot of the working /clients page (table + form) + the Cursor chat/Composer prompts you used
 
-**Objective 2 — Multi-file & context:** describe a Composer change touching 2+ files and how you used `@`-context or `.cursorrules`.
+**Objective 2 — Multi-file editing & context (Quiz Q4-1, Q4-2, Q4-3):**
+- Q4-1: "Which mode is best for multi-file changes?" ✅ Tests Composer knowledge
+- Q4-2: "What does `AGENTS.md` do?" ✅ Tests context/rules understanding
+- Q4-3: "`@`-mentions are used to:" ✅ Tests context-pinning knowledge
+- *Practical check:* Describe a Composer change spanning 2+ files. Example:
+  - "I used Composer to add a sidebar to the layout. It created `app/components/Sidebar.tsx`, imported it in `app/layout.tsx`, and styled both with Tailwind. I reviewed the diff file-by-file before accepting."
 
-**Objective 3 — Compare & justify:** in 3–4 sentences, recommend Cursor, VS Code + Copilot, or Zed for a given scenario and justify with the trade-offs.
+**Objective 3 — Compare alternatives (Lesson 4.6 knowledge):**
+- *Practical check:* For a scenario—"Your team standardizes on VS Code for backend. You're joining to build a frontend. Which editor?"—write a 3-sentence recommendation (Cursor, VS Code + Copilot, or Zed) with trade-offs.
+  - **SAMPLE ANSWER:** "I'd recommend VS Code + Copilot for consistency with the backend team—no editor switching tax. Trade-off: Copilot's autocomplete is more limited than Cursor's Composer for multi-file refactors. However, if full-stack AI coding matters more than team standardization, Cursor's superior context-handling wins."
+
+---
+
+**Scenario-based judgment checks:**
+
+For each, decide which Cursor mode fits best and explain in one sentence why:
+
+- (a) You need to refactor a function signature across 8 files. Tab? Cmd+K? Chat? Composer?
+- (b) You're unsure how your auth library works. What mode would you use to ask?
+- (c) You notice a typo in a variable name on the current screen. Tab or Cmd+K?
+- (d) A feature works but feels slow. Which mode to investigate why?
 
 *Pass mark: 80% and a working feature submitted.*
 

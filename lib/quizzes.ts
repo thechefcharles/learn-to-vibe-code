@@ -232,6 +232,19 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "@-mentions let you include specific files or web pages as context for the AI.",
       },
+      {
+        id: "4-4",
+        text: "You're building a React list component that fetches data from an API. Which Cursor mode is best?",
+        options: [
+          "Tab autocomplete (just keep typing)",
+          "Cmd+K inline edit (describe changes to a block)",
+          "Cmd+L chat (ask questions about the code)",
+          "Cmd+I Composer (build the whole component)",
+        ],
+        correctAnswer: 3,
+        explanation:
+          "Composer (Cmd+I) is best for building a complete feature—it orchestrates the component, imports, and wiring together.",
+      },
     ],
   },
   5: {
