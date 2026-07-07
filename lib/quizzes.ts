@@ -318,6 +318,19 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "shadcn/ui copies component code into your repo, giving you full ownership and control.",
       },
+      {
+        id: "6-4",
+        text: "What's the benefit of design-first prototyping (e.g. Claude Design) before coding?",
+        options: [
+          "it's faster than coding",
+          "the AI can't make mistakes in design",
+          "you see the visual intent *before* writing code, avoiding re-layout later",
+          "it replaces the need for CSS",
+        ],
+        correctAnswer: 2,
+        explanation:
+          "Design-first prototyping locks down layout and visual hierarchy before code, saving rework when you build.",
+      },
     ],
   },
   7: {
@@ -395,6 +408,19 @@ export const quizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation:
           "Disabling RLS treats the symptom (empty rows) but removes security. Find the real cause.",
+      },
+      {
+        id: "8-4",
+        text: "Before applying an AI-proposed fix, you should:",
+        options: [
+          "just apply it — the AI knows what it's doing",
+          "read the code, understand what it changes, ask the AI to explain any unclear lines, confirm against the bug",
+          "skip it if it's too long to read",
+          "apply it to production first to test",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Always review: read → understand → verify against the actual bug → then apply. You own what ships (Module 1).",
       },
     ],
   },
@@ -528,6 +554,19 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "Always require human approval before AI takes consequential actions.",
       },
+      {
+        id: "11-4",
+        text: "Your workflow calls an external API that fails 10% of the time. What do you add?",
+        options: [
+          "nothing — accept the 10% failure rate",
+          "retry logic + logging so failures are detectable and the loop can recover",
+          "delete the workflow — it's unreliable",
+          "a prayer",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Assess failure modes and add defensive patterns: retries, logging, fallbacks. Build workflows that degrade gracefully.",
+      },
     ],
   },
   12: {
@@ -567,6 +606,19 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "AI skips accessibility, performance optimization, and non-functional polish unless prompted.",
       },
+      {
+        id: "12-4",
+        text: "Before shipping, your code review checklist should verify all EXCEPT:",
+        options: [
+          "tests pass and error handling is in place",
+          "secrets aren't hardcoded",
+          "the variable names are the longest possible",
+          "SQL injection and XSS are mitigated",
+        ],
+        correctAnswer: 2,
+        explanation:
+          "Long variable names don't improve security or quality; focus on testing, error handling, secrets management, and injection protection.",
+      },
     ],
   },
   13: {
@@ -605,6 +657,19 @@ export const quizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation:
           "Pipelines fail fast to catch issues before they reach production—that's their job.",
+      },
+      {
+        id: "13-4",
+        text: "You want Claude Code to export GitHub data on every build. You should use:",
+        options: [
+          "a CLAUDE.md instruction",
+          "a skill (reusable, needs testing)",
+          "an MCP server (connects Claude to GitHub's API)",
+          "a GitHub Action (different tool entirely)",
+        ],
+        correctAnswer: 2,
+        explanation:
+          "MCPs are the way to connect Claude Code to external APIs/tools. Skills are for reusable logic; CLAUDE.md for project context.",
       },
     ],
   },
