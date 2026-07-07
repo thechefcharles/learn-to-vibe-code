@@ -33,6 +33,35 @@ This delivers Objective 1 — the skill the whole course's "don't ship what you 
 4. **Read the risky parts closely.** Anything touching auth, data, money, or external calls gets line-level attention (the Module 1 trust dial).
 5. **Confirm intent.** Does it do what you asked, or something plausible-but-different?
 
+**Concrete example — reading unfamiliar code:**
+
+```tsx
+// AI generated this. Can you explain it line by line?
+export async function updateInvoiceStatus(invoiceId: string, status: string) {
+  const supabase = await createClient();
+  const user = await supabase.auth.getUser();
+  
+  if (!user) return { error: "Unauthorized" };
+  
+  const { data, error } = await supabase
+    .from("invoices")
+    .update({ status })
+    .eq("id", invoiceId)
+    .eq("user_id", user.data.user?.id)
+    .select();
+  
+  return { data, error };
+}
+```
+
+**Reading it systematically:**
+
+1. **Purpose (line 1):** Updates an invoice's status. Takes `invoiceId` and `status`.
+2. **Data flow:** Gets the current user → checks if authenticated → updates the invoice → returns result.
+3. **Risky parts (lines 6-7):** Auth check is good. BUT line 11: does `.eq("user_id", user.data.user?.id)` work? Check: yes, filters to the current user's invoice only (security ✓).
+4. **Trace one path:** Invoice 123 owned by Alice → Alice calls with `status: "paid"` → row found and updated → returns updated row.
+5. **Intent match:** Does it do what you asked ("let users update their own invoice status")? Yes. ✅
+
 **Habits:** rename unclear variables as you read; drop a one-line comment capturing the *why*; and if you still can't explain a block, **don't ship it** — simplify or ask for a version you understand. This is exactly what the capstone oral defense tests.
 
 ---
@@ -99,16 +128,55 @@ Claude Code or Cursor chat: user pastes error message and mentions @app/clients/
 
 ## Lesson 8.6 — Common bug classes in our stack (~45 min)
 
-A field guide so learners recognize patterns:
+A field guide so learners recognize patterns and diagnose quickly:
 
-- **Server vs. client component errors (Next.js)** — a browser-only feature/event handler in a server component. Fix: add `"use client"` or move the logic.
-- **Silent empty data (Supabase RLS)** — no error, no rows: RLS on and unauthenticated, or a missing policy (Lesson 8.4).
-- **Env var problems** — `undefined` keys because `.env.local` is missing a value or the dev server wasn't restarted.
-- **Type errors (TypeScript)** — the code assumes a shape the data doesn't have; the squiggle names the mismatch.
-- **Hallucinated APIs (Module 1)** — a function/option that doesn't exist. Fix: check the real docs.
-- **Framework version deprecations** — e.g. Next.js 16 renamed the `middleware` file convention to **`proxy`**; read the warning and check the changelog rather than fighting the AI's older pattern.
+**1. Server vs. client component errors (Next.js)**
+- **Symptom:** Error like "localStorage is not defined" or "click handler not firing"
+- **Root cause:** Tried to use browser-only features (event handlers, localStorage, window) in a server component
+- **Fix:** Add `"use client"` at the top of the file, OR move the logic to a child component marked `"use client"`
+- **Example:**
+  ```tsx
+  // ❌ WRONG — server component, can't use onClick
+  export default function Page() {
+    return <button onClick={() => alert("clicked")}>Click me</button>;
+  }
+  
+  // ✅ CORRECT — client component
+  "use client";
+  export default function Page() {
+    return <button onClick={() => alert("clicked")}>Click me</button>;
+  }
+  ```
 
-Recognizing the *class* of bug is most of diagnosing it.
+**2. Silent empty data (Supabase RLS)**
+- **Symptom:** Query returns zero rows, no error message, but rows exist in the Table Editor
+- **Root cause:** RLS is enabled, but the user is unauthenticated or the policy is missing
+- **Fix:** Check RLS policies in Supabase; add `using (auth.uid() = user_id)` to your policy
+- **Example:** You query `supabase.from("clients").select()` but get `[]`. Check: is RLS on? Do you have a policy? Are you logged in?
+
+**3. Env var problems**
+- **Symptom:** `undefined` values or "Cannot read properties of undefined"
+- **Root cause:** `.env.local` is missing a value, or you didn't restart the dev server after adding it
+- **Fix:** Check `.env.local`, ensure the key is spelled exactly right, and run `npm run dev` again
+- **Example:** Used `process.env.NEXT_PUBLIC_SUPABASE_URL` but it's undefined → check `.env.local` has it → restart dev server
+
+**4. Type errors (TypeScript)**
+- **Symptom:** Red squiggly lines or "Property 'X' does not exist on type 'Y'"
+- **Root cause:** The code assumes the data has a shape it doesn't actually have (e.g., assumes `client.name` exists, but it might be `client.clientName`)
+- **Fix:** Read the error, check the actual data shape, fix the property name
+- **Example:** `client.name` but the API returns `client.firstName` → error immediately catches it
+
+**5. Hallucinated APIs (Module 1)**
+- **Symptom:** "supabase.auth.getUserAsync is not a function" or similar
+- **Root cause:** The AI made up a function that doesn't exist in the SDK
+- **Fix:** Check the real docs; the correct function is usually similar but slightly different (e.g., `getUser()` not `getUserAsync()`)
+
+**6. Framework version deprecations**
+- **Symptom:** Warning like "middleware.ts is deprecated; use proxy.ts instead"
+- **Root cause:** The AI generated code for an older Next.js version
+- **Fix:** Read the warning, check the changelog for the current version, rename/move the file
+
+**Recognizing the *class* of bug is most of diagnosing it.** If you see "undefined," think "env var or missing property." If you see no error but no data, think "RLS." If you see a function doesn't exist, think "hallucination — check the docs."
 
 ---
 
@@ -130,7 +198,104 @@ Then **verify**: reproduce the original trigger and confirm it's gone; check the
 
 ## Hands-on activity (~60 min, folded in)
 
-**"Bug hunt."** The instructor ships three planted bugs in a copy of the invoice-tracker: (1) a server/client component error, (2) the RLS empty-list bug, (3) a hallucinated API call. For each, learners read the error (or notice its absence), reproduce and isolate, use AI to propose a fix, and write one sentence assessing root-cause before applying. Deliverable: all three fixed, root cause named for each.
+**"Bug hunt."** You'll debug three real bugs that commonly appear when AI generates code. The goal: read the error (or lack thereof), pinpoint the root cause, and fix it safely.
+
+### Three planted bugs:
+
+#### Bug 1: Server/Client Component Error
+**What you'll see:** Error in the browser: "addEventListener is not a function" or click handler doesn't fire
+
+**Step 1 — Read the error (2 min)**
+- Open your browser console (F12 → Console tab)
+- Find the error message and the file:line it points to
+
+**Step 2 — Reproduce (2 min)**
+- Try the action that caused the error (click a button, submit a form)
+- Confirm it happens every time
+
+**Step 3 — Isolate (3 min)**
+- Look at the file from the error
+- Check if it has `"use client"` at the top
+- If not, that's likely the issue
+
+**Step 4 — Fix (2 min)**
+- Add `"use client";` at the very top of the file
+- Save and check the browser—error gone
+
+**Step 5 — Root cause (1 min)**
+- Write: "The component tried to use a click handler (browser-only feature) in a server component. Added `"use client"` to make it a client component."
+
+---
+
+#### Bug 2: Silent Empty Data (RLS)
+**What you'll see:** The `/clients` page shows an empty table, but you added clients. No error in console.
+
+**Step 1 — Read the error (1 min)**
+- No error message. That's the clue.
+- Empty data + no error = likely RLS
+
+**Step 2 — Reproduce (2 min)**
+- Go to `/clients`
+- Confirm it's empty
+- Open Supabase Table Editor and confirm rows exist
+
+**Step 3 — Isolate (3 min)**
+- Check: are you logged in? (If you're logged out, RLS blocks everything)
+- Check Supabase dashboard: is RLS enabled on the `clients` table? (Look under **SQL Editor** → run `SELECT * FROM clients;` — do you get rows?)
+
+**Step 4 — Check the policy (3 min)**
+- Go to Supabase **Table Editor** → click `clients` table → scroll right to **Policies**
+- Do you see a policy? Is it correct? (Should say `auth.uid() = user_id`)
+- If missing, add it:
+  ```sql
+  create policy "users manage own clients"
+    on clients for all
+    using (auth.uid() = user_id)
+    with check (auth.uid() = user_id);
+  ```
+
+**Step 5 — Fix (2 min)**
+- Refresh the page
+- Clients now appear
+
+**Step 6 — Root cause (1 min)**
+- Write: "RLS was enabled but the policy was missing. Without a policy, RLS default-denies all reads. Added the policy so authenticated users can see their own clients."
+
+---
+
+#### Bug 3: Hallucinated API Call
+**What you'll see:** Error like "supabase.auth.getCurrentUserAsync is not a function"
+
+**Step 1 — Read the error (2 min)**
+- Error says the function doesn't exist
+- Note the function name
+
+**Step 2 — Find the bug (2 min)**
+- Search your code for the function name (Ctrl+Shift+F)
+- Find the file that calls it
+
+**Step 3 — Check the docs (3 min)**
+- Open Supabase docs for `supabase-js`
+- Search for the function the AI called
+- It doesn't exist
+- Look for similar names — usually the correct one is close (e.g., `getUser()` instead of `getCurrentUserAsync()`)
+
+**Step 4 — Fix (2 min)**
+- Replace the hallucinated function with the real one
+- Test — no more error
+
+**Step 5 — Root cause (1 min)**
+- Write: "The AI generated a function name that doesn't exist in the Supabase SDK. Replaced it with the correct function from the official docs."
+
+---
+
+### Deliverable:
+- Screenshot or description of each bug
+- For each: one sentence naming the root cause
+- Example:
+  1. "Bug 1: Server component using click handler. Fix: added `"use client"`."
+  2. "Bug 2: RLS policy missing. Fix: added policy with `auth.uid() = user_id`."
+  3. "Bug 3: AI hallucinated function name. Fix: replaced with real SDK function from docs."
 
 ---
 
@@ -191,6 +356,49 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 - Q8-4: Tests evaluating fix correctness
 - *Practical:* Given a bug + two fixes (one correct, one hides symptom), pick the right one + explain why the other is dangerous
   - **SAMPLE:** "Bug: empty client list. Fix A: add RLS policy so authenticated users see their clients. Fix B: set RLS to off. Answer: Fix A (correct). Fix B is dangerous because it removes security and exposes all users' data."
+
+---
+
+**Scenario-based judgment checks:**
+
+*For each scenario, explain what's wrong and how you'd diagnose it.*
+
+- **(a) "Cannot read properties of undefined":** Your page crashes with this error. What are three possible root causes?
+  - ✅ **Correct answers:** (1) Missing env var (`process.env.X` is undefined), (2) Data shape mismatch (assumed `user.id` but it's `user?.id`), (3) Forgot to await an async call (value is promise, not data)
+  - ❌ **Avoid:** Guessing. Read the stack trace — it points to the exact line that failed.
+
+- **(b) Blank table, no error:** Your `/invoices` page renders an empty table, no console errors, but invoices exist in Supabase.
+  - ✅ **Diagnosis:** Check RLS. Is the policy on? Are you logged in? Log the query result in the browser console to confirm it returns `[]`.
+  - ❌ **Avoid:** Assuming the code is wrong. Check infrastructure (auth, RLS) first.
+
+- **(c) AI gave you a function that doesn't exist:** You got "is not a function" error. How do you find the real function?
+  - ✅ **Correct:** Search the official SDK docs for similar names. The real function is usually 90% the same name but slightly different.
+  - ❌ **Avoid:** Asking the AI to fix it blindly. It might halluci again. Read the real docs yourself.
+
+- **(d) You understand the fix, but it feels wrong:** AI proposes removing a security rule to "fix" an empty list bug.
+  - ✅ **Correct:** Reject it. It treats the symptom, not the root cause. The real cause is a missing RLS policy, not "too much security."
+  - ❌ **Avoid:** Accepting the shortcut. Security is not the problem; misunderstanding the data model is.
+
+- **(e) You fixed the bug, but now something else broke:** After applying the fix, a different page now shows an error.
+  - ✅ **Correct:** Revert, investigate. The fix might have broken something else (e.g., a shared function). Re-apply with more surgical precision.
+  - ❌ **Avoid:** Applying the fix and shipping without testing the full app.
+
+---
+
+**Rubric checklist (self-review before submission):**
+
+| Criterion | Check (✅ = pass) |
+|-----------|-------------|
+| **Bug 1 diagnosis** | Identified as server/client component error; fixed by adding `"use client"` |
+| **Bug 1 explanation** | Root cause: browser-only feature in server component |
+| **Bug 2 diagnosis** | Identified as RLS (no error, but no data); checked policies |
+| **Bug 2 fix** | Added or verified RLS policy with `auth.uid() = user_id` |
+| **Bug 2 explanation** | Root cause: RLS policy was missing or incorrect |
+| **Bug 3 diagnosis** | Identified hallucinated function; checked real SDK docs |
+| **Bug 3 fix** | Replaced with correct SDK function |
+| **Bug 3 explanation** | Root cause: AI generated non-existent function name |
+| **All bugs fixed** | The app runs without errors; all three issues resolved |
+| **Root causes named** | For each bug: wrote one clear sentence explaining the real problem (not the symptom) |
 
 *Pass mark: 80% and bug hunt completed.*
 
