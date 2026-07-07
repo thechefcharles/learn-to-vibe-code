@@ -5,6 +5,8 @@ export interface ModuleStep {
   title: string;
   type: "lesson" | "quiz" | "checkpoint" | "challenge";
   duration: number; // minutes
+  difficulty: "easy" | "medium" | "hard"; // step difficulty
+  xpReward: number; // XP for completing step
   content: string;
   codeBlock?: {
     language: string;
@@ -12,9 +14,15 @@ export interface ModuleStep {
   };
   tip?: string;
   keyPoint?: string;
+  hints?: string[]; // Hints for challenges
+  resources?: {
+    title: string;
+    url: string;
+    type: "docs" | "video" | "article"; // resource type
+  }[];
   challenge?: {
     description: string;
-    action: string; // e.g., "Open terminal and run: node --version"
+    action: string;
     successCriteria: string;
   };
   quiz?: {
@@ -23,6 +31,12 @@ export interface ModuleStep {
     correctAnswer: number;
     explanation: string;
   };
+}
+
+export interface StepMilestone {
+  milestone: "25%" | "50%" | "75%" | "100%";
+  celebration: string;
+  xpBonus: number;
 }
 
 export interface ModuleStepSequence {
@@ -44,6 +58,8 @@ export const module0Steps: Record<Version, ModuleStepSequence> = {
         title: "Welcome & Overview",
         type: "lesson",
         duration: 5,
+        difficulty: "easy",
+        xpReward: 50,
         content: `# Module 0: Setup & Accounts
 
 This module sets up your development environment **once, up front**. Setup friction is where beginners quietly give up.
@@ -66,6 +82,8 @@ Let's get started.`,
         title: "The Stack Map",
         type: "lesson",
         duration: 15,
+        difficulty: "easy",
+        xpReward: 75,
         content: `## The Stack Map
 
 Before you install anything, let's see the full picture. Each tool has a place in the stack:
@@ -101,6 +119,8 @@ You *write* code in Cursor/Claude Code → *design* it (Module 6) → *power* it
         title: "What is a Terminal?",
         type: "lesson",
         duration: 5,
+        difficulty: "easy",
+        xpReward: 50,
         content: `## What is a Terminal?
 
 A **terminal** (or command line) is a text-based interface to your computer. Instead of clicking buttons, you type commands.
@@ -129,6 +149,8 @@ You'll see a prompt (like \`$\` or \`>\`) which means the terminal is ready for 
         title: "Install Node.js",
         type: "checkpoint",
         duration: 10,
+        difficulty: "easy",
+        xpReward: 100,
         content: `## Install Node.js
 
 Node.js is the runtime that runs JavaScript on your computer (not just in a browser).
@@ -147,6 +169,23 @@ Node.js is the runtime that runs JavaScript on your computer (not just in a brow
           code: "node --version\nnpm --version",
         },
         keyPoint: 'You should see two version numbers (e.g., v22.12.0 and 10.5.0). If "command not found", close the terminal completely and reopen it.',
+        hints: [
+          "Make sure you're downloading the LTS version, not the latest version",
+          "If 'command not found' appears, the terminal cache hasn't updated — close and reopen it",
+          "On Windows, you may need to restart your computer for PATH changes to take effect",
+        ],
+        resources: [
+          {
+            title: "Node.js Official Documentation",
+            url: "https://nodejs.org/en/docs/",
+            type: "docs",
+          },
+          {
+            title: "Node.js Installation Guide (Video)",
+            url: "https://www.youtube.com/watch?v=DYR0qP5H2Ac",
+            type: "video",
+          },
+        ],
         challenge: {
           description: "Verify Node.js is installed on your computer",
           action: "Open a terminal and run the commands above",
@@ -169,6 +208,8 @@ Node.js is the runtime that runs JavaScript on your computer (not just in a brow
         title: "Install Cursor",
         type: "checkpoint",
         duration: 10,
+        difficulty: "easy",
+        xpReward: 75,
         content: `## Install Cursor
 
 Cursor is your AI code editor. It's built on VS Code, so it'll feel familiar if you've used it before.
@@ -207,6 +248,8 @@ Cursor is your AI code editor. It's built on VS Code, so it'll feel familiar if 
         title: "Install Claude Code",
         type: "checkpoint",
         duration: 10,
+        difficulty: "easy",
+        xpReward: 75,
         content: `## Install Claude Code
 
 Claude Code is the terminal AI agent. You'll use it from the terminal to ask for help with complex tasks.
@@ -220,9 +263,6 @@ Claude Code is the terminal AI agent. You'll use it from the terminal to ask for
           language: "bash",
           code: "claude --version",
         },
-        content: `You should see a version number (e.g., 0.5.2).
-
-**Step 3:** Sign in for the first time:`,
         keyPoint: "You'll need an API token from your Claude account. Follow the link in the terminal.",
       },
       {
@@ -230,6 +270,8 @@ Claude Code is the terminal AI agent. You'll use it from the terminal to ask for
         title: "Sign Up for GitHub",
         type: "checkpoint",
         duration: 10,
+        difficulty: "easy",
+        xpReward: 75,
         content: `## Create Your Accounts
 
 You'll need accounts on three platforms. **Use the same email for all three.**
@@ -252,6 +294,8 @@ GitHub is where you'll save your code. It's like Google Drive for developers.
         title: "Sign Up for Supabase",
         type: "checkpoint",
         duration: 8,
+        difficulty: "easy",
+        xpReward: 50,
         content: `## Sign Up for Supabase
 
 Supabase is your database — where your app stores data (logins, posts, etc.).
@@ -270,6 +314,8 @@ Supabase is your database — where your app stores data (logins, posts, etc.).
         title: "Sign Up for Vercel",
         type: "checkpoint",
         duration: 8,
+        difficulty: "easy",
+        xpReward: 50,
         content: `## Sign Up for Vercel
 
 Vercel is where you'll deploy your app — makes it live on the internet.
@@ -288,6 +334,8 @@ Vercel is where you'll deploy your app — makes it live on the internet.
         title: "Free Tiers & Costs",
         type: "lesson",
         duration: 10,
+        difficulty: "easy",
+        xpReward: 50,
         content: `## Free Tiers & Costs
 
 Set expectations now so you're not surprised by a bill later.
@@ -319,6 +367,8 @@ All tools have free tiers that cover this course. AI editor usage depends on how
         title: "Final Verification",
         type: "checkpoint",
         duration: 15,
+        difficulty: "medium",
+        xpReward: 100,
         content: `## Final Verification
 
 Let's verify everything works with a hello-world check.
@@ -330,9 +380,6 @@ Open a terminal and run:`,
           language: "bash",
           code: "mkdir vibe-hello-world\ncd vibe-hello-world",
         },
-        content: `### Step 2: Create a simple file
-
-Create a file called \`hello.js\`:`,
         keyPoint: "You just ran your first terminal commands! You can create folders and navigate with the terminal.",
       },
       {
@@ -340,6 +387,8 @@ Create a file called \`hello.js\`:`,
         title: "Checkpoint: Module Complete",
         type: "quiz",
         duration: 5,
+        difficulty: "easy",
+        xpReward: 150,
         content: `## You Did It! 🎉
 
 You've completed Module 0. You now have:
@@ -371,6 +420,8 @@ Ready to continue?`,
         title: "Welcome to Vibe Code! 🎮",
         type: "lesson",
         duration: 5,
+        difficulty: "easy",
+        xpReward: 50,
         content: `# Module 0: Setup & Accounts
 
 You're about to level up your coding skills! But first, we need to set up your **development environment** — think of it like getting your character's gear before the game starts.
@@ -394,6 +445,8 @@ Let's gear up! 🚀`,
         title: "The Toolbelt Map 🛠️",
         type: "lesson",
         duration: 15,
+        difficulty: "easy",
+        xpReward: 75,
         content: `## The Toolbelt Map
 
 Here's all the tools you'll use, what they do, and when you'll use them:
@@ -430,6 +483,8 @@ Write code (Cursor) → Make it look good → Add a database (Supabase) → Save
         title: "Terminal 101 💻",
         type: "lesson",
         duration: 5,
+        difficulty: "easy",
+        xpReward: 50,
         content: `## What's a Terminal?
 
 A **terminal** is like a text-based version of your computer. Instead of clicking buttons, you type commands.
@@ -460,6 +515,8 @@ The terminal is just another way to talk to your computer. We'll only use a few 
         title: "Install Node.js ⚙️",
         type: "checkpoint",
         duration: 10,
+        difficulty: "easy",
+        xpReward: 100,
         content: `## Install Node.js
 
 Node.js is the engine that runs JavaScript on your computer (not just in a web browser).
@@ -480,9 +537,6 @@ Open a terminal and copy-paste this:`,
           language: "bash",
           code: "node --version\nnpm --version",
         },
-        content: `If you see version numbers (like \`v22.12.0\`), you're done! 🎉
-
-**If you see "command not found":** Close the terminal completely and reopen it. Then try again.`,
         keyPoint: "Node.js is like the engine for your car — you need it before anything else works.",
         challenge: {
           description: "Verify Node.js installed ✓",
@@ -506,6 +560,8 @@ Open a terminal and copy-paste this:`,
         title: "Install Cursor 🎨",
         type: "checkpoint",
         duration: 10,
+        difficulty: "easy",
+        xpReward: 75,
         content: `## Install Cursor
 
 Cursor is your **AI-powered code editor**. It's like VS Code but with AI built in.
@@ -531,6 +587,8 @@ You're done! Cursor is ready to go. ✅`,
         title: "Install Claude Code 🤖",
         type: "checkpoint",
         duration: 10,
+        difficulty: "easy",
+        xpReward: 75,
         content: `## Install Claude Code
 
 Claude Code is your **terminal AI assistant**. Ask it complex tasks, and it builds them for you.
@@ -547,9 +605,6 @@ Open a terminal and copy-paste:`,
           language: "bash",
           code: "claude --version",
         },
-        content: `You should see a version number. If yes, you're done! ✅
-
-**4. Sign in** by running:`,
         keyPoint: "Claude Code is like having an expert developer on call. We'll use it starting in Module 5.",
       },
       {
@@ -557,6 +612,8 @@ Open a terminal and copy-paste:`,
         title: "GitHub: Save Your Code 💾",
         type: "checkpoint",
         duration: 10,
+        difficulty: "easy",
+        xpReward: 75,
         content: `## Create Your Accounts
 
 You need three accounts. **Use the same email for all three** to keep things organized.
@@ -581,6 +638,8 @@ GitHub is like Google Drive for code. It saves your work and lets you share it.
         title: "Supabase: Your Database 🗄️",
         type: "checkpoint",
         duration: 8,
+        difficulty: "easy",
+        xpReward: 50,
         content: `## Supabase ([supabase.com](https://supabase.com))
 
 Supabase is your app's database — where all the data lives (user accounts, posts, scores, etc.).
@@ -601,6 +660,8 @@ Supabase is your app's database — where all the data lives (user accounts, pos
         title: "Vercel: Deploy Online 🚀",
         type: "checkpoint",
         duration: 8,
+        difficulty: "easy",
+        xpReward: 50,
         content: `## Vercel ([vercel.com](https://vercel.com))
 
 Vercel is how you put your app on the internet. One button, and boom — everyone can see your app!
@@ -620,6 +681,8 @@ Vercel is how you put your app on the internet. One button, and boom — everyon
         title: "The Budget: Free vs. Paid 💰",
         type: "lesson",
         duration: 10,
+        difficulty: "easy",
+        xpReward: 50,
         content: `## Free Tiers & Costs
 
 Here's the real talk: what's free, and when does it cost money?
@@ -653,6 +716,8 @@ That's it!`,
         title: "Final Boss: Verification ✨",
         type: "checkpoint",
         duration: 15,
+        difficulty: "medium",
+        xpReward: 100,
         content: `## Final Verification
 
 Let's make sure everything actually works with a quick hello-world test.
@@ -664,9 +729,6 @@ Open a terminal and copy-paste:`,
           language: "bash",
           code: "mkdir vibe-hello-world\ncd vibe-hello-world",
         },
-        content: `### Step 2: Create a file
-
-This command creates a simple JavaScript file:`,
         keyPoint: "You just used your first terminal commands! You can create folders and navigate like a pro.",
       },
       {
@@ -674,6 +736,8 @@ This command creates a simple JavaScript file:`,
         title: "Level Complete! 🎉",
         type: "quiz",
         duration: 5,
+        difficulty: "easy",
+        xpReward: 150,
         content: `## Congratulations! You've Unlocked Module 1!
 
 You now have your full development environment set up:

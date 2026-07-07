@@ -21,6 +21,9 @@ interface StepLessonViewerProps {
 export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
+  const [showHints, setShowHints] = useState(false);
+  const [stepStartTime] = useState(Date.now());
+  const [totalXP, setTotalXP] = useState(0);
   const [quizState, setQuizState] = useState<StepQuizState>({
     answered: false,
     selectedIndex: null,
@@ -29,8 +32,12 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   const { version } = useVersion();
   const isKids = version === "kids";
 
-  const currentStep = steps.steps[currentStepIndex];
+  // Calculate milestone progress
   const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
+  const isMilestone = progress === 25 || progress === 50 || progress === 75 || progress === 100;
+  const milestoneText = progress === 25 ? "25% Complete! 🚀" : progress === 50 ? "Halfway There! 💪" : progress === 75 ? "Almost Done! 🔥" : "Module Complete! 🎉";
+
+  const currentStep = steps.steps[currentStepIndex];
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === steps.steps.length - 1;
 
@@ -142,8 +149,24 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          {/* Step Type Badge */}
-          <div className="mb-4 inline-block">
+          {/* Milestone Celebration */}
+          {isMilestone && (
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className={`mb-4 p-4 rounded-lg text-center font-bold text-lg ${
+                isKids
+                  ? "bg-yellow-100 text-yellow-700 border-2 border-yellow-400"
+                  : "bg-yellow-500/20 text-yellow-300 border border-yellow-500"
+              }`}
+            >
+              {milestoneText}
+            </motion.div>
+          )}
+
+          {/* Step Type Badge & Metadata */}
+          <div className="mb-4 flex flex-wrap gap-2 items-center">
             <span
               className={`px-3 py-1 rounded-full text-sm font-medium ${
                 currentStep.type === "lesson"
@@ -165,12 +188,47 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                   ? "✓ Checkpoint"
                   : "🎯 Quiz"}
             </span>
+
+            {/* Difficulty Badge */}
             <span
-              className={`ml-3 text-sm ${
+              className={`px-3 py-1 rounded-full text-sm font-medium ${
+                currentStep.difficulty === "easy"
+                  ? isKids
+                    ? "bg-green-100 text-green-700"
+                    : "bg-green-500/20 text-green-300"
+                  : currentStep.difficulty === "medium"
+                    ? isKids
+                      ? "bg-yellow-100 text-yellow-700"
+                      : "bg-yellow-500/20 text-yellow-300"
+                    : isKids
+                      ? "bg-red-100 text-red-700"
+                      : "bg-red-500/20 text-red-300"
+              }`}
+            >
+              {currentStep.difficulty === "easy"
+                ? "🟢 Easy"
+                : currentStep.difficulty === "medium"
+                  ? "🟡 Medium"
+                  : "🔴 Hard"}
+            </span>
+
+            {/* XP Reward Badge */}
+            <span
+              className={`px-3 py-1 rounded-full text-sm font-bold ${
+                isKids
+                  ? "bg-purple-100 text-purple-700"
+                  : "bg-purple-500/20 text-purple-300"
+              }`}
+            >
+              ⭐ +{currentStep.xpReward} XP
+            </span>
+
+            <span
+              className={`ml-auto text-sm ${
                 isKids ? "text-purple-600" : "text-slate-400"
               }`}
             >
-              ~{currentStep.duration} min read
+              ~{currentStep.duration} min
             </span>
           </div>
 
@@ -222,6 +280,81 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             >
               <p className="font-medium">💡 Key Point</p>
               <p className="text-sm mt-1">{currentStep.keyPoint}</p>
+            </div>
+          )}
+
+          {/* Hints Section */}
+          {currentStep.hints && currentStep.hints.length > 0 && (
+            <div
+              className={`rounded-lg p-4 mb-8 border ${
+                isKids
+                  ? "bg-blue-50 border-blue-300"
+                  : "bg-blue-500/10 border-blue-500/30"
+              }`}
+            >
+              <button
+                onClick={() => setShowHints(!showHints)}
+                className={`w-full flex justify-between items-center font-bold text-left ${
+                  isKids ? "text-blue-700" : "text-blue-300"
+                }`}
+              >
+                <span>💡 Hints ({currentStep.hints.length})</span>
+                <span className="text-xl">{showHints ? "−" : "+"}</span>
+              </button>
+              {showHints && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  transition={{ duration: 0.3 }}
+                  className="mt-3 space-y-2"
+                >
+                  {currentStep.hints.map((hint, idx) => (
+                    <div
+                      key={idx}
+                      className={`p-2 rounded text-sm ${
+                        isKids
+                          ? "bg-white text-blue-700 border border-blue-200"
+                          : "bg-slate-800 text-blue-200 border border-blue-500/30"
+                      }`}
+                    >
+                      <strong>Hint {idx + 1}:</strong> {hint}
+                    </div>
+                  ))}
+                </motion.div>
+              )}
+            </div>
+          )}
+
+          {/* Resources Section */}
+          {currentStep.resources && currentStep.resources.length > 0 && (
+            <div
+              className={`rounded-lg p-4 mb-8 border ${
+                isKids
+                  ? "bg-orange-50 border-orange-300"
+                  : "bg-orange-500/10 border-orange-500/30"
+              }`}
+            >
+              <p className={`font-bold mb-3 ${isKids ? "text-orange-700" : "text-orange-300"}`}>
+                📚 Related Resources
+              </p>
+              <div className="space-y-2">
+                {currentStep.resources.map((resource, idx) => (
+                  <a
+                    key={idx}
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`block p-2 rounded text-sm transition ${
+                      isKids
+                        ? "bg-white text-orange-700 hover:bg-orange-50 border border-orange-200"
+                        : "bg-slate-800 text-orange-200 hover:bg-slate-700 border border-orange-500/30"
+                    }`}
+                  >
+                    <span className="font-medium">{resource.type === "docs" ? "📖" : resource.type === "video" ? "🎥" : "📄"}</span>
+                    {" "}{resource.title}
+                  </a>
+                ))}
+              </div>
             </div>
           )}
 
