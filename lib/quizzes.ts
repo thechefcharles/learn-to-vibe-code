@@ -110,6 +110,32 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "Specific feedback (what was wrong, what you expected) leads to better outputs than vague retries.",
       },
+      {
+        id: "2-4",
+        text: "When building a complex UI, which approach is fastest?",
+        options: [
+          "write a 500-word description of the layout",
+          "paste a mockup image and ask the AI to build it",
+          "tell the AI 'make it look professional'",
+          "describe colors and fonts in detail",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Multimodal prompting (image input) is faster and more accurate than text descriptions. The AI reads visual structure directly.",
+      },
+      {
+        id: "2-5",
+        text: "Which is the correct order to build a blog (post data model → users → posts)?",
+        options: [
+          "1) Allow users to create posts, 2) Build a post table, 3) Build user auth",
+          "1) Build user auth, 2) Build a post table, 3) Allow users to create posts",
+          "1) Allow users to create posts, 2) Build user auth, 3) Build a post table",
+          "All orders work equally well",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Decompose by dependencies: auth must exist before posts (users login first), posts table must exist before the form to create them. Dependencies define the sequence.",
+      },
     ],
   },
   3: {

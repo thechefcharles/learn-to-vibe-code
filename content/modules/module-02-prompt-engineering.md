@@ -51,7 +51,19 @@ The strong prompt isn't longer for its own sake — every clause removes a wrong
 > **Instructor demo:** Run the weak and strong prompts live, side by side. The output gap sells the lesson in two minutes.
 > 
 
-*[SCREENSHOT: side-by-side outputs from the weak "make a login form" prompt vs. the strong five-ingredient prompt.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Weak vs. Strong Prompt Outputs]**
+
+**What this screenshot should show:**
+- Left panel: Claude/ChatGPT with weak prompt "make a login form"
+  - Shows the generated output (likely missing framework, validation, styling specifics)
+- Right panel: Same tools with strong five-ingredient prompt specifying Next.js, TypeScript, Tailwind, Supabase, validation rules
+  - Shows the generated output (correctly uses specified tools and includes all constraints)
+- Side-by-side comparison makes the difference visceral
+- Proves: precision in prompt structure directly improves code quality
+
+---
 
 ---
 
@@ -87,7 +99,20 @@ This delivers Objective 3. The first response is rarely perfect — that's norma
 
 Also teach *when to stop and re-scope*: if three rounds haven't converged, the prompt was under-specified or the task too big — go back to decomposition (Lesson 2.3) instead of piling on patches.
 
-*[SCREENSHOT: a refinement exchange — the flawed first output, a specific feedback prompt, and the corrected result.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Refinement Loop Exchange]**
+
+**What this screenshot should show:**
+- Panel 1: Initial AI response (e.g., a function using Pages Router when the app uses App Router)
+  - Visible code mistake or framework mismatch
+- Panel 2: User's refinement prompt (specific feedback naming the gap)
+  - Example: "We're using Next.js App Router, not Pages Router. Rewrite this as a server component with data fetch outside the component."
+- Panel 3: AI's corrected response (now uses correct framework and structure)
+- Shows: how precise feedback leads to immediate, correct fixes
+- Demonstrates: the iterative loop and when it converges vs. when to re-scope
+
+---
 
 ---
 
@@ -120,23 +145,161 @@ This delivers Objective 4 and unlocks a faster path than describing everything i
 > **Aside — voice / dictation:** you can also *speak* your prompts. Built-in dictation (macOS) or a tool like Whisper turns talk into text — handy for long, exploratory prompts where typing is the bottleneck. Same prompt-engineering rules apply; you're just inputting faster.
 > 
 
-*[SCREENSHOT: a mockup pasted into Claude Code/Cursor next to the generated UI.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Multimodal Prompt (Mockup → Generated UI)]**
+
+**What this screenshot should show:**
+- Left panel: A design mockup or wireframe pasted into Claude Code/Cursor
+  - Shows a simple UI layout (e.g., a card-based dashboard with a header, sidebar, content area)
+  - Image is clearly visible in the chat
+- Right panel (or below): The AI's generated React/UI code response
+  - Generated code reflects the layout structure, spacing, and hierarchy from the mockup
+  - Prompt was simply: "Build this UI based on the mockup I just pasted"
+- Shows: how an image eliminates 100 lines of text description
+- Demonstrates: multimodal prompting is faster and more accurate than text-only
+
+---
 
 ---
 
 ## Hands-on activity (~40 min, folded in)
 
-**"Prompt rewrite gauntlet."** Learners get five weak prompts ("make a chart," "fix my code," "add auth," "build a dashboard," "make it faster"). For each, they rewrite it with the five-ingredient anatomy, run it, and compare against the original. Submit before/after prompts plus a one-line note on what improved. Rehearses Objectives 1 and 3.
+**"Prompt rewrite gauntlet."** Learners rewrite five weak prompts using the five-ingredient anatomy, run both (weak and strong), and compare outputs. For each, they submit: rewritten prompt, before/after outputs, and one sentence on what improved. Rehearses Objectives 1 and 3.
+
+### Five weak prompts to rewrite:
+
+**WEAK PROMPT 1:** "make a chart"
+
+**Rewrite with five ingredients:**
+```
+Create a bar chart component in React using the Recharts library. 
+It should display monthly sales data (months on x-axis, revenue in USD on y-axis). 
+Use TypeScript and style with Tailwind CSS. 
+The data prop should accept: [{month: "Jan", revenue: 15000}, {month: "Feb", revenue: 18000}, ...]. 
+Handle the case where data is empty (show a "No data" message). 
+Return only the component with no explanations.
+```
+
+**What improved:** specifics on library (Recharts), data structure, styling, edge cases, and exact output format.
+
+---
+
+**WEAK PROMPT 2:** "fix my code"
+
+**Rewrite with five ingredients:**
+```
+I have a React component that's supposed to fetch user data from a Supabase table called "users" and display it in a list. 
+The code currently has a bug: it's fetching on every render instead of just once. 
+Stack: Next.js App Router, TypeScript, React Hooks.
+Fix the code by adding useEffect with the correct dependency array.
+Context: we use async/await and handle errors with try/catch.
+Return only the corrected component, no explanation.
+```
+
+**What improved:** named the exact bug ("fetching on every render"), gave context (Supabase, Next.js), specified the fix strategy (useEffect dependency), and set expectations for format.
+
+---
+
+**WEAK PROMPT 3:** "add auth"
+
+**Rewrite with five ingredients:**
+```
+I'm building a Next.js + TypeScript app. 
+I need a protected route that only logged-in users can access. 
+Use Supabase for authentication (email/password). 
+Create: 1) A middleware that checks if the user is authenticated, 2) A login page at /auth/login, 3) A protected page at /dashboard that redirects to /auth/login if not authenticated.
+Use the Supabase client library.
+Return the three files: middleware.ts, auth/login/page.tsx, dashboard/page.tsx.
+```
+
+**What improved:** named the exact stack, broke down what "add auth" means (3 specific pieces), specified the library, and listed exact files to create.
+
+---
+
+**WEAK PROMPT 4:** "build a dashboard"
+
+**Rewrite with five ingredients:**
+```
+Build a user dashboard in React (Next.js App Router, TypeScript, Tailwind CSS).
+It should display:
+- A greeting card with the user's name (fetched from Supabase)
+- A stats card showing total posts (count)
+- A recent posts list (title, date, preview text)
+Data comes from a Supabase table "posts" where each row has: id, user_id, title, body, created_at.
+Show a loading state while fetching.
+If the user has no posts, show "No posts yet."
+Return only the component code with comments.
+```
+
+**What improved:** named stack, listed exact UI elements, specified data source and schema, covered edge cases (empty, loading), and set output expectations.
+
+---
+
+**WEAK PROMPT 5:** "make it faster"
+
+**Rewrite with five ingredients:**
+```
+My Next.js page is slow. It fetches a list of 1000 products from Supabase on every page load.
+I want to:
+1) Cache the data server-side for 1 hour (using Next.js revalidation).
+2) Show a loading skeleton while the data fetches.
+3) Use React's Suspense boundary if applicable.
+Stack: Next.js App Router, TypeScript, React Server Components.
+The current data fetch is: const { data } = await supabase.from('products').select('*').
+Rewrite it with caching and show the component using the cached data.
+Return the updated code only.
+```
+
+**What improved:** identified the exact bottleneck (fetch on every load), named the constraints (1000 rows, 1-hour cache), specified the solution (Next.js revalidation + Suspense), and gave context (RSC, SSR patterns).
+
+---
+
+### Activity instructions for learners:
+
+1. **For each of the five weak prompts above:**
+   - Paste the weak prompt into Claude Code or ChatGPT
+   - Run it and note what the output is missing or gets wrong
+   - Now paste the rewritten prompt
+   - Run it and compare
+   - Write one sentence: "What was better in the strong version?"
+
+2. **Submit:**
+   - Your rewritten version of at least 3 of the 5 prompts
+   - Side-by-side before/after outputs for at least one pair
+   - For each rewrite, one sentence on the improvement
 
 ---
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Context-rich prompts:** given "build a signup form," write a complete prompt using all five ingredients for a Next.js + Supabase app.
+**Objective 1 — Write context-rich prompts (Quiz Q2-1, Q2-2):**
+- Q2-1: "Which is NOT one of the five ingredients?" ✅ Tests knowledge of the five-ingredient model
+- Q2-2: "A strong prompt is better mainly because..." ✅ Tests understanding of why precision matters
+- *Written check:* Given "build a signup form," write a complete prompt using all five ingredients (task, context, constraints, examples, output format) for a Next.js + Supabase app.
 
-**Objective 2 — Decompose:** break "build a simple blog with posts and comments" into an ordered list of promptable steps.
+**Objective 2 — Decompose tasks (Quiz Q2-5):**
+- Q2-5: "Which is the correct order to build a blog?" ✅ Tests dependency ordering
+- *Written check:* Break "build a simple blog with posts and comments" into an ordered list of 5–7 promptable steps. For each step, name its dependency (what must exist first).
 
-**Objective 3 — Critique & refine:** given a prompt and the flawed code it produced (nonexistent function, wrong framework), write the refinement prompt that fixes it, with specific feedback.
+**Objective 3 — Critique & refine (Quiz Q2-3):**
+- Q2-3: "The right way to iterate when output is wrong..." ✅ Tests refinement strategy
+- *Written check:* Given a flawed prompt output (e.g., wrong framework, missing constraint), write the specific feedback prompt that fixes it.
+
+**Objective 4 — Prompt with images (Quiz Q2-4):**
+- Q2-4: "When building a complex UI, which approach is fastest?" ✅ Tests knowledge of multimodal prompting
+- *Written check:* Describe a scenario where an image/mockup is more efficient than a text description. Why?
+
+---
+
+**Scenario-based judgment checks (all objectives):**
+
+For each scenario, decide which approach is best and explain why in one sentence:
+
+- (a) You're building a form component. Do you: write a detailed text description of layout, or paste a mockup screenshot? Why?
+- (b) You want the AI to write a complex feature. Do you: ask in one huge prompt, or break it into 5 smaller prompts? Why?
+- (c) The AI's code uses an outdated library version. Do you: say "that's wrong, fix it" or write specific feedback naming the library and version? Why?
+- (d) The AI's output is close but has one small bug. Do you: re-scope the whole task or give targeted feedback on the bug? Why?
 
 *Pass mark: 80%. Gates progress to Module 3.*
 
