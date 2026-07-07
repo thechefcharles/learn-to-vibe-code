@@ -62,12 +62,58 @@ Hit "Run." Boom! You have a database table.
 
 Your Next.js app needs to talk to Supabase.
 
-Prompt Claude Code: *"Connect this app to Supabase. Create a Supabase client. Update the pet tracker so it saves new pets to the `pets` table and loads them on page load."*
+**What you need to do:**
+
+1. Copy your Supabase URL and Publishable Key from the API settings
+2. Add them to `.env.local`:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_pub_xxx
+   ```
+3. Restart your dev server: `npm run dev`
+
+**Prompt Claude Code:**
+
+*"Connect this Next.js app to Supabase. Install @supabase/supabase-js. Create a browser client file (lib/supabase/client.ts) and a server client file (lib/supabase/server.ts). Update the pet tracker so it loads pets from the `pets` table on page load and saves new pets via a form action."*
 
 Claude Code will:
 - Install the Supabase library
-- Create a client file
+- Create browser and server clients
 - Update your component to save/load from the database
+
+**What this looks like:**
+
+```tsx
+// lib/supabase/client.ts (simplified)
+import { createBrowserClient } from "@supabase/ssr";
+
+export const supabase = createBrowserClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+);
+```
+
+Then on your page:
+
+```tsx
+// app/pets/page.tsx
+import { supabase } from "@/lib/supabase/client";
+
+export default async function PetsPage() {
+  // Load from database instead of mock data
+  const { data: pets } = await supabase.from("pets").select();
+
+  return (
+    <div>
+      {pets?.map((pet) => (
+        <div key={pet.id}>{pet.name}</div>
+      ))}
+    </div>
+  );
+}
+```
+
+No more mock data! Real data from Supabase.
 
 ---
 
@@ -111,10 +157,74 @@ Supabase has a built-in auth system (email/password). You can use it.
 
 ## Activity: Make Your App Cloud-Based ☁️
 
-1. Sign up for Supabase
-2. Create the database table
-3. Prompt Claude Code to connect your app
-4. Test: add a pet on one device, refresh on another — it's still there!
+Follow these steps to move from local (mock) data to real cloud data!
+
+### Step 1: Create a Supabase account (5 min)
+1. Go to [supabase.com](https://supabase.com)
+2. Sign up with your email
+3. Create a new project (give it a name like "pet-tracker")
+4. Wait for it to be ready (30 seconds or so)
+
+### Step 2: Get your credentials (3 min)
+1. In the Supabase dashboard, go to **Settings → API**
+2. Copy your **Project URL** (looks like: `https://xxx.supabase.co`)
+3. Copy your **Publishable Key** (starts with `sb_pub_`)
+4. Open your `.env.local` file in your code editor
+5. Add these lines:
+   ```
+   NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_pub_xxx
+   ```
+6. Save and restart your dev server: `npm run dev`
+
+### Step 3: Create your database table (5 min)
+1. In Supabase, go to **SQL Editor**
+2. Create a new query and paste this:
+   ```sql
+   CREATE TABLE pets (
+     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+     name TEXT NOT NULL,
+     breed TEXT,
+     age INT,
+     created_at TIMESTAMPTZ DEFAULT now()
+   );
+   ```
+3. Click **Run**
+4. Go to **Table Editor** and confirm the `pets` table exists
+
+### Step 4: Connect your app (10 min)
+1. Run this command:
+   ```bash
+   npm install @supabase/supabase-js @supabase/ssr
+   ```
+
+2. Prompt Claude Code:
+   ```
+   Connect this Next.js app to Supabase.
+   Install @supabase/ssr.
+   Create a browser client in lib/supabase/client.ts
+   Update the pets page to load from the `pets` table instead of mock data.
+   Add a form to save new pets to Supabase.
+   ```
+
+3. Review Claude Code's changes and accept them
+
+### Step 5: Test it! (5 min)
+1. Open your app: `http://localhost:3000`
+2. Add a new pet via the form
+3. **Refresh the page** — the pet is still there! (It's saved in Supabase)
+4. Open Supabase **Table Editor**, click the `pets` table
+5. You'll see your pet in the database!
+
+### Step 6: Optional — test on two devices (5 min)
+1. Add a pet on one device
+2. Open your app on a different device (phone, tablet, or another browser)
+3. The new pet appears! (It's coming from the same Supabase database)
+
+### Deliverable:
+- Screenshot of your Supabase `pets` table showing your data
+- Screenshot of your pet tracker app showing the same pets
+- Proof that data persists after refresh
 
 ---
 
@@ -148,11 +258,62 @@ Here are your three quiz questions. Study them now!
 
 ---
 
-## Knowledge Check (Quiz)
+## Knowledge Check (Quiz & Scenarios)
+
+### Written checks:
 
 1. **What's a database? How is it like a spreadsheet?**
+   - *Example answer:* "A database is an organized collection of data stored in tables. Each table has rows (records) and columns (fields), just like a spreadsheet. The difference: databases are on a server, so multiple people can access them, and data persists forever (not just in a file)."
+
 2. **Write the three operations: write, read, delete.**
+   - *Example answer:*
+     - Read: `supabase.from("pets").select()` — get all pets
+     - Write: `supabase.from("pets").insert({ name: "Buddy" })` — add a new pet
+     - Delete: `supabase.from("pets").delete().eq("id", petId)` — remove a pet
+
 3. **Why do we need security rules?**
+   - *Example answer:* "Security rules (RLS) make sure each user can only see and edit their own data. Without them, User A could see (or delete!) User B's pets, which is bad!"
+
+### Scenario-based judgment checks:
+
+*For each scenario, explain what's wrong and how to fix it.*
+
+- **(a) Data disappeared after refresh:** You add a pet, refresh the page, and it's gone. But it WAS there a second ago.
+  - ✅ **Fix:** Make sure you're loading from Supabase, not mock data. Update your page to use `supabase.from("pets").select()` instead of a hardcoded array.
+  - ❌ **Avoid:** Mock data resets every time you refresh. Real databases remember.
+
+- **(b) Two users see the same data:** You and your friend both have the app. You add a pet, and they see it too (without you sharing it).
+  - ✅ **Likely issue:** RLS (security rules) aren't set up. Each user should only see their own data.
+  - ❌ **Avoid:** Leaving the database open to everyone.
+
+- **(c) Can't add a pet:** You submit the form but nothing happens. No error, nothing in the table.
+  - ✅ **Likely issue:** The form isn't connected to Supabase, or you forgot the `.insert()` call. Check that your form action calls `supabase.from("pets").insert(...)`.
+  - ❌ **Avoid:** Assuming the form is "broken." Debug by checking the code and looking for the insert call.
+
+- **(d) Env vars problem:** You added your Supabase URL to the code but got an error about "undefined".
+  - ✅ **Fix:** Use `.env.local` instead. Add your URL to `.env.local` and use `process.env.NEXT_PUBLIC_SUPABASE_URL` in your code. Restart your dev server.
+  - ❌ **Avoid:** Hard-coding credentials. They should be in `.env.local`, never in your code.
+
+- **(e) Seeing someone else's data:** You sign in and can see all pets from all users, not just yours.
+  - ✅ **Fix:** This is a security problem! Enable RLS and set policies so users can only see their own rows. This is critical!
+  - ❌ **Avoid:** Ignoring this. Everyone's data is exposed!
+
+---
+
+**Rubric checklist (before you submit):**
+
+| Checkmark | What to check |
+|-----------|---------------|
+| ✅ | Created a Supabase project and have credentials (URL + key) |
+| ✅ | Added credentials to `.env.local` (not hard-coded in code) |
+| ✅ | Created a `pets` table with columns (id, name, breed, age, created_at) |
+| ✅ | App loads pets from Supabase (not mock data) |
+| ✅ | Form saves new pets to Supabase database |
+| ✅ | Data persists after page refresh |
+| ✅ | Screenshot of Supabase Table Editor showing your data |
+| ✅ | Screenshot of app showing the same pets |
+
+*Pass mark: 80% and working cloud-based app submitted.*
 
 ---
 
