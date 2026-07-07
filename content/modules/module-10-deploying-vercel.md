@@ -127,6 +127,36 @@ This delivers Objective 3.
 
 ---
 
+## Quiz questions (preview)
+
+These are the three questions you'll see on the quiz. Study these to prepare:
+
+**Q10-1:** CI/CD here means:
+- (a) manual uploads
+- (b) **pushing to GitHub auto-builds and deploys** ✓
+- (c) copying files to a server
+- (d) emailing code
+
+*Why:* CI/CD automates the entire build-and-deploy cycle: push to `main` → GitHub triggers a build → Vercel deploys the result. That's the payoff of the workflow you built in Modules 9–10.
+
+**Q10-2:** Your app worked locally but breaks on Vercel until you:
+- (a) restart your laptop
+- (b) **add the env vars to Vercel** ✓
+- (c) rewrite it
+- (d) buy a domain
+
+*Why:* The `NEXT_PUBLIC_*` variables are inlined at build time, so they must exist in Vercel before the deploy. This is the classic "works locally, breaks in prod" trap — your `.env.local` never made it to Vercel.
+
+**Q10-3:** A preview deploy is:
+- (a) the production site
+- (b) **a live URL for a branch/PR to test before merging** ✓
+- (c) a screenshot
+- (d) a local server
+
+*Why:* Every branch and PR gets its own preview URL (a real, live deployment). Test there, merge to `main` when confident, and production auto-deploys. No guessing — you've seen it working.
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Deploy with CI/CD:** submit your live production URL and explain, step by step, what happens when you push to `main`.

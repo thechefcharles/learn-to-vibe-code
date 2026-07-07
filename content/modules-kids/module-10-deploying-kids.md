@@ -86,6 +86,36 @@ It'll guide you.
 
 ---
 
+## Quiz Questions (Preview)
+
+Here are your three quiz questions. Study these!
+
+**Q10-k1:** What does 'CI/CD' mean here?
+- (a) Manual uploads
+- (b) **Push to GitHub → auto-build and auto-deploy** ✓
+- (c) Copying files manually
+- (d) Email code to a server
+
+*Why:* CI/CD is automation magic! You push code to GitHub, and Vercel automatically builds and deploys it. No manual steps. That's the whole point of using GitHub + Vercel together!
+
+**Q10-k2:** Your app works at home but breaks on Vercel because:
+- (a) Restart your laptop
+- (b) **You forgot to set environment variables on Vercel** ✓
+- (c) Rewrite it
+- (d) Buy a domain
+
+*Why:* Your Supabase secrets live in `.env.local` at home (safe, never pushed to GitHub). On Vercel, you have to tell it those secrets via Settings → Environment Variables. Without them, your app doesn't know how to connect to the database!
+
+**Q10-k3:** A 'preview deploy' is:
+- (a) The live production app
+- (b) **A test version of a branch/PR before merging** ✓
+- (c) A screenshot
+- (d) Your local computer
+
+*Why:* Every PR gets a live preview URL! You can test your changes on a real server before merging to `main`. If something's broken, you fix it. If it looks good, you merge and it auto-deploys to production.
+
+---
+
 ## Knowledge Check (Quiz)
 
 1. **What's the difference between development and deployment?**
