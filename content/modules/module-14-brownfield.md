@@ -57,8 +57,61 @@ This strengthens Objectives 2 & 3 and applies Module 8's debugging loop to code 
 3. **Trace it with the reading skill (Module 8)** — follow the data to the line that breaks; confirm the *root cause*, not the symptom.
 4. **Only then change** — and re-run to confirm the reproduction is gone and the baseline still passes.
 
-> **Worked example (practice repo, BUG-101):** the search box crashes with "Cannot read properties of undefined (reading 'toLowerCase')." Reproduce: type any letter. Trace: the filter calls `b.author.toLowerCase()`, but one book has no `author` — and an `any` cast hid the type error. Root-cause fix: guard the optional field (and type the data), *not* delete the book or remove author-search.
-> 
+**Concrete example (practice repo, BUG-101):** the search box crashes with "Cannot read properties of undefined (reading 'toLowerCase')."
+
+**Step 1 — Establish baseline:**
+```bash
+npm test  # All tests pass ✓
+npm run dev  # App loads ✓
+```
+
+**Step 2 — Reproduce the bug:**
+1. Open the app
+2. Type a letter in the search box
+3. Crash: "Cannot read properties of undefined (reading 'toLowerCase')"
+
+**Step 3 — Trace with Module 8 reading skill:**
+```typescript
+// app/search/page.tsx (where the crash happens)
+const filtered = books.filter(b => b.author.toLowerCase().includes(query));
+// ↑ CRASH HERE: b.author is undefined for some books
+
+// Check the data: lib/books.ts
+const books = [
+  { id: 1, title: "Book A", author: "Alice" },  // Has author
+  { id: 2, title: "Book B" },                    // ❌ Missing author!
+  { id: 3, title: "Book C", author: "Charlie" }
+];
+```
+
+**Step 4 — Identify the root cause:**
+- One book has no `author` field
+- `.toLowerCase()` on undefined crashes
+- The `any` type cast hid the type error (no TypeScript safety)
+
+**Root-cause fix (not: "delete that book" or "remove author search"):**
+```typescript
+// ✅ SAFE: guard the optional field + type it
+const filtered = books.filter(b =>
+  (b.author?.toLowerCase() ?? "").includes(query)  // Safe optional chaining
+);
+
+// Better: fix the type definition
+interface Book {
+  id: number;
+  title: string;
+  author?: string;  // Explicit optional
+}
+```
+
+**Step 5 — Verify the fix:**
+```bash
+npm test  # Still pass ✓
+# Type the search input again → no crash ✓
+# All books (even no-author) appear in results ✓
+```
+
+
 
 ---
 
@@ -127,13 +180,59 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Orient:** summarize the practice repo's architecture and how the search feature flows through it.
+### Written checks:
 
-**Objective 2 — Scoped change:** show a small, focused PR fixing BUG-101 (with a test) and adding FEAT-102, with no unrelated churn.
+**Objective 1 — Orient:** Summarize the practice repo's architecture and trace how the search feature flows through it.
+- *Example answer:* "Next.js app with React components + TypeScript. Data layer: lib/books.ts. UI: app/search/page.tsx displays books and filters by search query. Auth: optional (Supabase). Flow: user types → filter() runs on books array → display results."
 
-**Objective 3 — Assess risk:** for your change, identify what depends on the affected code and rate the risk, with reasoning.
+**Objective 2 — Scoped change:** Show a small, focused PR fixing BUG-101 (with a test) and adding FEAT-102, with no unrelated reformatting.
+- *Example answer:* "PR shows only the changed lines (optional chaining guard + type fix). Added a test: `it('handles missing author gracefully')`. No reformatting. Diff is tight and reviewable."
 
-*Pass mark: 80% and a scoped PR to the practice repo submitted.*
+**Objective 3 — Assess risk:** For your change, identify what depends on the affected code and rate the risk.
+- *Example answer:* "Changing the search filter affects: the search page (direct), book list (if shared), maybe export features. Risk: MEDIUM (search is important but not payment/auth critical). Mitigation: test the change, run full suite, keep the diff small."
+
+### Scenario-based judgment checks:
+
+*For each scenario, explain what's the better approach.*
+
+- **(a) You found tech debt while fixing BUG-101. You refactor it while you're there.** Scope creep.
+  - ✅ **Better:** Separate concerns. Fix the bug in one PR (tight, reviewable). Propose cleanup separately with justification.
+  - ❌ **Avoid:** Mixing bug fixes and refactors. It's harder to review and easier to introduce regressions.
+
+- **(b) The code uses a pattern you'd never write. You rewrite it to "modern" style.** Preference over consistency.
+  - ✅ **Better:** Match the existing pattern. Consistency > personal preference. Write new code in your style; refactor old code only if necessary.
+  - ❌ **Avoid:** "Improving" code unnecessarily. This is how you break things.
+
+- **(c) AI offers to fix 10 related issues while making your one-line change.** AI overstepping.
+  - ✅ **Better:** Reject the extra changes. Say: "Let's focus on the ticket scope. I'll open separate PRs for the others."
+  - ❌ **Avoid:** Accepting helpful rewrites. Scope creep introduces bugs.
+
+- **(d) You're not sure what the code does. You change it anyway.** Guessing.
+  - ✅ **Better:** Read it (Module 8). Ask AI to explain it. Trace through with print statements. Understand before you change.
+  - ❌ **Avoid:** "It probably doesn't matter." Guessing in brownfield is expensive.
+
+- **(e) Your change works locally but breaks in CI.** Missed a dependency.
+  - ✅ **Diagnose:** Check the CI logs. Find what's different (env vars, full test suite, different Node version). Fix it. Re-run locally mimicking CI if possible.
+  - ❌ **Avoid:** Shipping "it works on my machine." Always run the full test suite before pushing.
+
+---
+
+**Rubric checklist (self-review before submission):**
+
+| Criterion | Check (✅ = pass) |
+|-----------|-------------|
+| **Architecture understood** | Can summarize the repo in 3-4 sentences; traced one feature end-to-end |
+| **Bug reproduced** | Can trigger BUG-101 consistently; know the exact error |
+| **Root cause identified** | Traced to the line that fails; understand *why* (not just the symptom) |
+| **Blast radius assessed** | Listed what depends on the affected code; rated risk (LOW/MEDIUM/HIGH) |
+| **Minimal fix applied** | Only changed what's needed; no reformatting or unrelated refactors |
+| **Tests still pass** | `npm test` green ✅; no regressions |
+| **New test added** | One test covering the bug fix or new feature |
+| **Type safety checked** | No `any` casts; types are explicit |
+| **PR is focused** | Diff is tight and reviewable; one feature/fix per PR |
+| **Conventions matched** | Naming, folder structure, patterns match the repo's style |
+
+*Pass mark: 80% and a focused, tested PR to the practice repo submitted.*
 
 ---
 
