@@ -134,6 +134,44 @@ Then **verify**: reproduce the original trigger and confirm it's gone; check the
 
 ---
 
+## Quiz questions (preview)
+
+These are the four questions you'll see on the quiz. Study these to prepare:
+
+**Q8-1:** The best first move when something breaks:
+- (a) paste code at the AI and say 'fix it'
+- (b) **read the actual error message** ✓
+- (c) rewrite everything
+- (d) restart the computer
+
+*Why:* Error messages tell you exactly what failed and where. They're your best diagnostic tool. A stack trace reads top-down: top line = what went wrong, file:line = where. Always start there.
+
+**Q8-2:** If you can't explain a block of AI-generated code after reading it, you should:
+- (a) ship it anyway
+- (b) **not ship it — simplify or get a version you understand** ✓
+- (c) delete the whole file
+- (d) hide it
+
+*Why:* This is the capstone defense principle (Module 1). You own and maintain the code. Never ship what you don't understand. If you can't explain it, it's not ready.
+
+**Q8-3:** An AI "fix" that disables RLS to solve an empty list is:
+- (a) a good fix
+- (b) **a dangerous fix that removes security (symptom, not root cause)** ✓
+- (c) the only option
+- (d) fine
+
+*Why:* Disabling RLS treats the *symptom* (empty rows) but removes *security*. The real cause is usually unauthenticated request or missing policy. Distinguish root-cause from symptom every time.
+
+**Q8-4:** Before applying an AI-proposed fix, you should:
+- (a) just apply it — the AI knows what it's doing
+- (b) **read the code, understand what it changes, ask the AI to explain any unclear lines, confirm against the bug** ✓
+- (c) skip it if it's too long to read
+- (d) apply it to production first to test
+
+*Why:* You own what ships (Module 1). Loop: read → understand → verify it solves the actual bug → then apply. Never blind-accept AI code.
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Read & explain (Quiz Q8-1):**

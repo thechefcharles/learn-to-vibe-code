@@ -111,6 +111,36 @@ I'll give you code with a bug. Find it and fix it. Submit the corrected code.
 
 ---
 
+## Quiz Questions (Preview)
+
+Here are your three quiz questions. Study these!
+
+**Q8-k1:** When your code breaks, the first thing to do is:
+- (a) Ask the AI to fix it immediately
+- (b) **Read the error message (it tells you what went wrong!)** ✓
+- (c) Rewrite everything
+- (d) Restart your computer
+
+*Why:* Error messages are GOLD! They tell you exactly what's broken and where. The error message is your best friend. Always read it first!
+
+**Q8-k2:** If you can't explain a line of AI code after reading it carefully, you should:
+- (a) Ship it anyway
+- (b) **Don't ship it yet — simplify it or ask for a version you understand** ✓
+- (c) Delete the whole file
+- (d) Ignore it
+
+*Why:* You're responsible for every line of code in your app. If you don't understand it, you can't maintain it, and you can't defend it (that's what the capstone tests!). Never ship code you don't understand.
+
+**Q8-k3:** If the AI "fixes" a problem by removing security (like RLS), that's:
+- (a) A good fix
+- (b) **Dangerous (it hides the real problem)** ✓
+- (c) The only way
+- (d) Fine
+
+*Why:* That's a band-aid, not a real fix! Removing security to make an error disappear treats the symptom, not the root cause. Find what's REALLY wrong.
+
+---
+
 ## Knowledge Check (Quiz)
 
 1. **Read this code and explain what it does.**
