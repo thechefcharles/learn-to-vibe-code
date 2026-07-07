@@ -1,7 +1,9 @@
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
+import { StepLessonViewer } from "@/components/StepLessonViewer";
 import { ModuleChecklist } from "@/components/ModuleChecklist";
 import { getModule } from "@/lib/content";
 import { getModuleMetadata } from "@/lib/module-metadata";
+import { getModuleSteps, hasModuleSteps } from "@/lib/module-steps";
 import {
   getChecklistItems,
   isModuleUnlocked,
@@ -82,6 +84,14 @@ export default async function LessonPage(props: LessonPageProps) {
   });
 
   const isKids = userVersion === "kids";
+
+  // Check if this module uses the new step-based format
+  if (hasModuleSteps(moduleId)) {
+    const steps = getModuleSteps(moduleId, userVersion);
+    if (steps) {
+      return <StepLessonViewer steps={steps} moduleId={moduleId} />;
+    }
+  }
 
   return (
     <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
