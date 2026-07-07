@@ -205,16 +205,97 @@ Use Claude Code with a CLAUDE.md file to add a new feature (pick one):
 - Birthday reminders
 - Photo gallery (multiple photos per pet)
 
-### Step-by-step:
+### Concrete example: Favorite system
 
-1. **Create CLAUDE.md** at your project root with your stack info
-2. **Run `claude`** in your project terminal
-3. **Use `/plan`** to see Claude Code's approach before it executes
-4. **Describe your goal** at a high level (not step-by-step)
-5. **Review the changes** before accepting
-6. **Test your app** — does the new feature work?
+Here's what a good goal prompt looks like:
 
-Submit a screenshot showing the new feature working + one example of a plan you refined before executing.
+*"Add a favorite system to the pet tracker. Users can click a heart icon to mark pets as favorites. Show a count of favorites on each pet card. Sort the list so favorites appear first. Store favorite status in mock data (Supabase later). Follow the patterns in app/pets."*
+
+**What code looks like after Claude Code generates it:**
+
+```typescript
+// types/pet.ts (updated)
+export interface Pet {
+  id: string;
+  name: string;
+  breed: string;
+  age: number;
+  favorite: boolean;  // NEW
+  createdAt: Date;
+}
+```
+
+```tsx
+// app/pets/pet-card.tsx (updated)
+'use client';
+import { useState } from 'react';
+
+export default function PetCard({ pet }: { pet: Pet }) {
+  const [isFavorite, setIsFavorite] = useState(pet.favorite);
+
+  return (
+    <div className="border rounded p-4">
+      <h3>{pet.name}</h3>
+      <p>{pet.breed}, {pet.age} years old</p>
+      <button onClick={() => setIsFavorite(!isFavorite)}>
+        {isFavorite ? '❤️' : '🤍'} {pet.favorites || 0}
+      </button>
+    </div>
+  );
+}
+```
+
+### Step-by-step walkthrough:
+
+1. **Create CLAUDE.md** at your project root:
+   ```markdown
+   # CLAUDE.md
+   
+   This is a Next.js App Router app built with TypeScript and Tailwind.
+   It's a pet tracker with mock data.
+   Use server components by default.
+   Follow the patterns in app/pets.
+   ```
+
+2. **Run Claude Code:**
+   ```bash
+   cd your-project
+   claude
+   ```
+
+3. **Use `/plan` first:**
+   ```
+   /plan Add a favorite system...
+   ```
+   Claude Code responds with a plan. Read it and ask questions if anything is unclear.
+
+4. **Approve and execute** (after reviewing the plan):
+   ```
+   /plan output looks good. Execute it.
+   ```
+
+5. **Review the diff** — Claude Code shows what files changed. Check:
+   - New favorite field added to Pet type
+   - Heart button appears on each card
+   - Favorites are sorted to the top
+   - No red error squiggles in your editor
+
+6. **Test it:**
+   ```bash
+   npm run dev
+   ```
+   Click hearts, refresh, see favorites persist (during the session, with mock data).
+
+7. **Iterate** if needed:
+   ```
+   The favorites aren't persisting after a page reload. Debug it.
+   ```
+
+### Deliverable:
+- Screenshot of your new feature working
+- Your CLAUDE.md file
+- One example of a plan you refined before executing
+- One sentence on which small task you'd do in Cursor instead (e.g., "Adjusting the button color")
 
 ---
 
@@ -267,8 +348,44 @@ These are the three questions on your quiz. Study these first!
   - (d) Fix a typo in one file (Cursor? Claude Code?)
 
 **Scenario-based judgment checks:**
-- What's better: one prompt to Claude Code or multiple Cursor edits? Why?
-- When would you use both tools on the same feature?
+
+*For each scenario, explain what you'd do.*
+
+- **(a) Confusing plan:** Claude Code proposes a 5-step plan you don't fully understand. What do you do?
+  - ✅ **Right:** Ask it to explain step 3 in more detail before you approve.
+  - ❌ **Wrong:** Just approve and hope it works, or reject and start over.
+
+- **(b) One prompt vs. many edits:** Which is better for adding a whole new feature — one Claude Code prompt or multiple Cursor edits?
+  - ✅ **Right:** One Claude Code prompt. It figures out all the files at once. Faster, less mistake-prone.
+  - ❌ **Wrong:** Multiple Cursor edits. You'd have to remember what to edit in each file.
+
+- **(c) Which tool?** You want to tweak a button's color. Cursor or Claude Code?
+  - ✅ **Right:** Cursor. You see the color change instantly in one file. Fast and focused.
+  - ❌ **Wrong:** Claude Code. Overkill for one color tweak.
+
+- **(d) Multiple tools:** You're adding a new feature. Which tool do you start with, and when do you switch?
+  - ✅ **Right:** Start with Claude Code to build the whole feature. Then switch to Cursor if you need to tweak the styling or fix a small bug.
+  - ❌ **Wrong:** Use only Cursor for everything, or only Claude Code.
+
+- **(e) Code you don't understand:** Claude Code creates a file you don't understand. Do you:
+  - ✅ **Right:** Ask it to explain the file, and only accept after you understand it (Module 1).
+  - ❌ **Wrong:** Accept it blindly because "the AI knows what it's doing."
+
+---
+
+**Rubric checklist (before you submit):**
+
+| Checkmark | What to check |
+|-----------|---------------|
+| ✅ | You wrote a high-level goal (not step-by-step) |
+| ✅ | You reviewed the `/plan` output and refined it at least once |
+| ✅ | You reviewed the diff (changed files) before accepting |
+| ✅ | The feature works on your local app (`npm run dev`) |
+| ✅ | New code follows the patterns from existing files (same style, naming, structure) |
+| ✅ | You identified one small task you'd use Cursor for instead, with a reason |
+| ✅ | Your CLAUDE.md file is created and has your stack info |
+
+*Pass mark: 80% and a working feature with CLAUDE.md submitted.*
 
 ---
 
