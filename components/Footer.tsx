@@ -1,17 +1,21 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
+import { useVersion } from "@/lib/VersionContext";
 
 export function Footer() {
+  const { version } = useVersion();
+  const isKids = version === "kids";
+
   return (
-    <footer className="bg-indigo text-paper mt-12 pt-12 pb-8">
+    <footer className={`text-paper mt-12 pt-12 pb-8 ${isKids ? "bg-gradient-to-r from-purple-600 to-pink-600" : "bg-indigo"}`}>
       <div className="max-w-6xl mx-auto px-4">
         {/* Main footer content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
           <div>
             <Logo variant="reverse" size="sm" className="mb-4" />
-            <p className="text-sm text-violet-light">
-              Hard to start. Impossible to stop.
+            <p className="text-sm text-white/80">
+              {isKids ? "Learn, build, ship. Level up today! 🚀" : "Hard to start. Impossible to stop."}
             </p>
           </div>
 

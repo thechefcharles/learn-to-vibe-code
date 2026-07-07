@@ -4,13 +4,16 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { RippleEffect } from "./RippleEffect";
 import { MagneticButton } from "./MagneticButton";
+import { useVersion } from "@/lib/VersionContext";
 
 interface PlayButtonProps {
   hasStarted: boolean;
 }
 
 export function PlayButton({ hasStarted }: PlayButtonProps) {
-  const label = hasStarted ? "Resume" : "Start";
+  const { version } = useVersion();
+  const isKids = version === "kids";
+  const label = hasStarted ? (isKids ? "Keep Going! 🚀" : "Resume") : (isKids ? "Let's Go! 🎮" : "Start");
   const icon = hasStarted ? "▶" : "▶";
 
   return (
@@ -24,7 +27,11 @@ export function PlayButton({ hasStarted }: PlayButtonProps) {
         <RippleEffect>
           <Link href="/course">
             <motion.div
-              className="relative px-8 py-4 rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 shadow-lg hover:shadow-xl flex items-center justify-center gap-3 cursor-pointer"
+              className={`relative px-8 py-4 rounded-full shadow-lg hover:shadow-xl flex items-center justify-center gap-3 cursor-pointer ${
+                isKids
+                  ? "bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500"
+                  : "bg-gradient-to-r from-violet-600 to-indigo-600"
+              }`}
               whileHover={{
                 scale: 1.05,
               }}
@@ -33,7 +40,7 @@ export function PlayButton({ hasStarted }: PlayButtonProps) {
             >
               {/* Play icon + label */}
               <span className="text-2xl text-white">{icon}</span>
-              <span className="text-lg font-bold text-white uppercase tracking-wide">
+              <span className={`font-bold text-white ${isKids ? "text-lg tracking-normal" : "text-lg uppercase tracking-wide"}`}>
                 {label}
               </span>
             </motion.div>
