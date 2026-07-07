@@ -84,25 +84,43 @@ Terminal showing: `claude mcp list` with three connected servers: supabase (sche
 
 Begins Objective 2. A **skill** is a folder with a `SKILL.md` describing a task Claude should know; it loads automatically when context matches.
 
+**Concrete skill example:**
+
 ```
 .claude/skills/ship-feature/SKILL.md
 ---
 name: ship-feature
-description: Standard steps to ship a feature: branch, test, conventional commit, PR.
+description: Standard workflow to ship a feature safely
 ---
-1. Create a branch named for the feature.
-2. Run the test suite; do not proceed if it fails.
-3. Commit with a conventional message (feat/fix/chore).
-4. Open a PR with a summary.
+
+## Workflow: Ship a Feature
+
+Use this workflow when shipping a new feature or fix. It ensures testing and good history.
+
+1. **Create a branch:** `git checkout -b <feature-name>` (use kebab-case, e.g., `add-invoice-filter`)
+2. **Make changes** and commit incrementally with conventional messages:
+   - `feat: add invoice status filter`
+   - `fix: resolve RLS policy for clients table`
+3. **Run tests:** `npm run test && npm run test:e2e` — do NOT proceed if tests fail
+4. **Open a PR:** use `gh pr create` with a summary linking to any issue
+5. **Wait for review:** if the `reviewer` subagent finds issues, fix them; re-run tests; push
+6. **Merge:** `gh pr merge --squash` (clean history)
+7. **Verify deploy:** wait for Vercel to deploy, spot-check the live site
+
+### When NOT to use this:
+- Emergency hotfixes: follow this but notify #oncall
+- Schema changes: add a migration step before step 1
 ```
 
-**Installing skills from GitHub:** skills are portable, shared as repos. Install via a skills CLI or plugin marketplace — e.g. `npx skills add owner/repo` — to adopt vetted workflows without writing them. **Skill vs. [CLAUDE.md](http://CLAUDE.md):** applies to nearly every task → [CLAUDE.md](http://CLAUDE.md); occasional workflow → skill.
+**Installing skills from GitHub:** skills are portable, shared as repos. Install via a skills CLI or plugin marketplace — e.g. `npx skills add owner/repo` — to adopt vetted workflows without writing them. 
+
+**Skill vs. [CLAUDE.md](http://CLAUDE.md):** applies to nearly every task → [CLAUDE.md](http://CLAUDE.md); occasional workflow → skill.
 
 ---
 
 **[SCREENSHOT PLACEHOLDER: Skill Install]**
 
-Left: `.claude/skills/ship-feature/SKILL.md` file open (visible SKILL.md with task steps). Right: Terminal showing `npx skills add owner/repo` command. Proof: skills are installed and loaded.
+Left: `.claude/skills/ship-feature/SKILL.md` file open with detailed workflow steps. Right: Terminal showing `npx skills add owner/repo` and skill loaded. Proof: skills automate known workflows.
 
 ---
 
@@ -112,18 +130,55 @@ Left: `.claude/skills/ship-feature/SKILL.md` file open (visible SKILL.md with ta
 
 Continues Objective 2. A **subagent** is a separate Claude session with its own context and tool permissions, for a focused job — to keep heavy work from polluting your main context and to run specialists in parallel.
 
+**Concrete subagent example:**
+
 ```
 .claude/agents/reviewer.md
 ---
 name: reviewer
-description: Reviews a diff for bugs, security, and style. Read-only.
+description: Reviews code diffs for bugs, security, and style violations. Read-only, strict.
 tools: Read, Grep, Glob
+effort: high
 ---
-You are a strict code reviewer. Given a diff, report issues by severity
-with file:line references. Do not modify files.
+
+You are a strict security and code-quality reviewer. Your job: examine a code diff
+and report issues by severity (HIGH/MEDIUM/LOW) with file:line references.
+
+**Always check for:**
+- Security: RLS on tables, validation on inputs, secrets in code, SQL injection risk
+- Logic: off-by-one errors, null checks, race conditions
+- Style: naming clarity, function size, type safety
+
+**Format your report as:**
+```
+HIGH: [filename:line] SQL injection risk in query construction
+MEDIUM: [filename:line] Missing null check on user_id
 ```
 
-Claude Code can hand a finished change to `reviewer` before you merge — the capstone review gate, automated. Note the **least-privilege** `tools:` list.
+**Do not:**
+- Suggest trivial style changes (semicolons, spacing)
+- Modify any files (read-only)
+- Approve broken code even if it's "clever"
+```
+
+Claude Code can hand a finished change to `reviewer` before you merge — the capstone review gate, automated. Note the **least-privilege** `tools:` list — the reviewer can't edit, only report.
+
+**Invoking a subagent in the pipeline:**
+
+```typescript
+// When you're ready to merge, but want a final check:
+const reviewResult = await subagent("reviewer", {
+  diff: gitDiff,
+  context: "Adding new invoice endpoint with RLS policies"
+});
+
+// If HIGH issues, ask Claude to fix them; if only MEDIUM/LOW, you can approve
+if (reviewResult.includes("HIGH:")) {
+  // Loop back, fix issues, re-run
+} else {
+  // Ready to merge
+}
+```
 
 ---
 
@@ -165,24 +220,121 @@ One instruction, a full pipeline — but you stayed in control at the migration 
 
 Secures Objective 3. Automation without guardrails is how you drop a production table at 2 a.m.
 
-- **Permissions** (`/permissions`) — allow/ask/deny list. Auto-allow safe, reversible actions (run tests, read logs); **always require approval** for destructive ones (prod migration, merge to main, delete data, spend money). The Module 11 human-in-the-loop principle, configured.
-- **Hooks** — scripts that run at points in the session (e.g. `PreToolUse` to run tests before a commit, or block a commit containing a secret).
+**Permissions** (`/permissions`) — allow/ask/deny list. Auto-allow safe, reversible actions (run tests, read logs); **always require approval** for destructive ones (prod migration, merge to main, delete data, spend money). The Module 11 human-in-the-loop principle, configured.
 
+**Concrete permissions config:**
+
+```json
+// .claude/settings.json
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run test)",
+      "Bash(npm run lint)",
+      "Read(*)",
+      "Grep(*)",
+      "Bash(git status)",
+      "Bash(git log *)"
+    ],
+    "ask": [
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(supabase db push)",
+      "Bash(gh pr create)",
+      "Bash(npm install)",
+      "Bash(git rebase *)"
+    ],
+    "deny": [
+      "Bash(git reset --hard)",
+      "Bash(rm -rf *)",
+      "Bash(supabase db reset)",
+      "Bash(npx stripe *)"
+    ]
+  }
+}
 ```
-// .claude/settings.json (illustrative)
-"hooks": {
-  "PreToolUse": [{ "matcher": "Bash(git commit*)",
-    "command": "npm test && ./scripts/scan-for-secrets.sh" }]
+
+**Hooks** — scripts that run at points in the session. For example, run tests before committing, or block a commit if it contains secrets:
+
+**Concrete hooks config:**
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash(git commit*)",
+        "command": "npm run test && npm run lint && ./scripts/check-secrets.sh",
+        "failureAction": "block"
+      },
+      {
+        "matcher": "Bash(git push*)",
+        "command": "echo 'Pushing to remote. Verify the PR will pass CI.'",
+        "failureAction": "warn"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash(supabase db push)",
+        "command": "echo 'Migration applied. Verify in Supabase dashboard: https://app.supabase.com/project/YOUR_REF/sql/migrations'",
+        "failureAction": "log"
+      }
+    ]
+  }
 }
 ```
 
 **The rule:** automate the reversible, gate the irreversible. Everything about security and "you own every line" (Modules 1, 7, 12) applies double when an agent has hands on your infrastructure.
 
+Concretely:
+- ✅ **Auto-allow:** reading files, running tests, checking status (reversible)
+- ✅ **Ask:** committing, pushing, opening PRs (reversible but important to review)
+- ✅ **Deny or ask:** database migrations, merging to main, spending money (irreversible)
+
 ---
 
-## Hands-on activity (~60 min, folded in)
+## Hands-on activity (~90 min, folded in)
 
-**"Wire up and ship, hands-off (almost)."** (1) Connect the GitHub, Supabase, and Vercel MCPs, verify with `claude mcp list`, (2) write one skill and one read-only `reviewer` subagent, (3) set permissions so destructive actions require approval and add a pre-commit test hook, (4) have Claude Code take a small feature through the full pipeline, approving only the gated steps. Deliverable: a merged PR + live deploy from the pipeline, plus your permissions/hook config.
+**"Wire up and ship, hands-off (almost)."** Follow these steps to automate the full pipeline:
+
+### Step 1: Connect MCPs (15 min)
+1. Connect GitHub: `claude mcp add --transport http github https://api.githubcopilot.com/mcp/` (or use `gh auth login`)
+2. Connect Supabase: `claude mcp add supabase -- npx -y @supabase/mcp-server-supabase@latest --project-ref=YOUR_REF`
+3. Connect Vercel: `claude mcp add --transport http vercel https://mcp.vercel.com`
+4. Verify: `claude mcp list` → all three show connected ✓
+
+### Step 2: Write a skill (15 min)
+1. Create `.claude/skills/ship-feature/SKILL.md`
+2. Write a step-by-step workflow for shipping a feature (branch → test → commit → PR → merge)
+3. Include: what to do, what NOT to do, when to use this skill
+4. Test: prompt Claude Code: *"I want to ship a new feature. Walk me through the workflow."* → it should cite your skill
+
+### Step 3: Write a subagent (15 min)
+1. Create `.claude/agents/reviewer.md`
+2. Define a read-only reviewer with `tools: Read, Grep, Glob`
+3. Instruct it to check for: security issues (RLS, validation, secrets), logic bugs, style
+4. Include: format for reporting (HIGH/MEDIUM/LOW with file:line)
+
+### Step 4: Set permissions & hooks (15 min)
+1. Create `.claude/settings.json`
+2. Allow: tests, reading, git status (safe)
+3. Ask: commit, push, PR, migration (important)
+4. Deny: reset --hard, rm -rf, db reset (destructive)
+5. Add hook: Pre-commit runs `npm test && npm run lint` (blocks if fail)
+
+### Step 5: Ship a small feature (30 min)
+1. Pick a small feature: e.g., "Add `updated_at` timestamp to invoices table"
+2. Prompt Claude Code: *"Ship this feature end-to-end: migrate schema, update app, test, open PR, merge. Use the skills and reviewer."*
+3. Approve at the gated steps (migrations, merge to main)
+4. Watch the pipeline run: branch → migrate → code → test → PR → deploy
+
+### Deliverable:
+- Screenshots of `claude mcp list` (three connected servers)
+- Your `.claude/skills/ship-feature/SKILL.md` (describe your workflow)
+- Your `.claude/agents/reviewer.md` (define your reviewer)
+- Your `.claude/settings.json` (permissions + hooks)
+- Screenshot of the merged PR from the pipeline
+- Screenshot of the live deploy from Vercel
 
 ---
 
@@ -226,15 +378,67 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Configure:** show `claude mcp list` with all three connected, and when you'd use each server's MCP vs. its CLI.
+### Written checks:
 
-**Objective 2 — Build/install extensions:** submit a skill you wrote, a skill installed from GitHub, a subagent definition, and what a plugin would bundle.
+**Objective 1 — Configure:** Show `claude mcp list` with all three connected, and explain when you'd use each server's MCP vs. its CLI.
+- *Example answer:* "MCP: interactive queries (inspect schema, check current deploy status, read logs). CLI: versioned, scripted operations (migrations, git history, deployments that need to be repeatable). MCP for now, CLI for records."
 
-**Objective 3 — Orchestrate:** demonstrate the pipeline producing a merged PR and a deploy, with your permissions/hooks and which steps you gated.
+**Objective 2 — Build/install extensions:** Submit a skill you wrote, explain what a skill installed from GitHub would do, define a subagent, and describe what a plugin bundles.
+- *Example answer:* "Skill I wrote: ship-feature workflow (branch → test → commit → PR). Skill from GitHub: team's PR review checklist. Subagent: `reviewer` (read-only, checks for security/bugs). Plugin: all of the above + MCP config + permissions, packaged and installable."
 
-**Objective 4 — Choose:** for four needs (enforce commit style; check a live deploy; isolated security review; share the whole setup), pick [CLAUDE.md](http://CLAUDE.md) / skill / MCP / subagent / plugin and justify.
+**Objective 3 — Orchestrate:** Demonstrate the pipeline producing a merged PR and a deploy. Show: which steps require approval, what hooks ran, and what the reviewer checked.
+- *Example answer:* "Pipeline: `migrate → code → test (auto-allowed) → commit (asked) → PR (asked) → merge (asked) → deploy (monitored)`. Hooks: pre-commit ran tests (passed). Reviewer: checked for RLS, SQL injection, secrets. Approved merge and deployed."
 
-*Pass mark: 80% and an automated pipeline run submitted.*
+**Objective 4 — Choose:** For each need, pick the right extension and justify:
+- *"Enforce conventional commits across the team"* → **CLAUDE.md** (rule applies to every commit)
+- *"Check if a deploy succeeded"* → **MCP** (read-only access to Vercel's current state)
+- *"Isolated security audit of a diff"* → **Subagent** (separate context, read-only permissions, parallel)
+- *"Share our whole automation setup with a new team member"* → **Plugin** (one install, everything configured)
+
+### Scenario-based judgment checks:
+
+*For each scenario, explain what went wrong and what to do.*
+
+- **(a) Claude Code committed secrets to main without asking.** Permissions were too loose.
+  - ✅ **Root cause:** Commit was in "allow" list, no hook scanned for secrets. **Fix:** Move commit to "ask" list; add hook to run `check-secrets.sh` before commit.
+  - ❌ **Avoid:** Auto-allowing destructive actions. Everything that produces history should ask.
+
+- **(b) You had to manually review every commit because the `reviewer` subagent was too slow.** Bottleneck in the pipeline.
+  - ✅ **Root cause:** Subagent took 5 min per diff. **Fix:** Run subagent in parallel with human approval, or scope it to HIGH severity only (MEDIUM/LOW can be reviewed later).
+  - ❌ **Avoid:** Letting the pipeline slow you down. Automation should save time.
+
+- **(c) The reviewer subagent approved code with an SQL injection bug.** Reviewer failed at its job.
+  - ✅ **Root cause:** Subagent wasn't trained on your patterns or the bug was subtle. **Fix:** Update the reviewer prompt to include "check for SQL injection specifically"; add an example of a past bug you want to catch.
+  - ❌ **Avoid:** Trusting the reviewer blindly. Periodically audit its findings; improve its prompt.
+
+- **(d) You gated merge-to-main but forgot to gate the migration.** Inconsistent guardrails.
+  - ✅ **Root cause:** Migration wasn't in permissions. **Fix:** Add migrations to "ask" list; gate before code changes (schema → app).
+  - ❌ **Avoid:** Partial gates. If one is destructible, gate it; don't rely on reviewing later.
+
+- **(e) The MCP failed but the CLI works.** OAuth vs. token fallback.
+  - ✅ **Root cause:** Supabase MCP OAuth failed (client_id issue). **Fix:** Fall back to CLI with a personal access token (`supabase login --token`). Gate the token in env vars, not in scripts.
+  - ❌ **Avoid:** Hardcoding tokens or trusting only MCP. Have a CLI fallback for reliability.
+
+---
+
+**Rubric checklist (self-review before submission):**
+
+| Criterion | Check (✅ = pass) |
+|-----------|-------------|
+| **MCP connected** | `claude mcp list` shows 3+ servers (GitHub, Supabase, Vercel) |
+| **MCP fallback** | You know the CLI equivalent for each MCP (gh, supabase, vercel) |
+| **Skill written** | `.claude/skills/ship-feature/SKILL.md` describes a workflow with steps |
+| **Skill tested** | Claude Code cites your skill when given a task that matches |
+| **Subagent defined** | `.claude/agents/reviewer.md` exists; read-only; checks security + logic |
+| **Subagent invoked** | You can prompt Claude Code to run the reviewer on a diff |
+| **Permissions set** | Allow (safe), Ask (important), Deny (destructive) configured |
+| **Hooks working** | Pre-commit hook runs tests; they block if fail |
+| **Pipeline end-to-end** | Feature shipped: migrate → code → test → PR → merge → deploy (all steps visible) |
+| **Gated steps** | You approved only the destructible steps (migration, merge) |
+| **PR merged** | GitHub shows PR merged from the pipeline |
+| **Deploy live** | Vercel shows deployment successful; live site works |
+
+*Pass mark: 80% and a full pipeline run (MCP list + PR + deploy + config files) submitted.*
 
 ---
 
