@@ -81,20 +81,22 @@ export default async function LessonPage(props: LessonPageProps) {
     checked[item.item_key] = item.checked;
   });
 
+  const isKids = userVersion === "kids";
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+    <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
       {/* Header */}
-      <div className="bg-slate-800/50 border-b border-slate-700 sticky top-0 z-10">
+      <div className={`sticky top-0 z-10 ${isKids ? "bg-gradient-to-r from-purple-100 to-pink-100 border-b border-purple-300" : "bg-slate-800/50 border-b border-slate-700"}`}>
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <Link
             href="/course"
-            className="text-blue-400 hover:text-blue-300 text-sm font-medium"
+            className={`text-sm font-medium transition ${isKids ? "text-purple-600 hover:text-purple-800" : "text-blue-400 hover:text-blue-300"}`}
           >
             ← Back to Course
           </Link>
           <div className="text-center">
-            <p className="text-slate-400 text-xs">Module {String(moduleId).padStart(2, "0")}</p>
-            <h1 className="text-2xl font-bold text-white">{pageTitle}</h1>
+            <p className={`text-xs ${isKids ? "text-purple-600" : "text-slate-400"}`}>Module {String(moduleId).padStart(2, "0")}</p>
+            <h1 className={`text-2xl font-bold ${isKids ? "text-purple-700" : "text-white"}`}>{pageTitle}</h1>
           </div>
           <div className="w-24 text-right" />
         </div>
@@ -107,14 +109,14 @@ export default async function LessonPage(props: LessonPageProps) {
         </article>
 
         {/* Navigation */}
-        <div className="flex gap-4 mt-16 pt-8 border-t border-slate-700">
+        <div className={`flex gap-4 mt-16 pt-8 border-t ${isKids ? "border-purple-200" : "border-slate-700"}`}>
           {prevModule !== null ? (
             <Link
               href={`/course/${prevModule}`}
-              className="flex-1 p-4 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg transition text-left"
+              className={`flex-1 p-4 rounded-lg transition text-left ${isKids ? "bg-purple-100 hover:bg-purple-200 border border-purple-300" : "bg-slate-800 hover:bg-slate-700 border border-slate-600"}`}
             >
-              <p className="text-xs text-slate-400 mb-1">← Previous Module</p>
-              <p className="font-bold text-white">
+              <p className={`text-xs mb-1 ${isKids ? "text-purple-600" : "text-slate-400"}`}>← Previous Module</p>
+              <p className={`font-bold ${isKids ? "text-purple-700" : "text-white"}`}>
                 {getModuleMetadata(prevModule).title}
               </p>
             </Link>
@@ -125,21 +127,21 @@ export default async function LessonPage(props: LessonPageProps) {
           {nextModule !== null ? (
             <Link
               href={`/course/${nextModule}`}
-              className="flex-1 p-4 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg transition text-right"
+              className={`flex-1 p-4 rounded-lg transition text-right ${isKids ? "bg-purple-100 hover:bg-purple-200 border border-purple-300" : "bg-slate-800 hover:bg-slate-700 border border-slate-600"}`}
             >
-              <p className="text-xs text-slate-400 mb-1">Next Module →</p>
-              <p className="font-bold text-white">
+              <p className={`text-xs mb-1 ${isKids ? "text-purple-600" : "text-slate-400"}`}>Next Module →</p>
+              <p className={`font-bold ${isKids ? "text-purple-700" : "text-white"}`}>
                 {getModuleMetadata(nextModule).title}
               </p>
             </Link>
           ) : (
             <Link
               href="/capstone"
-              className="flex-1 p-4 bg-purple-800/30 hover:bg-purple-800/50 border border-purple-500 rounded-lg transition text-right"
+              className={`flex-1 p-4 rounded-lg transition text-right ${isKids ? "bg-gradient-to-r from-purple-300 to-pink-300 hover:from-purple-400 hover:to-pink-400 border border-purple-400" : "bg-purple-800/30 hover:bg-purple-800/50 border border-purple-500"}`}
             >
-              <p className="text-xs text-purple-400 mb-1">Next: Capstone →</p>
-              <p className="font-bold text-white">
-                Build & Defend Your Project
+              <p className={`text-xs mb-1 ${isKids ? "text-purple-700 font-bold" : "text-purple-400"}`}>{isKids ? "Final Project →" : "Next: Capstone →"}</p>
+              <p className={`font-bold ${isKids ? "text-purple-900" : "text-white"}`}>
+                {isKids ? "Build Your App 🚀" : "Build & Defend Your Project"}
               </p>
             </Link>
           )}
@@ -152,12 +154,12 @@ export default async function LessonPage(props: LessonPageProps) {
             initialChecked={checked}
           />
         ) : (
-          <div className="mt-12 p-6 bg-slate-800 border border-slate-700 rounded-lg">
-            <p className="text-slate-400 text-center">
-              <Link href="/auth/sign-in" className="text-blue-400 hover:text-blue-300">
+          <div className={`mt-12 p-6 rounded-lg border ${isKids ? "bg-purple-100 border-purple-300" : "bg-slate-800 border-slate-700"}`}>
+            <p className={`text-center ${isKids ? "text-purple-700" : "text-slate-400"}`}>
+              <Link href="/auth/sign-in" className={isKids ? "text-purple-600 hover:text-purple-800 font-bold" : "text-blue-400 hover:text-blue-300"}>
                 Sign in
               </Link>{" "}
-              to track your progress
+              {isKids ? "to track your progress and collect badges! 🏆" : "to track your progress"}
             </p>
           </div>
         )}
