@@ -127,6 +127,36 @@ Resolve by editing to the version you want and removing the marker lines, then c
 
 ---
 
+## Quiz questions (preview)
+
+These are the three questions you'll see on the quiz. Study these to prepare:
+
+**Q9-1:** A commit is best described as:
+- (a) a deployed app
+- (b) **a saved snapshot of changes with a message** ✓
+- (c) a branch
+- (d) a backup server
+
+*Why:* A commit is exactly this: you select which files changed, write a message explaining WHY you changed them (not what—the diff shows that), and save the snapshot. Each commit is a save point you can revert to.
+
+**Q9-2:** Why work on branches + pull requests even solo?
+- (a) required
+- (b) **`main` stays working and each change is isolated and reviewable** ✓
+- (c) faster typing
+- (d) it deletes old code
+
+*Why:* Branches protect your production code (`main`); PRs let you review your own changes (and practice the habit for when you collaborate). This is the professional workflow—build it now.
+
+**Q9-3:** A merge conflict is:
+- (a) an unfixable error
+- (b) **Git asking you to choose between two changes to the same lines** ✓
+- (c) a deploy failure
+- (d) a virus
+
+*Why:* Conflicts are routine, not errors. Git sees two versions of the same line and can't decide—you edit the file, choose which version to keep, remove the markers, and commit. Not scary.
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Explain:** define repo, commit, branch, and PR, and give one reason version control matters even solo.

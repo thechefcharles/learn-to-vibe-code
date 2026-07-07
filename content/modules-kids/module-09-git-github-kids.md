@@ -99,6 +99,36 @@ Why? So you don't accidentally break the working version.
 
 ---
 
+## Quiz Questions (Preview)
+
+Here are your three quiz questions. Study these!
+
+**Q9-k1:** A commit is best described as:
+- (a) A deployed app
+- (b) **A save point with a message (checkpoint in a game!)** ✓
+- (c) A branch
+- (d) A backup server
+
+*Why:* Commits are like game save points! You save your progress with a message explaining what you did. Later, if you mess up, you can revert to an earlier checkpoint.
+
+**Q9-k2:** Why use branches even when coding solo?
+- (a) Required
+- (b) **So main stays working, and each change is safe and reviewable** ✓
+- (c) Faster typing
+- (d) It deletes old code
+
+*Why:* Branches protect your working code! You can experiment on a branch without breaking your main app. Then you review the changes before bringing them in.
+
+**Q9-k3:** A merge conflict is:
+- (a) Unfixable
+- (b) **Git asking you to choose between two changes** ✓
+- (c) A deployment failure
+- (d) A virus
+
+*Why:* Merge conflicts just need you to pick which change to keep! It's not an error—Git just can't decide when two changes touch the same line. You edit the file and choose.
+
+---
+
 ## Knowledge Check (Quiz)
 
 1. **What's the difference between Git and GitHub?**
