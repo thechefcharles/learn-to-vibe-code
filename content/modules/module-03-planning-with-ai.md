@@ -47,7 +47,21 @@ This delivers Objective 1. A spec is a short written description of what the sof
 > **Instructor demo:** Take a one-sentence app idea from the class and have the AI interview-then-draft a spec live. Show how the questions expose hidden assumptions.
 > 
 
-*[SCREENSHOT: the AI interviewing the user with clarifying questions, then the drafted MVP spec.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: AI Interview + Drafted Spec]**
+
+**What this screenshot should show:**
+- Left panel: Claude/ChatGPT asked to interview the user
+  - AI prompt: "I want an app that helps freelancers track invoices. Ask me the questions you'd need to write a clear MVP spec."
+  - Visible questions: "Who is your primary user? How many invoices per month? Do clients have different rates? What's your timeline?"
+  - User's answers visible below each question
+- Right panel: AI's drafted MVP spec response
+  - Shows 5 sections: Problem, Users, Core Features, Out of Scope, Success Criteria
+  - Real example content (not placeholder)
+- Shows: how interviewing surfaces hidden assumptions and turns vague ideas into clarity
+
+---
 
 **Watch-out (Module 1):** the AI will confidently suggest features and scope. Treat its output as a draft to edit, not gospel — *you* own the scope decisions.
 
@@ -63,7 +77,29 @@ This delivers Objective 2. A spec says *what*; a technical plan says *how*. Tran
 
 Prompt the AI for a first draft of each ("Given this spec, propose a simple data model and the screens needed"), then critique it (Module 2 skill) against your intent.
 
-*[SCREENSHOT: the AI's proposed data model and screen list for the invoice tracker.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Technical Plan (Data Model + Screens)]**
+
+**What this screenshot should show:**
+- Top section: AI's proposed data model
+  - Table 1: `users` (id, name, email, created_at)
+  - Table 2: `invoices` (id, user_id, client_id, amount, due_date, status)
+  - Table 3: `clients` (id, user_id, name, email, phone)
+  - Clear relationships shown (user_id foreign keys)
+- Middle section: Proposed screens/views
+  - Screen 1: Dashboard (total invoices, revenue, overdue count)
+  - Screen 2: Clients list (add, edit, delete)
+  - Screen 3: Invoices list (filter by status, action links)
+  - Screen 4: New invoice form
+  - Screen 5: Invoice detail view (mark paid, edit, delete)
+- Bottom section: Milestones
+  - v0: Auth + clients CRUD
+  - v1: Invoices CRUD
+  - v2: Dashboard with analytics
+- Shows: how to translate spec into concrete technical plan with data, UI, and sequencing
+
+---
 
 ---
 
@@ -88,17 +124,275 @@ Ask, for each task, "what must already exist for this to work?" That question *i
 
 ## Hands-on activity (~40 min, folded in)
 
-**"Plan a real app end to end."** Each learner picks a simple app idea (or a provided one). Using AI as an interview partner, they produce: (1) a one-page spec with an explicit out-of-scope section, (2) a data model and screen list, and (3) an ordered build plan with dependencies noted. This single artifact exercises all three objectives and becomes their starting point for the Building stage.
+**"Plan a real app end to end."** Choose one of the provided project ideas (or use your own). Using AI as an interview partner, produce: (1) a one-page spec, (2) a data model + screen list, and (3) an ordered build plan. This artifact exercises all three objectives and becomes your starting point for the Building stage (Modules 4–13).
+
+### Three project ideas to choose from:
+
+**PROJECT 1: Habit tracker**
+*One-sentence idea:* An app where users can log daily habits and see streaks (e.g., "workout," "read," "meditate").
+
+**SAMPLE SPEC (what good looks like):**
+```
+PROBLEM & USERS
+Users want to build good habits but lose motivation without feedback. 
+Users: individuals (age 18+) using mobile or desktop.
+
+CORE FEATURES (MVP)
+1. Sign up and log in
+2. Create a habit (name, description, category)
+3. Check off a habit each day
+4. See current streak (consecutive days completed)
+5. View all habits and their streaks
+
+OUT OF SCOPE
+- Social sharing (v2)
+- Analytics/graphs (v2)
+- Recurring reminders/notifications (future)
+- Multiple habit categories/tags (v2)
+
+SUCCESS
+Users can log in, create 3 habits, check them off daily, and see their streaks growing.
+```
+
+**SAMPLE DATA MODEL:**
+```
+users
+  - id (uuid, primary key)
+  - email (unique)
+  - created_at
+
+habits
+  - id (uuid)
+  - user_id (foreign key → users)
+  - name (e.g., "workout")
+  - description
+  - created_at
+
+completions
+  - id (uuid)
+  - habit_id (foreign key → habits)
+  - date (yyyy-mm-dd)
+  - created_at
+```
+
+**SAMPLE SCREENS:**
+1. Auth: Sign up, Login
+2. Dashboard: List of habits with current streak for each
+3. Add Habit form: Name, description input, create button
+4. Daily log: Checkboxes for today's habits, confirm button
+5. Habit detail: Past completions, current streak, edit/delete
+
+**SAMPLE BUILD ORDER:**
+1. Auth (users table, sign up/login screens)
+2. Create habit (habits table, form UI)
+3. List habits (dashboard, fetch and display)
+4. Mark complete (completions table, add-to-log UI)
+5. Display streaks (calculate consecutive days, show on dashboard)
+
+---
+
+**PROJECT 2: Homework organizer for students**
+*One-sentence idea:* A class schedule + assignment tracker. Students enter their classes, add due dates, get a dashboard of what's due.
+
+**SAMPLE SPEC:**
+```
+PROBLEM & USERS
+Students juggle multiple classes and forget due dates.
+Users: high school / college students.
+
+CORE FEATURES (MVP)
+1. Sign up, log in
+2. Create classes (name, professor, schedule)
+3. Add assignments to a class (name, due date, description)
+4. Dashboard showing assignments sorted by due date
+5. Mark assignment complete (strikethrough)
+
+OUT OF SCOPE
+- Grade tracking (v2)
+- Reminders / notifications (future)
+- Calendar view (v2)
+- Collaboration / shared assignments (future)
+
+SUCCESS
+A student can enter their 4 classes, add 10 assignments across them, and see all due dates in order.
+```
+
+**SAMPLE DATA MODEL:**
+```
+users
+  - id, email, created_at
+
+classes
+  - id, user_id, name, professor, day_time (e.g., "MWF 10am")
+
+assignments
+  - id, class_id, title, due_date, description, completed, created_at
+```
+
+**SAMPLE SCREENS:**
+1. Classes list: Add, view, edit class
+2. Dashboard: All assignments sorted by due date (color-coded by class)
+3. Add assignment form: Class (dropdown), title, due date, description
+4. Assignment detail: Full details, toggle complete, edit/delete
+
+**SAMPLE BUILD ORDER:**
+1. Auth + classes CRUD
+2. Assignments table and CRUD forms
+3. Dashboard sorting by due date
+4. Mark complete / completion toggling
+
+---
+
+**PROJECT 3: Simple poll/survey tool**
+*One-sentence idea:* Create polls, share links, collect votes, see results live.
+
+**SAMPLE SPEC:**
+```
+PROBLEM & USERS
+Event planners, teachers, teams want quick feedback without setup overhead.
+Users: anyone organizing a group decision.
+
+CORE FEATURES (MVP)
+1. Create a poll (question + options)
+2. Share a public link (no login needed to vote)
+3. Vote on a poll (click an option)
+4. See live results (vote counts, percentages)
+5. Creator can view their polls and results
+
+OUT OF SCOPE
+- Custom branding (v2)
+- Time limits / poll closing (v2)
+- Multiple questions per poll (stay simple)
+- Email notifications (future)
+
+SUCCESS
+Creator makes a poll, shares the link, 20 people vote, creator sees live vote counts.
+```
+
+**SAMPLE DATA MODEL:**
+```
+users
+  - id, email, created_at (creators only)
+
+polls
+  - id, creator_id, question, created_at, closed (boolean)
+
+options
+  - id, poll_id, text, vote_count
+
+votes
+  - id, option_id, voted_at (no user tracking; public voting)
+```
+
+**SAMPLE SCREENS:**
+1. Create poll: Question input, option fields (dynamic), create button
+2. Vote page (public, no auth): Question, radio buttons, vote button
+3. Results page: Question, option names with vote counts and percentage bars
+4. Creator dashboard: List of their polls, link to share, view results
+
+**SAMPLE BUILD ORDER:**
+1. Auth (creators only for login)
+2. Create + list polls (creator dashboard)
+3. Public vote page (no auth required)
+4. Results page with live vote counts
+
+---
+
+### Activity instructions for learners:
+
+1. **Pick one of the three projects above** (or propose your own simple idea)
+
+2. **Use AI as an interview partner:**
+   - Paste the one-sentence idea into Claude Code or ChatGPT
+   - Ask: "I want to build [idea]. What questions would you ask me to write a clear spec?"
+   - Answer the AI's questions honestly
+   - Ask: "Now draft an MVP spec based on our conversation"
+
+3. **Create a technical plan:**
+   - Ask the AI: "Based on this spec, propose a data model (tables and fields) and a list of screens"
+   - Critique the output: does it match your vision? Is anything missing or over-scoped?
+   - Ask for refinements if needed
+
+4. **Sequence the work:**
+   - Ask the AI: "In what order should I build these features? For each, what must already exist?"
+   - Review the order: does each item have its dependencies met before it?
+
+5. **Submit:**
+   - Your final spec (1 page, 5 sections: problem, users, core features, out-of-scope, success)
+   - Your data model (table names, key fields, relationships)
+   - Your screen list (5-7 screens)
+   - Your build order (10–15 tasks with dependencies noted for at least 3 tasks)
 
 ---
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Produce a spec:** from "an app for a small gym to book classes," write a one-page MVP spec (problem, users, core features, out-of-scope, success).
+**Objective 1 — Produce a spec (Quiz Q3-1, Q3-2):**
+- Q3-1: "Why plan when AI writes code fast?" ✅ Tests value of planning
+- Q3-2: "A lightweight spec should include all EXCEPT:" ✅ Tests spec content
+- *Written check:* From the scenario "a small gym wants an app to book classes," write a one-page MVP spec with: problem statement, target users, 4–5 core features, explicit out-of-scope items, and success criteria.
+  - **SAMPLE OUTPUT (what good looks like):**
+    ```
+    PROBLEM: Gym members waste time calling or emailing to book classes. Classes fill up and members don't know.
+    USERS: Gym members (age 18–65) who take regular classes.
+    CORE FEATURES:
+    1. View available classes (day, time, capacity)
+    2. Book a class (one-click reservation)
+    3. Cancel a booking
+    4. See personal schedule (my booked classes)
+    5. Get notified when a class is full
+    OUT OF SCOPE:
+    - Payment / billing (member already has gym membership)
+    - Trainer profiles (v2)
+    - Class ratings / reviews (v2)
+    SUCCESS: Members book 80% of their classes through the app within first week.
+    ```
 
-**Objective 2 — Technical plan:** for that gym app, propose a data model and screen list, and define three milestones.
+**Objective 2 — Translate to technical plan (Quiz Q3-4):**
+- Q3-4: "For a note-taking app, what should you plan first?" ✅ Tests technical planning order
+- *Written check:* For the gym booking app above, propose: (1) a data model (table names, key fields, relationships), (2) a screen list (5–7 screens), and (3) three milestones.
+  - **SAMPLE DATA MODEL:**
+    ```
+    users (id, email, name, created_at)
+    classes (id, name, description, day_time, max_capacity, created_at)
+    bookings (id, user_id, class_id, booked_at, cancelled_at)
+    ```
+  - **SAMPLE SCREEN LIST:**
+    1. Login / sign up
+    2. Class browser (list/calendar view, filters)
+    3. Class detail (description, time, capacity, book button)
+    4. My bookings (upcoming classes, cancel button)
+    5. Confirmation (booking successful or error)
+  - **SAMPLE MILESTONES:**
+    - v0: Auth + classes list
+    - v1: Book class + my bookings
+    - v2: Notifications + capacity alerts
 
-**Objective 3 — Sequence:** put the build tasks in order and, for two, state what must already exist first and why.
+**Objective 3 — Sequence with dependencies (Quiz Q3-3):**
+- Q3-3: "A dependency means:" ✅ Tests dependency understanding
+- *Written check:* For the gym booking app, list the build tasks in order (8–10 tasks) and for at least 3 tasks, state what must exist first.
+  - **SAMPLE BUILD ORDER:**
+    ```
+    1. Auth (users table, sign up/login) — FOUNDATION
+    2. Classes table & list screen (fetch & display) — depends on: auth (know which user is logged in)
+    3. Book class form & logic (add to bookings table) — depends on: auth + classes (need both to create a booking)
+    4. My bookings screen (query user's bookings, show schedule) — depends on: auth + classes + bookings tables
+    5. Cancel booking (delete from bookings) — depends on: bookings table exists
+    6. Capacity check (count bookings per class, disable if full) — depends on: bookings table populated
+    7. Notifications / alerts (send email when class full) — depends on: capacity logic working
+    8. Calendar view of classes (visual layout) — depends on: classes list working
+    ```
+
+---
+
+**Scenario-based judgment checks (all objectives):**
+
+For each scenario, decide what's wrong with the plan and explain how to fix it:
+
+- (a) Your spec says "Users can create an account, upload a profile picture, and join groups." One sentence: which of these is scope creep, and why?
+- (b) Your data model has `users`, `posts`, and `comments` tables, but no way to link comments back to users. What's missing?
+- (c) You want to build: 1) Create post, 2) List posts, 3) Add comment, 4) Delete comment. What's the dependency issue?
+- (d) Your spec says "The app should be fast and scalable." Is this a good spec? Why or why not, in one sentence?
 
 *Pass mark: 80%. Completing this gates entry to Stage 2 (Building).*
 

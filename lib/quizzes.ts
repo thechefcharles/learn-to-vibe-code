@@ -180,6 +180,19 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "Dependencies define the order of tasks: you can't build 'show bookings' before 'save bookings' exists.",
       },
+      {
+        id: "3-4",
+        text: "For a note-taking app (users create notes), what should you plan first?",
+        options: [
+          "the 'edit note' screen — users want to change notes",
+          "the data model (users, notes) — everything else depends on it",
+          "the dashboard view — that's what users see first",
+          "authentication UI — it's the first screen",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Translate spec to technical plan by starting with the data model — it's the foundation. Screens and features all depend on knowing what data exists.",
+      },
     ],
   },
   4: {
