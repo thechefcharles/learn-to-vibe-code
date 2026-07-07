@@ -83,6 +83,20 @@ A spec is just a written description of what your app should do. You don't need 
 
 ---
 
+**[SCREENSHOT PLACEHOLDER: AI Interview + Drafted Spec]**
+
+**What this screenshot should show:**
+- Left panel: Claude/ChatGPT asked to interview the user
+  - Prompt: "I want an app to track video games I want to play. Ask me questions to understand what to build."
+  - AI questions visible: "How many games per list? Do you rate games? Can friends see your list?"
+  - User answers visible below
+- Right panel: AI's drafted MVP spec
+  - Shows sections: Problem, Users, Core Features, Out of Scope, Success Criteria
+  - Real example spec with details
+- **Shows:** how interviewing reveals hidden assumptions and turns vague ideas into clarity 💡
+
+---
+
 ## Lesson 3.3 — Turn Your Spec Into a Technical Plan (~60 min)
 
 Now you know *what* you're building. Time to figure out *how*.
@@ -124,6 +138,26 @@ Do them in order. Each one feeds into the next.
 
 ---
 
+**[SCREENSHOT PLACEHOLDER: Technical Plan (Data Model + Screens)]**
+
+**What this screenshot should show:**
+- Top section: AI's proposed data model for homework tracker
+  - Table 1: `users` (id, name, email)
+  - Table 2: `homework` (id, user_id, subject, description, due_date, done)
+  - Table 3: `reminders` (id, homework_id, sent_date)
+  - Clear relationships shown (user_id foreign keys)
+- Middle section: Proposed screens
+  - Screen 1: Dashboard (list all homework, sorted by due date)
+  - Screen 2: Add homework form (subject, due date, description)
+  - Screen 3: Homework detail (view, mark done, delete)
+  - Screen 4: Settings (reminder preferences)
+- Bottom section: Milestones
+  - v0: Auth + homework CRUD
+  - v1: Reminders working
+- **Shows:** how to translate spec into concrete tables, screens, and milestones 📋
+
+---
+
 ## Lesson 3.5 — Writing Your Plan as a Prompt (~45 min)
 
 After all this planning, you have a document. That document becomes your AI prompt!
@@ -138,21 +172,208 @@ Boom. The AI has all the context it needs. You get the right code first time bec
 
 ## Activity: Plan Your Own Project 🎨
 
-Pick a small idea (not huge):
-- Pet tracker
-- Book list
-- Recipe saver
-- Game idea tracker
-
-Write a spec (answer the 5 questions). Then break it into 5-6 tasks in order. Submit both.
+Pick one of these three projects (or use your own small idea). For EACH, you'll create: a spec, a data model, a screen list, and a build order.
 
 ---
 
-## Knowledge Check (Quiz)
+### PROJECT 1: Habit Tracker 🎯
 
-1. **Why does planning matter when AI can code fast?** (Answer in your own words.)
-2. **Write a 5-question spec for: "An app to track video games you want to play."**
-3. **Break your app idea into tasks and put them in order. Why is the order important?**
+**Idea:** An app where you log daily habits and watch your streaks grow (e.g., "workout," "read," "meditate").
+
+**SAMPLE SPEC (what good looks like):**
+```
+PROBLEM & USERS
+Kids want to build good habits but lose motivation without feedback.
+Users: kids and teens (age 10+) on any device.
+
+CORE FEATURES (MVP)
+1. Sign up and log in
+2. Create a habit (name, description)
+3. Check off a habit each day
+4. See your current streak (consecutive days completed)
+5. View all habits and their streaks
+
+OUT OF SCOPE
+- Social features (showing friends)
+- Rewards or badges (v2)
+- Reminders / notifications (future)
+
+SUCCESS
+A user creates 3 habits, checks them daily, and sees their streaks growing.
+```
+
+**SAMPLE DATA MODEL:**
+```
+users: id, name, email, created_at
+habits: id, user_id, name, description, created_at
+completions: id, habit_id, date (yyyy-mm-dd), created_at
+```
+
+**SAMPLE SCREENS:**
+1. Login / Sign up
+2. Dashboard: List of habits with current streak for each
+3. Add Habit: Form to create a new habit
+4. Habit Detail: View streak, past completions, edit/delete buttons
+5. Daily Check-in: Checkboxes for today's habits
+
+**SAMPLE BUILD ORDER:**
+1. Auth (sign up/login, users table)
+2. Create habit (habits table + form)
+3. List habits (show on dashboard)
+4. Mark habit done (add to completions table)
+5. Display streaks (count consecutive days, show on dashboard)
+
+---
+
+### PROJECT 2: Video Game Wishlist 🎮
+
+**Idea:** An app to track games you want to play. Mark them done when you finish them.
+
+**SAMPLE SPEC:**
+```
+PROBLEM & USERS
+Gamers have tons of games on their wishlist but forget which ones they wanted to play.
+Users: gamers (age 13+) who play video games.
+
+CORE FEATURES (MVP)
+1. Sign up and log in
+2. Add a game to your wishlist (name, platform, rating)
+3. View all games on your wishlist
+4. Mark a game as played/completed
+5. See how many games you've completed
+
+OUT OF SCOPE
+- Game reviews or descriptions (v2)
+- Multiplayer/sharing lists (future)
+- Game recommendations (v2)
+
+SUCCESS
+User adds 10 games, plays 3, and can see which ones are done.
+```
+
+**SAMPLE DATA MODEL:**
+```
+users: id, name, email, created_at
+games: id, user_id, title, platform, rating, completed, completed_date, created_at
+```
+
+**SAMPLE SCREENS:**
+1. Login / Sign up
+2. Wishlist: List of all games (show which are completed)
+3. Add Game: Form to add a new game
+4. Game Detail: Full details, mark as played, edit/delete
+5. Stats: "You've completed X of Y games"
+
+**SAMPLE BUILD ORDER:**
+1. Auth (users table, sign up/login)
+2. Add game (games table + form to create)
+3. List games (show on dashboard)
+4. Mark game complete (update completed status)
+5. Show stats (count completed games)
+
+---
+
+### PROJECT 3: Poll Tool 📊
+
+**Idea:** Create quick polls and share them. Anyone can vote. See results live.
+
+**SAMPLE SPEC:**
+```
+PROBLEM & USERS
+Event planners, teachers, and friends want quick feedback without complicated setup.
+Users: anyone organizing a quick group decision.
+
+CORE FEATURES (MVP)
+1. Create a poll (question + options, like "Pizza or tacos?")
+2. Share a public link (no login needed to vote)
+3. Vote on a poll (click your choice)
+4. See live results (vote counts and percentages)
+5. Creator can view their polls and results
+
+OUT OF SCOPE
+- Timed polls that close automatically (v2)
+- Multiple questions per poll (keep it simple)
+- Email notifications (future)
+
+SUCCESS
+Creator makes a poll, shares the link, 10 people vote, creator sees results.
+```
+
+**SAMPLE DATA MODEL:**
+```
+users: id, name, email, created_at
+polls: id, creator_id, question, created_at
+options: id, poll_id, text, vote_count
+```
+
+**SAMPLE SCREENS:**
+1. Create Poll: Question input, add options (buttons to add more), create button
+2. Vote Page (public): Question, radio buttons or buttons for each option, vote button
+3. Results: Question, options with vote counts and percentage bars
+4. My Polls: List of polls I created, view results button, share link
+
+**SAMPLE BUILD ORDER:**
+1. Auth (creators sign up/login)
+2. Create poll (polls table + form)
+3. Public vote page (no auth needed)
+4. Results page (count votes, show percentages)
+5. My polls dashboard (list creator's polls)
+
+---
+
+### Activity Instructions 🎯
+
+**Step 1: Pick one of the three projects** (or propose your own small idea)
+
+**Step 2: Use AI as an interview partner:**
+- Paste your one-sentence idea into Claude Code or ChatGPT
+- Ask: "I want to build [idea]. What questions would you ask me to clarify what I'm building?"
+- Answer the AI's questions honestly
+- Ask: "Now draft a complete spec based on our conversation"
+
+**Step 3: Create a technical plan:**
+- Ask the AI: "Based on this spec, propose: (1) a data model (tables and fields), (2) a list of screens, (3) a build order with dependencies"
+- Review the output: does it match your vision? Fix anything that's off.
+
+**Step 4: Submit:**
+- Your final spec (answer the 5 questions: problem, users, MVP, out-of-scope, success)
+- Your data model (table names, fields, relationships)
+- Your screen list (5-7 screens)
+- Your build order (6-8 tasks with dependencies explained)
+
+---
+
+## Knowledge Check (Mapped to Your Objectives)
+
+**Objective 1 — Produce a spec (Quiz Q3-k1, Q3-k2):**
+- Q3-k1: "Why does planning matter when AI codes fast?" ✅ Tests value of planning
+- Q3-k2: "A lightweight spec must include all EXCEPT:" ✅ Tests spec content
+- **Written check:** For "an app to organize school supplies," write a one-page MVP spec with: problem, users, 4-5 core features, out-of-scope, success criteria.
+
+**Objective 2 — Translate to technical plan (Quiz Q3-k4):**
+- Q3-k4: "When planning an app, what should you design first?" ✅ Tests planning order
+- **Written check:** For the "school supplies" app, propose: (1) a data model (table names + fields), (2) a screen list (5-7 screens), (3) build milestones.
+
+**Objective 3 — Sequence with dependencies (Quiz Q3-k3):**
+- Q3-k3: "A dependency means:" ✅ Tests dependency understanding
+- **Written check:** For the "school supplies" app, list 6-8 build tasks in order. For at least 3, explain what must exist first.
+
+**Scenario-based judgment checks (all objectives):**
+
+For each scenario, identify what's wrong and how to fix it:
+
+- (a) Your spec says "Users can create an account, upload a profile picture, and join groups." Which is too ambitious for MVP, and why?
+- (b) Your data model has `users` and `posts` tables, but no way to know which user wrote each post. What's missing?
+- (c) You want to build: 1) Create post, 2) List posts, 3) Add comment, 4) Delete comment. What's the dependency problem?
+- (d) Your spec says "The app should be fast and easy to use." Is this a good spec? Why or why not?
+
+---
+
+## Tools & Alternatives (This Module)
+
+**Planning works everywhere.** Any AI tool (Claude Code, ChatGPT, Cursor's chat) can be your thinking partner. The default is **Claude Code**, so you can save your spec and plan as files next to your code. But a text file, a note-taking app, or even a Google Doc works fine — the thinking matters more than the tool.
+
+**Pro tip:** keep your spec in a shared document (Google Docs, Notion) so if you're working with others, everyone sees the same plan. In Module 13, you'll connect Notion to Claude Code so the AI can check off your tasks as it builds them!
 
 ---
 
@@ -160,7 +381,7 @@ Write a spec (answer the 5 questions). Then break it into 5-6 tasks in order. Su
 
 - Planning is the context you'll feed the AI later 📝
 - A spec answers: problem, users, MVP, out-of-scope, success
-- A technical plan shows: data, screens, tasks
+- A technical plan shows: data model, screens, build order
 - Order matters — some tasks depend on others
 - Good plan + good prompt = good code first time 🎉
 
