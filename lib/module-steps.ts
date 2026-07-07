@@ -3,7 +3,7 @@ import type { Version } from "./VersionContext";
 export interface ModuleStep {
   id: number;
   title: string;
-  type: "lesson" | "quiz" | "checkpoint" | "exercise";
+  type: "lesson" | "quiz" | "checkpoint" | "challenge";
   duration: number; // minutes
   content: string;
   codeBlock?: {
@@ -12,6 +12,17 @@ export interface ModuleStep {
   };
   tip?: string;
   keyPoint?: string;
+  challenge?: {
+    description: string;
+    action: string; // e.g., "Open terminal and run: node --version"
+    successCriteria: string;
+  };
+  quiz?: {
+    question: string;
+    options: string[];
+    correctAnswer: number;
+    explanation: string;
+  };
 }
 
 export interface ModuleStepSequence {
@@ -136,6 +147,22 @@ Node.js is the runtime that runs JavaScript on your computer (not just in a brow
           code: "node --version\nnpm --version",
         },
         keyPoint: 'You should see two version numbers (e.g., v22.12.0 and 10.5.0). If "command not found", close the terminal completely and reopen it.',
+        challenge: {
+          description: "Verify Node.js is installed on your computer",
+          action: "Open a terminal and run the commands above",
+          successCriteria: "You see two version numbers (e.g., v22.12.0 and 10.5.0)",
+        },
+        quiz: {
+          question: "What does Node.js do?",
+          options: [
+            "Runs JavaScript on your computer",
+            "Manages your database",
+            "Deploys your app to the internet",
+            "Edits your code",
+          ],
+          correctAnswer: 0,
+          explanation: "Node.js is the runtime that executes JavaScript code outside of a web browser, typically on your computer or server.",
+        },
       },
       {
         id: 4,
@@ -158,6 +185,22 @@ Cursor is your AI code editor. It's built on VS Code, so it'll feel familiar if 
 
 **Step 5:** You're done! Cursor is ready to use.`,
         keyPoint: "Cursor will be your primary code editor for this course. Spend a moment exploring the welcome screen.",
+        challenge: {
+          description: "Install Cursor and open it",
+          action: "Download and install from cursor.com, then open the app",
+          successCriteria: "Cursor opens and shows the welcome screen",
+        },
+        quiz: {
+          question: "What's the main difference between Cursor and Claude Code?",
+          options: [
+            "Cursor is an editor; Claude Code is a terminal agent",
+            "Cursor is free; Claude Code costs money",
+            "Claude Code is for beginners; Cursor is for advanced developers",
+            "There is no difference—they're the same tool",
+          ],
+          correctAnswer: 0,
+          explanation: "Cursor is an AI-powered code editor where you write code directly. Claude Code is a terminal agent where you describe tasks and it builds for you.",
+        },
       },
       {
         id: 5,
@@ -441,6 +484,22 @@ Open a terminal and copy-paste this:`,
 
 **If you see "command not found":** Close the terminal completely and reopen it. Then try again.`,
         keyPoint: "Node.js is like the engine for your car — you need it before anything else works.",
+        challenge: {
+          description: "Verify Node.js installed ✓",
+          action: "Open terminal + run: node --version",
+          successCriteria: "See a version number like v22.12.0",
+        },
+        quiz: {
+          question: "🎯 Node.js is...",
+          options: [
+            "A JavaScript engine that runs on your computer",
+            "A video game",
+            "A website builder",
+            "A database",
+          ],
+          correctAnswer: 0,
+          explanation: "Exactly! Node.js lets you run JavaScript anywhere, not just in web browsers. That's your superpower for this course! 🚀",
+        },
       },
       {
         id: 4,

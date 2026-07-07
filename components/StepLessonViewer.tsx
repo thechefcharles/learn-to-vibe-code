@@ -7,6 +7,12 @@ import { MarkdownRenderer } from "./MarkdownRenderer";
 import { useVersion } from "@/lib/VersionContext";
 import type { ModuleStep, ModuleStepSequence } from "@/lib/module-steps";
 
+interface StepQuizState {
+  answered: boolean;
+  selectedIndex: number | null;
+  showExplanation: boolean;
+}
+
 interface StepLessonViewerProps {
   steps: ModuleStepSequence;
   moduleId: number;
@@ -15,6 +21,11 @@ interface StepLessonViewerProps {
 export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
+  const [quizState, setQuizState] = useState<StepQuizState>({
+    answered: false,
+    selectedIndex: null,
+    showExplanation: false,
+  });
   const { version } = useVersion();
   const isKids = version === "kids";
 
@@ -50,6 +61,11 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
       newCompleted.add(currentStepIndex);
       setCompletedSteps(newCompleted);
       setCurrentStepIndex(currentStepIndex + 1);
+      setQuizState({
+        answered: false,
+        selectedIndex: null,
+        showExplanation: false,
+      });
 
       // Scroll to top
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -206,6 +222,143 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             >
               <p className="font-medium">💡 Key Point</p>
               <p className="text-sm mt-1">{currentStep.keyPoint}</p>
+            </div>
+          )}
+
+          {/* Challenge Section */}
+          {currentStep.challenge && (
+            <div
+              className={`rounded-lg p-6 mb-8 border-2 ${
+                isKids
+                  ? "bg-green-50 border-green-300"
+                  : "bg-green-500/10 border-green-500/30"
+              }`}
+            >
+              <p
+                className={`font-bold text-lg mb-2 ${
+                  isKids ? "text-green-700" : "text-green-300"
+                }`}
+              >
+                {isKids ? "🎯 Your Challenge" : "✓ Challenge"}
+              </p>
+              <p
+                className={`mb-3 ${
+                  isKids ? "text-green-700" : "text-green-200"
+                }`}
+              >
+                {currentStep.challenge.description}
+              </p>
+              <div
+                className={`p-3 rounded mb-3 ${
+                  isKids
+                    ? "bg-white border border-green-200"
+                    : "bg-slate-900 border border-green-500/30"
+                }`}
+              >
+                <p className="text-xs font-mono mb-1 opacity-70">Action:</p>
+                <p
+                  className={`font-mono text-sm ${
+                    isKids ? "text-slate-700" : "text-green-100"
+                  }`}
+                >
+                  {currentStep.challenge.action}
+                </p>
+              </div>
+              <p
+                className={`text-sm ${
+                  isKids ? "text-green-600" : "text-green-400"
+                }`}
+              >
+                ✓ Success: {currentStep.challenge.successCriteria}
+              </p>
+            </div>
+          )}
+
+          {/* Quiz Section */}
+          {currentStep.quiz && (
+            <div
+              className={`rounded-lg p-6 mb-8 border-2 ${
+                isKids
+                  ? "bg-purple-50 border-purple-300"
+                  : "bg-purple-500/10 border-purple-500/30"
+              }`}
+            >
+              <p
+                className={`font-bold text-lg mb-4 ${
+                  isKids ? "text-purple-700" : "text-purple-300"
+                }`}
+              >
+                {isKids ? "🎯 Quick Check" : "? Quiz"}
+              </p>
+              <p
+                className={`mb-4 ${
+                  isKids ? "text-purple-700" : "text-purple-100"
+                }`}
+              >
+                {currentStep.quiz.question}
+              </p>
+
+              <div className="space-y-2 mb-4">
+                {currentStep.quiz.options.map((option, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      if (!quizState.answered) {
+                        setQuizState({
+                          answered: true,
+                          selectedIndex: idx,
+                          showExplanation: true,
+                        });
+                      }
+                    }}
+                    className={`w-full p-3 rounded-lg text-left transition ${
+                      quizState.selectedIndex === idx
+                        ? idx === currentStep.quiz!.correctAnswer
+                          ? isKids
+                            ? "bg-green-200 border-2 border-green-400 text-green-800"
+                            : "bg-green-500/30 border-2 border-green-500 text-green-100"
+                          : isKids
+                            ? "bg-red-200 border-2 border-red-400 text-red-800"
+                            : "bg-red-500/30 border-2 border-red-500 text-red-100"
+                        : isKids
+                          ? "bg-white border border-purple-200 text-purple-700 hover:bg-purple-50"
+                          : "bg-slate-800 border border-purple-500/30 text-purple-100 hover:bg-slate-700"
+                    } ${quizState.answered ? "cursor-default" : "cursor-pointer"}`}
+                    disabled={quizState.answered}
+                  >
+                    {idx === currentStep.quiz!.correctAnswer && quizState.answered && "✓ "}
+                    {idx !== currentStep.quiz!.correctAnswer && quizState.answered && idx === quizState.selectedIndex && "✗ "}
+                    {option}
+                  </button>
+                ))}
+              </div>
+
+              {quizState.showExplanation && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`p-3 rounded-lg border-l-4 ${
+                    quizState.selectedIndex === currentStep.quiz!.correctAnswer
+                      ? isKids
+                        ? "bg-green-100 border-green-400 text-green-800"
+                        : "bg-green-500/20 border-green-500 text-green-200"
+                      : isKids
+                        ? "bg-red-100 border-red-400 text-red-800"
+                        : "bg-red-500/20 border-red-500 text-red-200"
+                  }`}
+                >
+                  <p className="font-bold mb-1">
+                    {quizState.selectedIndex === currentStep.quiz!.correctAnswer
+                      ? isKids
+                        ? "🎉 Correct!"
+                        : "✓ Correct"
+                      : isKids
+                        ? "💡 Not quite!"
+                        : "✗ Try again"}
+                  </p>
+                  <p className="text-sm">{currentStep.quiz.explanation}</p>
+                </motion.div>
+              )}
             </div>
           )}
         </motion.div>
