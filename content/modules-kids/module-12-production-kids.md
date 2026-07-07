@@ -91,6 +91,36 @@ Supabase has built-in auth and security (RLS). Use it.
 
 ---
 
+## Quiz Questions (Preview)
+
+Here are your three quiz questions. Study these!
+
+**Q12-k1:** Production-ready code means tested, resilient, secure, maintainable, and:
+- (a) Colorful
+- (b) **Accessible (everyone can use it) & fast** ✓
+- (c) Cheap
+- (d) Quick to type
+
+*Why:* Production code isn't just for you—it's for real users. Everyone means people using keyboards or screen readers, people on slow internet, people using different devices. Plus it has to be fast or users leave!
+
+**Q12-k2:** When AI writes tests, what should you do?
+- (a) Run them blindly (it knows what it's doing)
+- (b) **Review them — they can pass while checking the wrong thing** ✓
+- (c) Never run them
+- (d) Delete them
+
+*Why:* A test can be WRONG but still pass! Maybe it checks the wrong thing, or it's too easy to pass. Always review tests to make sure they actually test what you care about.
+
+**Q12-k3:** What does AI usually skip unless you ask?
+- (a) Variable names
+- (b) **Accessibility & performance** ✓
+- (c) Syntax
+- (d) Spacing
+
+*Why:* AI is great at logic. But it forgets to ask: "Can this work with a keyboard?" "Is it fast?" "Can someone with bad vision read it?" You have to ask for these things, then check!
+
+---
+
 ## Knowledge Check (Quiz)
 
 1. **Why test your code?**

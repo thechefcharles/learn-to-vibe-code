@@ -154,6 +154,36 @@ Run it against the invoice-tracker and fix each gap. This checklist *is* the cap
 
 ---
 
+## Quiz questions (preview)
+
+These are the three questions you'll see on the quiz. Study these to prepare:
+
+**Q12-1:** The pillars of production-ready are tested, resilient, secure, maintainable, and:
+- (a) colorful
+- (b) **accessible & performant** ✓
+- (c) cheap
+- (d) fast to type
+
+*Why:* Production-ready has five pillars: tested, resilient (handles errors/empty/loading), secure (RLS/validation/env vars), accessible (WCAG, keyboard, labels), and performant (Core Web Vitals). Real users depend on all five.
+
+**Q12-2:** The caveat when AI writes your tests:
+- (a) they're always perfect
+- (b) **review them — a test can pass while checking the wrong thing** ✓
+- (c) never run them
+- (d) delete them
+
+*Why:* A test can pass and still not validate what you care about. The test passes because the assertion is wrong, not because the code works. Review the test logic — does it check what you intended?
+
+**Q12-3:** Which production qualities does AI usually skip unless you ask?
+- (a) Variable names
+- (b) **Accessibility & performance** ✓
+- (c) Syntax
+- (d) Comments
+
+*Why:* AI excels at logic and structure. It rarely thinks about a11y (labels, keyboard, contrast) or performance (bundle size, Core Web Vitals) unless you explicitly prompt for them. Ask. Verify. Measure.
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Deliver production-ready:** submit your hardened app with tests passing, resilient states, security verified, and a README.
