@@ -67,6 +67,10 @@ export default async function LessonPage(props: LessonPageProps) {
   const prevModule = moduleId > 0 ? moduleId - 1 : null;
   const nextModule = moduleId < 15 ? moduleId + 1 : null;
 
+  // Extract title from module content
+  const titleMatch = module.content.match(/^#\s+(.+?)(?:\n|$)/);
+  const pageTitle = titleMatch ? titleMatch[1] : meta.title;
+
   // Load user data
   const checklistItems = user ? await getChecklistItems(moduleId) : [];
   const progress = user ? await getUserModuleProgress(moduleId) : null;
@@ -90,7 +94,7 @@ export default async function LessonPage(props: LessonPageProps) {
           </Link>
           <div className="text-center">
             <p className="text-slate-400 text-xs">Module {String(moduleId).padStart(2, "0")}</p>
-            <h1 className="text-2xl font-bold text-white">{meta.title}</h1>
+            <h1 className="text-2xl font-bold text-white">{pageTitle}</h1>
           </div>
           <div className="w-24 text-right" />
         </div>
