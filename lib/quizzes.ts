@@ -58,6 +58,19 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "Vibe coding is about using AI as a tool while maintaining understanding and control.",
       },
+      {
+        id: "1-4",
+        text: "Which task requires the most careful verification of AI output?",
+        options: [
+          "drafting a project spec",
+          "writing authentication logic for production",
+          "explaining an unfamiliar code concept",
+          "generating boilerplate for a form",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Security and production code have the highest stakes — always verify thoroughly. Specs and boilerplate are lower-risk and can be reviewed more lightly.",
+      },
     ],
   },
   2: {

@@ -64,7 +64,19 @@ Two consequences fall out of this mechanism:
 > **Instructor demo:** Run the same request twice and show the two outputs; then add one line of context ("we're using TypeScript") and show how the answer changes. Makes "context is everything" concrete in three minutes.
 > 
 
-*[SCREENSHOT: the same prompt run twice showing two outputs, then the changed output after adding the TypeScript context line.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Prompt Context Effect]**
+
+**What this screenshot should show:**
+- Left side: A prompt like "Write a function to validate email" run in Claude/ChatGPT
+- Middle: The same prompt run again, showing a **different output** (different implementation)
+- Right side: The prompt run a third time with one line added: "We're using TypeScript and Next.js"
+  - Shows how the output **changes significantly** based on context
+- All three outputs visible for comparison
+- Proves: context is everything; same prompt + different context = different output
+
+---
 
 ---
 
@@ -80,7 +92,20 @@ The most important lesson in the module. Because the model outputs *likely* text
 
 **The takeaway:** these aren't bugs to fix — they're inherent to how the technology works. A skilled AI-assisted developer *expects* them and has habits to catch them. That habit is verification (Lesson 1.5).
 
-*[SCREENSHOT: an AI confidently calling a made-up library function — a concrete hallucination example.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Hallucination Example]**
+
+**What this screenshot should show:**
+- A prompt asking to use a specific library (e.g., "Use the 'fancyString' library to validate email")
+- AI response that confidently uses `fancyString.validate()` or similar
+- **Key proof:** Show that 'fancyString' library does NOT actually exist
+  - Screenshot of npm.org search or GitHub showing no results
+  - OR a terminal showing "npm install fancyString" → "404 not found"
+- Shows: AI invented a plausible library that doesn't exist, with full confidence
+- Demonstrates: hallucination in action
+
+---
 
 ---
 
@@ -119,15 +144,78 @@ This delivers Objective 3 — judgment. A simple framework for any AI output:
 
 **"Catch the hallucination."** Learners get three AI-generated snippets (instructor-provided): one works, one references a nonexistent library, one uses an outdated approach. They decide for each: *trust, or verify further — and why?*, then check the answer key. Rehearses Objective 3.
 
+**Snippet 1 (CORRECT):**
+```javascript
+// Request: "Validate an email using regex"
+function isValidEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+```
+**Verdict:** ✅ TRUST — standard regex pattern, widely used, easy to test locally.
+
+**Snippet 2 (HALLUCINATION):**
+```javascript
+// Request: "Check if a password is strong using a library"
+const PasswordValidator = require('passwordStrength-pro');
+
+const validator = new PasswordValidator({
+  minLength: 12,
+  requireSymbols: true,
+  requireNumbers: true,
+});
+
+function checkPassword(pwd) {
+  return validator.isStrong(pwd);
+}
+```
+**Verdict:** ❌ VERIFY FIRST — 'passwordStrength-pro' doesn't exist on npm. AI hallucinated a plausible library name.
+
+**Snippet 3 (OUTDATED):**
+```javascript
+// Request: "Create a React component using Hooks"
+import React from 'react';
+
+class UserProfile extends React.Component {
+  render() {
+    return <div>User Profile</div>;
+  }
+}
+
+export default UserProfile;
+```
+**Verdict:** ⚠️ VERIFY — Works, but outdated. Modern React uses functional components + Hooks, not class components. AI gave last year's pattern.
+
+---
+
+**Learner Task:** For each snippet, decide: **TRUST** (use as-is) or **VERIFY** (check first) — and one sentence why.
+
+**Answer Key (after learners attempt):**
+1. TRUST — standard pattern, testable, no exotic dependencies
+2. VERIFY — library doesn't exist (hallucination risk)
+3. VERIFY — works but outdated (outdated-knowledge risk)
+
 ---
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Explain how LLMs work & fail:** in 2–3 sentences explain to a non-technical friend how an AI writes code; name three failure modes with a one-line example each.
+**Objective 1 — Explain how LLMs work & fail (Quiz Q1-Q2):**
+- Q1: "Fundamentally, an LLM generates code by..." ✅ Testing token prediction
+- Q2: "Hallucination" means..." ✅ Testing failure mode understanding
+- *Short written check (if not fully covered by quiz):* In 2–3 sentences explain to a non-technical friend how an AI writes code; name three failure modes with a one-line example each.
 
-**Objective 2 — Capabilities/limits across the lifecycle:** list three stages where AI helps and whether each needs light or heavy verification.
+**Objective 2 — Capabilities/limits across the lifecycle (Quiz Q4):**
+- Q4: "Which task requires the most careful verification?" ✅ Testing trust matrix understanding
+- *Short written check (if not fully covered by quiz):* List three stages from the trust matrix (planning, writing code, debugging, learning, security/production) and whether each needs light or heavy verification.
 
-**Objective 3 — Trust vs. verify:** for each scenario, decide *trust* or *verify* and justify in one sentence: (a) a quick file-rename script, (b) code handling user login, (c) a function using a brand-new library, (d) boilerplate for a standard web form.
+**Objective 3 — Trust vs. verify (Quiz Q3 + Activity):**
+- Q3: "Vibe coding done well" means..." ✅ Philosophy understanding
+- Activity: "Catch the hallucination" ✅ Hands-on judgment calls
+- *Scenario-based check:* For each scenario, decide *TRUST* or *VERIFY* and justify in one sentence:
+  - (a) Asking AI to write a quick file-rename script for local use
+  - (b) Asking AI to write code handling user login and password storage
+  - (c) Asking AI to generate a function using a brand-new library released last month
+  - (d) Asking AI to generate boilerplate for a standard login form (common task)
 
 *Pass mark: 80%. Gates progress to Module 2.*
 
