@@ -34,6 +34,16 @@ Begins Objective 1.
 
 **Step 2 — Import your repo.** Vercel detects Next.js and configures the build — no config files (why Next.js + Vercel is the default).
 
+On the import page, you'll see:
+- Your GitHub username and repo list
+- Your repo name (`invoice-tracker`)
+- Vercel detects: **Next.js** ✓
+- Build command: `npm run build` (auto-filled)
+- Install command: `npm ci` (auto-filled)
+- Output directory: `.next` (auto-filled)
+
+Click **Import** and watch the magic happen.
+
 ---
 
 **[SCREENSHOT PLACEHOLDER: Vercel Import Project]**
@@ -42,7 +52,14 @@ Vercel dashboard showing: import flow detecting Next.js repo, configuration prev
 
 ---
 
-**Step 3 — Deploy.** In a minute or two you get a live URL. The build succeeds but the app won't fully work yet — no database keys in production. Deliberate teaching moment: **your local `.env.local` did not go to Vercel** (gitignored in Module 9), so production has no secrets until you add them.
+**Step 3 — Deploy.** In a minute or two you get a live URL like `invoice-tracker-abc123.vercel.app`. The build succeeds but the app won't fully work yet — no database keys in production. Deliberate teaching moment: **your local `.env.local` did not go to Vercel** (gitignored in Module 9), so production has no secrets until you add them.
+
+You'll see:
+- Deployment status: **Ready** ✓
+- Live URL: `https://invoice-tracker-abc123.vercel.app`
+- But click it—the `/clients` page shows an empty table (RLS + missing env vars)
+
+This is the "works locally, breaks in prod" moment that builds confidence.
 
 ---
 
@@ -50,12 +67,31 @@ Vercel dashboard showing: import flow detecting Next.js repo, configuration prev
 
 Begins Objective 2 and explains the "worked locally, broke deployed" mystery. Your Supabase keys live in `.env.local`, which is *not* in Git and *not* on Vercel. Add them in **Vercel → Project → Settings → Environment Variables** (same keys from Module 7):
 
-```
-NEXT_PUBLIC_SUPABASE_URL = https://YOUR-PROJECT.supabase.co
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = sb_publishable_xxx
-```
+**Concrete steps:**
 
-Then redeploy. Principle: **secrets live in the platform, never in the repo.** Same value, two homes — `.env.local` for local, Vercel's settings for production.
+1. Go to your Vercel project
+2. Click **Settings** (top right)
+3. Click **Environment Variables** (left sidebar)
+4. Add two variables:
+   ```
+   Name: NEXT_PUBLIC_SUPABASE_URL
+   Value: https://YOUR-PROJECT.supabase.co
+   ```
+   ```
+   Name: NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+   Value: sb_publishable_xxx
+   ```
+5. Click "Save"
+
+**Then redeploy:**
+1. Go to **Deployments** (left sidebar)
+2. Click the three dots on the latest deployment
+3. Click **Redeploy**
+4. Wait ~1 minute for the new build
+
+Now your app can talk to Supabase in production!
+
+**Principle:** secrets live in the platform, never in the repo. Same value, two homes — `.env.local` for local, Vercel's settings for production.
 
 > **Build-verified note:** `NEXT_PUBLIC_*` variables are **inlined at build time**, so they must exist in Vercel *before* the deploy that uses them — add them first, then trigger a fresh deploy, or the built app breaks in production with no error locally.
 > 
@@ -123,7 +159,71 @@ This delivers Objective 3.
 
 ## Hands-on activity (~60 min, folded in)
 
-**"Go live."** (1) Import your repo into Vercel and deploy, (2) add the Supabase env vars and redeploy so it works in production, (3) open a PR and confirm a preview URL, (4) configure Supabase Auth's production Site URL so login works live, (5) optionally attach a custom domain. Deliverable: a working, public URL where a user can sign up, log in, and see only their own data.
+**"Go live."** Follow these steps to deploy your invoice-tracker to the real internet!
+
+### Step 1: Sign up for Vercel (2 min)
+1. Go to [vercel.com](https://vercel.com)
+2. Click "Sign up"
+3. Choose "GitHub" and authorize it
+
+### Step 2: Import your GitHub repo (5 min)
+1. Click "New Project"
+2. Find your `invoice-tracker` repo in the list
+3. Click "Import"
+4. Vercel auto-detects Next.js ✓
+5. Click "Deploy"
+6. Wait for the build to complete (~2 min)
+7. You get a live URL! (e.g., `invoice-tracker-abc123.vercel.app`)
+
+### Step 3: Test it and see the issue (2 min)
+1. Click the live URL
+2. Try to view `/clients`
+3. Empty table — this is expected! Your Supabase keys aren't on Vercel yet.
+
+### Step 4: Add environment variables (5 min)
+1. In Vercel, go to **Settings → Environment Variables**
+2. Add your Supabase credentials (from Module 7):
+   ```
+   NEXT_PUBLIC_SUPABASE_URL = https://YOUR-PROJECT.supabase.co
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = sb_pub_xxx
+   ```
+3. Click "Save"
+
+### Step 5: Redeploy (5 min)
+1. Go to **Deployments**
+2. Click the three dots on the latest deployment
+3. Click "Redeploy"
+4. Wait ~1 min for the build
+5. Visit the live URL again—your data appears! ✅
+
+### Step 6: Test with a PR preview (5 min)
+1. On your local machine, create a branch: `git checkout -b add-sort-feature`
+2. Make a small change (add a comment, update a style)
+3. Commit and push: `git add . && git commit -m "Add feature" && git push -u origin add-sort-feature`
+4. Go to GitHub, open a PR
+5. Vercel posts a preview URL on the PR (watch for "Preview Ready")
+6. Click the preview URL—you see your change live!
+
+### Step 7: Test auth in production (3 min)
+1. On your live site, try to sign up with a new email
+2. You might see an error (auth not configured for production)
+3. This is normal — need to configure Supabase auth URLs (see Lesson 10.5)
+
+### Step 8: Configure Supabase Auth for production (5 min)
+1. In Supabase dashboard, go to **Authentication → URL Configuration**
+2. Set **Site URL** to your Vercel URL (e.g., `https://invoice-tracker-abc123.vercel.app`)
+3. Add your Vercel URL to **Redirect URLs** (same URL)
+4. Click "Save"
+
+### Step 9: Test auth again (2 min)
+1. Back on your live site, try to sign up
+2. Should work now! ✅
+3. Sign in and confirm you see only your own data
+
+### Deliverable:
+- Your live Vercel URL (screenshot showing it works)
+- Screenshot of a preview URL from a PR
+- Evidence that auth works in production (screenshot of sign-in → logged-in state)
 
 ---
 
@@ -164,6 +264,49 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 **Objective 2 — Configure env/previews/domain:** explain why it worked locally but not on Vercel until you added env vars, and show a preview URL from a PR.
 
 **Objective 3 — Compare:** recommend Vercel, Netlify, or Railway/Render for a given app and justify in 3–4 sentences.
+
+---
+
+**Scenario-based judgment checks:**
+
+*For each scenario, explain what's happening and what to do.*
+
+- **(a) Build succeeded but the app shows an error "Cannot read properties of undefined":** You deployed but didn't set env vars.
+  - ✅ **Root cause:** Supabase URL/key are undefined in production. Fix: Add env vars in Vercel Settings, redeploy.
+  - ❌ **Avoid:** Thinking the code is broken. The code is fine; the config is missing.
+
+- **(b) Env vars are in Vercel, but auth still fails on the live site.** Users can't log in even though it works locally.
+  - ✅ **Root cause:** Supabase Auth isn't configured for your production URL. Fix: Set Site URL and Redirect URLs in Supabase Dashboard.
+  - ❌ **Avoid:** Re-adding env vars (they're fine). The problem is Supabase auth config.
+
+- **(c) You opened a PR and no preview URL appeared.** You're waiting for Vercel to post a comment.
+  - ✅ **Likely issue:** Vercel integration isn't connected to your GitHub repo, or the build failed. Check Vercel Deployments tab.
+  - ❌ **Avoid:** Waiting forever. Investigate if the build even ran.
+
+- **(d) You want to roll back after a bad deploy.** The latest production deploy has a bug.
+  - ✅ **Fix:** Go to Vercel → Deployments, find the previous good deployment, click three dots, click "Promote to Production".
+  - ❌ **Avoid:** Trying to fix it via code; rollback is instant.
+
+- **(e) Preview URL doesn't match production behavior.** Code works in preview but breaks on production main.
+  - ✅ **Diagnose:** Different env vars? (per-environment config?) Different Supabase project? Check Settings → Environment Variables and filter by deployment environment.
+  - ❌ **Avoid:** Assuming they're the same. They might not be configured the same way.
+
+---
+
+**Rubric checklist (self-review before submission):**
+
+| Criterion | Check (✅ = pass) |
+|-----------|-------------|
+| **Repo imported** | Vercel project created, GitHub repo connected |
+| **Deployed successfully** | Live URL generated (e.g., `invoice-tracker-xxx.vercel.app`) |
+| **Env vars added** | NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY in Vercel Settings |
+| **Redeployed** | After adding env vars, redeploy triggered and build succeeded |
+| **App works live** | Visit the URL, `/clients` page loads with data (not empty) |
+| **Auth configured** | Supabase Site URL and Redirect URLs set to production URL |
+| **Auth works in production** | Can sign up / sign in on live site |
+| **Data isolation verified** | Two accounts: sign up as User A, see User A's data; sign out, sign up as User B, see only User B's data |
+| **Preview URL tested** | Opened a PR, Vercel posted a preview URL, clicked it and saw the preview |
+| **Live URL shared** | Submitted your live Vercel URL for grading |
 
 *Pass mark: 80% and a live, working deployed URL submitted.*
 
