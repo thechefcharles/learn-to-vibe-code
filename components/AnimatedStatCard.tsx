@@ -20,10 +20,10 @@ interface AnimatedStatCardProps {
 }
 
 const solidColorMap = {
-  violet: "bg-violet-600 hover:bg-violet-700",
-  orange: "bg-orange-500 hover:bg-orange-600",
-  lime: "bg-lime-500 hover:bg-lime-600",
-  pink: "bg-pink-500 hover:bg-pink-600",
+  violet: "bg-violet-500 hover:bg-violet-600",
+  orange: "bg-orange-400 hover:bg-orange-500",
+  lime: "bg-lime-400 hover:bg-lime-500",
+  pink: "bg-pink-400 hover:bg-pink-500",
 };
 
 export function AnimatedStatCard({
@@ -56,8 +56,8 @@ export function AnimatedStatCard({
         prefersReducedMotion
           ? {}
           : {
-              y: -10,
-              scale: 1.02,
+              y: -5,
+              scale: 1.01,
               transition: { duration: 0.3 },
             }
       }
