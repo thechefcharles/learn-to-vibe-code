@@ -37,21 +37,100 @@ Begins Objective 2. Tests are code that checks your code, so you can change thin
 - **Integration tests** — pieces together (saving a client actually writes to the DB).
 - **E2E tests** — drive the real app like a user, in a browser. Tool: Playwright.
 
-AI writes tests well — give it a function and ask for unit tests covering normal *and* edge cases. **But review the tests:** an AI can write a test that passes but checks the wrong thing, giving false confidence.
+**Concrete unit test example (Vitest):**
+
+```typescript
+// lib/invoiceStatus.ts
+export function isOverdue(invoice: Invoice): boolean {
+  const daysOverdue = Math.floor(
+    (Date.now() - new Date(invoice.dueDate).getTime()) / (1000 * 60 * 60 * 24)
+  );
+  return daysOverdue > 0;
+}
+
+// lib/__tests__/invoiceStatus.test.ts
+import { describe, it, expect } from "vitest";
+import { isOverdue } from "../invoiceStatus";
+
+describe("isOverdue", () => {
+  it("returns true for invoices past due", () => {
+    const pastDue = { dueDate: new Date(Date.now() - 5 * 86400000).toISOString() };
+    expect(isOverdue(pastDue as any)).toBe(true);
+  });
+
+  it("returns false for invoices not yet due", () => {
+    const future = { dueDate: new Date(Date.now() + 5 * 86400000).toISOString() };
+    expect(isOverdue(future as any)).toBe(false);
+  });
+
+  it("handles edge case: due today", () => {
+    const today = { dueDate: new Date().toISOString() };
+    expect(isOverdue(today as any)).toBe(false);
+  });
+});
+```
+
+**Concrete E2E test example (Playwright):**
+
+```typescript
+// e2e/invoices.spec.ts
+import { test, expect } from "@playwright/test";
+
+test("user can view and filter invoices", async ({ page }) => {
+  // Sign in (seed a demo user first)
+  await page.goto("/login");
+  await page.fill("input[type=email]", "demo@example.com");
+  await page.fill("input[type=password]", "demo-password");
+  await page.click("button:has-text('Sign In')");
+
+  // Navigate to invoices
+  await page.goto("/invoices");
+  
+  // Verify invoices list loads
+  await expect(page.locator("h1")).toContainText("Invoices");
+  const rows = page.locator("table tbody tr");
+  await expect(rows).toBeTruthy();
+  
+  // Filter to unpaid
+  await page.selectOption("[name=status]", "unpaid");
+  
+  // Verify results updated
+  await expect(page.locator("text=No unpaid invoices")).toBeHidden();
+});
+```
+
+AI writes tests well — give it a function and ask for unit tests covering normal *and* edge cases. **But review the tests:** an AI can write a test that passes but checks the wrong thing, giving false confidence. For example:
+
+```typescript
+// ❌ BAD TEST: passes but checks nothing
+it("invokes the function", () => {
+  isOverdue(someInvoice);
+  expect(true).toBe(true); // Always true!
+});
+
+// ✅ GOOD TEST: checks the actual return value
+it("returns true for overdue invoices", () => {
+  const overdue = { dueDate: new Date(Date.now() - 10000).toISOString() };
+  expect(isOverdue(overdue as any)).toBe(true);
+});
+```
+
+Run tests locally and on CI:
 
 ```bash
-npm run test
+npm run test           # Unit + integration
+npm run test:e2e       # Playwright E2E
 ```
 
 ---
 
 **[SCREENSHOT PLACEHOLDER: Test Run Output]**
 
-Terminal showing: `npm run test` output with green checkmarks, passing counts (e.g., "25 passed"). Proof: tests run and pass.
+Terminal showing: `npm run test` output with 25 unit tests passing; `npm run test:e2e` showing 5 E2E tests passing. Proof: tests run and pass.
 
 ---
 
-> **Common gotchas (build-verified):** (1) `@playwright/test` (runner) ≠ `playwright` (library) — install the right one. (2) Vitest and Playwright **double-collect** each other's specs unless you scope `include`/`testDir` — keep them in separate folders. (3) Once auth gates routes, **E2E/screenshot scripts must sign in first**, or every test hits a 302 to login. Seed a demo user and log in at the start.
+> **Common gotchas (build-verified):** (1) `@playwright/test` (runner) ≠ `playwright` (library) — install the right one. (2) Vitest and Playwright **double-collect** each other's specs unless you scope `include`/`testDir` — keep them in separate folders. (3) Once auth gates routes, **E2E/screenshot scripts must sign in first**, or every test hits a 302 to login. Seed a demo user and log in at the start. (4) Review AI-written tests critically — a passing test doesn't prove code correctness, only that the assertion passes. Check: does the test verify what you intended?
 > 
 
 ---
@@ -60,13 +139,96 @@ Terminal showing: `npm run test` output with green checkmarks, passing counts (e
 
 Continues Objective 2. Real apps hit failures. Every data-driven screen needs three states: **Loading** (spinner/skeleton), **Empty** ("No invoices yet — create your first," not a blank table), **Error** (friendly message + retry, never a raw stack trace).
 
-In code: wrap risky operations (DB calls, the agent workflow) in try/catch, handle the error path, never show raw errors to users. In Next.js, use error boundaries and loading files. Ask AI to "add loading, empty, and error states to this component" — then verify each triggers.
+**Concrete example — loading/empty/error states in a component:**
+
+```tsx
+// app/invoices/page.tsx
+"use client"
+
+import { useEffect, useState } from "react";
+
+export default function InvoicesPage() {
+  const [invoices, setInvoices] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch("/api/invoices");
+        if (!res.ok) throw new Error("Failed to load");
+        const data = await res.json();
+        setInvoices(data);
+      } catch (err) {
+        setError(err.message);
+      }
+    }
+    load();
+  }, []);
+
+  // Loading state
+  if (invoices === null && !error) {
+    return <div className="p-4"><div className="animate-pulse bg-gray-200 h-10 rounded" /></div>;
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="p-4 bg-red-50 border border-red-200 rounded">
+        <h2 className="font-bold text-red-800">Failed to load invoices</h2>
+        <p className="text-red-700">{error}</p>
+        <button onClick={() => window.location.reload()} className="mt-2 px-4 py-2 bg-red-600 text-white rounded">
+          Try Again
+        </button>
+      </div>
+    );
+  }
+
+  // Empty state
+  if (invoices.length === 0) {
+    return (
+      <div className="p-4 text-center">
+        <h2 className="text-lg font-bold">No invoices yet</h2>
+        <p>Create your first invoice to get started.</p>
+        <a href="/invoices/new" className="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded">
+          Create Invoice
+        </a>
+      </div>
+    );
+  }
+
+  // Happy path
+  return (
+    <div>
+      <h1>Invoices</h1>
+      <table>
+        <tbody>
+          {invoices.map(inv => (
+            <tr key={inv.id}>
+              <td>{inv.clientName}</td>
+              <td>${inv.amount}</td>
+              <td>{inv.status}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+```
+
+In code: wrap risky operations (DB calls, the agent workflow) in try/catch, handle the error path, never show raw errors to users. In Next.js, use error boundaries and loading files. Ask AI to "add loading, empty, and error states to this component" — then verify each state by testing:
+
+```bash
+# Test loading: intercept network requests
+# Test empty: mock API to return []
+# Test error: mock API to throw
+```
 
 ---
 
 **[SCREENSHOT PLACEHOLDER: Empty & Error States]**
 
-Left: `/clients` page with friendly message "No clients yet — create your first." Right: same page showing error state "Failed to load. Try again." Proof: UX handles all states.
+Three screenshots: (1) Loading state with spinner, (2) Empty state with "No invoices yet" message and Create button, (3) Error state with friendly error + Retry button. Proof: UX handles all states gracefully.
 
 ---
 
@@ -82,7 +244,81 @@ Completes Objective 2 and is non-negotiable. Pull together the course's security
 - **Least privilege** — code and agents get only the access they need (Module 11).
 - **Dependencies** — keep packages updated; AI can flag known-vulnerable ones.
 
-**AI + security caveat:** AI will happily write insecure code — skip validation, over-expose data, leave RLS off. Security is where you verify *hardest*. Ask AI to review specifically for security issues, then confirm its findings.
+**Concrete security fixes:**
+
+**Bad: No input validation (SSRF/XSS risk)**
+```typescript
+// ❌ DANGEROUS: trusts user input directly
+export async function saveInvoice(clientEmail: string) {
+  const client = await supabase
+    .from("clients")
+    .insert({ email: clientEmail });
+  return client;
+}
+```
+
+**Good: Validate on server**
+```typescript
+// ✅ SAFE: validates before using
+export async function saveInvoice(clientEmail: string) {
+  // Validate format
+  if (!clientEmail.includes("@") || clientEmail.length > 255) {
+    throw new Error("Invalid email");
+  }
+  
+  // Sanitize (remove extra whitespace)
+  const clean = clientEmail.trim().toLowerCase();
+  
+  const client = await supabase
+    .from("clients")
+    .insert({ email: clean });
+  return client;
+}
+```
+
+**Bad: Missing RLS check (data exposure)**
+```sql
+-- ❌ DANGEROUS: anyone can read anyone's data
+CREATE TABLE invoices (
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL,
+  amount INT NOT NULL
+);
+-- No RLS enabled!
+```
+
+**Good: RLS on every table**
+```sql
+-- ✅ SAFE: data access controlled by RLS
+ALTER TABLE invoices ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "users read own invoices" ON invoices
+  FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "users update own invoices" ON invoices
+  FOR UPDATE USING (auth.uid() = user_id);
+```
+
+**Test with two accounts:** sign in as User A, confirm you see only User A's data. Sign in as User B, confirm you see only User B's data (and can't access User A's via API).
+
+**Bad: Secrets in code**
+```typescript
+// ❌ DANGEROUS: API key in the repo!
+const STRIPE_SECRET = "sk_live_abc123";
+```
+
+**Good: Secrets in env vars**
+```typescript
+// ✅ SAFE: loaded from env at runtime
+const STRIPE_SECRET = process.env.STRIPE_SECRET_KEY;
+if (!STRIPE_SECRET) throw new Error("Missing STRIPE_SECRET_KEY");
+```
+
+**AI + security caveat:** AI will happily write insecure code — skip validation, over-expose data, leave RLS off. Security is where you verify *hardest*. Ask AI to review specifically for security issues, then confirm its findings by:
+1. Reading the code yourself
+2. Testing with two accounts
+3. Checking `.gitignore` for secrets
+4. Running a dependency audit: `npm audit`
 
 ---
 
@@ -148,9 +384,69 @@ Run it against the invoice-tracker and fix each gap. This checklist *is* the cap
 
 ---
 
-## Hands-on activity (~60 min, folded in)
+## Hands-on activity (~90 min, folded in)
 
-**"Harden the invoice tracker."** (1) Add unit tests for core logic and one Playwright E2E test, (2) add loading/empty/error states, (3) run the security checklist and fix gaps, (4) run an a11y + performance audit and fix the top issues, (5) self-review against the full checklist. Deliverable: the hardened app plus the completed checklist evidenced.
+**"Harden the invoice tracker to production-ready."** Follow these steps:
+
+### Step 1: Add unit tests (15 min)
+1. Create `lib/__tests__/` folder
+2. Pick one core function (e.g., `isOverdue`, `calculateTax`, `validateEmail`)
+3. Ask AI: "Write Vitest unit tests for this function covering normal cases and edge cases"
+4. Review the tests (do they check what you care about?)
+5. Run: `npm run test` → all tests pass
+
+### Step 2: Add one E2E test (15 min)
+1. Create `e2e/invoices.spec.ts`
+2. Write a test that: logs in → navigates → performs an action → verifies result
+3. Seed a demo user in your Supabase project first
+4. Run: `npm run test:e2e` → test passes
+
+### Step 3: Add loading/empty/error states (15 min)
+1. Pick a data-driven page (e.g., `/invoices`, `/clients`)
+2. Ask AI: "Add loading, empty, and error states to this page"
+3. Test each state by mocking different API responses (use Playwright intercept or modify the component locally)
+4. Verify: loading spinner shows, empty message shows, error message shows
+
+### Step 4: Run security checklist (15 min)
+1. For every table in your database:
+   - [ ] RLS is enabled
+   - [ ] Policies exist for SELECT, INSERT, UPDATE, DELETE
+   - Test with two accounts (User A sees only User A's data)
+
+2. For every form/API route:
+   - [ ] Input validated on server (not just browser)
+   - [ ] Secrets are env vars, not in code
+
+3. Check `.gitignore`:
+   - [ ] `.env.local` is listed
+   - [ ] `node_modules`, `.next` are listed
+
+4. Run: `npm audit` → no critical vulnerabilities
+
+### Step 5: Run a11y + performance audit (15 min)
+1. Deploy to Vercel or run locally
+2. Open in Chrome, press F12, go to Lighthouse
+3. Run: Accessibility audit → note score
+4. Run: Performance audit → note LCP, INP, CLS
+5. Fix the top 2-3 issues:
+   - Missing alt text? Add it
+   - Low contrast? Increase it
+   - Large images? Compress/size them
+   - Missing labels? Add them
+6. Re-run Lighthouse → verify scores improved
+
+### Step 6: Self-review against checklist (15 min)
+1. Go through the 9-point checklist in Lesson 12.7
+2. For each item: does your app pass?
+3. List: ✅ (passes) or ❌ (needs work)
+4. For each ❌, write what you'd fix
+
+### Deliverable:
+- Passing unit test + E2E test (screenshot or test output)
+- Screenshots of loading/empty/error states
+- Screenshot of Lighthouse audit (before & after)
+- Completed 9-point checklist (with ✅ or ❌ for each)
+- Write-up: one paragraph on what hardening taught you
 
 ---
 
@@ -186,15 +482,67 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Deliver production-ready:** submit your hardened app with tests passing, resilient states, security verified, and a README.
+### Written checks:
 
-**Objective 2 — Tests/errors/hardening:** show one unit test, one E2E test, one component's error/empty/loading states, and one security fix.
+**Objective 1 — Deliver production-ready:** Describe what "production-ready" means and how it differs from "it works on my screen."
+- *Example answer:* "Production-ready means the app holds up when real people use it unexpectedly. It's tested (unit/E2E), resilient (handles errors/loading/empty), secure (RLS/validation/env vars), accessible (keyboard/contrast/labels), performant (Core Web Vitals), and maintainable (clear names, documented). 'It works on my screen' is just the happy path."
 
-**Objective 3 — A11y & performance:** show an audit (Lighthouse/axe) before and after fixing at least two issues.
+**Objective 2 — Tests/errors/hardening:** Explain why a test can pass but be wrong, and give an example.
+- *Example answer:* "A test can pass but check the wrong thing. Example: `it("function exists", () => { expect(true).toBe(true); })` passes but doesn't verify the function's behavior. Better: `it("returns true for overdue invoices", () => { expect(isOverdue(pastDue)).toBe(true); })` checks what we care about."
 
-**Objective 4 — Review:** review a small app against the production-readiness checklist and list what passes and what needs work.
+**Objective 3 — A11y & performance:** Name three WCAG basics and one Core Web Vital, then explain how you'd measure them.
+- *Example answer:* "WCAG basics: semantic HTML (real buttons), keyboard navigation (Tab key works), contrast (text meets ratio), alt text (images described). Core Web Vital: LCP (time to largest paint). Measure with Chrome Lighthouse (F12 → Lighthouse tab)."
 
-*Pass mark: 80% and a hardened app with completed checklist submitted.*
+**Objective 4 — Review:** Use the 9-point checklist to review your app and identify one gap and how to fix it.
+- *Example answer:* "My app fails Accessibility (missing form labels). Fix: add `<label htmlFor="email">` to the input field and aria attributes. Verified with Lighthouse that the score improved."
+
+### Scenario-based judgment checks:
+
+*For each scenario, explain what's the problem and what to do.*
+
+- **(a) All your tests pass, but your app crashes in production.** Tests passed but didn't catch the bug.
+  - ✅ **Root cause:** Tests only checked the happy path, not edge cases or integration. **Fix:** Add tests for error states (invalid input, network failure), test with real DB (not mocks), test with two accounts.
+  - ❌ **Avoid:** Trusting tests alone. Tests catch bugs you think to test for; they don't catch everything.
+
+- **(b) You deployed but users with screen readers can't use your app.** No a11y testing.
+  - ✅ **Root cause:** AI generated HTML without labels/alt/semantic structure. **Fix:** Run Lighthouse a11y audit, add labels to forms, add alt text to images, use semantic HTML (`<button>` not `<div>`).
+  - ❌ **Avoid:** Skipping a11y because "most users don't need it." Some do. It's a legal requirement in many places.
+
+- **(c) Your app is slow (Lighthouse: LCP = 5s).** Performance not measured.
+  - ✅ **Root cause:** Probably fetching all data client-side. **Fix:** Use server components (don't fetch on client), paginate large lists, size images properly, check Core Web Vitals.
+  - ❌ **Avoid:** Hoping it's fast. Measure with Lighthouse. Optimize what's slow.
+
+- **(d) A user from a different team can see another team's invoices.** RLS not tested.
+  - ✅ **Critical:** Test with two accounts! User A signs in → sees only User A's data. User B signs in → sees only User B's data. **Fix:** Check RLS policies in Supabase; verify both SELECT and UPDATE policies exist.
+  - ❌ **Avoid:** Assuming RLS works without testing. This is a real data breach.
+
+- **(e) You need to add a feature but the code is a mess and you're terrified to change it.** Non-maintainable code.
+  - ✅ **Root cause:** Function names are unclear, no tests, inconsistent patterns. **Fix:** Add tests first (safety net for refactoring), rename functions clearly, extract small pieces, document the pattern in CLAUDE.md.
+  - ❌ **Avoid:** Shipping unmaintainable code. Technical debt compounds. Harder to ship later.
+
+---
+
+**Rubric checklist (self-review before submission):**
+
+| Criterion | Check (✅ = pass) |
+|-----------|-------------|
+| **Unit tests** | At least 1 unit test written, covers normal + edge case, passes |
+| **E2E test** | At least 1 E2E test (real browser, real login, real action), passes |
+| **Loading state** | Data-driven page shows loading spinner/skeleton while fetching |
+| **Empty state** | Page shows friendly "No items yet" message, not blank table |
+| **Error state** | Page shows friendly error + retry button, never raw error message |
+| **RLS verified** | Enabled on all tables; tested with 2 accounts (A sees only A's data) |
+| **Input validation** | Server-side validation on forms (not just browser) |
+| **Secrets safe** | `.env.local` in `.gitignore`; no API keys in code |
+| **A11y checked** | Lighthouse a11y audit run; score ≥85; semantic HTML, labels, alt text |
+| **Performance checked** | Lighthouse performance audit run; LCP, INP, CLS measured; obvious wins done (images sized, data paginated) |
+| **Tests reviewed** | You read your own tests; each one checks what you intended (not just passing) |
+| **App deployable** | Deploys without errors; env vars configured; auth URLs set |
+| **README exists** | One-page README: what it is, how to run it, how to test it |
+| **Checklist completed** | 9-point production-readiness checklist filled out; each item ✅ or ❌ with notes |
+| **Understanding** | You can explain every part you're shipping; no "I don't know why this works" |
+
+*Pass mark: 80% and a hardened app with test output, audit screenshots, and completed checklist submitted.*
 
 ---
 
