@@ -50,6 +50,55 @@ This begins Objective 1. The small set of principles that fixes most ugly UIs:
 
 Teach these as *prompt direction*: "apply a consistent 8px spacing scale, one accent color, and clear type hierarchy" beats "make it look nice."
 
+**Concrete examples — bad vs. good:**
+
+```tsx
+// ❌ BAD — cramped, no hierarchy, too many colors
+export default function Clients() {
+  return (
+    <div>
+      <h1 style={{ fontSize: '12px', color: '#000' }}>Clients</h1>
+      <table style={{ width: '100%', border: '1px solid #ccc' }}>
+        <tr>
+          <td style={{ padding: '2px', color: '#0066ff' }}>Name</td>
+          <td style={{ padding: '2px', color: '#ff0000' }}>Email</td>
+          <td style={{ padding: '2px', color: '#00aa00' }}>Status</td>
+        </tr>
+        {/* rows... */}
+      </table>
+    </div>
+  );
+}
+
+// ✅ GOOD — hierarchy, consistent spacing, restrained palette
+export default function Clients() {
+  return (
+    <div className="space-y-8 px-6 py-8">
+      <div>
+        <h1 className="text-3xl font-bold text-slate-900">Clients</h1>
+        <p className="text-sm text-slate-500 mt-2">Manage your client list</p>
+      </div>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeader>Name</TableHeader>
+            <TableHeader>Email</TableHeader>
+            <TableHeader>Status</TableHeader>
+          </TableRow>
+        </TableHead>
+        {/* rows using consistent spacing and semantic colors */}
+      </Table>
+    </div>
+  );
+}
+```
+
+**The levers in action:**
+- **Hierarchy:** h1 is large and bold; column headers smaller; body text smallest
+- **Spacing:** `space-y-8` (consistent vertical gaps), `px-6 py-8` (generous padding)
+- **Typography:** one font family, three clear sizes (h1, h2, body)
+- **Color:** slate palette (neutral), no accent needed here (save accent for actions)
+
 ---
 
 ## Lesson 6.3 — Component libraries: shadcn/ui (~60 min)
@@ -159,6 +208,73 @@ Screen 2: Claude Design canvas showing a generated UI prototype (dashboard, form
 
 **"Glow-up."** Each learner restyles their invoice-tracker with a component library and the four levers, makes it **responsive** (works at phone width), then writes a 3-point critique of their own before/after. Deliverable: before/after screenshots (desktop + mobile) + the critique.
 
+### Step-by-step walkthrough:
+
+**Phase 1: Capture a "before" screenshot (5 min)**
+1. Run your app: `npm run dev`
+2. Open `http://localhost:3000/clients` in your browser
+3. Take a screenshot (desktop view)
+4. Resize the browser to ~375px mobile width and take a second screenshot
+5. Save both — you'll use them in your final critique
+
+**Phase 2: Install shadcn/ui (10 min)**
+1. In your terminal: `npx shadcn@latest init`
+2. Follow the prompts (use defaults)
+3. Add components: `npx shadcn@latest add button input table card badge`
+
+**Phase 3: Restyle the `/clients` page (25 min)**
+
+Use Cursor with this design direction prompt:
+
+```
+Restyle the /clients page using shadcn/ui components and apply the four design levers:
+1. Hierarchy: make the page title (h1) large and bold, section headers medium, body text small
+2. Spacing: use consistent gap/padding (8px scale), with at least 24px between sections
+3. Typography: use the Inter font (or system default), limit to 3 sizes
+4. Color: use a neutral base (slate-900 for text, slate-50 for background), blue as accent for buttons
+
+Specific changes:
+- Replace the raw <table> with shadcn Table component
+- Add a header with "Clients" title + "Manage your clients" subtitle
+- Wrap in a Card with consistent padding
+- Make buttons (add client, etc.) use the Button component with blue accent
+- NO horizontal scroll, NO cramped spacing
+- Test responsiveness: columns stack on small screens
+```
+
+Then review the diff:
+- ✅ Check that `<Table>`, `<Button>`, `<Card>` are used
+- ✅ Check for consistent spacing classes (`gap-4`, `p-6`, `space-y-8`)
+- ✅ Check that colors are consistent (no random colors)
+- ✅ Check that heading sizes vary (h1 larger than body)
+
+**Phase 4: Test responsive (mobile) view (5 min)**
+1. Keep your app running
+2. Open DevTools (F12)
+3. Click the device toolbar icon (or Ctrl+Shift+M)
+4. Set it to `iPhone 12` or a 375px-width preset
+5. Scroll and test:
+   - ✅ Table columns stack into cards (not a horizontal scrollbar)
+   - ✅ Buttons are big enough to tap (~44px)
+   - ✅ Text is readable (no tiny font)
+6. Take a screenshot
+
+**Phase 5: Critique your own work (5 min)**
+
+Compare before/after. List 3 specific changes you made and why:
+
+```
+1. Increased h1 font size from 16px to 32px → improved visual hierarchy
+2. Added 24px gap between sections → more breathing room (Tailwind space-y-6)
+3. Changed button colors from gray to blue accent → clear call-to-action
+```
+
+### Deliverable:
+- Before screenshot (desktop + mobile)
+- After screenshot (desktop + mobile)
+- 3-point critique (specific changes + reasoning)
+- Optional: screenshot of your `/invoices` page restyled the same way
+
 ---
 
 ## Quiz questions (preview)
@@ -225,9 +341,42 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 
 **Scenario-based judgment checks:**
 
-- (a) Your page looks professional on desktop but text overlaps on phones. What did you miss?
-- (b) You're building a settings page. Would you prototype in Claude Design or code directly in Cursor? Why?
-- (c) Your colors pass contrast checks but feel jarring. What principle might help?
+*For each scenario, explain the problem and how to fix it.*
+
+- **(a) Desktop looks pro, mobile is broken:** Your page looks professional on desktop but text overlaps on phones. What did you miss?
+  - ✅ **Correct:** Responsive design (mobile-first). Fix: Add responsive classes to stack columns on mobile (`flex-col md:flex-row`), increase tap targets, test at 375px width.
+  - ❌ **Avoid:** Ignoring mobile and hoping desktop CSS works everywhere.
+
+- **(b) Prototype vs. code:** You're building a complex settings page with multiple sections. Would you prototype in Claude Design or code directly in Cursor? Why?
+  - ✅ **Correct:** Claude Design first. Complex layouts benefit from visual prototyping before code. Once approved, hand to Claude Code to implement.
+  - ❌ **Avoid:** Guessing the layout in code, building it, then realizing mid-way it needs restructuring.
+
+- **(c) Contrast passes, colors feel jarring:** Your colors pass contrast checks but the page feels chaotic. What principle might help?
+  - ✅ **Correct:** Restrain your palette. Pick 1 neutral base + 1 accent + semantic colors (success/error). Fix: swap multiple bright colors for a cohesive scheme.
+  - ❌ **Avoid:** Adding more colors to differentiate things. Restraint, not variety, makes design feel intentional.
+
+- **(d) Spacing feels cramped:** You restyled with shadcn, but the layout feels cramped even on desktop. What's wrong?
+  - ✅ **Correct:** Spacing isn't consistent or generous enough. Fix: use Tailwind's spacing scale (e.g., `gap-8 p-6`) and check that gaps between sections are ≥ 24px.
+  - ❌ **Avoid:** Adding more content. The problem is space, not information.
+
+- **(e) Hierarchy is unclear:** Users don't know where to look on the page. The design is colorful but confusing. What's missing?
+  - ✅ **Correct:** Visual hierarchy. Fix: make the primary action (e.g., "Create Invoice" button) largest and most prominent; de-emphasize secondary info.
+  - ❌ **Avoid:** Making everything bold/big. Hierarchy comes from *contrast*, not volume.
+
+---
+
+**Rubric checklist (self-review before submission):**
+
+| Criterion | Check (✅ = pass) |
+|-----------|-------------|
+| **Hierarchy** | Page title (h1) is clearly the most prominent; section headers and body text scale down clearly |
+| **Spacing** | Consistent gaps between elements (no cramped areas); at least 24px between major sections |
+| **Typography** | Single font family; 3 clear sizes (h1, body, small); readable line-height (1.5+) |
+| **Color** | Restrained palette (neutral base + 1 accent + semantic colors); no pure black on white |
+| **Responsive** | Works at 375px width; columns stack on mobile; no horizontal scroll; tap targets ≥ 44px |
+| **Component library** | Uses shadcn/ui Button, Input, Table, Card (not raw HTML/divs) |
+| **Before/after screenshots** | Desktop view + mobile view (375px) for both versions |
+| **Critique** | 3 specific design changes named with reasoning (e.g., "increased h1 from 16px to 32px for hierarchy") |
 
 *Pass mark: 80% and a restyled, responsive screen submitted.*
 
