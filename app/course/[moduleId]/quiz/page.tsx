@@ -6,6 +6,7 @@ import { getModuleQuizByVersion } from "@/lib/quizzes";
 import { getModuleMetadata } from "@/lib/module-metadata";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useVersion } from "@/lib/VersionContext";
 import type { Version } from "@/lib/VersionContext";
 
 interface QuizResult {
@@ -17,6 +18,8 @@ interface QuizResult {
 export default function QuizPage() {
   const params = useParams();
   const moduleId = parseInt(params.moduleId as string);
+  const { version } = useVersion();
+  const isKids = version === "kids";
 
   const [quiz, setQuiz] = useState<any>(null);
   const [responses, setResponses] = useState<Record<string, number>>({});
@@ -71,33 +74,33 @@ export default function QuizPage() {
 
   if (!quiz) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
-        <div className="max-w-2xl mx-auto text-center text-slate-400">
-          Loading quiz...
+      <div className={`min-h-screen py-12 px-4 ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
+        <div className={`max-w-2xl mx-auto text-center ${isKids ? "text-purple-600" : "text-slate-400"}`}>
+          {isKids ? "Loading your quiz! 🎮" : "Loading quiz..."}
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
+    <div className={`min-h-screen py-12 px-4 ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <Link
           href={`/course/${moduleId}`}
-          className="text-blue-400 hover:text-blue-300 text-sm mb-6 inline-block"
+          className={`text-sm mb-6 inline-block transition ${isKids ? "text-purple-600 hover:text-purple-800" : "text-blue-400 hover:text-blue-300"}`}
         >
           ← Back to Lesson
         </Link>
 
-        <h1 className="text-4xl font-bold text-white mb-2">{meta.title}</h1>
-        <p className="text-slate-400 mb-8">
-          Quiz: Answer all questions. 80% to pass.
+        <h1 className={`text-4xl font-bold mb-2 ${isKids ? "text-purple-700" : "text-white"}`}>{meta.title}</h1>
+        <p className={`mb-8 ${isKids ? "text-purple-600" : "text-slate-400"}`}>
+          {isKids ? "🎯 Answer all questions. 80% to pass!" : "Quiz: Answer all questions. 80% to pass."}
         </p>
 
         {submitted && result ? (
           /* Results Screen */
-          <div className="bg-slate-800 rounded-lg p-8 border-2 border-slate-700">
+          <div className={`rounded-lg p-8 border-2 ${isKids ? "bg-white border-purple-300" : "bg-slate-800 border-slate-700"}`}>
             <div className="text-center mb-8">
               <div
                 className={`text-6xl font-bold mb-2 ${
@@ -113,25 +116,23 @@ export default function QuizPage() {
               >
                 {result.passed ? "✓ Quiz Passed!" : "Quiz Failed"}
               </h2>
-              <p className="text-slate-300 mt-2">
-                You scored {result.score} out of {quiz.questions.length}
+              <p className={`mt-2 ${isKids ? "text-purple-600" : "text-slate-300"}`}>
+                {isKids ? `You scored ${result.score}/${quiz.questions.length} — Amazing! 🎉` : `You scored ${result.score} out of ${quiz.questions.length}`}
               </p>
             </div>
 
             {result.passed && (
-              <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4 mb-6">
-                <p className="text-green-400 font-medium">
-                  ✓ You've unlocked the next module! Check your checklist to
-                  mark the quiz as complete.
+              <div className={`rounded-lg p-4 mb-6 ${isKids ? "bg-green-100 border border-green-300" : "bg-green-500/10 border border-green-500/20"}`}>
+                <p className={`font-medium ${isKids ? "text-green-700" : "text-green-400"}`}>
+                  {isKids ? "🚀 Next level unlocked! Mark your checklist complete to unlock the next module." : "✓ You've unlocked the next module! Check your checklist to mark the quiz as complete."}
                 </p>
               </div>
             )}
 
             {!result.passed && (
-              <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4 mb-6">
-                <p className="text-yellow-400 font-medium">
-                  You need 80% to pass. You can retake the quiz with a fresh
-                  question pool.
+              <div className={`rounded-lg p-4 mb-6 ${isKids ? "bg-yellow-100 border border-yellow-300" : "bg-yellow-500/10 border border-yellow-500/20"}`}>
+                <p className={`font-medium ${isKids ? "text-yellow-700" : "text-yellow-400"}`}>
+                  {isKids ? "Almost there! 💪 You need 80% to pass. Try again with fresh questions." : "You need 80% to pass. You can retake the quiz with a fresh question pool."}
                 </p>
               </div>
             )}
@@ -139,13 +140,13 @@ export default function QuizPage() {
             <div className="flex gap-4">
               <button
                 onClick={handleRetake}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition"
+                className={`flex-1 font-medium py-2 rounded-lg transition ${isKids ? "bg-purple-500 hover:bg-purple-600 text-white" : "bg-blue-600 hover:bg-blue-700 text-white"}`}
               >
-                Retake Quiz
+                {isKids ? "Try Again 🔄" : "Retake Quiz"}
               </button>
               <Link
                 href={`/course/${moduleId}`}
-                className="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-medium py-2 rounded-lg transition text-center"
+                className={`flex-1 font-medium py-2 rounded-lg transition text-center ${isKids ? "bg-slate-200 hover:bg-slate-300 text-purple-700" : "bg-slate-700 hover:bg-slate-600 text-white"}`}
               >
                 Back to Lesson
               </Link>
@@ -153,17 +154,17 @@ export default function QuizPage() {
 
             {/* Attempt History */}
             {attempts.length > 1 && (
-              <div className="mt-8 pt-8 border-t border-slate-700">
-                <h3 className="text-lg font-bold text-white mb-4">
-                  Attempt History
+              <div className={`mt-8 pt-8 border-t ${isKids ? "border-purple-200" : "border-slate-700"}`}>
+                <h3 className={`text-lg font-bold mb-4 ${isKids ? "text-purple-700" : "text-white"}`}>
+                  {isKids ? "📊 Your Attempts" : "Attempt History"}
                 </h3>
                 <div className="space-y-2 text-sm">
                   {attempts.map((a: any, idx: number) => (
-                    <div key={idx} className="flex justify-between text-slate-300">
+                    <div key={idx} className={`flex justify-between ${isKids ? "text-purple-700" : "text-slate-300"}`}>
                       <span>Attempt {a.attempt_no}</span>
                       <span
                         className={
-                          a.passed ? "text-green-400" : "text-red-400"
+                          a.passed ? (isKids ? "text-green-600 font-bold" : "text-green-400") : (isKids ? "text-red-600 font-bold" : "text-red-400")
                         }
                       >
                         {Math.round((a.score / quiz.questions.length) * 100)}%
@@ -180,18 +181,18 @@ export default function QuizPage() {
             {quiz.questions.map((q: any, idx: number) => (
               <div
                 key={q.id}
-                className="bg-slate-800 rounded-lg p-6 border border-slate-700"
+                className={`rounded-lg p-6 border ${isKids ? "bg-white border-purple-200" : "bg-slate-800 border-slate-700"}`}
               >
-                <h3 className="text-lg font-bold text-white mb-4">
-                  Question {idx + 1}
+                <h3 className={`text-lg font-bold mb-4 ${isKids ? "text-purple-700" : "text-white"}`}>
+                  {isKids ? `🎯 Question ${idx + 1}` : `Question ${idx + 1}`}
                 </h3>
-                <p className="text-slate-200 mb-4">{q.text}</p>
+                <p className={`mb-4 ${isKids ? "text-slate-700" : "text-slate-200"}`}>{q.text}</p>
 
                 <div className="space-y-2">
                   {q.options.map((option: string, optIdx: number) => (
                     <label
                       key={optIdx}
-                      className="flex items-center gap-3 p-3 rounded-lg bg-slate-700 hover:bg-slate-600 cursor-pointer transition"
+                      className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer transition ${isKids ? "bg-purple-50 hover:bg-purple-100 border border-purple-200" : "bg-slate-700 hover:bg-slate-600"}`}
                     >
                       <input
                         type="radio"
@@ -206,7 +207,7 @@ export default function QuizPage() {
                         }
                         className="w-4 h-4"
                       />
-                      <span className="text-slate-200">{option}</span>
+                      <span className={isKids ? "text-slate-700" : "text-slate-200"}>{option}</span>
                     </label>
                   ))}
                 </div>
@@ -216,9 +217,9 @@ export default function QuizPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white font-bold py-3 rounded-lg transition"
+              className={`w-full font-bold py-3 rounded-lg transition ${isKids ? "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:from-purple-400 disabled:to-pink-400 text-white" : "bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white"}`}
             >
-              {loading ? "Submitting..." : "Submit Quiz"}
+              {loading ? (isKids ? "Checking Answers... 🤔" : "Submitting...") : (isKids ? "Submit Quiz 🚀" : "Submit Quiz")}
             </button>
           </form>
         )}
