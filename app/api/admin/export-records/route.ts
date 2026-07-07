@@ -101,6 +101,17 @@ export async function GET(req: NextRequest) {
       })
     );
 
+    // CSV-safe escaper (prevents formula injection)
+    function csvSafe(value: any): string {
+      const s = String(value ?? "");
+      let escaped = s.replace(/"/g, '""');
+      // Prevent formula injection: prefix with ' if starts with formula chars
+      if (/^[=+\-@\t\r]/.test(escaped)) {
+        escaped = "'" + escaped;
+      }
+      return `"${escaped}"`;
+    }
+
     // Generate CSV
     const headers = [
       "Learner ID",
@@ -119,19 +130,19 @@ export async function GET(req: NextRequest) {
     ];
 
     const csvRows = records.map((record) => [
-      record.learner_id,
-      `"${record.learner_name}"`,
-      `"${record.learner_email}"`,
-      record.enrolled_at,
-      record.enrollment_status,
+      csvSafe(record.learner_id),
+      csvSafe(record.learner_name),
+      csvSafe(record.learner_email),
+      csvSafe(record.enrolled_at),
+      csvSafe(record.enrollment_status),
       record.modules_completed,
       record.quizzes_passed,
-      record.capstone_result,
-      record.capstone_submitted_at,
-      record.certificate_issued,
-      record.certificate_id,
-      record.certificate_issued_at,
-      record.account_created_at,
+      csvSafe(record.capstone_result),
+      csvSafe(record.capstone_submitted_at),
+      csvSafe(record.certificate_issued),
+      csvSafe(record.certificate_id),
+      csvSafe(record.certificate_issued_at),
+      csvSafe(record.account_created_at),
     ]);
 
     const csvContent = [
