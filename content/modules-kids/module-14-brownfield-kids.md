@@ -69,6 +69,36 @@ Then it helps you add the feature without breaking anything.
 
 ---
 
+## Quiz Questions (Preview)
+
+Here are your three quiz questions. Study these!
+
+**Q14-k1:** The brownfield golden rule is:
+- (a) Rewrite it all your way
+- (b) **Change minimum, match the code around it, prove you didn't break anything** ✓
+- (c) Never use tests
+- (d) Don't read the code
+
+*Why:* Someone built this code before you. Respect their work. Change only what you need to, write it the way they did, and test that you didn't break anything. Small, careful changes beat big rewrites.
+
+**Q14-k2:** Before changing existing code, assess:
+- (a) Its color scheme
+- (b) **The blast radius (what depends on it)** ✓
+- (c) File size only
+- (d) Who wrote it
+
+*Why:* One line can break something far away if other code depends on it. Ask: "If I change this, what breaks?" Know the risk before you act.
+
+**Q14-k3:** If an AI tries to reformat 40 files for a one-line fix, you should:
+- (a) Accept it
+- (b) **Reject scope creep — keep the change tiny** ✓
+- (c) Delete the repo
+- (d) Disable tests
+
+*Why:* AI loves to "helpfully" refactor everything. But that's scope creep! A one-line bug fix should touch one file, maybe two. Reject the extra changes. Scope creep = more chances to break stuff.
+
+---
+
 ## Knowledge Check (Quiz)
 
 1. **How do you start understanding an existing codebase?**

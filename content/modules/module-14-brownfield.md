@@ -95,6 +95,36 @@ Real repos have old patterns, inconsistencies, and debt. Teach judgment: match t
 
 ---
 
+## Quiz questions (preview)
+
+These are the three questions you'll see on the quiz. Study these to prepare:
+
+**Q14-1:** Brownfield development means:
+- (a) building in dirt
+- (b) **working on an existing codebase with constraints** ✓
+- (c) always starting fresh
+- (d) removing features
+
+*Why:* Greenfield = build from scratch, choose everything. Brownfield = inherit an existing system with its history, conventions, and tech debt. Most real jobs are brownfield.
+
+**Q14-2:** When reading unfamiliar code, start with:
+- (a) deleting it
+- (b) **the README or entry point** ✓
+- (c) asking for a rewrite
+- (d) guessing
+
+*Why:* The README and entry points tell you what the app does and how it's organized — the architecture. With that foundation, the details make sense. Never read a codebase bottom-up; start at the top.
+
+**Q14-3:** Refactoring during brownfield work:
+- (a) always necessary
+- (b) **only touch what you need to change** ✓
+- (c) delete everything first
+- (d) optional if it works
+
+*Why:* Restraint is a skill. Match existing patterns, not your preferences. Resist rewrites; scope creep is how you introduce bugs. Change the minimum needed, add a test, prove it works, ship it.
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Orient:** summarize the practice repo's architecture and how the search feature flows through it.
