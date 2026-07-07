@@ -55,7 +55,13 @@ This begins Objective 2. Beginners paste code at the AI and say "fix it." The be
 
 A stack trace reads top-down: the top line is usually *what* went wrong, and the file:line tells you *where*. Extract those two facts first.
 
-*[SCREENSHOT: a Next.js error overlay with the message and file:line highlighted.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Next.js Error Overlay]**
+
+Browser error overlay: red error message, file name and line number highlighted, stack trace below. Shows exactly where and what went wrong.
+
+---
 
 ---
 
@@ -81,7 +87,13 @@ This delivers Objective 3. AI is excellent at debugging — *if* you give it con
 
 **Multimodal tip (Module 2):** you can also *paste a screenshot* of the broken screen or the error overlay — the AI reads the visual directly, which is often faster than describing what's wrong.
 
-*[SCREENSHOT: a debugging chat where the pasted error + @-mentioned file yields a root-cause explanation.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Debugging Chat]**
+
+Claude Code or Cursor chat: user pastes error message and mentions @app/clients/page.tsx, asks "why are clients empty?" → AI response identifies root cause ("RLS is on but no authenticated session").
+
+---
 
 ---
 
@@ -124,15 +136,25 @@ Then **verify**: reproduce the original trigger and confirm it's gone; check the
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Read & explain:** given a function you didn't write, explain it in three sentences and flag one risky line.
+**Objective 1 — Read & explain (Quiz Q8-1):**
+- Q8-1: Tests understanding of reading code you don't own
+- *Practical:* Given an AI function, explain in 3 sentences + flag one risky line (auth, data, external call)
 
-**Objective 2 — Diagnose:** given an error and a snippet, state the root cause and the file:line.
+**Objective 2 — Diagnose (Quiz Q8-2):**
+- Q8-2: "An AI 'fix' that disables RLS..." ✅ Tests root-cause vs. symptom understanding
+- *Practical:* Given an error + code snippet, state root cause + file:line
 
-**Objective 3 — Use AI to fix:** write a strong debugging prompt with all four parts.
+**Objective 3 — Use AI to debug (Quiz Q8-3):**
+- Q8-3: "Before applying an AI-proposed fix..." ✅ Tests verification discipline
+- *Practical:* Write a strong debugging prompt with all 4 parts: error message, code (@-mention), expected vs. actual, what you tried
+  - **SAMPLE:** "My /clients page shows empty table. Expected: my saved clients. Query: `supabase.from('clients').select()`. No error. RLS is on. Code: @app/clients/page.tsx. I tried refreshing and logging in/out — same empty result. What's the root cause?"
 
-**Objective 4 — Assess a fix:** shown a bug and two fixes (one root-cause, one hides the symptom via disabling RLS), pick the right one and explain why the other is dangerous.
+**Objective 4 — Assess fix safety (Q8-4):**
+- Q8-4: Tests evaluating fix correctness
+- *Practical:* Given a bug + two fixes (one correct, one hides symptom), pick the right one + explain why the other is dangerous
+  - **SAMPLE:** "Bug: empty client list. Fix A: add RLS policy so authenticated users see their clients. Fix B: set RLS to off. Answer: Fix A (correct). Fix B is dangerous because it removes security and exposes all users' data."
 
-*Pass mark: 80% and the bug hunt completed with root causes named.*
+*Pass mark: 80% and bug hunt completed.*
 
 ---
 

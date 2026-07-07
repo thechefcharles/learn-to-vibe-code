@@ -67,7 +67,13 @@ Completes Objective 2. Before building, decompose (the Module 3 habit, for agent
 3. **Hand-off to human**: show drafts for review/approval.
 4. Tool `sendEmail(draft)` → sends only approved ones.
 
-*[SCREENSHOT: a diagram of the reminder-assistant workflow (tool → agent → human approval → tool).]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Workflow Diagram]**
+
+Diagram showing: getOverdueInvoices → Agent → Draft Reminders → Human Approval Queue → SendEmail. Flowchart proves sequence and hand-offs.
+
+---
 
 ---
 
@@ -94,7 +100,13 @@ Why: you can **stub** it for tests (no live AI calls, deterministic), and **swap
 
 **Step 5 — Send approved drafts** via `sendEmail` (mock or real). Verify end to end.
 
-*[SCREENSHOT: the app showing AI-drafted reminders in an approval queue.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Approval Queue UI]**
+
+App page showing: list of AI-drafted reminder emails with Approve/Edit/Reject buttons. Proof of human-in-the-loop checkpoint working.
+
+---
 
 ---
 

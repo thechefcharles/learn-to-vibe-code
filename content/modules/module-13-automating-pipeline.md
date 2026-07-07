@@ -62,7 +62,13 @@ Confirm with `claude mcp list`.
 
 **Notion as your project's source of truth:** after connecting Notion (run `/mcp` for the OAuth flow, then share the pages you want Claude to access), Claude Code can **read a feature checklist, tick items off as it ships them, and write specs/decisions back** — so your plan (Module 3) and your automation live in one place. Great for a solo builder keeping a living TODO the agent actually maintains.
 
-*[SCREENSHOT: `claude mcp list` showing supabase, github, and vercel connected.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: MCP List Output]**
+
+Terminal showing: `claude mcp list` with three connected servers: supabase (schema access), github (PR/issues), vercel (deploys). Proof: Claude Code can act on all systems.
+
+---
 
 **MCP vs. CLI — both matter:** MCP for interactive read/act (inspect a schema, check a deploy, comment on a PR); the matching **CLIs** (`gh`, `supabase`, `vercel`) for versioned, scripted operations, which Claude Code runs via its shell. Rule: **MCP for current-state, CLI for migrations/history.** Teach both; they're complementary.
 
@@ -92,7 +98,13 @@ description: Standard steps to ship a feature: branch, test, conventional commit
 
 **Installing skills from GitHub:** skills are portable, shared as repos. Install via a skills CLI or plugin marketplace — e.g. `npx skills add owner/repo` — to adopt vetted workflows without writing them. **Skill vs. [CLAUDE.md](http://CLAUDE.md):** applies to nearly every task → [CLAUDE.md](http://CLAUDE.md); occasional workflow → skill.
 
-*[SCREENSHOT: a [SKILL.md](http://SKILL.md) file and a skill being installed from a GitHub repo.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Skill Install]**
+
+Left: `.claude/skills/ship-feature/SKILL.md` file open (visible SKILL.md with task steps). Right: Terminal showing `npx skills add owner/repo` command. Proof: skills are installed and loaded.
+
+---
 
 ---
 

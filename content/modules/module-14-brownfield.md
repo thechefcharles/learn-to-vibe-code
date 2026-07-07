@@ -38,7 +38,13 @@ This delivers Objective 1. A repeatable way to map an unfamiliar codebase, using
 - **Find the seams:** where's the data layer, routing, auth, tests? Trace one real feature end to end.
 - **Note the conventions:** naming, folder patterns, state management — you'll match them, not fight them.
 
-*[SCREENSHOT: an AI-generated architecture summary of the practice repo next to its file tree.]*
+---
+
+**[SCREENSHOT PLACEHOLDER: Repo Architecture Summary]**
+
+Left: File tree of brownfield-practice-repo (app/, lib/, components/, pages/). Right: Claude Code output: "This is a Next.js Reading List app. Main layers: auth (Supabase), data (Postgres), UI (React + Tailwind)..." Proof: AI can map unfamiliar repos.
+
+---
 
 ---
 
