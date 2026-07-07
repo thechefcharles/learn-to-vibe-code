@@ -175,12 +175,51 @@ Here are your three quiz questions. Study these!
 
 ---
 
-## Knowledge Check (Quiz)
+## Knowledge Check (Quiz & Scenarios)
+
+### Written checks:
 
 1. **List the tools in our stack and why each one.**
+   - *Example answer:* "Next.js (full-stack, fast), Supabase (database + auth), Tailwind (styling), GitHub (version control), Vercel (deployment), Cursor (AI coding)."
+
 2. **Name two alternatives to Next.js and when you'd use them.**
+   - *Example answer:* "React (if you want just frontend); Vue (if you want simpler syntax). React is lighter but needs separate backend."
+
 3. **When would you use a different database than Supabase?**
+   - *Example answer:* "Firebase if you need realtime collaboration (like Google Docs); MongoDB if your data is really flexible."
+
 4. **What makes a good programming tool?**
+   - *Example answer:* "Good community (help when stuck), easy to learn, free or cheap, fast, good docs, and you're not trapped."
+
+### Scenario checks:
+
+- **(a) You need a real-time multiplayer game.**
+  - ✅ **Better stack:** Unity (engine) + Firebase (realtime), not Next.js + Supabase.
+
+- **(b) You're building a static blog (no database needed).**
+  - ✅ **Better stack:** Astro + Vercel (faster than Next.js for static).
+
+- **(c) You're a complete beginner.**
+  - ✅ **Use our stack:** It's simple, well-documented, and complete.
+
+- **(d) Cost is zero (student with no money).**
+  - ✅ **Options:** VS Code (free), React (free), Firebase free tier, GitHub free, Netlify free.
+
+- **(e) You need an app for iPhone and Android.**
+  - ✅ **Better:** React Native or Flutter (mobile frameworks), not Next.js.
+
+---
+
+**Rubric:**
+| ✅ | Check |
+|----|---|
+| ✅ | Can name the tools in your stack |
+| ✅ | Understand pros/cons of each layer |
+| ✅ | Know when to use alternatives |
+| ✅ | Can evaluate tools (community, cost, etc.) |
+| ✅ | Understand "it depends" means you decide what |
+
+*Pass mark: 80% and a thoughtful tool comparison submitted.*
 
 ---
 
