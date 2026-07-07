@@ -53,29 +53,33 @@ export default function SignIn() {
 
           <form onSubmit={handleSignIn} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-ink mb-2">
                 Email
               </label>
               <input
+                id="email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-2 bg-paper border border-violet-light/30 rounded-lg text-ink placeholder-slate focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/20 transition"
                 placeholder="your@email.com"
+                aria-label="Email address"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">
+              <label htmlFor="signin-password" className="block text-sm font-medium text-ink mb-2">
                 Password
               </label>
               <input
+                id="signin-password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2 bg-paper border border-violet-light/30 rounded-lg text-ink placeholder-slate focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/20 transition"
                 placeholder="••••••••"
+                aria-label="Password"
                 required
               />
             </div>

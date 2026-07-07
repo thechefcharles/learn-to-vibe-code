@@ -181,29 +181,33 @@ export default function SignUp() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-ink mb-2">
                 Password
               </label>
               <input
+                id="password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-2 bg-paper border border-violet-light/30 rounded-lg text-ink placeholder-slate focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/20 transition"
                 placeholder="••••••••"
+                aria-label="Password"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-ink mb-2">
+              <label htmlFor="confirm-password" className="block text-sm font-medium text-ink mb-2">
                 Confirm Password
               </label>
               <input
+                id="confirm-password"
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="w-full px-4 py-2 bg-paper border border-violet-light/30 rounded-lg text-ink placeholder-slate focus:outline-none focus:border-violet focus:ring-2 focus:ring-violet/20 transition"
                 placeholder="••••••••"
+                aria-label="Confirm password"
                 required
               />
             </div>

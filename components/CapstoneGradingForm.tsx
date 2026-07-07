@@ -123,7 +123,7 @@ export function CapstoneGradingForm({
             </p>
           </div>
         </div>
-        <p className="text-xs text-slate-500 mt-3 text-center">
+        <p className="text-xs text-slate-600 mt-3 text-center">
           Pass requires: all criteria ≥ 2 points AND total ≥ 80%
         </p>
       </div>

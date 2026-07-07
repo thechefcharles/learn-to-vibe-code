@@ -222,7 +222,7 @@ export function AnimatedDashboard({ data }: AnimatedDashboardProps) {
                 </h3>
                 <p className="text-sm text-slate relative z-10">{getBadgeDescription(badge.badge_key)}</p>
                 <motion.p
-                  className="text-xs text-slate-500 mt-3 relative z-10"
+                  className="text-xs text-slate-600 mt-3 relative z-10"
                   initial={{ opacity: 0.6 }}
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.2 }}

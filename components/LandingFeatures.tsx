@@ -86,7 +86,7 @@ export function LandingFeatures() {
               <p className={`${isKids ? "text-lg" : "text-base"} text-slate mb-4`}>
                 {feature.description}
               </p>
-              <p className={`${isKids ? "text-base" : "text-sm"} text-slate-500`}>
+              <p className={`${isKids ? "text-base" : "text-sm"} text-slate-600`}>
                 {feature.details}
               </p>
             </motion.div>

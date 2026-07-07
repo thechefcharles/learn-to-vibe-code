@@ -18,7 +18,7 @@ export function VersionToggle() {
       transition={{ duration: 0.5 }}
       className="fixed top-4 left-4 z-50 flex gap-2 items-center"
     >
-      <span className="text-xs text-slate-500 font-medium hidden sm:inline">
+      <span className="text-xs text-slate-600 font-medium hidden sm:inline">
         MODE:
       </span>
       <div className="flex gap-1 p-1 bg-white/80 backdrop-blur-md rounded-full border border-slate-200/50 shadow-lg">
