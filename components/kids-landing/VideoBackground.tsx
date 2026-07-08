@@ -1,52 +1,45 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTheme } from '@/lib/ThemeContext';
 
 export function VideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { currentTheme } = useTheme();
-  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const handleCanPlay = () => {
-      setIsReady(true);
-      if (currentTheme === 'violet') {
-        video.play().catch(() => {});
-      }
-    };
-
-    if (video.readyState >= 2) {
-      handleCanPlay();
+    if (currentTheme === 'violet') {
+      video.style.display = 'block';
+      video.play().catch(() => {});
     } else {
-      video.addEventListener('canplay', handleCanPlay);
-      return () => video.removeEventListener('canplay', handleCanPlay);
+      video.style.display = 'none';
+      video.pause();
     }
   }, [currentTheme]);
 
-  useEffect(() => {
-    if (videoRef.current && isReady) {
-      if (currentTheme === 'violet') {
-        videoRef.current.play().catch(() => {});
-      } else {
-        videoRef.current.pause();
-      }
-    }
-  }, [currentTheme, isReady]);
-
   return (
-    <video
-      ref={videoRef}
-      muted
-      loop
-      playsInline
-      className="fixed inset-0 w-full h-full object-cover -z-10 transition-opacity duration-500"
-      style={{ opacity: currentTheme === 'violet' ? 1 : 0 }}
-    >
-      <source src="/bg-purple.mp4" type="video/mp4" />
-    </video>
+    <>
+      <video
+        ref={videoRef}
+        muted
+        loop
+        playsInline
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          zIndex: -1,
+          display: 'none',
+        }}
+      >
+        <source src="/bg-purple.mp4" type="video/mp4" />
+      </video>
+    </>
   );
 }
