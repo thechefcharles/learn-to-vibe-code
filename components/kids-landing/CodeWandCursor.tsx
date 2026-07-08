@@ -116,6 +116,27 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
     }
   }, [updateMousePos, trySpawnCodeBlock]);
 
+  // Handle touch position tracking for mobile
+  const handleTouchMove = useCallback((e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length === 0) return;
+    const touch = e.touches[0];
+    const x = touch.clientX;
+    const y = touch.clientY;
+
+    // Update position (throttled via RAF)
+    updateMousePos(x, y);
+
+    // Try to spawn a code block (throttled to 150ms intervals)
+    if (throttleTimeoutRef.current === null) {
+      trySpawnCodeBlock(x, y);
+
+      // Set throttle timeout to prevent rapid spawning attempts
+      throttleTimeoutRef.current = setTimeout(() => {
+        throttleTimeoutRef.current = null;
+      }, 150);
+    }
+  }, [updateMousePos, trySpawnCodeBlock]);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -147,10 +168,11 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
     <div
       ref={mouseTrackerRef}
       onMouseMove={handleMouseMove}
+      onTouchMove={handleTouchMove}
       className="relative w-full min-h-screen overflow-hidden flex items-center justify-center"
       style={{
         cursor: prefersReducedMotion ? 'auto' : 'none',
-        backgroundImage: `url(${bgImage})`,
+        backgroundImage: bgImage.startsWith('url(') ? bgImage : `url(${bgImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -216,7 +238,7 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl font-bold mb-4 font-display"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-4 font-display"
             style={{ color: '#00d9ff' }}
           >
             Build Real Apps.
@@ -226,7 +248,7 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.8 }}
-            className="text-4xl md:text-6xl font-bold mb-6 font-display"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-6xl font-bold mb-6 font-display"
             style={{ color: '#a78bfa' }}
           >
             With AI. In Weeks.
@@ -236,7 +258,7 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-lg md:text-xl mb-8 text-white/90"
+            className="text-base sm:text-lg md:text-lg lg:text-xl mb-8 text-white/90"
           >
             Learn full-stack development with AI-assisted coding. Go from zero to deployed in 16 modules.
           </motion.p>
@@ -249,13 +271,13 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
           >
             <Link
               href="/auth/sign-up"
-              className="px-8 py-4 bg-cyan-500 text-white font-bold rounded-lg hover:bg-cyan-600 transition-colors duration-300 shadow-lg hover:shadow-xl text-lg"
+              className="px-6 sm:px-8 py-3 sm:py-4 bg-cyan-500 text-white font-bold rounded-lg hover:bg-cyan-600 transition-colors duration-300 shadow-lg hover:shadow-xl text-base sm:text-lg active:scale-95"
             >
               Start Learning Now
             </Link>
             <Link
               href="/demo"
-              className="px-8 py-4 border-2 border-cyan-500 text-cyan-400 font-bold rounded-lg hover:bg-cyan-500/10 transition-colors duration-300 text-lg"
+              className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-cyan-500 text-cyan-400 font-bold rounded-lg hover:bg-cyan-500/10 transition-colors duration-300 text-base sm:text-lg active:scale-95"
             >
               Explore Free Lessons
             </Link>

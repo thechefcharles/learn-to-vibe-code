@@ -36,7 +36,7 @@ export const InteractiveFeatureCard: React.FC<InteractiveFeatureCardProps> = ({
   const [progressValue, setProgressValue] = useState(0);
   const prefersReducedMotion = useReducedMotion();
 
-  const handleMouseEnter = () => {
+  const triggerInteraction = () => {
     if (prefersReducedMotion) return;
 
     setIsHovering(true);
@@ -61,9 +61,27 @@ export const InteractiveFeatureCard: React.FC<InteractiveFeatureCardProps> = ({
     }
   };
 
+  const handleMouseEnter = () => {
+    triggerInteraction();
+  };
+
   const handleMouseLeave = () => {
     setIsHovering(false);
     setProgressValue(0);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    triggerInteraction();
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    // Keep state for a bit longer on touch to show effect
+    setTimeout(() => {
+      setIsHovering(false);
+      setProgressValue(0);
+    }, 1500);
   };
 
   const icon = ICON_MAP[feature.icon];
@@ -71,9 +89,15 @@ export const InteractiveFeatureCard: React.FC<InteractiveFeatureCardProps> = ({
   return (
     <>
       <motion.div
-        className="relative flex flex-col items-center justify-center p-6 rounded-xl border border-cyan-400/30 bg-gradient-to-br from-slate-900/50 to-slate-800/50 backdrop-blur-sm hover:border-cyan-400/60 transition-colors duration-300 cursor-pointer h-full"
+        role="button"
+        tabIndex={0}
+        aria-label={`Feature: ${feature.title}. Tap or hover to interact`}
+        aria-pressed={isHovering}
+        className="relative flex flex-col items-center justify-center p-6 rounded-xl border border-cyan-400/30 bg-gradient-to-br from-slate-900/50 to-slate-800/50 backdrop-blur-sm hover:border-cyan-400/60 transition-colors duration-300 cursor-pointer h-full focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         animate={isHovering && !prefersReducedMotion ? { scale: 1.05 } : { scale: 1 }}
         transition={{ type: 'spring', stiffness: 400, damping: 30 }}
       >

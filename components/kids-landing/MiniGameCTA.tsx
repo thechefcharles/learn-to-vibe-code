@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import { playSound } from '@/lib/sounds';
@@ -25,46 +25,42 @@ const EXPECTED_RESULT = 'const build = () => { ship(); }';
 export const MiniGameCTA: React.FC = () => {
   const [blocks, setBlocks] = useState<CodeBlock[]>(BLOCKS);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [gameWon, setGameWon] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showParticles, setShowParticles] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+
+  // Detect touch capability on mount
+  useEffect(() => {
+    setIsTouchDevice(() => {
+      return (
+        typeof window !== 'undefined' &&
+        (window.matchMedia('(pointer:coarse)').matches ||
+          ('ontouchstart' in window) ||
+          (navigator as any).maxTouchPoints > 0)
+      );
+    });
+  }, []);
 
   // Check if blocks are in correct order
   const checkWin = useCallback((blockOrder: CodeBlock[]) => {
     return blockOrder.every((block, index) => block.correctPosition === index);
   }, []);
 
-  // Handle drag start
-  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, index: number) => {
-    setDraggedIndex(index);
-    playSound('click');
-    e.dataTransfer.effectAllowed = 'move';
-  };
+  // Swap blocks and check for win
+  const swapAndCheck = (index1: number, index2: number) => {
+    if (index1 === index2) return;
 
-  // Handle drag over
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = 'move';
-    playSound('hover');
-  };
-
-  // Handle drop
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>, dropIndex: number) => {
-    e.preventDefault();
-    playSound('click');
-
-    if (draggedIndex === null || draggedIndex === dropIndex) return;
-
-    // Swap blocks
     const newBlocks = [...blocks];
-    [newBlocks[draggedIndex], newBlocks[dropIndex]] = [
-      newBlocks[dropIndex],
-      newBlocks[draggedIndex],
+    [newBlocks[index1], newBlocks[index2]] = [
+      newBlocks[index2],
+      newBlocks[index1],
     ];
 
     setBlocks(newBlocks);
-    setDraggedIndex(null);
+    playSound('click');
 
     // Check for win
     if (checkWin(newBlocks)) {
@@ -75,6 +71,44 @@ export const MiniGameCTA: React.FC = () => {
     }
   };
 
+  // Handle drag start (desktop)
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, index: number) => {
+    setDraggedIndex(index);
+    playSound('click');
+    e.dataTransfer!.effectAllowed = 'move';
+  };
+
+  // Handle drag over (desktop)
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.dataTransfer!.dropEffect = 'move';
+  };
+
+  // Handle drop (desktop)
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>, dropIndex: number) => {
+    e.preventDefault();
+    if (draggedIndex === null) return;
+    swapAndCheck(draggedIndex, dropIndex);
+    setDraggedIndex(null);
+  };
+
+  // Handle tap to select/swap (mobile)
+  const handleTapBlock = (index: number) => {
+    if (selectedIndex === null) {
+      // First tap: select block
+      setSelectedIndex(index);
+      playSound('hover');
+    } else if (selectedIndex === index) {
+      // Second tap on same block: deselect
+      setSelectedIndex(null);
+      playSound('click');
+    } else {
+      // Second tap on different block: swap
+      swapAndCheck(selectedIndex, index);
+      setSelectedIndex(null);
+    }
+  };
+
   // Reset game
   const handleReset = () => {
     setBlocks(BLOCKS);
@@ -82,6 +116,7 @@ export const MiniGameCTA: React.FC = () => {
     setShowConfetti(false);
     setShowParticles(false);
     setDraggedIndex(null);
+    setSelectedIndex(null);
     playSound('click');
   };
 
@@ -103,23 +138,30 @@ export const MiniGameCTA: React.FC = () => {
         {/* Draggable Blocks */}
         <div className="mb-8">
           <label className="text-sm font-semibold text-cyan-400 mb-4 block">
-            Drag to reorder:
+            {isTouchDevice ? 'Tap to reorder:' : 'Drag to reorder:'}
           </label>
           <div className="space-y-3">
             {blocks.map((block, index) => (
               <motion.div
                 key={block.id}
-                draggable
+                draggable={!isTouchDevice}
                 onDragStart={(e: any) => handleDragStart(e, index)}
                 onDragOver={(e: any) => handleDragOver(e)}
                 onDrop={(e: any) => handleDrop(e, index)}
                 onDragEnd={() => setDraggedIndex(null)}
-                className={`p-4 rounded-lg font-mono text-sm cursor-grab active:cursor-grabbing transition-all ${
+                onClick={() => isTouchDevice && handleTapBlock(index)}
+                role="button"
+                tabIndex={0}
+                aria-label={`Code block ${index + 1}: ${block.text}`}
+                aria-pressed={selectedIndex === index}
+                className={`p-4 rounded-lg font-mono text-base cursor-pointer transition-all focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black ${
                   draggedIndex === index
                     ? 'bg-cyan-500/20 border-2 border-cyan-400 opacity-50'
-                    : 'bg-slate-700/80 border-2 border-slate-600 hover:border-cyan-400/60'
+                    : selectedIndex === index
+                      ? 'bg-purple-500/30 border-2 border-purple-400'
+                      : 'bg-slate-700/80 border-2 border-slate-600 hover:border-cyan-400/60'
                 }`}
-                whileHover={{ scale: prefersReducedMotion ? 1 : 1.02 }}
+                whileHover={!isTouchDevice ? { scale: prefersReducedMotion ? 1 : 1.02 } : undefined}
                 whileTap={{ scale: prefersReducedMotion ? 1 : 0.98 }}
               >
                 <div className="flex items-center gap-3">
@@ -166,18 +208,18 @@ export const MiniGameCTA: React.FC = () => {
         </AnimatePresence>
 
         {/* Action Buttons */}
-        <div className="flex gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
           {gameWon ? (
             <>
               <button
                 onClick={handleReset}
-                className="px-6 py-3 rounded-lg font-semibold text-slate-900 bg-slate-300 hover:bg-slate-200 transition-colors"
+                className="px-6 py-3 sm:py-3 rounded-lg font-semibold text-slate-900 bg-slate-300 hover:bg-slate-200 transition-colors active:scale-95 text-base"
               >
                 Try Again
               </button>
               <Link
                 href="/auth/sign-up?version=kids"
-                className="px-8 py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-cyan-400 to-purple-500 hover:shadow-lg hover:shadow-cyan-400/50 transition-all hover:scale-105 active:scale-95 inline-block"
+                className="px-6 sm:px-8 py-3 sm:py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-cyan-400 to-purple-500 hover:shadow-lg hover:shadow-cyan-400/50 transition-all hover:scale-105 active:scale-95 inline-block text-base text-center"
               >
                 Enroll Free →
               </Link>
@@ -185,7 +227,7 @@ export const MiniGameCTA: React.FC = () => {
           ) : (
             <button
               onClick={handleReset}
-              className="px-6 py-3 rounded-lg font-semibold text-white bg-slate-600/50 hover:bg-slate-600 transition-colors"
+              className="px-6 py-3 rounded-lg font-semibold text-white bg-slate-600/50 hover:bg-slate-600 transition-colors active:scale-95 text-base"
             >
               Reset
             </button>

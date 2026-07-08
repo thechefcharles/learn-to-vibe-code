@@ -28,8 +28,21 @@ export const RotatableProjectCard: React.FC<RotatableProjectCardProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
+
+  // Detect touch capability on mount
+  useEffect(() => {
+    setIsTouchDevice(() => {
+      return (
+        typeof window !== 'undefined' &&
+        (window.matchMedia('(pointer:coarse)').matches ||
+          ('ontouchstart' in window) ||
+          (navigator as any).maxTouchPoints > 0)
+      );
+    });
+  }, []);
 
   // Handle mouse down for drag
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -37,7 +50,14 @@ export const RotatableProjectCard: React.FC<RotatableProjectCardProps> = ({
     setDragStart({ x: e.clientX, y: e.clientY });
   };
 
-  // Handle mouse move for drag rotation
+  // Handle touch start for drag
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length === 0) return;
+    setIsDragging(true);
+    setDragStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+  };
+
+  // Handle mouse/touch move for drag rotation
   useEffect(() => {
     if (!isDragging) return;
 
@@ -55,16 +75,35 @@ export const RotatableProjectCard: React.FC<RotatableProjectCardProps> = ({
       setDragStart({ x: e.clientX, y: e.clientY });
     };
 
-    const handleMouseUp = () => {
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 0) return;
+      const deltaX = e.touches[0].clientY - dragStart.y;
+      const deltaY = e.touches[0].clientX - dragStart.x;
+
+      // Scale sensitivity: every 2 pixels = 1 degree
+      const sensitivity = 0.5;
+      setRotation((prev) => ({
+        x: prev.x + deltaX * sensitivity,
+        y: prev.y + deltaY * sensitivity,
+      }));
+
+      setDragStart({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+    };
+
+    const handleEnd = () => {
       setIsDragging(false);
     };
 
     document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener('mouseup', handleEnd);
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener('touchend', handleEnd);
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener('mouseup', handleEnd);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('touchend', handleEnd);
     };
   }, [isDragging, dragStart]);
 
@@ -114,8 +153,9 @@ export const RotatableProjectCard: React.FC<RotatableProjectCardProps> = ({
     <motion.div
       ref={cardRef}
       tabIndex={0}
-      className="group relative cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black rounded-xl transition-transform duration-200"
+      className="group relative focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black rounded-xl transition-transform duration-200"
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
       onMouseEnter={() => !prefersReducedMotion && setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       whileHover={prefersReducedMotion ? undefined : { scale: 1.05 }}
@@ -127,7 +167,7 @@ export const RotatableProjectCard: React.FC<RotatableProjectCardProps> = ({
       style={{
         transform: prefersReducedMotion ? 'none' : transform3D,
         transformStyle: 'preserve-3d',
-        cursor: isDragging ? 'grabbing' : 'grab',
+        cursor: isTouchDevice ? 'default' : isDragging ? 'grabbing' : 'grab',
       }}
     >
       <MotionConfig reducedMotion="user">
@@ -234,7 +274,7 @@ export const RotatableProjectCard: React.FC<RotatableProjectCardProps> = ({
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full px-4 py-3 bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-bold rounded-lg text-center transition-all duration-300 hover:from-cyan-400 hover:to-cyan-300 hover:shadow-lg hover:shadow-cyan-400/30 active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                className="block w-full px-6 py-4 bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-bold rounded-lg text-center transition-all duration-300 hover:from-cyan-400 hover:to-cyan-300 hover:shadow-lg hover:shadow-cyan-400/30 active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-400 text-base"
               >
                 See Project →
               </Link>
@@ -253,8 +293,8 @@ export const RotatableProjectCard: React.FC<RotatableProjectCardProps> = ({
         </motion.div>
       </MotionConfig>
 
-      {/* Drag hint text (show on focus or hover) */}
-      {!prefersReducedMotion && (
+      {/* Drag hint text (show on focus or hover, desktop only) */}
+      {!prefersReducedMotion && !isTouchDevice && (
         <motion.div
           className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-xs text-white/50 font-medium whitespace-nowrap pointer-events-none"
           initial={{ opacity: 0, y: -5 }}

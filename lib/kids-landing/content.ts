@@ -91,6 +91,8 @@ export const KIDS_LANDING_CONTENT: KidsLandingContent = {
     headline: 'You can code anything.',
     subheadline: 'Seriously. From a personal website to a full app — if you can imagine it, you can build it with AI by your side.',
     cta: 'Start Learning Free',
+    // Midjourney hero background image (fallback to gradient if not provided)
+    // Path: /public/midjourney-drafts/hero-bg.png
     backgroundImage: 'linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%)',
   },
   projects: [
