@@ -8,10 +8,54 @@ const VIDEO_SOURCES: Record<string, string> = {
   sunset: '/bg-orange.mp4',
 };
 
+function setupReverseLoop(video: HTMLVideoElement) {
+  let isReversing = false;
+
+  const handleTimeUpdate = () => {
+    if (isReversing) {
+      // Playing backwards
+      if (video.currentTime <= 0.1) {
+        video.currentTime = 0;
+        isReversing = false;
+        video.play();
+      } else {
+        video.currentTime -= 0.03;
+      }
+    }
+  };
+
+  const handleEnded = () => {
+    isReversing = true;
+    video.pause();
+    video.currentTime = video.duration;
+  };
+
+  video.addEventListener('ended', handleEnded);
+  video.addEventListener('timeupdate', handleTimeUpdate);
+
+  return () => {
+    video.removeEventListener('ended', handleEnded);
+    video.removeEventListener('timeupdate', handleTimeUpdate);
+  };
+}
+
 export function VideoBackground() {
   const violetVideoRef = useRef<HTMLVideoElement>(null);
   const sunsetVideoRef = useRef<HTMLVideoElement>(null);
   const { currentTheme } = useTheme();
+
+  // Setup reverse loop for both videos
+  useEffect(() => {
+    if (violetVideoRef.current) {
+      return setupReverseLoop(violetVideoRef.current);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (sunsetVideoRef.current) {
+      return setupReverseLoop(sunsetVideoRef.current);
+    }
+  }, []);
 
   useEffect(() => {
     const violetVideo = violetVideoRef.current;
@@ -57,10 +101,10 @@ export function VideoBackground() {
 
   return (
     <>
-      <video ref={violetVideoRef} muted loop playsInline style={videoStyle}>
+      <video ref={violetVideoRef} muted playsInline style={videoStyle}>
         <source src={VIDEO_SOURCES.violet} type="video/mp4" />
       </video>
-      <video ref={sunsetVideoRef} muted loop playsInline style={videoStyle}>
+      <video ref={sunsetVideoRef} muted playsInline style={videoStyle}>
         <source src={VIDEO_SOURCES.sunset} type="video/mp4" />
       </video>
     </>
