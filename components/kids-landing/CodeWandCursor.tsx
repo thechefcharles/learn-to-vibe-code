@@ -37,10 +37,8 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const mouseTrackerRef = useRef<HTMLDivElement>(null);
   const blockCounterRef = useRef(0);
-  const lastMousePosRef = useRef({ x: 0, y: 0 });
   const lastSpawnTimeRef = useRef(0);
   const throttleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const rafRef = useRef<number | null>(null);
 
   // Check for prefers-reduced-motion on mount
   useEffect(() => {
@@ -55,20 +53,23 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  // Throttled mouse position update using requestAnimationFrame (60fps = ~16ms)
+  // Initialize cursor position and track global mouse move
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    // Start listening immediately on mount
+    window.addEventListener('mousemove', handleGlobalMouseMove);
+
+    return () => {
+      window.removeEventListener('mousemove', handleGlobalMouseMove);
+    };
+  }, []);
+
+  // Direct mouse position update (no RAF throttling)
   const updateMousePos = useCallback((x: number, y: number) => {
-    lastMousePosRef.current = { x, y };
-
-    // Cancel pending RAF if already scheduled
-    if (rafRef.current !== null) {
-      cancelAnimationFrame(rafRef.current);
-    }
-
-    // Schedule state update on next frame
-    rafRef.current = requestAnimationFrame(() => {
-      setMousePos(lastMousePosRef.current);
-      rafRef.current = null;
-    });
+    setMousePos({ x, y });
   }, []);
 
   // Attempt to spawn a code block (throttled to every 150ms, ~5-7 blocks/sec max)
@@ -140,9 +141,6 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
-      }
       if (throttleTimeoutRef.current !== null) {
         clearTimeout(throttleTimeoutRef.current);
       }
