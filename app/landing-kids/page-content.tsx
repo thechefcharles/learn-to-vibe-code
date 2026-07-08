@@ -12,12 +12,22 @@ import { SoundToggle } from '@/components/kids-landing/SoundToggle';
 import { VideoBackground } from '@/components/kids-landing/VideoBackground';
 import { useTheme } from '@/lib/ThemeContext';
 import Link from 'next/link';
+import { useRef, useEffect } from 'react';
 
 export default function KidsLandingPageContent() {
   const { currentTheme } = useTheme();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.style.backgroundColor =
+        currentTheme === 'violet' ? 'transparent' : '#0f172a';
+    }
+  }, [currentTheme]);
 
   return (
     <div
+      ref={containerRef}
       className="relative w-full min-h-screen text-white overflow-x-hidden"
       data-landing-container
       style={{
