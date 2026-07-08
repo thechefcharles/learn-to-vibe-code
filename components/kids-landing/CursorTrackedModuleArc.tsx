@@ -89,11 +89,16 @@ export function CursorTrackedModuleArc({ totalModules = 16 }: CursorTrackedModul
           strokeLinecap="round"
         />
 
-        {/* Filled arc (gradient, animated if motion allowed) */}
+        {/* Filled arc (rainbow gradient, animated if motion allowed) */}
         <defs>
           <linearGradient id="arcGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#06b6d4" /> {/* cyan */}
-            <stop offset="100%" stopColor="#a855f7" /> {/* purple */}
+            <stop offset="0%" stopColor="#ff0000" /> {/* red */}
+            <stop offset="16.66%" stopColor="#ff7f00" /> {/* orange */}
+            <stop offset="33.33%" stopColor="#ffff00" /> {/* yellow */}
+            <stop offset="50%" stopColor="#00ff00" /> {/* green */}
+            <stop offset="66.66%" stopColor="#0000ff" /> {/* blue */}
+            <stop offset="83.33%" stopColor="#4b0082" /> {/* indigo */}
+            <stop offset="100%" stopColor="#9400d3" /> {/* violet */}
           </linearGradient>
         </defs>
 
@@ -103,7 +108,7 @@ export function CursorTrackedModuleArc({ totalModules = 16 }: CursorTrackedModul
           strokeWidth="20"
           fill="none"
           strokeLinecap="round"
-          strokeDasharray={`${(arcPercentage / 100) * 314} 314`} // 314 ≈ arc length
+          strokeDasharray={`${(arcPercentage / 100) * 471} 471`} // 471 = π*150 (accurate arc length for complete fill)
           style={prefersReducedMotion ? {} : { transition: 'stroke-dasharray 100ms ease-out' }}
         />
 
