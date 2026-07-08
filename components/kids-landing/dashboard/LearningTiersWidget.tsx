@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { MODULE_TIERS } from '@/lib/kids-landing/content';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const TIER_COLORS: Record<string, { gradient: string; bg: string }> = {
-  foundations: { gradient: 'from-blue-500 to-cyan-500', bg: 'bg-blue-600/20' },
-  building: { gradient: 'from-purple-500 to-pink-500', bg: 'bg-purple-600/20' },
-  production: { gradient: 'from-green-500 to-emerald-500', bg: 'bg-green-600/20' },
-  landscape: { gradient: 'from-orange-500 to-red-500', bg: 'bg-orange-600/20' },
+const TIER_COLORS: Record<string, { gradient: string; bg: string; style: React.CSSProperties }> = {
+  foundations: { gradient: 'from-blue-500 to-cyan-500', bg: 'bg-blue-600/20', style: { backgroundImage: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(6, 182, 212, 0.15))' } },
+  building: { gradient: 'from-purple-500 to-pink-500', bg: 'bg-purple-600/20', style: { backgroundImage: 'linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(236, 72, 153, 0.15))' } },
+  production: { gradient: 'from-green-500 to-emerald-500', bg: 'bg-green-600/20', style: { backgroundImage: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(5, 150, 105, 0.15))' } },
+  landscape: { gradient: 'from-orange-500 to-red-500', bg: 'bg-orange-600/20', style: { backgroundImage: 'linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(239, 68, 68, 0.15))' } },
 };
 
 export function LearningTiersWidget() {
@@ -32,14 +32,17 @@ export function LearningTiersWidget() {
             key={key}
             onClick={() => toggleTier(key)}
             className={`
-              p-4 rounded-xl bg-gradient-to-br ${TIER_COLORS[key].gradient}
-              bg-opacity-5 backdrop-blur-lg
+              p-4 rounded-xl backdrop-blur-lg
               text-white font-bold text-sm
               border border-white/30
-              hover:shadow-2xl hover:bg-opacity-15 hover:border-white/50 transition-all duration-300
+              hover:shadow-2xl hover:border-white/50 transition-all duration-300
               flex flex-col items-center justify-center
-              ${expandedTier === key ? 'ring-2 ring-white/50 bg-opacity-15' : ''}
+              ${expandedTier === key ? 'ring-2 ring-white/50' : ''}
             `}
+            style={{
+              ...TIER_COLORS[key].style,
+              boxShadow: expandedTier === key ? '0 0 20px rgba(255,255,255,0.3)' : undefined,
+            }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
