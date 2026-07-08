@@ -11,23 +11,20 @@ const VIDEO_SOURCES: Record<string, string> = {
 function setupReverseLoop(video: HTMLVideoElement) {
   let isReversing = false;
 
-  const handleTimeUpdate = () => {
-    if (isReversing) {
-      // Playing backwards
-      if (video.currentTime <= 0.1) {
-        video.currentTime = 0;
-        isReversing = false;
-        video.play();
-      } else {
-        video.currentTime -= 0.03;
-      }
-    }
-  };
-
   const handleEnded = () => {
     isReversing = true;
-    video.pause();
-    video.currentTime = video.duration;
+    video.currentTime = video.duration - 0.1;
+    video.playbackRate = -1;
+    video.play();
+  };
+
+  const handleTimeUpdate = () => {
+    if (isReversing && video.currentTime <= 0.1) {
+      isReversing = false;
+      video.playbackRate = 1;
+      video.currentTime = 0;
+      video.play();
+    }
   };
 
   video.addEventListener('ended', handleEnded);
