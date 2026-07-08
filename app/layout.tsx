@@ -5,7 +5,6 @@ import "./globals-theme.css";
 import { ThemeProvider } from "@/lib/ThemeContext";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { VersionProvider } from "@/lib/VersionContext";
-import { VersionToggle } from "@/components/VersionToggle";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -44,7 +43,6 @@ export default function RootLayout({
         <VersionProvider>
           <ThemeProvider>
             <ThemeSwitcher />
-            <VersionToggle />
             {children}
           </ThemeProvider>
         </VersionProvider>

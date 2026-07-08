@@ -35,6 +35,7 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [codeBlocks, setCodeBlocks] = useState<CodeBlock[]>([]);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [showCursor, setShowCursor] = useState(true);
   const mouseTrackerRef = useRef<HTMLDivElement>(null);
   const blockCounterRef = useRef(0);
   const lastSpawnTimeRef = useRef(0);
@@ -166,6 +167,8 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
     <div
       ref={mouseTrackerRef}
       onMouseMove={handleMouseMove}
+      onMouseEnter={() => setShowCursor(true)}
+      onMouseLeave={() => setShowCursor(false)}
       onTouchMove={handleTouchMove}
       className="relative w-full min-h-screen overflow-hidden flex items-center justify-center"
       style={{
@@ -179,7 +182,7 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
       <div className="absolute inset-0 bg-black/50 pointer-events-none" />
 
       {/* Custom cursor (✨ emoji) */}
-      {!prefersReducedMotion && (
+      {!prefersReducedMotion && showCursor && (
         <div
           className="fixed pointer-events-none text-3xl z-50"
           style={{
