@@ -10,11 +10,20 @@ import { CredentialPreviewWidget } from '@/components/CredentialPreviewWidget';
 import { FloatingCTA } from '@/components/kids-landing/FloatingCTA';
 import { SoundToggle } from '@/components/kids-landing/SoundToggle';
 import { VideoBackground } from '@/components/kids-landing/VideoBackground';
+import { useTheme } from '@/lib/ThemeContext';
 import Link from 'next/link';
 
 export default function KidsLandingPageContent() {
+  const { currentTheme } = useTheme();
+
   return (
-    <div className="relative w-full min-h-screen bg-slate-950 text-white overflow-x-hidden" data-landing-container>
+    <div
+      className="relative w-full min-h-screen text-white overflow-x-hidden"
+      data-landing-container
+      style={{
+        backgroundColor: currentTheme === 'violet' ? 'transparent' : '#0f172a',
+      }}
+    >
       <VideoBackground />
       <SoundToggle />
       <FloatingCTA />
