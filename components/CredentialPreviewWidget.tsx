@@ -42,9 +42,8 @@ export function CredentialPreviewWidget() {
     return (
       <div className="w-full h-full flex flex-col gap-4">
         <div className="relative w-full flex-1 bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center shadow-2xl">
-          <div className="text-sm font-semibold text-white">Accredited</div>
-          <div className="text-2xl font-bold font-display text-white mt-2">
-            Vibe Coding Course
+          <div className="text-2xl font-bold font-display text-white">
+            Learn To Vibe Code
           </div>
           <div className="text-xs text-white/80 mt-4">Certificate of Completion</div>
         </div>
@@ -103,16 +102,8 @@ export function CredentialPreviewWidget() {
                 transition={{ delay: 0.1, duration: 0.4 }}
                 className="relative z-10"
               >
-                <motion.div
-                  className="text-sm font-semibold text-white tracking-widest"
-                  animate={{ letterSpacing: "0.1em" }}
-                  transition={{ duration: 0.3 }}
-                >
-                  ACCREDITED
-                </motion.div>
-
-                <motion.div className="text-2xl font-bold font-display text-white mt-4">
-                  Vibe Coding Course
+                <motion.div className="text-2xl font-bold font-display text-white">
+                  Learn To Vibe Code
                 </motion.div>
 
                 <motion.div className="text-xs text-white/80 mt-6 italic">
