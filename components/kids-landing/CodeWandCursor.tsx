@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, MotionConfig } from 'framer-motion';
 import Link from 'next/link';
 
@@ -37,6 +37,10 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const mouseTrackerRef = useRef<HTMLDivElement>(null);
   const blockCounterRef = useRef(0);
+  const lastMousePosRef = useRef({ x: 0, y: 0 });
+  const lastSpawnTimeRef = useRef(0);
+  const throttleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const rafRef = useRef<number | null>(null);
 
   // Check for prefers-reduced-motion on mount
   useEffect(() => {
@@ -51,15 +55,31 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
 
-  // Track mouse position and spawn code blocks
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const x = e.clientX;
-    const y = e.clientY;
+  // Throttled mouse position update using requestAnimationFrame (60fps = ~16ms)
+  const updateMousePos = useCallback((x: number, y: number) => {
+    lastMousePosRef.current = { x, y };
 
-    setMousePos({ x, y });
+    // Cancel pending RAF if already scheduled
+    if (rafRef.current !== null) {
+      cancelAnimationFrame(rafRef.current);
+    }
 
-    // ~5% chance to spawn a code block on mousemove
-    if (Math.random() < 0.05 && !prefersReducedMotion) {
+    // Schedule state update on next frame
+    rafRef.current = requestAnimationFrame(() => {
+      setMousePos(lastMousePosRef.current);
+      rafRef.current = null;
+    });
+  }, []);
+
+  // Attempt to spawn a code block (throttled to every 150ms, ~5-7 blocks/sec max)
+  const trySpawnCodeBlock = useCallback((x: number, y: number) => {
+    const now = Date.now();
+    const timeSinceLastSpawn = now - lastSpawnTimeRef.current;
+
+    // Only spawn if enough time has passed AND random chance succeeds
+    if (timeSinceLastSpawn > 150 && Math.random() < 0.4 && !prefersReducedMotion) {
+      lastSpawnTimeRef.current = now;
+
       const newBlock: CodeBlock = {
         id: `code-${blockCounterRef.current++}`,
         code: CODE_SNIPPETS[Math.floor(Math.random() * CODE_SNIPPETS.length)],
@@ -75,7 +95,38 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
         setCodeBlocks((prev) => prev.filter((b) => b.id !== newBlock.id));
       }, 2000);
     }
-  };
+  }, [codeBlocks.length, prefersReducedMotion]);
+
+  // Track mouse position and spawn code blocks with throttling
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const x = e.clientX;
+    const y = e.clientY;
+
+    // Update mouse position (throttled via RAF)
+    updateMousePos(x, y);
+
+    // Try to spawn a code block (throttled to 150ms intervals)
+    if (throttleTimeoutRef.current === null) {
+      trySpawnCodeBlock(x, y);
+
+      // Set throttle timeout to prevent rapid spawning attempts
+      throttleTimeoutRef.current = setTimeout(() => {
+        throttleTimeoutRef.current = null;
+      }, 150);
+    }
+  }, [updateMousePos, trySpawnCodeBlock]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+      }
+      if (throttleTimeoutRef.current !== null) {
+        clearTimeout(throttleTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const codeBlockVariants = {
     initial: (i: number) => ({
