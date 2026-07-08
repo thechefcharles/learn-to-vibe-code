@@ -25,21 +25,21 @@ export default function KidsLandingPageContent() {
       <FloatingCTA />
 
       {/* ============ HERO SECTION WITH DASHBOARD GRID ============ */}
-      <section className="py-12 px-4 sm:py-16">
+      <section className="py-6 px-4 sm:py-8">
         <div className="max-w-7xl mx-auto">
           {/* Hero Logo and Headline */}
-          <div className="text-center mb-12 sm:mb-16">
-            <div className="mb-8 sm:mb-12 flex justify-center">
+          <div className="text-center mb-6 sm:mb-8">
+            <div className="mb-4 sm:mb-6 flex justify-center">
               <Logo variant="cosmic-mark" size="lg" />
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-3 leading-tight">
               <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                 Learn To Build Real Apps
               </span>
             </h1>
 
             {/* Stats Line */}
-            <div className="text-base sm:text-lg md:text-xl text-gray-300 space-y-2">
+            <div className="text-sm sm:text-base md:text-lg text-gray-300 space-y-1">
               <div className="font-medium">
                 16 Modules • 93 Hours • Free • Self-Paced • Accredited Certificate
               </div>
@@ -78,10 +78,10 @@ export default function KidsLandingPageContent() {
       </section>
 
       {/* ============ FOOTER ============ */}
-      <footer className="border-t border-slate-800 py-8 px-4 mt-8 sm:mt-12">
-        <div className="max-w-7xl mx-auto text-center text-xs sm:text-sm text-gray-500">
+      <footer className="border-t border-slate-800 py-4 px-4 mt-4">
+        <div className="max-w-7xl mx-auto text-center text-xs text-gray-500">
           <p>© 2026 Vibe Coding. Learn to code with AI. Ship real apps.</p>
-          <div className="flex gap-4 sm:gap-6 justify-center mt-4">
+          <div className="flex gap-3 sm:gap-4 justify-center mt-2">
             <Link href="/demo" className="hover:text-cyan-400 transition">
               Demo
             </Link>
