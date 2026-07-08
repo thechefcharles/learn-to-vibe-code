@@ -9,14 +9,20 @@ const themeOrder: ThemeName[] = ["violet", "dark", "sage", "sunset", "ocean"];
 export function ThemeSwitcher() {
   const { currentTheme, setTheme } = useTheme();
 
+  const handleThemeClick = (themeName: ThemeName) => {
+    setTheme(themeName);
+    // Apply background gradient to page
+    const theme = themes[themeName];
+    document.documentElement.style.background = theme.bg;
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-4 left-4 z-50 flex gap-2 items-center"
+      className="fixed top-4 left-2 z-50"
     >
-      <span className="text-xs text-slate-600 font-medium">THEME:</span>
       <div className="flex gap-2 p-2 bg-white/80 backdrop-blur-md rounded-full border border-violet-light/20 shadow-lg">
         {themeOrder.map((themeName) => {
           const theme = themes[themeName];
@@ -25,7 +31,7 @@ export function ThemeSwitcher() {
           return (
             <motion.button
               key={themeName}
-              onClick={() => setTheme(themeName)}
+              onClick={() => handleThemeClick(themeName)}
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.95 }}
               className={`w-6 h-6 rounded-full transition-all duration-300 ${
