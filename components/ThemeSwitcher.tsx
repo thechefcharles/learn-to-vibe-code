@@ -70,7 +70,7 @@ export function ThemeSwitcher() {
       transition={{ duration: 0.5 }}
       className="fixed top-4 left-2 z-50"
     >
-      <div className="flex gap-2 p-2 bg-white/80 backdrop-blur-md rounded-full border border-violet-light/20 shadow-lg">
+      <div className="flex gap-2 p-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20 shadow-lg">
         {themeOrder.map((themeName) => {
           const theme = themes[themeName];
           const isActive = currentTheme === themeName;
