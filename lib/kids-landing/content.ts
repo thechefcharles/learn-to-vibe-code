@@ -6,11 +6,13 @@
 
 export interface Project {
   id: string;
-  title: string;
-  tagline: string;
+  name: string;
+  builderName: string;
+  builderAge: number;
   description: string;
-  icon: string;
-  color: 'cyan' | 'pink' | 'purple';
+  techStack: string[];
+  stats: string;
+  link: string;
 }
 
 export interface Concept {
@@ -18,14 +20,15 @@ export interface Concept {
   title: string;
   explanation: string;
   icon: string;
+  animationType: 'bounce' | 'slide' | 'fade' | 'scale';
 }
 
 export interface Feature {
   id: string;
   title: string;
-  description: string;
-  icon: string;
-  highlight?: string;
+  copy: string;
+  hoverEffect: 'dollar-signs-away' | 'progress-animate' | 'trophy-animate' | 'certificate-slide';
+  icon: 'dollar' | 'chart' | 'trophy' | 'certificate';
 }
 
 export interface Testimonial {
@@ -54,6 +57,7 @@ export interface KidsLandingContent {
     headline: string;
     subheadline: string;
     cta: string;
+    backgroundImage: string;
   };
   projects: Project[];
   concepts: Concept[];
@@ -87,39 +91,48 @@ export const KIDS_LANDING_CONTENT: KidsLandingContent = {
     headline: 'You can code anything.',
     subheadline: 'Seriously. From a personal website to a full app — if you can imagine it, you can build it with AI by your side.',
     cta: 'Start Learning Free',
+    backgroundImage: 'linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(167, 139, 250, 0.1) 100%)',
   },
   projects: [
     {
       id: 'portfolio',
-      title: 'Your First Website',
-      tagline: 'Go live in 20 minutes',
+      name: 'Your First Website',
+      builderName: 'Maya',
+      builderAge: 14,
       description: 'Build your own portfolio site with React and Tailwind. AI writes half the code; you debug and ship it. By the end, you\'ll have a real URL to show anyone.',
-      icon: '🌐',
-      color: 'cyan',
+      techStack: ['React', 'Tailwind CSS', 'Vercel'],
+      stats: 'Deployed in 20 minutes',
+      link: 'https://github.com/learntovibecode',
     },
     {
       id: 'ai-tools',
-      title: 'AI Sidekick Apps',
-      tagline: 'Claude does what you tell it',
+      name: 'AI Sidekick Apps',
+      builderName: 'Dev',
+      builderAge: 15,
       description: 'Create tools that use Claude API: a homework helper, a story generator, a code debugger. Learn how AI APIs work and why they\'re not magic—just trained models.',
-      icon: '🤖',
-      color: 'pink',
+      techStack: ['Next.js', 'Claude API', 'Supabase'],
+      stats: '3 AI-powered tools built',
+      link: 'https://github.com/learntovibecode',
     },
     {
       id: 'database',
-      title: 'Real Databases',
-      tagline: 'Where your data lives',
+      name: 'Real Databases',
+      builderName: 'Jordan',
+      builderAge: 16,
       description: 'Build an app that stores data: a habit tracker, a journal, a rating app. Use Supabase (PostgreSQL in the cloud). Learn why databases matter when apps go live.',
-      icon: '💾',
-      color: 'purple',
+      techStack: ['PostgreSQL', 'Supabase', 'Next.js'],
+      stats: 'Full-stack app with 1000+ users',
+      link: 'https://github.com/learntovibecode',
     },
     {
       id: 'deployment',
-      title: 'Deploy Like a Pro',
-      tagline: 'Your app. The internet. Connected.',
+      name: 'Deploy Like a Pro',
+      builderName: 'Alex',
+      builderAge: 14,
       description: 'Take everything you built and put it live on Vercel. No scary DevOps—just a git push and you\'re deployed. Learn what "production" actually means.',
-      icon: '🚀',
-      color: 'cyan',
+      techStack: ['Vercel', 'GitHub Actions', 'Node.js'],
+      stats: 'Production-ready from day 1',
+      link: 'https://github.com/learntovibecode',
     },
   ],
   concepts: [
@@ -128,48 +141,51 @@ export const KIDS_LANDING_CONTENT: KidsLandingContent = {
       title: 'AI Isn\'t Magic—It\'s a Skill',
       explanation: 'Claude (and other AI) can write code faster than you, but only if you know what to ask and how to debug. This course teaches you to collaborate with AI: what makes a good prompt, how to spot hallucinations, and how to break big problems into steps.',
       icon: '✨',
+      animationType: 'bounce',
     },
     {
       id: 'full-stack',
       title: 'Full Stack (Without the Headache)',
       explanation: 'You\'ll code frontend (React), backend (Node.js APIs), and databases (PostgreSQL) in the same course. Not separately. Not in isolation. Real, connected systems. By the end, you\'ll know how data actually moves through an app.',
       icon: '🔗',
+      animationType: 'slide',
     },
     {
       id: 'ship-first',
       title: 'Ship First, Learn Second',
       explanation: 'Every module ends with something live on the internet. A broken site is better than theory. You\'ll ship code in week 1, and each project teaches you why it matters: performance, accessibility, security, user experience.',
       icon: '🎯',
+      animationType: 'scale',
     },
   ],
   features: [
     {
-      id: 'step-by-step',
-      title: 'Learn at Your Speed',
-      description: 'Self-paced. Watch a lesson video, read the code walkthrough, build your own version, quiz yourself. Retake quizzes as many times as you need.',
-      icon: '📚',
-      highlight: '16 modules, ~90 hours',
+      id: 'free',
+      title: 'Completely Free',
+      copy: 'All course content is free to audit. No hidden fees, no paywall. Learn everything without spending a penny.',
+      hoverEffect: 'dollar-signs-away',
+      icon: 'dollar',
     },
     {
-      id: 'hands-on',
-      title: 'You Actually Build Stuff',
-      description: 'No copy-paste tutorials. Every lesson has a deliverable: a real project you build in your editor (Cursor or VS Code), commit to GitHub, and ship to a live URL.',
-      icon: '⚙️',
-      highlight: '4 capstone options',
+      id: 'progress',
+      title: 'Track Your Progress',
+      copy: 'See your learning journey visualized. Complete badges, levels, and streaks. Gamification that actually motivates.',
+      hoverEffect: 'progress-animate',
+      icon: 'chart',
     },
     {
-      id: 'credential',
-      title: 'Get Certified',
-      description: 'Pass (80%+ on quizzes and projects) and you get a shareable certificate. Real accreditation body behind it. Employers and colleges recognize it.',
-      icon: '🏆',
-      highlight: 'Professional credential',
+      id: 'win',
+      title: 'Win Achievement Badges',
+      copy: 'Unlock badges as you hit milestones: first project, first deployment, first API call. Share them everywhere.',
+      hoverEffect: 'trophy-animate',
+      icon: 'trophy',
     },
     {
-      id: 'community',
-      title: 'Learn with Others',
-      description: 'Discord server with instructors, TAs, and other learners. Ask questions, show your projects, get feedback. Not isolated. Real community.',
-      icon: '👥',
-      highlight: '24/7 support',
+      id: 'certificate',
+      title: 'Get a Real Certificate',
+      copy: 'Pass with 80%+ and earn a verifiable credential. Display it on LinkedIn, add it to college apps.',
+      hoverEffect: 'certificate-slide',
+      icon: 'certificate',
     },
   ],
   testimonials: [
