@@ -10,29 +10,41 @@ const VIDEO_SOURCES: Record<string, string> = {
 
 function setupReverseLoop(video: HTMLVideoElement) {
   let isReversing = false;
+  let rafId: number | null = null;
+  let lastTime = 0;
 
-  const handleEnded = () => {
-    isReversing = true;
-    video.currentTime = video.duration - 0.1;
-    video.playbackRate = -1;
-    video.play();
-  };
+  const reversePlayback = (timestamp: number) => {
+    if (lastTime === 0) lastTime = timestamp;
 
-  const handleTimeUpdate = () => {
-    if (isReversing && video.currentTime <= 0.1) {
-      isReversing = false;
-      video.playbackRate = 1;
+    const deltaTime = (timestamp - lastTime) / 1000; // Convert to seconds
+    lastTime = timestamp;
+
+    // Move backwards at same speed as forward playback
+    video.currentTime -= deltaTime;
+
+    if (video.currentTime <= 0) {
       video.currentTime = 0;
+      isReversing = false;
+      lastTime = 0;
       video.play();
+      if (rafId) cancelAnimationFrame(rafId);
+    } else {
+      rafId = requestAnimationFrame(reversePlayback);
     }
   };
 
+  const handleEnded = () => {
+    isReversing = true;
+    video.pause();
+    lastTime = 0;
+    rafId = requestAnimationFrame(reversePlayback);
+  };
+
   video.addEventListener('ended', handleEnded);
-  video.addEventListener('timeupdate', handleTimeUpdate);
 
   return () => {
     video.removeEventListener('ended', handleEnded);
-    video.removeEventListener('timeupdate', handleTimeUpdate);
+    if (rafId) cancelAnimationFrame(rafId);
   };
 }
 
