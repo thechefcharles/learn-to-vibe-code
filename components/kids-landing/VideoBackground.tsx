@@ -1,28 +1,45 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTheme } from '@/lib/ThemeContext';
 
 export function VideoBackground() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { currentTheme } = useTheme();
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    if (videoRef.current) {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const handleCanPlay = () => {
+      setIsReady(true);
       if (currentTheme === 'violet') {
-        videoRef.current.style.opacity = '1';
+        video.play().catch(() => {});
+      }
+    };
+
+    if (video.readyState >= 2) {
+      handleCanPlay();
+    } else {
+      video.addEventListener('canplay', handleCanPlay);
+      return () => video.removeEventListener('canplay', handleCanPlay);
+    }
+  }, [currentTheme]);
+
+  useEffect(() => {
+    if (videoRef.current && isReady) {
+      if (currentTheme === 'violet') {
         videoRef.current.play().catch(() => {});
       } else {
-        videoRef.current.style.opacity = '0';
         videoRef.current.pause();
       }
     }
-  }, [currentTheme]);
+  }, [currentTheme, isReady]);
 
   return (
     <video
       ref={videoRef}
-      autoPlay
       muted
       loop
       playsInline
