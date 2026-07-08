@@ -11,9 +11,12 @@ export function ThemeSwitcher() {
 
   const handleThemeClick = (themeName: ThemeName) => {
     setTheme(themeName);
-    // Apply background gradient to page
+    // Apply background gradient to main container
     const theme = themes[themeName];
-    document.documentElement.style.background = theme.bg;
+    const mainDiv = document.querySelector('[data-landing-container]');
+    if (mainDiv) {
+      (mainDiv as HTMLElement).style.background = theme.bg;
+    }
   };
 
   return (

@@ -13,7 +13,7 @@ import Link from 'next/link';
 
 export default function KidsLandingPageContent() {
   return (
-    <div className="relative w-full min-h-screen bg-slate-950 text-white overflow-x-hidden">
+    <div className="relative w-full min-h-screen bg-slate-950 text-white overflow-x-hidden" data-landing-container>
       <SoundToggle />
       <FloatingCTA />
 
