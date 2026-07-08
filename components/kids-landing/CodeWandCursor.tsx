@@ -180,24 +180,17 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
 
       {/* Custom cursor (✨ emoji) */}
       {!prefersReducedMotion && (
-        <motion.div
+        <div
           className="fixed pointer-events-none text-3xl z-50"
-          animate={{
-            x: mousePos.x - 8,
-            y: mousePos.y - 8,
-          }}
-          transition={{
-            type: 'spring',
-            damping: 30,
-            stiffness: 200,
-            mass: 0.8,
-          }}
           style={{
+            left: `${mousePos.x}px`,
+            top: `${mousePos.y}px`,
+            transform: 'translate(-50%, -50%)',
             filter: 'drop-shadow(0 0 4px rgba(0, 217, 255, 0.6))',
           }}
         >
           ✨
-        </motion.div>
+        </div>
       )}
 
       {/* Cascading code blocks */}
