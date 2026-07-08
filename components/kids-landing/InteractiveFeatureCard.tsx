@@ -9,24 +9,14 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
 export interface FeatureData {
   id: string;
   title: string;
-  copy: string;
-  hoverEffect: 'dollar-signs-away' | 'progress-animate' | 'trophy-animate' | 'certificate-slide';
-  icon: 'dollar' | 'chart' | 'trophy' | 'certificate';
+  description: string;
+  animation: 'dollar-signs-away' | 'progress-animate' | 'trophy-animate' | 'certificate-slide';
+  icon: string;
 }
 
 interface InteractiveFeatureCardProps {
   feature: FeatureData;
 }
-
-/**
- * Icon mapping: simple emoji or SVG symbols
- */
-const ICON_MAP: Record<FeatureData['icon'], string> = {
-  dollar: '$',
-  chart: '📊',
-  trophy: '🏆',
-  certificate: '📜',
-};
 
 export const InteractiveFeatureCard: React.FC<InteractiveFeatureCardProps> = ({
   feature,
@@ -47,7 +37,7 @@ export const InteractiveFeatureCard: React.FC<InteractiveFeatureCardProps> = ({
     setTimeout(() => setParticleTrigger(false), 100);
 
     // Animate progress bar
-    if (feature.hoverEffect === 'progress-animate') {
+    if (feature.animation === 'progress-animate') {
       let progress = 0;
       const interval = setInterval(() => {
         progress += Math.random() * 30 + 10;
@@ -84,7 +74,7 @@ export const InteractiveFeatureCard: React.FC<InteractiveFeatureCardProps> = ({
     }, 1500);
   };
 
-  const icon = ICON_MAP[feature.icon];
+  const icon = feature.icon;
 
   return (
     <>
@@ -125,14 +115,14 @@ export const InteractiveFeatureCard: React.FC<InteractiveFeatureCardProps> = ({
           animate={isHovering && !prefersReducedMotion ? { opacity: 1 } : { opacity: 0.6 }}
           transition={{ duration: 0.3 }}
         >
-          {feature.copy}
+          {feature.description}
         </motion.p>
 
         {/* Feature-specific hover effects */}
         {isHovering && (
           <>
             {/* Dollar: Free indicator */}
-            {feature.hoverEffect === 'dollar-signs-away' && (
+            {feature.animation === 'dollar-signs-away' && (
               <motion.div
                 className="mt-4 px-3 py-2 rounded-lg bg-green-500/20 border border-green-400 text-green-400 text-sm font-semibold"
                 initial={{ scale: 0, opacity: 0 }}
@@ -145,7 +135,7 @@ export const InteractiveFeatureCard: React.FC<InteractiveFeatureCardProps> = ({
             )}
 
             {/* Chart: Progress bar */}
-            {feature.hoverEffect === 'progress-animate' && (
+            {feature.animation === 'progress-animate' && (
               <motion.div
                 className="mt-4 w-full"
                 initial={{ opacity: 0 }}
@@ -168,7 +158,7 @@ export const InteractiveFeatureCard: React.FC<InteractiveFeatureCardProps> = ({
             )}
 
             {/* Trophy: Bounce animation */}
-            {feature.hoverEffect === 'trophy-animate' && (
+            {feature.animation === 'trophy-animate' && (
               <motion.div
                 className="mt-4 text-4xl"
                 animate={{
@@ -185,7 +175,7 @@ export const InteractiveFeatureCard: React.FC<InteractiveFeatureCardProps> = ({
             )}
 
             {/* Certificate: Slide-in preview */}
-            {feature.hoverEffect === 'certificate-slide' && (
+            {feature.animation === 'certificate-slide' && (
               <motion.div
                 className="mt-4 p-4 rounded-lg bg-gradient-to-br from-amber-900/30 to-yellow-900/30 border border-amber-400/50 w-full max-w-xs"
                 initial={{ x: 100, opacity: 0 }}

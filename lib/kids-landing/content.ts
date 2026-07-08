@@ -26,9 +26,9 @@ export interface Concept {
 export interface Feature {
   id: string;
   title: string;
-  copy: string;
-  hoverEffect: 'dollar-signs-away' | 'progress-animate' | 'trophy-animate' | 'certificate-slide';
-  icon: 'dollar' | 'chart' | 'trophy' | 'certificate';
+  description: string;
+  animation: 'dollar-signs-away' | 'progress-animate' | 'trophy-animate' | 'certificate-slide';
+  icon: string;
 }
 
 export interface Testimonial {
@@ -80,6 +80,14 @@ export interface KidsLandingContent {
     }>;
   };
 }
+
+export const MODULE_TIERS = {
+  foundations: { name: 'Foundations', modules: [0, 1, 2, 3] },
+  building: { name: 'Building', modules: [4, 5, 6, 7, 8, 9] },
+  production: { name: 'Production', modules: [10, 11, 12] },
+  landscape: { name: 'Landscape', modules: [13, 14, 15] },
+  capstone: { name: 'Capstone', modules: [16] }
+};
 
 export const KIDS_LANDING_CONTENT: KidsLandingContent = {
   meta: {
@@ -163,31 +171,31 @@ export const KIDS_LANDING_CONTENT: KidsLandingContent = {
   features: [
     {
       id: 'free',
-      title: 'Completely Free',
-      copy: 'All course content is free to audit. No hidden fees, no paywall. Learn everything without spending a penny.',
-      hoverEffect: 'dollar-signs-away',
-      icon: 'dollar',
+      title: 'Free Forever',
+      description: 'No credit card. No surprise charges. Just learning.',
+      animation: 'dollar-signs-away',
+      icon: '💰',
     },
     {
-      id: 'progress',
-      title: 'Track Your Progress',
-      copy: 'See your learning journey visualized. Complete badges, levels, and streaks. Gamification that actually motivates.',
-      hoverEffect: 'progress-animate',
-      icon: 'chart',
+      id: 'self-paced',
+      title: 'Self-Paced',
+      description: 'Work at your speed. Pause anytime. No deadlines, no pressure.',
+      animation: 'progress-animate',
+      icon: '⏰',
     },
     {
-      id: 'win',
-      title: 'Win Achievement Badges',
-      copy: 'Unlock badges as you hit milestones: first project, first deployment, first API call. Share them everywhere.',
-      hoverEffect: 'trophy-animate',
-      icon: 'trophy',
+      id: 'capstone',
+      title: 'Capstone + Defense',
+      description: 'You build something real. You present it. You own it.',
+      animation: 'trophy-animate',
+      icon: '🏆',
     },
     {
       id: 'certificate',
-      title: 'Get a Real Certificate',
-      copy: 'Pass with 80%+ and earn a verifiable credential. Display it on LinkedIn, add it to college apps.',
-      hoverEffect: 'certificate-slide',
-      icon: 'certificate',
+      title: 'Accredited Certificate',
+      description: 'CPD/IACET accreditation. Employers and universities recognize it.',
+      animation: 'certificate-slide',
+      icon: '📜',
     },
   ],
   testimonials: [
