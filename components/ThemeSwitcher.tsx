@@ -11,11 +11,15 @@ export function ThemeSwitcher() {
 
   const handleThemeClick = (themeName: ThemeName) => {
     setTheme(themeName);
-    // Apply background gradient to main container
-    const theme = themes[themeName];
+    // Apply background gradient to main container (transparent for violet to show video)
     const mainDiv = document.querySelector('[data-landing-container]');
     if (mainDiv) {
-      (mainDiv as HTMLElement).style.background = theme.bg;
+      if (themeName === 'violet') {
+        (mainDiv as HTMLElement).style.background = 'transparent';
+      } else {
+        const theme = themes[themeName];
+        (mainDiv as HTMLElement).style.background = theme.bg;
+      }
     }
   };
 
