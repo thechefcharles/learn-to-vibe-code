@@ -12,7 +12,10 @@ export function ThemeSwitcher() {
 
   // Apply theme background on mount and whenever theme changes
   useEffect(() => {
-    const applyThemeBackground = (themeName: ThemeName) => {
+    let retries = 0;
+    const maxRetries = 10;
+
+    const applyThemeBackground = (themeName: ThemeName): boolean => {
       const mainDiv = document.querySelector('[data-landing-container]');
       if (mainDiv) {
         const el = mainDiv as HTMLElement;
@@ -24,10 +27,23 @@ export function ThemeSwitcher() {
           const theme = themes[themeName];
           el.style.background = theme.bg;
         }
+        return true;
       }
+      return false;
     };
 
-    applyThemeBackground(currentTheme);
+    // Try immediately
+    if (applyThemeBackground(currentTheme)) return;
+
+    // Retry with exponential backoff
+    const interval = setInterval(() => {
+      if (applyThemeBackground(currentTheme) || retries >= maxRetries) {
+        clearInterval(interval);
+      }
+      retries++;
+    }, 50);
+
+    return () => clearInterval(interval);
   }, [currentTheme]);
 
   const handleThemeClick = (themeName: ThemeName) => {
