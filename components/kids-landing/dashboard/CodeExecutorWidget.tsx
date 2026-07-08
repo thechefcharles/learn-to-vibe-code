@@ -80,19 +80,19 @@ export function CodeExecutorWidget() {
       <div className="flex gap-2 flex-wrap">
         <button
           onClick={() => handlePreset(presets.math)}
-          className="px-3 py-1 text-xs font-medium bg-cyan-900/40 border border-cyan-500/50 text-cyan-300 rounded hover:bg-cyan-900/60 hover:border-cyan-400 transition-all"
+          className="px-3 py-1 text-xs font-medium bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/40 text-cyan-300 rounded-lg hover:bg-cyan-500/30 hover:border-cyan-300/60 transition-all"
         >
           Math
         </button>
         <button
           onClick={() => handlePreset(presets.string)}
-          className="px-3 py-1 text-xs font-medium bg-cyan-900/40 border border-cyan-500/50 text-cyan-300 rounded hover:bg-cyan-900/60 hover:border-cyan-400 transition-all"
+          className="px-3 py-1 text-xs font-medium bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/40 text-cyan-300 rounded-lg hover:bg-cyan-500/30 hover:border-cyan-300/60 transition-all"
         >
           String
         </button>
         <button
           onClick={() => handlePreset(presets.greet)}
-          className="px-3 py-1 text-xs font-medium bg-cyan-900/40 border border-cyan-500/50 text-cyan-300 rounded hover:bg-cyan-900/60 hover:border-cyan-400 transition-all"
+          className="px-3 py-1 text-xs font-medium bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/40 text-cyan-300 rounded-lg hover:bg-cyan-500/30 hover:border-cyan-300/60 transition-all"
         >
           Greet
         </button>

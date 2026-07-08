@@ -33,12 +33,12 @@ export function LearningTiersWidget() {
             onClick={() => toggleTier(key)}
             className={`
               p-4 rounded-xl bg-gradient-to-br ${TIER_COLORS[key].gradient}
-              bg-opacity-20 backdrop-blur-md
+              bg-opacity-10 backdrop-blur-md
               text-white font-bold text-sm
               border border-white/40
-              hover:shadow-2xl hover:bg-opacity-30 hover:border-white/60 transition-all duration-300
+              hover:shadow-2xl hover:bg-opacity-20 hover:border-white/60 transition-all duration-300
               flex flex-col items-center justify-center
-              ${expandedTier === key ? 'ring-2 ring-white/60 bg-opacity-30' : ''}
+              ${expandedTier === key ? 'ring-2 ring-white/60 bg-opacity-20' : ''}
             `}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
