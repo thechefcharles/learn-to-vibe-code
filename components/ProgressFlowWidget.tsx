@@ -141,7 +141,7 @@ export function ProgressFlowWidget() {
 
                 {/* Label */}
                 <motion.p
-                  className="text-xs font-semibold text-ink mt-3 text-center w-20 break-words"
+                  className="text-xs font-semibold text-white mt-3 text-center w-20 break-words"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: prefersReducedMotion ? 0 : 0.2 + index * 0.1 }}
@@ -177,16 +177,6 @@ export function ProgressFlowWidget() {
           </div>
         </div>
       </div>
-
-      {/* Info text */}
-      <motion.p
-        className="text-sm text-slate text-center mt-8"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.5 }}
-      >
-        Click any stage to learn more • Complete all modules to earn your certificate
-      </motion.p>
 
       {/* Scroll indicator (mobile only) */}
       <motion.div

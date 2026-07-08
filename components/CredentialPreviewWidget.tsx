@@ -32,13 +32,13 @@ export function CredentialPreviewWidget() {
   if (prefersReducedMotion) {
     return (
       <div className="w-full max-w-sm mx-auto">
-        <div className="relative w-full aspect-video bg-gradient-to-br from-yellow-300 via-yellow-200 to-amber-300 rounded-xl border-2 border-yellow-500 p-8 flex flex-col justify-center items-center text-center">
+        <div className="relative w-full aspect-video bg-gradient-to-br from-violet-300/60 via-purple-200/60 to-violet-200/60 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center shadow-2xl">
           <div className="text-6xl mb-4">🏆</div>
-          <div className="text-sm font-semibold text-yellow-900">Accredited</div>
-          <div className="text-2xl font-bold font-display text-yellow-900 mt-2">
+          <div className="text-sm font-semibold text-white">Accredited</div>
+          <div className="text-2xl font-bold font-display text-white mt-2">
             Vibe Coding Course
           </div>
-          <div className="text-xs text-yellow-800 mt-4">Certificate of Completion</div>
+          <div className="text-xs text-white/80 mt-4">Certificate of Completion</div>
         </div>
         <button
           onClick={handleShare}
@@ -81,11 +81,11 @@ export function CredentialPreviewWidget() {
             }}
             className="absolute inset-0 w-full h-full"
           >
-            <div className="relative w-full h-full bg-gradient-to-br from-yellow-300 via-yellow-200 to-amber-300 rounded-xl border-2 border-yellow-500 p-8 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
+            <div className="relative w-full h-full bg-gradient-to-br from-violet-300/60 via-purple-200/60 to-violet-200/60 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
               {/* Decorative background pattern */}
               <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-4 right-4 w-20 h-20 border-2 border-yellow-600 rounded-full" />
-                <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-yellow-600 rounded-lg" />
+                <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full" />
+                <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-lg" />
               </div>
 
               {/* Content */}
@@ -136,11 +136,11 @@ export function CredentialPreviewWidget() {
             }}
             className="w-full h-full"
           >
-            <div className="relative w-full h-full bg-gradient-to-br from-yellow-300 via-yellow-200 to-amber-300 rounded-xl border-2 border-yellow-500 p-8 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
+            <div className="relative w-full h-full bg-gradient-to-br from-violet-300/60 via-purple-200/60 to-violet-200/60 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
               {/* Decorative background pattern */}
               <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-4 right-4 w-20 h-20 border-2 border-yellow-600 rounded-full" />
-                <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-yellow-600 rounded-lg" />
+                <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full" />
+                <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-lg" />
               </div>
 
               {/* Content */}
@@ -151,26 +151,26 @@ export function CredentialPreviewWidget() {
                 className="relative z-10 space-y-4 w-full"
               >
                 <div>
-                  <div className="text-xs text-yellow-800 font-semibold mb-1">CREDENTIAL ID</div>
-                  <div className="text-lg font-mono font-bold text-yellow-900">{credentialId}</div>
+                  <div className="text-xs text-white/70 font-semibold mb-1">CREDENTIAL ID</div>
+                  <div className="text-lg font-mono font-bold text-white">{credentialId}</div>
                 </div>
 
                 <div className="h-px bg-yellow-400 opacity-50 w-3/4 mx-auto" />
 
                 <div>
-                  <div className="text-xs text-yellow-800 font-semibold mb-1">ISSUED</div>
-                  <div className="text-sm font-semibold text-yellow-900">{issueDate}</div>
+                  <div className="text-xs text-white/70 font-semibold mb-1">ISSUED</div>
+                  <div className="text-sm font-semibold text-white">{issueDate}</div>
                 </div>
 
-                <div className="h-px bg-yellow-400 opacity-50 w-3/4 mx-auto" />
+                <div className="h-px bg-white/30 opacity-50 w-3/4 mx-auto" />
 
                 <div>
-                  <div className="text-xs text-yellow-800 font-semibold mb-2">VERIFY</div>
+                  <div className="text-xs text-white/70 font-semibold mb-2">VERIFY</div>
                   <motion.a
                     href={verificationUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-yellow-900 font-mono underline hover:text-yellow-800 break-all"
+                    className="text-xs text-white font-mono underline hover:text-white/80 break-all"
                     whileHover={{ scale: 1.05 }}
                   >
                     vibecode.academy/verify
