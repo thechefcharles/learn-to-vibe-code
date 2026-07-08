@@ -8,7 +8,6 @@ import { AICopilotWidget } from '@/components/kids-landing/dashboard/AICopilotWi
 import { ProgressFlowWidget } from '@/components/ProgressFlowWidget';
 import { CredentialPreviewWidget } from '@/components/CredentialPreviewWidget';
 import { FloatingCTA } from '@/components/kids-landing/FloatingCTA';
-import { SoundToggle } from '@/components/kids-landing/SoundToggle';
 import { VideoBackground } from '@/components/kids-landing/VideoBackground';
 import Link from 'next/link';
 
@@ -22,7 +21,6 @@ export default function KidsLandingPageContent() {
       }}
     >
       <VideoBackground />
-      <SoundToggle />
       <FloatingCTA />
 
       {/* ============ HERO SECTION WITH DASHBOARD GRID ============ */}

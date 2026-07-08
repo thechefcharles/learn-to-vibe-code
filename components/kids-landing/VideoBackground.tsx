@@ -4,41 +4,25 @@ import { useEffect, useRef } from 'react';
 import { useTheme } from '@/lib/ThemeContext';
 
 const VIDEO_SOURCES: Record<string, string> = {
-  violet: '/bg-purple.mp4',
-  sunset: '/bg-orange.mp4',
+  sage: '/bg-sage.mp4',
 };
 
 export function VideoBackground() {
-  const violetVideoRef = useRef<HTMLVideoElement>(null);
-  const sunsetVideoRef = useRef<HTMLVideoElement>(null);
+  const sageVideoRef = useRef<HTMLVideoElement>(null);
   const { currentTheme } = useTheme();
 
   useEffect(() => {
-    const violetVideo = violetVideoRef.current;
-    const sunsetVideo = sunsetVideoRef.current;
-    if (!violetVideo || !sunsetVideo) return;
+    const sageVideo = sageVideoRef.current;
+    if (!sageVideo) return;
 
-    if (currentTheme === 'violet') {
-      violetVideo.style.visibility = 'visible';
-      violetVideo.style.opacity = '1';
-      violetVideo.play().catch(() => {});
-      sunsetVideo.style.visibility = 'hidden';
-      sunsetVideo.style.opacity = '0';
-      sunsetVideo.pause();
-    } else if (currentTheme === 'sunset') {
-      sunsetVideo.style.visibility = 'visible';
-      sunsetVideo.style.opacity = '1';
-      sunsetVideo.play().catch(() => {});
-      violetVideo.style.visibility = 'hidden';
-      violetVideo.style.opacity = '0';
-      violetVideo.pause();
+    if (currentTheme === 'sage') {
+      sageVideo.style.visibility = 'visible';
+      sageVideo.style.opacity = '1';
+      sageVideo.play().catch(() => {});
     } else {
-      violetVideo.style.visibility = 'hidden';
-      violetVideo.style.opacity = '0';
-      violetVideo.pause();
-      sunsetVideo.style.visibility = 'hidden';
-      sunsetVideo.style.opacity = '0';
-      sunsetVideo.pause();
+      sageVideo.style.visibility = 'hidden';
+      sageVideo.style.opacity = '0';
+      sageVideo.pause();
     }
   }, [currentTheme]);
 
@@ -56,13 +40,8 @@ export function VideoBackground() {
   };
 
   return (
-    <>
-      <video ref={violetVideoRef} muted loop playsInline style={videoStyle}>
-        <source src={VIDEO_SOURCES.violet} type="video/mp4" />
-      </video>
-      <video ref={sunsetVideoRef} muted loop playsInline style={videoStyle}>
-        <source src={VIDEO_SOURCES.sunset} type="video/mp4" />
-      </video>
-    </>
+    <video ref={sageVideoRef} muted loop playsInline style={videoStyle}>
+      <source src={VIDEO_SOURCES.sage} type="video/mp4" />
+    </video>
   );
 }
