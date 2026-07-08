@@ -14,11 +14,14 @@ export function ThemeSwitcher() {
     // Apply background gradient to main container (transparent for violet to show video)
     const mainDiv = document.querySelector('[data-landing-container]');
     if (mainDiv) {
+      const el = mainDiv as HTMLElement;
       if (themeName === 'violet') {
-        (mainDiv as HTMLElement).style.background = 'transparent';
+        el.style.background = 'transparent';
+        el.style.backgroundColor = 'transparent';
+        el.style.backgroundImage = 'none';
       } else {
         const theme = themes[themeName];
-        (mainDiv as HTMLElement).style.background = theme.bg;
+        el.style.background = theme.bg;
       }
     }
   };
