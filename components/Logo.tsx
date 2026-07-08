@@ -18,15 +18,15 @@ export function Logo({
   };
 
   const cosmicSizeMap = {
-    sm: { width: 120, height: 40 },
-    md: { width: 240, height: 80 },
-    lg: { width: 360, height: 120 },
+    sm: { width: 200, height: 67 },
+    md: { width: 400, height: 133 },
+    lg: { width: 600, height: 200 },
   };
 
   const cosmicMarkSizeMap = {
-    sm: { width: 40, height: 40 },
-    md: { width: 60, height: 60 },
-    lg: { width: 100, height: 100 },
+    sm: { width: 80, height: 80 },
+    md: { width: 150, height: 150 },
+    lg: { width: 220, height: 220 },
   };
 
   const logoMap = {

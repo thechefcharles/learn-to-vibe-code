@@ -29,7 +29,7 @@ export default function KidsLandingPageContent() {
         <div className="max-w-7xl mx-auto">
           {/* Hero Logo and Headline */}
           <div className="text-center mb-12 sm:mb-16">
-            <div className="mb-6 sm:mb-8 flex justify-center">
+            <div className="mb-8 sm:mb-12 flex justify-center">
               <Logo variant="cosmic-mark" size="lg" />
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight">
