@@ -19,7 +19,7 @@ export function ThemeSwitcher() {
       const mainDiv = document.querySelector('[data-landing-container]');
       if (mainDiv) {
         const el = mainDiv as HTMLElement;
-        if (themeName === 'violet') {
+        if (themeName === 'violet' || themeName === 'sunset') {
           el.style.background = 'transparent';
           el.style.backgroundColor = 'transparent';
           el.style.backgroundImage = 'none';
@@ -48,11 +48,11 @@ export function ThemeSwitcher() {
 
   const handleThemeClick = (themeName: ThemeName) => {
     setTheme(themeName);
-    // Apply background gradient to main container (transparent for violet to show video)
+    // Apply background gradient to main container (transparent for violet/sunset to show videos)
     const mainDiv = document.querySelector('[data-landing-container]');
     if (mainDiv) {
       const el = mainDiv as HTMLElement;
-      if (themeName === 'violet') {
+      if (themeName === 'violet' || themeName === 'sunset') {
         el.style.background = 'transparent';
         el.style.backgroundColor = 'transparent';
         el.style.backgroundImage = 'none';
