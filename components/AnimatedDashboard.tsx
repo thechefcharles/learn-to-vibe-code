@@ -10,6 +10,7 @@ import { FloatingOrbs } from "./FloatingOrbs";
 import { AnimatedGradientBg } from "./AnimatedGradientBg";
 import { PlayButton } from "./PlayButton";
 import { BackgroundFlair } from "./BackgroundFlair";
+import { ProgressFlowWidget } from "./ProgressFlowWidget";
 import type { Version } from "@/lib/VersionContext";
 
 interface DashboardData {
@@ -101,6 +102,16 @@ export function AnimatedDashboard({ data }: AnimatedDashboardProps) {
 
       {/* Play Button */}
       <PlayButton hasStarted={data.completedModules > 0} />
+
+      {/* Progress Flow Widget */}
+      <motion.div
+        className="mb-12"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4, duration: 0.6 }}
+      >
+        <ProgressFlowWidget />
+      </motion.div>
 
       {/* Stats Grid */}
       <motion.div
