@@ -56,7 +56,7 @@ export function ProgressFlowWidget() {
     >
       {/* Title */}
       <motion.h2
-        className="text-2xl font-bold font-display text-ink mb-8 text-center"
+        className="text-2xl font-bold font-display text-white mb-8 text-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
@@ -187,6 +187,15 @@ export function ProgressFlowWidget() {
       >
         Click any stage to learn more • Complete all modules to earn your certificate
       </motion.p>
+
+      {/* Scroll indicator (mobile only) */}
+      <motion.div
+        className="flex justify-center gap-1 mt-6 md:hidden"
+        animate={{ x: [0, 8, 0] }}
+        transition={{ duration: 1.5, repeat: Infinity }}
+      >
+        <span className="text-xs text-cyan-400 font-semibold">Swipe to explore →</span>
+      </motion.div>
 
       {/* Custom scrollbar hide style */}
       <style>{`
