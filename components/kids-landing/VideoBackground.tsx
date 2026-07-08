@@ -8,55 +8,10 @@ const VIDEO_SOURCES: Record<string, string> = {
   sunset: '/bg-orange.mp4',
 };
 
-function setupReverseLoop(video: HTMLVideoElement) {
-  let isReversing = false;
-  let reverseSpeed = 0.5; // Half speed for smooth reverse
-
-  const checkForReverse = () => {
-    if (video.duration && video.currentTime >= video.duration - 0.1) {
-      isReversing = true;
-    }
-
-    if (isReversing) {
-      video.currentTime = Math.max(0, video.currentTime - reverseSpeed / 60); // 60fps adjustment
-
-      if (video.currentTime <= 0) {
-        video.currentTime = 0;
-        isReversing = false;
-      }
-    }
-  };
-
-  // Poll via requestAnimationFrame
-  const animationLoop = () => {
-    checkForReverse();
-    requestAnimationFrame(animationLoop);
-  };
-
-  animationLoop();
-
-  return () => {
-    // Cleanup handled by component unmount
-  };
-}
-
 export function VideoBackground() {
   const violetVideoRef = useRef<HTMLVideoElement>(null);
   const sunsetVideoRef = useRef<HTMLVideoElement>(null);
   const { currentTheme } = useTheme();
-
-  // Setup reverse loop for both videos
-  useEffect(() => {
-    if (violetVideoRef.current) {
-      return setupReverseLoop(violetVideoRef.current);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (sunsetVideoRef.current) {
-      return setupReverseLoop(sunsetVideoRef.current);
-    }
-  }, []);
 
   useEffect(() => {
     const violetVideo = violetVideoRef.current;
@@ -102,10 +57,10 @@ export function VideoBackground() {
 
   return (
     <>
-      <video ref={violetVideoRef} muted playsInline style={videoStyle}>
+      <video ref={violetVideoRef} muted loop playsInline style={videoStyle}>
         <source src={VIDEO_SOURCES.violet} type="video/mp4" />
       </video>
-      <video ref={sunsetVideoRef} muted playsInline style={videoStyle}>
+      <video ref={sunsetVideoRef} muted loop playsInline style={videoStyle}>
         <source src={VIDEO_SOURCES.sunset} type="video/mp4" />
       </video>
     </>
