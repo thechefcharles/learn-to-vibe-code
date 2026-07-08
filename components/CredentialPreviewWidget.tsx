@@ -214,15 +214,6 @@ export function CredentialPreviewWidget() {
         )}
       </motion.button>
 
-      {/* Instructions */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="mt-4 text-center text-xs text-slate/60"
-      >
-        Click or hover to flip • Click share to copy details
-      </motion.div>
     </div>
   );
 }
