@@ -17,54 +17,50 @@
 - **Purpose:** Immediate "wow" moment; invites interaction with the arrow cue
 - **Tone:** Confident, achievable, exciting (not corporate)
 
-### "What You'll Build" Section
-- **Format:** 4 rotating 3D cards showcasing real kids' projects
-- **Card Content:**
-  - Project name + builder name & age
-  - 1-sentence description (e.g., "Maya, 13 → Built a drawing app in 3 weeks")
-  - Tech stack (2-3 words: React, AI, API)
-  - Project link/live demo
-- **Interaction:** Click + drag to rotate card; see different angles reveal project details + social proof ("500 downloads," "friends use it daily")
-- **Sound Effect:** Subtle "whoosh" or "click" on rotation
-- **Purpose:** Social proof + aspirational ("kids like me did this")
-- **Fallback:** Keyboard arrows work for accessibility
+### Interactive Course Module Arc Section
+- **Headline:** "Your Learning Path: 16 Modules, 93 Hours"
+- **Interactive Element:** Cursor-tracked progress arc (inspired by Zalak Patel's work hours arc)
+  - Arc displays 0-16 modules as you move cursor across the arc
+  - Center displays current module number + label (e.g., "Module 7: Databases")
+  - Arc fills with gradient color (cyan → purple) proportional to module position
+  - Smooth, real-time tracking with no lag
+  - **Fallback:** Displays all 16 modules in a static list with descriptions for accessibility
+- **Module Tiers** (displayed alongside or below arc):
+  - **Tier 1: Foundations** (Modules 0-3) — Setup, HTML/CSS, JavaScript basics, AI collaboration
+  - **Tier 2: Building** (Modules 4-9) — React, databases, full-stack, APIs, deployment, security
+  - **Tier 3: Production** (Modules 10-12) — Design/UX, testing, production-ready code
+  - **Tier 4: Landscape** (Modules 13-15) — Industry tools, frameworks, future of coding
+  - **Capstone:** Defense + credential issuance
+- **Copy Block:** "93 hours of real learning. From zero to shipping. Self-paced. Accredited."
+- **Purpose:** Describes course depth and structure; sets realistic expectations
+- **Tone:** Clear, specific, emphasizes comprehensiveness
 
-### "The Vibe Coding Way" Section (3 Concepts)
-- **Concept 1 (Write Code):** 
-  - Copy: "You sit down. You write. AI watches your back."
-  - Animation: Fade + slide (text enters smoothly)
-- **Concept 2 (AI Helps):**
-  - Copy: "Stuck? AI suggests. You decide. You learn."
-  - Animation: Hover animation (icon rotates + color shifts + particles burst)
-- **Concept 3 (You Ship It):**
-  - Copy: "It works. You deploy. You're a builder."
-  - Animation: Interactive reveal (hover to expand hidden details)
-- **Purpose:** Explains the learning journey in an engaging, story-like way
-- **Tone:** Second-person ("You"), active verbs, emphasizes agency
+### Course Structure Overview Section
+- **Three Key Stats (card-based or grid):**
+  1. **"16 Modules"** — Progressive skill building from fundamentals to production
+  2. **"93 Contact Hours"** — Accredited depth (not a quick tutorial)
+  3. **"Capstone Project"** — Build something real, defend it, earn your certificate
+- **Optional Module Spotlight:** Rotate through 3-4 example modules with 1-line descriptions:
+  - "Module 4: React Basics — Learn the framework used by 90% of modern apps"
+  - "Module 8: Deployment — Put your code live on the internet"
+  - "Module 12: Production-Ready — Write code teams actually trust"
+- **Purpose:** Gives concrete sense of *what* is taught, not just *why it matters*
+- **Tone:** Specific, honest about scope and commitment
 
-### Social Proof / Video Testimonials Section
-- **Format:** Short video clips (10-15 seconds each) of kids explaining their builds
-- **Overlay Copy:**
-  - "I didn't think I could build something real. Then I did."
-  - "It's not as hard as I thought. It's actually fun."
-  - "I showed my parents and they were shocked."
-- **Interactive Overlay:** Play button is interactive; video previews on hover
-- **Purpose:** Relatable doubts → achievement arc; parent approval adds credibility
-
-### Feature Deep-Dive Section (3-4 Key Features)
+### Feature Deep-Dive Section (Key Course Benefits)
 - **Feature 1: "Free Forever"**
   - Copy: "No credit card. No surprise charges. Just learning."
   - Hover Interaction: Dollar signs animate away, check mark appears
-- **Feature 2: "16 Modules, ~93 Hours"**
-  - Copy: "From zero to shipping. A real journey, not a 2-hour tutorial."
-  - Hover Interaction: Progress bar animates to 100%, milestones highlight
-- **Feature 3: "Capstone Project"**
-  - Copy: "You build something real. You defend it. You own it."
-  - Hover Interaction: Trophy icon animates, text expands with details
-- **Feature 4: "Verifiable Certificate"**
-  - Copy: "Employers recognize it. Universities recognize it. You earned it."
+- **Feature 2: "Self-Paced"**
+  - Copy: "Work at your speed. Pause anytime. No deadlines, no pressure."
+  - Hover Interaction: Timeline animates with flexible markers
+- **Feature 3: "Capstone + Defense"**
+  - Copy: "You build something real. You present it. You own it."
+  - Hover Interaction: Trophy icon animates, project showcase expands
+- **Feature 4: "Accredited Certificate"**
+  - Copy: "CPD/IACET accreditation. Employers and universities recognize it."
   - Hover Interaction: Certificate preview slides in, seal animates
-- **Purpose:** Answers hidden kid questions ("Is it worth it?" / "Will anyone care?")
+- **Purpose:** Describes *how* the course works and what you get
 - **Tone:** Confident, specific, removes objections
 
 ### Interactive Challenge CTA Section
@@ -196,13 +192,13 @@
 | Component | Purpose | Complexity |
 |-----------|---------|-----------|
 | **CodeWandCursor** | Hero cursor morphs into wand + materializes code blocks | High |
-| **RotatableProjectCard** | 3D card responds to drag/rotation, reveals details | High |
+| **CursorTrackedModuleArc** | Interactive arc showing modules 0-16, tracks cursor position, updates center label | High |
 | **ScrollRevealSection** | Wrapper that fades/slides elements in on scroll | Medium |
 | **InteractiveFeatureCard** | Hover animations, micro-interactions, particles | Medium |
 | **MiniGameCTA** | Drag-to-sort code blocks challenge → unlock signup | High |
 | **SoundToggle** | Header toggle to enable/disable all sound effects | Low |
 | **ParticleEffect** | Subtle particle bursts on hover/click | Medium |
-| **StaggeredList** | Renders list items with cascading animation | Low |
+| **ModuleGrid** | Static fallback for module display (accessibility) | Low |
 
 ### What You Can Do (User)
 
@@ -229,12 +225,12 @@
 | Phase | Owner | Work | Estimate |
 |-------|-------|------|----------|
 | A: Foundation | Claude | Scaffold page, ScrollRevealSection, SoundToggle, audio system | 45 min |
-| B: Hero | Claude | CodeWandCursor, hero section with Midjourney background | 1 hour |
-| C: Interactive Sections | Claude | RotatableProjectCard, InteractiveFeatureCard, image integration | 1.5 hours |
+| B: Hero + Module Arc | Claude | CodeWandCursor + CursorTrackedModuleArc (cursor-tracked, real-time module display) | 1.5 hours |
+| C: Course Structure | Claude | Module Grid layout, course overview cards, feature cards | 1 hour |
 | D: Game & CTA | Claude | MiniGameCTA, glowing button, enrollment link | 1.5 hours |
-| E: Polish & Test | Both | Sound integration, a11y audit, mobile responsive, Core Web Vitals | 1-2 hours |
+| E: Polish & Test | Both | Sound integration, a11y audit (arc fallback), mobile responsive, Core Web Vitals | 1-2 hours |
 
-**Total Estimate:** 4-6 hours to full interactive page (with Midjourney images + copy ready)
+**Total Estimate:** 4-6 hours to full interactive page (shift from social proof to content description)
 
 ### File Structure
 ```
