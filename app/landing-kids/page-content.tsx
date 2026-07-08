@@ -8,6 +8,7 @@ import { InteractiveFeatureCard } from '@/components/kids-landing/InteractiveFea
 import { MiniGameCTA } from '@/components/kids-landing/MiniGameCTA';
 import { SoundToggle } from '@/components/kids-landing/SoundToggle';
 import { FloatingCTA } from '@/components/kids-landing/FloatingCTA';
+import { LearningTiersWidget } from '@/components/kids-landing/dashboard/LearningTiersWidget';
 import { KIDS_LANDING_CONTENT, MODULE_TIERS } from '@/lib/kids-landing/content';
 import Link from 'next/link';
 import { useEffect } from 'react';
@@ -141,9 +142,17 @@ export default function KidsLandingPageContent() {
               </div>
             </div>
 
+            {/* Interactive Learning Tiers Widget */}
+            <div className="mt-16 p-8 bg-slate-800/30 border border-slate-700 rounded-lg">
+              <h3 className="text-2xl font-bold mb-6">Interactive Tier Explorer</h3>
+              <div style={{ minHeight: '300px' }}>
+                <LearningTiersWidget />
+              </div>
+            </div>
+
             {/* Module Grid */}
             <div>
-              <h3 className="text-2xl font-bold mb-6">All 16 Modules</h3>
+              <h3 className="text-2xl font-bold mb-6 mt-12">All 16 Modules</h3>
               <ModuleGrid />
             </div>
           </div>
