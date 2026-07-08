@@ -14,7 +14,7 @@ function GridItem({ children, colSpan = 1, rowSpan = 1 }: GridItemProps) {
 
   return (
     <div
-      className={`${colSpanClass} ${rowSpanClass} rounded-lg bg-slate-900/50 border border-slate-700 p-6 hover:border-cyan-500/50 transition-colors`}
+      className={`${colSpanClass} ${rowSpanClass} rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-6 hover:border-white/40 transition-all hover:bg-white/15 shadow-xl`}
     >
       {children}
     </div>

@@ -32,11 +32,13 @@ export function LearningTiersWidget() {
             key={key}
             onClick={() => toggleTier(key)}
             className={`
-              p-4 rounded-lg bg-gradient-to-br ${TIER_COLORS[key].gradient}
+              p-4 rounded-xl bg-gradient-to-br ${TIER_COLORS[key].gradient}
+              bg-opacity-40 backdrop-blur-sm
               text-white font-bold text-sm
-              hover:shadow-lg transition-all duration-300
+              border border-white/30
+              hover:shadow-2xl hover:bg-opacity-50 transition-all duration-300
               flex flex-col items-center justify-center
-              ${expandedTier === key ? 'ring-2 ring-white' : ''}
+              ${expandedTier === key ? 'ring-2 ring-white/60' : ''}
             `}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -56,7 +58,7 @@ export function LearningTiersWidget() {
             animate={{ opacity: 1, height: 'auto', y: 0 }}
             exit={{ opacity: 0, height: 0, y: -10 }}
             transition={{ duration: 0.3 }}
-            className={`p-3 rounded-lg border border-slate-700 ${TIER_COLORS[expandedTier].bg}`}
+            className={`p-3 rounded-xl backdrop-blur-sm border border-white/20 bg-white/5`}
           >
             <div className="font-bold mb-2 text-sm text-gray-200">
               {MODULE_TIERS[expandedTier as keyof typeof MODULE_TIERS].name} Modules:

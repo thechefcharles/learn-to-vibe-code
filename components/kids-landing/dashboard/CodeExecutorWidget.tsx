@@ -104,7 +104,7 @@ export function CodeExecutorWidget() {
         <textarea
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          className="flex-1 w-full bg-slate-950 border border-slate-700 rounded p-3 text-cyan-300 font-mono text-sm focus:border-cyan-500 focus:outline-none resize-none placeholder-gray-600"
+          className="flex-1 w-full bg-black/30 backdrop-blur-sm border border-white/20 rounded-lg p-3 text-cyan-300 font-mono text-sm focus:border-cyan-400/60 focus:outline-none resize-none placeholder-gray-500"
           placeholder="Enter JavaScript code..."
           spellCheck="false"
         />
@@ -113,7 +113,7 @@ export function CodeExecutorWidget() {
       {/* Output Display */}
       <div className="flex-1 flex flex-col">
         <label className="text-xs font-medium text-gray-300 mb-2">Output:</label>
-        <div className="flex-1 w-full bg-slate-950 border border-slate-700 rounded p-3 font-mono text-sm overflow-auto">
+        <div className="flex-1 w-full bg-black/30 backdrop-blur-sm border border-white/20 rounded-lg p-3 font-mono text-sm overflow-auto">
           {isExecuting && <span className="text-gray-500">Executing...</span>}
           {error && <span className="text-red-400">{error}</span>}
           {!error && !isExecuting && output && <span className="text-cyan-300">{output}</span>}

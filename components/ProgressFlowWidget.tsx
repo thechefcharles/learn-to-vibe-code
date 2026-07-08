@@ -52,7 +52,7 @@ export function ProgressFlowWidget() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="w-full bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-violet/20 overflow-hidden"
+      className="w-full bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/20 overflow-hidden"
     >
       {/* Title */}
       <motion.h2
@@ -160,7 +160,7 @@ export function ProgressFlowWidget() {
                       activeStage === stage.id ? "auto" : "none",
                   }}
                   transition={{ duration: 0.3 }}
-                  className="absolute top-24 z-50 bg-white/95 backdrop-blur-md rounded-xl p-4 w-max max-w-xs shadow-2xl border border-violet/20"
+                  className="absolute top-24 z-50 bg-white/20 backdrop-blur-md rounded-xl p-4 w-max max-w-xs shadow-2xl border border-white/40"
                 >
                   <p className="text-sm font-bold text-violet mb-2">
                     {stage.label}
