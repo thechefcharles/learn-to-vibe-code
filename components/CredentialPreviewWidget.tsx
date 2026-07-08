@@ -18,22 +18,30 @@ export function CredentialPreviewWidget() {
   });
   const verificationUrl = "https://vibecode.academy/verify/VBC-2026-00547";
 
-  const handleShare = async () => {
-    try {
-      const text = `I just earned my Accredited Vibe Coding Course Certificate! Credential ID: ${credentialId}\nVerify: ${verificationUrl}`;
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy:", err);
+  const handleShare = () => {
+    const message = encodeURIComponent("Learn To Vibe Code With Me");
+    const signupUrl = `${window.location.origin}/signup?referral=${message}`;
+
+    if (navigator.share) {
+      navigator.share({
+        title: "Vibe Coding Course",
+        text: "Learn To Vibe Code With Me",
+        url: signupUrl,
+      }).catch(() => {
+        window.open(signupUrl, "_blank");
+      });
+    } else {
+      window.open(signupUrl, "_blank");
     }
+
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   if (prefersReducedMotion) {
     return (
       <div className="w-full max-w-sm mx-auto">
-        <div className="relative w-full aspect-video bg-gradient-to-br from-violet-300/60 via-purple-200/60 to-violet-200/60 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center shadow-2xl">
-          <div className="text-6xl mb-4">🏆</div>
+        <div className="relative w-full aspect-video bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center shadow-2xl">
           <div className="text-sm font-semibold text-white">Accredited</div>
           <div className="text-2xl font-bold font-display text-white mt-2">
             Vibe Coding Course
@@ -42,9 +50,9 @@ export function CredentialPreviewWidget() {
         </div>
         <button
           onClick={handleShare}
-          className="mt-6 w-full px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-semibold rounded-lg transition-colors"
+          className="mt-6 w-full px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 hover:border-white/40 text-white font-semibold rounded-lg transition-all"
         >
-          {copied ? "Copied!" : "Share Certificate"}
+          {copied ? "Shared!" : "Share Certificate"}
         </button>
       </div>
     );
@@ -81,7 +89,7 @@ export function CredentialPreviewWidget() {
             }}
             className="absolute inset-0 w-full h-full"
           >
-            <div className="relative w-full h-full bg-gradient-to-br from-violet-300/60 via-purple-200/60 to-violet-200/60 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
+            <div className="relative w-full h-full bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
               {/* Decorative background pattern */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full" />
@@ -96,26 +104,18 @@ export function CredentialPreviewWidget() {
                 className="relative z-10"
               >
                 <motion.div
-                  className="text-6xl mb-4"
-                  animate={{ rotate: isFlipped ? 0 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  🏆
-                </motion.div>
-
-                <motion.div
-                  className="text-sm font-semibold text-yellow-900 tracking-widest"
+                  className="text-sm font-semibold text-white tracking-widest"
                   animate={{ letterSpacing: "0.1em" }}
                   transition={{ duration: 0.3 }}
                 >
                   ACCREDITED
                 </motion.div>
 
-                <motion.div className="text-2xl font-bold font-display text-yellow-900 mt-4">
+                <motion.div className="text-2xl font-bold font-display text-white mt-4">
                   Vibe Coding Course
                 </motion.div>
 
-                <motion.div className="text-xs text-yellow-800 mt-6 italic">
+                <motion.div className="text-xs text-white/80 mt-6 italic">
                   Certificate of Completion
                 </motion.div>
               </motion.div>
@@ -136,7 +136,7 @@ export function CredentialPreviewWidget() {
             }}
             className="w-full h-full"
           >
-            <div className="relative w-full h-full bg-gradient-to-br from-violet-300/60 via-purple-200/60 to-violet-200/60 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
+            <div className="relative w-full h-full bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
               {/* Decorative background pattern */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full" />
@@ -155,7 +155,7 @@ export function CredentialPreviewWidget() {
                   <div className="text-lg font-mono font-bold text-white">{credentialId}</div>
                 </div>
 
-                <div className="h-px bg-yellow-400 opacity-50 w-3/4 mx-auto" />
+                <div className="h-px bg-white/30 opacity-50 w-3/4 mx-auto" />
 
                 <div>
                   <div className="text-xs text-white/70 font-semibold mb-1">ISSUED</div>
@@ -187,10 +187,10 @@ export function CredentialPreviewWidget() {
         onClick={handleShare}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className={`mt-6 w-full px-6 py-3 font-semibold rounded-lg transition-all duration-300 ${
+        className={`mt-6 w-full px-6 py-3 font-semibold rounded-lg transition-all duration-300 backdrop-blur-md border ${
           copied
-            ? "bg-green-500 hover:bg-green-600 text-white"
-            : "bg-yellow-500 hover:bg-yellow-600 text-white shadow-lg hover:shadow-xl"
+            ? "bg-white/20 border-white/30 hover:bg-white/25 text-white"
+            : "bg-white/10 border-white/20 hover:bg-white/15 hover:border-white/40 text-white shadow-lg hover:shadow-xl"
         }`}
       >
         {copied ? (
@@ -200,7 +200,7 @@ export function CredentialPreviewWidget() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            ✓ Copied to Clipboard
+            ✓ Shared
           </motion.span>
         ) : (
           <motion.span
@@ -209,7 +209,7 @@ export function CredentialPreviewWidget() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
-            📋 Share Certificate
+            Share Certificate
           </motion.span>
         )}
       </motion.button>

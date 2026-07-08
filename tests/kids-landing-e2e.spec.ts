@@ -348,15 +348,16 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
     });
   });
 
-  test('credential preview widget shows 🏆 emoji', async ({ page }) => {
-    const trophy = page.locator(':text("🏆")').first();
-    await expect(trophy).toBeVisible({ timeout: 2000 }).catch(() => {
-      console.log('Trophy emoji visible or rendered');
+  test('credential preview widget shows accredited badge', async ({ page }) => {
+    const accreditedBadge = page.locator(':text("Accredited")').first();
+    await expect(accreditedBadge).toBeVisible({ timeout: 2000 }).catch(() => {
+      console.log('Accredited badge visible or rendered');
     });
   });
 
   test('credential preview widget flip animation works', async ({ page }) => {
-    const certificateContainer = page.locator('div').filter({ hasText: '🏆' }).first();
+    // Find the certificate container by looking for the perspective style
+    const certificateContainer = page.locator('[style*="perspective"]').first();
 
     if (await certificateContainer.isVisible({ timeout: 2000 }).catch(() => false)) {
       await certificateContainer.click();
