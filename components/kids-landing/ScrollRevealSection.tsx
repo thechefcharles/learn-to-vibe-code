@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion, Variants } from 'framer-motion';
+import { motion, Variants, easeOut } from 'framer-motion';
 import { useIntersectionObserver } from '@/hooks/useIntersectionObserver';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
@@ -35,7 +35,7 @@ export const ScrollRevealSection: React.FC<ScrollRevealSectionProps> = ({
       y: 0,
       transition: {
         duration: 0.6,
-        ease: 'easeOut' as const,
+        ease: easeOut,
         delay: prefersReducedMotion ? 0 : delay,
         staggerChildren: stagger ? 0.15 : 0,
       },
@@ -53,7 +53,7 @@ export const ScrollRevealSection: React.FC<ScrollRevealSectionProps> = ({
       y: 0,
       transition: {
         duration: 0.6,
-        ease: 'easeOut' as const,
+        ease: easeOut,
       },
     },
   };
