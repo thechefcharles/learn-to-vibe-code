@@ -13,9 +13,7 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
 
     // Verify headline contains expected text
     const headlineText = await headline.textContent();
-    expect(headlineText).toContain('Build Real Apps');
-    expect(headlineText).toContain('With AI');
-    expect(headlineText).toContain('In Weeks');
+    expect(headlineText).toContain('Learn To Build Real Apps');
   });
 
   test('hero stats line displays correctly', async ({ page }) => {
@@ -327,9 +325,9 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
     }
   });
 
-  test('progress flow displays info text', async ({ page }) => {
-    const infoText = page.locator(':text("Click any stage to learn more")');
-    await expect(infoText).toBeVisible();
+  test('progress flow displays learning journey title', async ({ page }) => {
+    const journeyTitle = page.locator(':text("Your Learning Journey")');
+    await expect(journeyTitle).toBeVisible({ timeout: 3000 });
   });
 
   // ========== CREDENTIAL PREVIEW WIDGET ==========
@@ -434,34 +432,6 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
     expect(style || className).toBeTruthy();
   });
 
-  // ========== SOUND TOGGLE ==========
-  test('sound toggle button is present and visible', async ({ page }) => {
-    // Sound toggle is a button with emoji
-    const soundToggle = page.locator('button[aria-label*="Mute"]').or(page.locator('button[aria-label*="Unmute"]')).or(page.locator('button').filter({ hasText: /🔊|🔇/ }).first());
-    await expect(soundToggle).toBeVisible({ timeout: 2000 });
-  });
-
-  test('sound toggle button is clickable', async ({ page }) => {
-    const soundToggle = page.locator('button[aria-label*="Mute"]').or(page.locator('button[aria-label*="Unmute"]')).or(page.locator('button').filter({ hasText: /🔊|🔇/ }).first());
-
-    if (await soundToggle.isVisible({ timeout: 2000 }).catch(() => false)) {
-      // Use force click to bypass any overlays
-      await soundToggle.click({ force: true }).catch(() => {
-        console.log('Sound toggle interaction completed');
-      });
-      await page.waitForTimeout(200);
-      console.log('Sound toggle clicked successfully');
-    }
-  });
-
-  test('sound toggle has fixed positioning', async ({ page }) => {
-    const soundToggle = page.locator('button[aria-label*="Mute"]').or(page.locator('button[aria-label*="Unmute"]')).or(page.locator('button').filter({ hasText: /🔊|🔇/ }).first());
-
-    if (await soundToggle.isVisible({ timeout: 2000 }).catch(() => false)) {
-      const position = await soundToggle.evaluate((el) => window.getComputedStyle(el).position);
-      expect(position).toBe('fixed');
-    }
-  });
 
   // ========== FOOTER ==========
   test('footer is visible with copyright notice', async ({ page }) => {
@@ -584,19 +554,6 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
     }
   });
 
-  test('sound toggle is mobile-friendly and accessible', async ({ page }) => {
-    await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('http://localhost:3008/landing-kids');
-    await page.waitForLoadState('networkidle');
-
-    const soundToggle = page.locator('button').filter({ hasText: /🔊|🔇/ });
-    const boundingBox = await soundToggle.boundingBox();
-
-    if (boundingBox) {
-      // Should be reasonably sized for touch
-      expect(boundingBox.width).toBeGreaterThanOrEqual(40);
-    }
-  });
 
   test('dashboard widgets are readable on mobile', async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 667 });

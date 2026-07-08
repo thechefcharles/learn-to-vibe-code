@@ -4,26 +4,35 @@ import { useEffect, useRef } from 'react';
 import { useTheme } from '@/lib/ThemeContext';
 
 const VIDEO_SOURCES: Record<string, string> = {
+  violet: '/bg-purple.mp4',
   sage: '/bg-sage.mp4',
+  sunset: '/bg-orange.mp4',
 };
 
 export function VideoBackground() {
-  const sageVideoRef = useRef<HTMLVideoElement>(null);
+  const videoRefs = {
+    violet: useRef<HTMLVideoElement>(null),
+    sage: useRef<HTMLVideoElement>(null),
+    sunset: useRef<HTMLVideoElement>(null),
+  };
   const { currentTheme } = useTheme();
 
   useEffect(() => {
-    const sageVideo = sageVideoRef.current;
-    if (!sageVideo) return;
+    const themes = Object.keys(videoRefs) as Array<keyof typeof videoRefs>;
+    themes.forEach((theme) => {
+      const video = videoRefs[theme].current;
+      if (!video) return;
 
-    if (currentTheme === 'sage') {
-      sageVideo.style.visibility = 'visible';
-      sageVideo.style.opacity = '1';
-      sageVideo.play().catch(() => {});
-    } else {
-      sageVideo.style.visibility = 'hidden';
-      sageVideo.style.opacity = '0';
-      sageVideo.pause();
-    }
+      if (theme === currentTheme) {
+        video.style.visibility = 'visible';
+        video.style.opacity = '1';
+        video.play().catch(() => {});
+      } else {
+        video.style.visibility = 'hidden';
+        video.style.opacity = '0';
+        video.pause();
+      }
+    });
   }, [currentTheme]);
 
   const videoStyle = {
@@ -40,8 +49,16 @@ export function VideoBackground() {
   };
 
   return (
-    <video ref={sageVideoRef} muted loop playsInline style={videoStyle}>
-      <source src={VIDEO_SOURCES.sage} type="video/mp4" />
-    </video>
+    <>
+      <video ref={videoRefs.violet} muted loop playsInline style={videoStyle}>
+        <source src={VIDEO_SOURCES.violet} type="video/mp4" />
+      </video>
+      <video ref={videoRefs.sage} muted loop playsInline style={videoStyle}>
+        <source src={VIDEO_SOURCES.sage} type="video/mp4" />
+      </video>
+      <video ref={videoRefs.sunset} muted loop playsInline style={videoStyle}>
+        <source src={VIDEO_SOURCES.sunset} type="video/mp4" />
+      </video>
+    </>
   );
 }

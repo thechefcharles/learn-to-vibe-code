@@ -5,7 +5,7 @@ import { useTheme } from "@/lib/ThemeContext";
 import { themes, type ThemeName } from "@/lib/themes";
 import { useEffect } from "react";
 
-const themeOrder: ThemeName[] = ["dark", "sage", "ocean"];
+const themeOrder: ThemeName[] = ["violet", "sage", "sunset"];
 
 export function ThemeSwitcher() {
   const { currentTheme, setTheme } = useTheme();
@@ -19,7 +19,7 @@ export function ThemeSwitcher() {
       const mainDiv = document.querySelector('[data-landing-container]');
       if (mainDiv) {
         const el = mainDiv as HTMLElement;
-        if (themeName === 'sage') {
+        if (themeName === 'violet' || themeName === 'sage' || themeName === 'sunset') {
           el.style.background = 'transparent';
           el.style.backgroundColor = 'transparent';
           el.style.backgroundImage = 'none';
@@ -48,11 +48,11 @@ export function ThemeSwitcher() {
 
   const handleThemeClick = (themeName: ThemeName) => {
     setTheme(themeName);
-    // Apply background gradient to main container (transparent for sage to show video)
+    // Apply background gradient to main container (transparent for video themes)
     const mainDiv = document.querySelector('[data-landing-container]');
     if (mainDiv) {
       const el = mainDiv as HTMLElement;
-      if (themeName === 'sage') {
+      if (themeName === 'violet' || themeName === 'sage' || themeName === 'sunset') {
         el.style.background = 'transparent';
         el.style.backgroundColor = 'transparent';
         el.style.backgroundImage = 'none';
