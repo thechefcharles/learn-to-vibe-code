@@ -23,10 +23,8 @@ export default function KidsLandingPageContent() {
           {/* Hero Headline */}
           <div className="text-center mb-12 sm:mb-16">
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight">
-              Build Real Apps.
-              <br />
               <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                With AI. In Weeks.
+                Learn To Build Real Apps
               </span>
             </h1>
 
