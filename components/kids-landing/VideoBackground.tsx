@@ -10,65 +10,33 @@ const VIDEO_SOURCES: Record<string, string> = {
 
 function setupReverseLoop(video: HTMLVideoElement) {
   let isReversing = false;
-  let rafId: number | null = null;
-  let lastTime = 0;
-  let checkId: number | null = null;
+  let reverseSpeed = 0.5; // Half speed for smooth reverse
 
-  const reversePlayback = (timestamp: number) => {
-    if (lastTime === 0) lastTime = timestamp;
-
-    const deltaTime = (timestamp - lastTime) / 1000;
-    lastTime = timestamp;
-
-    video.currentTime -= deltaTime;
-
-    if (video.currentTime <= 0) {
-      video.currentTime = 0;
-      isReversing = false;
-      lastTime = 0;
-      video.play().catch(() => {});
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = null;
-    } else {
-      rafId = requestAnimationFrame(reversePlayback);
-    }
-  };
-
-  const startReverse = () => {
-    if (!isReversing && video.duration > 0 && video.currentTime >= video.duration - 0.2) {
+  const checkForReverse = () => {
+    if (video.duration && video.currentTime >= video.duration - 0.1) {
       isReversing = true;
-      video.pause();
-      lastTime = 0;
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(reversePlayback);
+    }
+
+    if (isReversing) {
+      video.currentTime = Math.max(0, video.currentTime - reverseSpeed / 60); // 60fps adjustment
+
+      if (video.currentTime <= 0) {
+        video.currentTime = 0;
+        isReversing = false;
+      }
     }
   };
 
-  const handleEnded = () => {
-    startReverse();
+  // Poll via requestAnimationFrame
+  const animationLoop = () => {
+    checkForReverse();
+    requestAnimationFrame(animationLoop);
   };
 
-  const handleTimeUpdate = () => {
-    if (!isReversing && video.duration > 0 && video.currentTime >= video.duration - 0.2) {
-      startReverse();
-    }
-  };
-
-  video.addEventListener('ended', handleEnded);
-  video.addEventListener('timeupdate', handleTimeUpdate);
-
-  // Fallback check in case events don't fire
-  checkId = window.setInterval(() => {
-    if (!isReversing && video.duration > 0 && !video.paused && video.currentTime >= video.duration - 0.1) {
-      startReverse();
-    }
-  }, 100);
+  animationLoop();
 
   return () => {
-    video.removeEventListener('ended', handleEnded);
-    video.removeEventListener('timeupdate', handleTimeUpdate);
-    if (rafId) cancelAnimationFrame(rafId);
-    if (checkId) clearInterval(checkId);
+    // Cleanup handled by component unmount
   };
 }
 
