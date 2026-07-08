@@ -20,7 +20,7 @@ export function CredentialPreviewWidget() {
 
   const handleShare = () => {
     const message = encodeURIComponent("Learn To Vibe Code With Me");
-    const signupUrl = `${window.location.origin}/signup?referral=${message}`;
+    const signupUrl = `https://learntovibecode.io/signup?referral=${message}`;
 
     if (navigator.share) {
       navigator.share({
@@ -40,7 +40,7 @@ export function CredentialPreviewWidget() {
 
   if (prefersReducedMotion) {
     return (
-      <div className="w-full h-full flex flex-col gap-6">
+      <div className="w-full h-full flex flex-col gap-4">
         <div className="relative w-full flex-1 bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center shadow-2xl">
           <div className="text-sm font-semibold text-white">Accredited</div>
           <div className="text-2xl font-bold font-display text-white mt-2">
@@ -59,9 +59,9 @@ export function CredentialPreviewWidget() {
   }
 
   return (
-    <div className="w-full h-full flex flex-col gap-6 min-h-[500px]">
+    <div className="w-full h-full flex flex-col gap-4">
       <div
-        className="relative w-full flex-1 cursor-pointer min-h-[400px]"
+        className="relative w-full flex-1 cursor-pointer"
         style={{ perspective: "1200px" }}
         onClick={() => setIsFlipped(!isFlipped)}
         onMouseEnter={() => setIsFlipped(true)}
