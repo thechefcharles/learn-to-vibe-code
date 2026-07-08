@@ -164,7 +164,7 @@ export function CredentialPreviewWidget() {
                     className="text-xs text-white font-mono underline hover:text-white/80 break-all"
                     whileHover={{ scale: 1.05 }}
                   >
-                    vibecode.academy/verify
+                    learntovibecode.io/verify
                   </motion.a>
                 </div>
               </motion.div>
