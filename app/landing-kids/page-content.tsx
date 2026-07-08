@@ -7,6 +7,7 @@ import { ScrollRevealSection } from '@/components/kids-landing/ScrollRevealSecti
 import { InteractiveFeatureCard } from '@/components/kids-landing/InteractiveFeatureCard';
 import { MiniGameCTA } from '@/components/kids-landing/MiniGameCTA';
 import { SoundToggle } from '@/components/kids-landing/SoundToggle';
+import { FloatingCTA } from '@/components/kids-landing/FloatingCTA';
 import { KIDS_LANDING_CONTENT, MODULE_TIERS } from '@/lib/kids-landing/content';
 import Link from 'next/link';
 import { useEffect } from 'react';
@@ -21,6 +22,7 @@ export default function KidsLandingPageContent() {
   return (
     <div className="relative w-full min-h-screen overflow-x-hidden text-white">
       <SoundToggle />
+      <FloatingCTA />
 
       {/* ============ HERO SECTION ============ */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
