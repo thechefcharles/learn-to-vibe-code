@@ -9,11 +9,13 @@ import { ProgressFlowWidget } from '@/components/ProgressFlowWidget';
 import { CredentialPreviewWidget } from '@/components/CredentialPreviewWidget';
 import { FloatingCTA } from '@/components/kids-landing/FloatingCTA';
 import { SoundToggle } from '@/components/kids-landing/SoundToggle';
+import { VideoBackground } from '@/components/kids-landing/VideoBackground';
 import Link from 'next/link';
 
 export default function KidsLandingPageContent() {
   return (
     <div className="relative w-full min-h-screen bg-slate-950 text-white overflow-x-hidden" data-landing-container>
+      <VideoBackground />
       <SoundToggle />
       <FloatingCTA />
 
