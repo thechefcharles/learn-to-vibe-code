@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, MotionConfig } from 'framer-motion';
 import Link from 'next/link';
 
 interface CodeWandCursorProps {
@@ -159,77 +159,79 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
       ))}
 
       {/* Hero content - centered overlay */}
-      <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-5xl md:text-7xl font-bold mb-4 font-display"
-          style={{ color: '#00d9ff' }}
-        >
-          Build Real Apps.
-        </motion.h1>
-
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-4xl md:text-6xl font-bold mb-6 font-display"
-          style={{ color: '#a78bfa' }}
-        >
-          With AI. In Weeks.
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="text-lg md:text-xl mb-8 text-white/90"
-        >
-          Learn full-stack development with AI-assisted coding. Go from zero to deployed in 16 modules.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-        >
-          <Link
-            href="/auth/sign-up"
-            className="px-8 py-4 bg-cyan-500 text-white font-bold rounded-lg hover:bg-cyan-600 transition-colors duration-300 shadow-lg hover:shadow-xl text-lg"
+      <MotionConfig reducedMotion="user">
+        <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-5xl md:text-7xl font-bold mb-4 font-display"
+            style={{ color: '#00d9ff' }}
           >
-            Start Learning Now
-          </Link>
-          <Link
-            href="/demo"
-            className="px-8 py-4 border-2 border-cyan-500 text-cyan-400 font-bold rounded-lg hover:bg-cyan-500/10 transition-colors duration-300 text-lg"
-          >
-            Explore Free Lessons
-          </Link>
-        </motion.div>
+            Build Real Apps.
+          </motion.h1>
 
-        {/* Trust badges */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-          className="flex flex-col sm:flex-row justify-center gap-4 mt-12 text-sm text-white/70"
-        >
-          <div className="flex items-center gap-2">
-            <span>✓</span>
-            <span>100% Free</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span>✓</span>
-            <span>Learn at your pace</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span>✓</span>
-            <span>Verifiable Certificate</span>
-          </div>
-        </motion.div>
-      </div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+            className="text-4xl md:text-6xl font-bold mb-6 font-display"
+            style={{ color: '#a78bfa' }}
+          >
+            With AI. In Weeks.
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+            className="text-lg md:text-xl mb-8 text-white/90"
+          >
+            Learn full-stack development with AI-assisted coding. Go from zero to deployed in 16 modules.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+          >
+            <Link
+              href="/auth/sign-up"
+              className="px-8 py-4 bg-cyan-500 text-white font-bold rounded-lg hover:bg-cyan-600 transition-colors duration-300 shadow-lg hover:shadow-xl text-lg"
+            >
+              Start Learning Now
+            </Link>
+            <Link
+              href="/demo"
+              className="px-8 py-4 border-2 border-cyan-500 text-cyan-400 font-bold rounded-lg hover:bg-cyan-500/10 transition-colors duration-300 text-lg"
+            >
+              Explore Free Lessons
+            </Link>
+          </motion.div>
+
+          {/* Trust badges */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="flex flex-col sm:flex-row justify-center gap-4 mt-12 text-sm text-white/70"
+          >
+            <div className="flex items-center gap-2">
+              <span>✓</span>
+              <span>100% Free</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span>✓</span>
+              <span>Learn at your pace</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span>✓</span>
+              <span>Verifiable Certificate</span>
+            </div>
+          </motion.div>
+        </div>
+      </MotionConfig>
     </div>
   );
 };
