@@ -67,8 +67,8 @@ export default function KidsLandingPageContent() {
               <ProgressFlowWidget />
             </GridItem>
 
-            {/* Row 4: Credential Preview (1x1) */}
-            <GridItem colSpan={1}>
+            {/* Row 4: Credential Preview (1x2 - tall) */}
+            <GridItem colSpan={1} rowSpan={2}>
               <CredentialPreviewWidget />
             </GridItem>
           </DashboardGrid>

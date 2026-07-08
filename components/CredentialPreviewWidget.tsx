@@ -16,7 +16,7 @@ export function CredentialPreviewWidget() {
     month: "long",
     day: "numeric",
   });
-  const verificationUrl = "https://vibecode.academy/verify/VBC-2026-00547";
+  const verificationUrl = "https://learntovibecode.io/verify/VBC-2026-00547";
 
   const handleShare = () => {
     const message = encodeURIComponent("Learn To Vibe Code With Me");
@@ -40,8 +40,8 @@ export function CredentialPreviewWidget() {
 
   if (prefersReducedMotion) {
     return (
-      <div className="w-full max-w-sm mx-auto">
-        <div className="relative w-full aspect-video bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center shadow-2xl">
+      <div className="w-full h-full flex flex-col gap-6">
+        <div className="relative w-full flex-1 bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center shadow-2xl">
           <div className="text-sm font-semibold text-white">Accredited</div>
           <div className="text-2xl font-bold font-display text-white mt-2">
             Vibe Coding Course
@@ -50,7 +50,7 @@ export function CredentialPreviewWidget() {
         </div>
         <button
           onClick={handleShare}
-          className="mt-6 w-full px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 hover:border-white/40 text-white font-semibold rounded-lg transition-all"
+          className="w-full px-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 hover:border-white/40 text-white font-semibold rounded-lg transition-all"
         >
           {copied ? "Shared!" : "Share Certificate"}
         </button>
@@ -59,9 +59,9 @@ export function CredentialPreviewWidget() {
   }
 
   return (
-    <div className="w-full max-w-sm mx-auto">
+    <div className="w-full h-full flex flex-col gap-6 min-h-[500px]">
       <div
-        className="relative w-full aspect-video cursor-pointer"
+        className="relative w-full flex-1 cursor-pointer min-h-[400px]"
         style={{ perspective: "1200px" }}
         onClick={() => setIsFlipped(!isFlipped)}
         onMouseEnter={() => setIsFlipped(true)}
@@ -185,9 +185,9 @@ export function CredentialPreviewWidget() {
       {/* Share Button */}
       <motion.button
         onClick={handleShare}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className={`mt-6 w-full px-6 py-3 font-semibold rounded-lg transition-all duration-300 backdrop-blur-md border ${
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className={`w-full px-6 py-3 font-semibold rounded-lg transition-all duration-300 backdrop-blur-md border ${
           copied
             ? "bg-white/20 border-white/30 hover:bg-white/25 text-white"
             : "bg-white/10 border-white/20 hover:bg-white/15 hover:border-white/40 text-white shadow-lg hover:shadow-xl"
@@ -213,7 +213,6 @@ export function CredentialPreviewWidget() {
           </motion.span>
         )}
       </motion.button>
-
     </div>
   );
 }

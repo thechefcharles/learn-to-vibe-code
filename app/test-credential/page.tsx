@@ -11,7 +11,7 @@ export default function TestCredentialPage() {
           Test the 3D flip effect and share functionality
         </p>
 
-        <div className="bg-white/5 backdrop-blur rounded-2xl p-12 border border-white/10">
+        <div className="bg-white/5 backdrop-blur rounded-2xl p-12 border border-white/10 min-h-[600px]">
           <CredentialPreviewWidget />
         </div>
 
