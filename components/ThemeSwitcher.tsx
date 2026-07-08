@@ -14,7 +14,7 @@ export function ThemeSwitcher() {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-4 right-4 z-50 flex gap-2 items-center"
+      className="fixed top-4 left-4 z-50 flex gap-2 items-center"
     >
       <span className="text-xs text-slate-600 font-medium">THEME:</span>
       <div className="flex gap-2 p-2 bg-white/80 backdrop-blur-md rounded-full border border-violet-light/20 shadow-lg">
