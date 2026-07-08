@@ -25,23 +25,20 @@ export default function KidsLandingPageContent() {
       <FloatingCTA />
 
       {/* ============ HERO SECTION WITH DASHBOARD GRID ============ */}
-      <section className="py-3 px-4 sm:py-4">
+      <section className="py-2 px-4 sm:py-3">
         <div className="max-w-7xl mx-auto">
           {/* Hero Logo and Headline */}
-          <div className="text-center mb-4 sm:mb-5">
-            <div className="mb-2 sm:mb-3 flex justify-center">
-              <Logo variant="cosmic-mark" size="lg" />
-            </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 sm:mb-2 leading-tight">
+          <div className="text-center mb-3">
+            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-1 leading-tight">
               <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                 Learn To Build Real Apps
               </span>
             </h1>
 
             {/* Stats Line */}
-            <div className="text-xs sm:text-sm md:text-base text-gray-300 space-y-0">
+            <div className="text-2xs sm:text-xs text-gray-300">
               <div className="font-medium">
-                16 Modules • 93 Hours • Free • Self-Paced • Accredited Certificate
+                16 Modules • 93 Hours • Free • Accredited
               </div>
             </div>
           </div>

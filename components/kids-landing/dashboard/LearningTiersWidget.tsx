@@ -22,18 +22,18 @@ export function LearningTiersWidget() {
   };
 
   return (
-    <div className="flex flex-col gap-3 h-full">
-      <div className="text-sm text-gray-400 uppercase tracking-wide">4 Learning Tiers</div>
+    <div className="flex flex-col gap-2 h-full">
+      <div className="text-xs text-gray-400 uppercase tracking-wide">4 Tiers</div>
 
       {/* 2x2 Grid of Tier Cards */}
-      <div className="grid grid-cols-2 gap-2 flex-1">
+      <div className="grid grid-cols-2 gap-1 flex-1">
         {mainTiers.map(([key, tier]) => (
           <motion.button
             key={key}
             onClick={() => toggleTier(key)}
             className={`
-              p-4 rounded-xl backdrop-blur-lg
-              text-white font-bold text-sm
+              p-3 rounded-xl backdrop-blur-lg
+              text-white font-bold text-xs
               border border-white/30
               hover:shadow-2xl hover:border-white/50 transition-all duration-300
               flex flex-col items-center justify-center
