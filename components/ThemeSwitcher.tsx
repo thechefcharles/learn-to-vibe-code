@@ -87,6 +87,7 @@ export function ThemeSwitcher() {
               style={{
                 backgroundColor: theme.accent,
                 cursor: "pointer",
+                opacity: 0.6,
               }}
               title={theme.name}
             />
