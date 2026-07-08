@@ -30,7 +30,7 @@ export const SoundToggle: React.FC = () => {
     <button
       onClick={handleToggle}
       aria-label={isEnabled ? 'Mute sound' : 'Unmute sound'}
-      className={`fixed top-4 right-4 z-50 w-14 h-14 md:w-auto md:h-auto md:px-4 md:py-2 rounded-lg font-semibold text-white text-lg bg-gradient-to-r from-cyan-400 to-purple-500 shadow-lg flex items-center justify-center md:inline-flex ${!prefersReducedMotion ? 'transition-transform hover:scale-105 active:scale-95 hover:shadow-xl' : ''}`}
+      className={`fixed top-4 left-56 z-50 w-14 h-14 md:w-auto md:h-auto md:px-4 md:py-2 rounded-lg font-semibold text-white text-lg bg-gradient-to-r from-cyan-400 to-purple-500 shadow-lg flex items-center justify-center md:inline-flex ${!prefersReducedMotion ? 'transition-transform hover:scale-105 active:scale-95 hover:shadow-xl' : ''}`}
       title={isEnabled ? 'Sound: On' : 'Sound: Off'}
     >
       <span className="inline-block text-2xl md:text-lg">
