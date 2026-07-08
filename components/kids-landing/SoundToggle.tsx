@@ -2,10 +2,12 @@
 
 import React, { useState, useEffect } from 'react';
 import { getSoundEnabled, setSoundEnabled } from '@/lib/sounds';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 export const SoundToggle: React.FC = () => {
   const [isEnabled, setIsEnabled] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   // Initialize from localStorage on mount (hydration-safe)
   useEffect(() => {
@@ -28,7 +30,7 @@ export const SoundToggle: React.FC = () => {
     <button
       onClick={handleToggle}
       aria-label={isEnabled ? 'Mute sound' : 'Unmute sound'}
-      className="fixed top-6 right-6 z-50 px-4 py-2 rounded-lg font-semibold text-white text-lg transition-transform hover:scale-105 active:scale-95 bg-gradient-to-r from-cyan-400 to-purple-500 shadow-lg hover:shadow-xl"
+      className={`fixed top-6 right-6 z-50 px-4 py-2 rounded-lg font-semibold text-white text-lg bg-gradient-to-r from-cyan-400 to-purple-500 shadow-lg ${!prefersReducedMotion ? 'transition-transform hover:scale-105 active:scale-95 hover:shadow-xl' : ''}`}
       title={isEnabled ? 'Sound: On' : 'Sound: Off'}
     >
       <span className="inline-block">
