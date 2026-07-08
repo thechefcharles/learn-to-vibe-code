@@ -3,11 +3,32 @@
 import { motion } from "framer-motion";
 import { useTheme } from "@/lib/ThemeContext";
 import { themes, type ThemeName } from "@/lib/themes";
+import { useEffect } from "react";
 
 const themeOrder: ThemeName[] = ["violet", "dark", "sage", "sunset", "ocean"];
 
 export function ThemeSwitcher() {
   const { currentTheme, setTheme } = useTheme();
+
+  // Apply theme background on mount and whenever theme changes
+  useEffect(() => {
+    const applyThemeBackground = (themeName: ThemeName) => {
+      const mainDiv = document.querySelector('[data-landing-container]');
+      if (mainDiv) {
+        const el = mainDiv as HTMLElement;
+        if (themeName === 'violet') {
+          el.style.background = 'transparent';
+          el.style.backgroundColor = 'transparent';
+          el.style.backgroundImage = 'none';
+        } else {
+          const theme = themes[themeName];
+          el.style.background = theme.bg;
+        }
+      }
+    };
+
+    applyThemeBackground(currentTheme);
+  }, [currentTheme]);
 
   const handleThemeClick = (themeName: ThemeName) => {
     setTheme(themeName);
