@@ -95,7 +95,7 @@ export default function SignUp() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-block hover:opacity-80 transition">
-            <Logo variant="tagline" size="lg" />
+            <Logo variant="cosmic" size="md" />
           </Link>
         </div>
 

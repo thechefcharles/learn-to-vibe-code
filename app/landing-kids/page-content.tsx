@@ -9,6 +9,7 @@ import { ProgressFlowWidget } from '@/components/ProgressFlowWidget';
 import { CredentialPreviewWidget } from '@/components/CredentialPreviewWidget';
 import { FloatingCTA } from '@/components/kids-landing/FloatingCTA';
 import { VideoBackground } from '@/components/kids-landing/VideoBackground';
+import { Logo } from '@/components/Logo';
 import Link from 'next/link';
 
 export default function KidsLandingPageContent() {
@@ -26,8 +27,11 @@ export default function KidsLandingPageContent() {
       {/* ============ HERO SECTION WITH DASHBOARD GRID ============ */}
       <section className="py-12 px-4 sm:py-16">
         <div className="max-w-7xl mx-auto">
-          {/* Hero Headline */}
+          {/* Hero Logo and Headline */}
           <div className="text-center mb-12 sm:mb-16">
+            <div className="mb-6 sm:mb-8 flex justify-center">
+              <Logo variant="cosmic-mark" size="lg" />
+            </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 sm:mb-6 leading-tight">
               <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                 Learn To Build Real Apps

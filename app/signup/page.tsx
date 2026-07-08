@@ -33,7 +33,7 @@ export default function DifficultySelector() {
         {/* Logo */}
         <div className="text-center mb-12">
           <Link href="/" className="inline-block hover:opacity-80 transition">
-            <Logo variant="tagline" size="lg" />
+            <Logo variant="cosmic" size="md" />
           </Link>
         </div>
 
