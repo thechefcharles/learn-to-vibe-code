@@ -118,7 +118,7 @@ export function AICopilotWidget() {
           onKeyPress={handleKeyPress}
           placeholder="What do you want to build?"
           disabled={isTyping}
-          className="flex-1 px-3 py-2 bg-slate-950 border border-slate-700 rounded text-sm text-white placeholder-gray-500 focus:border-cyan-500 focus:outline-none transition-colors disabled:opacity-50"
+          className="flex-1 px-3 py-2 bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg text-sm text-white placeholder-gray-400 focus:border-cyan-300/80 focus:outline-none transition-colors disabled:opacity-50"
           aria-label="AI suggestion input"
         />
         <button
@@ -137,7 +137,7 @@ export function AICopilotWidget() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="flex-1 p-3 bg-slate-800/50 border border-cyan-500/50 rounded text-sm text-gray-300 overflow-y-auto"
+          className="flex-1 p-3 bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg text-sm text-gray-300 overflow-y-auto"
         >
           <div className="flex gap-1 items-start">
             <span className="text-cyan-400 flex-shrink-0">→</span>
