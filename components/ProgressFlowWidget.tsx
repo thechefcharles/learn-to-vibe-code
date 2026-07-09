@@ -107,7 +107,7 @@ export function ProgressFlowWidget() {
       className="w-full bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/20 overflow-hidden"
     >
       {/* Title */}
-      <h3 className="text-lg font-semibold text-white uppercase tracking-wide mb-8 text-center">
+      <h3 className="text-2xl font-bold uppercase tracking-wide mb-8 text-center bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 bg-clip-text text-transparent">
         Your Learning Journey
       </h3>
 

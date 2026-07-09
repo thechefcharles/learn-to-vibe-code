@@ -54,7 +54,7 @@ export function CredentialPreviewWidget() {
   return (
     <div className="w-full h-full flex flex-col gap-3">
       {/* Title */}
-      <h3 className="text-lg font-semibold text-white uppercase tracking-wide">
+      <h3 className="text-2xl font-bold uppercase tracking-wide text-center bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 bg-clip-text text-transparent">
         Get Certified
       </h3>
 

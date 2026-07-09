@@ -95,8 +95,8 @@ export function InviteWidget() {
   return (
     <div className="flex flex-col items-center justify-center h-full gap-6">
       {/* Title */}
-      <h3 className="text-lg font-semibold text-white uppercase tracking-wide">
-        share the vibe
+      <h3 className="text-2xl font-bold uppercase tracking-wide bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+        Share The Vibe
       </h3>
 
       {/* Scratch box container */}

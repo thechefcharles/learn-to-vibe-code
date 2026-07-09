@@ -43,7 +43,7 @@ export function TimeWidget() {
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <h3 className="text-lg font-semibold text-white uppercase tracking-wide mb-6">
+      <h3 className="text-2xl font-bold uppercase tracking-wide mb-6 bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 bg-clip-text text-transparent">
         Course Duration
       </h3>
 
