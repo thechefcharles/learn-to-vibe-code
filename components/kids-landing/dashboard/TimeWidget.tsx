@@ -135,10 +135,6 @@ export function TimeWidget() {
           </motion.div>
         )}
       </motion.div>
-
-      <p className="text-xs text-gray-400 text-center mt-6">
-        93 hours of hands-on learning
-      </p>
     </div>
   );
 }

@@ -216,26 +216,6 @@ export function ProgressFlowWidget() {
         </div>
       </div>
 
-      {/* Drag Indicator */}
-      <motion.div
-        className="flex justify-center gap-2 mt-6 select-none"
-        animate={{ opacity: isDragging ? 0.3 : 0.6 }}
-      >
-        <motion.span
-          animate={{ x: [0, 6, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity }}
-          className="text-xs text-cyan-400/80 font-semibold"
-        >
-          ← Drag to explore
-        </motion.span>
-        <motion.span
-          animate={{ x: [-6, 0, -6] }}
-          transition={{ duration: 1.8, repeat: Infinity }}
-          className="text-xs text-cyan-400/80 font-semibold"
-        >
-          →
-        </motion.span>
-      </motion.div>
 
       {/* Scrollbar hide style */}
       <style>{`
