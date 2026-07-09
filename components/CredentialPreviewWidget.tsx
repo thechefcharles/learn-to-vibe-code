@@ -53,6 +53,11 @@ export function CredentialPreviewWidget() {
 
   return (
     <div className="w-full h-full flex flex-col gap-3">
+      {/* Title */}
+      <h3 className="text-base font-semibold text-white uppercase tracking-wide">
+        Earn Your
+      </h3>
+
       <div
         className="relative w-full flex-1 cursor-pointer"
         style={{ perspective: "1200px" }}
@@ -83,6 +88,15 @@ export function CredentialPreviewWidget() {
             className="absolute inset-0 w-full h-full"
           >
             <div className="relative w-full h-full bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-6 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
+              {/* Gold star - top right */}
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="absolute top-4 right-4 text-3xl"
+              >
+                ★
+              </motion.div>
+
               {/* Decorative background pattern */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-4 right-4 w-16 h-16 border-2 border-white rounded-full" />
