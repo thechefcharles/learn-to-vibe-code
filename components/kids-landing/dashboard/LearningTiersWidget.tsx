@@ -85,7 +85,7 @@ export function LearningTiersWidget() {
                   <div className="text-xs font-semibold text-white text-center space-y-1">
                     {tier.modules.map((modNum) => (
                       <div key={modNum} className="text-sm leading-tight">
-                        {MODULE_NAMES[modNum]}
+                        <span className="text-cyan-300 font-bold">{modNum}.</span> {MODULE_NAMES[modNum]}
                       </div>
                     ))}
                   </div>
