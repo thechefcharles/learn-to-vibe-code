@@ -137,13 +137,6 @@ export function ProgressFlowWidget() {
                 duration: 0.5,
               }}
             >
-              {/* Connecting Line */}
-              {index < stages.length - 1 && (
-                <div
-                  className="absolute top-7 left-[56px] w-6 h-0.5 bg-gradient-to-r from-cyan-400/60 to-purple-500/60 z-0"
-                />
-              )}
-
               {/* Stage Circle */}
               <motion.button
                 onClick={() =>
