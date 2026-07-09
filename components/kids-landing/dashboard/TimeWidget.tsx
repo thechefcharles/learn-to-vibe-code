@@ -162,6 +162,18 @@ export function TimeWidget() {
           >
             {isHovering ? '93' : hours}
           </motion.div>
+
+          {/* "hours" label appears below 93 on hover */}
+          <motion.div
+            animate={{
+              opacity: isHovering ? 1 : 0,
+              y: isHovering ? 0 : -10,
+            }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="text-cyan-300/70 text-sm font-semibold uppercase tracking-wide mt-2"
+          >
+            hours
+          </motion.div>
         </div>
 
         {/* Pause indicator */}

@@ -23,7 +23,7 @@ function GridItem({ children, colSpan = 1, rowSpan = 1 }: GridItemProps) {
 
 export function DashboardGrid({ children }: { children: ReactNode }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 w-full max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-3 w-full max-w-7xl mx-auto">
       {children}
     </div>
   );

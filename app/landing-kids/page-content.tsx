@@ -11,6 +11,7 @@ import { ProgressFlowWidget } from '@/components/ProgressFlowWidget';
 import { CredentialPreviewWidget } from '@/components/CredentialPreviewWidget';
 import { FloatingCTA } from '@/components/kids-landing/FloatingCTA';
 import { VideoBackground } from '@/components/kids-landing/VideoBackground';
+import { MouseTrail } from '@/components/kids-landing/MouseTrail';
 import { Logo } from '@/components/Logo';
 import Link from 'next/link';
 
@@ -26,65 +27,47 @@ export default function KidsLandingPageContent() {
       }}
     >
       <VideoBackground />
+      <MouseTrail />
       <FloatingCTA />
 
       {/* ============ FLOATING LOGO (TOP-LEFT) ============ */}
-      <div className="fixed top-6 left-6 z-40">
+      <div className="fixed top-16 left-5 z-40">
         <img
           src="/learn_to_vibe_code_logo_cosmic_wordmark_transparent.svg"
           alt="Learn To Vibe Code"
-          className="h-16 sm:h-20 w-auto"
+          className="h-20 sm:h-24 lg:h-28 w-auto"
         />
       </div>
 
-      {/* ============ DIAGONAL WELCOME BACKGROUND ============ */}
-      <div className="absolute top-0 left-0 w-full h-96 pointer-events-none">
-        <h1
-          className="text-7xl sm:text-8xl lg:text-9xl font-bold leading-tight opacity-10"
-          style={{
-            transform: 'rotate(-12deg) translateX(-10%)',
-            background: 'linear-gradient(to right, rgb(6, 182, 212), rgb(168, 85, 247), rgb(236, 72, 153))',
-            backgroundClip: 'text',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            position: 'absolute',
-            top: '-100px',
-            left: '-200px',
-            whiteSpace: 'nowrap',
-          }}
-        >
-          Welcome, "{userName || 'Your Name'}"
-        </h1>
-      </div>
-
-      {/* ============ HERO SECTION WITH NAME INPUT ============ */}
-      <section className="py-8 px-4 sm:py-12 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          {/* Input Box - centered at top */}
-          <div className="flex justify-center mb-12">
-            <div className="bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-5 hover:bg-white/10 transition-all max-w-sm">
-              <p className="text-xs font-medium text-gray-400 mb-3 uppercase tracking-wide">Input:</p>
-              <div className="font-mono text-sm text-cyan-300 break-words">
-                greet("<span className="inline-block"><input
-                  type="text"
-                  value={userName}
-                  onChange={(e) => setUserName(e.target.value)}
-                  placeholder="your name"
-                  className="bg-transparent border-0 p-0 w-24 text-cyan-300 font-mono text-sm focus:outline-none focus:ring-0 placeholder-gray-600"
-                /></span>")
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ============ DASHBOARD GRID ============ */}
-      <section className="py-8 px-4 relative z-10">
+      <section className="py-4 sm:py-8 px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
+          {/* Gleaming Headline */}
+          <div className="text-center mb-6 sm:mb-8">
+            <h2
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-wider"
+              style={{
+                background: 'linear-gradient(90deg, #06b6d4 0%, #a78bfa 50%, #ec4899 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                animation: 'gleam 3s ease-in-out infinite',
+              }}
+            >
+              Learn Vibe Coding In Weeks!
+            </h2>
+          </div>
+          <style>{`
+            @keyframes gleam {
+              0%, 100% { filter: brightness(1); }
+              50% { filter: brightness(1.4); }
+            }
+          `}</style>
+
           <DashboardGrid>
             {/* Row 1: The Story - Path + Structure + Time */}
             <GridItem colSpan={1}>
-              <ModuleArcWidget />
+              <ModuleArcWidget userName={userName} onUserNameChange={setUserName} />
             </GridItem>
             <GridItem colSpan={2}>
               <LearningTiersWidget />
