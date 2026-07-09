@@ -115,25 +115,30 @@ export function FreeWidget() {
               style={{ perspective: '1200px' }}
             >
               {/* Coin container */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-300/40 via-purple-400/40 to-pink-300/40 backdrop-blur-sm border-2 border-white/40 shadow-2xl shadow-purple-500/30 flex items-center justify-center overflow-hidden group">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-slate-300 via-slate-200 to-slate-300 backdrop-blur-sm border-4 border-slate-400 shadow-2xl shadow-slate-600/50 flex items-center justify-center overflow-hidden group">
+                {/* Coin ridges - concentric circles */}
+                <div className="absolute inset-0 rounded-full border border-slate-400/40" style={{ transform: 'scale(0.85)' }} />
+                <div className="absolute inset-0 rounded-full border border-slate-400/30" style={{ transform: 'scale(0.70)' }} />
+
                 {/* Glossy shine - top shine */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-white/20 to-transparent rounded-full" />
-                {/* Additional shine overlay */}
-                <div className="absolute top-0 left-1/4 w-1/3 h-1/3 bg-gradient-to-br from-white/60 to-transparent rounded-full blur-md" />
+                <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/10 to-transparent rounded-full" />
+
+                {/* Metallic inner circle */}
+                <div className="absolute inset-6 rounded-full border border-slate-400/50 bg-gradient-to-b from-slate-200 to-slate-400" />
 
                 {/* Coin content */}
                 <motion.div
-                  className="relative z-10 text-center font-mono font-bold text-2xl"
+                  className="relative z-10 text-center font-bold"
                   animate={{ opacity: isFlipping ? 0.3 : 1 }}
                 >
                   {isFlipping ? (
-                    <span className="text-4xl">∿</span>
+                    <span className="text-4xl text-slate-500">∿</span>
                   ) : result ? (
-                    <span className="bg-gradient-to-r from-cyan-300 to-purple-400 bg-clip-text text-transparent">
-                      {result === 'heads' ? 'H' : 'T'}
+                    <span className="text-5xl text-slate-700 font-black">
+                      {result === 'heads' ? '◐' : '◑'}
                     </span>
                   ) : (
-                    <span className="text-cyan-300 text-lg leading-tight">
+                    <span className="text-slate-700 text-lg leading-tight font-semibold">
                       Flip
                       <br />
                       Me
@@ -191,35 +196,44 @@ export function FreeWidget() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           className="text-center"
         >
-          <div className="mb-6">
+          <div className="mb-8 text-center">
             {won ? (
-              <div className="text-white">
-                <p className="text-base mb-2">you won,</p>
-                <motion.p
-                  className="text-5xl font-black bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent"
-                  animate={{
-                    y: [0, -4, 4, -4, 4, -4, 4, 0],
-                    scale: [1, 1.05, 0.95, 1.05, 0.95, 1.05, 0.95, 1]
-                  }}
-                  transition={{ duration: 0.6, repeat: Infinity }}
+              <div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                  className="mb-4"
                 >
-                  the course is free
-                </motion.p>
+                  <p className="text-sm font-semibold text-cyan-300 uppercase tracking-widest mb-2">Victory</p>
+                  <motion.p
+                    className="text-6xl font-black bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent leading-none"
+                    animate={{
+                      y: [0, -3, 3, -3, 3, 0],
+                      scale: [1, 1.02, 0.98, 1.02, 0.98, 1]
+                    }}
+                    transition={{ duration: 0.5, repeat: Infinity }}
+                  >
+                    It's Free
+                  </motion.p>
+                </motion.div>
               </div>
             ) : (
-              <div className="text-white">
-                <p className="text-base mb-2">you lost,</p>
-                <p className="text-base mb-2">but the course is</p>
-                <motion.p
-                  className="text-5xl font-black bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent"
-                  animate={{
-                    y: [0, -4, 4, -4, 4, -4, 4, 0],
-                    scale: [1, 1.05, 0.95, 1.05, 0.95, 1.05, 0.95, 1]
-                  }}
-                  transition={{ duration: 0.6, repeat: Infinity }}
+              <div>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                  className="mb-4"
                 >
-                  still free
-                </motion.p>
+                  <p className="text-sm font-semibold text-slate-300 uppercase tracking-widest mb-2">Close One</p>
+                  <motion.p
+                    className="text-4xl font-black text-white mb-2 leading-none"
+                  >
+                    Still Free
+                  </motion.p>
+                  <p className="text-xs text-slate-300 font-medium">Better luck next time</p>
+                </motion.div>
               </div>
             )}
           </div>
