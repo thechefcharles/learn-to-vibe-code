@@ -30,12 +30,12 @@ export default function KidsLandingPageContent() {
       <MouseTrail />
       <FloatingCTA />
 
-      {/* ============ FLOATING LOGO (TOP-LEFT) ============ */}
-      <div className="fixed top-4 left-4 z-30 opacity-50 pointer-events-none">
+      {/* ============ FLOATING LOGO (TOP-RIGHT) ============ */}
+      <div className="fixed top-6 right-4 z-30 opacity-40 pointer-events-none">
         <img
           src="/learn_to_vibe_code_logo_cosmic_wordmark_transparent.png"
           alt="Learn To Vibe Code"
-          className="h-16 sm:h-20 lg:h-24 w-auto"
+          className="h-12 sm:h-14 lg:h-16 w-auto"
         />
       </div>
 
