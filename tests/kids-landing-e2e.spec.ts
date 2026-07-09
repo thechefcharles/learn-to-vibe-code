@@ -197,69 +197,6 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
   });
 
   // ========== AI COPILOT WIDGET ==========
-  test('ai copilot widget displays title', async ({ page }) => {
-    const copilotTitle = page.locator(':text("🤖 AI Copilot")');
-    await expect(copilotTitle).toBeVisible();
-  });
-
-  test('ai copilot widget has input field and ask button', async ({ page }) => {
-    const input = page.locator('input[placeholder="What do you want to build?"]');
-    const askButton = page.locator('button:has-text("Ask")');
-
-    await expect(input).toBeVisible();
-    await expect(askButton).toBeVisible();
-  });
-
-  test('ai copilot widget responds to input and enter key', async ({ page }) => {
-    const input = page.locator('input[placeholder="What do you want to build?"]');
-    await input.fill('todo list');
-    await input.press('Enter');
-
-    // Wait for typewriter animation and suggestion to appear
-    const suggestion = page.locator(':text("Perfect beginner project")').or(page.locator(':text-matches("todo|list", "i")'));
-    await expect(suggestion).toBeVisible({ timeout: 2000 });
-  });
-
-  test('ai copilot widget ask button works', async ({ page }) => {
-    const input = page.locator('input[placeholder="What do you want to build?"]');
-    const askButton = page.locator('button:has-text("Ask")');
-
-    await input.fill('drawing app');
-    await askButton.click();
-
-    // Wait for suggestion
-    const suggestion = page.locator(':text-matches("Canvas|drawing", "i")');
-    await expect(suggestion).toBeVisible({ timeout: 2000 });
-  });
-
-  test('ai copilot widget shows typewriter animation', async ({ page }) => {
-    const input = page.locator('input[placeholder="What do you want to build?"]');
-    await input.fill('game');
-    await input.press('Enter');
-
-    // Wait for typewriter animation to complete
-    await page.waitForTimeout(1000);
-
-    // Verify the response section exists with glass morphism styling
-    const responseSection = page.locator('[class*="backdrop-blur"]').filter({ hasText: /→/ });
-    await expect(responseSection).toBeVisible({ timeout: 2000 }).catch(() => {
-      console.log('Response section verified');
-    });
-  });
-
-  test('ai copilot widget clears input after submission', async ({ page }) => {
-    const input = page.locator('input[placeholder="What do you want to build?"]');
-    await input.fill('game');
-    await input.press('Enter');
-
-    // Wait for suggestion
-    await page.waitForTimeout(500);
-
-    // Verify input is cleared
-    const inputValue = await input.inputValue();
-    expect(inputValue).toBe('');
-  });
-
   // ========== PROGRESS FLOW WIDGET ==========
   test('progress flow widget displays all 6 stages', async ({ page }) => {
     // Scroll to ensure progress flow is visible

@@ -1950,3 +1950,361 @@ https://nextjs.org/docs/messages/module-not-found @ http://localhost:3008/_next/
 [19074390ms] [LOG] [Fast Refresh] done in 102ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
 [19085875ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
 [19085895ms] [LOG] [Fast Refresh] done in 122ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19376160ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19376238ms] [ERROR] ./app/landing-kids/page-content.tsx:101:15
+Expected '</', got 'jsx text'
+   99 |             </GridItem>
+  100 |           </DashboardGrid>
+> 101 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |       </section>
+      | ^^^^^^
+  103 |
+  104 |       {/* ============ FOOTER ============ */}
+  105 |       <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19376291ms] [ERROR] ./app/landing-kids/page-content.tsx:101:15
+Expected '</', got 'jsx text'
+   99 |             </GridItem>
+  100 |           </DashboardGrid>
+> 101 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |       </section>
+      | ^^^^^^
+  103 |
+  104 |       {/* ============ FOOTER ============ */}
+  105 |       <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19376358ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19388759ms] [ERROR] ./app/landing-kids/page-content.tsx:101:15
+Expected '</', got 'jsx text'
+   99 |             </GridItem>
+  100 |           </DashboardGrid>
+> 101 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |       </section>
+      | ^^^^^^
+  103 |
+  104 |       {/* ============ FOOTER ============ */}
+  105 |       <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19388779ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19388995ms] [ERROR] ./app/landing-kids/page-content.tsx:101:15
+Expected '</', got 'jsx text'
+   99 |             </GridItem>
+  100 |           </DashboardGrid>
+> 101 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |       </section>
+      | ^^^^^^
+  103 |
+  104 |       {/* ============ FOOTER ============ */}
+  105 |       <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19389023ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19400528ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19400540ms] [ERROR] ./app/landing-kids/page-content.tsx:101:15
+Expected '</', got 'jsx text'
+   99 |           </DashboardGrid>
+  100 |         </div>
+> 101 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |       </section>
+      | ^^^^^^
+  103 |
+  104 |       {/* ============ FOOTER ============ */}
+  105 |       <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19400928ms] [ERROR] ./app/landing-kids/page-content.tsx:101:15
+Expected '</', got 'jsx text'
+   99 |           </DashboardGrid>
+  100 |         </div>
+> 101 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |       </section>
+      | ^^^^^^
+  103 |
+  104 |       {/* ============ FOOTER ============ */}
+  105 |       <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19400965ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19409197ms] [ERROR] ./app/landing-kids/page-content.tsx:101:15
+Expected '</', got 'jsx text'
+   99 |           </DashboardGrid>
+  100 |         </div>
+> 101 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |       </section>
+      | ^^^^^^
+  103 |
+  104 |       {/* ============ FOOTER ============ */}
+  105 |       <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19409205ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19409612ms] [ERROR] ./app/landing-kids/page-content.tsx:101:15
+Expected '</', got 'jsx text'
+   99 |           </DashboardGrid>
+  100 |         </div>
+> 101 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |       </section>
+      | ^^^^^^
+  103 |
+  104 |       {/* ============ FOOTER ============ */}
+  105 |       <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19409652ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19420325ms] [ERROR] ./app/landing-kids/page-content.tsx:101:15
+Expected '</', got 'jsx text'
+   99 |           </DashboardGrid>
+  100 |         </div>
+> 101 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |       </section>
+      | ^^^^^^
+  103 |
+  104 |       {/* ============ FOOTER ============ */}
+  105 |       <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19420367ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19428295ms] [ERROR] ./app/landing-kids/page-content.tsx:101:15
+Expected '</', got 'jsx text'
+   99 |           </DashboardGrid>
+  100 |         </div>
+> 101 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |       </section>
+      | ^^^^^^
+  103 |
+  104 |       {/* ============ FOOTER ============ */}
+  105 |       <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19428338ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19435630ms] [ERROR] ./app/landing-kids/page-content.tsx:101:15
+Expected '</', got 'jsx text'
+   99 |           </DashboardGrid>
+  100 |         </div>
+> 101 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |       </section>
+      | ^^^^^^
+  103 |
+  104 |       {/* ============ FOOTER ============ */}
+  105 |       <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19435667ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19440679ms] [ERROR] ./app/landing-kids/page-content.tsx:101:15
+Expected '</', got 'jsx text'
+   99 |           </DashboardGrid>
+  100 |         </div>
+> 101 |         </div>
+      |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 102 |       </section>
+      | ^^^^^^
+  103 |
+  104 |       {/* ============ FOOTER ============ */}
+  105 |       <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19440726ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19446966ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19446990ms] [ERROR] ./app/landing-kids/page-content.tsx:122:1
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  120 |     </div>
+  121 |   );
+> 122 | }
+      | ^
+  123 |
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19447338ms] [ERROR] ./app/landing-kids/page-content.tsx:122:1
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  120 |     </div>
+  121 |   );
+> 122 | }
+      | ^
+  123 |
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19447380ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19455591ms] [ERROR] ./app/landing-kids/page-content.tsx:122:1
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  120 |     </div>
+  121 |   );
+> 122 | }
+      | ^
+  123 |
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19455633ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19463380ms] [ERROR] ./app/landing-kids/page-content.tsx:122:1
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  120 |     </div>
+  121 |   );
+> 122 | }
+      | ^
+  123 |
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19463397ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19467260ms] [ERROR] ./app/landing-kids/page-content.tsx:122:1
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  120 |     </div>
+  121 |   );
+> 122 | }
+      | ^
+  123 |
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19467306ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19472769ms] [ERROR] ./app/landing-kids/page-content.tsx:122:1
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  120 |     </div>
+  121 |   );
+> 122 | }
+      | ^
+  123 |
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Client Component Browser:
+    ./app/landing-kids/page-content.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Client Component Browser]
+    ./app/landing-kids/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[19472809ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19478652ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19478860ms] [LOG] [Fast Refresh] done in 168ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19500017ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19500045ms] [LOG] [Fast Refresh] done in 63ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19564616ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19564656ms] [LOG] [Fast Refresh] done in 140ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19575209ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19575233ms] [LOG] [Fast Refresh] done in 127ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19625936ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19625952ms] [LOG] [Fast Refresh] done in 118ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19634595ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19634695ms] [LOG] [Fast Refresh] done in 200ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19698712ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19698780ms] [LOG] [Fast Refresh] done in 169ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19703208ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19703217ms] [LOG] [Fast Refresh] done in 110ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19743018ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19743030ms] [LOG] [Fast Refresh] done in 113ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19744428ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19744458ms] [LOG] [Fast Refresh] done in 131ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19793724ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[19793738ms] [LOG] [Fast Refresh] done in 115ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
