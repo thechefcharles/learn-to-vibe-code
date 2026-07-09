@@ -2,10 +2,11 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export function CredentialPreviewWidget() {
-  const [isFlipped, setIsFlipped] = useState(false);
+  const router = useRouter();
   const [copied, setCopied] = useState(false);
   const [titleHover, setTitleHover] = useState(false);
   const prefersReducedMotion = useReducedMotion();
@@ -42,7 +43,16 @@ export function CredentialPreviewWidget() {
   if (prefersReducedMotion) {
     return (
       <div className="w-full h-full flex flex-col gap-3">
-        <div className="relative w-full flex-1 bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-6 flex flex-col justify-center items-center text-center shadow-2xl">
+        <motion.h3
+          className="uppercase tracking-wide text-center cursor-pointer font-bold text-white text-xl"
+          onClick={() => router.push('/auth/sign-up')}
+        >
+          Get Certified
+        </motion.h3>
+        <div
+          className="relative w-full flex-1 bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-6 flex flex-col justify-center items-center text-center shadow-2xl cursor-pointer hover:shadow-xl transition-shadow"
+          onClick={() => router.push('/auth/sign-up')}
+        >
           <div className="text-2xl font-bold font-display text-white">
             Learn To Vibe Code
           </div>
@@ -62,7 +72,8 @@ export function CredentialPreviewWidget() {
           scale: titleHover ? 1.3 : 1,
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="uppercase tracking-wide text-center cursor-pointer font-bold text-white"
+        onClick={() => router.push('/auth/sign-up')}
+        className="uppercase tracking-wide text-center cursor-pointer font-bold text-white hover:opacity-80 transition-opacity"
         style={{
           fontSize: titleHover ? '28px' : '20px',
           background: titleHover
@@ -79,34 +90,17 @@ export function CredentialPreviewWidget() {
       </motion.h3>
 
       <div
-        className="relative w-full flex-1 cursor-pointer"
+        className="relative w-full flex-1 cursor-pointer hover:opacity-90 transition-opacity"
         style={{ perspective: "1200px" }}
-        onClick={() => setIsFlipped(!isFlipped)}
-        onMouseEnter={() => setIsFlipped(true)}
-        onMouseLeave={() => setIsFlipped(false)}
+        onClick={() => router.push('/auth/sign-up')}
       >
         <motion.div
-          style={{
-            rotateY: isFlipped ? 180 : 0,
-            transformStyle: "preserve-3d",
-          }}
-          animate={{
-            rotateY: isFlipped ? 180 : 0,
-          }}
-          transition={{
-            duration: 0.6,
-            ease: "easeInOut",
-          }}
           className="w-full h-full"
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.3 }}
         >
-          {/* Front Side - Certificate */}
-          <motion.div
-            style={{
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-            }}
-            className="absolute inset-0 w-full h-full"
-          >
+          {/* Certificate Card */}
+          <motion.div className="w-full h-full">
             <div className="relative w-full h-full bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-6 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
               {/* Gold star - top right */}
               <motion.div
@@ -141,63 +135,6 @@ export function CredentialPreviewWidget() {
             </div>
           </motion.div>
 
-          {/* Back Side - Credential Details */}
-          <motion.div
-            style={{
-              backfaceVisibility: "hidden",
-              WebkitBackfaceVisibility: "hidden",
-              transform: "rotateY(180deg)",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-            }}
-            className="w-full h-full"
-          >
-            <div className="relative w-full h-full bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-8 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
-              {/* Decorative background pattern */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-4 right-4 w-20 h-20 border-2 border-white rounded-full" />
-                <div className="absolute bottom-4 left-4 w-16 h-16 border-2 border-white rounded-lg" />
-              </div>
-
-              {/* Content */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.15, duration: 0.4 }}
-                className="relative z-10 space-y-4 w-full"
-              >
-                <div>
-                  <div className="text-xs text-white/70 font-semibold mb-1">CREDENTIAL ID</div>
-                  <div className="text-lg font-mono font-bold text-white">{credentialId}</div>
-                </div>
-
-                <div className="h-px bg-white/30 opacity-50 w-3/4 mx-auto" />
-
-                <div>
-                  <div className="text-xs text-white/70 font-semibold mb-1">ISSUED</div>
-                  <div className="text-sm font-semibold text-white">{issueDate}</div>
-                </div>
-
-                <div className="h-px bg-white/30 opacity-50 w-3/4 mx-auto" />
-
-                <div>
-                  <div className="text-xs text-white/70 font-semibold mb-2">VERIFY</div>
-                  <motion.a
-                    href={verificationUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-white font-mono underline hover:text-white/80 break-all"
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    learntovibecode.io/verify
-                  </motion.a>
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
         </motion.div>
       </div>
     </div>
