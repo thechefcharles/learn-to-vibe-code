@@ -127,15 +127,15 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
 
   // ========== NEW WIDGETS - TIME & FREE ==========
   test('time widget displays course duration', async ({ page }) => {
-    const timeTitle = page.locator(':text("Course Time")');
+    const timeTitle = page.locator(':text("Course Duration")');
     await expect(timeTitle).toBeVisible({ timeout: 3000 });
 
-    const canvas = page.locator('canvas').first();
-    await expect(canvas).toBeVisible();
+    const svg = page.locator('svg').first();
+    await expect(svg).toBeVisible();
   });
 
   test('free widget shows coin flip game with heads/tails selection', async ({ page }) => {
-    const coinTitle = page.locator(':text("Coin Flip Game")');
+    const coinTitle = page.locator(':text("Free Forever")');
     await expect(coinTitle).toBeVisible({ timeout: 3000 });
 
     const headsButton = page.locator('button:has-text("Heads")');
@@ -146,7 +146,7 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
 
     // Select heads and verify selection
     await headsButton.click();
-    await expect(headsButton).toHaveClass(/from-cyan-400/);
+    await expect(headsButton).toHaveClass(/bg-cyan-400/);
   });
   // ========== PROGRESS FLOW WIDGET ==========
   test('progress flow widget displays all 6 stages', async ({ page }) => {

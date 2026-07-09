@@ -2507,3 +2507,26 @@ Import trace:
 [21982329ms] [ERROR] WebSocket connection to 'ws://localhost:3008/_next/webpack-hmr?id=fg2-iylIasMNrfTBaNv15' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
 [21987474ms] [ERROR] WebSocket connection to 'ws://localhost:3008/_next/webpack-hmr?id=fg2-iylIasMNrfTBaNv15' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
 [21992772ms] [ERROR] WebSocket connection to 'ws://localhost:3008/_next/webpack-hmr?id=fg2-iylIasMNrfTBaNv15' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[22989180ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[22989190ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[22989402ms] [WARNING] You are trying to animate strokeDashoffset from "undefined" to "534.0707511102648". "undefined" is not an animatable value.. For more information and steps for solving, visit https://motion.dev/troubleshooting/value-not-animatable @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[22992497ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[22992530ms] [LOG] [Fast Refresh] done in 75ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23023514ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23023574ms] [LOG] [Fast Refresh] done in 161ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23027213ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23027234ms] [LOG] [Fast Refresh] done in 122ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23028362ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23028365ms] [LOG] [Fast Refresh] done in 104ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23030771ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23030846ms] [LOG] [Fast Refresh] done in 177ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23049032ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23049068ms] [LOG] [Fast Refresh] done in 137ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23058225ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23058228ms] [LOG] [Fast Refresh] done in 105ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23059133ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23059144ms] [LOG] [Fast Refresh] done in 112ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23059382ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23059466ms] [LOG] [Fast Refresh] done in 185ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23073399ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[23073411ms] [LOG] [Fast Refresh] done in 113ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477

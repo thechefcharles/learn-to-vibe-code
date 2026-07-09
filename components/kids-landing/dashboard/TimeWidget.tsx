@@ -1,157 +1,155 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 
 export function TimeWidget() {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isHovering, setIsHovering] = useState(false);
-  const speedRef = useRef(1);
-  const hoursRef = useRef(0);
+  const [hours, setHours] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [speed, setSpeed] = useState(1);
+  const timeRef = useRef(0);
+  const lastTimeRef = useRef(Date.now());
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let lastTime = Date.now();
+    let animationId: number;
 
     const animate = () => {
-      const now = Date.now();
-      const deltaTime = (now - lastTime) / 1000;
-      lastTime = now;
+      if (!isPaused) {
+        const now = Date.now();
+        const deltaMs = now - lastTimeRef.current;
+        lastTimeRef.current = now;
 
-      // Update hours based on speed (hover slows, click speeds up)
-      if (!isHovering) {
-        hoursRef.current += (deltaTime * speedRef.current);
-      }
-      if (hoursRef.current >= 93) {
-        hoursRef.current = 0;
-      }
+        timeRef.current += (deltaMs / 1000) * speed * 5;
+        if (timeRef.current >= 93) {
+          timeRef.current = 0;
+        }
 
-      const size = canvas.width / 2;
-      const centerX = size;
-      const centerY = size;
-      const radius = size * 0.75;
-
-      // Clear canvas
-      ctx.fillStyle = 'rgba(15, 23, 42, 0)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // Draw outer circle with glow
-      ctx.shadowColor = 'rgba(6, 182, 212, 0.3)';
-      ctx.shadowBlur = 12;
-      ctx.strokeStyle = 'rgba(107, 114, 128, 0.3)';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.shadowColor = 'transparent';
-
-      // Draw progress arc (cyan to pink gradient)
-      const gradient = ctx.createLinearGradient(centerX - radius, centerY, centerX + radius, centerY);
-      gradient.addColorStop(0, '#06B6D4'); // cyan
-      gradient.addColorStop(0.5, '#A78BFA'); // purple
-      gradient.addColorStop(1, '#EC4899'); // pink
-
-      ctx.strokeStyle = gradient;
-      ctx.lineWidth = 10;
-      ctx.lineCap = 'round';
-      ctx.beginPath();
-      const angle = (hoursRef.current / 93) * Math.PI * 2 - Math.PI / 2;
-      ctx.arc(centerX, centerY, radius, -Math.PI / 2, angle);
-      ctx.stroke();
-
-      // Draw hour markers
-      for (let i = 0; i < 93; i += 15) {
-        const markerAngle = (i / 93) * Math.PI * 2 - Math.PI / 2;
-        const x1 = centerX + Math.cos(markerAngle) * radius;
-        const y1 = centerY + Math.sin(markerAngle) * radius;
-        const x2 = centerX + Math.cos(markerAngle) * (radius - 15);
-        const y2 = centerY + Math.sin(markerAngle) * (radius - 15);
-
-        ctx.strokeStyle = 'rgba(107, 114, 128, 0.5)';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.stroke();
+        setHours(Math.floor(timeRef.current));
       }
 
-      // Draw center circle with gradient
-      const centerGradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, 14);
-      centerGradient.addColorStop(0, 'rgba(6, 182, 212, 0.4)');
-      centerGradient.addColorStop(1, 'rgba(6, 182, 212, 0.1)');
-      ctx.fillStyle = centerGradient;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, 14, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.strokeStyle = 'rgba(6, 182, 212, 0.6)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, 14, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Draw hours number with better styling
-      ctx.fillStyle = '#00D9FF';
-      ctx.font = 'bold 56px "Courier New", monospace';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(`${Math.floor(hoursRef.current)}`, centerX, centerY - 6);
-
-      // Draw / 93 text
-      ctx.fillStyle = 'rgba(6, 182, 212, 0.7)';
-      ctx.font = '14px "Courier New", monospace';
-      ctx.fillText('/ 93h', centerX, centerY + 20);
-
-      requestAnimationFrame(animate);
+      animationId = requestAnimationFrame(animate);
     };
 
-    animate();
-  }, [isHovering]);
+    animationId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationId);
+  }, [isPaused, speed]);
 
-  const handleCanvasClick = () => {
-    speedRef.current = Math.min(speedRef.current + 0.5, 5);
-  };
-
-  const handleCanvasDoubleClick = () => {
-    speedRef.current = 1;
-  };
+  const percentage = (hours / 93) * 100;
+  const circumference = 2 * Math.PI * 85;
+  const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <div className="mb-4">
-        <h3 className="text-sm font-semibold text-white uppercase tracking-wide">Course Time</h3>
-      </div>
+      <h3 className="text-sm font-semibold text-white uppercase tracking-wide mb-6">
+        Course Duration
+      </h3>
 
-      <div className="relative">
-        <canvas
-          ref={canvasRef}
-          width={200}
-          height={200}
-          className="w-full max-w-[180px] cursor-pointer transition-opacity hover:opacity-90"
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-          onClick={handleCanvasClick}
-          onDoubleClick={handleCanvasDoubleClick}
-          title="Click to speed up, double-click to reset, hover to pause"
-        />
-        {isHovering && (
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div className="text-xs text-cyan-300 font-mono bg-black/40 px-2 py-1 rounded">
-              Paused
-            </div>
+      <motion.div
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onClick={() => setSpeed(prev => Math.min(prev + 0.5, 3))}
+        onDoubleClick={() => setSpeed(1)}
+        className="cursor-pointer group relative"
+        whileHover={{ scale: 1.05 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 10 }}
+      >
+        <svg className="w-40 h-40" viewBox="0 0 200 200">
+          <defs>
+            <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#06B6D4" />
+              <stop offset="50%" stopColor="#A78BFA" />
+              <stop offset="100%" stopColor="#EC4899" />
+            </linearGradient>
+          </defs>
+
+          {/* Background circle */}
+          <circle
+            cx="100"
+            cy="100"
+            r="85"
+            fill="none"
+            stroke="rgba(107, 114, 128, 0.2)"
+            strokeWidth="3"
+          />
+
+          {/* Progress circle */}
+          <motion.circle
+            cx="100"
+            cy="100"
+            r="85"
+            fill="none"
+            stroke="url(#progressGradient)"
+            strokeWidth="8"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            animate={{ strokeDashoffset }}
+            transition={{ duration: 0.2, ease: 'linear' }}
+            style={{
+              transform: 'rotate(-90deg)',
+              transformOrigin: '100px 100px',
+            }}
+          />
+
+          {/* Hour markers */}
+          {[0, 15, 30, 45, 60, 75, 90].map((h) => {
+            const angle = (h / 93) * 360 - 90;
+            const rad = (angle * Math.PI) / 180;
+            const x1 = 100 + 85 * Math.cos(rad);
+            const y1 = 100 + 85 * Math.sin(rad);
+            const x2 = 100 + 72 * Math.cos(rad);
+            const y2 = 100 + 72 * Math.sin(rad);
+            return (
+              <line
+                key={h}
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                stroke="rgba(107, 114, 128, 0.4)"
+                strokeWidth="1"
+              />
+            );
+          })}
+
+          {/* Center circle */}
+          <circle
+            cx="100"
+            cy="100"
+            r="12"
+            fill="rgba(6, 182, 212, 0.2)"
+            stroke="rgba(6, 182, 212, 0.6)"
+            strokeWidth="1"
+          />
+        </svg>
+
+        {/* Text overlay */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+          <div className="text-3xl font-bold text-cyan-300 font-mono">
+            {hours}
           </div>
-        )}
-      </div>
+          <div className="text-xs text-gray-400 font-mono">
+            /93h
+          </div>
+        </div>
 
-      <p className="text-xs text-gray-400 text-center mt-4 max-w-[160px]">
+        {/* Paused label */}
+        {isPaused && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            className="absolute top-2 right-2 bg-black/60 backdrop-blur px-2 py-1 rounded text-xs text-cyan-300 font-semibold"
+          >
+            Paused
+          </motion.div>
+        )}
+      </motion.div>
+
+      <p className="text-xs text-gray-400 text-center mt-6">
         93 hours of hands-on learning
       </p>
-      <p className="text-2xs text-gray-500 text-center mt-1">
-        💡 Hover to pause • Click to speed up
+      <p className="text-2xs text-gray-500 text-center mt-2">
+        Hover to pause • Click to speed up
       </p>
     </div>
   );
