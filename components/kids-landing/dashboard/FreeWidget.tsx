@@ -102,7 +102,7 @@ export function FreeWidget() {
 
             {/* Coin content */}
             <motion.div
-              className="relative z-10 text-center font-mono font-bold text-2xl"
+              className="relative z-10 text-center font-mono font-bold text-xl"
               animate={{ opacity: isFlipping ? 0.3 : 1 }}
             >
               {isFlipping ? (
@@ -112,7 +112,11 @@ export function FreeWidget() {
                   {result === 'heads' ? 'H' : 'T'}
                 </span>
               ) : (
-                <span className="text-gray-400">?</span>
+                <span className="text-gray-300 text-sm leading-tight">
+                  flip
+                  <br />
+                  me
+                </span>
               )}
             </motion.div>
           </div>

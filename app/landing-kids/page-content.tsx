@@ -53,7 +53,7 @@ export default function KidsLandingPageContent() {
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
                 <span className="text-white">Welcome, </span>
                 <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                  "{userName || 'your name'}"
+                  "{userName || 'Your Name'}"
                 </span>
               </h1>
 

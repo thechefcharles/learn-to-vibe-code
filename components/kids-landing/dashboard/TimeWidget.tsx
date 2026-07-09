@@ -21,10 +21,12 @@ export function TimeWidget() {
 
         timeRef.current += (deltaMs / 1000) * speed * 5;
         if (timeRef.current >= 93) {
-          timeRef.current = 0;
+          timeRef.current = timeRef.current - 93;
         }
 
         setHours(Math.floor(timeRef.current));
+      } else {
+        lastTimeRef.current = Date.now();
       }
 
       animationId = requestAnimationFrame(animate);
@@ -45,10 +47,9 @@ export function TimeWidget() {
       </h3>
 
       <motion.div
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        onClick={() => setSpeed(prev => Math.min(prev + 0.5, 3))}
-        onDoubleClick={() => setSpeed(1)}
+        onMouseEnter={() => setSpeed(prev => Math.min(prev + 1, 4))}
+        onMouseLeave={() => setSpeed(1)}
+        onClick={() => setIsPaused(!isPaused)}
         className="cursor-pointer group relative"
         whileHover={{ scale: 1.05 }}
         transition={{ type: 'spring', stiffness: 300, damping: 10 }}
@@ -83,7 +84,7 @@ export function TimeWidget() {
             strokeLinecap="round"
             strokeDasharray={circumference}
             animate={{ strokeDashoffset }}
-            transition={{ duration: 0.2, ease: 'linear' }}
+            transition={{ duration: 0.1, ease: 'linear' }}
             style={{
               transform: 'rotate(-90deg)',
               transformOrigin: '100px 100px',
@@ -110,29 +111,19 @@ export function TimeWidget() {
               />
             );
           })}
-
-          {/* Center circle */}
-          <circle
-            cx="100"
-            cy="100"
-            r="12"
-            fill="rgba(6, 182, 212, 0.2)"
-            stroke="rgba(6, 182, 212, 0.6)"
-            strokeWidth="1"
-          />
         </svg>
 
-        {/* Text overlay */}
+        {/* Center content - positioned absolutely to avoid overlap */}
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <div className="text-3xl font-bold text-cyan-300 font-mono">
+          <div className="text-3xl font-bold text-cyan-300 font-mono leading-none">
             {hours}
           </div>
-          <div className="text-xs text-gray-400 font-mono">
+          <div className="text-xs text-gray-400 font-mono mt-1">
             /93h
           </div>
         </div>
 
-        {/* Paused label */}
+        {/* Pause indicator */}
         {isPaused && (
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -147,9 +138,6 @@ export function TimeWidget() {
 
       <p className="text-xs text-gray-400 text-center mt-6">
         93 hours of hands-on learning
-      </p>
-      <p className="text-2xs text-gray-500 text-center mt-2">
-        Hover to pause • Click to speed up
       </p>
     </div>
   );
