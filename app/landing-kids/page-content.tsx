@@ -25,10 +25,10 @@ export default function KidsLandingPageContent() {
       <FloatingCTA />
 
       {/* ============ HERO SECTION WITH DASHBOARD GRID ============ */}
-      <section className="py-1 px-4 sm:py-2">
+      <section className="py-0.5 px-4 sm:py-1">
         <div className="max-w-7xl mx-auto">
           {/* Hero Logo and Headline */}
-          <div className="text-center mb-3">
+          <div className="text-center mb-2">
             <div className="mb-1 flex justify-center scale-75">
               <Logo variant="cosmic-mark" size="lg" />
             </div>
