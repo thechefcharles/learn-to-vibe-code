@@ -42,7 +42,7 @@ export function FloatingCTA() {
 
         // Only move if cursor is far enough away (to avoid jitter at rest)
         if (distance > 10) {
-          const speed = 0.015; // Very slow chase speed
+          const speed = 0.004; // Extremely slow chase speed
           return {
             x: prev.x + dx * speed,
             y: prev.y + dy * speed,
