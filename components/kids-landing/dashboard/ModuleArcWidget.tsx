@@ -59,7 +59,7 @@ export function ModuleArcWidget({ userName = '', onUserNameChange }: ModuleArcWi
               value={userName}
               onChange={(e) => onUserNameChange?.(e.target.value)}
               placeholder="your name"
-              className="bg-transparent border-0 p-0 w-28 text-cyan-300 font-mono text-sm focus:outline-none focus:ring-0 placeholder-cyan-300/70"
+              className="bg-transparent border-0 p-0 w-auto max-w-24 text-cyan-300 font-mono text-sm focus:outline-none focus:ring-0 placeholder-cyan-300/70"
             /></span>")
           </div>
         </div>
