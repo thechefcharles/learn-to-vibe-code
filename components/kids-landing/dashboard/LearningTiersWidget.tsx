@@ -57,6 +57,7 @@ export function LearningTiersWidget() {
           WebkitBackgroundClip: titleHover ? 'text' : 'unset',
           WebkitTextFillColor: titleHover ? 'transparent' : 'white',
           color: titleHover ? 'transparent' : 'white',
+          transformOrigin: 'center',
         }}
       >
         4 Learning Tiers

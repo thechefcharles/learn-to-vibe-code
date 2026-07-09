@@ -17,7 +17,7 @@ export function ModuleArcWidget() {
             scale: titleHover ? 1.3 : 1,
           }}
           transition={{ duration: 0.3, ease: 'easeOut' }}
-          className="uppercase tracking-wide cursor-pointer font-bold"
+          className="uppercase tracking-wide cursor-pointer font-bold text-center"
           style={{
             fontSize: titleHover ? '28px' : '20px',
             background: titleHover
@@ -27,6 +27,7 @@ export function ModuleArcWidget() {
             WebkitBackgroundClip: titleHover ? 'text' : 'unset',
             WebkitTextFillColor: titleHover ? 'transparent' : 'white',
             color: titleHover ? 'transparent' : 'white',
+            transformOrigin: 'center',
           }}
         >16 Modules</motion.h3>
       </div>

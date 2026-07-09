@@ -125,6 +125,7 @@ export function ProgressFlowWidget() {
           WebkitBackgroundClip: titleHover ? 'text' : 'unset',
           WebkitTextFillColor: titleHover ? 'transparent' : 'white',
           color: titleHover ? 'transparent' : 'white',
+          transformOrigin: 'center',
         }}
       >
         Your Learning Journey

@@ -72,6 +72,7 @@ export function CredentialPreviewWidget() {
           WebkitBackgroundClip: titleHover ? 'text' : 'unset',
           WebkitTextFillColor: titleHover ? 'transparent' : 'white',
           color: titleHover ? 'transparent' : 'white',
+          transformOrigin: 'center',
         }}
       >
         Get Certified
