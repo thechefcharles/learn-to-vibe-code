@@ -9,7 +9,7 @@ interface GridItemProps {
 }
 
 function GridItem({ children, colSpan = 1, rowSpan = 1 }: GridItemProps) {
-  const colSpanClass = colSpan === 2 ? 'col-span-2' : 'col-span-1';
+  const colSpanClass = colSpan === 2 ? 'col-span-2' : colSpan === 3 ? 'col-span-3' : 'col-span-1';
   const rowSpanClass = rowSpan === 2 ? 'row-span-2' : 'row-span-1';
 
   return (
