@@ -8,7 +8,7 @@ interface Stage {
   id: number;
   label: string;
   description: string;
-  icon: string;
+  shortLabel: string;
 }
 
 const stages: Stage[] = [
@@ -16,37 +16,37 @@ const stages: Stage[] = [
     id: 1,
     label: "Module",
     description: "Access course content and learning materials",
-    icon: "📚",
+    shortLabel: "Module",
   },
   {
     id: 2,
     label: "Quiz",
     description: "Take the module assessment and demonstrate knowledge",
-    icon: "✓",
+    shortLabel: "Quiz",
   },
   {
     id: 3,
     label: "Pass (80%)",
     description: "Achieve 80% or higher score to pass and earn XP",
-    icon: "🎯",
+    shortLabel: "Pass",
   },
   {
     id: 4,
     label: "Unlock Next",
     description: "Submit deliverable to unlock the next module",
-    icon: "🔓",
+    shortLabel: "Next",
   },
   {
     id: 5,
     label: "Capstone",
     description: "After Module 15, access the capstone project challenge",
-    icon: "⭐",
+    shortLabel: "Cap",
   },
   {
     id: 6,
     label: "Certificate",
     description: "Earn your verifiable completion certificate and 9.3 CEUs",
-    icon: "🏆",
+    shortLabel: "Cert",
   },
 ];
 
@@ -128,7 +128,7 @@ export function ProgressFlowWidget() {
                 onClick={() =>
                   setActiveStage(activeStage === stage.id ? null : stage.id)
                 }
-                className="relative flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-cyan-400/30 to-purple-500/30 border-2 border-cyan-400/60 text-white font-bold text-3xl cursor-pointer transition-all duration-300 hover:border-cyan-300/100 hover:shadow-lg hover:shadow-cyan-400/50 flex-shrink-0 group"
+                className="relative flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-cyan-400/30 to-purple-500/30 border-2 border-cyan-400/60 text-white font-bold text-sm cursor-pointer transition-all duration-300 hover:border-cyan-300/100 hover:shadow-lg hover:shadow-cyan-400/50 flex-shrink-0 group"
                 whileHover={
                   prefersReducedMotion
                     ? {}
@@ -159,8 +159,10 @@ export function ProgressFlowWidget() {
                   transition={{ duration: 0.3 }}
                 />
 
-                {/* Icon/Number */}
-                <span className="relative z-10">{stage.icon}</span>
+                {/* Text Label */}
+                <span className="relative z-10 text-center leading-tight px-2">
+                  {stage.shortLabel}
+                </span>
 
                 {/* Pulse animation on hover */}
                 <motion.div
