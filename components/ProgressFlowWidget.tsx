@@ -64,6 +64,16 @@ export function ProgressFlowWidget() {
     setIsDragging(false);
   };
 
+  const handleScroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 200;
+      scrollContainerRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -202,6 +212,28 @@ export function ProgressFlowWidget() {
         </div>
       </div>
 
+      {/* Scroll Arrow Buttons */}
+      <div className="relative">
+        {/* Left Arrow */}
+        <motion.button
+          onClick={() => handleScroll('left')}
+          className="absolute bottom-0 left-0 w-10 h-10 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all flex items-center justify-center text-white text-xl cursor-pointer"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          ←
+        </motion.button>
+
+        {/* Right Arrow */}
+        <motion.button
+          onClick={() => handleScroll('right')}
+          className="absolute bottom-0 right-0 w-10 h-10 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all flex items-center justify-center text-white text-xl cursor-pointer"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          →
+        </motion.button>
+      </div>
 
       {/* Scrollbar hide style */}
       <style>{`
