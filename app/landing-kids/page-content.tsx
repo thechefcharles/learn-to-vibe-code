@@ -31,7 +31,7 @@ export default function KidsLandingPageContent() {
       <FloatingCTA />
 
       {/* ============ FLOATING LOGO (BOTTOM-LEFT) ============ */}
-      <div className="fixed bottom-32 left-4 z-30 opacity-60 pointer-events-none">
+      <div className="fixed bottom-56 left-4 z-30 opacity-60 pointer-events-none">
         <img
           src="/learn_to_vibe_code_logo_cosmic_wordmark_transparent.png"
           alt="Learn To Vibe Code"
