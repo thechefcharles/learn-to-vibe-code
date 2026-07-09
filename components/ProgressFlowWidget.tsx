@@ -102,25 +102,11 @@ export function ProgressFlowWidget() {
                 duration: 0.5,
               }}
             >
-              {/* Connecting Arrow */}
+              {/* Connecting Line */}
               {index < stages.length - 1 && (
-                <motion.div
-                  className="absolute top-8 left-[72px] w-12 h-12 flex items-center justify-center z-0"
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{
-                    delay: prefersReducedMotion ? 0 : 0.3 + index * 0.08,
-                    duration: 0.5,
-                  }}
-                >
-                  <motion.div
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity }}
-                    className="text-2xl"
-                  >
-                    →
-                  </motion.div>
-                </motion.div>
+                <div
+                  className="absolute top-7 left-[56px] w-6 h-0.5 bg-gradient-to-r from-cyan-400/60 to-purple-500/60 z-0"
+                />
               )}
 
               {/* Stage Circle */}
@@ -128,7 +114,7 @@ export function ProgressFlowWidget() {
                 onClick={() =>
                   setActiveStage(activeStage === stage.id ? null : stage.id)
                 }
-                className="relative flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-cyan-400/30 to-purple-500/30 border-2 border-cyan-400/60 text-white font-bold text-sm cursor-pointer transition-all duration-300 hover:border-cyan-300/100 hover:shadow-lg hover:shadow-cyan-400/50 flex-shrink-0 group"
+                className="relative flex items-center justify-center w-14 h-14 rounded-full bg-gradient-to-br from-cyan-400/30 to-purple-500/30 border-2 border-cyan-400/60 text-white font-bold text-sm cursor-pointer transition-all duration-300 hover:border-cyan-300/100 hover:shadow-lg hover:shadow-cyan-400/50 flex-shrink-0 group"
                 whileHover={
                   prefersReducedMotion
                     ? {}
