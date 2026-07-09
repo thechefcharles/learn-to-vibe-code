@@ -2,6 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
+import { VideoBackground } from "@/components/kids-landing/VideoBackground";
+import { MouseTrail } from "@/components/kids-landing/MouseTrail";
+import { motion } from "framer-motion";
 
 export default function TestDonatePage() {
   const [loading, setLoading] = useState<string | null>(null);
@@ -62,128 +66,128 @@ export default function TestDonatePage() {
   };
 
   const donations = [
-    { type: "coffee", amount: 5, label: "☕ Buy me a coffee", emoji: "☕" },
-    { type: "tea", amount: 10, label: "🍵 Cup of tea", emoji: "🍵" },
-    { type: "lunch", amount: 25, label: "🍽️ Lunch", emoji: "🍽️" },
-    { type: "dinner", amount: 50, label: "🍷 Dinner", emoji: "🍷" },
+    { type: "coffee", amount: 5, label: "Buy me a coffee", emoji: "☕" },
+    { type: "tea", amount: 10, label: "Cup of tea", emoji: "🍵" },
+    { type: "lunch", amount: 25, label: "Lunch", emoji: "🍽️" },
+    { type: "dinner", amount: 50, label: "Dinner", emoji: "🍷" },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
-      <div className="max-w-2xl mx-auto">
-        <Link href="/" className="text-blue-400 hover:text-blue-300 mb-8 inline-block">
-          ← Back to Home
-        </Link>
+    <div className="relative w-full min-h-screen text-white overflow-x-hidden flex items-center justify-center py-12 px-4">
+      <VideoBackground />
+      <div className="fixed inset-0 bg-black/40 z-0 pointer-events-none" />
+      <MouseTrail />
 
-        <div className="bg-slate-800 rounded-lg p-8 border border-slate-700">
-          <h1 className="text-3xl font-bold text-white mb-2">Test Donation Flow</h1>
-          <p className="text-slate-400 mb-8">
-            This page tests Stripe integration in sandbox mode. No real charges will be made.
-          </p>
+      <div className="w-full max-w-md relative z-10">
+        {/* Logo */}
+        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-8">
+          <Link href="/" className="inline-block hover:opacity-80 transition">
+            <Logo variant="cosmic" size="lg" />
+          </Link>
+        </motion.div>
+
+        {/* Form Card with Glass Morphism */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all"
+        >
+          {/* Heading with Gradient */}
+          <h1
+            className="text-3xl font-bold uppercase tracking-wider mb-2"
+            style={{
+              background: 'linear-gradient(90deg, #06b6d4 0%, #a78bfa 50%, #ec4899 100%)',
+              backgroundClip: 'text',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
+            Support The Vibe
+          </h1>
+          <p className="text-gray-300 mb-6">Help us build the future of AI-assisted coding education</p>
 
           {/* Quick Donation Buttons */}
           <div className="space-y-3 mb-8">
-            <h2 className="text-lg font-bold text-white mb-4">Quick Amounts ($5, $10, $25, $50):</h2>
-
             {donations.map((item) => (
-              <button
+              <motion.button
                 key={item.type}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => handleDonate(item.type)}
                 disabled={loading !== null}
-                className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-3 px-4 rounded-lg transition"
+                className={`w-full py-3 px-4 rounded-lg font-bold text-white uppercase tracking-wide transition-all disabled:opacity-60 ${
+                  loading === item.type ? 'opacity-70' : ''
+                }`}
+                style={{
+                  background: 'linear-gradient(90deg, #06b6d4 0%, #a78bfa 50%, #ec4899 100%)',
+                }}
               >
-                {loading === item.type ? "Processing..." : `${item.label} ($${item.amount})`}
-              </button>
+                {loading === item.type ? (
+                  'Processing...'
+                ) : (
+                  <>
+                    {item.emoji} {item.label} (${item.amount})
+                  </>
+                )}
+              </motion.button>
             ))}
           </div>
 
+          {/* Divider */}
+          <div className="border-t border-white/20 my-8" />
+
           {/* Custom Amount */}
-          <div className="mt-8 pt-8 border-t border-slate-600">
-            <h2 className="text-lg font-bold text-white mb-4">Custom Amount:</h2>
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wide text-gray-300 mb-2">
+              Custom Amount
+            </label>
             <form onSubmit={handleCustom} className="flex gap-2">
               <div className="flex-1">
                 <input
                   type="number"
-                  placeholder="Enter amount (e.g., 15)"
+                  placeholder="Enter amount"
                   step="0.01"
                   min="1"
                   value={customAmount}
                   onChange={(e) => setCustomAmount(e.target.value)}
-                  className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none transition-all focus:bg-white/10 focus:border-cyan-400/70"
                   disabled={loading !== null}
                 />
               </div>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={loading !== null}
-                className="bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white font-medium py-2 px-6 rounded-lg transition"
+                className="py-3 px-6 rounded-lg font-bold text-white uppercase tracking-wide transition-all disabled:opacity-60"
+                style={{
+                  background: 'linear-gradient(90deg, #06b6d4 0%, #a78bfa 50%, #ec4899 100%)',
+                }}
               >
                 {loading === "custom" ? "..." : "Donate"}
-              </button>
+              </motion.button>
             </form>
           </div>
 
           {/* Test Card Info */}
-          <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-6 mt-8">
-            <h3 className="text-lg font-bold text-blue-400 mb-4">💳 Stripe Sandbox Test Card</h3>
-            <div className="space-y-2 text-slate-300 font-mono text-sm">
-              <div>
-                <strong>Card Number:</strong> <code>4242 4242 4242 4242</code>
-              </div>
-              <div>
-                <strong>Expiry:</strong> <code>12/25</code> (or any future date)
-              </div>
-              <div>
-                <strong>CVC:</strong> <code>123</code> (or any 3 digits)
-              </div>
-              <div>
-                <strong>ZIP:</strong> <code>12345</code> (or any 5 digits)
-              </div>
-            </div>
-            <p className="text-blue-300 text-sm mt-4">
-              ℹ️ Use this card to test successful payments. After checkout, you'll be redirected to
-              the success page.
-            </p>
-          </div>
-
-          {/* Testing Notes */}
-          <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-6 mt-6">
-            <h3 className="text-lg font-bold text-yellow-400 mb-4">📝 Testing Notes</h3>
-            <ul className="text-slate-300 space-y-2 text-sm">
-              <li>
-                ✅ <strong>This is SANDBOX mode:</strong> No real money will be charged
-              </li>
-              <li>
-                ✅ <strong>Test card:</strong> Use 4242 4242 4242 4242 to simulate success
-              </li>
-              <li>
-                ❌ <strong>To test failure:</strong> Use 4000 0000 0000 0002 (card will be declined)
-              </li>
-              <li>✅ <strong>Check Stripe Dashboard:</strong> All transactions appear at https://dashboard.stripe.com/payments</li>
-              <li>
-                ✅ <strong>Success redirect:</strong> After payment, you'll be sent to `/support?success=true`
-              </li>
-            </ul>
-          </div>
-
-          {/* More Test Cards */}
-          <div className="bg-slate-700 rounded-lg p-6 mt-6">
-            <h3 className="text-lg font-bold text-white mb-4">🧪 Other Test Cards</h3>
-            <div className="space-y-2 text-slate-300 text-sm">
-              <div>
-                <code className="bg-slate-800 px-2 py-1 rounded">4000 0000 0000 0069</code> →
-                Card expired
-              </div>
-              <div>
-                <code className="bg-slate-800 px-2 py-1 rounded">4000 0000 0000 0002</code> →
-                Card declined
-              </div>
-              <p className="text-xs text-slate-400 mt-4">
-                Full list: https://stripe.com/docs/testing
-              </p>
+          <div className="bg-white/5 backdrop-blur-md border border-cyan-400/30 rounded-lg p-4 mt-6">
+            <h3 className="text-sm font-bold text-cyan-300 mb-3">💳 Stripe Test Card</h3>
+            <div className="space-y-1 text-gray-400 font-mono text-xs">
+              <div><strong>Card:</strong> 4242 4242 4242 4242</div>
+              <div><strong>Exp:</strong> 12/25 (any future date)</div>
+              <div><strong>CVC:</strong> 123 (any 3 digits)</div>
+              <div><strong>ZIP:</strong> 12345 (any 5 digits)</div>
             </div>
           </div>
-        </div>
+
+          {/* Back Link */}
+          <div className="text-center mt-6">
+            <Link href="/" className="text-cyan-300 hover:text-purple-300 text-sm font-semibold transition">
+              ← Back to Home
+            </Link>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
