@@ -28,50 +28,59 @@ export default function KidsLandingPageContent() {
       <VideoBackground />
       <FloatingCTA />
 
+      {/* ============ FLOATING LOGO (TOP-LEFT) ============ */}
+      <div className="fixed top-6 left-6 z-40">
+        <img
+          src="/learn_to_vibe_code_logo_cosmic_wordmark_transparent.svg"
+          alt="Learn To Vibe Code"
+          className="h-16 sm:h-20 w-auto"
+        />
+      </div>
+
+      {/* ============ DIAGONAL WELCOME BACKGROUND ============ */}
+      <div className="absolute top-0 left-0 w-full h-96 pointer-events-none">
+        <h1
+          className="text-7xl sm:text-8xl lg:text-9xl font-bold leading-tight opacity-10"
+          style={{
+            transform: 'rotate(-12deg) translateX(-10%)',
+            background: 'linear-gradient(to right, rgb(6, 182, 212), rgb(168, 85, 247), rgb(236, 72, 153))',
+            backgroundClip: 'text',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            position: 'absolute',
+            top: '-100px',
+            left: '-200px',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          Welcome, "{userName || 'Your Name'}"
+        </h1>
+      </div>
+
       {/* ============ HERO SECTION WITH NAME INPUT ============ */}
-      <section className="py-4 px-4 sm:py-6">
+      <section className="py-8 px-4 sm:py-12 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 items-start">
-            {/* Left: Input Box with greet() function */}
-            <div className="md:col-span-1">
-              <div className="bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-5 hover:bg-white/10 transition-all">
-                <p className="text-xs font-medium text-gray-400 mb-3 uppercase tracking-wide">Input:</p>
-                <div className="font-mono text-sm text-cyan-300 break-words">
-                  greet("<span className="inline-block"><input
-                    type="text"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
-                    placeholder="your name"
-                    className="bg-transparent border-0 p-0 w-20 text-cyan-300 font-mono text-sm focus:outline-none focus:ring-0 placeholder-gray-600"
-                  /></span>")
-                </div>
+          {/* Input Box - centered at top */}
+          <div className="flex justify-center mb-12">
+            <div className="bg-white/5 backdrop-blur-md border border-white/20 rounded-2xl p-5 hover:bg-white/10 transition-all max-w-sm">
+              <p className="text-xs font-medium text-gray-400 mb-3 uppercase tracking-wide">Input:</p>
+              <div className="font-mono text-sm text-cyan-300 break-words">
+                greet("<span className="inline-block"><input
+                  type="text"
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
+                  placeholder="your name"
+                  className="bg-transparent border-0 p-0 w-24 text-cyan-300 font-mono text-sm focus:outline-none focus:ring-0 placeholder-gray-600"
+                /></span>")
               </div>
-            </div>
-
-            {/* Center-Right: Greeting + Logo */}
-            <div className="md:col-span-3">
-              {/* Welcome greeting - ALWAYS visible */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-                <span className="text-white">Welcome, </span>
-                <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                  "{userName || 'Your Name'}"
-                </span>
-              </h1>
-
-              {/* Cosmic Wordmark Logo */}
-              <img
-                src="/learn_to_vibe_code_logo_cosmic_wordmark_transparent.svg"
-                alt="Learn To Vibe Code"
-                className="h-24 sm:h-32 md:h-40 lg:h-48 w-auto"
-              />
             </div>
           </div>
         </div>
       </section>
 
       {/* ============ DASHBOARD GRID ============ */}
-      <section className="py-4 px-4">
-        <div className="max-w-7xl mx-auto">
+      <section className="py-8 px-4 relative z-10">
+        <div className="max-w-6xl mx-auto">
           <DashboardGrid>
             {/* Row 1: The Story - Path + Structure + Time */}
             <GridItem colSpan={1}>
