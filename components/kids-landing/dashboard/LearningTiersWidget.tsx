@@ -51,7 +51,7 @@ export function LearningTiersWidget() {
               key={key}
               onMouseEnter={() => setFlipped(prev => ({ ...prev, [key]: true }))}
               onMouseLeave={() => setFlipped(prev => ({ ...prev, [key]: false }))}
-              className="relative h-40 cursor-pointer"
+              className="relative h-48 cursor-pointer"
               style={{ perspective: '1200px' }}
             >
               <motion.div
@@ -75,18 +75,18 @@ export function LearningTiersWidget() {
 
                 {/* Back of card */}
                 <div
-                  className="absolute inset-0 p-4 rounded-xl backdrop-blur-lg border border-white/30 bg-white/5 overflow-y-auto flex flex-col justify-start"
+                  className="absolute inset-0 p-3 rounded-xl backdrop-blur-lg border border-white/30 bg-white/5 overflow-y-auto flex flex-col items-center justify-center"
                   style={{
                     backfaceVisibility: 'hidden',
                     WebkitBackfaceVisibility: 'hidden',
                     transform: 'rotateY(180deg)',
                   }}
                 >
-                  <div className="space-y-2 text-center">
+                  <div className="space-y-1.5 text-center w-full">
                     {tier.modules.map((modNum) => (
-                      <div key={modNum} className="text-xs leading-snug">
-                        <span className="text-cyan-300 font-bold text-sm">{modNum}.</span>
-                        <span className="text-white ml-1 text-xs">{MODULE_NAMES[modNum]}</span>
+                      <div key={modNum} className="text-xs leading-tight">
+                        <span className="text-cyan-300 font-bold">{modNum}.</span>
+                        <span className="text-white ml-1">{MODULE_NAMES[modNum]}</span>
                       </div>
                     ))}
                   </div>
