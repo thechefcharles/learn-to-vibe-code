@@ -16,37 +16,37 @@ const stages: Stage[] = [
     id: 1,
     label: "Module",
     description: "Access course content and learning materials",
-    shortLabel: "Module",
+    shortLabel: "1",
   },
   {
     id: 2,
     label: "Quiz",
     description: "Take the module assessment and demonstrate knowledge",
-    shortLabel: "Quiz",
+    shortLabel: "2",
   },
   {
     id: 3,
     label: "Pass (80%)",
     description: "Achieve 80% or higher score to pass and earn XP",
-    shortLabel: "Pass",
+    shortLabel: "3",
   },
   {
     id: 4,
     label: "Unlock Next",
     description: "Submit deliverable to unlock the next module",
-    shortLabel: "Next",
+    shortLabel: "4",
   },
   {
     id: 5,
     label: "Capstone",
     description: "After Module 15, access the capstone project challenge",
-    shortLabel: "Cap",
+    shortLabel: "5",
   },
   {
     id: 6,
     label: "Certificate",
     description: "Earn your verifiable completion certificate and 9.3 CEUs",
-    shortLabel: "Cert",
+    shortLabel: "6",
   },
 ];
 
