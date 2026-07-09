@@ -7,8 +7,14 @@ import { useEffect, useState, useRef } from 'react';
 export function FloatingCTA() {
   const prefersReducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
-  const [cursorPos, setCursorPos] = useState({ x: typeof window !== 'undefined' ? window.innerWidth - 100 : 0, y: 40 });
-  const [buttonPos, setButtonPos] = useState({ x: typeof window !== 'undefined' ? window.innerWidth - 100 : 0, y: 40 });
+  const [initialPos] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return { x: window.innerWidth - 80, y: 40 };
+    }
+    return { x: 0, y: 40 };
+  });
+  const [cursorPos, setCursorPos] = useState(initialPos);
+  const [buttonPos, setButtonPos] = useState(initialPos);
   const animationFrameRef = useRef<number>();
 
   // Avoid hydration mismatch
@@ -36,7 +42,7 @@ export function FloatingCTA() {
 
         // Only move if cursor is far enough away (to avoid jitter at rest)
         if (distance > 10) {
-          const speed = 0.08; // Slow chase speed
+          const speed = 0.015; // Very slow chase speed
           return {
             x: prev.x + dx * speed,
             y: prev.y + dy * speed,
