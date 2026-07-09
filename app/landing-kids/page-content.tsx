@@ -84,20 +84,15 @@ export default function KidsLandingPageContent() {
               <TimeWidget />
             </GridItem>
 
-            {/* Row 2: The Value - Free + Your Journey */}
+            {/* Row 2: The Value - Free + Journey + Invite + Certificate */}
             <GridItem colSpan={1}>
               <FreeWidget />
             </GridItem>
-            <GridItem colSpan={3}>
+            <GridItem colSpan={1}>
               <ProgressFlowWidget />
             </GridItem>
-
-            {/* Row 3: The Connection - Invite + Certificate */}
             <GridItem colSpan={1}>
               <InviteWidget />
-            </GridItem>
-            <GridItem colSpan={2}>
-              <div></div>
             </GridItem>
             <GridItem colSpan={1}>
               <CredentialPreviewWidget />
