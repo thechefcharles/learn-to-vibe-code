@@ -21,7 +21,7 @@ export function CredentialPreviewWidget() {
 
   const handleShare = () => {
     const message = encodeURIComponent("Learn To Vibe Code With Me");
-    const signupUrl = `https://learntovibecode.io/signup?referral=${message}`;
+    const signupUrl = `https://learntovibecode.io/auth/sign-up?referral=${message}`;
 
     if (navigator.share) {
       navigator.share({

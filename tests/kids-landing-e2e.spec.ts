@@ -277,7 +277,7 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
 
   // ========== FLOATING CTA ==========
   test('floating cta button is visible in top-right', async ({ page }) => {
-    const floatingCTA = page.locator('a[href="/signup"]').filter({ hasText: /Enroll|Free/ }).first();
+    const floatingCTA = page.locator('a[href="/auth/sign-up"]').filter({ hasText: /Enroll|Free/ }).first();
     await expect(floatingCTA).toBeVisible({ timeout: 2000 });
 
     // Verify it's in the top-right corner
@@ -292,7 +292,7 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
   });
 
   test('floating cta button is sticky and remains visible on scroll', async ({ page }) => {
-    const floatingCTA = page.locator('a[href="/signup"]').filter({ hasText: /Enroll|Free/ }).first();
+    const floatingCTA = page.locator('a[href="/auth/sign-up"]').filter({ hasText: /Enroll|Free/ }).first();
     await expect(floatingCTA).toBeVisible({ timeout: 2000 });
 
     const initialBox = await floatingCTA.boundingBox();
@@ -312,14 +312,14 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
   });
 
   test('floating cta button is clickable and links to signup', async ({ page }) => {
-    const floatingCTA = page.locator('a[href="/signup"]').filter({ hasText: /Enroll|Free/ }).first();
+    const floatingCTA = page.locator('a[href="/auth/sign-up"]').filter({ hasText: /Enroll|Free/ }).first();
     const href = await floatingCTA.getAttribute('href');
 
-    expect(href).toBe('/signup');
+    expect(href).toBe('/auth/sign-up');
   });
 
   test('floating cta button has glowing effect', async ({ page }) => {
-    const floatingCTA = page.locator('a[href="/signup"]').filter({ hasText: /Enroll|Free/ }).first();
+    const floatingCTA = page.locator('a[href="/auth/sign-up"]').filter({ hasText: /Enroll|Free/ }).first();
     const style = await floatingCTA.getAttribute('style');
 
     // Verify it has styling or className for effect
@@ -515,7 +515,7 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
     await expect(dashboardContent).toBeVisible({ timeout: 2000 });
 
     // User can interact with CTA
-    const floatingCTA = page.locator('a[href="/signup"]');
+    const floatingCTA = page.locator('a[href="/auth/sign-up"]');
     await expect(floatingCTA).toBeVisible({ timeout: 2000 });
   });
 

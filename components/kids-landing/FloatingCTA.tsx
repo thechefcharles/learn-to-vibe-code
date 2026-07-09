@@ -15,7 +15,7 @@ export function FloatingCTA() {
   });
   const [cursorPos, setCursorPos] = useState(initialPos);
   const [buttonPos, setButtonPos] = useState(initialPos);
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number | undefined>(undefined);
 
   // Avoid hydration mismatch
   useEffect(() => {
@@ -42,7 +42,7 @@ export function FloatingCTA() {
 
         // Only move if cursor is far enough away (to avoid jitter at rest)
         if (distance > 10) {
-          const speed = 0.004; // Extremely slow chase speed
+          const speed = 0.002; // Ultra-slow chase speed (half of previous)
           return {
             x: prev.x + dx * speed,
             y: prev.y + dy * speed,
@@ -79,7 +79,7 @@ export function FloatingCTA() {
       }}
     >
       <Link
-        href="/signup"
+        href="/auth/sign-up"
         data-testid="floating-cta-button"
         className={`
           inline-block px-6 py-3 rounded-lg font-bold text-white

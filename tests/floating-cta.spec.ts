@@ -16,7 +16,7 @@ test.describe('FloatingCTA Component', () => {
   test('button has correct href to signup', async ({ page }) => {
     const cta = page.getByTestId('floating-cta-button');
     const href = await cta.getAttribute('href');
-    expect(href).toBe('/signup');
+    expect(href).toBe('/auth/sign-up');
   });
 
   test('button has gradient background', async ({ page }) => {
