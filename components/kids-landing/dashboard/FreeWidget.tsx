@@ -89,11 +89,13 @@ export function FreeWidget() {
             <motion.div
               animate={{
                 rotateY: rotation,
-                x: selected && !isFlipping ? [0, -4, 4, -4, 4, 0] : 0,
+                x: selected && !isFlipping ? [0, -6, 6, -6, 6, -6, 6, 0] : 0,
+                y: selected && !isFlipping ? [0, -3, 3, -3, 3, -3, 3, 0] : 0,
               }}
               transition={{
                 rotateY: { duration: 1.2, ease: 'easeInOut' },
-                x: { duration: 0.5, repeat: isFlipping ? Infinity : 0 },
+                x: { duration: 0.4, repeat: selected && !isFlipping ? Infinity : 0 },
+                y: { duration: 0.4, repeat: selected && !isFlipping ? Infinity : 0 },
               }}
               className="relative w-40 h-40"
               style={{ perspective: '1200px' }}
@@ -113,6 +115,12 @@ export function FreeWidget() {
                   ) : result ? (
                     <span className="bg-gradient-to-r from-cyan-300 to-purple-400 bg-clip-text text-transparent">
                       {result === 'heads' ? 'H' : 'T'}
+                    </span>
+                  ) : selected ? (
+                    <span className="text-cyan-300 text-lg leading-tight">
+                      flip
+                      <br />
+                      me
                     </span>
                   ) : (
                     <span className="text-gray-400">?</span>
