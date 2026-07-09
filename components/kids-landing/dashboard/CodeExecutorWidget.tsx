@@ -72,27 +72,27 @@ export function CodeExecutorWidget() {
     <div className="flex flex-col h-full gap-3">
       {/* Title */}
       <div className="mb-2">
-        <h3 className="text-sm font-semibold text-white">Code Executor</h3>
-        <p className="text-xs text-gray-400 mt-1">Try live code with presets</p>
+        <h3 className="text-base font-semibold text-white">Code Executor</h3>
+        <p className="text-sm text-gray-400 mt-1">Try live code with presets</p>
       </div>
 
       {/* Preset Buttons */}
       <div className="flex gap-2 flex-wrap">
         <button
           onClick={() => handlePreset(presets.math)}
-          className="px-3 py-1 text-xs font-medium bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/40 text-cyan-300 rounded-lg hover:bg-cyan-500/30 hover:border-cyan-300/60 transition-all"
+          className="px-3 py-1 text-sm font-medium bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/40 text-cyan-300 rounded-lg hover:bg-cyan-500/30 hover:border-cyan-300/60 transition-all"
         >
           Math
         </button>
         <button
           onClick={() => handlePreset(presets.string)}
-          className="px-3 py-1 text-xs font-medium bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/40 text-cyan-300 rounded-lg hover:bg-cyan-500/30 hover:border-cyan-300/60 transition-all"
+          className="px-3 py-1 text-sm font-medium bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/40 text-cyan-300 rounded-lg hover:bg-cyan-500/30 hover:border-cyan-300/60 transition-all"
         >
           String
         </button>
         <button
           onClick={() => handlePreset(presets.greet)}
-          className="px-3 py-1 text-xs font-medium bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/40 text-cyan-300 rounded-lg hover:bg-cyan-500/30 hover:border-cyan-300/60 transition-all"
+          className="px-3 py-1 text-sm font-medium bg-cyan-500/20 backdrop-blur-sm border border-cyan-400/40 text-cyan-300 rounded-lg hover:bg-cyan-500/30 hover:border-cyan-300/60 transition-all"
         >
           Greet
         </button>
@@ -100,11 +100,11 @@ export function CodeExecutorWidget() {
 
       {/* Code Input */}
       <div className="flex-1 flex flex-col">
-        <label className="text-xs font-medium text-gray-300 mb-2">Input:</label>
+        <label className="text-sm font-medium text-gray-300 mb-2">Input:</label>
         <textarea
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          className="flex-1 w-full bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg p-3 text-cyan-300 font-mono text-sm focus:border-cyan-300/80 focus:outline-none resize-none placeholder-gray-400"
+          className="flex-1 w-full bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg p-3 text-cyan-300 font-mono text-base focus:border-cyan-300/80 focus:outline-none resize-none placeholder-gray-400"
           placeholder="Enter JavaScript code..."
           spellCheck="false"
         />
@@ -112,8 +112,8 @@ export function CodeExecutorWidget() {
 
       {/* Output Display */}
       <div className="flex-1 flex flex-col">
-        <label className="text-xs font-medium text-gray-300 mb-2">Output:</label>
-        <div className="flex-1 w-full bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg p-3 font-mono text-sm overflow-auto">
+        <label className="text-sm font-medium text-gray-300 mb-2">Output:</label>
+        <div className="flex-1 w-full bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg p-3 font-mono text-base overflow-auto">
           {isExecuting && <span className="text-gray-500">Executing...</span>}
           {error && <span className="text-red-400">{error}</span>}
           {!error && !isExecuting && output && <span className="text-cyan-300">{output}</span>}

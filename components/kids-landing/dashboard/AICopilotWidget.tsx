@@ -107,7 +107,7 @@ export function AICopilotWidget() {
 
   return (
     <div className="flex flex-col gap-3 h-full">
-      <div className="text-sm text-gray-400 uppercase tracking-wide">🤖 AI Copilot</div>
+      <div className="text-base text-gray-400 uppercase tracking-wide">🤖 AI Copilot</div>
 
       {/* Input Section */}
       <div className="flex gap-2">
@@ -118,13 +118,13 @@ export function AICopilotWidget() {
           onKeyPress={handleKeyPress}
           placeholder="What do you want to build?"
           disabled={isTyping}
-          className="flex-1 px-3 py-2 bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg text-sm text-white placeholder-gray-400 focus:border-cyan-300/80 focus:outline-none transition-colors disabled:opacity-50"
+          className="flex-1 px-3 py-2 bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg text-base text-white placeholder-gray-400 focus:border-cyan-300/80 focus:outline-none transition-colors disabled:opacity-50"
           aria-label="AI suggestion input"
         />
         <button
           onClick={handleSubmit}
           disabled={isTyping || !input.trim()}
-          className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded text-sm font-bold transition-colors"
+          className="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded text-base font-bold transition-colors"
           aria-label="Ask AI for suggestion"
         >
           Ask
@@ -137,7 +137,7 @@ export function AICopilotWidget() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className="flex-1 p-3 bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg text-sm text-gray-300 overflow-y-auto"
+          className="flex-1 p-3 bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg text-base text-gray-300 overflow-y-auto"
         >
           <div className="flex gap-1 items-start">
             <span className="text-cyan-400 flex-shrink-0">→</span>

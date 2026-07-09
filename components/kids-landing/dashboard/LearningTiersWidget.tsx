@@ -23,7 +23,7 @@ export function LearningTiersWidget() {
 
   return (
     <div className="flex flex-col gap-3 h-full">
-      <div className="text-sm text-gray-400 uppercase tracking-wide">4 Learning Tiers</div>
+      <div className="text-base text-gray-400 uppercase tracking-wide">4 Learning Tiers</div>
 
       {/* 2x2 Grid of Tier Cards */}
       <div className="grid grid-cols-2 gap-2 flex-1">
@@ -33,7 +33,7 @@ export function LearningTiersWidget() {
             onClick={() => toggleTier(key)}
             className={`
               p-4 rounded-xl backdrop-blur-lg
-              text-white font-bold text-sm
+              text-white font-bold text-base
               border border-white/30
               hover:shadow-2xl hover:border-white/50 transition-all duration-300
               flex flex-col items-center justify-center

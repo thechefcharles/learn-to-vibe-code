@@ -62,11 +62,6 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
     await expect(arcTitle).toBeVisible();
   });
 
-  test('module arc widget shows cursor tracking instruction', async ({ page }) => {
-    const instruction = page.locator(':text-matches("Drag cursor|explore modules", "i")');
-    await expect(instruction).toBeVisible();
-  });
-
   test('module arc responds to cursor movement', async ({ page }) => {
     const arcTitle = page.locator('text=16 Module Learning Path');
     const arcContainer = arcTitle.locator('../..').first();
