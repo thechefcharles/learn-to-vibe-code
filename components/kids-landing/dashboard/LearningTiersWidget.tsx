@@ -75,17 +75,18 @@ export function LearningTiersWidget() {
 
                 {/* Back of card */}
                 <div
-                  className="absolute inset-0 p-3 rounded-xl backdrop-blur-lg border border-white/30 flex flex-col items-center justify-center bg-white/5 overflow-y-auto"
+                  className="absolute inset-0 p-4 rounded-xl backdrop-blur-lg border border-white/30 bg-white/5 overflow-y-auto flex flex-col justify-start"
                   style={{
                     backfaceVisibility: 'hidden',
                     WebkitBackfaceVisibility: 'hidden',
                     transform: 'rotateY(180deg)',
                   }}
                 >
-                  <div className="text-xs font-semibold text-white text-center space-y-1">
+                  <div className="space-y-2 text-center">
                     {tier.modules.map((modNum) => (
-                      <div key={modNum} className="text-sm leading-tight">
-                        <span className="text-cyan-300 font-bold">{modNum}.</span> {MODULE_NAMES[modNum]}
+                      <div key={modNum} className="text-xs leading-snug">
+                        <span className="text-cyan-300 font-bold text-sm">{modNum}.</span>
+                        <span className="text-white ml-1 text-xs">{MODULE_NAMES[modNum]}</span>
                       </div>
                     ))}
                   </div>
