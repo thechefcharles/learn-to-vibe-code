@@ -47,12 +47,6 @@ export function CredentialPreviewWidget() {
           </div>
           <div className="text-sm text-white/80 mt-3">Certificate of Completion</div>
         </div>
-        <button
-          onClick={handleShare}
-          className="w-full px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 hover:border-white/40 text-white text-base font-semibold rounded-lg transition-all"
-        >
-          {copied ? "Shared!" : "Share Certificate"}
-        </button>
       </div>
     );
   }
@@ -172,38 +166,6 @@ export function CredentialPreviewWidget() {
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Share Button */}
-      <motion.button
-        onClick={handleShare}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className={`w-full px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 backdrop-blur-md border ${
-          copied
-            ? "bg-white/20 border-white/30 hover:bg-white/25 text-white"
-            : "bg-white/10 border-white/20 hover:bg-white/15 hover:border-white/40 text-white shadow-lg hover:shadow-xl"
-        }`}
-      >
-        {copied ? (
-          <motion.span
-            key="copied"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            ✓ Shared
-          </motion.span>
-        ) : (
-          <motion.span
-            key="share"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            Share Certificate
-          </motion.span>
-        )}
-      </motion.button>
     </div>
   );
 }

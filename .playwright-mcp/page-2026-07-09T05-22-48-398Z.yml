@@ -1,0 +1,199 @@
+- generic [ref=f20e1]:
+  - generic [ref=f20e3]:
+    - button "Violet" [ref=f20e4] [cursor=pointer]
+    - button "Sage" [ref=f20e5] [cursor=pointer]
+    - button "Sunset" [ref=f20e6] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=f20e12] [cursor=pointer]:
+    - img [ref=f20e13]
+  - alert [ref=f20e16]
+  - generic [ref=f20e21]:
+    - link "Enroll Free" [ref=f20e24] [cursor=pointer]:
+      - /url: /signup
+    - generic [ref=f20e27]:
+      - generic [ref=f20e29]:
+        - paragraph [ref=f20e30]: "Input:"
+        - generic [ref=f20e31]:
+          - text: greet("
+          - textbox "your name" [ref=f20e33]
+          - text: "\")"
+      - generic [ref=f20e34]:
+        - heading "Welcome, \"Your Name\"" [level=1] [ref=f20e35]:
+          - text: Welcome,
+          - generic [ref=f20e36]: "\"Your Name\""
+        - img "Learn To Vibe Code" [ref=f20e37]
+    - generic [ref=f20e40]:
+      - generic [ref=f20e42]:
+        - heading "16 Modules" [level=3] [ref=f20e44]
+        - generic [ref=f20e46]:
+          - generic [ref=f20e47]:
+            - generic [ref=f20e48]: "0"
+            - generic [ref=f20e49]: Setup
+          - img [ref=f20e50]
+      - generic [ref=f20e55]:
+        - generic [ref=f20e56]: 4 Learning Tiers
+        - generic [ref=f20e58]:
+          - generic [ref=f20e60] [cursor=pointer]:
+            - generic [ref=f20e61]:
+              - generic [ref=f20e62]: Foundations
+              - generic [ref=f20e63]: 4 modules
+            - generic [ref=f20e65]:
+              - generic [ref=f20e66]:
+                - generic [ref=f20e67]: "0."
+                - text: Setup & Tools
+              - generic [ref=f20e68]:
+                - generic [ref=f20e69]: "1."
+                - text: HTML Basics
+              - generic [ref=f20e70]:
+                - generic [ref=f20e71]: "2."
+                - text: CSS Fundamentals
+              - generic [ref=f20e72]:
+                - generic [ref=f20e73]: "3."
+                - text: JavaScript Intro
+          - generic [ref=f20e75] [cursor=pointer]:
+            - generic [ref=f20e76]:
+              - generic [ref=f20e77]: Building
+              - generic [ref=f20e78]: 6 modules
+            - generic [ref=f20e80]:
+              - generic [ref=f20e81]:
+                - generic [ref=f20e82]: "4."
+                - text: React Basics
+              - generic [ref=f20e83]:
+                - generic [ref=f20e84]: "5."
+                - text: Components & State
+              - generic [ref=f20e85]:
+                - generic [ref=f20e86]: "6."
+                - text: Design & UX
+              - generic [ref=f20e87]:
+                - generic [ref=f20e88]: "7."
+                - text: Databases
+              - generic [ref=f20e89]:
+                - generic [ref=f20e90]: "8."
+                - text: Full Stack
+              - generic [ref=f20e91]:
+                - generic [ref=f20e92]: "9."
+                - text: APIs & Integration
+          - generic [ref=f20e94] [cursor=pointer]:
+            - generic [ref=f20e95]:
+              - generic [ref=f20e96]: Production
+              - generic [ref=f20e97]: 3 modules
+            - generic [ref=f20e99]:
+              - generic [ref=f20e100]:
+                - generic [ref=f20e101]: "10."
+                - text: Deployment
+              - generic [ref=f20e102]:
+                - generic [ref=f20e103]: "11."
+                - text: Security & Auth
+              - generic [ref=f20e104]:
+                - generic [ref=f20e105]: "12."
+                - text: Production Ready
+          - generic [ref=f20e107] [cursor=pointer]:
+            - generic [ref=f20e108]:
+              - generic [ref=f20e109]: Landscape
+              - generic [ref=f20e110]: 3 modules
+            - generic [ref=f20e112]:
+              - generic [ref=f20e113]:
+                - generic [ref=f20e114]: "13."
+                - text: Testing
+              - generic [ref=f20e115]:
+                - generic [ref=f20e116]: "14."
+                - text: Frameworks
+              - generic [ref=f20e117]:
+                - generic [ref=f20e118]: "15."
+                - text: Future of Coding
+      - generic [ref=f20e120]:
+        - heading "Course Duration" [level=3] [ref=f20e121]
+        - generic [ref=f20e122] [cursor=pointer]:
+          - img [ref=f20e123]
+          - generic:
+            - generic: "92"
+            - generic: /93h
+        - paragraph [ref=f20e132]: 93 hours of hands-on learning
+      - generic [ref=f20e134]:
+        - heading "It's Free!" [level=3] [ref=f20e135]
+        - generic [ref=f20e136]:
+          - button "Heads" [active] [ref=f20e137]
+          - button "Tails" [ref=f20e138]
+        - button "flip me" [ref=f20e139] [cursor=pointer]:
+          - generic [ref=f20e145]:
+            - text: flip
+            - text: me
+      - generic [ref=f20e147]:
+        - heading "Your Learning Journey" [level=2] [ref=f20e148]
+        - generic [ref=f20e150]:
+          - generic [ref=f20e151]:
+            - generic [ref=f20e153]: →
+            - button "1" [ref=f20e154] [cursor=pointer]:
+              - generic [ref=f20e157]: "1"
+            - paragraph [ref=f20e159]: Module
+            - generic:
+              - paragraph: Module
+              - paragraph: Access course content and learning materials
+          - generic [ref=f20e160]:
+            - generic [ref=f20e162]: →
+            - button "2" [ref=f20e163] [cursor=pointer]:
+              - generic [ref=f20e166]: "2"
+            - paragraph [ref=f20e168]: Quiz
+            - generic:
+              - paragraph: Quiz
+              - paragraph: Take the module assessment and demonstrate knowledge
+          - generic [ref=f20e169]:
+            - generic [ref=f20e171]: →
+            - button "3" [ref=f20e172] [cursor=pointer]:
+              - generic [ref=f20e175]: "3"
+            - paragraph [ref=f20e177]: Pass (80%)
+            - generic:
+              - paragraph: Pass (80%)
+              - paragraph: Achieve 80% or higher score to pass and earn XP
+          - generic [ref=f20e178]:
+            - generic [ref=f20e180]: →
+            - button "4" [ref=f20e181] [cursor=pointer]:
+              - generic [ref=f20e184]: "4"
+            - paragraph [ref=f20e186]: Unlock Next
+            - generic:
+              - paragraph: Unlock Next
+              - paragraph: Submit deliverable to unlock the next module
+          - generic [ref=f20e187]:
+            - generic [ref=f20e189]: →
+            - button "5" [ref=f20e190] [cursor=pointer]:
+              - generic [ref=f20e193]: "5"
+            - paragraph [ref=f20e195]: Capstone
+            - generic:
+              - paragraph: Capstone
+              - paragraph: After Module 15, access the capstone project challenge
+          - generic [ref=f20e196]:
+            - button "6" [ref=f20e197] [cursor=pointer]:
+              - generic [ref=f20e200]: "6"
+            - paragraph [ref=f20e202]: Certificate
+            - generic:
+              - paragraph: Certificate
+              - paragraph: Earn your verifiable completion certificate and 9.3 CEUs
+        - generic [ref=f20e203]:
+          - generic [ref=f20e204]: ← Drag to explore
+          - generic [ref=f20e205]: →
+      - generic [ref=f20e207]:
+        - generic [ref=f20e209] [cursor=pointer]:
+          - generic [ref=f20e215]:
+            - generic [ref=f20e216]: Learn To Vibe Code
+            - generic [ref=f20e217]: Certificate of Completion
+          - generic [ref=f20e223]:
+            - generic [ref=f20e224]:
+              - generic [ref=f20e225]: CREDENTIAL ID
+              - generic [ref=f20e226]: VBC-2026-00547
+            - generic [ref=f20e228]:
+              - generic [ref=f20e229]: ISSUED
+              - generic [ref=f20e230]: July 9, 2026
+            - generic [ref=f20e232]:
+              - generic [ref=f20e233]: VERIFY
+              - link "learntovibecode.io/verify" [ref=f20e234]:
+                - /url: https://learntovibecode.io/verify/VBC-2026-00547
+        - button "Share Certificate" [ref=f20e235]
+    - contentinfo [ref=f20e237]:
+      - generic [ref=f20e238]:
+        - paragraph [ref=f20e239]: © 2026 Vibe Coding. Learn to code with AI. Ship real apps.
+        - generic [ref=f20e240]:
+          - link "Demo" [ref=f20e241] [cursor=pointer]:
+            - /url: /demo
+          - link "About" [ref=f20e242] [cursor=pointer]:
+            - /url: /about
+          - link "Support" [ref=f20e243] [cursor=pointer]:
+            - /url: /support

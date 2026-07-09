@@ -6,6 +6,7 @@ import { ModuleArcWidget } from '@/components/kids-landing/dashboard/ModuleArcWi
 import { LearningTiersWidget } from '@/components/kids-landing/dashboard/LearningTiersWidget';
 import { TimeWidget } from '@/components/kids-landing/dashboard/TimeWidget';
 import { FreeWidget } from '@/components/kids-landing/dashboard/FreeWidget';
+import { InviteWidget } from '@/components/kids-landing/dashboard/InviteWidget';
 import { ProgressFlowWidget } from '@/components/ProgressFlowWidget';
 import { CredentialPreviewWidget } from '@/components/CredentialPreviewWidget';
 import { FloatingCTA } from '@/components/kids-landing/FloatingCTA';
@@ -91,12 +92,15 @@ export default function KidsLandingPageContent() {
               <ProgressFlowWidget />
             </GridItem>
 
-            {/* Row 3: The Reward - Certificate */}
+            {/* Row 3: The Connection - Invite + Certificate */}
+            <GridItem colSpan={1}>
+              <InviteWidget />
+            </GridItem>
+            <GridItem colSpan={2}>
+              <div></div>
+            </GridItem>
             <GridItem colSpan={1}>
               <CredentialPreviewWidget />
-            </GridItem>
-            <GridItem colSpan={3}>
-              <div></div>
             </GridItem>
           </DashboardGrid>
         </div>
