@@ -5,9 +5,9 @@ import { motion } from 'framer-motion';
 
 export function InviteWidget() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
   const [scratchPercentage, setScratchPercentage] = useState(0);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const shareUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/landing-kids`
@@ -20,36 +20,31 @@ export function InviteWidget() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set canvas size to match container
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (rect) {
-      canvas.width = rect.width;
-      canvas.height = rect.height;
-    }
+    canvas.width = 240;
+    canvas.height = 80;
 
-    // Create scratch overlay with tie-dye inspired texture
+    // Create tie-dye gradient for scratch box
     const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
     gradient.addColorStop(0, '#a78bfa');
-    gradient.addColorStop(0.25, '#ec4899');
-    gradient.addColorStop(0.5, '#06b6d4');
-    gradient.addColorStop(0.75, '#a78bfa');
-    gradient.addColorStop(1, '#ec4899');
+    gradient.addColorStop(0.33, '#ec4899');
+    gradient.addColorStop(0.66, '#06b6d4');
+    gradient.addColorStop(1, '#a78bfa');
 
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Add some noise/texture
+    // Add texture
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
     for (let i = 0; i < data.length; i += 4) {
-      const noise = Math.random() * 20;
+      const noise = Math.random() * 15;
       data[i + 3] = Math.max(0, data[i + 3] - noise);
     }
     ctx.putImageData(imageData, 0, 0);
 
-    // Add text overlay
+    // Add text
     ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-    ctx.font = 'bold 24px sans-serif';
+    ctx.font = 'bold 16px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText('scratch to reveal', canvas.width / 2, canvas.height / 2);
@@ -73,8 +68,8 @@ export function InviteWidget() {
       y = e.clientY - rect.top;
     }
 
-    // Scratch with larger brush
-    ctx.clearRect(x - 20, y - 20, 40, 40);
+    // Scratch with brush
+    ctx.clearRect(x - 18, y - 18, 36, 36);
 
     // Calculate scratch percentage
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
@@ -87,85 +82,60 @@ export function InviteWidget() {
     setScratchPercentage(percentage);
   };
 
-  const handleMouseDown = () => setIsDrawing(true);
-  const handleMouseUp = () => setIsDrawing(false);
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  const isRevealed = scratchPercentage > 50;
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-      {/* Container with tie-dye background */}
-      <div
-        ref={containerRef}
-        className="relative w-full h-full flex items-center justify-center overflow-hidden rounded-2xl"
-        style={{
-          background: 'linear-gradient(135deg, #a78bfa 0%, #ec4899 25%, #06b6d4 50%, #a78bfa 75%, #ec4899 100%)',
-          backgroundSize: '400% 400%',
-        }}
-      >
-        {/* Tie-dye animated background */}
-        <motion.div
-          animate={{
-            backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(135deg, #a78bfa 0%, #ec4899 25%, #06b6d4 50%, #a78bfa 75%, #ec4899 100%)',
-            backgroundSize: '400% 400%',
-          }}
-        />
+    <div className="flex flex-col items-center justify-center h-full gap-6">
+      {/* Title */}
+      <h3 className="text-base font-semibold text-white uppercase tracking-wide">
+        share the vibe
+      </h3>
 
-        {/* Share link content underneath */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center z-0 p-6">
-          <p className="text-sm text-white/60 mb-3">your share link:</p>
-          <p className="text-xs font-mono text-white/80 text-center break-all px-2">{shareUrl}</p>
-          <motion.p
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="mt-4 text-lg font-bold text-white"
-          >
-            share the vibe
-          </motion.p>
-        </div>
-
-        {/* Scratch-off canvas overlay */}
+      {/* Scratch box container */}
+      <div className="relative">
+        {/* Scratch canvas */}
         <canvas
           ref={canvasRef}
-          onMouseDown={handleMouseDown}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
+          onMouseDown={() => setIsDrawing(true)}
+          onMouseUp={() => setIsDrawing(false)}
+          onMouseLeave={() => setIsDrawing(false)}
           onMouseMove={handleScratch}
-          onTouchStart={handleMouseDown}
-          onTouchEnd={handleMouseUp}
+          onTouchStart={() => setIsDrawing(true)}
+          onTouchEnd={() => setIsDrawing(false)}
           onTouchMove={handleScratch}
-          className="absolute inset-0 cursor-pointer z-10"
-          style={{ cursor: isDrawing ? 'grabbing' : 'grab' }}
+          className="rounded-lg transition-all"
+          style={{ cursor: isDrawing ? 'grabbing' : isRevealed ? 'pointer' : 'grab' }}
         />
 
-        {/* Scratch progress indicator */}
-        {scratchPercentage > 0 && scratchPercentage < 100 && (
+        {/* Revealed content - link + copy button */}
+        {isRevealed && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs text-white/60 z-20"
+            className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm p-4"
           >
-            {Math.round(scratchPercentage)}% scratched
-          </motion.div>
-        )}
+            <p className="text-xs text-white/60 text-center break-all font-mono">
+              {shareUrl}
+            </p>
 
-        {/* Reveal celebration */}
-        {scratchPercentage > 60 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none"
-          >
-            <motion.div
-              animate={{ scale: [0.8, 1.2, 0.8], rotate: [0, 360, 0] }}
-              transition={{ duration: 1 }}
-              className="text-4xl"
+            <motion.button
+              onClick={handleCopyLink}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-400/30 to-purple-500/30 border border-cyan-400/60 text-white font-semibold text-xs hover:border-cyan-300/100 hover:shadow-lg hover:shadow-cyan-400/50 transition-all"
             >
-              ✨
-            </motion.div>
+              {copied ? '✨ Link copied' : 'Copy link'}
+            </motion.button>
           </motion.div>
         )}
       </div>
