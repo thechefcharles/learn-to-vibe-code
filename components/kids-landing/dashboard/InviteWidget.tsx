@@ -50,7 +50,7 @@ export function InviteWidget() {
 
   const handleScratch = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
     const canvas = canvasRef.current;
-    if (!canvas || !isDrawing) return;
+    if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
@@ -104,15 +104,14 @@ export function InviteWidget() {
         {/* Scratch canvas */}
         <canvas
           ref={canvasRef}
-          onMouseDown={() => setIsDrawing(true)}
-          onMouseUp={() => setIsDrawing(false)}
+          onMouseEnter={() => setIsDrawing(true)}
           onMouseLeave={() => setIsDrawing(false)}
           onMouseMove={handleScratch}
           onTouchStart={() => setIsDrawing(true)}
           onTouchEnd={() => setIsDrawing(false)}
           onTouchMove={handleScratch}
           className="rounded-lg transition-all"
-          style={{ cursor: isDrawing ? 'grabbing' : isRevealed ? 'pointer' : 'grab' }}
+          style={{ cursor: isRevealed ? 'pointer' : 'crosshair' }}
         />
 
         {/* Revealed content - link + copy button */}
