@@ -23,8 +23,11 @@ export function FloatingCTA() {
     setMounted(true);
   }, []);
 
-  // Track cursor position
+  // Track cursor position (desktop only)
   useEffect(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+    if (isMobile) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       setCursorPos({ x: e.clientX, y: e.clientY });
     };
@@ -33,8 +36,11 @@ export function FloatingCTA() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Smoothly move button towards cursor
+  // Smoothly move button towards cursor (desktop only)
   useEffect(() => {
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+    if (isMobile) return;
+
     const animate = () => {
       setButtonPos(prev => {
         const dx = cursorPos.x - prev.x;
