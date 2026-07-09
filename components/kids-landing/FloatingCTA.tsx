@@ -9,7 +9,8 @@ export function FloatingCTA() {
   const [mounted, setMounted] = useState(false);
   const [initialPos] = useState(() => {
     if (typeof window !== 'undefined') {
-      return { x: window.innerWidth - 80, y: 40 };
+      const isMobile = window.innerWidth < 640;
+      return { x: isMobile ? window.innerWidth - 60 : window.innerWidth - 80, y: 40 };
     }
     return { x: 0, y: 40 };
   });
@@ -84,7 +85,7 @@ export function FloatingCTA() {
         className={`
           inline-block px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-bold text-sm sm:text-base text-white
           bg-gradient-to-r from-cyan-500 to-purple-600
-          border border-cyan-400 shadow-lg
+          border border-cyan-400 shadow-lg whitespace-nowrap
           ${!prefersReducedMotion ? 'hover:scale-105 active:scale-95 transition-transform duration-300 animate-pulse' : ''}
           focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950
         `}
