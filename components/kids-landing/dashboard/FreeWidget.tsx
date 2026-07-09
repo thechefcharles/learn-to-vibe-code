@@ -51,7 +51,7 @@ export function FreeWidget() {
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <h3 className="text-base font-semibold text-white uppercase tracking-wide mb-6">
+      <h3 className="text-lg font-semibold text-white uppercase tracking-wide mb-6">
         is it free?
       </h3>
 

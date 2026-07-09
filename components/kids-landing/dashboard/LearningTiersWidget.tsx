@@ -39,7 +39,7 @@ export function LearningTiersWidget() {
   return (
     <div className="flex flex-col h-full w-full">
       {/* Centered heading */}
-      <div className="text-center text-base text-gray-400 uppercase tracking-wide mb-4">
+      <div className="text-center text-lg text-gray-400 uppercase tracking-wide mb-4">
         4 Learning Tiers
       </div>
 

@@ -95,7 +95,7 @@ export function InviteWidget() {
   return (
     <div className="flex flex-col items-center justify-center h-full gap-6">
       {/* Title */}
-      <h3 className="text-base font-semibold text-white uppercase tracking-wide">
+      <h3 className="text-lg font-semibold text-white uppercase tracking-wide">
         share the vibe
       </h3>
 

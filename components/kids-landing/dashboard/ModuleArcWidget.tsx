@@ -7,7 +7,7 @@ export function ModuleArcWidget() {
     <div className="flex flex-col items-center justify-start h-full w-full overflow-visible">
       {/* Title at top with spacing */}
       <div className="pt-1 pb-6">
-        <h3 className="text-xs font-semibold text-white uppercase tracking-wide">16 Modules</h3>
+        <h3 className="text-lg font-semibold text-white uppercase tracking-wide">16 Modules</h3>
       </div>
 
       {/* Arc Container - pushed down, centered horizontally */}
