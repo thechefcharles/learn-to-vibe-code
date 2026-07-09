@@ -48,24 +48,16 @@ export default async function Image() {
             zIndex: 1,
           }}
         >
-          {/* Logo placeholder with cosmic colors */}
-          <div
+          {/* Branded Logo */}
+          <img
+            src="https://www.learntovibecode.io/favicon.png"
+            alt="Learn to Vibe Code Logo"
             style={{
-              width: '120px',
-              height: '120px',
-              background: 'linear-gradient(135deg, #06B6D4 0%, #A78BFA 50%, #EC4899 100%)',
-              borderRadius: '50%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '60px',
-              fontWeight: 'bold',
-              color: 'white',
-              boxShadow: '0 0 40px rgba(6, 182, 212, 0.5)',
+              width: '140px',
+              height: '140px',
+              filter: 'drop-shadow(0 0 30px rgba(6, 182, 212, 0.4))',
             }}
-          >
-            V
-          </div>
+          />
 
           {/* Main title */}
           <div

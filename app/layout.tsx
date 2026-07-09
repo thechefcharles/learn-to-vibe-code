@@ -26,6 +26,9 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Learn To Vibe Code",
   description: "Master AI-powered full-stack development. Free, accredited, gamified.",
+  icons: {
+    icon: "/favicon.png",
+  },
   openGraph: {
     title: "Learn to Vibe Code",
     description: "Free Vibe Coding Course",
