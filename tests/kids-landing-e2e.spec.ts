@@ -72,14 +72,14 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
 
   // ========== LEARNING TIERS WIDGET ==========
   test('learning tiers widget displays all 4 tiers', async ({ page }) => {
-    const tiersTitle = page.locator(':text("4 Learning Tiers")');
+    const tiersTitle = page.locator('text=4 Learning Tiers');
     await expect(tiersTitle).toBeVisible();
 
     // Check for tier cards with gradient backgrounds
-    const foundationsTier = page.locator('button:has-text("Foundations")');
-    const buildingTier = page.locator('button:has-text("Building")');
-    const productionTier = page.locator('button:has-text("Production")');
-    const landscapeTier = page.locator('button:has-text("Landscape")');
+    const foundationsTier = page.locator('text=Foundations').first();
+    const buildingTier = page.locator('text=Building').first();
+    const productionTier = page.locator('text=Production').first();
+    const landscapeTier = page.locator('text=Landscape').first();
 
     await expect(foundationsTier).toBeVisible();
     await expect(buildingTier).toBeVisible();
@@ -92,9 +92,9 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
     await expect(moduleCount).toBeVisible();
   });
 
-  test('learning tiers cards flip to show modules on hover/click', async ({ page }) => {
-    const foundationsTier = page.locator('button:has-text("Foundations")');
-    await foundationsTier.click();
+  test('learning tiers cards flip to show modules on hover', async ({ page }) => {
+    const foundationsTier = page.locator('text=Foundations').first().locator('..');
+    await foundationsTier.hover();
 
     // Wait for flip animation and verify module names appear
     await page.waitForTimeout(700);
@@ -102,28 +102,28 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
     await expect(setupModule).toBeVisible({ timeout: 500 });
   });
 
-  test('learning tiers card flips back when clicked again', async ({ page }) => {
-    const foundationsTier = page.locator('button:has-text("Foundations")');
+  test('learning tiers card flips back when hover leaves', async ({ page }) => {
+    const foundationsTier = page.locator('text=Foundations').first().locator('..');
 
-    // Flip to show modules
-    await foundationsTier.click();
+    // Hover to flip
+    await foundationsTier.hover();
     await page.waitForTimeout(700);
     const setupModule = page.locator(':text("Setup & Tools")');
     await expect(setupModule).toBeVisible();
 
-    // Flip back
-    await foundationsTier.click();
+    // Move away to flip back
+    await page.mouse.move(0, 0);
     await page.waitForTimeout(800);
     // Card should show front text again
-    const foundationsText = page.locator('button:has-text("Foundations")');
+    const foundationsText = page.locator('text=Foundations').first();
     await expect(foundationsText).toBeVisible();
   });
 
   test('learning tiers displays all four tier cards centered', async ({ page }) => {
-    const foundationsTier = page.locator('button:has-text("Foundations")');
-    const buildingTier = page.locator('button:has-text("Building")');
-    const productionTier = page.locator('button:has-text("Production")');
-    const landscapeTier = page.locator('button:has-text("Landscape")');
+    const foundationsTier = page.locator('text=Foundations').first();
+    const buildingTier = page.locator('text=Building').first();
+    const productionTier = page.locator('text=Production').first();
+    const landscapeTier = page.locator('text=Landscape').first();
 
     await expect(foundationsTier).toBeVisible();
     await expect(buildingTier).toBeVisible();
@@ -546,20 +546,17 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
   });
 
   test('interactive elements have visual feedback on hover', async ({ page }) => {
-    const tierButton = page.locator('button:has-text("Foundations")');
+    const tierCard = page.locator('text=Foundations').first().locator('..');
 
-    // Get initial style
-    const initialStyle = await tierButton.evaluate((el) => window.getComputedStyle(el).transform);
+    // Hover over the card
+    await tierCard.hover();
+    await page.waitForTimeout(700);
 
-    // Hover
-    await tierButton.hover();
-    await page.waitForTimeout(100);
-
-    // Get hovered style (may have transform or other changes)
-    const hoveredStyle = await tierButton.evaluate((el) => window.getComputedStyle(el).transform);
+    // Verify module text appears on hover (flip animation)
+    const setupModule = page.locator(':text("Setup & Tools")');
+    await expect(setupModule).toBeVisible({ timeout: 500 });
 
     console.log('Hover feedback working');
     // Visual feedback verified
-    expect(true).toBe(true);
   });
 });

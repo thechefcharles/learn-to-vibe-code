@@ -36,65 +36,62 @@ export function LearningTiersWidget() {
 
   const mainTiers = Object.entries(MODULE_TIERS).filter(([key]) => key !== 'capstone');
 
-  const toggleFlip = (tierKey: string) => {
-    setFlipped(prev => ({ ...prev, [tierKey]: !prev[tierKey] }));
-  };
-
   return (
-    <div className="flex flex-col gap-3 h-full">
-      <div className="text-base text-gray-400 uppercase tracking-wide">4 Learning Tiers</div>
+    <div className="flex flex-col h-full w-full">
+      {/* Centered heading */}
+      <div className="text-center text-base text-gray-400 uppercase tracking-wide mb-4">
+        4 Learning Tiers
+      </div>
 
       {/* Centered 2x2 Grid of Flip Cards */}
       <div className="flex-1 flex items-center justify-center">
-        <div className="grid grid-cols-2 gap-3 w-full max-w-xs">
+        <div className="grid grid-cols-2 gap-4 w-full max-w-xs h-full">
           {mainTiers.map(([key, tier]) => (
-            <motion.button
+            <motion.div
               key={key}
-              onClick={() => toggleFlip(key)}
-              className="h-32 cursor-pointer focus:outline-none"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              onMouseEnter={() => setFlipped(prev => ({ ...prev, [key]: true }))}
+              onMouseLeave={() => setFlipped(prev => ({ ...prev, [key]: false }))}
+              className="relative h-40 cursor-pointer"
+              style={{ perspective: '1200px' }}
             >
               <motion.div
                 animate={{ rotateY: flipped[key] ? 180 : 0 }}
                 transition={{ duration: 0.6, ease: 'easeInOut' }}
                 className="w-full h-full relative"
-                style={{ perspective: '1000px' }}
+                style={{ transformStyle: 'preserve-3d' }}
               >
                 {/* Front of card */}
-                <motion.div
-                  className="absolute inset-0 p-4 rounded-xl backdrop-blur-lg border border-white/30 flex flex-col items-center justify-center text-white font-bold backface-hidden"
+                <div
+                  className="absolute inset-0 p-4 rounded-xl backdrop-blur-lg border border-white/30 flex flex-col items-center justify-center text-white font-bold"
                   style={{
                     ...TIER_COLORS[key].style,
                     backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
                   }}
-                  animate={{ opacity: flipped[key] ? 0 : 1 }}
-                  transition={{ duration: 0.3 }}
                 >
                   <div className="text-center text-base">{tier.name}</div>
                   <div className="text-xs opacity-80 mt-1">{tier.modules.length} modules</div>
-                </motion.div>
+                </div>
 
                 {/* Back of card */}
-                <motion.div
-                  className="absolute inset-0 p-3 rounded-xl backdrop-blur-lg border border-white/30 flex flex-col items-center justify-center bg-white/5 backface-hidden"
+                <div
+                  className="absolute inset-0 p-3 rounded-xl backdrop-blur-lg border border-white/30 flex flex-col items-center justify-center bg-white/5 overflow-y-auto"
                   style={{
                     backfaceVisibility: 'hidden',
+                    WebkitBackfaceVisibility: 'hidden',
                     transform: 'rotateY(180deg)',
                   }}
-                  animate={{ opacity: flipped[key] ? 1 : 0 }}
-                  transition={{ duration: 0.3 }}
                 >
-                  <div className="text-xs font-semibold text-white text-center overflow-y-auto max-h-full">
+                  <div className="text-xs font-semibold text-white text-center space-y-1">
                     {tier.modules.map((modNum) => (
-                      <div key={modNum} className="mb-1.5 text-sm">
+                      <div key={modNum} className="text-sm leading-tight">
                         {MODULE_NAMES[modNum]}
                       </div>
                     ))}
                   </div>
-                </motion.div>
+                </div>
               </motion.div>
-            </motion.button>
+            </motion.div>
           ))}
         </div>
       </div>
