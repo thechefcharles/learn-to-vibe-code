@@ -1,0 +1,30 @@
+<svg width="100%" viewBox="0 0 600 200" role="img" xmlns="http://www.w3.org/2000/svg" style="">
+<title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Learn To Vibe Code — cosmic wordmark, transparent</title>
+<desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">A glowing soundwave mark in a frosted glass tile beside the wordmark Learn To Vibe Code in a cyan to magenta gradient on a transparent background.</desc>
+
+<defs>
+<radialGradient id="glowWT" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="#E23FA6" stop-opacity="0.32"/>
+<stop offset="100%" stop-color="#E23FA6" stop-opacity="0"/>
+</radialGradient>
+<linearGradient id="barsWT" gradientUnits="userSpaceOnUse" x1="87" y1="0" x2="173" y2="0">
+<stop offset="0%" stop-color="#22D3EE"/>
+<stop offset="55%" stop-color="#8B5CF6"/>
+<stop offset="100%" stop-color="#EC4899"/>
+</linearGradient>
+<linearGradient id="textWT" gradientUnits="userSpaceOnUse" x1="228" y1="0" x2="470" y2="0">
+<stop offset="0%" stop-color="#38D6F0"/>
+<stop offset="50%" stop-color="#9B7BF0"/>
+<stop offset="100%" stop-color="#F05CB0"/>
+</linearGradient>
+</defs>
+<ellipse cx="130" cy="110" rx="150" ry="95" fill="url(#glowWT)" style="stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<rect x="70" y="50" width="120" height="120" rx="24" fill="#FFFFFF" fill-opacity="0.10" stroke="#FFFFFF" stroke-opacity="0.30" stroke-width="1" style="fill:rgb(255, 255, 255);stroke:rgb(255, 255, 255);color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<rect x="87" y="124" width="10" height="26" rx="5" fill="url(#barsWT)" style="stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<rect x="106" y="108" width="10" height="42" rx="5" fill="url(#barsWT)" style="stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<rect x="125" y="88" width="10" height="62" rx="5" fill="url(#barsWT)" style="stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<rect x="144" y="112" width="10" height="38" rx="5" fill="url(#barsWT)" style="stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<rect x="163" y="78" width="10" height="72" rx="5" fill="url(#barsWT)" style="stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+<text x="230" y="98" font-family="'Inter', system-ui, sans-serif" font-size="16" font-weight="500" letter-spacing="5" fill="#38D6F0" style="fill:rgb(56, 214, 240);stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:Inter, system-ui, sans-serif;font-size:16px;font-weight:500;text-anchor:start;dominant-baseline:auto">LEARN TO</text>
+<text x="228" y="146" font-family="'Space Grotesk', system-ui, sans-serif" font-size="46" font-weight="700" fill="url(#textWT)" style="stroke:none;color:rgb(11, 11, 11);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Space Grotesk&quot;, system-ui, sans-serif;font-size:46px;font-weight:700;text-anchor:start;dominant-baseline:auto">Vibe Code</text>
+</svg>

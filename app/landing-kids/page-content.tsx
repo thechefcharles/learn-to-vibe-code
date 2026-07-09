@@ -46,32 +46,22 @@ export default function KidsLandingPageContent() {
               </div>
             </div>
 
-            {/* Center-Right: Greeting Display */}
+            {/* Center-Right: Greeting + Logo */}
             <div className="md:col-span-3">
-              <div className="mb-3 flex justify-center md:justify-start scale-75 md:scale-100">
-                <Logo variant="cosmic-mark" size="lg" />
-              </div>
-
               {/* Welcome greeting - ALWAYS visible */}
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-2">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
                 <span className="text-white">Welcome, </span>
                 <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                   "{userName || 'your name'}"
                 </span>
               </h1>
 
-              {/* Learn To Vibe Code - Below greeting */}
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-                  to learn to vibe code
-                </span>
-              </h2>
-
-              <div className="text-xs sm:text-sm text-gray-300 mt-4">
-                <div className="font-medium">
-                  16 Modules • 93 Hours • Free • Self-Paced • Accredited
-                </div>
-              </div>
+              {/* Cosmic Wordmark Logo */}
+              <img
+                src="/learn_to_vibe_code_logo_cosmic_wordmark_transparent.svg"
+                alt="Learn To Vibe Code"
+                className="h-24 sm:h-32 md:h-40 lg:h-48 w-auto"
+              />
             </div>
           </div>
         </div>
