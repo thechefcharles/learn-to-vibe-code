@@ -1,0 +1,11 @@
+- generic [active] [ref=f32e1]:
+  - generic [ref=f32e3]:
+    - button "Violet" [ref=f32e4] [cursor=pointer]
+    - button "Sage" [ref=f32e5] [cursor=pointer]
+    - button "Sunset" [ref=f32e6] [cursor=pointer]
+  - generic [ref=f32e10]:
+    - generic [ref=f32e11]: 🌀
+    - paragraph [ref=f32e12]: Loading...
+  - button "Open Next.js Dev Tools" [ref=f32e18] [cursor=pointer]:
+    - img [ref=f32e19]
+  - alert [ref=f32e22]

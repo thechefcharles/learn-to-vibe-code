@@ -31,21 +31,21 @@ export default function KidsLandingPageContent() {
       <FloatingCTA />
 
       {/* ============ FLOATING LOGO (TOP-LEFT) ============ */}
-      <div className="fixed top-16 left-5 z-40">
+      <div className="fixed top-8 left-3 z-40">
         <img
           src="/learn_to_vibe_code_logo_cosmic_wordmark_transparent.svg"
           alt="Learn To Vibe Code"
-          className="h-20 sm:h-24 lg:h-28 w-auto"
+          className="h-14 sm:h-16 lg:h-20 w-auto"
         />
       </div>
 
       {/* ============ DASHBOARD GRID ============ */}
-      <section className="py-4 sm:py-8 px-4 relative z-10">
+      <section className="py-2 sm:py-4 px-3 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Gleaming Headline */}
-          <div className="text-center mb-6 sm:mb-8">
+          <div className="text-center mb-3 sm:mb-4">
             <h2
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-wider"
+              className="text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-wider"
               style={{
                 background: 'linear-gradient(90deg, #06b6d4 0%, #a78bfa 50%, #ec4899 100%)',
                 backgroundClip: 'text',
@@ -94,7 +94,7 @@ export default function KidsLandingPageContent() {
       </section>
 
       {/* ============ FOOTER ============ */}
-      <footer className="border-t border-slate-800 py-2 px-4 mt-2">
+      <footer className="border-t border-slate-800 py-1 px-2 mt-1">
         <div className="max-w-7xl mx-auto text-center text-xs text-gray-500">
           <p>© 2026 Vibe Coding. Learn to code with AI. Ship real apps.</p>
           <div className="flex gap-4 justify-center mt-1">

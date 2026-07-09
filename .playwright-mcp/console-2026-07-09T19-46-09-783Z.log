@@ -1,0 +1,2 @@
+[   35148ms] TypeError: this.accordionItems[this.currentTimerIndex].setProgress is not a function
+    at o.updateTimer (https://workspace.google.com/assets/-8tDCob-.min.js:1:2121)

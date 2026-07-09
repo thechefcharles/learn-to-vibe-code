@@ -1,0 +1,196 @@
+- generic [active] [ref=f34e1]:
+  - generic [ref=f34e3]:
+    - button "Violet" [ref=f34e4] [cursor=pointer]
+    - button "Sage" [ref=f34e5] [cursor=pointer]
+    - button "Sunset" [ref=f34e6] [cursor=pointer]
+  - generic [ref=f34e9]:
+    - link "Enroll Free" [ref=f34e12] [cursor=pointer]:
+      - /url: /signup
+    - img "Learn To Vibe Code" [ref=f34e14]
+    - generic:
+      - heading "Welcome, \"Your Name\"" [level=1]
+    - generic [ref=f34e17]:
+      - generic [ref=f34e19]:
+        - heading "16 Modules" [level=3] [ref=f34e21] [cursor=pointer]
+        - generic [ref=f34e23]:
+          - generic [ref=f34e24]:
+            - generic [ref=f34e25]: "0"
+            - generic [ref=f34e26]: Setup
+          - img [ref=f34e27]
+        - generic [ref=f34e32]:
+          - paragraph [ref=f34e33]: "Input:"
+          - generic [ref=f34e34]:
+            - text: greet("
+            - textbox "your name" [ref=f34e36]
+            - text: "\")"
+      - generic [ref=f34e38]:
+        - generic [ref=f34e39] [cursor=pointer]: 4 Learning Tiers
+        - generic [ref=f34e41]:
+          - generic [ref=f34e43] [cursor=pointer]:
+            - generic [ref=f34e44]:
+              - generic [ref=f34e45]: Foundations
+              - generic [ref=f34e46]: 4 modules
+            - generic [ref=f34e48]:
+              - generic [ref=f34e49]:
+                - generic [ref=f34e50]: "0."
+                - text: Setup & Tools
+              - generic [ref=f34e51]:
+                - generic [ref=f34e52]: "1."
+                - text: HTML Basics
+              - generic [ref=f34e53]:
+                - generic [ref=f34e54]: "2."
+                - text: CSS Fundamentals
+              - generic [ref=f34e55]:
+                - generic [ref=f34e56]: "3."
+                - text: JavaScript Intro
+          - generic [ref=f34e58] [cursor=pointer]:
+            - generic [ref=f34e59]:
+              - generic [ref=f34e60]: Building
+              - generic [ref=f34e61]: 6 modules
+            - generic [ref=f34e63]:
+              - generic [ref=f34e64]:
+                - generic [ref=f34e65]: "4."
+                - text: React Basics
+              - generic [ref=f34e66]:
+                - generic [ref=f34e67]: "5."
+                - text: Components & State
+              - generic [ref=f34e68]:
+                - generic [ref=f34e69]: "6."
+                - text: Design & UX
+              - generic [ref=f34e70]:
+                - generic [ref=f34e71]: "7."
+                - text: Databases
+              - generic [ref=f34e72]:
+                - generic [ref=f34e73]: "8."
+                - text: Full Stack
+              - generic [ref=f34e74]:
+                - generic [ref=f34e75]: "9."
+                - text: APIs & Integration
+          - generic [ref=f34e77] [cursor=pointer]:
+            - generic [ref=f34e78]:
+              - generic [ref=f34e79]: Production
+              - generic [ref=f34e80]: 3 modules
+            - generic [ref=f34e82]:
+              - generic [ref=f34e83]:
+                - generic [ref=f34e84]: "10."
+                - text: Deployment
+              - generic [ref=f34e85]:
+                - generic [ref=f34e86]: "11."
+                - text: Security & Auth
+              - generic [ref=f34e87]:
+                - generic [ref=f34e88]: "12."
+                - text: Production Ready
+          - generic [ref=f34e90] [cursor=pointer]:
+            - generic [ref=f34e91]:
+              - generic [ref=f34e92]: Landscape
+              - generic [ref=f34e93]: 3 modules
+            - generic [ref=f34e95]:
+              - generic [ref=f34e96]:
+                - generic [ref=f34e97]: "13."
+                - text: Testing
+              - generic [ref=f34e98]:
+                - generic [ref=f34e99]: "14."
+                - text: Frameworks
+              - generic [ref=f34e100]:
+                - generic [ref=f34e101]: "15."
+                - text: Future of Coding
+      - generic [ref=f34e103]:
+        - heading "Course Duration" [level=3] [ref=f34e104] [cursor=pointer]
+        - generic [ref=f34e105] [cursor=pointer]:
+          - img [ref=f34e106]:
+            - generic [ref=f34e109]: "93"
+          - generic:
+            - generic: "93"
+            - generic: hours
+      - generic [ref=f34e117]:
+        - heading "Is It Free?" [level=3] [ref=f34e118] [cursor=pointer]
+        - generic [ref=f34e119]:
+          - button "Heads" [ref=f34e120]
+          - button "Tails" [ref=f34e121]
+        - button "Flip Me" [disabled] [ref=f34e122]:
+          - generic [ref=f34e130]:
+            - text: Flip
+            - text: Me
+      - generic [ref=f34e132]:
+        - heading "Your Learning Journey" [level=3] [ref=f34e133] [cursor=pointer]
+        - generic [ref=f34e134]:
+          - img
+          - generic [ref=f34e135]:
+            - generic [ref=f34e136]:
+              - button "1" [ref=f34e137] [cursor=pointer]:
+                - generic [ref=f34e140]: "1"
+              - paragraph [ref=f34e142]: Module
+              - generic:
+                - paragraph: Module
+                - paragraph: Access course content and learning materials
+            - generic [ref=f34e143]:
+              - button "2" [ref=f34e144] [cursor=pointer]:
+                - generic [ref=f34e147]: "2"
+              - paragraph [ref=f34e149]: Quiz
+              - generic:
+                - paragraph: Quiz
+                - paragraph: Take the module assessment and demonstrate knowledge
+            - generic [ref=f34e150]:
+              - button "3" [ref=f34e151] [cursor=pointer]:
+                - generic [ref=f34e154]: "3"
+              - paragraph [ref=f34e156]: Pass (80%)
+              - generic:
+                - paragraph: Pass (80%)
+                - paragraph: Achieve 80% or higher score to pass and earn XP
+            - generic [ref=f34e157]:
+              - button "4" [ref=f34e158] [cursor=pointer]:
+                - generic [ref=f34e161]: "4"
+              - paragraph [ref=f34e163]: Unlock Next
+              - generic:
+                - paragraph: Unlock Next
+                - paragraph: Submit deliverable to unlock the next module
+            - generic [ref=f34e164]:
+              - button "5" [ref=f34e165] [cursor=pointer]:
+                - generic [ref=f34e168]: "5"
+              - paragraph [ref=f34e170]: Capstone
+              - generic:
+                - paragraph: Capstone
+                - paragraph: After Module 15, access the capstone project challenge
+            - generic [ref=f34e171]:
+              - button "6" [ref=f34e172] [cursor=pointer]:
+                - generic [ref=f34e175]: "6"
+              - paragraph [ref=f34e177]: Certificate
+              - generic:
+                - paragraph: Certificate
+                - paragraph: Earn your verifiable completion certificate and 9.3 CEUs
+        - generic [ref=f34e179]:
+          - generic [ref=f34e188]: ←
+          - generic [ref=f34e189]: →
+      - heading "Share The Vibe" [level=3] [ref=f34e192] [cursor=pointer]
+      - generic [ref=f34e196]:
+        - heading "Get Certified" [level=3] [ref=f34e197] [cursor=pointer]
+        - generic [ref=f34e199] [cursor=pointer]:
+          - generic [ref=f34e201]:
+            - generic [ref=f34e202]: ★
+            - generic [ref=f34e206]:
+              - generic [ref=f34e207]: Learn To Vibe Code
+              - generic [ref=f34e208]: Certificate of Completion
+          - generic [ref=f34e214]:
+            - generic [ref=f34e215]:
+              - generic [ref=f34e216]: CREDENTIAL ID
+              - generic [ref=f34e217]: VBC-2026-00547
+            - generic [ref=f34e219]:
+              - generic [ref=f34e220]: ISSUED
+              - generic [ref=f34e221]: July 9, 2026
+            - generic [ref=f34e223]:
+              - generic [ref=f34e224]: VERIFY
+              - link "learntovibecode.io/verify" [ref=f34e225]:
+                - /url: https://learntovibecode.io/verify/VBC-2026-00547
+    - contentinfo [ref=f34e226]:
+      - generic [ref=f34e227]:
+        - paragraph [ref=f34e228]: © 2026 Vibe Coding. Learn to code with AI. Ship real apps.
+        - generic [ref=f34e229]:
+          - link "Demo" [ref=f34e230] [cursor=pointer]:
+            - /url: /demo
+          - link "About" [ref=f34e231] [cursor=pointer]:
+            - /url: /about
+          - link "Support" [ref=f34e232] [cursor=pointer]:
+            - /url: /support
+  - button "Open Next.js Dev Tools" [ref=f34e238] [cursor=pointer]:
+    - img [ref=f34e239]
+  - alert [ref=f34e242]: Welcome, "Your Name"
