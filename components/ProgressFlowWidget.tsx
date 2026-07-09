@@ -107,14 +107,9 @@ export function ProgressFlowWidget() {
       className="w-full bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/20 overflow-hidden"
     >
       {/* Title */}
-      <motion.h2
-        className="text-2xl font-bold font-display text-white mb-8 text-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
-      >
+      <h3 className="text-lg font-semibold text-white uppercase tracking-wide mb-8 text-center">
         Your Learning Journey
-      </motion.h2>
+      </h3>
 
       {/* Flow Container */}
       <div
