@@ -46,7 +46,7 @@ export function VideoBackground() {
     visibility: 'hidden' as const,
     opacity: 0,
     transition: 'opacity 0.5s ease-in-out',
-    filter: 'blur(20px) brightness(0.4)',
+    filter: 'blur(8px) brightness(0.4)',
   };
 
   return (
