@@ -30,12 +30,12 @@ export default function KidsLandingPageContent() {
       <MouseTrail />
       <FloatingCTA />
 
-      {/* ============ FLOATING LOGO (TOP-LEFT) ============ */}
-      <div className="fixed top-8 left-3 z-40">
+      {/* ============ FLOATING LOGO (BOTTOM-RIGHT) ============ */}
+      <div className="fixed bottom-8 right-4 z-40">
         <img
           src="/learn_to_vibe_code_logo_cosmic_wordmark_transparent.svg"
           alt="Learn To Vibe Code"
-          className="h-14 sm:h-16 lg:h-20 w-auto"
+          className="h-32 sm:h-40 lg:h-52 w-auto"
         />
       </div>
 
@@ -97,14 +97,11 @@ export default function KidsLandingPageContent() {
       <footer className="border-t border-slate-800 py-1 px-2 mt-1">
         <div className="max-w-7xl mx-auto text-center text-xs text-gray-500">
           <p>© 2026 Vibe Coding. Learn to code with AI. Ship real apps.</p>
-          <div className="flex gap-4 justify-center mt-1">
-            <Link href="/demo" className="hover:text-cyan-400 transition">
-              Demo
-            </Link>
-            <Link href="/about" className="hover:text-cyan-400 transition">
+          <div className="flex gap-8 justify-center mt-2">
+            <Link href="/about" className="text-lg font-semibold hover:text-cyan-400 transition">
               About
             </Link>
-            <Link href="/support" className="hover:text-cyan-400 transition">
+            <Link href="/support" className="text-lg font-semibold hover:text-cyan-400 transition">
               Support
             </Link>
           </div>
