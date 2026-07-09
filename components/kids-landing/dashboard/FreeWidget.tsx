@@ -39,8 +39,8 @@ export function FreeWidget() {
 
     setIsFlipping(false);
 
-    // Wait a bit before showing result so user can see H or T
-    await new Promise(resolve => setTimeout(resolve, 800));
+    // Wait 2 seconds before showing result so user can see H or T and let it breathe
+    await new Promise(resolve => setTimeout(resolve, 2000));
     setShowResult(true);
   };
 
@@ -55,7 +55,7 @@ export function FreeWidget() {
   return (
     <div className="flex flex-col items-center justify-center h-full">
       <h3 className="text-base font-semibold text-white uppercase tracking-wide mb-6">
-        It's Free!
+        is it free?
       </h3>
 
       {/* Game State: Selection */}
@@ -191,13 +191,38 @@ export function FreeWidget() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           className="text-center"
         >
-          <p className="text-lg font-bold mb-4">
+          <div className="mb-6">
             {won ? (
-              <span className="text-green-400">You won</span>
+              <div className="text-white">
+                <p className="text-base mb-2">you won,</p>
+                <motion.p
+                  className="text-5xl font-black bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent"
+                  animate={{
+                    y: [0, -4, 4, -4, 4, -4, 4, 0],
+                    scale: [1, 1.05, 0.95, 1.05, 0.95, 1.05, 0.95, 1]
+                  }}
+                  transition={{ duration: 0.6, repeat: Infinity }}
+                >
+                  the course is free
+                </motion.p>
+              </div>
             ) : (
-              <span className="text-orange-400">You lost, but it's still free</span>
+              <div className="text-white">
+                <p className="text-base mb-2">you lost,</p>
+                <p className="text-base mb-2">but the course is</p>
+                <motion.p
+                  className="text-5xl font-black bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent"
+                  animate={{
+                    y: [0, -4, 4, -4, 4, -4, 4, 0],
+                    scale: [1, 1.05, 0.95, 1.05, 0.95, 1.05, 0.95, 1]
+                  }}
+                  transition={{ duration: 0.6, repeat: Infinity }}
+                >
+                  still free
+                </motion.p>
+              </div>
             )}
-          </p>
+          </div>
 
           <motion.button
             onClick={resetGame}
@@ -218,11 +243,7 @@ export function FreeWidget() {
               key={idx}
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
-              className={`text-sm font-bold px-2 py-0.5 rounded ${
-                flip === 'W'
-                  ? 'bg-green-400/30 text-green-300 border border-green-400/60'
-                  : 'bg-orange-400/30 text-orange-300 border border-orange-400/60'
-              }`}
+              className="text-sm font-bold px-2 py-0.5 rounded bg-white/20 text-white border border-white/60"
             >
               {flip}
             </motion.span>
