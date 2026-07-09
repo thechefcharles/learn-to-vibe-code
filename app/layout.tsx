@@ -3,7 +3,6 @@ import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import "./globals-theme.css";
 import { ThemeProvider } from "@/lib/ThemeContext";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { VersionProvider } from "@/lib/VersionContext";
 
 const spaceGrotesk = Space_Grotesk({
@@ -42,7 +41,6 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <VersionProvider>
           <ThemeProvider>
-            <ThemeSwitcher />
             {children}
           </ThemeProvider>
         </VersionProvider>

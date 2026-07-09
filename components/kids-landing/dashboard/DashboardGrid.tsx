@@ -18,7 +18,7 @@ function GridItem({ children, colSpan = 1, rowSpan = 1, mobileColSpan, mobileOrd
 
   return (
     <div
-      className={`${mobileColSpanClass} ${desktopColSpan} ${rowSpanClass} ${orderClass} rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-2 sm:p-3 lg:p-4 hover:border-white/40 transition-all hover:bg-white/15 shadow-xl`}
+      className={`${mobileColSpanClass} ${desktopColSpan} ${rowSpanClass} ${orderClass} rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-2 sm:p-2.5 lg:p-3 hover:border-white/40 transition-all hover:bg-white/15 shadow-lg`}
     >
       {children}
     </div>
@@ -27,7 +27,7 @@ function GridItem({ children, colSpan = 1, rowSpan = 1, mobileColSpan, mobileOrd
 
 export function DashboardGrid({ children }: { children: ReactNode }) {
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-1.5 sm:gap-2 lg:gap-3 w-full max-w-6xl mx-auto px-2 sm:px-3 lg:px-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-1 sm:gap-1.5 lg:gap-2 w-full max-w-6xl mx-auto px-2 sm:px-3 lg:px-4">
       {children}
     </div>
   );
