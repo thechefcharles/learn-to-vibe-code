@@ -134,12 +134,19 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
     await expect(canvas).toBeVisible();
   });
 
-  test('free widget shows zero cost with interactive coin', async ({ page }) => {
-    const freeTitle = page.locator(':text("No Cost")');
-    await expect(freeTitle).toBeVisible({ timeout: 3000 });
+  test('free widget shows coin flip game with heads/tails selection', async ({ page }) => {
+    const coinTitle = page.locator(':text("Coin Flip Game")');
+    await expect(coinTitle).toBeVisible({ timeout: 3000 });
 
-    const priceText = page.locator(':text("$0")');
-    await expect(priceText).toBeVisible();
+    const headsButton = page.locator('button:has-text("Heads")');
+    const tailsButton = page.locator('button:has-text("Tails")');
+
+    await expect(headsButton).toBeVisible();
+    await expect(tailsButton).toBeVisible();
+
+    // Select heads and verify selection
+    await headsButton.click();
+    await expect(headsButton).toHaveClass(/from-cyan-400/);
   });
   // ========== PROGRESS FLOW WIDGET ==========
   test('progress flow widget displays all 6 stages', async ({ page }) => {
@@ -232,14 +239,18 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
   });
 
   test('credential preview widget flip animation works', async ({ page }) => {
-    // Find the certificate container by looking for the perspective style
-    const certificateContainer = page.locator('[style*="perspective"]').first();
+    // Find the certificate preview widget by looking for text that indicates it
+    const credentialWidget = page.locator(':text("Credential Preview")').first();
 
-    if (await certificateContainer.isVisible({ timeout: 2000 }).catch(() => false)) {
-      await certificateContainer.click();
-      // Wait for animation
-      await page.waitForTimeout(700);
-      console.log('Certificate flip animation triggered');
+    if (await credentialWidget.isVisible({ timeout: 2000 }).catch(() => false)) {
+      // Look for any clickable element within the widget (the flip card or button)
+      const clickableElement = credentialWidget.locator('button, div[role="button"]').first();
+
+      if (await clickableElement.isVisible({ timeout: 1000 }).catch(() => false)) {
+        await clickableElement.click();
+        await page.waitForTimeout(700);
+        console.log('Certificate flip animation triggered');
+      }
     }
   });
 
