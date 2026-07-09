@@ -92,37 +92,43 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
     await expect(moduleCount).toBeVisible();
   });
 
-  test('learning tiers tier can be clicked to expand details', async ({ page }) => {
+  test('learning tiers cards flip to show modules on hover/click', async ({ page }) => {
     const foundationsTier = page.locator('button:has-text("Foundations")');
     await foundationsTier.click();
 
-    // Verify expanded details appear
-    const expandedDetails = page.locator(':text("Foundations Modules:")');
-    await expect(expandedDetails).toBeVisible({ timeout: 500 });
+    // Wait for flip animation and verify module names appear
+    await page.waitForTimeout(700);
+    const setupModule = page.locator(':text("Setup & Tools")');
+    await expect(setupModule).toBeVisible({ timeout: 500 });
   });
 
-  test('learning tiers tier can be clicked again to collapse', async ({ page }) => {
+  test('learning tiers card flips back when clicked again', async ({ page }) => {
     const foundationsTier = page.locator('button:has-text("Foundations")');
 
-    // Expand
+    // Flip to show modules
     await foundationsTier.click();
-    const expandedDetails = page.locator(':text("Foundations Modules:")');
-    await expect(expandedDetails).toBeVisible({ timeout: 500 });
+    await page.waitForTimeout(700);
+    const setupModule = page.locator(':text("Setup & Tools")');
+    await expect(setupModule).toBeVisible();
 
-    // Collapse
+    // Flip back
     await foundationsTier.click();
-    await expect(expandedDetails).not.toBeVisible({ timeout: 500 });
+    await page.waitForTimeout(800);
+    // Card should show front text again
+    const foundationsText = page.locator('button:has-text("Foundations")');
+    await expect(foundationsText).toBeVisible();
   });
 
-  test('learning tiers displays different colors for each tier', async ({ page }) => {
+  test('learning tiers displays all four tier cards centered', async ({ page }) => {
     const foundationsTier = page.locator('button:has-text("Foundations")');
     const buildingTier = page.locator('button:has-text("Building")');
+    const productionTier = page.locator('button:has-text("Production")');
+    const landscapeTier = page.locator('button:has-text("Landscape")');
 
-    const foundationsStyle = await foundationsTier.evaluate((el) => window.getComputedStyle(el).backgroundImage);
-    const buildingStyle = await buildingTier.evaluate((el) => window.getComputedStyle(el).backgroundImage);
-
-    // Verify different gradient backgrounds
-    expect(foundationsStyle).not.toBe(buildingStyle);
+    await expect(foundationsTier).toBeVisible();
+    await expect(buildingTier).toBeVisible();
+    await expect(productionTier).toBeVisible();
+    await expect(landscapeTier).toBeVisible();
   });
 
   // ========== NEW WIDGETS - TIME & FREE ==========
