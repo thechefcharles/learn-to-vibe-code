@@ -25,14 +25,14 @@ export default function KidsLandingPageContent() {
       <FloatingCTA />
 
       {/* ============ HERO SECTION WITH DASHBOARD GRID ============ */}
-      <section className="py-4 px-4 sm:py-5">
+      <section className="py-2 px-4 sm:py-3">
         <div className="max-w-7xl mx-auto">
           {/* Hero Logo and Headline */}
-          <div className="text-center mb-5">
-            <div className="mb-3 flex justify-center scale-75">
+          <div className="text-center mb-4">
+            <div className="mb-2 flex justify-center scale-75">
               <Logo variant="cosmic-mark" size="lg" />
             </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-2 leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-1 leading-tight">
               <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
                 Learn To Build Real Apps
               </span>
@@ -78,7 +78,7 @@ export default function KidsLandingPageContent() {
       </section>
 
       {/* ============ FOOTER ============ */}
-      <footer className="border-t border-slate-800 py-4 px-4 mt-4">
+      <footer className="border-t border-slate-800 py-3 px-4 mt-3">
         <div className="max-w-7xl mx-auto text-center text-xs text-gray-500">
           <p>© 2026 Vibe Coding. Learn to code with AI. Ship real apps.</p>
           <div className="flex gap-4 justify-center mt-2">
