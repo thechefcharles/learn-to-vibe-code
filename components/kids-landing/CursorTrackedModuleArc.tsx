@@ -161,11 +161,6 @@ export function CursorTrackedModuleArc({ totalModules = 16 }: CursorTrackedModul
         />
       </svg>
 
-      {/* Year labels */}
-      <div className="absolute bottom-8 left-0 right-0 flex justify-between px-4 text-xs text-gray-400">
-        <span>Module 0</span>
-        <span>Module 16</span>
-      </div>
     </div>
   );
 }
