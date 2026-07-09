@@ -26,6 +26,26 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Learn To Vibe Code",
   description: "Master AI-powered full-stack development. Free, accredited, gamified.",
+  openGraph: {
+    title: "Learn to Vibe Code",
+    description: "Free Vibe Coding Course",
+    type: "website",
+    url: "https://www.learntovibecode.io",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Learn to Vibe Code",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Learn to Vibe Code",
+    description: "Free Vibe Coding Course",
+    images: ["/opengraph-image"],
+  },
 };
 
 export default function RootLayout({
