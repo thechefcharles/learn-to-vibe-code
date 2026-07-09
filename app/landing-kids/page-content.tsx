@@ -65,28 +65,38 @@ export default function KidsLandingPageContent() {
           `}</style>
 
           <DashboardGrid>
-            {/* Row 1: The Story - Path + Structure + Time */}
-            <GridItem colSpan={1}>
+            {/* Mobile: 16 MODULES top (full width) */}
+            <GridItem colSpan={1} mobileColSpan={2} mobileOrder={1}>
               <ModuleArcWidget userName={userName} onUserNameChange={setUserName} />
             </GridItem>
-            <GridItem colSpan={2}>
+
+            {/* Desktop: 4 LEARNING TIERS */}
+            <GridItem colSpan={2} mobileColSpan={2} mobileOrder={6}>
               <LearningTiersWidget />
             </GridItem>
-            <GridItem colSpan={1}>
+
+            {/* Desktop: COURSE DURATION */}
+            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={7}>
               <TimeWidget />
             </GridItem>
 
-            {/* Row 2: The Value - Free + Journey + Invite + Certificate */}
-            <GridItem colSpan={1}>
+            {/* Desktop: IS IT FREE */}
+            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={8}>
               <FreeWidget />
             </GridItem>
-            <GridItem colSpan={1}>
+
+            {/* Mobile: YOUR LEARNING JOURNEY (full width middle) */}
+            <GridItem colSpan={1} mobileColSpan={2} mobileOrder={3}>
               <ProgressFlowWidget />
             </GridItem>
-            <GridItem colSpan={1}>
+
+            {/* Mobile: SHARE THE VIBE (bottom left) */}
+            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={4}>
               <InviteWidget />
             </GridItem>
-            <GridItem colSpan={1}>
+
+            {/* Mobile: GET CERTIFIED (bottom right) */}
+            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={5}>
               <CredentialPreviewWidget />
             </GridItem>
           </DashboardGrid>
