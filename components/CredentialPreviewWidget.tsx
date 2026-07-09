@@ -131,6 +131,9 @@ export function CredentialPreviewWidget() {
                 <motion.div className="text-sm text-white/80 mt-3 italic">
                   Certificate of Completion
                 </motion.div>
+                <motion.div className="text-xs text-cyan-300 mt-4 font-semibold tracking-wider">
+                  Click Here!
+                </motion.div>
               </motion.div>
             </div>
           </motion.div>
