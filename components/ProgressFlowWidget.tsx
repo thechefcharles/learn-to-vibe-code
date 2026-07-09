@@ -56,22 +56,17 @@ export function ProgressFlowWidget() {
   const [joystickX, setJoystickX] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const joystickRef = useRef<HTMLDivElement>(null);
+  const joystickContainerRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const handleMouseDown = () => {
     setIsDragging(true);
   };
 
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging || !joystickContainerRef.current || !joystickRef.current) return;
 
-  const handleJoystickDrag = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!joystickRef.current) return;
-
-    const rect = joystickRef.current.parentElement?.getBoundingClientRect();
-    if (!rect) return;
-
+    const rect = joystickContainerRef.current.getBoundingClientRect();
     const centerX = rect.width / 2;
     const clientX = e.clientX - rect.left;
     const offsetX = clientX - centerX;
@@ -82,31 +77,27 @@ export function ProgressFlowWidget() {
 
     // Scroll based on drag position
     if (scrollContainerRef.current) {
-      const scrollAmount = (constrainedX / maxOffset) * 5;
-      scrollContainerRef.current.scrollBy({
-        left: scrollAmount,
-        behavior: 'smooth',
-      });
+      const scrollAmount = (constrainedX / maxOffset) * 15;
+      scrollContainerRef.current.scrollLeft += scrollAmount;
     }
   };
 
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setJoystickX(0);
+  };
+
   useEffect(() => {
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-      if (joystickRef.current?.dataset.dragging === 'true') {
-        handleJoystickDrag(e as any);
-      }
-    };
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
 
-    const handleMouseUpGlobal = () => {
-      if (joystickRef.current) {
-        joystickRef.current.dataset.dragging = 'false';
-        setJoystickX(0);
-      }
-    };
-
-    window.addEventListener('mouseup', handleMouseUpGlobal);
-    return () => window.removeEventListener('mouseup', handleMouseUpGlobal);
-  }, []);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging]);
 
   return (
     <motion.div
@@ -248,7 +239,7 @@ export function ProgressFlowWidget() {
 
       {/* Glassy Joystick Control */}
       <div className="flex justify-center mt-6 relative h-20">
-        <div className="relative w-32 h-16 flex items-center justify-center">
+        <div ref={joystickContainerRef} className="relative w-32 h-16 flex items-center justify-center">
           {/* Base circle */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/30 shadow-lg shadow-white/20" />
 
@@ -259,10 +250,7 @@ export function ProgressFlowWidget() {
           {/* Joystick ball */}
           <motion.div
             ref={joystickRef}
-            onMouseDown={(e) => {
-              joystickRef.current!.dataset.dragging = 'true';
-              handleJoystickDrag(e);
-            }}
+            onMouseDown={handleMouseDown}
             animate={{ x: joystickX }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             className="relative w-12 h-12 rounded-full cursor-grab active:cursor-grabbing group"
