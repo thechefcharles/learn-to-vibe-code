@@ -1924,3 +1924,15 @@ https://nextjs.org/docs/messages/module-not-found @ http://localhost:3008/_next/
 [18571643ms] [LOG] [Fast Refresh] done in 145ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
 [18617593ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
 [18617598ms] [LOG] [Fast Refresh] done in 107ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[18658189ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[18658291ms] [LOG] [Fast Refresh] done in 202ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[18662651ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[18662661ms] [LOG] [Fast Refresh] done in 111ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[18779286ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[18779342ms] [LOG] [Fast Refresh] done in 121ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[18801954ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[18801957ms] [LOG] [Fast Refresh] done in 105ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[18810277ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[18810279ms] [LOG] [Fast Refresh] done in 103ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[18812212ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[18812228ms] [LOG] [Fast Refresh] done in 117ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
