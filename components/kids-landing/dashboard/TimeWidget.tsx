@@ -56,7 +56,7 @@ export function TimeWidget() {
           fontSize: titleHover ? '28px' : '20px',
           background: titleHover
             ? 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(236, 72, 153))'
-            : 'white',
+            : 'transparent',
           backgroundClip: titleHover ? 'text' : 'unset',
           WebkitBackgroundClip: titleHover ? 'text' : 'unset',
           WebkitTextFillColor: titleHover ? 'transparent' : 'white',

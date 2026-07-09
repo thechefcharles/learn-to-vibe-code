@@ -62,12 +62,12 @@ export function CredentialPreviewWidget() {
           scale: titleHover ? 1.3 : 1,
         }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="uppercase tracking-wide text-center cursor-pointer font-bold"
+        className="uppercase tracking-wide text-center cursor-pointer font-bold text-white"
         style={{
           fontSize: titleHover ? '28px' : '20px',
           background: titleHover
             ? 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(236, 72, 153))'
-            : 'white',
+            : 'transparent',
           backgroundClip: titleHover ? 'text' : 'unset',
           WebkitBackgroundClip: titleHover ? 'text' : 'unset',
           WebkitTextFillColor: titleHover ? 'transparent' : 'white',
