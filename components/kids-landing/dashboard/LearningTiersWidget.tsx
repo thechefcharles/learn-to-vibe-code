@@ -33,15 +33,34 @@ const MODULE_NAMES: Record<number, string> = {
 
 export function LearningTiersWidget() {
   const [flipped, setFlipped] = useState<Record<string, boolean>>({});
+  const [titleHover, setTitleHover] = useState(false);
 
   const mainTiers = Object.entries(MODULE_TIERS).filter(([key]) => key !== 'capstone');
 
   return (
     <div className="flex flex-col h-full w-full">
       {/* Centered heading */}
-      <div className="text-center text-2xl font-bold uppercase tracking-wide mb-4 bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+      <motion.div
+        onMouseEnter={() => setTitleHover(true)}
+        onMouseLeave={() => setTitleHover(false)}
+        animate={{
+          scale: titleHover ? 1.3 : 1,
+        }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        className="text-center uppercase tracking-wide mb-4 cursor-pointer font-bold"
+        style={{
+          fontSize: titleHover ? '28px' : '20px',
+          background: titleHover
+            ? 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(236, 72, 153))'
+            : 'white',
+          backgroundClip: titleHover ? 'text' : 'unset',
+          WebkitBackgroundClip: titleHover ? 'text' : 'unset',
+          WebkitTextFillColor: titleHover ? 'transparent' : 'white',
+          color: titleHover ? 'transparent' : 'white',
+        }}
+      >
         4 Learning Tiers
-      </div>
+      </motion.div>
 
       {/* Centered 2x2 Grid of Flip Cards */}
       <div className="flex-1 flex items-center justify-center">

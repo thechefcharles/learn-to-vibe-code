@@ -54,6 +54,7 @@ export function ProgressFlowWidget() {
   const [activeStage, setActiveStage] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [joystickX, setJoystickX] = useState(0);
+  const [titleHover, setTitleHover] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const joystickRef = useRef<HTMLDivElement>(null);
   const joystickContainerRef = useRef<HTMLDivElement>(null);
@@ -107,9 +108,27 @@ export function ProgressFlowWidget() {
       className="w-full bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-white/20 overflow-hidden"
     >
       {/* Title */}
-      <h3 className="text-2xl font-bold uppercase tracking-wide mb-8 text-center bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+      <motion.h3
+        onMouseEnter={() => setTitleHover(true)}
+        onMouseLeave={() => setTitleHover(false)}
+        animate={{
+          scale: titleHover ? 1.3 : 1,
+        }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        className="uppercase tracking-wide mb-8 text-center cursor-pointer font-bold"
+        style={{
+          fontSize: titleHover ? '28px' : '20px',
+          background: titleHover
+            ? 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(236, 72, 153))'
+            : 'white',
+          backgroundClip: titleHover ? 'text' : 'unset',
+          WebkitBackgroundClip: titleHover ? 'text' : 'unset',
+          WebkitTextFillColor: titleHover ? 'transparent' : 'white',
+          color: titleHover ? 'transparent' : 'white',
+        }}
+      >
         Your Learning Journey
-      </h3>
+      </motion.h3>
 
       {/* Flow Container */}
       <div

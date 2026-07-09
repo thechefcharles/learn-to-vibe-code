@@ -14,6 +14,7 @@ export function FreeWidget() {
   const [won, setWon] = useState(false);
   const [rotation, setRotation] = useState(0);
   const [record, setRecord] = useState<FlipRecord[]>([]);
+  const [titleHover, setTitleHover] = useState(false);
 
   const handleFlip = async () => {
     if (!selected || stage !== 'select') return;
@@ -51,9 +52,27 @@ export function FreeWidget() {
 
   return (
     <div className="flex flex-col items-center justify-center h-full">
-      <h3 className="text-2xl font-bold uppercase tracking-wide mb-6 bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+      <motion.h3
+        onMouseEnter={() => setTitleHover(true)}
+        onMouseLeave={() => setTitleHover(false)}
+        animate={{
+          scale: titleHover ? 1.3 : 1,
+        }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        className="uppercase tracking-wide mb-6 cursor-pointer font-bold"
+        style={{
+          fontSize: titleHover ? '28px' : '20px',
+          background: titleHover
+            ? 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(236, 72, 153))'
+            : 'white',
+          backgroundClip: titleHover ? 'text' : 'unset',
+          WebkitBackgroundClip: titleHover ? 'text' : 'unset',
+          WebkitTextFillColor: titleHover ? 'transparent' : 'white',
+          color: titleHover ? 'transparent' : 'white',
+        }}
+      >
         Is It Free?
-      </h3>
+      </motion.h3>
 
       {/* Selection Stage: Pick Heads or Tails */}
       {stage === 'select' && (
