@@ -116,8 +116,10 @@ export function FreeWidget() {
             >
               {/* Coin container */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-300/40 via-purple-400/40 to-pink-300/40 backdrop-blur-sm border-2 border-white/40 shadow-2xl shadow-purple-500/30 flex items-center justify-center overflow-hidden group">
-                {/* Glossy shine */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full group-hover:from-white/40 transition-all" />
+                {/* Glossy shine - top shine */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/50 via-white/20 to-transparent rounded-full" />
+                {/* Additional shine overlay */}
+                <div className="absolute top-0 left-1/4 w-1/3 h-1/3 bg-gradient-to-br from-white/60 to-transparent rounded-full blur-md" />
 
                 {/* Coin content */}
                 <motion.div
@@ -130,14 +132,12 @@ export function FreeWidget() {
                     <span className="bg-gradient-to-r from-cyan-300 to-purple-400 bg-clip-text text-transparent">
                       {result === 'heads' ? 'H' : 'T'}
                     </span>
-                  ) : selected ? (
+                  ) : (
                     <span className="text-cyan-300 text-lg leading-tight">
                       flip
                       <br />
                       me
                     </span>
-                  ) : (
-                    <span className="text-gray-400">?</span>
                   )}
                 </motion.div>
               </div>
@@ -191,15 +191,12 @@ export function FreeWidget() {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           className="text-center"
         >
-          <p className="text-lg font-bold mb-2">
+          <p className="text-lg font-bold mb-4">
             {won ? (
               <span className="text-green-400">You won</span>
             ) : (
-              <span className="text-orange-400">You lost</span>
+              <span className="text-orange-400">You lost, but it's still free</span>
             )}
-          </p>
-          <p className="text-base mb-4 text-gray-300">
-            {won ? "it's free" : "it's still free"}
           </p>
 
           <motion.button
