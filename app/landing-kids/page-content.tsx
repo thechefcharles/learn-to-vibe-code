@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { DashboardGrid, GridItem } from '@/components/kids-landing/dashboard/DashboardGrid';
 import { ModuleArcWidget } from '@/components/kids-landing/dashboard/ModuleArcWidget';
 import { LearningTiersWidget } from '@/components/kids-landing/dashboard/LearningTiersWidget';
-import { CodeExecutorWidget } from '@/components/kids-landing/dashboard/CodeExecutorWidget';
+import { TimeWidget } from '@/components/kids-landing/dashboard/TimeWidget';
+import { FreeWidget } from '@/components/kids-landing/dashboard/FreeWidget';
 import { ProgressFlowWidget } from '@/components/ProgressFlowWidget';
 import { CredentialPreviewWidget } from '@/components/CredentialPreviewWidget';
 import { FloatingCTA } from '@/components/kids-landing/FloatingCTA';
@@ -71,7 +72,7 @@ export default function KidsLandingPageContent() {
       <section className="py-4 px-4">
         <div className="max-w-7xl mx-auto">
           <DashboardGrid>
-            {/* Row 1: Module Arc (skinny 1) + Learning Tiers (2) + space (1) */}
+            {/* Row 1: The Story - Path + Structure + Time */}
             <GridItem colSpan={1}>
               <ModuleArcWidget />
             </GridItem>
@@ -79,18 +80,18 @@ export default function KidsLandingPageContent() {
               <LearningTiersWidget />
             </GridItem>
             <GridItem colSpan={1}>
-              <div></div>
+              <TimeWidget />
             </GridItem>
 
-            {/* Row 2: Code Executor (1) + Progress Flow (3) */}
+            {/* Row 2: The Value - Free + Your Journey */}
             <GridItem colSpan={1}>
-              <CodeExecutorWidget />
+              <FreeWidget />
             </GridItem>
             <GridItem colSpan={3}>
               <ProgressFlowWidget />
             </GridItem>
 
-            {/* Row 3: Certificate (1) + space (3) */}
+            {/* Row 3: The Reward - Certificate */}
             <GridItem colSpan={1}>
               <CredentialPreviewWidget />
             </GridItem>
