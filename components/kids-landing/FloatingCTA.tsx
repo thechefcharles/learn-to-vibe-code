@@ -2,23 +2,76 @@
 
 import Link from 'next/link';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export function FloatingCTA() {
   const prefersReducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
+  const [cursorPos, setCursorPos] = useState({ x: typeof window !== 'undefined' ? window.innerWidth - 100 : 0, y: 40 });
+  const [buttonPos, setButtonPos] = useState({ x: typeof window !== 'undefined' ? window.innerWidth - 100 : 0, y: 40 });
+  const animationFrameRef = useRef<number>();
 
   // Avoid hydration mismatch
   useEffect(() => {
     setMounted(true);
   }, []);
 
+  // Track cursor position
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setCursorPos({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Smoothly move button towards cursor
+  useEffect(() => {
+    const animate = () => {
+      setButtonPos(prev => {
+        const dx = cursorPos.x - prev.x;
+        const dy = cursorPos.y - prev.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Only move if cursor is far enough away (to avoid jitter at rest)
+        if (distance > 10) {
+          const speed = 0.08; // Slow chase speed
+          return {
+            x: prev.x + dx * speed,
+            y: prev.y + dy * speed,
+          };
+        }
+        return prev;
+      });
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    if (!prefersReducedMotion) {
+      animationFrameRef.current = requestAnimationFrame(animate);
+    }
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [cursorPos, prefersReducedMotion]);
+
   if (!mounted) {
     return null;
   }
 
   return (
-    <div className="fixed top-8 right-8 z-50">
+    <div
+      className="fixed z-50"
+      style={{
+        left: `${buttonPos.x}px`,
+        top: `${buttonPos.y}px`,
+        transform: 'translate(-50%, -50%)',
+        transition: prefersReducedMotion ? 'none' : 'none',
+      }}
+    >
       <Link
         href="/signup"
         data-testid="floating-cta-button"
