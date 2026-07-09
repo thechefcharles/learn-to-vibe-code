@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Particle {
   id: number;
@@ -16,8 +16,16 @@ export function MouseTrail() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const idRef = useRef(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Disable particles on mobile for performance
+    setIsMobile(window.innerWidth < 640);
+  }, []);
+
+  useEffect(() => {
+    if (isMobile) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -98,6 +106,8 @@ export function MouseTrail() {
       window.removeEventListener('resize', handleWindowResize);
     };
   }, []);
+
+  if (isMobile) return null;
 
   return (
     <canvas

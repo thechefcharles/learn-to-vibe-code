@@ -82,7 +82,7 @@ export function FloatingCTA() {
         href="/auth/sign-up"
         data-testid="floating-cta-button"
         className={`
-          inline-block px-6 py-3 rounded-lg font-bold text-white
+          inline-block px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-bold text-sm sm:text-base text-white
           bg-gradient-to-r from-cyan-500 to-purple-600
           border border-cyan-400 shadow-lg
           ${!prefersReducedMotion ? 'hover:scale-105 active:scale-95 transition-transform duration-300 animate-pulse' : ''}

@@ -40,12 +40,12 @@ export default function KidsLandingPageContent() {
       </div>
 
       {/* ============ DASHBOARD GRID ============ */}
-      <section className="py-2 sm:py-4 px-3 relative z-10">
+      <section className="py-1 sm:py-3 lg:py-4 px-2 sm:px-3 lg:px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Gleaming Headline */}
-          <div className="text-center mb-3 sm:mb-4">
+          <div className="text-center mb-2 sm:mb-3 lg:mb-4">
             <h2
-              className="text-2xl sm:text-3xl lg:text-4xl font-bold uppercase tracking-wider"
+              className="text-xl sm:text-2xl lg:text-4xl font-bold uppercase tracking-wider"
               style={{
                 background: 'linear-gradient(90deg, #06b6d4 0%, #a78bfa 50%, #ec4899 100%)',
                 backgroundClip: 'text',
@@ -94,14 +94,14 @@ export default function KidsLandingPageContent() {
       </section>
 
       {/* ============ FOOTER ============ */}
-      <footer className="border-t border-slate-800 py-1 px-2 mt-1">
-        <div className="max-w-7xl mx-auto text-center text-xs text-gray-500">
-          <p>© 2026 Vibe Coding. Learn to code with AI. Ship real apps.</p>
-          <div className="flex gap-8 justify-center mt-2">
-            <Link href="/about" className="text-lg font-semibold hover:text-cyan-400 transition">
+      <footer className="border-t border-slate-800 py-2 sm:py-3 px-2 sm:px-4 mt-2">
+        <div className="max-w-7xl mx-auto text-center text-xs sm:text-sm text-gray-500">
+          <p className="text-xs sm:text-xs">© 2026 Vibe Coding. Learn to code with AI. Ship real apps.</p>
+          <div className="flex gap-4 sm:gap-8 justify-center mt-2 flex-wrap">
+            <Link href="/about" className="text-sm sm:text-base lg:text-lg font-semibold hover:text-cyan-400 transition">
               About
             </Link>
-            <Link href="/support" className="text-lg font-semibold hover:text-cyan-400 transition">
+            <Link href="/support" className="text-sm sm:text-base lg:text-lg font-semibold hover:text-cyan-400 transition">
               Support
             </Link>
           </div>
