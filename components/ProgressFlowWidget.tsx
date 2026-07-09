@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 interface Stage {
@@ -53,7 +53,9 @@ const stages: Stage[] = [
 export function ProgressFlowWidget() {
   const [activeStage, setActiveStage] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [joystickX, setJoystickX] = useState(0);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const joystickRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const handleMouseDown = () => {
@@ -64,15 +66,47 @@ export function ProgressFlowWidget() {
     setIsDragging(false);
   };
 
-  const handleScroll = (direction: 'left' | 'right') => {
+  const handleJoystickDrag = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!joystickRef.current) return;
+
+    const rect = joystickRef.current.parentElement?.getBoundingClientRect();
+    if (!rect) return;
+
+    const centerX = rect.width / 2;
+    const clientX = e.clientX - rect.left;
+    const offsetX = clientX - centerX;
+    const maxOffset = 40;
+    const constrainedX = Math.max(-maxOffset, Math.min(maxOffset, offsetX));
+
+    setJoystickX(constrainedX);
+
+    // Scroll based on drag position
     if (scrollContainerRef.current) {
-      const scrollAmount = 200;
+      const scrollAmount = (constrainedX / maxOffset) * 5;
       scrollContainerRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        left: scrollAmount,
         behavior: 'smooth',
       });
     }
   };
+
+  useEffect(() => {
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+      if (joystickRef.current?.dataset.dragging === 'true') {
+        handleJoystickDrag(e as any);
+      }
+    };
+
+    const handleMouseUpGlobal = () => {
+      if (joystickRef.current) {
+        joystickRef.current.dataset.dragging = 'false';
+        setJoystickX(0);
+      }
+    };
+
+    window.addEventListener('mouseup', handleMouseUpGlobal);
+    return () => window.removeEventListener('mouseup', handleMouseUpGlobal);
+  }, []);
 
   return (
     <motion.div
@@ -212,27 +246,48 @@ export function ProgressFlowWidget() {
         </div>
       </div>
 
-      {/* Scroll Arrow Buttons */}
-      <div className="relative">
-        {/* Left Arrow */}
-        <motion.button
-          onClick={() => handleScroll('left')}
-          className="absolute bottom-0 left-0 w-10 h-10 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all flex items-center justify-center text-white text-xl cursor-pointer"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          ←
-        </motion.button>
+      {/* Glassy Joystick Control */}
+      <div className="flex justify-center mt-6 relative h-20">
+        <div className="relative w-32 h-16 flex items-center justify-center">
+          {/* Base circle */}
+          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/30 shadow-lg shadow-white/20" />
 
-        {/* Right Arrow */}
-        <motion.button
-          onClick={() => handleScroll('right')}
-          className="absolute bottom-0 right-0 w-10 h-10 rounded-lg bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all flex items-center justify-center text-white text-xl cursor-pointer"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          →
-        </motion.button>
+          {/* Center crosshair glow */}
+          <div className="absolute w-1 h-6 bg-gradient-to-b from-cyan-400/40 to-transparent" />
+          <div className="absolute h-1 w-6 bg-gradient-to-r from-cyan-400/40 to-transparent" />
+
+          {/* Joystick ball */}
+          <motion.div
+            ref={joystickRef}
+            onMouseDown={(e) => {
+              joystickRef.current!.dataset.dragging = 'true';
+              handleJoystickDrag(e);
+            }}
+            animate={{ x: joystickX }}
+            transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+            className="relative w-12 h-12 rounded-full cursor-grab active:cursor-grabbing group"
+          >
+            {/* Ball gradient */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-300/40 via-purple-400/40 to-pink-300/40 backdrop-blur-sm" />
+
+            {/* Glossy shine */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/50 via-transparent to-transparent" />
+
+            {/* Bright center glow */}
+            <div className="absolute inset-2 rounded-full bg-gradient-to-r from-cyan-400/30 to-purple-400/20" />
+
+            {/* Subtle pulsing ring */}
+            <motion.div
+              className="absolute inset-0 rounded-full border-2 border-cyan-300/0 group-hover:border-cyan-300/40"
+              animate={{ scale: [1, 1.15, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            />
+          </motion.div>
+
+          {/* Direction indicators */}
+          <div className="absolute left-1 top-1/2 -translate-y-1/2 text-xs text-cyan-400/40">←</div>
+          <div className="absolute right-1 top-1/2 -translate-y-1/2 text-xs text-cyan-400/40">→</div>
+        </div>
       </div>
 
       {/* Scrollbar hide style */}
