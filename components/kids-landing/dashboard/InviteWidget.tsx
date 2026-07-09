@@ -133,7 +133,7 @@ export function InviteWidget() {
               whileTap={{ scale: 0.95 }}
               className="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-400/40 to-purple-500/40 border border-cyan-300/60 text-white font-semibold text-xs hover:border-cyan-200/100 hover:shadow-lg hover:shadow-cyan-400/50 transition-all"
             >
-              {copied ? '✨ Link copied' : 'Copy link'}
+              {copied ? '✨ Link Copied' : 'Copy link'}
             </motion.button>
           </motion.div>
         )}

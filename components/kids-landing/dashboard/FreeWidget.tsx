@@ -52,7 +52,7 @@ export function FreeWidget() {
   return (
     <div className="flex flex-col items-center justify-center h-full">
       <h3 className="text-lg font-semibold text-white uppercase tracking-wide mb-6">
-        is it free?
+        Is It Free?
       </h3>
 
       {/* Selection Stage: Pick Heads or Tails */}
