@@ -64,13 +64,16 @@ export function ProgressFlowWidget() {
     setIsDragging(true);
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
+  const handleTouchStart = () => {
+    setIsDragging(true);
+  };
+
+  const handleMove = (clientX: number) => {
     if (!isDragging || !joystickContainerRef.current || !joystickRef.current) return;
 
     const rect = joystickContainerRef.current.getBoundingClientRect();
     const centerX = rect.width / 2;
-    const clientX = e.clientX - rect.left;
-    const offsetX = clientX - centerX;
+    const offsetX = clientX - rect.left - centerX;
     const maxOffset = 40;
     const constrainedX = Math.max(-maxOffset, Math.min(maxOffset, offsetX));
 
@@ -83,7 +86,22 @@ export function ProgressFlowWidget() {
     }
   };
 
+  const handleMouseMove = (e: MouseEvent) => {
+    handleMove(e.clientX);
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    if (e.touches.length > 0) {
+      handleMove(e.touches[0].clientX);
+    }
+  };
+
   const handleMouseUp = () => {
+    setIsDragging(false);
+    setJoystickX(0);
+  };
+
+  const handleTouchEnd = () => {
     setIsDragging(false);
     setJoystickX(0);
   };
@@ -92,10 +110,14 @@ export function ProgressFlowWidget() {
     if (isDragging) {
       window.addEventListener('mousemove', handleMouseMove);
       window.addEventListener('mouseup', handleMouseUp);
+      window.addEventListener('touchmove', handleTouchMove);
+      window.addEventListener('touchend', handleTouchEnd);
 
       return () => {
         window.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('mouseup', handleMouseUp);
+        window.removeEventListener('touchmove', handleTouchMove);
+        window.removeEventListener('touchend', handleTouchEnd);
       };
     }
   }, [isDragging]);
@@ -268,9 +290,10 @@ export function ProgressFlowWidget() {
           <motion.div
             ref={joystickRef}
             onMouseDown={handleMouseDown}
+            onTouchStart={handleTouchStart}
             animate={{ x: joystickX }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-            className="relative w-12 h-12 rounded-full cursor-grab active:cursor-grabbing group"
+            className="relative w-12 h-12 rounded-full cursor-grab active:cursor-grabbing group touch-none"
           >
             {/* Ball gradient */}
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-cyan-300/40 via-purple-400/40 to-pink-300/40 backdrop-blur-sm" />

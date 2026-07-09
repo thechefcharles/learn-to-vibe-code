@@ -70,8 +70,10 @@ export function TimeWidget() {
       <motion.div
         onMouseEnter={() => setIsHovering(true)}
         onMouseLeave={() => setIsHovering(false)}
+        onTouchStart={() => setIsHovering(true)}
+        onTouchEnd={() => setIsHovering(false)}
         onClick={() => setIsPaused(!isPaused)}
-        className="cursor-pointer group relative"
+        className="cursor-pointer group relative touch-none"
         whileHover={{ scale: 1.05 }}
         transition={{ type: 'spring', stiffness: 300, damping: 10 }}
       >
