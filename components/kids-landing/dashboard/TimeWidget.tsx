@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 export function TimeWidget() {
   const [hours, setHours] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
   const [speed, setSpeed] = useState(1);
   const timeRef = useRef(0);
   const lastTimeRef = useRef(Date.now());
@@ -14,7 +15,7 @@ export function TimeWidget() {
     let animationId: number;
 
     const animate = () => {
-      if (!isPaused) {
+      if (!isPaused && !isHovering) {
         const now = Date.now();
         const deltaMs = now - lastTimeRef.current;
         lastTimeRef.current = now;
@@ -34,7 +35,7 @@ export function TimeWidget() {
 
     animationId = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(animationId);
-  }, [isPaused, speed]);
+  }, [isPaused, isHovering, speed]);
 
   const percentage = (hours / 93) * 100;
   const circumference = 2 * Math.PI * 85;
@@ -47,8 +48,8 @@ export function TimeWidget() {
       </h3>
 
       <motion.div
-        onMouseEnter={() => setSpeed(prev => Math.min(prev + 1, 4))}
-        onMouseLeave={() => setSpeed(1)}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
         onClick={() => setIsPaused(!isPaused)}
         className="cursor-pointer group relative"
         whileHover={{ scale: 1.05 }}
@@ -91,6 +92,19 @@ export function TimeWidget() {
             }}
           />
 
+          {/* Background "93" */}
+          <text
+            x="100"
+            y="110"
+            textAnchor="middle"
+            fontSize="72"
+            fontWeight="bold"
+            fill="rgba(107, 114, 128, 0.1)"
+            fontFamily="monospace"
+          >
+            93
+          </text>
+
           {/* Hour markers */}
           {[0, 15, 30, 45, 60, 75, 90].map((h) => {
             const angle = (h / 93) * 360 - 90;
@@ -115,12 +129,19 @@ export function TimeWidget() {
 
         {/* Center content - positioned absolutely to avoid overlap */}
         <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-          <div className="text-3xl font-bold text-cyan-300 font-mono leading-none">
-            {hours}
-          </div>
-          <div className="text-xs text-gray-400 font-mono mt-1">
-            /93h
-          </div>
+          <motion.div
+            animate={{
+              scale: isHovering ? 1.8 : 1,
+              opacity: isHovering ? 1 : 1,
+            }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="font-bold text-cyan-300 font-mono leading-none"
+            style={{
+              fontSize: isHovering ? '56px' : '32px',
+            }}
+          >
+            {isHovering ? '93' : hours}
+          </motion.div>
         </div>
 
         {/* Pause indicator */}
