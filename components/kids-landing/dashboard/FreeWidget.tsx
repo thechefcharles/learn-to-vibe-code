@@ -5,17 +5,22 @@ import { motion } from 'framer-motion';
 
 type CoinSide = 'heads' | 'tails' | null;
 
+type FlipRecord = 'W' | 'L';
+
 export function FreeWidget() {
   const [selected, setSelected] = useState<CoinSide>(null);
   const [isFlipping, setIsFlipping] = useState(false);
   const [result, setResult] = useState<CoinSide>(null);
   const [won, setWon] = useState(false);
   const [rotation, setRotation] = useState(0);
+  const [record, setRecord] = useState<FlipRecord[]>([]);
+  const [showResult, setShowResult] = useState(false);
 
   const handleFlip = async () => {
     if (!selected || isFlipping) return;
 
     setIsFlipping(true);
+    setShowResult(false);
 
     // Animate rotation
     setRotation(prev => prev + 1080);
@@ -26,9 +31,17 @@ export function FreeWidget() {
     // Random result
     const flipResult = Math.random() > 0.5 ? 'heads' : 'tails';
     setResult(flipResult);
-    setWon(flipResult === selected);
+    const isWin = flipResult === selected;
+    setWon(isWin);
+
+    // Add to record
+    setRecord(prev => [...prev, isWin ? 'W' : 'L']);
 
     setIsFlipping(false);
+
+    // Wait a bit before showing result so user can see H or T
+    await new Promise(resolve => setTimeout(resolve, 800));
+    setShowResult(true);
   };
 
   const resetGame = () => {
@@ -36,6 +49,7 @@ export function FreeWidget() {
     setResult(null);
     setWon(false);
     setRotation(0);
+    setShowResult(false);
   };
 
   return (
@@ -171,22 +185,21 @@ export function FreeWidget() {
       )}
 
       {/* Game State: Result */}
-      {result && (
+      {result && showResult && (
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           className="text-center"
         >
-          <p className="text-lg font-bold mb-4">
+          <p className="text-lg font-bold mb-2">
             {won ? (
-              <span className="text-green-400">
-                You won, it's free!
-              </span>
+              <span className="text-green-400">You won</span>
             ) : (
-              <span className="text-orange-400">
-                You lost, but it's still free
-              </span>
+              <span className="text-orange-400">You lost</span>
             )}
+          </p>
+          <p className="text-base mb-4 text-gray-300">
+            {won ? "it's free" : "it's still free"}
           </p>
 
           <motion.button
@@ -198,6 +211,26 @@ export function FreeWidget() {
             Play Again
           </motion.button>
         </motion.div>
+      )}
+
+      {/* Record Display */}
+      {record.length > 0 && (
+        <div className="mt-6 flex flex-wrap gap-1 justify-center max-w-xs">
+          {record.map((flip, idx) => (
+            <motion.span
+              key={idx}
+              initial={{ scale: 0, rotate: -180 }}
+              animate={{ scale: 1, rotate: 0 }}
+              className={`text-sm font-bold px-2 py-0.5 rounded ${
+                flip === 'W'
+                  ? 'bg-green-400/30 text-green-300 border border-green-400/60'
+                  : 'bg-orange-400/30 text-orange-300 border border-orange-400/60'
+              }`}
+            >
+              {flip}
+            </motion.span>
+          ))}
+        </div>
       )}
     </div>
   );
