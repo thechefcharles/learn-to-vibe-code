@@ -9,9 +9,7 @@ export function InviteWidget() {
   const [isDrawing, setIsDrawing] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const shareUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}/landing-kids`
-    : 'https://learn-to-vibe-code.vercel.app/landing-kids';
+  const shareUrl = 'https://learntovibecode.io';
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -122,17 +120,19 @@ export function InviteWidget() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="absolute inset-0 flex flex-col items-center justify-center gap-3 rounded-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm p-4"
+            className="absolute inset-0 flex flex-col items-center justify-center gap-2 rounded-lg bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm p-4"
           >
-            <p className="text-xs text-white/60 text-center break-all font-mono">
-              {shareUrl}
-            </p>
+            <div className="px-3 py-1.5 rounded-full bg-white/10 border border-white/30">
+              <p className="text-xs text-white font-semibold tracking-wide">
+                learntovibecode.io
+              </p>
+            </div>
 
             <motion.button
               onClick={handleCopyLink}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-400/30 to-purple-500/30 border border-cyan-400/60 text-white font-semibold text-xs hover:border-cyan-300/100 hover:shadow-lg hover:shadow-cyan-400/50 transition-all"
+              className="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-400/40 to-purple-500/40 border border-cyan-300/60 text-white font-semibold text-xs hover:border-cyan-200/100 hover:shadow-lg hover:shadow-cyan-400/50 transition-all"
             >
               {copied ? '✨ Link copied' : 'Copy link'}
             </motion.button>
