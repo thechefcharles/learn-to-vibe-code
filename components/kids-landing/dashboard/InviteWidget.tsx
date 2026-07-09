@@ -45,7 +45,7 @@ export function InviteWidget() {
     ctx.font = 'bold 16px sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('scratch to reveal', canvas.width / 2, canvas.height / 2);
+    ctx.fillText('Scratch To Reveal', canvas.width / 2, canvas.height / 2);
   }, []);
 
   const handleScratch = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {

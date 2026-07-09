@@ -134,9 +134,9 @@ export function FreeWidget() {
                     </span>
                   ) : (
                     <span className="text-cyan-300 text-lg leading-tight">
-                      flip
+                      Flip
                       <br />
-                      me
+                      Me
                     </span>
                   )}
                 </motion.div>
