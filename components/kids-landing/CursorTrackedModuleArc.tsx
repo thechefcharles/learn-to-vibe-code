@@ -102,7 +102,7 @@ export function CursorTrackedModuleArc({ totalModules = 16 }: CursorTrackedModul
   }, [totalModules]);
 
   return (
-    <div ref={containerRef} className="relative w-full max-w-2xl mx-auto h-64">
+    <div ref={containerRef} className="relative w-full max-w-2xl mx-auto h-36">
       {/* Static label */}
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         <div
