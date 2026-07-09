@@ -111,13 +111,9 @@ export function ProgressFlowWidget() {
       <motion.h3
         onMouseEnter={() => setTitleHover(true)}
         onMouseLeave={() => setTitleHover(false)}
-        animate={{
-          scale: titleHover ? 1.3 : 1,
-        }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="uppercase tracking-wide mb-8 text-center cursor-pointer font-bold"
+        className="uppercase tracking-wide mb-8 text-center cursor-pointer font-bold text-xl"
         style={{
-          fontSize: titleHover ? '28px' : '20px',
           background: titleHover
             ? 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(236, 72, 153))'
             : 'transparent',
@@ -125,7 +121,6 @@ export function ProgressFlowWidget() {
           WebkitBackgroundClip: titleHover ? 'text' : 'unset',
           WebkitTextFillColor: titleHover ? 'transparent' : 'white',
           color: titleHover ? 'transparent' : 'white',
-          transformOrigin: 'center',
         }}
       >
         Your Learning Journey
@@ -139,7 +134,21 @@ export function ProgressFlowWidget() {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       >
-        <div className="flex justify-center min-w-min px-4 relative pb-8">
+        <svg className="absolute top-20 left-0 w-full h-12 pointer-events-none" style={{ zIndex: 1 }}>
+          <defs>
+            <linearGradient id="connectorGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="rgba(6, 182, 212, 0.3)" />
+              <stop offset="50%" stopColor="rgba(168, 85, 247, 0.3)" />
+              <stop offset="100%" stopColor="rgba(236, 72, 153, 0.3)" />
+            </linearGradient>
+          </defs>
+          <line x1="60" y1="24" x2="120" y2="24" stroke="url(#connectorGradient)" strokeWidth="2" strokeDasharray="5,5" />
+          <line x1="180" y1="24" x2="240" y2="24" stroke="url(#connectorGradient)" strokeWidth="2" strokeDasharray="5,5" />
+          <line x1="300" y1="24" x2="360" y2="24" stroke="url(#connectorGradient)" strokeWidth="2" strokeDasharray="5,5" />
+          <line x1="420" y1="24" x2="480" y2="24" stroke="url(#connectorGradient)" strokeWidth="2" strokeDasharray="5,5" />
+          <line x1="540" y1="24" x2="600" y2="24" stroke="url(#connectorGradient)" strokeWidth="2" strokeDasharray="5,5" />
+        </svg>
+        <div className="flex justify-center min-w-min px-4 relative pb-8" style={{ zIndex: 2 }}>
           {/* Stage Items with connecting arrows */}
           {stages.map((stage, index) => (
             <motion.div

@@ -43,13 +43,9 @@ export function LearningTiersWidget() {
       <motion.div
         onMouseEnter={() => setTitleHover(true)}
         onMouseLeave={() => setTitleHover(false)}
-        animate={{
-          scale: titleHover ? 1.3 : 1,
-        }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
-        className="text-center uppercase tracking-wide mb-4 cursor-pointer font-bold"
+        className="text-center uppercase tracking-wide mb-4 cursor-pointer font-bold text-xl"
         style={{
-          fontSize: titleHover ? '28px' : '20px',
           background: titleHover
             ? 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(236, 72, 153))'
             : 'transparent',
@@ -57,7 +53,6 @@ export function LearningTiersWidget() {
           WebkitBackgroundClip: titleHover ? 'text' : 'unset',
           WebkitTextFillColor: titleHover ? 'transparent' : 'white',
           color: titleHover ? 'transparent' : 'white',
-          transformOrigin: 'center',
         }}
       >
         4 Learning Tiers
