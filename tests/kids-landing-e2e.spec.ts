@@ -141,7 +141,7 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
   });
 
   test('free widget shows coin flip game with heads/tails selection', async ({ page }) => {
-    const coinTitle = page.locator(':text("Free Forever")');
+    const coinTitle = page.locator('text=It\'s Free!');
     await expect(coinTitle).toBeVisible({ timeout: 3000 });
 
     const headsButton = page.locator('button:has-text("Heads")');
