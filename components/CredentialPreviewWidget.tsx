@@ -40,25 +40,25 @@ export function CredentialPreviewWidget() {
 
   if (prefersReducedMotion) {
     return (
-      <div className="w-full h-full flex flex-col gap-2">
-        <div className="relative w-full flex-1 bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-4 flex flex-col justify-center items-center text-center shadow-2xl">
-          <div className="text-lg font-bold font-display text-white">
+      <div className="w-full h-full flex flex-col gap-3">
+        <div className="relative w-full flex-1 bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-6 flex flex-col justify-center items-center text-center shadow-2xl">
+          <div className="text-xl font-bold font-display text-white">
             Learn To Vibe Code
           </div>
-          <div className="text-2xs text-white/80 mt-2">Certificate of Completion</div>
+          <div className="text-xs text-white/80 mt-3">Certificate of Completion</div>
         </div>
         <button
           onClick={handleShare}
-          className="w-full px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 hover:border-white/40 text-white text-sm font-semibold rounded-lg transition-all"
+          className="w-full px-4 py-2 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/15 hover:border-white/40 text-white text-sm font-semibold rounded-lg transition-all"
         >
-          {copied ? "Shared!" : "Share"}
+          {copied ? "Shared!" : "Share Certificate"}
         </button>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-full flex flex-col gap-2">
+    <div className="w-full h-full flex flex-col gap-3">
       <div
         className="relative w-full flex-1 cursor-pointer"
         style={{ perspective: "1200px" }}
@@ -88,11 +88,11 @@ export function CredentialPreviewWidget() {
             }}
             className="absolute inset-0 w-full h-full"
           >
-            <div className="relative w-full h-full bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-4 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
+            <div className="relative w-full h-full bg-gradient-to-br from-violet-400/80 via-purple-300/80 to-violet-400/80 backdrop-blur-lg rounded-xl border-2 border-white/40 p-6 flex flex-col justify-center items-center text-center overflow-hidden shadow-2xl">
               {/* Decorative background pattern */}
               <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-2 right-2 w-12 h-12 border-2 border-white rounded-full" />
-                <div className="absolute bottom-2 left-2 w-10 h-10 border-2 border-white rounded-lg" />
+                <div className="absolute top-4 right-4 w-16 h-16 border-2 border-white rounded-full" />
+                <div className="absolute bottom-4 left-4 w-12 h-12 border-2 border-white rounded-lg" />
               </div>
 
               {/* Content */}
@@ -102,11 +102,11 @@ export function CredentialPreviewWidget() {
                 transition={{ delay: 0.1, duration: 0.4 }}
                 className="relative z-10"
               >
-                <motion.div className="text-lg font-bold font-display text-white">
+                <motion.div className="text-xl font-bold font-display text-white">
                   Learn To Vibe Code
                 </motion.div>
 
-                <motion.div className="text-2xs text-white/80 mt-2 italic">
+                <motion.div className="text-xs text-white/80 mt-3 italic">
                   Certificate of Completion
                 </motion.div>
               </motion.div>
@@ -178,7 +178,7 @@ export function CredentialPreviewWidget() {
         onClick={handleShare}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
-        className={`w-full px-3 py-2 text-sm font-semibold rounded-lg transition-all duration-300 backdrop-blur-md border ${
+        className={`w-full px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 backdrop-blur-md border ${
           copied
             ? "bg-white/20 border-white/30 hover:bg-white/25 text-white"
             : "bg-white/10 border-white/20 hover:bg-white/15 hover:border-white/40 text-white shadow-lg hover:shadow-xl"

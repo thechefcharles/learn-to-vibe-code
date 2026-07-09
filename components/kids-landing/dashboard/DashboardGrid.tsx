@@ -14,7 +14,7 @@ function GridItem({ children, colSpan = 1, rowSpan = 1 }: GridItemProps) {
 
   return (
     <div
-      className={`${colSpanClass} ${rowSpanClass} rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-4 hover:border-white/40 transition-all hover:bg-white/15 shadow-xl`}
+      className={`${colSpanClass} ${rowSpanClass} rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 p-5 hover:border-white/40 transition-all hover:bg-white/15 shadow-xl`}
     >
       {children}
     </div>
@@ -23,7 +23,7 @@ function GridItem({ children, colSpan = 1, rowSpan = 1 }: GridItemProps) {
 
 export function DashboardGrid({ children }: { children: ReactNode }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 w-full max-w-7xl mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 w-full max-w-7xl mx-auto">
       {children}
     </div>
   );

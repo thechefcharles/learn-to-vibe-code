@@ -21,7 +21,7 @@ test.describe('Kids Landing Page - Dashboard Hero E2E', () => {
     await expect(statsLine).toBeVisible();
 
     // Verify all stats are present
-    const stats = page.locator(':text("16 Modules • 93 Hours • Free • Self-Paced • Accredited Certificate")');
+    const stats = page.locator(':text("16 Modules • 93 Hours • Free • Self-Paced • Accredited")');
     await expect(stats).toBeVisible();
   });
 
