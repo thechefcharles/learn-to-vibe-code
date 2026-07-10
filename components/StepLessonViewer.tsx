@@ -150,7 +150,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
 
       {/* Minimal Header */}
       <div className="sticky top-0 z-40 bg-slate-900/60 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
           <Link
             href={`/course/${moduleId}`}
             className="text-sm font-medium text-slate-300 hover:text-white transition"
@@ -159,7 +159,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           </Link>
           <div className="flex flex-col items-center gap-1">
             <div className="flex items-center gap-3">
-              <div className="text-xs text-slate-400">
+              <div className="text-xs sm:text-sm text-slate-400">
                 Step {currentStepIndex + 1} of {steps.steps.length}
               </div>
               <BookmarkButton
@@ -182,10 +182,10 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
       </div>
 
       {/* Main Content - Two Column Layout */}
-      <div className="max-w-7xl mx-auto px-4 py-8 flex gap-8 relative z-10 flex-1">
+      <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 flex gap-4 sm:gap-8 relative z-10 flex-1">
         {/* Sidebar - Show on step 1+ */}
         {!isFirstStep && (
-          <div className="hidden lg:block">
+          <div className="hidden lg:block w-64 flex-shrink-0">
             <ModuleSidebar
               steps={steps}
               currentStepIndex={currentStepIndex}
@@ -211,7 +211,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className={`rounded-2xl border backdrop-blur-md p-6 ${
+          className={`rounded-2xl border backdrop-blur-md p-4 sm:p-6 ${
             isKids
               ? "bg-white/10 border-white/20"
               : "bg-white/5 border-white/10"
@@ -521,11 +521,11 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             nextStepTitle={!isLastStep ? steps.steps[currentStepIndex + 1]?.title : undefined}
           />
           {/* Navigation Inside Box */}
-          <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center gap-4">
+          <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
             <button
               onClick={handleBack}
               disabled={isFirstStep}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+              className={`w-full sm:w-auto px-4 py-2 rounded-lg text-sm font-medium transition ${
                 isFirstStep
                   ? "opacity-30 cursor-not-allowed text-slate-500"
                   : "text-slate-300 hover:text-white hover:bg-white/10"
@@ -545,6 +545,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               <div className="text-xs text-slate-600 font-medium">
                 K/J to navigate
               </div>
+              <span className="text-slate-600 text-xs mt-1 sm:hidden">Swipe to navigate</span>
             </div>
 
             <button
