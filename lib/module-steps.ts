@@ -342,31 +342,50 @@ Vercel is where you'll deploy your app — makes it live on the internet.
         duration: 10,
         difficulty: "easy",
         xpReward: 50,
-        content: `## Free Tiers & Costs
+        sections: [
+          {
+            id: 0,
+            heading: "What's Free",
+            content: `## What's Free
 
 Set expectations now so you're not surprised by a bill later.
-
-### What's Free
 
 | Tool | Free Tier | Cost If You Upgrade |
 |------|----------|-------------------|
 | Node.js | Always free | N/A |
 | GitHub | Unlimited repos | N/A (always free) |
-| Supabase | 500MB database | $50+/month (rarely needed) |
-| Vercel | Unlimited deployments | Only extra bandwidth |
-| Cursor | 2 slow requests/day | $20/month for unlimited |
-| Claude Code | Free trial | Pay by token ($5-50/month) |
+| Supabase | 500MB database | $50+/month |
+| Vercel | Unlimited deployments | Only bandwidth |
+| Cursor | 2 slow requests/day | $20/month |
+| Claude Code | Free trial | Pay by token |`,
+            keyPoint: "Every tool has a free tier that covers this course.",
+          },
+          {
+            id: 1,
+            heading: "You Can Complete This Course Free",
+            content: `## You Can Complete This Course Free
 
-### You Can Complete This Course Free
+All tools have free tiers. AI editor usage depends on how much you experiment — most learners stay under $10-20/month.
 
-All tools have free tiers that cover this course. AI editor usage depends on how much you experiment — most learners stay under $10-20/month.
-
-### Avoid Surprise Bills
+No tool requires payment to complete this course.`,
+            keyPoint: "Nothing in this course requires payment.",
+          },
+          {
+            id: 2,
+            heading: "Avoid Surprise Bills",
+            content: `## Avoid Surprise Bills
 
 1. Use free tiers first — don't upgrade unless you hit limits
-2. Check usage dashboards weekly (takes 2 minutes)
+2. Check usage dashboards weekly (2 minutes)
 3. Set spending alerts if available`,
-        keyPoint: "Plan on $0-20/month if you experiment with AI editors. Nothing is required.",
+            keyPoint: "Budget for $0-20/month if you experiment. Nothing is required.",
+            challenge: {
+              description: "Set a spending alert on one tool",
+              action: "Open Cursor or Claude billing and set a monthly cap",
+              successCriteria: "You see a spend limit configured",
+            },
+          },
+        ],
       },
       {
         id: 10,
