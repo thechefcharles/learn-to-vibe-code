@@ -9,6 +9,7 @@ import { useKeyboardNavigation } from "@/lib/hooks/useKeyboardNavigation";
 import { useModuleTimeRemaining } from "@/lib/hooks/useModuleTimeRemaining";
 import { useSwipeNavigation } from "@/lib/hooks/useSwipeNavigation";
 import { useUserStreak } from "@/lib/hooks/useUserStreak";
+import { useUser } from "@/lib/hooks/useUser";
 import { ModuleSidebar } from "./course/ModuleSidebar";
 import { ModuleIntro } from "./course/ModuleIntro";
 import { KeyPointCard } from "./course/KeyPointCard";
@@ -20,6 +21,8 @@ import { ModuleBreadcrumb } from "./course/ModuleBreadcrumb";
 import { VideoBackground } from "./kids-landing/VideoBackground";
 import { XPRewardBadge } from "./course/XPRewardBadge";
 import { MouseTrail } from "./kids-landing/MouseTrail";
+import { SectionLessonViewer } from "@/components/course/SectionLessonViewer";
+import { awardXP } from "@/lib/actions/gamification";
 import type { ModuleStep, ModuleStepSequence } from "@/lib/module-steps";
 
 interface StepQuizState {
@@ -39,6 +42,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   const [showHints, setShowHints] = useState(false);
   const [stepStartTime] = useState(Date.now());
   const [totalXP, setTotalXP] = useState(0);
+  const [lessonCompletedTrigger, setLessonCompletedTrigger] = useState<number | null>(null);
   const [quizState, setQuizState] = useState<StepQuizState>({
     answered: false,
     selectedIndex: null,
@@ -48,6 +52,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   const isKids = version === "kids";
   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
   const streak = useUserStreak();
+  const { user } = useUser();
 
   // Calculate milestone progress
   const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
@@ -91,6 +96,9 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
         selectedIndex: null,
         showExplanation: false,
       });
+
+      // Reset lesson completion trigger when moving to next lesson
+      setLessonCompletedTrigger(null);
 
       // Scroll to top
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -272,238 +280,271 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             </div>
           )}
 
-          {/* Content */}
-          <div
-            className={`prose prose-invert max-w-none mb-6 ${
-              isKids ? "prose-invert-kids" : ""
-            }`}
-          >
-            <MarkdownRenderer content={currentStep.content || ""} />
-          </div>
-
-          {/* Code Block */}
-          {currentStep.codeBlock && (
-            <div className="mb-8">
-              <CodeBlockWithCopy
-                code={currentStep.codeBlock.code}
-                language={currentStep.codeBlock.language}
+          {currentStep.sections ? (
+            <div className="mb-6">
+              <SectionLessonViewer
+                step={currentStep}
+                moduleId={moduleId}
+                isKids={isKids}
+                onLessonComplete={() => {
+                  setLessonCompletedTrigger(currentStepIndex);
+                  // Mark lesson as complete in module progress
+                  const moduleProgress = JSON.parse(
+                    localStorage.getItem(`module-${moduleId}-progress`) || "{}"
+                  );
+                  const newCompleted = new Set(moduleProgress.completedSteps || []);
+                  newCompleted.add(currentStepIndex);
+                  localStorage.setItem(
+                    `module-${moduleId}-progress`,
+                    JSON.stringify({
+                      ...moduleProgress,
+                      completedSteps: Array.from(newCompleted),
+                    })
+                  );
+                  // Award XP via server action
+                  if (user) {
+                    awardXP(user.id, currentStep.xpReward).catch(console.error);
+                  }
+                }}
               />
             </div>
-          )}
-
-          {/* Key Point */}
-          {currentStep.keyPoint && <KeyPointCard keyPoint={currentStep.keyPoint} />}
-
-          {/* Hints Section */}
-          {currentStep.hints && currentStep.hints.length > 0 && (
-            <div
-              className={`rounded-lg p-4 mb-8 border ${
-                isKids
-                  ? "bg-blue-50 border-blue-300"
-                  : "bg-blue-500/10 border-blue-500/30"
-              }`}
-            >
-              <button
-                onClick={() => setShowHints(!showHints)}
-                className={`w-full flex justify-between items-center font-bold text-left ${
-                  isKids ? "text-blue-700" : "text-blue-300"
+          ) : (
+            // Legacy single-content rendering
+            <>
+              {/* Content */}
+              <div
+                className={`prose prose-invert max-w-none mb-6 ${
+                  isKids ? "prose-invert-kids" : ""
                 }`}
               >
-                <span>💡 Hints ({currentStep.hints.length})</span>
-                <span className="text-xl">{showHints ? "−" : "+"}</span>
-              </button>
-              {showHints && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  transition={{ duration: 0.3 }}
-                  className="mt-3 space-y-2"
-                >
-                  {currentStep.hints.map((hint, idx) => (
-                    <div
-                      key={idx}
-                      className={`p-2 rounded text-sm ${
-                        isKids
-                          ? "bg-white text-blue-700 border border-blue-200"
-                          : "bg-slate-800 text-blue-200 border border-blue-500/30"
-                      }`}
-                    >
-                      <strong>Hint {idx + 1}:</strong> {hint}
-                    </div>
-                  ))}
-                </motion.div>
-              )}
-            </div>
-          )}
+                <MarkdownRenderer content={currentStep.content || ""} />
+              </div>
 
-          {/* Resources Section */}
-          {currentStep.resources && currentStep.resources.length > 0 && (
-            <div
-              className={`rounded-lg p-4 mb-8 border ${
-                isKids
-                  ? "bg-orange-50 border-orange-300"
-                  : "bg-orange-500/10 border-orange-500/30"
-              }`}
-            >
-              <p className={`font-bold mb-3 ${isKids ? "text-orange-700" : "text-orange-300"}`}>
-                📚 Related Resources
-              </p>
-              <div className="space-y-2">
-                {currentStep.resources.map((resource, idx) => (
-                  <a
-                    key={idx}
-                    href={resource.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`block p-2 rounded text-sm transition ${
-                      isKids
-                        ? "bg-white text-orange-700 hover:bg-orange-50 border border-orange-200"
-                        : "bg-slate-800 text-orange-200 hover:bg-slate-700 border border-orange-500/30"
+              {/* Code Block */}
+              {currentStep.codeBlock && (
+                <div className="mb-8">
+                  <CodeBlockWithCopy
+                    code={currentStep.codeBlock.code}
+                    language={currentStep.codeBlock.language}
+                  />
+                </div>
+              )}
+
+              {/* Key Point */}
+              {currentStep.keyPoint && <KeyPointCard keyPoint={currentStep.keyPoint} />}
+
+              {/* Hints Section */}
+              {currentStep.hints && currentStep.hints.length > 0 && (
+                <div
+                  className={`rounded-lg p-4 mb-8 border ${
+                    isKids
+                      ? "bg-blue-50 border-blue-300"
+                      : "bg-blue-500/10 border-blue-500/30"
+                  }`}
+                >
+                  <button
+                    onClick={() => setShowHints(!showHints)}
+                    className={`w-full flex justify-between items-center font-bold text-left ${
+                      isKids ? "text-blue-700" : "text-blue-300"
                     }`}
                   >
-                    <span className="font-medium">{resource.type === "docs" ? "📖" : resource.type === "video" ? "🎥" : "📄"}</span>
-                    {" "}{resource.title}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Challenge Section */}
-          {currentStep.challenge && (
-            <div
-              className={`rounded-lg p-6 mb-8 border-2 ${
-                isKids
-                  ? "bg-green-50 border-green-300"
-                  : "bg-green-500/10 border-green-500/30"
-              }`}
-            >
-              <p
-                className={`font-bold text-lg mb-2 ${
-                  isKids ? "text-green-700" : "text-green-300"
-                }`}
-              >
-                {isKids ? "🎯 Your Challenge" : "✓ Challenge"}
-              </p>
-              <p
-                className={`mb-3 ${
-                  isKids ? "text-green-700" : "text-green-200"
-                }`}
-              >
-                {currentStep.challenge.description}
-              </p>
-              <div
-                className={`p-3 rounded mb-3 ${
-                  isKids
-                    ? "bg-white border border-green-200"
-                    : "bg-slate-900 border border-green-500/30"
-                }`}
-              >
-                <p className="text-xs font-mono mb-1 opacity-70">Action:</p>
-                <p
-                  className={`font-mono text-sm ${
-                    isKids ? "text-slate-700" : "text-green-100"
-                  }`}
-                >
-                  {currentStep.challenge.action}
-                </p>
-              </div>
-              <p
-                className={`text-sm ${
-                  isKids ? "text-green-600" : "text-green-400"
-                }`}
-              >
-                ✓ Success: {currentStep.challenge.successCriteria}
-              </p>
-            </div>
-          )}
-
-          {/* Quiz Section */}
-          {currentStep.quiz && (
-            <div
-              className={`rounded-lg p-6 mb-8 border-2 ${
-                isKids
-                  ? "bg-purple-50 border-purple-300"
-                  : "bg-purple-500/10 border-purple-500/30"
-              }`}
-            >
-              <p
-                className={`font-bold text-lg mb-4 ${
-                  isKids ? "text-purple-700" : "text-purple-300"
-                }`}
-              >
-                {isKids ? "🎯 Quick Check" : "? Quiz"}
-              </p>
-              <p
-                className={`mb-4 ${
-                  isKids ? "text-purple-700" : "text-purple-100"
-                }`}
-              >
-                {currentStep.quiz.question}
-              </p>
-
-              <div className="space-y-2 mb-4">
-                {currentStep.quiz.options.map((option, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => {
-                      if (!quizState.answered) {
-                        setQuizState({
-                          answered: true,
-                          selectedIndex: idx,
-                          showExplanation: true,
-                        });
-                      }
-                    }}
-                    className={`w-full p-3 rounded-lg text-left transition ${
-                      quizState.selectedIndex === idx
-                        ? idx === currentStep.quiz!.correctAnswer
-                          ? isKids
-                            ? "bg-green-200 border-2 border-green-400 text-green-800"
-                            : "bg-green-500/30 border-2 border-green-500 text-green-100"
-                          : isKids
-                            ? "bg-red-200 border-2 border-red-400 text-red-800"
-                            : "bg-red-500/30 border-2 border-red-500 text-red-100"
-                        : isKids
-                          ? "bg-white border border-purple-200 text-purple-700 hover:bg-purple-50"
-                          : "bg-slate-800 border border-purple-500/30 text-purple-100 hover:bg-slate-700"
-                    } ${quizState.answered ? "cursor-default" : "cursor-pointer"}`}
-                    disabled={quizState.answered}
-                  >
-                    {idx === currentStep.quiz!.correctAnswer && quizState.answered && "✓ "}
-                    {idx !== currentStep.quiz!.correctAnswer && quizState.answered && idx === quizState.selectedIndex && "✗ "}
-                    {option}
+                    <span>💡 Hints ({currentStep.hints.length})</span>
+                    <span className="text-xl">{showHints ? "−" : "+"}</span>
                   </button>
-                ))}
-              </div>
+                  {showHints && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      transition={{ duration: 0.3 }}
+                      className="mt-3 space-y-2"
+                    >
+                      {currentStep.hints.map((hint, idx) => (
+                        <div
+                          key={idx}
+                          className={`p-2 rounded text-sm ${
+                            isKids
+                              ? "bg-white text-blue-700 border border-blue-200"
+                              : "bg-slate-800 text-blue-200 border border-blue-500/30"
+                          }`}
+                        >
+                          <strong>Hint {idx + 1}:</strong> {hint}
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </div>
+              )}
 
-              {quizState.showExplanation && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`p-3 rounded-lg border-l-4 ${
-                    quizState.selectedIndex === currentStep.quiz!.correctAnswer
-                      ? isKids
-                        ? "bg-green-100 border-green-400 text-green-800"
-                        : "bg-green-500/20 border-green-500 text-green-200"
-                      : isKids
-                        ? "bg-red-100 border-red-400 text-red-800"
-                        : "bg-red-500/20 border-red-500 text-red-200"
+              {/* Resources Section */}
+              {currentStep.resources && currentStep.resources.length > 0 && (
+                <div
+                  className={`rounded-lg p-4 mb-8 border ${
+                    isKids
+                      ? "bg-orange-50 border-orange-300"
+                      : "bg-orange-500/10 border-orange-500/30"
                   }`}
                 >
-                  <p className="font-bold mb-1">
-                    {quizState.selectedIndex === currentStep.quiz!.correctAnswer
-                      ? isKids
-                        ? "🎉 Correct!"
-                        : "✓ Correct"
-                      : isKids
-                        ? "💡 Not quite!"
-                        : "✗ Try again"}
+                  <p className={`font-bold mb-3 ${isKids ? "text-orange-700" : "text-orange-300"}`}>
+                    📚 Related Resources
                   </p>
-                  <p className="text-sm">{currentStep.quiz.explanation}</p>
-                </motion.div>
+                  <div className="space-y-2">
+                    {currentStep.resources.map((resource, idx) => (
+                      <a
+                        key={idx}
+                        href={resource.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`block p-2 rounded text-sm transition ${
+                          isKids
+                            ? "bg-white text-orange-700 hover:bg-orange-50 border border-orange-200"
+                            : "bg-slate-800 text-orange-200 hover:bg-slate-700 border border-orange-500/30"
+                        }`}
+                      >
+                        <span className="font-medium">{resource.type === "docs" ? "📖" : resource.type === "video" ? "🎥" : "📄"}</span>
+                        {" "}{resource.title}
+                      </a>
+                    ))}
+                  </div>
+                </div>
               )}
-            </div>
+
+              {/* Challenge Section */}
+              {currentStep.challenge && (
+                <div
+                  className={`rounded-lg p-6 mb-8 border-2 ${
+                    isKids
+                      ? "bg-green-50 border-green-300"
+                      : "bg-green-500/10 border-green-500/30"
+                  }`}
+                >
+                  <p
+                    className={`font-bold text-lg mb-2 ${
+                      isKids ? "text-green-700" : "text-green-300"
+                    }`}
+                  >
+                    {isKids ? "🎯 Your Challenge" : "✓ Challenge"}
+                  </p>
+                  <p
+                    className={`mb-3 ${
+                      isKids ? "text-green-700" : "text-green-200"
+                    }`}
+                  >
+                    {currentStep.challenge.description}
+                  </p>
+                  <div
+                    className={`p-3 rounded mb-3 ${
+                      isKids
+                        ? "bg-white border border-green-200"
+                        : "bg-slate-900 border border-green-500/30"
+                    }`}
+                  >
+                    <p className="text-xs font-mono mb-1 opacity-70">Action:</p>
+                    <p
+                      className={`font-mono text-sm ${
+                        isKids ? "text-slate-700" : "text-green-100"
+                      }`}
+                    >
+                      {currentStep.challenge.action}
+                    </p>
+                  </div>
+                  <p
+                    className={`text-sm ${
+                      isKids ? "text-green-600" : "text-green-400"
+                    }`}
+                  >
+                    ✓ Success: {currentStep.challenge.successCriteria}
+                  </p>
+                </div>
+              )}
+
+              {/* Quiz Section */}
+              {currentStep.quiz && (
+                <div
+                  className={`rounded-lg p-6 mb-8 border-2 ${
+                    isKids
+                      ? "bg-purple-50 border-purple-300"
+                      : "bg-purple-500/10 border-purple-500/30"
+                  }`}
+                >
+                  <p
+                    className={`font-bold text-lg mb-4 ${
+                      isKids ? "text-purple-700" : "text-purple-300"
+                    }`}
+                  >
+                    {isKids ? "🎯 Quick Check" : "? Quiz"}
+                  </p>
+                  <p
+                    className={`mb-4 ${
+                      isKids ? "text-purple-700" : "text-purple-100"
+                    }`}
+                  >
+                    {currentStep.quiz.question}
+                  </p>
+
+                  <div className="space-y-2 mb-4">
+                    {currentStep.quiz.options.map((option, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => {
+                          if (!quizState.answered) {
+                            setQuizState({
+                              answered: true,
+                              selectedIndex: idx,
+                              showExplanation: true,
+                            });
+                          }
+                        }}
+                        className={`w-full p-3 rounded-lg text-left transition ${
+                          quizState.selectedIndex === idx
+                            ? idx === currentStep.quiz!.correctAnswer
+                              ? isKids
+                                ? "bg-green-200 border-2 border-green-400 text-green-800"
+                                : "bg-green-500/30 border-2 border-green-500 text-green-100"
+                              : isKids
+                                ? "bg-red-200 border-2 border-red-400 text-red-800"
+                                : "bg-red-500/30 border-2 border-red-500 text-red-100"
+                            : isKids
+                              ? "bg-white border border-purple-200 text-purple-700 hover:bg-purple-50"
+                              : "bg-slate-800 border border-purple-500/30 text-purple-100 hover:bg-slate-700"
+                        } ${quizState.answered ? "cursor-default" : "cursor-pointer"}`}
+                        disabled={quizState.answered}
+                      >
+                        {idx === currentStep.quiz!.correctAnswer && quizState.answered && "✓ "}
+                        {idx !== currentStep.quiz!.correctAnswer && quizState.answered && idx === quizState.selectedIndex && "✗ "}
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+
+                  {quizState.showExplanation && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className={`p-3 rounded-lg border-l-4 ${
+                        quizState.selectedIndex === currentStep.quiz!.correctAnswer
+                          ? isKids
+                            ? "bg-green-100 border-green-400 text-green-800"
+                            : "bg-green-500/20 border-green-500 text-green-200"
+                          : isKids
+                            ? "bg-red-100 border-red-400 text-red-800"
+                            : "bg-red-500/20 border-red-500 text-red-200"
+                      }`}
+                    >
+                      <p className="font-bold mb-1">
+                        {quizState.selectedIndex === currentStep.quiz!.correctAnswer
+                          ? isKids
+                            ? "🎉 Correct!"
+                            : "✓ Correct"
+                          : isKids
+                            ? "💡 Not quite!"
+                            : "✗ Try again"}
+                      </p>
+                      <p className="text-sm">{currentStep.quiz.explanation}</p>
+                    </motion.div>
+                  )}
+                </div>
+              )}
+            </>
           )}
 
           {/* Next Step Preview */}
@@ -545,13 +586,20 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
 
             <button
               onClick={isLastStep ? () => (window.location.href = `/course`) : handleNext}
+              disabled={currentStep.sections ? lessonCompletedTrigger !== currentStepIndex : false}
               className={`w-full sm:w-auto px-4 py-2 rounded-lg text-sm font-medium transition text-white ${
-                isLastStep
-                  ? "bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600"
-                  : "bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600"
+                currentStep.sections && lessonCompletedTrigger !== currentStepIndex
+                  ? "opacity-30 cursor-not-allowed"
+                  : isLastStep
+                    ? "bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600"
+                    : "bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600"
               }`}
             >
-              {isLastStep ? "Back to Course" : "Next →"}
+              {currentStep.sections && lessonCompletedTrigger !== currentStepIndex
+                ? "Complete all sections to continue"
+                : isLastStep
+                  ? "Back to Course"
+                  : "Next →"}
             </button>
           </div>
         </motion.div>
