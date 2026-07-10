@@ -5,11 +5,12 @@ import { useReducedMotion } from 'framer-motion';
 
 interface CursorTrackedModuleArcProps {
   totalModules?: number; // Default 16
+  externalModule?: number; // Optional external control (0-16)
 }
 
-export function CursorTrackedModuleArc({ totalModules = 16 }: CursorTrackedModuleArcProps) {
+export function CursorTrackedModuleArc({ totalModules = 16, externalModule }: CursorTrackedModuleArcProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const stateRef = useRef({ currentModule: 0, arcPercentage: 0 });
+  const stateRef = useRef({ currentModule: externalModule ?? 0, arcPercentage: 0 });
   const rafRef = useRef<number | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
@@ -100,6 +101,44 @@ export function CursorTrackedModuleArc({ totalModules = 16 }: CursorTrackedModul
       };
     }
   }, [totalModules]);
+
+  // Handle external module changes
+  useEffect(() => {
+    if (externalModule === undefined || !containerRef.current) return;
+
+    const newModule = Math.min(externalModule, totalModules);
+    const percentage = (newModule / totalModules) * 100;
+
+    stateRef.current.currentModule = newModule;
+    stateRef.current.arcPercentage = percentage;
+
+    // Update DOM
+    const moduleText = containerRef.current.querySelector('[data-module-text]');
+    const moduleLabel = containerRef.current.querySelector('[data-module-label]');
+    const dashPath = containerRef.current.querySelector('[data-arc-fill]') as SVGPathElement;
+
+    if (moduleText) moduleText.textContent = String(newModule);
+    if (moduleLabel) {
+      const labels = [
+        'Setup', 'HTML & CSS', 'JavaScript', 'AI Collaboration', 'React Basics',
+        'Components & State', 'Design & UX', 'Databases', 'Full Stack',
+        'APIs & Integration', 'Deployment', 'Security & Auth', 'Production Ready',
+        'Testing', 'Frameworks', 'Future of Coding', 'Capstone',
+      ];
+      moduleLabel.textContent = labels[newModule] || '';
+    }
+    if (dashPath) {
+      const dashLength = (percentage / 100) * 471;
+      dashPath.setAttribute('stroke-dasharray', `${dashLength} 471`);
+    }
+
+    // Update dot position
+    const dot = containerRef.current.querySelector('[data-arc-dot]') as SVGCircleElement;
+    if (dot) {
+      const dotX = 50 + (percentage / 100) * 300;
+      dot.setAttribute('cx', String(dotX));
+    }
+  }, [externalModule, totalModules]);
 
   return (
     <div ref={containerRef} className="relative w-full max-w-2xl mx-auto h-36">
