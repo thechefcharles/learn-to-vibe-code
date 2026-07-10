@@ -1,5 +1,5 @@
-'use client';
-
+import { getUser } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 import dynamic from 'next/dynamic';
 
 // Dynamically import the page content to avoid SSR issues with browser APIs
@@ -15,6 +15,13 @@ const PageContent = dynamic(() => import('./page-content'), {
   ),
 });
 
-export default function KidsLandingPage() {
+export default async function KidsLandingPage() {
+  const user = await getUser();
+
+  // If user is already logged in, redirect to dashboard
+  if (user) {
+    redirect('/dashboard');
+  }
+
   return <PageContent />;
 }
