@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 import { useVersion } from "@/lib/VersionContext";
+import { ModuleSidebar } from "./course/ModuleSidebar";
+import { ModuleIntro } from "./course/ModuleIntro";
 import type { ModuleStep, ModuleStepSequence } from "@/lib/module-steps";
 
 interface StepQuizState {
@@ -140,8 +142,37 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      {/* Main Content - Two Column Layout */}
+      <div className="max-w-7xl mx-auto px-4 py-12 flex gap-8">
+        {/* Sidebar - Show on step 1+ */}
+        {!isFirstStep && (
+          <div className="hidden lg:block">
+            <ModuleSidebar
+              steps={steps}
+              currentStepIndex={currentStepIndex}
+              completedSteps={completedSteps}
+              onJumpToStep={handleJumpToStep}
+              isKids={isKids}
+            />
+          </div>
+        )}
+
+        {/* Main Content */}
+        <div className="flex-1 max-w-4xl">
+        {/* Module Intro - Show only on first step */}
+        {isFirstStep && (
+          <div className="mb-12">
+            <ModuleIntro
+              steps={steps}
+              moduleId={moduleId}
+              isKids={isKids}
+              onStart={() => {
+                // Just scroll to content, intro will auto-hide after first step
+              }}
+            />
+          </div>
+        )}
+
         {/* Step Indicator */}
         <motion.div
           key={currentStepIndex}
@@ -495,11 +526,12 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             </div>
           )}
         </motion.div>
+        </div>
       </div>
 
       {/* Navigation */}
       <div className="bg-slate-800/50 border-t border-slate-700 sticky bottom-0">
-        <div className="max-w-4xl mx-auto px-4 py-6 flex justify-between items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center gap-4">
           <button
             onClick={handleBack}
             disabled={isFirstStep}
