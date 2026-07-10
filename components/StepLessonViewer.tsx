@@ -113,6 +113,12 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   });
 
   const celebrateCompletion = () => {
+
+  useSwipeNavigation({
+    onSwipeLeft: handleNext,
+    onSwipeRight: handleBack,
+    disabled: false,
+  });
     if (!isLastStep) {
       const ele = document.querySelector('[data-step-container]');
       if (ele && 'animate' in Element.prototype) {
