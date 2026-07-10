@@ -41,38 +41,11 @@ export function ModuleIntro({ steps, moduleId, isKids, onStart }: ModuleIntroPro
               isKids ? 'text-purple-900' : 'text-white'
             }`}
           >
-            {steps.moduleTitle}
+            {steps.moduleName}
           </h1>
-          <p className={`text-sm ${isKids ? 'text-purple-700' : 'text-slate-400'}`}>
-            {steps.description}
-          </p>
         </div>
       </div>
 
-      {/* Learning Objectives */}
-      {steps.learningObjectives && steps.learningObjectives.length > 0 && (
-        <div className="mb-6">
-          <h3 className={`font-semibold mb-3 ${isKids ? 'text-purple-900' : 'text-white'}`}>
-            By the end, you'll be able to:
-          </h3>
-          <ul className="space-y-2">
-            {steps.learningObjectives.map((objective, idx) => (
-              <li key={idx} className="flex items-start gap-3">
-                <span
-                  className={`text-lg flex-shrink-0 ${
-                    isKids ? 'text-purple-500' : 'text-cyan-400'
-                  }`}
-                >
-                  ✓
-                </span>
-                <span className={`text-sm ${isKids ? 'text-purple-800' : 'text-slate-300'}`}>
-                  {objective}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
 
       {/* Module Stats */}
       <div
