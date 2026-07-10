@@ -261,6 +261,9 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             moduleId={moduleId}
             moduleName={steps.moduleName}
           />
+          {/* TODO: Pass section info to breadcrumb via React Context (Task 9)
+              Once SectionLessonViewer section state is available globally, update breadcrumb with:
+              currentSectionIndex, currentSectionHeading, totalSections */}
 
           {/* Step Title */}
           <h1 className="text-2xl font-bold mb-6 text-white">
