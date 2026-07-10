@@ -8,16 +8,22 @@ export const metadata: Metadata = {
   description: "16 modules, 93 hours, 9.3 CEUs. Learn full-stack development with AI. Free, accredited, with a capstone project.",
 };
 
-export default async function Home() {
+interface HomeProps {
+  searchParams?: Promise<{ view?: string }>;
+}
+
+export default async function Home(props: HomeProps) {
+  const searchParams = await props.searchParams;
+  const viewLanding = searchParams?.view === 'landing';
   const user = await getUser();
 
-  // If user is already logged in, redirect to dashboard
-  if (user) {
+  // If user is already logged in and not explicitly viewing landing page, redirect to dashboard
+  if (user && !viewLanding) {
     redirect('/dashboard');
   }
 
-  // If not logged in, show landing page
-  // Enrolled users who aren't signed in will see the landing page
-  // and can click "Enroll Free" to go to sign-in/sign-up
+  // Show landing page if:
+  // - User is not logged in, OR
+  // - User is logged in but explicitly requested landing page view with ?view=landing
   return <KidsLandingPage />;
 }

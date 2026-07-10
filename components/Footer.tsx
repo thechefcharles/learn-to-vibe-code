@@ -26,6 +26,11 @@ export function Footer() {
             <h3 className="font-display font-bold text-paper mb-4">Course</h3>
             <ul className="space-y-2 text-sm">
               <li>
+                <Link href="/?view=landing" className="text-violet-light hover:text-lime transition">
+                  Course Info
+                </Link>
+              </li>
+              <li>
                 <Link href="/demo" className="text-violet-light hover:text-lime transition">
                   Preview
                 </Link>
