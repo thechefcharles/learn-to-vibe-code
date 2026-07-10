@@ -8,6 +8,7 @@ import { MarkdownRenderer } from '@/components/MarkdownRenderer';
 import { CodeBlockWithCopy } from '@/components/course/CodeBlockWithCopy';
 import { KeyPointCard } from '@/components/course/KeyPointCard';
 import { usePreferredMotion } from '@/lib/hooks/usePreferredMotion';
+import { LessonCompletionReward } from '@/components/course/LessonCompletionReward';
 
 interface SectionLessonViewerProps {
   step: ModuleStep;
@@ -26,6 +27,7 @@ export function SectionLessonViewer({
   const [sectionIndex, setSectionIndex] = useState(0);
   const [viewedSections, setViewedSections] = useState<Set<number>>(new Set());
   const [progress, setProgress] = useState<LessonSectionProgress | null>(null);
+  const [showReward, setShowReward] = useState(false);
   const prefersReducedMotion = usePreferredMotion();
 
   const lessonStorageKey = `lesson-${moduleId}-${step.id}-sections`;
@@ -121,6 +123,7 @@ export function SectionLessonViewer({
         completed: true,
         rewardClaimed: true,
       }));
+      setShowReward(true);
       onLessonComplete?.();
     }
   }, [viewedSections.size, sections.length, progress, onLessonComplete, lessonStorageKey]);
@@ -309,6 +312,15 @@ export function SectionLessonViewer({
           </motion.button>
         )}
       </div>
+
+      {showReward && (
+        <LessonCompletionReward
+          xpReward={step.xpReward}
+          lessonTitle={step.title}
+          isKids={isKids}
+          onClose={() => setShowReward(false)}
+        />
+      )}
     </motion.div>
   );
 }
