@@ -10,6 +10,7 @@ alter table badges enable row level security;
 alter table xp enable row level security;
 alter table streaks enable row level security;
 alter table certificates enable row level security;
+alter table step_xp_claims enable row level security;
 
 -- PROFILES TABLE POLICIES
 -- Learners can view their own profile
@@ -223,3 +224,14 @@ create policy "Instructors can view all certificates"
       where id = auth.uid() and role = 'instructor'
     )
   );
+
+-- STEP XP CLAIMS TABLE POLICIES
+-- Idempotency ledger for per-lesson-step XP awards (see awardXP in
+-- lib/actions/gamification.ts). Like xp/badges/streaks, there is
+-- intentionally no INSERT/UPDATE policy for the authenticated role — rows
+-- are only ever written by the service-role client from trusted server
+-- code, never directly by a learner's own client. Learners may only view
+-- their own claims.
+create policy "Users can view their own step xp claims"
+  on step_xp_claims for select
+  using (auth.uid() = user_id);

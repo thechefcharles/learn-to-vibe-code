@@ -1,7 +1,23 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { createClient as createServiceClient } from "@supabase/supabase-js";
 import { getUser } from "@/lib/auth";
+import { getModuleSteps } from "@/lib/module-steps";
+import type { Version } from "@/lib/VersionContext";
+
+// The `xp`, `badges`, `streaks` and `step_xp_claims` tables intentionally have
+// no INSERT/UPDATE RLS policy for the `authenticated` role (see
+// supabase/rls-policies.sql) — gamification records must only ever be
+// written by trusted server logic, never directly by a user's own Supabase
+// client, or a learner could grant themselves arbitrary XP/badges by calling
+// the table API directly. Writes therefore go through the service-role
+// client (same pattern as lib/actions/profile.ts / lib/certificate.ts),
+// gated by the `getUser()` session check in every exported function below.
+const serviceClient = createServiceClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export interface UserXP {
   user_id: string;
@@ -67,16 +83,14 @@ export async function getUserStreak(): Promise<UserStreak> {
   return { user_id: user.id, current: data.current, longest: data.longest };
 }
 
-// Internal functions - only callable from quiz submission
-export async function awardXP(userId: string, points: number): Promise<UserXP> {
-  const user = await getUser();
-  if (!user || user.id !== userId) {
-    throw new Error("Unauthorized");
-  }
-
-  const supabase = await createClient();
-
-  const { data: current } = await supabase
+// Internal helper — deliberately NOT exported. Only exported `async function`s
+// in a "use server" file become callable Server Actions, so keeping this
+// private guarantees it can never be invoked directly with attacker-supplied
+// userId/points. Every exported entry point below must resolve the user from
+// the session and derive `points` from trusted server-side data BEFORE
+// calling this.
+async function grantXP(userId: string, points: number): Promise<UserXP> {
+  const { data: current } = await serviceClient
     .from("xp")
     .select("points, level")
     .eq("user_id", userId)
@@ -87,7 +101,7 @@ export async function awardXP(userId: string, points: number): Promise<UserXP> {
   const newPoints = current.points + points;
   const newLevel = Math.floor(newPoints / 1000) + 1;
 
-  const { error } = await supabase
+  const { error } = await serviceClient
     .from("xp")
     .update({ points: newPoints, level: newLevel })
     .eq("user_id", userId);
@@ -100,16 +114,121 @@ export async function awardXP(userId: string, points: number): Promise<UserXP> {
   return { user_id: userId, points: newPoints, level: newLevel };
 }
 
+/**
+ * Award XP for completing a lesson step (module-steps flow).
+ *
+ * This is called directly from a Client Component (StepLessonViewer), which
+ * means it is a public RPC endpoint — the client can send *any* arguments.
+ * It must not accept a user id or an XP amount from the caller:
+ *  - the user is resolved from the server session
+ *  - the XP amount is looked up from the server-side step catalog
+ *  - awarding is idempotent per (user, module, step) via `step_xp_claims`,
+ *    so replaying the call cannot farm XP
+ */
+export async function awardXP(moduleId: number, stepId: number): Promise<UserXP | null> {
+  const user = await getUser();
+  if (!user) {
+    throw new Error("Unauthorized: must be logged in to earn XP");
+  }
+
+  const supabase = await createClient();
+
+  // Resolve the user's enrolled version server-side to look up the correct
+  // step catalog (kids vs adult steps can carry different XP values).
+  const { data: enrollment } = await supabase
+    .from("enrollments")
+    .select("enrolled_version")
+    .eq("user_id", user.id)
+    .single();
+  const version = (enrollment?.enrolled_version as Version) || "adult";
+
+  // Canonical step + XP value, from server-side data only — never trust the
+  // client's copy of the step (it can be edited in memory before the call).
+  const steps = getModuleSteps(moduleId, version);
+  const step = steps?.steps.find((s) => s.id === stepId);
+  if (!step) {
+    throw new Error("Step not found");
+  }
+
+  // Idempotency: claim (user, module, step) exactly once via a unique
+  // constraint. If the claim already exists, this is a safe no-op.
+  const { error: claimError } = await serviceClient.from("step_xp_claims").insert({
+    user_id: user.id,
+    module_id: moduleId,
+    step_id: stepId,
+    xp_awarded: step.xpReward,
+  });
+
+  if (claimError) {
+    if (claimError.code === "23505") {
+      // Unique violation — XP for this step was already claimed.
+      return getUserXP().catch(() => null);
+    }
+    throw claimError;
+  }
+
+  return grantXP(user.id, step.xpReward);
+}
+
+/**
+ * Award XP for passing a module quiz.
+ *
+ * Also called from a Client Component indirectly via `submitQuiz`, so the
+ * same rule applies: no client-supplied score or XP amount. This re-reads
+ * the user's own most recent quiz attempt (already scored and stored
+ * server-side in `submitQuiz`) and claims its XP exactly once via the
+ * `xp_awarded` flag on that row, guarding against double-award races with a
+ * conditional update.
+ */
+export async function awardQuizXP(moduleId: number): Promise<UserXP | null> {
+  const user = await getUser();
+  if (!user) {
+    throw new Error("Unauthorized: must be logged in to earn XP");
+  }
+
+  const supabase = await createClient();
+
+  const { data: attempt } = await supabase
+    .from("quiz_attempts")
+    .select("id, score, passed, xp_awarded")
+    .eq("user_id", user.id)
+    .eq("module_id", moduleId)
+    .order("attempt_no", { ascending: false })
+    .limit(1)
+    .single();
+
+  if (!attempt || !attempt.passed) return null;
+  if (attempt.xp_awarded) return getUserXP().catch(() => null);
+
+  const xpReward = attempt.score === 100 ? 150 : 100;
+
+  // Conditional update: only proceed if this attempt hasn't been claimed yet.
+  // Uses the service client — learners have no UPDATE grant on quiz_attempts,
+  // so this flag can't be flipped back to false from the client to re-farm XP.
+  const { data: claimed, error: claimError } = await serviceClient
+    .from("quiz_attempts")
+    .update({ xp_awarded: true })
+    .eq("id", attempt.id)
+    .eq("xp_awarded", false)
+    .select("id");
+
+  if (claimError) throw claimError;
+  if (!claimed || claimed.length === 0) {
+    // Lost the race to another concurrent request — already claimed.
+    return getUserXP().catch(() => null);
+  }
+
+  return grantXP(user.id, xpReward);
+}
+
 export async function awardBadge(userId: string, badgeId: string): Promise<UserBadge> {
   const user = await getUser();
   if (!user || user.id !== userId) {
     throw new Error("Unauthorized");
   }
 
-  const supabase = await createClient();
-
   // Check if badge already exists
-  const { data: existing } = await supabase
+  const { data: existing } = await serviceClient
     .from("badges")
     .select("id")
     .eq("user_id", userId)
@@ -120,7 +239,7 @@ export async function awardBadge(userId: string, badgeId: string): Promise<UserB
     throw new Error("Badge already earned");
   }
 
-  const { data, error } = await supabase
+  const { data, error } = await serviceClient
     .from("badges")
     .insert({
       user_id: userId,
@@ -140,9 +259,7 @@ export async function updateStreak(userId: string, increment: boolean = true): P
     throw new Error("Unauthorized");
   }
 
-  const supabase = await createClient();
-
-  const { data: current } = await supabase
+  const { data: current } = await serviceClient
     .from("streaks")
     .select("current, longest")
     .eq("user_id", userId)
@@ -153,7 +270,7 @@ export async function updateStreak(userId: string, increment: boolean = true): P
   const newCurrent = increment ? current.current + 1 : 0;
   const newLongest = Math.max(current.longest, newCurrent);
 
-  const { error } = await supabase
+  const { error } = await serviceClient
     .from("streaks")
     .update({ current: newCurrent, longest: newLongest })
     .eq("user_id", userId);

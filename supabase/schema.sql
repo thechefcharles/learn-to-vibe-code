@@ -54,6 +54,7 @@ create table if not exists quiz_attempts (
   score integer not null,
   passed boolean not null,
   attempt_no integer not null default 1,
+  xp_awarded boolean not null default false,
   taken_at timestamp with time zone default now(),
   created_at timestamp with time zone default now()
 );
@@ -126,6 +127,19 @@ create table if not exists streaks (
   updated_at timestamp with time zone default now()
 );
 
+-- Step XP claims table (idempotency ledger for per-lesson-step XP awards;
+-- see lib/actions/gamification.ts#awardXP)
+create table if not exists step_xp_claims (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid not null references profiles(id) on delete cascade,
+  module_id integer not null,
+  step_id integer not null,
+  xp_awarded integer not null,
+  awarded_at timestamp with time zone default now(),
+  created_at timestamp with time zone default now(),
+  unique(user_id, module_id, step_id)
+);
+
 -- Certificates table
 create table if not exists certificates (
   id uuid primary key default uuid_generate_v4(),
@@ -143,3 +157,4 @@ create index if not exists idx_module_progress_module_id on module_progress(modu
 create index if not exists idx_quiz_attempts_user_id on quiz_attempts(user_id);
 create index if not exists idx_deliverables_user_id on deliverables(user_id);
 create index if not exists idx_badges_user_id on badges(user_id);
+create index if not exists idx_step_xp_claims_user_id on step_xp_claims(user_id);

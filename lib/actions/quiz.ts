@@ -4,7 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getUser } from "@/lib/auth";
 import { scoreQuiz, getModuleQuizByVersion } from "@/lib/quizzes";
 import { revalidatePath } from "next/cache";
-import { awardXP, awardBadge, updateStreak } from "@/lib/actions/gamification";
+import { awardQuizXP, awardBadge, updateStreak } from "@/lib/actions/gamification";
 import type { Version } from "@/lib/VersionContext";
 
 export async function submitQuiz(
@@ -45,8 +45,9 @@ export async function submitQuiz(
 
   // Award XP and badges for passing
   if (result.passed) {
-    const xpReward = result.score === 100 ? 150 : 100; // Bonus for perfect score
-    await awardXP(user.id, xpReward);
+    // xpReward is derived server-side inside awardQuizXP from the attempt
+    // row just inserted above — never trust a client-supplied amount here.
+    await awardQuizXP(moduleId);
 
     // Award badge for first quiz passed
     await awardBadge(user.id, "first_quiz_passed").catch(() => {});

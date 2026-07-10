@@ -301,9 +301,12 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                       completedSteps: Array.from(newCompleted),
                     })
                   );
-                  // Award XP via server action
+                  // Award XP via server action. The server resolves the
+                  // current user from the session and looks up the XP
+                  // amount from its own step catalog — it does not trust
+                  // client-supplied user ids or XP amounts.
                   if (user) {
-                    awardXP(user.id, currentStep.xpReward).catch(console.error);
+                    awardXP(moduleId, currentStep.id).catch(console.error);
                   }
                 }}
               />
