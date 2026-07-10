@@ -16,7 +16,6 @@ import { BookmarkButton } from "./course/BookmarkButton";
 import { NextStepPreview } from "./course/NextStepPreview";
 import { CodeBlockWithCopy } from "./course/CodeBlockWithCopy";
 import { StepResourcesFooter } from "./course/StepResourcesFooter";
-import { ModuleBreadcrumb } from "./course/ModuleBreadcrumb";
 import { VideoBackground } from "./kids-landing/VideoBackground";
 import { MouseTrail } from "./kids-landing/MouseTrail";
 import { SectionLessonViewer } from "@/components/course/SectionLessonViewer";
@@ -222,19 +221,19 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             </motion.div>
           )}
 
-          <ModuleBreadcrumb
-            moduleId={moduleId}
-            moduleName={steps.moduleName}
-          />
-          {/* TODO: Pass section info to breadcrumb via React Context (Task 9)
-              Once SectionLessonViewer section state is available globally, update breadcrumb with:
-              currentSectionIndex, currentSectionHeading, totalSections */}
-
-          {/* Step Title — single source of truth for the lesson name (no longer
-              repeated in the breadcrumb above). */}
-          <h1 className={`text-2xl sm:text-3xl font-bold mb-6 ${isKids ? "text-purple-900" : "text-white"}`}>
-            {currentStep.title}
-          </h1>
+          {/* Minimal Title Section - Module and Lesson, each shown once */}
+          <div className="mb-8">
+            <h2 className={`text-lg font-semibold mb-2 ${
+              isKids ? 'text-purple-600' : 'text-slate-400'
+            }`}>
+              {steps.moduleName}
+            </h2>
+            <h1 className={`text-4xl font-bold ${
+              isKids ? 'text-purple-900' : 'text-white'
+            }`}>
+              {currentStep.title}
+            </h1>
+          </div>
 
           {/* Skip To Next Option */}
           {currentStep.duration > 10 && !isFirstStep && !isLastStep && (
