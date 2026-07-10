@@ -7,9 +7,10 @@ import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface AuthPanelProps {
   userName?: string;
+  isSignedIn?: boolean;
 }
 
-export function AuthPanel({ userName }: AuthPanelProps) {
+export function AuthPanel({ userName, isSignedIn = false }: AuthPanelProps) {
   const prefersReducedMotion = useReducedMotion();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [scratchPercentage, setScratchPercentage] = useState(0);
@@ -205,9 +206,9 @@ export function AuthPanel({ userName }: AuthPanelProps) {
         </motion.p>
       </div>
 
-      {/* Start Button */}
+      {/* Start/Dashboard Button */}
       <Link
-        href="/auth/sign-up"
+        href={isSignedIn ? "/dashboard" : "/auth/sign-up"}
         className="w-full mt-auto pt-4"
       >
         <motion.button
@@ -215,7 +216,7 @@ export function AuthPanel({ userName }: AuthPanelProps) {
           whileTap={{ scale: 0.95 }}
           className="w-full py-3 rounded-lg font-bold text-white text-lg uppercase tracking-widest bg-gradient-to-r from-cyan-500/80 via-purple-500/80 to-pink-500/80 hover:from-cyan-500 hover:via-purple-500 hover:to-pink-500 border border-cyan-300/50 hover:border-cyan-300/100 shadow-lg transition-all"
         >
-          Start →
+          {isSignedIn ? 'My Dashboard →' : 'Start →'}
         </motion.button>
       </Link>
     </motion.div>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getUser } from "@/lib/auth";
 import { KidsLandingPage } from "@/components/kids-landing/KidsLandingPage";
 
 export const metadata: Metadata = {
@@ -7,6 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Home() {
+  const user = await getUser();
   // Always show landing page regardless of auth status
-  return <KidsLandingPage />;
+  return <KidsLandingPage isSignedIn={!!user} />;
 }

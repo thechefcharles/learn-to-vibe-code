@@ -14,6 +14,10 @@ const PageContent = dynamic(() => import('@/app/landing-kids/page-content'), {
   ),
 });
 
-export function KidsLandingPage() {
-  return <PageContent />;
+interface KidsLandingPageProps {
+  isSignedIn?: boolean;
+}
+
+export function KidsLandingPage({ isSignedIn = false }: KidsLandingPageProps) {
+  return <PageContent isSignedIn={isSignedIn} />;
 }

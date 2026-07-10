@@ -15,7 +15,11 @@ import { MouseTrail } from '@/components/kids-landing/MouseTrail';
 import { Header } from '@/components/kids-landing/Header';
 import Link from 'next/link';
 
-export default function KidsLandingPageContent() {
+interface KidsLandingPageContentProps {
+  isSignedIn?: boolean;
+}
+
+export default function KidsLandingPageContent({ isSignedIn = false }: KidsLandingPageContentProps) {
   const [userName, setUserName] = useState('');
 
   return (
@@ -40,7 +44,7 @@ export default function KidsLandingPageContent() {
           <DashboardGrid>
             {/* WELCOME BACK / SIGN IN */}
             <GridItem colSpan={1} mobileColSpan={2} mobileOrder={1}>
-              <AuthPanel userName={userName} />
+              <AuthPanel userName={userName} isSignedIn={isSignedIn} />
             </GridItem>
 
             {/* 4 LEARNING TIERS */}
