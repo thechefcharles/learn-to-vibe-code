@@ -48,29 +48,29 @@ export default function KidsLandingPageContent() {
               <ModuleArcWidget userName={userName} onUserNameChange={setUserName} />
             </GridItem>
 
-            {/* Mobile: YOUR LEARNING JOURNEY (third on mobile, full width) */}
+            {/* Desktop: COURSE DURATION (top row, moved from bottom) */}
             <GridItem colSpan={1} mobileColSpan={2} mobileOrder={3}>
-              <ProgressFlowWidget />
+              <TimeWidget />
             </GridItem>
 
-            {/* Mobile: GET CERTIFIED (fourth on mobile, bottom right) */}
+            {/* Desktop: GET CERTIFIED (top row right) */}
             <GridItem colSpan={1} mobileColSpan={1} mobileOrder={4}>
               <CredentialPreviewWidget />
             </GridItem>
 
-            {/* Desktop: 4 LEARNING TIERS */}
-            <GridItem colSpan={2} mobileColSpan={1} mobileOrder={5}>
-              <LearningTiersWidget />
+            {/* Mobile: YOUR LEARNING JOURNEY (bottom left, moved from top) */}
+            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={5}>
+              <ProgressFlowWidget />
             </GridItem>
 
-            {/* Desktop: COURSE DURATION */}
+            {/* Desktop: IS IT FREE (bottom middle, moved from right) */}
             <GridItem colSpan={1} mobileColSpan={1} mobileOrder={6}>
-              <TimeWidget />
+              <FreeWidget />
             </GridItem>
 
-            {/* Desktop: IS IT FREE */}
-            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={7}>
-              <FreeWidget />
+            {/* Desktop: 4 LEARNING TIERS (bottom right) */}
+            <GridItem colSpan={2} mobileColSpan={1} mobileOrder={7}>
+              <LearningTiersWidget />
             </GridItem>
           </DashboardGrid>
         </div>
