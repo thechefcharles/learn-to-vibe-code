@@ -9,6 +9,9 @@ interface ModuleSidebarProps {
   completedSteps: Set<number>;
   onJumpToStep: (index: number) => void;
   isKids: boolean;
+  currentSectionIndex?: number;
+  viewedSections?: Set<number>;
+  onJumpToSection?: (sectionIndex: number) => void;
 }
 
 export function ModuleSidebar({
@@ -17,6 +20,9 @@ export function ModuleSidebar({
   completedSteps,
   onJumpToStep,
   isKids,
+  currentSectionIndex,
+  viewedSections,
+  onJumpToSection,
 }: ModuleSidebarProps) {
   const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
 
@@ -76,45 +82,87 @@ export function ModuleSidebar({
           const isCurrent = currentStepIndex === index;
 
           return (
-            <motion.button
-              key={index}
-              onClick={() => onJumpToStep(index)}
-              className={`w-full text-left px-3 py-2 rounded-lg transition-all ${
-                isCurrent
-                  ? isKids
-                    ? 'bg-purple-300 text-purple-900 shadow-lg'
-                    : 'bg-cyan-500/30 text-white shadow-lg'
-                  : isCompleted
-                  ? isKids
-                    ? 'bg-green-100 text-green-900 hover:bg-green-200'
-                    : 'bg-green-600/20 text-green-400 hover:bg-green-600/30'
-                  : isKids
-                  ? 'bg-white/50 text-purple-900 hover:bg-white/70'
-                  : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
-              }`}
-              whileHover={{ x: 4 }}
-            >
-              <div className="flex items-center gap-2">
-                <div
-                  className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
-                    isCurrent
-                      ? isKids
-                        ? 'bg-purple-500 text-white'
-                        : 'bg-cyan-400 text-slate-900'
-                      : isCompleted
-                      ? isKids
-                        ? 'bg-green-500 text-white'
-                        : 'bg-green-500 text-white'
-                      : isKids
-                      ? 'bg-purple-300 text-purple-700'
-                      : 'bg-slate-600 text-slate-400'
-                  }`}
-                >
-                  {isCompleted ? '✓' : index + 1}
+            <div key={index}>
+              <motion.button
+                onClick={() => onJumpToStep(index)}
+                className={`w-full text-left px-3 py-2 rounded-lg transition-all ${
+                  isCurrent
+                    ? isKids
+                      ? 'bg-purple-300 text-purple-900 shadow-lg'
+                      : 'bg-cyan-500/30 text-white shadow-lg'
+                    : isCompleted
+                    ? isKids
+                      ? 'bg-green-100 text-green-900 hover:bg-green-200'
+                      : 'bg-green-600/20 text-green-400 hover:bg-green-600/30'
+                    : isKids
+                    ? 'bg-white/50 text-purple-900 hover:bg-white/70'
+                    : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                }`}
+                whileHover={{ x: 4 }}
+              >
+                <div className="flex items-center gap-2">
+                  <div
+                    className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
+                      isCurrent
+                        ? isKids
+                          ? 'bg-purple-500 text-white'
+                          : 'bg-cyan-400 text-slate-900'
+                        : isCompleted
+                        ? isKids
+                          ? 'bg-green-500 text-white'
+                          : 'bg-green-500 text-white'
+                        : isKids
+                        ? 'bg-purple-300 text-purple-700'
+                        : 'bg-slate-600 text-slate-400'
+                    }`}
+                  >
+                    {isCompleted ? '✓' : index + 1}
+                  </div>
+                  <span className="text-sm font-medium truncate">{step.title}</span>
                 </div>
-                <span className="text-sm font-medium truncate">{step.title}</span>
-              </div>
-            </motion.button>
+              </motion.button>
+
+              {/* Section sub-list when this is the current lesson and it has sections */}
+              {isCurrent && step.sections && step.sections.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  className="ml-7 mt-1 space-y-1"
+                >
+                  {step.sections.map((section, sIdx) => {
+                    const sectionViewed = viewedSections?.has(sIdx);
+                    const sectionCurrent = currentSectionIndex === sIdx;
+                    return (
+                      <motion.button
+                        key={sIdx}
+                        onClick={() => onJumpToSection?.(sIdx)}
+                        className={`w-full text-left px-2 py-1.5 text-xs rounded transition-all ${
+                          sectionCurrent
+                            ? isKids
+                              ? 'bg-purple-200 text-purple-900'
+                              : 'bg-cyan-500/20 text-cyan-300'
+                            : sectionViewed
+                            ? isKids
+                              ? 'bg-green-100 text-green-900'
+                              : 'bg-green-600/20 text-green-400'
+                            : isKids
+                            ? 'bg-white/30 text-purple-900'
+                            : 'bg-slate-700/50 text-slate-400'
+                        }`}
+                        whileHover={{ x: 2 }}
+                      >
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-xs">
+                            {sectionViewed ? '✓' : '○'}
+                          </span>
+                          <span className="truncate font-medium">{section.heading}</span>
+                        </div>
+                      </motion.button>
+                    );
+                  })}
+                </motion.div>
+              )}
+            </div>
           );
         })}
       </div>
