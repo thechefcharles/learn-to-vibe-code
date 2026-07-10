@@ -160,7 +160,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           <div className="flex flex-col items-center gap-1">
             <div className="flex items-center gap-3">
               <div className="text-xs sm:text-sm text-slate-400">
-                Step {currentStepIndex + 1} of {steps.steps.length}
+                Lesson {currentStepIndex + 1} of {steps.steps.length}
               </div>
               <BookmarkButton
                 moduleId={moduleId}
@@ -200,7 +200,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
         {/* Minimal Module Info - Show only on first step */}
         {isFirstStep && (
           <div className="mb-6 text-xs text-slate-400">
-            <span className="text-cyan-400 font-semibold">{String(moduleId).padStart(2, '0')}</span> {steps.moduleName} • {steps.steps.length} steps • {Math.round(steps.totalDuration)} min
+            <span className="text-cyan-400 font-semibold">{String(moduleId).padStart(2, '0')}</span> {steps.moduleName} • {steps.steps.length} lessons • {Math.round(steps.totalDuration)} min
           </div>
         )}
 
@@ -233,14 +233,14 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             </motion.div>
           )}
 
-          {/* Compact Step Metadata */}
+          {/* Lesson Metadata */}
           <div className="mb-6 flex items-center gap-3 text-xs">
             <span className="text-slate-400">
               {currentStep.type === "lesson"
-                ? "📖"
+                ? `📖 Lesson ${currentStepIndex + 1}`
                 : currentStep.type === "checkpoint"
-                  ? "✓"
-                  : "🎯"} {currentStep.type}
+                  ? `✓ Checkpoint ${currentStepIndex + 1}`
+                  : `🎯 Quiz ${currentStepIndex + 1}`}
             </span>
             <span className="text-slate-500">•</span>
             <XPRewardBadge xp={currentStep.xpReward} type="preview" />

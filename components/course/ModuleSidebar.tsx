@@ -28,13 +28,13 @@ export function ModuleSidebar({
           : 'bg-slate-800/50 border-slate-700'
       }`}
     >
-      {/* Module Title */}
+      {/* Lessons Title */}
       <h3
         className={`text-sm font-bold uppercase tracking-wider mb-4 ${
           isKids ? 'text-purple-900' : 'text-white'
         }`}
       >
-        Module Progress
+        Lessons
       </h3>
 
       {/* Progress Bar */}
