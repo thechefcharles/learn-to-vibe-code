@@ -7,12 +7,14 @@ import { MarkdownRenderer } from "./MarkdownRenderer";
 import { useVersion } from "@/lib/VersionContext";
 import { useKeyboardNavigation } from "@/lib/hooks/useKeyboardNavigation";
 import { useModuleTimeRemaining } from "@/lib/hooks/useModuleTimeRemaining";
+import { useSwipeNavigation } from "@/lib/hooks/useSwipeNavigation";
 import { useUserStreak } from "@/lib/hooks/useUserStreak";
 import { ModuleSidebar } from "./course/ModuleSidebar";
 import { ModuleIntro } from "./course/ModuleIntro";
 import { KeyPointCard } from "./course/KeyPointCard";
 import { BookmarkButton } from "./course/BookmarkButton";
 import { NextStepPreview } from "./course/NextStepPreview";
+import { CodeBlockWithCopy } from "./course/CodeBlockWithCopy";
 import { StepResourcesFooter } from "./course/StepResourcesFooter";
 import { ModuleBreadcrumb } from "./course/ModuleBreadcrumb";
 import { VideoBackground } from "./kids-landing/VideoBackground";
@@ -115,12 +117,6 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   });
 
   const celebrateCompletion = () => {
-
-  useSwipeNavigation({
-    onSwipeLeft: handleNext,
-    onSwipeRight: handleBack,
-    disabled: false,
-  });
     if (!isLastStep) {
       const ele = document.querySelector('[data-step-container]');
       if (ele && 'animate' in Element.prototype) {
@@ -135,6 +131,12 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
       }
     }
   };
+
+  useSwipeNavigation({
+    onSwipeLeft: handleNext,
+    onSwipeRight: handleBack,
+    disabled: false,
+  });
 
   return (
     <div
@@ -214,6 +216,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               ? "bg-white/10 border-white/20"
               : "bg-white/5 border-white/10"
           }`}
+          data-step-container
         >
           {/* Milestone Celebration */}
           {isMilestone && (
@@ -528,7 +531,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             <div className="flex flex-col items-center gap-2">
               <div className="text-xs text-slate-500">
                 {isLastStep ? (
-                  <span className="text-emerald-400">✓ Complete!</span>
+                  <span className="text-emerald-400">✓ Complete! +{currentStep.xpReward} XP</span>
                 ) : (
                   <span>{currentStepIndex + 1} of {steps.steps.length}</span>
                 )}
