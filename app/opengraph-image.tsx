@@ -20,7 +20,7 @@ export default async function Image() {
           alignItems: 'center',
           justifyContent: 'center',
           flexDirection: 'column',
-          gap: '20px',
+          gap: '40px',
           padding: '40px',
           position: 'relative',
         }}
@@ -38,61 +38,64 @@ export default async function Image() {
           }}
         />
 
-        {/* Logo and text container */}
+        {/* Logo mark with gradient glow */}
+        <div
+          style={{
+            width: '140px',
+            height: '140px',
+            background: 'linear-gradient(135deg, #06B6D4 0%, #A78BFA 50%, #EC4899 100%)',
+            borderRadius: '30px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 0 50px rgba(6, 182, 212, 0.5), inset 0 0 30px rgba(168, 85, 247, 0.2)',
+          }}
+        >
+          <div
+            style={{
+              fontSize: '80px',
+              fontWeight: 'bold',
+              color: 'white',
+              textAlign: 'center',
+              lineHeight: '1',
+            }}
+          >
+            ◸
+          </div>
+        </div>
+
+        {/* Text content */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            gap: '30px',
-            zIndex: 1,
+            gap: '15px',
+            textAlign: 'center',
           }}
         >
-          {/* Branded Logo */}
-          <img
-            src="https://www.learntovibecode.io/favicon.png"
-            alt="Learn to Vibe Code Logo"
-            style={{
-              width: '140px',
-              height: '140px',
-              filter: 'drop-shadow(0 0 30px rgba(6, 182, 212, 0.4))',
-            }}
-          />
-
-          {/* Main title */}
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '10px',
+              fontSize: '72px',
+              fontWeight: 'bold',
+              background: 'linear-gradient(90deg, #06B6D4, #A78BFA, #EC4899)',
+              backgroundClip: 'text',
+              color: 'transparent',
+              letterSpacing: '-2px',
             }}
           >
-            <div
-              style={{
-                fontSize: '72px',
-                fontWeight: 'bold',
-                background: 'linear-gradient(90deg, #06B6D4, #A78BFA, #EC4899)',
-                backgroundClip: 'text',
-                color: 'transparent',
-                textAlign: 'center',
-                letterSpacing: '-2px',
-              }}
-            >
-              Learn to Vibe Code
-            </div>
+            Learn to Vibe Code
+          </div>
 
-            {/* Subtitle */}
-            <div
-              style={{
-                fontSize: '36px',
-                color: '#e5e7eb',
-                textAlign: 'center',
-                letterSpacing: '1px',
-              }}
-            >
-              Free Vibe Coding Course
-            </div>
+          <div
+            style={{
+              fontSize: '40px',
+              color: '#e5e7eb',
+              fontWeight: '500',
+              letterSpacing: '0.5px',
+            }}
+          >
+            Free Vibe Coding Course
           </div>
         </div>
       </div>
