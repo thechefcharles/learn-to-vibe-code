@@ -143,10 +143,7 @@ export function SectionLessonViewer({
     >
       {/* Section Header */}
       <div>
-        <div className={`text-sm font-semibold ${isKids ? 'text-purple-600' : 'text-cyan-400'} mb-2`}>
-          Section {sectionIndex + 1} of {sections.length}
-        </div>
-        <h2 className={`text-3xl font-bold ${isKids ? 'text-purple-900' : 'text-white'}`}>
+        <h2 className={`text-3xl font-bold ${isKids ? 'text-purple-600' : 'text-white'}`}>
           {currentSection.heading}
         </h2>
       </div>

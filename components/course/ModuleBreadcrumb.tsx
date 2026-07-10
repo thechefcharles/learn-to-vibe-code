@@ -5,6 +5,7 @@ import Link from "next/link";
 interface ModuleBreadcrumbProps {
   moduleId: number;
   moduleName: string;
+  currentLessonTitle?: string;
   currentSectionIndex?: number;
   currentSectionHeading?: string;
   totalSections?: number;
@@ -13,6 +14,7 @@ interface ModuleBreadcrumbProps {
 export function ModuleBreadcrumb({
   moduleId,
   moduleName,
+  currentLessonTitle,
   currentSectionIndex,
   currentSectionHeading,
   totalSections,
@@ -32,6 +34,12 @@ export function ModuleBreadcrumb({
       >
         {String(moduleId).padStart(2, "0")} {moduleName}
       </Link>
+      {currentLessonTitle && (
+        <>
+          <span className="text-slate-600">→</span>
+          <span className="text-sm text-slate-400">{currentLessonTitle}</span>
+        </>
+      )}
       {currentSectionIndex !== undefined && currentSectionHeading && (
         <>
           <span className="text-slate-600">→</span>

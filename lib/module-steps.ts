@@ -346,9 +346,7 @@ Vercel is where you'll deploy your app — makes it live on the internet.
           {
             id: 0,
             heading: "What's Free",
-            content: `## What's Free
-
-Set expectations now so you're not surprised by a bill later.
+            content: `Set expectations now so you're not surprised by a bill later.
 
 | Tool | Free Tier | Cost If You Upgrade |
 |------|----------|-------------------|
@@ -363,9 +361,7 @@ Set expectations now so you're not surprised by a bill later.
           {
             id: 1,
             heading: "You Can Complete This Course Free",
-            content: `## You Can Complete This Course Free
-
-All tools have free tiers. AI editor usage depends on how much you experiment — most learners stay under $10-20/month.
+            content: `All tools have free tiers. AI editor usage depends on how much you experiment — most learners stay under $10-20/month.
 
 No tool requires payment to complete this course.`,
             keyPoint: "Nothing in this course requires payment.",
@@ -373,9 +369,7 @@ No tool requires payment to complete this course.`,
           {
             id: 2,
             heading: "Avoid Surprise Bills",
-            content: `## Avoid Surprise Bills
-
-1. Use free tiers first — don't upgrade unless you hit limits
+            content: `1. Use free tiers first — don't upgrade unless you hit limits
 2. Check usage dashboards weekly (2 minutes)
 3. Set spending alerts if available`,
             keyPoint: "Budget for $0-20/month if you experiment. Nothing is required.",

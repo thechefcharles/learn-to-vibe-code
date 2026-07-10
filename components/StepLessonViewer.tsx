@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 import { useVersion } from "@/lib/VersionContext";
@@ -19,7 +18,6 @@ import { CodeBlockWithCopy } from "./course/CodeBlockWithCopy";
 import { StepResourcesFooter } from "./course/StepResourcesFooter";
 import { ModuleBreadcrumb } from "./course/ModuleBreadcrumb";
 import { VideoBackground } from "./kids-landing/VideoBackground";
-import { XPRewardBadge } from "./course/XPRewardBadge";
 import { MouseTrail } from "./kids-landing/MouseTrail";
 import { SectionLessonViewer } from "@/components/course/SectionLessonViewer";
 import { awardXP } from "@/lib/actions/gamification";
@@ -158,13 +156,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
 
       {/* Minimal Header */}
       <div className="sticky top-0 z-40 bg-slate-900/60 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
-          <Link
-            href={`/course/${moduleId}`}
-            className="text-sm font-medium text-slate-300 hover:text-white transition"
-          >
-            ← Back
-          </Link>
+        <div className="max-w-7xl mx-auto px-4 py-3 flex justify-center items-center gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
           <div className="flex flex-col items-center gap-1">
             <div className="flex items-center gap-3">
               <div className="text-xs sm:text-sm text-slate-400">
@@ -178,14 +170,6 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             </div>
             {streak && <div className="text-orange-400 text-xs">🔥 {streak.current} day streak</div>}
             <div className="text-xs text-slate-500">~{remaining} min left</div>
-          </div>
-          <div className="w-32 h-1 bg-slate-700 rounded-full overflow-hidden">
-            <motion.div
-              className="h-full bg-gradient-to-r from-cyan-500 to-purple-500"
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.3 }}
-            />
           </div>
         </div>
       </div>
@@ -241,25 +225,10 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             </motion.div>
           )}
 
-          {/* Lesson Metadata */}
-          <div className="mb-6 flex items-center gap-3 text-xs">
-            <span className="text-slate-400">
-              {currentStep.type === "lesson"
-                ? `📖 Lesson ${currentStepIndex + 1}`
-                : currentStep.type === "checkpoint"
-                  ? `✓ Checkpoint ${currentStepIndex + 1}`
-                  : `🎯 Quiz ${currentStepIndex + 1}`}
-            </span>
-            <span className="text-slate-500">•</span>
-            <XPRewardBadge xp={currentStep.xpReward} type="preview" />
-            <span className="text-slate-500 ml-auto">~{currentStep.duration} min</span>
-          </div>
-
-
-
           <ModuleBreadcrumb
             moduleId={moduleId}
             moduleName={steps.moduleName}
+            currentLessonTitle={currentStep.title}
           />
           {/* TODO: Pass section info to breadcrumb via React Context (Task 9)
               Once SectionLessonViewer section state is available globally, update breadcrumb with:
