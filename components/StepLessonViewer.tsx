@@ -184,9 +184,8 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
 
       {/* Main Content - Two Column Layout */}
       <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 flex gap-4 sm:gap-8 relative z-10 flex-1">
-        {/* Sidebar - Show on step 1+ */}
-        {!isFirstStep && (
-          <div className="hidden lg:block w-64 flex-shrink-0">
+        {/* Sidebar - Always visible */}
+        <div className="hidden lg:block w-64 flex-shrink-0">
             <ModuleSidebar
               steps={steps}
               currentStepIndex={currentStepIndex}
@@ -194,8 +193,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               onJumpToStep={handleJumpToStep}
               isKids={isKids}
             />
-          </div>
-        )}
+        </div>
 
         {/* Main Content */}
         <div className="flex-1 max-w-3xl">
@@ -564,51 +562,6 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
         </div>
       </div>
 
-      {/* Step Progress Mini Map (Optional - shown on side on large screens) */}
-      {steps.steps.length > 1 && (
-        <div className="fixed right-4 top-32 hidden xl:block">
-          <div
-            className={`rounded-lg p-4 border ${
-              isKids
-                ? "bg-white border-purple-300"
-                : "bg-slate-800 border-slate-700"
-            }`}
-            style={{ maxWidth: "120px" }}
-          >
-            <p
-              className={`text-xs font-bold mb-3 ${
-                isKids ? "text-purple-700" : "text-slate-300"
-              }`}
-            >
-              Progress
-            </p>
-            <div className="space-y-1">
-              {steps.steps.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleJumpToStep(idx)}
-                  className={`block w-full text-xs text-left px-2 py-1 rounded transition ${
-                    idx === currentStepIndex
-                      ? isKids
-                        ? "bg-purple-500 text-white font-bold"
-                        : "bg-violet-600 text-white font-bold"
-                      : completedSteps.has(idx)
-                        ? isKids
-                          ? "bg-green-100 text-green-700"
-                          : "bg-green-500/20 text-green-300"
-                        : isKids
-                          ? "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                          : "bg-slate-700 text-slate-400 hover:bg-slate-600"
-                  }`}
-                  title={steps.steps[idx].title}
-                >
-                  {idx + 1}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
