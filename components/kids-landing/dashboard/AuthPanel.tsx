@@ -106,7 +106,7 @@ export function AuthPanel({ userName }: AuthPanelProps) {
       initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
       animate={!prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
       transition={!prefersReducedMotion ? { duration: 0.5 } : undefined}
-      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 w-full max-w-md mx-auto flex flex-col items-center gap-4 h-full"
+      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 w-full max-w-md mx-auto flex flex-col items-center gap-3 h-full"
     >
       {/* Welcome Header */}
       <div className="flex flex-col items-center gap-2">
