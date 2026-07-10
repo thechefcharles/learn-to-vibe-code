@@ -2,16 +2,13 @@ import { getUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { getUserXP, getUserBadges, getUserStreak } from "@/lib/actions/gamification";
 import { getAllModuleProgress, getUserEnrolledVersion } from "@/lib/actions/course";
-import { signOutAction } from "@/lib/actions/auth";
 import { ProfileHeroCard } from "@/components/dashboard/ProfileHeroCard";
-import { StatsGrid } from "@/components/dashboard/StatsGrid";
 import { CourseProgress } from "@/components/dashboard/CourseProgress";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { BadgesShowcase } from "@/components/dashboard/BadgesShowcase";
 import { DashboardBackground } from "@/components/dashboard/DashboardBackground";
 import { Header } from "@/components/kids-landing/Header";
 import { Footer } from "@/components/Footer";
-import Link from "next/link";
 
 const BADGE_METADATA = [
   { key: "first_quiz_passed", name: "First Steps", description: "Passed your first quiz", icon: "🎯" },
@@ -53,26 +50,6 @@ export default async function DashboardPage() {
             xpPoints={xp.points}
             streakCurrent={streak.current}
             streakLongest={streak.longest}
-          />
-        </section>
-
-        {/* Continue Learning CTA */}
-        <section className="mb-8">
-          <Link href="/course" className="block">
-            <div className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 rounded-2xl p-6 sm:p-8 text-white font-bold text-lg sm:text-xl transition-all shadow-lg hover:shadow-xl">
-              ▶ Continue Learning
-            </div>
-          </Link>
-        </section>
-
-        {/* Stats Grid */}
-        <section className="mb-8">
-          <StatsGrid
-            completedModules={completedModules}
-            totalModules={16}
-            badgeCount={badges.length}
-            xpLevel={xp.level}
-            capstoneUnlocked={capstoneUnlocked}
           />
         </section>
 
