@@ -5,8 +5,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 import { useVersion } from "@/lib/VersionContext";
+import { useKeyboardNavigation } from "@/lib/hooks/useKeyboardNavigation";
 import { ModuleSidebar } from "./course/ModuleSidebar";
 import { ModuleIntro } from "./course/ModuleIntro";
+import { KeyPointCard } from "./course/KeyPointCard";
 import { VideoBackground } from "./kids-landing/VideoBackground";
 import { MouseTrail } from "./kids-landing/MouseTrail";
 import type { ModuleStep, ModuleStepSequence } from "@/lib/module-steps";
@@ -35,6 +37,13 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   });
   const { version } = useVersion();
   const isKids = version === "kids";
+
+  // Keyboard navigation: K for previous, J for next
+  useKeyboardNavigation({
+    onNext: handleNext,
+    onPrevious: handleBack,
+    disabled: false,
+  });
 
   // Calculate milestone progress
   const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
@@ -230,18 +239,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           )}
 
           {/* Key Point */}
-          {currentStep.keyPoint && (
-            <div
-              className={`rounded-lg p-4 mb-8 border-l-4 ${
-                isKids
-                  ? "bg-yellow-50 border-yellow-400 text-yellow-700"
-                  : "bg-yellow-500/10 border-yellow-500/30 text-yellow-300"
-              }`}
-            >
-              <p className="font-medium">💡 Key Point</p>
-              <p className="text-sm mt-1">{currentStep.keyPoint}</p>
-            </div>
-          )}
+          {currentStep.keyPoint && <KeyPointCard keyPoint={currentStep.keyPoint} />}
 
           {/* Hints Section */}
           {currentStep.hints && currentStep.hints.length > 0 && (
@@ -455,18 +453,6 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             </div>
           )}
 
-          {/* Key Points - Show at end of step or on last step */}
-          {currentStep.keyPoint && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-8 pt-6 border-t border-white/10"
-            >
-              <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">Key Takeaway</p>
-              <p className="text-sm text-slate-200 italic">{currentStep.keyPoint}</p>
-            </motion.div>
-          )}
-
           {/* Navigation Inside Box */}
           <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center gap-4">
             <button
@@ -481,12 +467,17 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               ← Previous
             </button>
 
-            <div className="text-xs text-slate-500">
-              {isLastStep ? (
-                <span className="text-emerald-400">✓ Complete!</span>
-              ) : (
-                <span>{currentStepIndex + 1} of {steps.steps.length}</span>
-              )}
+            <div className="flex flex-col items-center gap-2">
+              <div className="text-xs text-slate-500">
+                {isLastStep ? (
+                  <span className="text-emerald-400">✓ Complete!</span>
+                ) : (
+                  <span>{currentStepIndex + 1} of {steps.steps.length}</span>
+                )}
+              </div>
+              <div className="text-xs text-slate-600 font-medium">
+                K/J to navigate
+              </div>
             </div>
 
             <button
