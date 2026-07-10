@@ -38,39 +38,39 @@ export default function KidsLandingPageContent() {
         <div className="max-w-6xl mx-auto">
 
           <DashboardGrid>
-            {/* Mobile: SIGN IN / SIGN UP (top on mobile) */}
+            {/* WELCOME BACK / SIGN IN */}
             <GridItem colSpan={1} mobileColSpan={2} mobileOrder={1}>
               <AuthPanel />
             </GridItem>
 
-            {/* Mobile: 16 MODULES (second on mobile) */}
-            <GridItem colSpan={1} mobileColSpan={2} mobileOrder={2}>
+            {/* 4 LEARNING TIERS */}
+            <GridItem colSpan={2} mobileColSpan={2} mobileOrder={2}>
+              <LearningTiersWidget />
+            </GridItem>
+
+            {/* 16 MODULES */}
+            <GridItem colSpan={1} mobileColSpan={2} mobileOrder={3}>
               <ModuleArcWidget userName={userName} onUserNameChange={setUserName} />
             </GridItem>
 
-            {/* Desktop: COURSE DURATION (top row, moved from bottom) */}
-            <GridItem colSpan={1} mobileColSpan={2} mobileOrder={3}>
-              <TimeWidget />
-            </GridItem>
-
-            {/* Desktop: GET CERTIFIED (top row right) */}
+            {/* YOUR LEARNING JOURNEY (bottom left) */}
             <GridItem colSpan={1} mobileColSpan={1} mobileOrder={4}>
-              <CredentialPreviewWidget />
-            </GridItem>
-
-            {/* Mobile: YOUR LEARNING JOURNEY (bottom left, moved from top) */}
-            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={5}>
               <ProgressFlowWidget />
             </GridItem>
 
-            {/* Desktop: IS IT FREE (bottom middle, moved from right) */}
+            {/* COURSE DURATION */}
+            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={5}>
+              <TimeWidget />
+            </GridItem>
+
+            {/* IS IT FREE */}
             <GridItem colSpan={1} mobileColSpan={1} mobileOrder={6}>
               <FreeWidget />
             </GridItem>
 
-            {/* Desktop: 4 LEARNING TIERS (bottom right) */}
-            <GridItem colSpan={2} mobileColSpan={1} mobileOrder={7}>
-              <LearningTiersWidget />
+            {/* GET CERTIFIED (bottom right) */}
+            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={7}>
+              <CredentialPreviewWidget />
             </GridItem>
           </DashboardGrid>
         </div>
