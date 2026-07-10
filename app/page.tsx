@@ -16,5 +16,8 @@ export default async function Home() {
     redirect('/dashboard');
   }
 
+  // If not logged in, show landing page
+  // Enrolled users who aren't signed in will see the landing page
+  // and can click "Enroll Free" to go to sign-in/sign-up
   return <KidsLandingPage />;
 }
