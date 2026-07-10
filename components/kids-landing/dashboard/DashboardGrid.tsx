@@ -18,7 +18,7 @@ function GridItem({ children, colSpan = 1, rowSpan = 1, mobileColSpan, mobileOrd
 
   return (
     <div
-      className={`${mobileColSpanClass} ${desktopColSpan} ${rowSpanClass} ${orderClass} rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-2 sm:p-2.5 lg:p-3 hover:border-white/40 transition-all hover:bg-white/15 shadow-lg`}
+      className={`${mobileColSpanClass} ${desktopColSpan} ${rowSpanClass} ${orderClass} rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-md border border-white/20 p-2 sm:p-2.5 lg:p-3 hover:border-white/40 transition-all hover:bg-white/15 shadow-lg flex flex-col items-center justify-center`}
     >
       {children}
     </div>

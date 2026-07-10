@@ -249,7 +249,7 @@ export function FreeWidget() {
 
 function CoinDisplay({ isFlipping, result }: { isFlipping: boolean; result: CoinSide }) {
   return (
-    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-slate-300 via-slate-200 to-slate-300 backdrop-blur-sm border-4 border-slate-400 shadow-2xl shadow-slate-600/50 flex items-center justify-center overflow-hidden">
+    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-pink-500/40 via-blue-400/40 to-purple-500/40 backdrop-blur-xl border-4 border-pink-300/50 shadow-2xl shadow-pink-400/50 flex items-center justify-center overflow-hidden">
       {/* Coin ridges - concentric circles */}
       <div className="absolute inset-0 rounded-full border border-slate-400/40" style={{ transform: 'scale(0.85)' }} />
       <div className="absolute inset-0 rounded-full border border-slate-400/30" style={{ transform: 'scale(0.70)' }} />
