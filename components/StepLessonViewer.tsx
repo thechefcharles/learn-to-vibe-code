@@ -7,6 +7,8 @@ import { MarkdownRenderer } from "./MarkdownRenderer";
 import { useVersion } from "@/lib/VersionContext";
 import { ModuleSidebar } from "./course/ModuleSidebar";
 import { ModuleIntro } from "./course/ModuleIntro";
+import { VideoBackground } from "./kids-landing/VideoBackground";
+import { MouseTrail } from "./kids-landing/MouseTrail";
 import type { ModuleStep, ModuleStepSequence } from "@/lib/module-steps";
 
 interface StepQuizState {
@@ -94,14 +96,22 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+    <div
+      className="relative w-full min-h-screen text-white overflow-x-hidden flex flex-col"
+      style={{
+        backgroundColor: '#0f172a',
+      }}
+    >
+      <VideoBackground />
+      <MouseTrail />
+
       {/* Header */}
       <div
         className={`sticky top-0 z-40 border-b ${
           isKids
             ? "bg-gradient-to-r from-purple-100 to-pink-100 border-purple-300"
-            : "bg-slate-800/80 border-slate-700"
-        } backdrop-blur`}
+            : "bg-slate-800/80 backdrop-blur-md border-slate-700/50 border"
+        }`}
       >
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex justify-between items-center mb-4">
@@ -143,7 +153,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
       </div>
 
       {/* Main Content - Two Column Layout */}
-      <div className="max-w-7xl mx-auto px-4 py-12 flex gap-8">
+      <div className="max-w-7xl mx-auto px-4 py-12 flex gap-8 relative z-10 flex-1">
         {/* Sidebar - Show on step 1+ */}
         {!isFirstStep && (
           <div className="hidden lg:block">
@@ -179,6 +189,11 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
+          className={`rounded-2xl border backdrop-blur-md p-8 ${
+            isKids
+              ? "bg-white/10 border-white/20"
+              : "bg-white/5 border-white/10"
+          }`}
         >
           {/* Milestone Celebration */}
           {isMilestone && (
@@ -284,10 +299,10 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           {/* Code Block */}
           {currentStep.codeBlock && (
             <div
-              className={`rounded-lg p-6 mb-8 border ${
+              className={`rounded-lg p-6 mb-8 border backdrop-blur-sm ${
                 isKids
-                  ? "bg-slate-900 border-purple-300 text-white"
-                  : "bg-slate-950 border-slate-700"
+                  ? "bg-slate-900/50 border-purple-300/50"
+                  : "bg-slate-950/50 border-white/10"
               }`}
             >
               <pre
@@ -530,7 +545,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
       </div>
 
       {/* Navigation */}
-      <div className="bg-slate-800/50 border-t border-slate-700 sticky bottom-0">
+      <div className="bg-white/5 backdrop-blur-md border-t border-white/10 sticky bottom-0 relative z-20">
         <div className="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center gap-4">
           <button
             onClick={handleBack}

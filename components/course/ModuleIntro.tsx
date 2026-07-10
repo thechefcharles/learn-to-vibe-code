@@ -18,10 +18,10 @@ export function ModuleIntro({ steps, moduleId, isKids, onStart }: ModuleIntroPro
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`rounded-2xl p-8 border-2 ${
+      className={`rounded-2xl p-8 border backdrop-blur-md ${
         isKids
-          ? 'bg-gradient-to-br from-purple-100 via-pink-100 to-blue-100 border-purple-300'
-          : 'bg-gradient-to-br from-slate-800 to-slate-700 border-cyan-500/30'
+          ? 'bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-blue-500/20 border-purple-400/30'
+          : 'bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border-white/20'
       }`}
     >
       {/* Module Badge */}
@@ -82,12 +82,12 @@ export function ModuleIntro({ steps, moduleId, isKids, onStart }: ModuleIntroPro
       {/* Start Button */}
       <motion.button
         onClick={onStart}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        className={`w-full py-3 rounded-lg font-bold text-white transition-all ${
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className={`w-full py-3 rounded-lg font-bold text-white transition-all shadow-lg ${
           isKids
-            ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600'
-            : 'bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700'
+            ? 'bg-gradient-to-r from-purple-500 via-pink-500 to-rose-500 hover:from-purple-600 hover:via-pink-600 hover:to-rose-600 shadow-purple-500/50 hover:shadow-purple-600/50'
+            : 'bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 shadow-cyan-500/50 hover:shadow-cyan-600/50'
         }`}
       >
         Let's Go! 🚀
