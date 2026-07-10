@@ -13,6 +13,8 @@ import { ModuleIntro } from "./course/ModuleIntro";
 import { KeyPointCard } from "./course/KeyPointCard";
 import { BookmarkButton } from "./course/BookmarkButton";
 import { NextStepPreview } from "./course/NextStepPreview";
+import { StepResourcesFooter } from "./course/StepResourcesFooter";
+import { ModuleBreadcrumb } from "./course/ModuleBreadcrumb";
 import { VideoBackground } from "./kids-landing/VideoBackground";
 import { XPRewardBadge } from "./course/XPRewardBadge";
 import { MouseTrail } from "./kids-landing/MouseTrail";
@@ -153,8 +155,18 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           >
             ← Back
           </Link>
-          <div className="text-xs text-slate-400">
-            Step {currentStepIndex + 1} of {steps.steps.length}
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center gap-3">
+              <div className="text-xs text-slate-400">
+                Step {currentStepIndex + 1} of {steps.steps.length}
+              </div>
+              <BookmarkButton
+                moduleId={moduleId}
+                stepIndex={currentStepIndex}
+                stepTitle={currentStep.title}
+              />
+            </div>
+            {streak && <div className="text-orange-400 text-xs">🔥 {streak.current} day streak</div>}
           </div>
           <div className="w-32 h-1 bg-slate-700 rounded-full overflow-hidden">
             <motion.div
@@ -236,6 +248,19 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           </div>
 
 
+
+          <ModuleBreadcrumb
+            moduleId={moduleId}
+            moduleName={steps.moduleName}
+            stepIndex={currentStepIndex}
+            stepTitle={currentStep.title}
+          />
+
+          {/* Step Title */}
+          <h1 className="text-2xl font-bold mb-6 text-white">
+            {currentStep.title}
+          </h1>
+
           {/* Skip To Next Option */}
           {currentStep.duration > 10 && !isFirstStep && !isLastStep && (
             <div className="mb-6 flex items-center justify-between p-3 rounded-lg bg-slate-800/30 border border-slate-700/50">
@@ -248,10 +273,6 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               </button>
             </div>
           )}
-          {/* Step Title */}
-          <h1 className="text-2xl font-bold mb-6 text-white">
-            {currentStep.title}
-          </h1>
 
           {/* Content */}
           <div
@@ -264,20 +285,11 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
 
           {/* Code Block */}
           {currentStep.codeBlock && (
-            <div
-              className={`rounded-lg p-6 mb-8 border backdrop-blur-sm ${
-                isKids
-                  ? "bg-slate-900/50 border-purple-300/50"
-                  : "bg-slate-950/50 border-white/10"
-              }`}
-            >
-              <pre
-                className={`text-sm font-mono overflow-x-auto ${
-                  isKids ? "text-slate-100" : "text-slate-300"
-                }`}
-              >
-                <code>{currentStep.codeBlock.code}</code>
-              </pre>
+            <div className="mb-8">
+              <CodeBlockWithCopy
+                code={currentStep.codeBlock.code}
+                language={currentStep.codeBlock.language}
+              />
             </div>
           )}
 
