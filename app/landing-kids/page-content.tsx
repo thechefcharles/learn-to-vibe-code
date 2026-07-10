@@ -40,7 +40,7 @@ export default function KidsLandingPageContent() {
           <DashboardGrid>
             {/* WELCOME BACK / SIGN IN */}
             <GridItem colSpan={1} mobileColSpan={2} mobileOrder={1}>
-              <AuthPanel />
+              <AuthPanel userName={userName} />
             </GridItem>
 
             {/* 4 LEARNING TIERS */}

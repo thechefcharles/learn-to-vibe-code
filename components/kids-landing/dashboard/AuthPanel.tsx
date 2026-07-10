@@ -5,13 +5,18 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
-export function AuthPanel() {
+interface AuthPanelProps {
+  userName?: string;
+}
+
+export function AuthPanel({ userName }: AuthPanelProps) {
   const prefersReducedMotion = useReducedMotion();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [scratchPercentage, setScratchPercentage] = useState(0);
   const [isDrawing, setIsDrawing] = useState(false);
   const [copied, setCopied] = useState(false);
 
+  const displayName = userName || 'Guest';
   const shareUrl = 'https://learntovibecode.io';
 
   useEffect(() => {
@@ -101,8 +106,19 @@ export function AuthPanel() {
       initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
       animate={!prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
       transition={!prefersReducedMotion ? { duration: 0.5 } : undefined}
-      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 w-full max-w-md mx-auto flex flex-col items-center gap-8"
+      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 w-full max-w-md mx-auto flex flex-col items-center gap-6 h-full justify-between"
     >
+      {/* Welcome Header */}
+      <motion.h3
+        className="uppercase tracking-widest font-bold text-center text-white"
+        style={{
+          fontSize: '20px',
+          textTransform: 'uppercase',
+        }}
+      >
+        Welcome
+      </motion.h3>
+
       {/* Sign In / Sign Up Buttons */}
       <div className="flex gap-4 w-full">
         <Link
@@ -178,6 +194,15 @@ export function AuthPanel() {
           Share The Vibe
         </motion.p>
       </div>
+
+      {/* User Name Display at Bottom */}
+      <motion.p
+        className="text-center text-sm font-semibold text-white/70 uppercase tracking-wide"
+        animate={{ opacity: [0.7, 1, 0.7] }}
+        transition={{ duration: 3, repeat: Infinity }}
+      >
+        {displayName}
+      </motion.p>
     </motion.div>
   );
 }
