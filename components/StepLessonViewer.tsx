@@ -169,6 +169,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               />
             </div>
             {streak && <div className="text-orange-400 text-xs">🔥 {streak.current} day streak</div>}
+            <div className="text-xs text-slate-500">~{remaining} min left</div>
           </div>
           <div className="w-32 h-1 bg-slate-700 rounded-full overflow-hidden">
             <motion.div
