@@ -243,8 +243,6 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                   : "🎯"} {currentStep.type}
             </span>
             <span className="text-slate-500">•</span>
-            <span className="text-slate-400">{currentStep.difficulty}</span>
-            <span className="text-slate-500">•</span>
             <XPRewardBadge xp={currentStep.xpReward} type="preview" />
             <span className="text-slate-500 ml-auto">~{currentStep.duration} min</span>
           </div>
@@ -254,8 +252,6 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           <ModuleBreadcrumb
             moduleId={moduleId}
             moduleName={steps.moduleName}
-            stepIndex={currentStepIndex}
-            stepTitle={currentStep.title}
           />
 
           {/* Step Title */}
