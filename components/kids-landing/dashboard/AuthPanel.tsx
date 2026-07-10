@@ -106,18 +106,28 @@ export function AuthPanel({ userName }: AuthPanelProps) {
       initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
       animate={!prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
       transition={!prefersReducedMotion ? { duration: 0.5 } : undefined}
-      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 w-full max-w-md mx-auto flex flex-col items-center gap-6 h-full justify-between"
+      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 w-full max-w-md mx-auto flex flex-col items-center gap-4 h-full justify-start"
     >
       {/* Welcome Header */}
-      <motion.h3
-        className="uppercase tracking-widest font-bold text-center text-white"
-        style={{
-          fontSize: '20px',
-          textTransform: 'uppercase',
-        }}
-      >
-        Welcome
-      </motion.h3>
+      <div className="flex flex-col items-center gap-2">
+        <motion.h3
+          className="uppercase tracking-widest font-bold text-center text-white"
+          style={{
+            fontSize: '20px',
+            textTransform: 'uppercase',
+          }}
+        >
+          Welcome,
+        </motion.h3>
+        <motion.p
+          className="uppercase tracking-widest font-bold text-center text-white"
+          style={{
+            fontSize: '20px',
+          }}
+        >
+          {displayName}
+        </motion.p>
+      </div>
 
       {/* Sign In / Sign Up Buttons */}
       <div className="flex gap-4 w-full">
@@ -194,15 +204,6 @@ export function AuthPanel({ userName }: AuthPanelProps) {
           Share The Vibe
         </motion.p>
       </div>
-
-      {/* User Name Display at Bottom */}
-      <motion.p
-        className="text-center text-sm font-semibold text-white/70 uppercase tracking-wide"
-        animate={{ opacity: [0.7, 1, 0.7] }}
-        transition={{ duration: 3, repeat: Infinity }}
-      >
-        {displayName}
-      </motion.p>
     </motion.div>
   );
 }
