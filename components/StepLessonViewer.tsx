@@ -550,7 +550,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
 
             <button
               onClick={isLastStep ? () => (window.location.href = `/course`) : handleNext}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition text-white ${
+              className={`w-full sm:w-auto px-4 py-2 rounded-lg text-sm font-medium transition text-white ${
                 isLastStep
                   ? "bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600"
                   : "bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600"
