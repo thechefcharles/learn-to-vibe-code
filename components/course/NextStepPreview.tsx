@@ -26,6 +26,8 @@ export function NextStepPreview({ nextStep, isLastStep }: NextStepPreviewProps) 
       <p className="text-sm text-slate-200 font-medium mb-2">
         {nextStep.title}
       </p>
+      {/* Duration intentionally omitted here — it's already shown in the
+          "Time Estimates" hierarchy (Next lesson: ~X minutes) above this card. */}
       <p className="text-xs text-slate-400">
         {nextStep.type === "lesson"
           ? "📖"
@@ -34,7 +36,7 @@ export function NextStepPreview({ nextStep, isLastStep }: NextStepPreviewProps) 
             : nextStep.type === "challenge"
               ? "🎯"
               : "?"}{" "}
-        {nextStep.type} • ~{nextStep.duration} min
+        {nextStep.type}
       </p>
     </motion.div>
   );

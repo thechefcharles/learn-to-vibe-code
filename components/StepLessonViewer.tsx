@@ -154,22 +154,26 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
       <VideoBackground />
       <MouseTrail />
 
-      {/* Minimal Header */}
+      {/* Header — single source of truth for module identity + time-remaining.
+          Layout: Lesson # | Module · total time | time remaining in module. */}
       <div className="sticky top-0 z-40 bg-slate-900/60 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex justify-center items-center gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
-          <div className="flex flex-col items-center gap-1">
-            <div className="flex items-center gap-3">
-              <div className="text-xs sm:text-sm text-slate-400">
-                Lesson {currentStepIndex + 1} of {steps.steps.length}
-              </div>
-              <BookmarkButton
-                moduleId={moduleId}
-                stepIndex={currentStepIndex}
-                stepTitle={currentStep.title}
-              />
-            </div>
-            {streak && <div className="text-orange-400 text-xs">🔥 {streak.current} day streak</div>}
-            <div className="text-xs text-slate-500">~{remaining} min left</div>
+        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4">
+          <div className="flex items-center gap-3">
+            <span className={`text-xs sm:text-sm font-semibold ${isKids ? "text-purple-900" : "text-slate-300"}`}>
+              Lesson {currentStepIndex + 1} of {steps.steps.length}
+            </span>
+            <BookmarkButton
+              moduleId={moduleId}
+              stepIndex={currentStepIndex}
+              stepTitle={currentStep.title}
+            />
+            {streak && <span className="text-orange-400 text-xs">🔥 {streak.current} day streak</span>}
+          </div>
+          <div className={`text-xs sm:text-sm ${isKids ? "text-purple-700" : "text-slate-400"}`}>
+            {steps.moduleName} · {total} min
+          </div>
+          <div className={`text-xs sm:text-sm font-semibold ${isKids ? "text-purple-700" : "text-slate-300"}`}>
+            ~{remaining} min remaining
           </div>
         </div>
       </div>
@@ -189,13 +193,6 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
 
         {/* Main Content */}
         <div className="flex-1 max-w-3xl">
-        {/* Minimal Module Info - Show only on first step */}
-        {isFirstStep && (
-          <div className="mb-6 text-xs text-slate-400">
-            <span className="text-cyan-400 font-semibold">{String(moduleId).padStart(2, '0')}</span> {steps.moduleName} • {steps.steps.length} lessons • {Math.round(steps.totalDuration)} min
-          </div>
-        )}
-
         {/* Step Indicator */}
         <motion.div
           key={currentStepIndex}
@@ -228,14 +225,14 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           <ModuleBreadcrumb
             moduleId={moduleId}
             moduleName={steps.moduleName}
-            currentLessonTitle={currentStep.title}
           />
           {/* TODO: Pass section info to breadcrumb via React Context (Task 9)
               Once SectionLessonViewer section state is available globally, update breadcrumb with:
               currentSectionIndex, currentSectionHeading, totalSections */}
 
-          {/* Step Title */}
-          <h1 className="text-2xl font-bold mb-6 text-white">
+          {/* Step Title — single source of truth for the lesson name (no longer
+              repeated in the breadcrumb above). */}
+          <h1 className={`text-2xl sm:text-3xl font-bold mb-6 ${isKids ? "text-purple-900" : "text-white"}`}>
             {currentStep.title}
           </h1>
 
@@ -525,6 +522,25 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               )}
             </>
           )}
+
+          {/* Time Estimates — single three-level hierarchy (module total → this
+              lesson → next lesson). Replaces scattered/duplicated time values. */}
+          <div
+            className={`my-6 p-4 rounded-lg border ${
+              isKids ? "bg-blue-50 border-blue-200" : "bg-blue-500/10 border-blue-500/30"
+            }`}
+          >
+            <div className={`text-sm font-semibold mb-2 ${isKids ? "text-blue-900" : "text-blue-300"}`}>
+              ⏱ Time Estimates
+            </div>
+            <ul className={`text-sm space-y-1 ${isKids ? "text-blue-800" : "text-blue-200"}`}>
+              <li>Module total: {total} minutes</li>
+              <li>This lesson: ~{currentStep.duration} minutes</li>
+              {!isLastStep && steps.steps[currentStepIndex + 1] && (
+                <li>Next lesson: ~{steps.steps[currentStepIndex + 1].duration} minutes</li>
+              )}
+            </ul>
+          </div>
 
           {/* Next Step Preview */}
           <NextStepPreview nextStep={steps.steps[currentStepIndex + 1]} isLastStep={isLastStep} />
