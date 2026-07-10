@@ -278,7 +278,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               isKids ? "prose-invert-kids" : ""
             }`}
           >
-            <MarkdownRenderer content={currentStep.content} />
+            <MarkdownRenderer content={currentStep.content || ""} />
           </div>
 
           {/* Code Block */}

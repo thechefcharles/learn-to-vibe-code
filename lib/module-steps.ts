@@ -1,4 +1,5 @@
 import type { Version } from "./VersionContext";
+import type { LessonSection } from "@/lib/types/lesson-section";
 
 export interface ModuleStep {
   id: number;
@@ -7,7 +8,12 @@ export interface ModuleStep {
   duration: number; // minutes
   difficulty: "easy" | "medium" | "hard"; // step difficulty
   xpReward: number; // XP for completing step
-  content: string;
+
+  // NEW: optional sections for multi-section lessons
+  sections?: LessonSection[];
+
+  // Legacy fields (used when sections is absent)
+  content?: string;
   codeBlock?: {
     language: string;
     code: string;
