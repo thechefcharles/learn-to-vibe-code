@@ -101,19 +101,19 @@ export function AuthPanel() {
       initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
       animate={!prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
       transition={!prefersReducedMotion ? { duration: 0.5 } : undefined}
-      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 w-full flex flex-col items-center gap-8"
+      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 w-full max-w-md mx-auto flex flex-col items-center gap-8"
     >
       {/* Sign In / Sign Up Buttons */}
-      <div className="flex gap-4 w-full sm:gap-6">
+      <div className="flex gap-4 w-full">
         <Link
           href="/auth/sign-in"
-          className="flex-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold py-3 sm:py-4 rounded-xl text-center transition-all shadow-lg hover:shadow-xl hover:scale-105 text-lg"
+          className="flex-1 bg-white/15 hover:bg-white/25 backdrop-blur border border-white/30 hover:border-white/40 text-white font-bold py-3 rounded-xl text-center transition-all shadow-lg hover:shadow-xl text-base"
         >
           Sign In
         </Link>
         <Link
           href="/auth/sign-up"
-          className="flex-1 bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 text-white font-bold py-3 sm:py-4 rounded-xl text-center transition-all shadow-lg hover:shadow-xl hover:scale-105 text-lg"
+          className="flex-1 bg-white/15 hover:bg-white/25 backdrop-blur border border-white/30 hover:border-white/40 text-white font-bold py-3 rounded-xl text-center transition-all shadow-lg hover:shadow-xl text-base"
         >
           Sign Up
         </Link>
@@ -121,7 +121,7 @@ export function AuthPanel() {
 
       {/* Scratch to Reveal Lottery Ticket */}
       <div className="flex flex-col items-center gap-4 w-full">
-        <div className="relative w-full max-w-sm">
+        <div className="relative w-full max-w-xs mx-auto">
           {/* Scratch canvas */}
           <canvas
             ref={canvasRef}
@@ -177,12 +177,6 @@ export function AuthPanel() {
         >
           Share The Vibe
         </motion.p>
-
-        {!isRevealed && (
-          <p className="text-xs text-white/60 font-medium">
-            Scratch to reveal the share link →
-          </p>
-        )}
       </div>
     </motion.div>
   );
