@@ -282,6 +282,10 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
 
           {currentStep.sections ? (
             <div className="mb-6">
+              {/* NOTE: Section navigation is owned entirely by SectionLessonViewer via localStorage.
+                  Future enhancement: refactor to use React Context if we need to expose section state
+                  at the StepLessonViewer level for sidebar section jumps or breadcrumb updates.
+                  For MVP, section list in sidebar is display-only. */}
               <SectionLessonViewer
                 step={currentStep}
                 moduleId={moduleId}
