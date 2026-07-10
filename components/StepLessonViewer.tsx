@@ -247,7 +247,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             <span className="text-slate-500">•</span>
             <span className="text-slate-400">{currentStep.difficulty}</span>
             <span className="text-slate-500">•</span>
-            <span className="text-purple-400">+{currentStep.xpReward} XP</span>
+            <XPRewardBadge xp={currentStep.xpReward} type="preview" />
             <span className="text-slate-500 ml-auto">~{currentStep.duration} min</span>
           </div>
 
