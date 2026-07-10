@@ -47,23 +47,23 @@ export function ModuleArcWidget({ userName = '', onUserNameChange }: ModuleArcWi
         >16 Modules</motion.h3>
       </div>
 
-      {/* Arc Container with Navigation Buttons */}
-      <div className="flex-1 w-full flex items-center justify-center gap-4 overflow-visible px-2">
+      {/* Arc Container */}
+      <div className="flex-1 w-full flex items-center justify-center overflow-visible px-2">
+        <CursorTrackedModuleArc totalModules={16} externalModule={selectedModule} />
+      </div>
+
+      {/* Navigation Buttons Below Arc */}
+      <div className="flex items-center justify-center gap-4 py-4">
         {/* Previous Button */}
         <motion.button
           onClick={handlePrevious}
           disabled={selectedModule === 0}
           whileHover={{ scale: selectedModule === 0 ? 1 : 1.1 }}
           whileTap={{ scale: selectedModule === 0 ? 1 : 0.95 }}
-          className="flex-shrink-0 w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 disabled:opacity-50 disabled:cursor-not-allowed border border-white/30 text-white font-bold flex items-center justify-center transition-all"
+          className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 disabled:opacity-50 disabled:cursor-not-allowed border border-white/30 text-white font-bold flex items-center justify-center transition-all"
         >
           ◀
         </motion.button>
-
-        {/* Arc */}
-        <div className="flex-1 flex items-center justify-center overflow-visible">
-          <CursorTrackedModuleArc totalModules={16} externalModule={selectedModule} />
-        </div>
 
         {/* Next Button */}
         <motion.button
@@ -71,7 +71,7 @@ export function ModuleArcWidget({ userName = '', onUserNameChange }: ModuleArcWi
           disabled={selectedModule === 16}
           whileHover={{ scale: selectedModule === 16 ? 1 : 1.1 }}
           whileTap={{ scale: selectedModule === 16 ? 1 : 0.95 }}
-          className="flex-shrink-0 w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 disabled:opacity-50 disabled:cursor-not-allowed border border-white/30 text-white font-bold flex items-center justify-center transition-all"
+          className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 disabled:opacity-50 disabled:cursor-not-allowed border border-white/30 text-white font-bold flex items-center justify-center transition-all"
         >
           ▶
         </motion.button>

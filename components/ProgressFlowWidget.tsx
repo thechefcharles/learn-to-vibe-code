@@ -54,6 +54,7 @@ export function ProgressFlowWidget() {
   const [activeStage, setActiveStage] = useState<number | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [joystickX, setJoystickX] = useState(0);
+  const [joystickY, setJoystickY] = useState(0);
   const [titleHover, setTitleHover] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const joystickRef = useRef<HTMLDivElement>(null);
@@ -68,42 +69,50 @@ export function ProgressFlowWidget() {
     setIsDragging(true);
   };
 
-  const handleMove = (clientX: number) => {
+  const handleMove = (clientX: number, clientY: number) => {
     if (!isDragging || !joystickContainerRef.current || !joystickRef.current) return;
 
     const rect = joystickContainerRef.current.getBoundingClientRect();
     const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
     const offsetX = clientX - rect.left - centerX;
+    const offsetY = clientY - rect.top - centerY;
     const maxOffset = 40;
     const constrainedX = Math.max(-maxOffset, Math.min(maxOffset, offsetX));
+    const constrainedY = Math.max(-maxOffset, Math.min(maxOffset, offsetY));
 
     setJoystickX(constrainedX);
+    setJoystickY(constrainedY);
 
     // Scroll based on drag position
     if (scrollContainerRef.current) {
-      const scrollAmount = (constrainedX / maxOffset) * 15;
-      scrollContainerRef.current.scrollLeft += scrollAmount;
+      const scrollXAmount = (constrainedX / maxOffset) * 15;
+      const scrollYAmount = (constrainedY / maxOffset) * 8;
+      scrollContainerRef.current.scrollLeft += scrollXAmount;
+      scrollContainerRef.current.scrollTop += scrollYAmount;
     }
   };
 
   const handleMouseMove = (e: MouseEvent) => {
-    handleMove(e.clientX);
+    handleMove(e.clientX, e.clientY);
   };
 
   const handleTouchMove = (e: TouchEvent) => {
     if (e.touches.length > 0) {
-      handleMove(e.touches[0].clientX);
+      handleMove(e.touches[0].clientX, e.touches[0].clientY);
     }
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
     setJoystickX(0);
+    setJoystickY(0);
   };
 
   const handleTouchEnd = () => {
     setIsDragging(false);
     setJoystickX(0);
+    setJoystickY(0);
   };
 
   useEffect(() => {
@@ -151,7 +160,7 @@ export function ProgressFlowWidget() {
       {/* Flow Container */}
       <div
         ref={scrollContainerRef}
-        className="w-full overflow-x-auto scrollbar-hide"
+        className="w-full overflow-auto scrollbar-hide max-h-64"
         onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
@@ -277,21 +286,21 @@ export function ProgressFlowWidget() {
       </div>
 
       {/* Glassy Joystick Control */}
-      <div className="flex justify-center mt-6 relative h-20">
-        <div ref={joystickContainerRef} className="relative w-32 h-16 flex items-center justify-center">
+      <div className="flex justify-center mt-6 relative h-32">
+        <div ref={joystickContainerRef} className="relative w-32 h-32 flex items-center justify-center">
           {/* Base circle */}
           <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-md border border-white/30 shadow-lg shadow-white/20" />
 
-          {/* Center crosshair glow */}
-          <div className="absolute w-1 h-6 bg-gradient-to-b from-cyan-400/40 to-transparent" />
-          <div className="absolute h-1 w-6 bg-gradient-to-r from-cyan-400/40 to-transparent" />
+          {/* Center crosshair glow - both axes */}
+          <div className="absolute w-1 h-8 bg-gradient-to-b from-cyan-400/40 to-transparent" />
+          <div className="absolute h-1 w-8 bg-gradient-to-r from-cyan-400/40 to-transparent" />
 
           {/* Joystick ball */}
           <motion.div
             ref={joystickRef}
             onMouseDown={handleMouseDown}
             onTouchStart={handleTouchStart}
-            animate={{ x: joystickX }}
+            animate={{ x: joystickX, y: joystickY }}
             transition={{ type: 'spring', stiffness: 400, damping: 30 }}
             className="relative w-12 h-12 rounded-full cursor-grab active:cursor-grabbing group touch-none"
           >
@@ -312,9 +321,11 @@ export function ProgressFlowWidget() {
             />
           </motion.div>
 
-          {/* Direction indicators */}
-          <div className="absolute left-1 top-1/2 -translate-y-1/2 text-xs text-cyan-400/40">←</div>
-          <div className="absolute right-1 top-1/2 -translate-y-1/2 text-xs text-cyan-400/40">→</div>
+          {/* Direction indicators - all 4 directions */}
+          <div className="absolute left-2 top-1/2 -translate-y-1/2 text-xs text-cyan-400/40">←</div>
+          <div className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-cyan-400/40">→</div>
+          <div className="absolute top-2 left-1/2 -translate-x-1/2 text-xs text-cyan-400/40">↑</div>
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-xs text-cyan-400/40">↓</div>
         </div>
       </div>
 
