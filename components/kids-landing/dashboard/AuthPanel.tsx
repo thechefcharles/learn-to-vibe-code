@@ -106,7 +106,7 @@ export function AuthPanel({ userName }: AuthPanelProps) {
       initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
       animate={!prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
       transition={!prefersReducedMotion ? { duration: 0.5 } : undefined}
-      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 w-full max-w-md mx-auto flex flex-col items-center gap-4 h-full justify-start"
+      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-8 w-full max-w-md mx-auto flex flex-col items-center gap-4 h-full"
     >
       {/* Welcome Header */}
       <div className="flex flex-col items-center gap-2">
@@ -204,6 +204,20 @@ export function AuthPanel({ userName }: AuthPanelProps) {
           Share The Vibe
         </motion.p>
       </div>
+
+      {/* Start Button */}
+      <Link
+        href="/auth/sign-up"
+        className="w-full mt-auto pt-4"
+      >
+        <motion.button
+          whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(6, 182, 212, 0.6)' }}
+          whileTap={{ scale: 0.95 }}
+          className="w-full py-3 rounded-lg font-bold text-white text-lg uppercase tracking-widest bg-gradient-to-r from-cyan-500/80 via-purple-500/80 to-pink-500/80 hover:from-cyan-500 hover:via-purple-500 hover:to-pink-500 border border-cyan-300/50 hover:border-cyan-300/100 shadow-lg transition-all"
+        >
+          Start →
+        </motion.button>
+      </Link>
     </motion.div>
   );
 }
