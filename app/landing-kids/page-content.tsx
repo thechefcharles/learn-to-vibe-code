@@ -6,7 +6,7 @@ import { ModuleArcWidget } from '@/components/kids-landing/dashboard/ModuleArcWi
 import { LearningTiersWidget } from '@/components/kids-landing/dashboard/LearningTiersWidget';
 import { TimeWidget } from '@/components/kids-landing/dashboard/TimeWidget';
 import { FreeWidget } from '@/components/kids-landing/dashboard/FreeWidget';
-import { InviteWidget } from '@/components/kids-landing/dashboard/InviteWidget';
+import { AuthPanel } from '@/components/kids-landing/dashboard/AuthPanel';
 import { ProgressFlowWidget } from '@/components/ProgressFlowWidget';
 import { CredentialPreviewWidget } from '@/components/CredentialPreviewWidget';
 import { FloatingCTA } from '@/components/kids-landing/FloatingCTA';
@@ -38,39 +38,39 @@ export default function KidsLandingPageContent() {
         <div className="max-w-6xl mx-auto">
 
           <DashboardGrid>
-            {/* Mobile: 16 MODULES top (full width) */}
+            {/* Mobile: SIGN IN / SIGN UP (top on mobile) */}
             <GridItem colSpan={1} mobileColSpan={2} mobileOrder={1}>
+              <AuthPanel />
+            </GridItem>
+
+            {/* Mobile: 16 MODULES (second on mobile) */}
+            <GridItem colSpan={1} mobileColSpan={2} mobileOrder={2}>
               <ModuleArcWidget userName={userName} onUserNameChange={setUserName} />
             </GridItem>
 
-            {/* Desktop: 4 LEARNING TIERS */}
-            <GridItem colSpan={2} mobileColSpan={2} mobileOrder={6}>
-              <LearningTiersWidget />
-            </GridItem>
-
-            {/* Desktop: COURSE DURATION */}
-            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={7}>
-              <TimeWidget />
-            </GridItem>
-
-            {/* Desktop: IS IT FREE */}
-            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={8}>
-              <FreeWidget />
-            </GridItem>
-
-            {/* Mobile: YOUR LEARNING JOURNEY (full width middle) */}
+            {/* Mobile: YOUR LEARNING JOURNEY (third on mobile, full width) */}
             <GridItem colSpan={1} mobileColSpan={2} mobileOrder={3}>
               <ProgressFlowWidget />
             </GridItem>
 
-            {/* Mobile: SHARE THE VIBE (bottom left) */}
+            {/* Mobile: GET CERTIFIED (fourth on mobile, bottom right) */}
             <GridItem colSpan={1} mobileColSpan={1} mobileOrder={4}>
-              <InviteWidget />
+              <CredentialPreviewWidget />
             </GridItem>
 
-            {/* Mobile: GET CERTIFIED (bottom right) */}
-            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={5}>
-              <CredentialPreviewWidget />
+            {/* Desktop: 4 LEARNING TIERS */}
+            <GridItem colSpan={2} mobileColSpan={1} mobileOrder={5}>
+              <LearningTiersWidget />
+            </GridItem>
+
+            {/* Desktop: COURSE DURATION */}
+            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={6}>
+              <TimeWidget />
+            </GridItem>
+
+            {/* Desktop: IS IT FREE */}
+            <GridItem colSpan={1} mobileColSpan={1} mobileOrder={7}>
+              <FreeWidget />
             </GridItem>
           </DashboardGrid>
         </div>
