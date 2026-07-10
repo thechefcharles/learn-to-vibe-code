@@ -2,13 +2,13 @@ import { getUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { getUserXP, getUserBadges, getUserStreak } from "@/lib/actions/gamification";
 import { getAllModuleProgress, getUserEnrolledVersion } from "@/lib/actions/course";
-import { ProfileHeroCard } from "@/components/dashboard/ProfileHeroCard";
 import { CourseProgress } from "@/components/dashboard/CourseProgress";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 import { BadgesShowcase } from "@/components/dashboard/BadgesShowcase";
 import { DashboardBackground } from "@/components/dashboard/DashboardBackground";
-import { Header } from "@/components/kids-landing/Header";
+import { DashboardHeader } from "@/components/dashboard/DashboardHeader";
 import { Footer } from "@/components/Footer";
+import Link from "next/link";
 
 const BADGE_METADATA = [
   { key: "first_quiz_passed", name: "First Steps", description: "Passed your first quiz", icon: "🎯" },
@@ -38,19 +38,17 @@ export default async function DashboardPage() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-950">
       <DashboardBackground />
-      <Header />
+      <DashboardHeader userName={user.user_metadata?.name || user.email || "Learner"} />
 
       {/* Main Content */}
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        {/* Profile Hero */}
+        {/* Continue Learning CTA */}
         <section className="mb-8">
-          <ProfileHeroCard
-            userName={user.user_metadata?.name || user.email || "Learner"}
-            xpLevel={xp.level}
-            xpPoints={xp.points}
-            streakCurrent={streak.current}
-            streakLongest={streak.longest}
-          />
+          <Link href="/course" className="block">
+            <div className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 rounded-2xl p-8 sm:p-12 text-white font-bold text-2xl sm:text-3xl transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-4">
+              <span className="text-4xl">▶</span> Continue Learning
+            </div>
+          </Link>
         </section>
 
         {/* Two Column Layout: Progress + Actions */}
