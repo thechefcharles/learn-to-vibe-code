@@ -6,10 +6,15 @@ import { motion } from "framer-motion";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 import { useVersion } from "@/lib/VersionContext";
 import { useKeyboardNavigation } from "@/lib/hooks/useKeyboardNavigation";
+import { useModuleTimeRemaining } from "@/lib/hooks/useModuleTimeRemaining";
+import { useUserStreak } from "@/lib/hooks/useUserStreak";
 import { ModuleSidebar } from "./course/ModuleSidebar";
 import { ModuleIntro } from "./course/ModuleIntro";
 import { KeyPointCard } from "./course/KeyPointCard";
+import { BookmarkButton } from "./course/BookmarkButton";
+import { NextStepPreview } from "./course/NextStepPreview";
 import { VideoBackground } from "./kids-landing/VideoBackground";
+import { XPRewardBadge } from "./course/XPRewardBadge";
 import { MouseTrail } from "./kids-landing/MouseTrail";
 import type { ModuleStep, ModuleStepSequence } from "@/lib/module-steps";
 
@@ -37,13 +42,8 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   });
   const { version } = useVersion();
   const isKids = version === "kids";
-
-  // Keyboard navigation: K for previous, J for next
-  useKeyboardNavigation({
-    onNext: handleNext,
-    onPrevious: handleBack,
-    disabled: false,
-  });
+  const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  const streak = useUserStreak();
 
   // Calculate milestone progress
   const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
@@ -77,6 +77,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
 
   const handleNext = () => {
     if (!isLastStep) {
+      celebrateCompletion();
       const newCompleted = new Set(completedSteps);
       newCompleted.add(currentStepIndex);
       setCompletedSteps(newCompleted);
@@ -102,6 +103,29 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   const handleJumpToStep = (index: number) => {
     setCurrentStepIndex(index);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Keyboard navigation: K for previous, J for next
+  useKeyboardNavigation({
+    onNext: handleNext,
+    onPrevious: handleBack,
+    disabled: false,
+  });
+
+  const celebrateCompletion = () => {
+    if (!isLastStep) {
+      const ele = document.querySelector('[data-step-container]');
+      if (ele && 'animate' in Element.prototype) {
+        ele.animate(
+          [
+            { scale: 1, opacity: 1 },
+            { scale: 1.05, opacity: 1 },
+            { scale: 1, opacity: 1 },
+          ],
+          { duration: 600, easing: 'ease-in-out' }
+        );
+      }
+    }
   };
 
   return (
@@ -205,6 +229,19 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             <span className="text-slate-500 ml-auto">~{currentStep.duration} min</span>
           </div>
 
+
+          {/* Skip To Next Option */}
+          {currentStep.duration > 10 && !isFirstStep && !isLastStep && (
+            <div className="mb-6 flex items-center justify-between p-3 rounded-lg bg-slate-800/30 border border-slate-700/50">
+              <span className="text-xs text-slate-400">Taking too long?</span>
+              <button
+                onClick={handleNext}
+                className="text-xs px-3 py-1 rounded text-slate-300 hover:text-white hover:bg-slate-700/50 transition"
+              >
+                Jump to next step →
+              </button>
+            </div>
+          )}
           {/* Step Title */}
           <h1 className="text-2xl font-bold mb-6 text-white">
             {currentStep.title}
@@ -452,6 +489,9 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               )}
             </div>
           )}
+
+          {/* Next Step Preview */}
+          <NextStepPreview nextStep={steps.steps[currentStepIndex + 1]} isLastStep={isLastStep} />
 
           {/* Navigation Inside Box */}
           <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center gap-4">
