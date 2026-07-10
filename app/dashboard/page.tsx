@@ -56,6 +56,15 @@ export default async function DashboardPage() {
           />
         </section>
 
+        {/* Continue Learning CTA */}
+        <section className="mb-8">
+          <Link href="/course" className="block">
+            <div className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 rounded-2xl p-6 sm:p-8 text-white font-bold text-lg sm:text-xl transition-all shadow-lg hover:shadow-xl">
+              ▶ Continue Learning
+            </div>
+          </Link>
+        </section>
+
         {/* Stats Grid */}
         <section className="mb-8">
           <StatsGrid

@@ -64,7 +64,7 @@ export function CourseProgress({ progress, totalModules }: CourseProgressProps) 
           return (
             <Link
               key={moduleId}
-              href={`/course/module-${moduleId.toString().padStart(2, '0')}`}
+              href={`/course/${moduleId}`}
             >
               <motion.div
                 whileHover={!prefersReducedMotion ? { scale: 1.1 } : undefined}
