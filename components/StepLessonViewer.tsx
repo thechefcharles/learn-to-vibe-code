@@ -514,6 +514,12 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           {/* Next Step Preview */}
           <NextStepPreview nextStep={steps.steps[currentStepIndex + 1]} isLastStep={isLastStep} />
 
+
+          {/* Resources Footer */}
+          <StepResourcesFooter
+            resources={currentStep.resources}
+            nextStepTitle={!isLastStep ? steps.steps[currentStepIndex + 1]?.title : undefined}
+          />
           {/* Navigation Inside Box */}
           <div className="mt-8 pt-6 border-t border-white/10 flex justify-between items-center gap-4">
             <button
