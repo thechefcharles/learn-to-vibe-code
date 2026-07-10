@@ -11,15 +11,10 @@ interface QuickActionsProps {
 
 export function QuickActions({ capstoneUnlocked, completedModules }: QuickActionsProps) {
   const prefersReducedMotion = useReducedMotion();
+  const totalModules = 16;
+  const progressPercentage = (completedModules / totalModules) * 100;
 
   const actions = [
-    {
-      label: 'Continue Learning',
-      icon: '▶',
-      href: '/course',
-      color: 'from-cyan-500 to-blue-600',
-      subtext: 'Jump back in',
-    },
     {
       label: 'View Badges',
       icon: '🏆',
@@ -49,12 +44,35 @@ export function QuickActions({ capstoneUnlocked, completedModules }: QuickAction
 
   return (
     <div className="flex flex-col gap-4 w-full">
+      {/* Progress Bar */}
+      <motion.div
+        initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
+        animate={!prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
+        transition={!prefersReducedMotion ? { duration: 0.5 } : undefined}
+        className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4"
+      >
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="font-semibold text-white text-sm">Progress</h4>
+          <p className="text-xs text-cyan-400 font-bold">{completedModules}/{totalModules}</p>
+        </div>
+        <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden border border-white/20">
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: `${progressPercentage}%` }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
+            className="h-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500"
+          />
+        </div>
+        <p className="text-xs text-gray-400 mt-2 text-center">{Math.round(progressPercentage)}% complete</p>
+      </motion.div>
+
+      {/* Quick Action Links */}
       {actions.map((action, idx) => (
         <motion.div
           key={action.label}
           initial={!prefersReducedMotion ? { opacity: 0, x: 20 } : undefined}
           animate={!prefersReducedMotion ? { opacity: 1, x: 0 } : undefined}
-          transition={!prefersReducedMotion ? { duration: 0.5, delay: idx * 0.1 } : undefined}
+          transition={!prefersReducedMotion ? { duration: 0.5, delay: (idx + 1) * 0.1 } : undefined}
         >
           <Link href={action.href} className="block">
             <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 hover:border-white/40 transition-all hover:bg-white/15 group cursor-pointer">
