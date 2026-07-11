@@ -158,10 +158,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
       <VideoBackground />
       <MouseTrail />
 
-      {/* Header — centered module/lesson identity with a cosmic gradient
-          treatment (cyan → purple → pink). Time-remaining now lives in the
-          top-right corner of the content box (see below) as a circular
-          progress ring; streak sits below the module/lesson titles. */}
+      {/* Header — large module name with lesson number below */}
       <div
         className={`sticky top-0 z-40 backdrop-blur-xl border-b ${
           isKids
@@ -169,9 +166,9 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             : "bg-gradient-to-r from-cyan-950/70 via-purple-950/70 to-pink-950/70 border-white/10 shadow-[0_1px_24px_-8px_rgba(168,85,247,0.5)]"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:py-5 flex flex-col items-center text-center gap-1.5">
+        <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 flex flex-col items-center text-center gap-2">
           <div
-            className={`text-base sm:text-lg font-bold tracking-tight ${
+            className={`text-4xl sm:text-6xl font-bold tracking-tight ${
               isKids
                 ? "text-purple-900"
                 : "bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 bg-clip-text text-transparent"
@@ -179,11 +176,11 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           >
             {steps.moduleName}
           </div>
-          <div className={`text-sm sm:text-base font-medium ${isKids ? "text-purple-700" : "text-slate-300/90"}`}>
-            Lesson {currentStepIndex + 1}: {currentStep.title}
+          <div className={`text-lg sm:text-xl font-semibold ${isKids ? "text-purple-700" : "text-slate-300/90"}`}>
+            Lesson {currentStepIndex + 1}
           </div>
           {streak && (
-            <span className="text-orange-400 text-xs mt-0.5">🔥 {streak.current} day streak</span>
+            <span className="text-orange-400 text-sm mt-1">🔥 {streak.current} day streak</span>
           )}
         </div>
       </div>

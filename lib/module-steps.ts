@@ -66,9 +66,7 @@ export const module0Steps: Record<Version, ModuleStepSequence> = {
         duration: 5,
         difficulty: "easy",
         xpReward: 50,
-        content: `# Module 0: Setup & Accounts
-
-This module sets up your development environment **once, up front**. Setup friction is where beginners quietly give up.
+        content: `This module sets up your development environment **once, up front**. Setup friction is where beginners quietly give up.
 
 By the end, you'll have:
 - ✅ Node.js installed (JavaScript runtime)
@@ -441,9 +439,7 @@ Ready to continue?`,
         duration: 5,
         difficulty: "easy",
         xpReward: 50,
-        content: `# Module 0: Setup & Accounts
-
-You're about to level up your coding skills! But first, we need to set up your **development environment** — think of it like getting your character's gear before the game starts.
+        content: `You're about to level up your coding skills! But first, we need to set up your **development environment** — think of it like getting your character's gear before the game starts.
 
 By the end of this module, you'll have:
 - ✅ Node.js (the engine that runs your code)
