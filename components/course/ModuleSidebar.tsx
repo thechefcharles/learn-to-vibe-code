@@ -92,26 +92,26 @@ export function ModuleSidebar({
                       : 'bg-cyan-500/30 text-white shadow-lg'
                     : isCompleted
                     ? isKids
-                      ? 'bg-green-100 text-green-900 hover:bg-green-200'
-                      : 'bg-green-600/20 text-green-400 hover:bg-green-600/30'
+                      ? 'bg-green-400 text-white shadow-lg hover:bg-green-500'
+                      : 'bg-green-600 text-white shadow-lg hover:bg-green-700'
                     : isKids
                     ? 'bg-white/50 text-purple-900 hover:bg-white/70'
                     : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
                 }`}
                 whileHover={{ x: 4 }}
               >
-                <div className="flex items-center gap-2">
-                  <div className="relative flex-shrink-0">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
                     <div
-                      className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
+                      className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
                         isCurrent
                           ? isKids
                             ? 'bg-purple-500 text-white'
                             : 'bg-cyan-400 text-slate-900'
                           : isCompleted
                           ? isKids
-                            ? 'bg-green-500 text-white'
-                            : 'bg-green-500 text-white'
+                            ? 'bg-green-600 text-white'
+                            : 'bg-green-700 text-white'
                           : isKids
                           ? 'bg-purple-300 text-purple-700'
                           : 'bg-slate-600 text-slate-400'
@@ -119,19 +119,11 @@ export function ModuleSidebar({
                     >
                       {index + 1}
                     </div>
-                    {isCompleted && (
-                      <div
-                        className={`absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full flex items-center justify-center text-[8px] leading-none border-2 ${
-                          isKids
-                            ? 'bg-green-500 text-white border-purple-50'
-                            : 'bg-green-500 text-white border-slate-800'
-                        }`}
-                      >
-                        ✓
-                      </div>
-                    )}
+                    <span className="text-sm font-medium truncate">{step.title}</span>
                   </div>
-                  <span className="text-sm font-medium truncate">{step.title}</span>
+                  {isCompleted && (
+                    <span className="text-lg flex-shrink-0 ml-2">✓</span>
+                  )}
                 </div>
               </motion.button>
 
