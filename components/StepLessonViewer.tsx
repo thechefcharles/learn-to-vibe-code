@@ -152,24 +152,24 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
       <VideoBackground />
       <MouseTrail />
 
-      {/* Header — single source of truth for module identity + time-remaining.
-          Module name + total duration is the prominent headline; lesson number,
-          bookmark, streak, and time-remaining are secondary metadata. */}
+      {/* Header — centered module/lesson identity. Time-remaining now lives
+          in the top-right corner of the content box (see below); bookmark
+          and streak sit below the module/lesson titles. */}
       <div className="sticky top-0 z-40 bg-slate-900/60 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-4">
+        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col items-center text-center gap-1">
           <div className={`text-base sm:text-lg font-bold ${isKids ? "text-purple-900" : "text-white"}`}>
-            {steps.moduleName} · {total} min
+            {steps.moduleName}
           </div>
-          <div className="flex items-center gap-3">
+          <div className={`text-sm sm:text-base font-medium ${isKids ? "text-purple-700" : "text-slate-300"}`}>
+            Lesson {currentStepIndex + 1}: {currentStep.title}
+          </div>
+          <div className="flex items-center gap-3 mt-1">
             <BookmarkButton
               moduleId={moduleId}
               stepIndex={currentStepIndex}
               stepTitle={currentStep.title}
             />
             {streak && <span className="text-orange-400 text-xs">🔥 {streak.current} day streak</span>}
-          </div>
-          <div className={`text-xs sm:text-sm font-semibold ${isKids ? "text-purple-700" : "text-slate-300"}`}>
-            ~{remaining} min remaining
           </div>
         </div>
       </div>
@@ -218,13 +218,21 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             </motion.div>
           )}
 
-          {/* Minimal Title Section - Lesson only (module shown once in header) */}
-          <div className="mb-8">
+          {/* Minimal Title Section - Lesson only (module shown once in header),
+              paired with the time-remaining indicator in the top-right corner. */}
+          <div className="mb-8 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
             <h1 className={`text-4xl font-bold ${
               isKids ? 'text-purple-900' : 'text-white'
             }`}>
               {currentStep.title}
             </h1>
+            <span
+              className={`text-xs sm:text-sm font-medium whitespace-nowrap ${
+                isKids ? 'text-purple-500' : 'text-slate-400'
+              }`}
+            >
+              {remaining} min left out of {total} min total
+            </span>
           </div>
 
           {/* Skip To Next Option */}
