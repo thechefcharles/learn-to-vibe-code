@@ -213,6 +213,11 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           }`}
           data-step-container
         >
+          {/* Lesson Title */}
+          <h2 className={`text-2xl sm:text-3xl font-bold mb-6 ${isKids ? "text-purple-900" : "text-white"}`}>
+            {currentStep.title}
+          </h2>
+
           {/* Milestone Celebration */}
           {isMilestone && (
             <motion.div
