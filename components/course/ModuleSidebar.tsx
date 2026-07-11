@@ -101,22 +101,35 @@ export function ModuleSidebar({
                 whileHover={{ x: 4 }}
               >
                 <div className="flex items-center gap-2">
-                  <div
-                    className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
-                      isCurrent
-                        ? isKids
-                          ? 'bg-purple-500 text-white'
-                          : 'bg-cyan-400 text-slate-900'
-                        : isCompleted
-                        ? isKids
-                          ? 'bg-green-500 text-white'
-                          : 'bg-green-500 text-white'
-                        : isKids
-                        ? 'bg-purple-300 text-purple-700'
-                        : 'bg-slate-600 text-slate-400'
-                    }`}
-                  >
-                    {isCompleted ? '✓' : index + 1}
+                  <div className="relative flex-shrink-0">
+                    <div
+                      className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold ${
+                        isCurrent
+                          ? isKids
+                            ? 'bg-purple-500 text-white'
+                            : 'bg-cyan-400 text-slate-900'
+                          : isCompleted
+                          ? isKids
+                            ? 'bg-green-500 text-white'
+                            : 'bg-green-500 text-white'
+                          : isKids
+                          ? 'bg-purple-300 text-purple-700'
+                          : 'bg-slate-600 text-slate-400'
+                      }`}
+                    >
+                      {index + 1}
+                    </div>
+                    {isCompleted && (
+                      <div
+                        className={`absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full flex items-center justify-center text-[8px] leading-none border-2 ${
+                          isKids
+                            ? 'bg-green-500 text-white border-purple-50'
+                            : 'bg-green-500 text-white border-slate-800'
+                        }`}
+                      >
+                        ✓
+                      </div>
+                    )}
                   </div>
                   <span className="text-sm font-medium truncate">{step.title}</span>
                 </div>

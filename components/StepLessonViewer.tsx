@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useId } from "react";
 import { motion } from "framer-motion";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 import { useVersion } from "@/lib/VersionContext";
@@ -12,7 +12,6 @@ import { useUser } from "@/lib/hooks/useUser";
 import { ModuleSidebar } from "./course/ModuleSidebar";
 import { ModuleIntro } from "./course/ModuleIntro";
 import { KeyPointCard } from "./course/KeyPointCard";
-import { BookmarkButton } from "./course/BookmarkButton";
 import { CodeBlockWithCopy } from "./course/CodeBlockWithCopy";
 import { StepResourcesFooter } from "./course/StepResourcesFooter";
 import { VideoBackground } from "./kids-landing/VideoBackground";
@@ -49,6 +48,13 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
   const streak = useUserStreak();
   const { user } = useUser();
+  const timeGradientId = useId();
+
+  // Circular progress: filled portion represents time remaining out of total.
+  const timeRingRadius = 16;
+  const timeRingCircumference = 2 * Math.PI * timeRingRadius;
+  const timeRingPercent = total > 0 ? Math.max(0, Math.min(1, remaining / total)) : 0;
+  const timeRingOffset = timeRingCircumference * (1 - timeRingPercent);
 
   // Calculate milestone progress
   const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
@@ -152,25 +158,33 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
       <VideoBackground />
       <MouseTrail />
 
-      {/* Header — centered module/lesson identity. Time-remaining now lives
-          in the top-right corner of the content box (see below); bookmark
-          and streak sit below the module/lesson titles. */}
-      <div className="sticky top-0 z-40 bg-slate-900/60 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col items-center text-center gap-1">
-          <div className={`text-base sm:text-lg font-bold ${isKids ? "text-purple-900" : "text-white"}`}>
+      {/* Header — centered module/lesson identity with a cosmic gradient
+          treatment (cyan → purple → pink). Time-remaining now lives in the
+          top-right corner of the content box (see below) as a circular
+          progress ring; streak sits below the module/lesson titles. */}
+      <div
+        className={`sticky top-0 z-40 backdrop-blur-xl border-b ${
+          isKids
+            ? "bg-gradient-to-r from-cyan-100/70 via-purple-100/70 to-pink-100/70 border-purple-200/60"
+            : "bg-gradient-to-r from-cyan-950/70 via-purple-950/70 to-pink-950/70 border-white/10 shadow-[0_1px_24px_-8px_rgba(168,85,247,0.5)]"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 py-4 sm:py-5 flex flex-col items-center text-center gap-1.5">
+          <div
+            className={`text-base sm:text-lg font-bold tracking-tight ${
+              isKids
+                ? "text-purple-900"
+                : "bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 bg-clip-text text-transparent"
+            }`}
+          >
             {steps.moduleName}
           </div>
-          <div className={`text-sm sm:text-base font-medium ${isKids ? "text-purple-700" : "text-slate-300"}`}>
+          <div className={`text-sm sm:text-base font-medium ${isKids ? "text-purple-700" : "text-slate-300/90"}`}>
             Lesson {currentStepIndex + 1}: {currentStep.title}
           </div>
-          <div className="flex items-center gap-3 mt-1">
-            <BookmarkButton
-              moduleId={moduleId}
-              stepIndex={currentStepIndex}
-              stepTitle={currentStep.title}
-            />
-            {streak && <span className="text-orange-400 text-xs">🔥 {streak.current} day streak</span>}
-          </div>
+          {streak && (
+            <span className="text-orange-400 text-xs mt-0.5">🔥 {streak.current} day streak</span>
+          )}
         </div>
       </div>
 
@@ -226,13 +240,49 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             }`}>
               {currentStep.title}
             </h1>
-            <span
-              className={`text-xs sm:text-sm font-medium whitespace-nowrap ${
-                isKids ? 'text-purple-500' : 'text-slate-400'
-              }`}
+            <div
+              className="flex items-center gap-2 flex-shrink-0"
+              title={`${remaining} min left out of ${total} min total`}
+              role="img"
+              aria-label={`${remaining} of ${total} minutes remaining in this module`}
             >
-              {remaining} min left out of {total} min total
-            </span>
+              <svg width="36" height="36" viewBox="0 0 36 36" className="-rotate-90 flex-shrink-0">
+                <defs>
+                  <linearGradient id={timeGradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#22d3ee" />
+                    <stop offset="100%" stopColor="#a855f7" />
+                  </linearGradient>
+                </defs>
+                <circle
+                  cx="18"
+                  cy="18"
+                  r={timeRingRadius}
+                  fill="none"
+                  stroke={isKids ? "rgba(126,34,206,0.15)" : "rgba(255,255,255,0.1)"}
+                  strokeWidth="3"
+                />
+                <circle
+                  cx="18"
+                  cy="18"
+                  r={timeRingRadius}
+                  fill="none"
+                  stroke={`url(#${timeGradientId})`}
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeDasharray={timeRingCircumference}
+                  strokeDashoffset={timeRingOffset}
+                  style={{ transition: "stroke-dashoffset 0.3s ease" }}
+                />
+              </svg>
+              <div className="text-left leading-tight">
+                <span className={`block text-xs sm:text-sm font-semibold ${isKids ? 'text-purple-700' : 'text-slate-200'}`}>
+                  {remaining} / {total}
+                </span>
+                <span className={`block text-[10px] uppercase tracking-wide ${isKids ? 'text-purple-500' : 'text-slate-500'}`}>
+                  min left
+                </span>
+              </div>
+            </div>
           </div>
 
           {/* Skip To Next Option */}
