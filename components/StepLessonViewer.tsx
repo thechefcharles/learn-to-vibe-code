@@ -232,14 +232,8 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             </motion.div>
           )}
 
-          {/* Minimal Title Section - Lesson only (module shown once in header),
-              paired with the time-remaining indicator in the top-right corner. */}
-          <div className="mb-8 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
-            <h1 className={`text-4xl font-bold ${
-              isKids ? 'text-purple-900' : 'text-white'
-            }`}>
-              {currentStep.title}
-            </h1>
+          {/* Time Remaining Indicator - Top right of content box */}
+          <div className="mb-8 flex justify-end">
             <div
               className="flex items-center gap-2 flex-shrink-0"
               title={`${remaining} min left out of ${total} min total`}
@@ -284,19 +278,6 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               </div>
             </div>
           </div>
-
-          {/* Skip To Next Option */}
-          {currentStep.duration > 10 && !isFirstStep && !isLastStep && (
-            <div className="mb-6 flex items-center justify-between p-3 rounded-lg bg-slate-800/30 border border-slate-700/50">
-              <span className="text-xs text-slate-400">Taking too long?</span>
-              <button
-                onClick={handleNext}
-                className="text-xs px-3 py-1 rounded text-slate-300 hover:text-white hover:bg-slate-700/50 transition"
-              >
-                Jump to next step →
-              </button>
-            </div>
-          )}
 
           {currentStep.sections ? (
             <div className="mb-6">
