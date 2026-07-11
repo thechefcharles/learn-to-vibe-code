@@ -161,9 +161,6 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             {steps.moduleName} · {total} min
           </div>
           <div className="flex items-center gap-3">
-            <span className={`text-xs sm:text-sm font-semibold ${isKids ? "text-purple-900" : "text-slate-300"}`}>
-              Lesson {currentStepIndex + 1} of {steps.steps.length}
-            </span>
             <BookmarkButton
               moduleId={moduleId}
               stepIndex={currentStepIndex}
