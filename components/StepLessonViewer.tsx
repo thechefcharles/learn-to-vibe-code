@@ -177,7 +177,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             {steps.moduleName}
           </div>
           <div className={`text-lg sm:text-xl font-semibold ${isKids ? "text-purple-700" : "text-slate-300/90"}`}>
-            Lesson {currentStepIndex + 1}
+            Lesson {currentStepIndex + 1}: {currentStep.title}
           </div>
           {streak && (
             <span className="text-orange-400 text-sm mt-1">🔥 {streak.current} day streak</span>

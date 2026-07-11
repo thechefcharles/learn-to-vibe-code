@@ -61,7 +61,7 @@ export const module0Steps: Record<Version, ModuleStepSequence> = {
     steps: [
       {
         id: 0,
-        title: "Welcome & Overview",
+        title: "Walkthrough Overview",
         type: "lesson",
         duration: 5,
         difficulty: "easy",
@@ -434,7 +434,7 @@ Ready to continue?`,
     steps: [
       {
         id: 0,
-        title: "Welcome to Vibe Code! 🎮",
+        title: "Walkthrough Overview",
         type: "lesson",
         duration: 5,
         difficulty: "easy",
