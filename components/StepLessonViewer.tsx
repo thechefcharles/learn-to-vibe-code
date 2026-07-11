@@ -221,13 +221,8 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             </motion.div>
           )}
 
-          {/* Minimal Title Section - Module and Lesson, each shown once */}
+          {/* Minimal Title Section - Lesson only (module shown once in header) */}
           <div className="mb-8">
-            <h2 className={`text-lg font-semibold mb-2 ${
-              isKids ? 'text-purple-600' : 'text-slate-400'
-            }`}>
-              {steps.moduleName}
-            </h2>
             <h1 className={`text-4xl font-bold ${
               isKids ? 'text-purple-900' : 'text-white'
             }`}>
