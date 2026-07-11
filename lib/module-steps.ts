@@ -88,9 +88,7 @@ Let's get started.`,
         duration: 15,
         difficulty: "easy",
         xpReward: 75,
-        content: `## The Stack Map
-
-Before you install anything, let's see the full picture. Each tool has a place in the stack:
+        content: `Before you install anything, let's see the full picture. Each tool has a place in the stack:
 
 | Tool | What it does | First used |
 |------|-------------|-----------|
@@ -125,9 +123,7 @@ You *write* code in Cursor/Claude Code → *design* it (Module 6) → *power* it
         duration: 5,
         difficulty: "easy",
         xpReward: 50,
-        content: `## What is a Terminal?
-
-A **terminal** (or command line) is a text-based interface to your computer. Instead of clicking buttons, you type commands.
+        content: `A **terminal** (or command line) is a text-based interface to your computer. Instead of clicking buttons, you type commands.
 
 ### Opening a Terminal
 
@@ -155,9 +151,7 @@ You'll see a prompt (like \`$\` or \`>\`) which means the terminal is ready for 
         duration: 10,
         difficulty: "easy",
         xpReward: 100,
-        content: `## Install Node.js
-
-Node.js is the runtime that runs JavaScript on your computer (not just in a browser).
+        content: `Node.js is the runtime that runs JavaScript on your computer (not just in a browser).
 
 ### Steps
 
@@ -214,9 +208,7 @@ Node.js is the runtime that runs JavaScript on your computer (not just in a brow
         duration: 10,
         difficulty: "easy",
         xpReward: 75,
-        content: `## Install Cursor
-
-Cursor is your AI code editor. It's built on VS Code, so it'll feel familiar if you've used it before.
+        content: `Cursor is your AI code editor. It's built on VS Code, so it'll feel familiar if you've used it before.
 
 ### Steps
 
@@ -254,9 +246,7 @@ Cursor is your AI code editor. It's built on VS Code, so it'll feel familiar if 
         duration: 10,
         difficulty: "easy",
         xpReward: 75,
-        content: `## Install Claude Code
-
-Claude Code is the terminal AI agent. You'll use it from the terminal to ask for help with complex tasks.
+        content: `Claude Code is the terminal AI agent. You'll use it from the terminal to ask for help with complex tasks.
 
 ### Steps
 
@@ -300,9 +290,7 @@ GitHub is where you'll save your code. It's like Google Drive for developers.
         duration: 8,
         difficulty: "easy",
         xpReward: 50,
-        content: `## Sign Up for Supabase
-
-Supabase is your database — where your app stores data (logins, posts, etc.).
+        content: `Supabase is your database — where your app stores data (logins, posts, etc.).
 
 **Step 1:** Go to [https://supabase.com](https://supabase.com) and click "Sign up"
 
@@ -320,9 +308,7 @@ Supabase is your database — where your app stores data (logins, posts, etc.).
         duration: 8,
         difficulty: "easy",
         xpReward: 50,
-        content: `## Sign Up for Vercel
-
-Vercel is where you'll deploy your app — makes it live on the internet.
+        content: `Vercel is where you'll deploy your app — makes it live on the internet.
 
 **Step 1:** Go to [https://vercel.com/signup](https://vercel.com/signup)
 
@@ -386,9 +372,7 @@ No tool requires payment to complete this course.`,
         duration: 15,
         difficulty: "medium",
         xpReward: 100,
-        content: `## Final Verification
-
-Let's verify everything works with a hello-world check.
+        content: `Let's verify everything works with a hello-world check.
 
 ### Step 1: Create a folder
 
@@ -462,9 +446,7 @@ Let's gear up! 🚀`,
         duration: 15,
         difficulty: "easy",
         xpReward: 75,
-        content: `## The Toolbelt Map
-
-Here's all the tools you'll use, what they do, and when you'll use them:
+        content: `Here's all the tools you'll use, what they do, and when you'll use them:
 
 | Tool | What it does | First used |
 |------|-------------|-----------|
@@ -532,9 +514,7 @@ The terminal is just another way to talk to your computer. We'll only use a few 
         duration: 10,
         difficulty: "easy",
         xpReward: 100,
-        content: `## Install Node.js
-
-Node.js is the engine that runs JavaScript on your computer (not just in a web browser).
+        content: `Node.js is the engine that runs JavaScript on your computer (not just in a web browser).
 
 ### Follow Along
 
@@ -577,9 +557,7 @@ Open a terminal and copy-paste this:`,
         duration: 10,
         difficulty: "easy",
         xpReward: 75,
-        content: `## Install Cursor
-
-Cursor is your **AI-powered code editor**. It's like VS Code but with AI built in.
+        content: `Cursor is your **AI-powered code editor**. It's like VS Code but with AI built in.
 
 ### Follow Along
 
@@ -604,9 +582,7 @@ You're done! Cursor is ready to go. ✅`,
         duration: 10,
         difficulty: "easy",
         xpReward: 75,
-        content: `## Install Claude Code
-
-Claude Code is your **terminal AI assistant**. Ask it complex tasks, and it builds them for you.
+        content: `Claude Code is your **terminal AI assistant**. Ask it complex tasks, and it builds them for you.
 
 ### Follow Along
 
@@ -655,9 +631,7 @@ GitHub is like Google Drive for code. It saves your work and lets you share it.
         duration: 8,
         difficulty: "easy",
         xpReward: 50,
-        content: `## Supabase ([supabase.com](https://supabase.com))
-
-Supabase is your app's database — where all the data lives (user accounts, posts, scores, etc.).
+        content: `Supabase is your app's database — where all the data lives (user accounts, posts, scores, etc.).
 
 **1. Go to** [https://supabase.com](https://supabase.com)
 
@@ -677,9 +651,7 @@ Supabase is your app's database — where all the data lives (user accounts, pos
         duration: 8,
         difficulty: "easy",
         xpReward: 50,
-        content: `## Vercel ([vercel.com](https://vercel.com))
-
-Vercel is how you put your app on the internet. One button, and boom — everyone can see your app!
+        content: `Vercel is how you put your app on the internet. One button, and boom — everyone can see your app!
 
 **1. Go to** [https://vercel.com/signup](https://vercel.com/signup)
 
@@ -698,9 +670,7 @@ Vercel is how you put your app on the internet. One button, and boom — everyon
         duration: 10,
         difficulty: "easy",
         xpReward: 50,
-        content: `## Free Tiers & Costs
-
-Here's the real talk: what's free, and when does it cost money?
+        content: `Here's the real talk: what's free, and when does it cost money?
 
 ### What's Free (All You Need)
 
@@ -733,9 +703,7 @@ That's it!`,
         duration: 15,
         difficulty: "medium",
         xpReward: 100,
-        content: `## Final Verification
-
-Let's make sure everything actually works with a quick hello-world test.
+        content: `Let's make sure everything actually works with a quick hello-world test.
 
 ### Step 1: Create a folder
 
