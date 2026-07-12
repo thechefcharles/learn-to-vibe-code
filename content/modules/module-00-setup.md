@@ -1,5 +1,29 @@
 # Module 0: Setup & Accounts
 
+## Who This Course Is For
+
+This course teaches full-stack development with AI assistance. It's designed for ages 14+. Here's how we adapt:
+
+### If You're Under 18 ("Kids" Content)
+
+The "kids" version of lessons uses simpler language and metaphors. Examples focus on personal projects (pet tracker, homework helper). Concepts are identical to the adult version; the presentation is clearer for younger learners.
+
+You can read either version (kids is clearer; adult is more business-focused). Pick what resonates.
+
+**Your goal:** Ship a capstone project that proves you can build, ship, and explain production code.
+
+### If You're an Adult or Career-Changer ("Adult" Content)
+
+The "adult" version includes business context (SaaS, product, team workflows). Examples assume some work experience. Concepts apply directly to real job scenarios.
+
+**Your goal:** Same: ship a capstone that proves you can handle real projects.
+
+### Bottom Line
+
+Age or background doesn't matter. What matters: curiosity, willingness to learn, and commitment to shipping something.
+
+---
+
 **Stage:** Onboarding · **Level:** Beginner / All · **Duration:** ~2 contact hours (0.2 CEU)
 
 **Prerequisites:** None — this comes before Module 1. A computer and an internet connection are all that's assumed.
