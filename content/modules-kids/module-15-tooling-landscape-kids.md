@@ -6,6 +6,28 @@
 
 > **Why this matters:** The coding world has tons of tools. This module teaches you to evaluate tools, understand tradeoffs, and pick the right one for your project. Also, what you learned transfers to *any* stack, not just our stack.
 
+---
+
+## Module 15: Other Choices in Tech (Reinforcement, Not Doubt)
+
+You've learned Next.js, Supabase, Tailwind, TypeScript, Vercel.
+
+This module isn't saying "you chose wrong." It's saying "you chose well. Here's why, and what other choices exist for different problems."
+
+### Your Stack
+
+The stack you learned is **professional-grade**:
+- ✅ Used by real companies
+- ✅ Good for learning and shipping
+- ✅ Scalable (from pet project to millions of users)
+- ✅ Lots of tutorials and help
+
+For your capstone: **stick with what you learned.** Don't second-guess.
+
+If someday a project needs something else, you'll know what to look for. But for now, what you learned is solid.
+
+---
+
 ## What You'll Learn
 
 By the end of this module, you'll be able to:
@@ -173,6 +195,16 @@ Here are your three quiz questions. Study these!
 
 *Why:* "It depends" without deciding is lazy. "It depends on whether you need real-time data (use Firebase) or can use a regular DB (use Supabase)—for this project, I'd choose Supabase" is *smart*. Always back it up with a choice.
 
+**Q15-k4:** A friend says "You should have used Vue instead of React."
+
+You:
+- (a) Panic—you chose wrong
+- (b) **Agree, both work, but you'll stick with React for consistency** ✓
+- (c) Rewrite everything in Vue
+- (d) Give up on programming
+
+*Why:* Both React and Vue work great. You chose React and learned it well. That's solid. Consistency beats second-guessing.
+
 ---
 
 ## Knowledge Check (Quiz & Scenarios)
@@ -193,20 +225,11 @@ Here are your three quiz questions. Study these!
 
 ### Scenario checks:
 
-- **(a) You need a real-time multiplayer game.**
-  - ✅ **Better stack:** Unity (engine) + Firebase (realtime), not Next.js + Supabase.
+- **(a) You're a complete beginner.**
+  - ✅ **Use our stack:** It's simple, well-documented, and complete. Perfect for you right now.
 
-- **(b) You're building a static blog (no database needed).**
-  - ✅ **Better stack:** Astro + Vercel (faster than Next.js for static).
-
-- **(c) You're a complete beginner.**
-  - ✅ **Use our stack:** It's simple, well-documented, and complete.
-
-- **(d) Cost is zero (student with no money).**
-  - ✅ **Options:** VS Code (free), React (free), Firebase free tier, GitHub free, Netlify free.
-
-- **(e) You need an app for iPhone and Android.**
-  - ✅ **Better:** React Native or Flutter (mobile frameworks), not Next.js.
+- **(b) You need an app for iPhone and Android.**
+  - ✅ **Different stack needed:** React Native or Flutter (mobile frameworks), not Next.js. But your skills transfer!
 
 ---
 
