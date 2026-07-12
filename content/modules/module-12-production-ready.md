@@ -29,6 +29,216 @@ Reframe for AI builders: AI helps you *reach* production-ready faster (it writes
 
 ---
 
+### 12.1a — Configuration discipline (~45 min)
+
+Production apps live in multiple environments: your local machine, CI/CD pipelines, staging, and production. Each environment has different needs — a test database vs. production, short timeouts for local dev vs. resilient timeouts for production, feature flags toggled differently. **Configuration discipline** is separating *things you might change* (config) from *things you never share* (secrets).
+
+**Config files** (versioned in git, safe to commit):
+- Environment-specific values: database connection strings for test/staging/prod
+- Feature flags: which features are enabled
+- Thresholds: timeouts, retry limits, rate limits
+- Public URLs and endpoints
+
+Example config structure:
+```yaml
+# config/development.yaml
+database:
+  url: postgresql://localhost/invoice_tracker_dev
+  pool_size: 5
+
+features:
+  enable_agent_workflows: true
+  enable_payments: false
+
+timeouts:
+  db_query_ms: 2000
+  external_api_ms: 5000
+```
+
+```yaml
+# config/production.yaml
+database:
+  url: postgresql://prod-db.example.com/invoices  # ← swapped at deploy time
+  pool_size: 25
+
+features:
+  enable_agent_workflows: true
+  enable_payments: true
+
+timeouts:
+  db_query_ms: 10000    # ← longer for resilience
+  external_api_ms: 15000
+```
+
+**Secrets** (in `.env.local` locally, Vercel env vars in production):
+- Database passwords and service keys
+- API keys (Anthropic, Stripe, SendGrid)
+- Signing certificates
+- Auth tokens
+
+Load secrets at runtime, never in config files:
+```typescript
+// lib/config.ts
+export const config = {
+  database: {
+    url: process.env.DATABASE_URL || "postgresql://localhost/dev",
+    password: process.env.DATABASE_PASSWORD, // Never in config!
+  },
+  anthropic: {
+    apiKey: process.env.ANTHROPIC_API_KEY, // Secret only
+  },
+};
+```
+
+In deployment: Vercel injects secrets as env vars at build/runtime. Your code reads them from `process.env`, never touches config files for secrets. This separation means a teammate can safely clone your repo without exposing production credentials, and you can swap configs (test vs. prod) without touching secrets.
+
+**Check:** if a value starts with `secret`, `token`, `key`, or `password`, it's a secret. If it's something you'd reasonably version-control or commit with a placeholder value, it's config.
+
+---
+
+### 12.1b — Golden fixtures (~45 min)
+
+**Golden fixtures** are known-good test data — versioned JSON files representing exact, stable states of your app. When you run tests, you load a fixture, run the workflow, and verify the output matches expected behavior. This is essential for regression testing: you catch the moment code changes unintentionally break a previously working flow.
+
+**Why golden fixtures matter:** Tests often use mocked or randomly generated data. But real data has edge cases — an invoice with a client name containing a quote character, a date field bordering midnight UTC, a currency with fractional units. Fixtures freeze those real edge cases in version control.
+
+Example fixture for invoice testing:
+```json
+// fixtures/invoices.json
+{
+  "invoices": [
+    {
+      "id": "inv-001",
+      "client_id": "client-123",
+      "client_name": "O'Reilly Media",
+      "amount": 1500.50,
+      "due_date": "2024-12-31T23:59:59Z",
+      "status": "overdue",
+      "created_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "id": "inv-002",
+      "client_id": "client-456",
+      "client_name": "Acme & Sons",
+      "amount": 2000.00,
+      "due_date": "2025-01-15T00:00:00Z",
+      "status": "paid",
+      "created_at": "2024-01-02T00:00:00Z"
+    }
+  ]
+}
+```
+
+In your test:
+```typescript
+import { readFileSync } from "fs";
+import { describe, it, expect } from "vitest";
+import { processReminders } from "@/lib/reminders";
+
+const fixtures = JSON.parse(readFileSync("fixtures/invoices.json", "utf8"));
+
+describe("reminders", () => {
+  it("drafts reminders only for overdue invoices", async () => {
+    const reminders = await processReminders(fixtures.invoices);
+    
+    // Golden check: expect exactly one reminder (for inv-001)
+    expect(reminders).toHaveLength(1);
+    expect(reminders[0].invoiceId).toBe("inv-001");
+    expect(reminders[0].body).toContain("O'Reilly Media"); // ← edge case: apostrophe handled
+  });
+});
+```
+
+If someone changes the reminder logic and it breaks on names with apostrophes, the golden fixture catches it immediately. The fixture is versioned in git, so the team knows exactly what data triggered the bug.
+
+**Calibration:** create fixtures from real data (scrub for privacy), include edge cases (quotes, special characters, boundary times), and keep them small (3-5 representative records). As bugs surface, add them to the fixtures to prevent regressions.
+
+---
+
+### 12.1c — Tool contracts (~45 min)
+
+Tools (from Module 11) are functions or CLI commands your agent can call. A **tool contract** is a standardized interface for tool output — every tool returns the same shape: status, result/error, metrics. This makes tools predictable and composable.
+
+**Bad tool output:** inconsistent shapes, no clear success/failure signal:
+```typescript
+// ❌ Inconsistent: sometimes returns object, sometimes string, unclear on errors
+export async function sendEmail(email: string, subject: string, body: string) {
+  try {
+    const result = await mailer.send({ email, subject, body });
+    return result; // What shape? Varies by mailer library
+  } catch (err) {
+    return err.message; // String, not an object!
+  }
+}
+```
+
+**Good tool contract:** standardized JSON with status, result, and metrics:
+```typescript
+// ✅ Consistent: always returns {status, result, error, metrics}
+interface ToolOutput {
+  status: "success" | "error" | "timeout";
+  result?: Record<string, any>;
+  error?: string;
+  metrics: {
+    duration_ms: number;
+    attempts: number;
+    timestamp: string;
+  };
+}
+
+export async function sendEmail(email: string, subject: string, body: string): Promise<ToolOutput> {
+  const startTime = Date.now();
+  let attempts = 0;
+
+  try {
+    attempts += 1;
+    const result = await mailer.send({ email, subject, body });
+    
+    return {
+      status: "success",
+      result: {
+        sent: true,
+        message_id: result.id,
+        recipient: email,
+      },
+      metrics: {
+        duration_ms: Date.now() - startTime,
+        attempts,
+        timestamp: new Date().toISOString(),
+      },
+    };
+  } catch (err) {
+    if (Date.now() - startTime > 5000) {
+      return {
+        status: "timeout",
+        error: "Email service took too long",
+        metrics: {
+          duration_ms: Date.now() - startTime,
+          attempts,
+          timestamp: new Date().toISOString(),
+        },
+      };
+    }
+    
+    return {
+      status: "error",
+      error: err instanceof Error ? err.message : "Unknown error",
+      metrics: {
+        duration_ms: Date.now() - startTime,
+        attempts,
+        timestamp: new Date().toISOString(),
+      },
+    };
+  }
+}
+```
+
+Every tool returns `{status, result, error, metrics}`. The agent (or your code) checks `status` to know what happened. Metrics let you measure reliability over time — are emails taking longer? How often do retries happen? This is how you build observability.
+
+**Link to stability:** with a tool contract, you can swap implementations (Sendgrid → AWS SES) without changing the contract. The agent sees the same interface. You can also log and replay failures — since every tool call returns metrics, you can debug "why did email #5 fail?" by inspecting the metrics and the error.
+
+---
+
 ## Lesson 12.2 — Testing with AI (~75 min)
 
 Begins Objective 2. Tests are code that checks your code, so you can change things confidently. Three levels:
