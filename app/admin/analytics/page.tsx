@@ -15,8 +15,11 @@ export default async function AnalyticsPage() {
     redirect('/auth/sign-in');
   }
 
-  // TODO: Check if user is admin role
-  // For now, allow access (will add role check later)
+  // Admin-only access
+  const isAdmin = user.user_metadata?.role === 'admin';
+  if (!isAdmin) {
+    redirect('/');
+  }
 
   const analyticsData = await getAnalyticsSummary();
 

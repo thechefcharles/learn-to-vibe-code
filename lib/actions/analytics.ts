@@ -32,6 +32,12 @@ export async function logEvent(event: AnalyticsEvent) {
 
 export async function getAnalyticsSummary() {
   try {
+    // Admin-only access
+    const user = await getUser();
+    if (!user || user.user_metadata?.role !== 'admin') {
+      return null;
+    }
+
     const supabase = await createClient();
 
     // Total users
