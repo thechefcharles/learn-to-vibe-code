@@ -162,25 +162,25 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
       <div
         className={`sticky top-0 z-40 backdrop-blur-xl border-b ${
           isKids
-            ? "bg-gradient-to-r from-cyan-100/70 via-purple-100/70 to-pink-100/70 border-purple-200/60"
-            : "bg-gradient-to-r from-cyan-950/70 via-purple-950/70 to-pink-950/70 border-white/10 shadow-[0_1px_24px_-8px_rgba(168,85,247,0.5)]"
+            ? "bg-gradient-to-b from-cyan-100/20 via-purple-100/10 to-transparent border-purple-200/30"
+            : "bg-gradient-to-b from-cyan-500/10 via-purple-500/5 to-transparent border-white/10 shadow-[0_8px_32px_-8px_rgba(168,85,247,0.3)]"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 flex flex-col items-center text-center gap-2">
+        <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12 flex flex-col items-center text-center gap-3">
           <div
-            className={`text-4xl sm:text-6xl font-bold tracking-tight ${
+            className={`text-5xl sm:text-7xl font-black tracking-tighter ${
               isKids
                 ? "text-purple-900"
-                : "bg-gradient-to-r from-cyan-300 via-purple-300 to-pink-300 bg-clip-text text-transparent"
+                : "bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-lg"
             }`}
           >
             {steps.moduleName}
           </div>
-          <div className={`text-lg sm:text-xl font-semibold ${isKids ? "text-purple-700" : "text-slate-300/90"}`}>
+          <div className={`text-lg sm:text-2xl font-bold ${isKids ? "text-purple-700" : "bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent"}`}>
             Lesson {currentStepIndex + 1}: {currentStep.title}
           </div>
           {streak && (
-            <span className="text-orange-400 text-sm mt-1">🔥 {streak.current} day streak</span>
+            <span className="text-orange-400 text-sm mt-2 font-semibold">🔥 {streak.current} day streak</span>
           )}
         </div>
       </div>
@@ -237,16 +237,17 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           {/* Time Remaining Indicator - Top right of content box */}
           <div className="mb-8 flex justify-end">
             <div
-              className="flex items-center gap-2 flex-shrink-0"
+              className="flex items-center gap-3 flex-shrink-0 p-3 rounded-lg bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 backdrop-blur-sm"
               title={`${remaining} min left out of ${total} min total`}
               role="img"
               aria-label={`${remaining} of ${total} minutes remaining in this module`}
             >
-              <svg width="36" height="36" viewBox="0 0 36 36" className="-rotate-90 flex-shrink-0">
+              <svg width="48" height="48" viewBox="0 0 36 36" className="-rotate-90 flex-shrink-0">
                 <defs>
                   <linearGradient id={timeGradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#22d3ee" />
-                    <stop offset="100%" stopColor="#a855f7" />
+                    <stop offset="0%" stopColor="#06b6d4" />
+                    <stop offset="50%" stopColor="#8b5cf6" />
+                    <stop offset="100%" stopColor="#ec4899" />
                   </linearGradient>
                 </defs>
                 <circle
@@ -254,7 +255,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                   cy="18"
                   r={timeRingRadius}
                   fill="none"
-                  stroke={isKids ? "rgba(126,34,206,0.15)" : "rgba(255,255,255,0.1)"}
+                  stroke={isKids ? "rgba(126,34,206,0.2)" : "rgba(6,182,212,0.15)"}
                   strokeWidth="3"
                 />
                 <circle
@@ -271,11 +272,11 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                 />
               </svg>
               <div className="text-left leading-tight">
-                <span className={`block text-xs sm:text-sm font-semibold ${isKids ? 'text-purple-700' : 'text-slate-200'}`}>
-                  {remaining} / {total}
+                <span className={`block text-sm sm:text-base font-bold bg-gradient-to-r ${isKids ? 'from-purple-400 to-purple-300 bg-clip-text text-transparent' : 'from-cyan-400 to-purple-400 bg-clip-text text-transparent'}`}>
+                  {remaining}/{total}
                 </span>
-                <span className={`block text-[10px] uppercase tracking-wide ${isKids ? 'text-purple-500' : 'text-slate-500'}`}>
-                  min left
+                <span className={`block text-[10px] uppercase tracking-widest font-semibold ${isKids ? 'text-purple-400/70' : 'text-cyan-400/70'}`}>
+                  minutes
                 </span>
               </div>
             </div>
