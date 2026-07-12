@@ -69,3 +69,63 @@ body {
 code {
   font-family: var(--font-jetbrains-mono, ui-monospace, monospace);
 }
+
+/* Prose improvements */
+.prose {
+  line-height: 1.75;
+}
+
+.prose p {
+  line-height: 1.75;
+  margin-bottom: 1.5rem;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.prose h1 {
+  font-size: 2rem;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  margin-top: 2rem;
+}
+
+.prose li {
+  line-height: 1.75;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced focus states for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+}
+
+/* Animation performance optimization */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
+}
