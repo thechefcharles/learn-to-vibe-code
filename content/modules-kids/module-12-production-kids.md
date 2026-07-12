@@ -1,10 +1,18 @@
 # Module 12: Production-Ready Code 🏭
 
-**Stage:** Advanced · **Level:** Intermediate/Advanced · **Duration:** ~5 hours · **XP:** 500
+**Stage:** Advanced · **Level:** Intermediate/Advanced · **Duration:** ~6 hours · **XP:** 600
 
 **What you need:** Modules 0-11
 
 > **Why this matters:** Your app works, but is it solid? Production = real users using it unexpectedly. This module teaches testing, error handling, security, and performance so your app doesn't break.
+
+## Module 12: Production-Ready (Essentials Only)
+
+This module covers the non-negotiable checks before shipping. It's streamlined: 6 hours, not 8. Focus: tests, error handling, security, accessibility, performance.
+
+**Not covered:** advanced patterns (complex testing frameworks, performance profiling). Those are next-level; learn them after shipping your capstone.
+
+**Goal:** By end of Module 12, you have a checklist. Complete it, you're ready to ship.
 
 ## What You'll Learn
 
