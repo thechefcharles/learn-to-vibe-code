@@ -47,6 +47,8 @@ Each is intentionally scoped like the invoice tracker: small enough to finish in
 
 ## Governance & Decision Documentation
 
+Recall **Module 0.6-0.7:** CLAUDE.md and Notion are two halves of project ownership. You'll create both here.
+
 Submit the following alongside your code and oral defense:
 
 ### 1. **decisions.md** (hand-written, authentic)
