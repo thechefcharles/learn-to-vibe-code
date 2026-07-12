@@ -123,19 +123,88 @@ Components from shadcn/ui rendered: Button, Input, Table, Card in context of the
 
 ---
 
-## Lesson 6.4 — Restyle the invoice tracker (~75 min)
+## Lesson 6.4 — Apply design direction with Claude Code (~75 min)
 
 This delivers Objective 1 end-to-end. Take the plain clients + invoices pages and make them look professional: swap raw tables for styled components, apply the spacing scale, add hierarchy (page title, section headers), a header/nav, and an accent color. Still mock data — purely the visual layer.
 
-Do it AI-assisted but *directed*: give Cursor/Claude Code the design direction from 6.2, review each change against the principles, iterate. **prompt → look critically → refine** — the same loop as code, for design.
+### The automation-first approach: Claude Code applies design direction
 
-**Tip (multimodal, Module 2):** paste a screenshot of a design you like (or a competitor's UI) and ask the AI to match it — a picture guides the styling far better than words.
+Instead of manually tweaking CSS/Tailwind classes line by line, **prompt Claude Code to apply your design direction to the entire app:**
+
+**Step 1 — Ensure shadcn/ui is installed:**
+
+```bash
+npx shadcn@latest init
+npx shadcn@latest add button input table card badge
+```
+
+**Step 2 — Open Claude Code and give it design direction:**
+
+```bash
+claude
+```
+
+Then write:
+
+```
+I'm applying the four design levers (hierarchy, spacing, typography, color) 
+to my invoice tracker. Current state: plain pages with raw HTML tables and no styling.
+
+Please restyle these pages using shadcn/ui components:
+1. app/clients/page.tsx
+2. app/invoices/page.tsx  
+3. Create an app/components/Header.tsx with nav
+
+Design direction:
+- Hierarchy: Page title (h1) 32px bold, section headers 20px, body 14px
+- Spacing: Consistent 8px scale, minimum 24px between sections, 6px internal padding
+- Typography: Use Inter font (system default), 3 size tiers max
+- Color: Slate neutral palette (text: slate-900, bg: slate-50), blue accent (#2563eb) for CTAs
+
+Specific requirements:
+- Use shadcn <Table>, <Button>, <Card>, <Input> components
+- Add a header with "Clients"/"Invoices" title + subtitle
+- Wrap pages in Card with consistent padding
+- Responsive: columns stack on mobile (no horizontal scroll)
+- Buttons use accent blue for primary actions
+- Include hover/focus states where shadcn provides them
+- Add a header navigation bar linking to /clients and /invoices
+
+Please apply this to all pages, creating a cohesive design.
+I'll review each file and iterate if needed.
+```
+
+**Step 3 — Review Claude Code's output.** Claude Code will propose styling changes across multiple files. Step through:
+- Does the hierarchy match (larger titles, smaller body)?
+- Is spacing consistent (check gap/p-* classes)?
+- Are shadcn components used consistently?
+- Is the color palette restrained (no random colors)?
+- Do the pages respond to mobile resize (test in DevTools)?
+
+**Step 4 — Accept or refine.** If something's off:
+- Tell Claude Code: "The accent blue is too bright; use slate-500 for secondary buttons instead"
+- Or: "The spacing between sections feels cramped; increase to 32px"
+- Claude Code iterates until you're satisfied
+
+**Step 5 — Test responsively.** Run the app and resize to mobile (375px). Verify:
+- Tables stack into readable layouts (not horizontal scroll)
+- Buttons are large enough to tap (~44px)
+- Text is readable (no font < 12px on mobile)
+
+**Why Claude Code for styling?**
+
+- **End-to-end consistency:** Claude Code applies the design direction to all pages at once, so nothing is missed
+- **Component-aware:** it uses shadcn/ui everywhere, avoiding inconsistent ad-hoc styling
+- **Responsive-first:** it handles mobile breakpoints as part of the design direction, not an afterthought
+- **Iteration-friendly:** you refine once, and it propagates across all pages
+
+**Tip (multimodal, Module 2):** if you have a reference design you like (Linear, Stripe, your competitor), describe or paste a screenshot. Tell Claude Code: "Make it feel like [company]'s UI" — a picture guides styling far better than words.
 
 ---
 
 **[SCREENSHOT PLACEHOLDER: Restyled UI ("After")]**
 
-Side-by-side: plain `/clients` (left) and restyled version (right). Shows hierarchy, consistent spacing, professional typography, accent color. Desktop view.
+Side-by-side: plain `/clients` (left) and restyled version (right). Shows hierarchy, consistent spacing, professional typography, accent color. Desktop view. And resized to mobile (375px) on the right, showing responsive stacking.
 
 ---
 
@@ -222,31 +291,45 @@ Screen 2: Claude Design canvas showing a generated UI prototype (dashboard, form
 2. Follow the prompts (use defaults)
 3. Add components: `npx shadcn@latest add button input table card badge`
 
-**Phase 3: Restyle the `/clients` page (25 min)**
+**Phase 3: Use Claude Code to apply design direction (25 min)**
 
-Use Cursor with this design direction prompt:
+Open Claude Code:
 
-```
-Restyle the /clients page using shadcn/ui components and apply the four design levers:
-1. Hierarchy: make the page title (h1) large and bold, section headers medium, body text small
-2. Spacing: use consistent gap/padding (8px scale), with at least 24px between sections
-3. Typography: use the Inter font (or system default), limit to 3 sizes
-4. Color: use a neutral base (slate-900 for text, slate-50 for background), blue as accent for buttons
-
-Specific changes:
-- Replace the raw <table> with shadcn Table component
-- Add a header with "Clients" title + "Manage your clients" subtitle
-- Wrap in a Card with consistent padding
-- Make buttons (add client, etc.) use the Button component with blue accent
-- NO horizontal scroll, NO cramped spacing
-- Test responsiveness: columns stack on small screens
+```bash
+claude
 ```
 
-Then review the diff:
-- ✅ Check that `<Table>`, `<Button>`, `<Card>` are used
-- ✅ Check for consistent spacing classes (`gap-4`, `p-6`, `space-y-8`)
-- ✅ Check that colors are consistent (no random colors)
-- ✅ Check that heading sizes vary (h1 larger than body)
+Send this prompt:
+
+```
+Apply the four design levers to my invoice-tracker app using shadcn/ui:
+
+DESIGN DIRECTION:
+- Hierarchy: h1=32px bold, headers=20px, body=14px
+- Spacing: 8px scale, 24px between sections, 6px internal padding
+- Typography: Inter font, 3 sizes max
+- Color: slate palette (text: slate-900, bg: slate-50), blue accent for buttons
+
+PAGES TO RESTYLE:
+1. app/clients/page.tsx — use shadcn Table, add page header, wrap in Card
+2. app/invoices/page.tsx — same treatment
+3. app/components/Header.tsx — create with nav links
+
+REQUIREMENTS:
+- Replace raw <table> with shadcn <Table>
+- Use <Button>, <Card>, <Input> components
+- NO horizontal scroll on any page
+- Responsive: columns stack on mobile
+- Hover/focus states included (shadcn provides them)
+
+Apply this design to all pages for consistency. I'll iterate if needed.
+```
+
+Claude Code will restyle all pages. Review:
+- ✅ shadcn components used consistently (`<Table>`, `<Button>`, `<Card>`)
+- ✅ Spacing classes consistent (`gap-*`, `p-*`, `space-y-*`)
+- ✅ Color palette restrained (slate + blue only)
+- ✅ Heading sizes vary (h1 > h2 > body)
 
 **Phase 4: Test responsive (mobile) view (5 min)**
 1. Keep your app running
