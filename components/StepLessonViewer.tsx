@@ -407,31 +407,41 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                 >
                   <button
                     onClick={() => setShowHints(!showHints)}
-                    className={`w-full flex justify-between items-center font-bold text-left ${
-                      isKids ? "text-blue-700" : "text-blue-300"
+                    className={`w-full flex justify-between items-center font-bold text-left uppercase text-xs tracking-wider transition-all duration-200 py-1 ${
+                      isKids ? "text-blue-700 hover:text-blue-800" : "text-blue-300 hover:text-blue-200"
                     }`}
                   >
                     <span>💡 Hints ({currentStep.hints.length})</span>
-                    <span className="text-xl">{showHints ? "−" : "+"}</span>
+                    <motion.span
+                      animate={{ rotate: showHints ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-lg"
+                    >
+                      {showHints ? "−" : "+"}
+                    </motion.span>
                   </button>
                   {showHints && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       transition={{ duration: 0.3 }}
-                      className="mt-3 space-y-2"
+                      className="mt-4 space-y-3"
                     >
                       {currentStep.hints.map((hint, idx) => (
-                        <div
+                        <motion.div
                           key={idx}
-                          className={`p-2 rounded text-sm ${
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.2, delay: idx * 0.05 }}
+                          className={`p-3 rounded text-sm leading-relaxed ${
                             isKids
                               ? "bg-white text-blue-700 border border-blue-200"
                               : "bg-slate-800 text-blue-200 border border-blue-500/30"
                           }`}
                         >
-                          <strong>Hint {idx + 1}:</strong> {hint}
-                        </div>
+                          <strong className="uppercase text-xs tracking-wider block mb-1">Hint {idx + 1}:</strong>
+                          <span>{hint}</span>
+                        </motion.div>
                       ))}
                     </motion.div>
                   )}
@@ -447,25 +457,26 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                       : "bg-orange-500/10 border-orange-500/30"
                   }`}
                 >
-                  <p className={`font-bold mb-3 ${isKids ? "text-orange-700" : "text-orange-300"}`}>
+                  <p className={`font-bold mb-4 uppercase text-xs tracking-wider ${isKids ? "text-orange-700" : "text-orange-300"}`}>
                     📚 Related Resources
                   </p>
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {currentStep.resources.map((resource, idx) => (
-                      <a
+                      <motion.a
                         key={idx}
                         href={resource.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`block p-2 rounded text-sm transition ${
+                        whileHover={{ x: 4 }}
+                        className={`block p-3 rounded text-sm transition duration-200 ${
                           isKids
                             ? "bg-white text-orange-700 hover:bg-orange-50 border border-orange-200"
                             : "bg-slate-800 text-orange-200 hover:bg-slate-700 border border-orange-500/30"
                         }`}
                       >
-                        <span className="font-medium">{resource.type === "docs" ? "📖" : resource.type === "video" ? "🎥" : "📄"}</span>
-                        {" "}{resource.title}
-                      </a>
+                        <span className="font-medium mr-2">{resource.type === "docs" ? "📖" : resource.type === "video" ? "🎥" : "📄"}</span>
+                        <span className="font-medium">{resource.title}</span>
+                      </motion.a>
                     ))}
                   </div>
                 </div>
@@ -473,7 +484,9 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
 
               {/* Challenge Section */}
               {currentStep.challenge && (
-                <div
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
                   className={`rounded-lg p-6 mb-8 border-2 ${
                     isKids
                       ? "bg-green-50 border-green-300"
@@ -481,48 +494,56 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                   }`}
                 >
                   <p
-                    className={`font-bold text-lg mb-2 ${
+                    className={`font-bold text-lg mb-4 uppercase text-xs tracking-wider ${
                       isKids ? "text-green-700" : "text-green-300"
                     }`}
                   >
                     {isKids ? "🎯 Your Challenge" : "✓ Challenge"}
                   </p>
                   <p
-                    className={`mb-3 ${
+                    className={`mb-4 leading-relaxed ${
                       isKids ? "text-green-700" : "text-green-200"
                     }`}
                   >
                     {currentStep.challenge.description}
                   </p>
-                  <div
-                    className={`p-3 rounded mb-3 ${
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.1 }}
+                    className={`p-4 rounded mb-4 border ${
                       isKids
-                        ? "bg-white border border-green-200"
-                        : "bg-slate-900 border border-green-500/30"
+                        ? "bg-white border-green-200"
+                        : "bg-slate-900 border-green-500/30"
                     }`}
                   >
-                    <p className="text-xs font-mono mb-1 opacity-70">Action:</p>
+                    <p className="text-xs font-mono mb-2 opacity-70 uppercase tracking-wider font-bold">Action:</p>
                     <p
-                      className={`font-mono text-sm ${
+                      className={`font-mono text-sm leading-relaxed ${
                         isKids ? "text-slate-700" : "text-green-100"
                       }`}
                     >
                       {currentStep.challenge.action}
                     </p>
-                  </div>
-                  <p
-                    className={`text-sm ${
+                  </motion.div>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className={`text-sm font-semibold uppercase tracking-wider ${
                       isKids ? "text-green-600" : "text-green-400"
                     }`}
                   >
                     ✓ Success: {currentStep.challenge.successCriteria}
-                  </p>
-                </div>
+                  </motion.p>
+                </motion.div>
               )}
 
               {/* Quiz Section */}
               {currentStep.quiz && (
-                <div
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
                   className={`rounded-lg p-6 mb-8 border-2 ${
                     isKids
                       ? "bg-purple-50 border-purple-300"
@@ -530,23 +551,23 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                   }`}
                 >
                   <p
-                    className={`font-bold text-lg mb-4 ${
+                    className={`font-bold text-lg mb-4 uppercase text-xs tracking-wider ${
                       isKids ? "text-purple-700" : "text-purple-300"
                     }`}
                   >
                     {isKids ? "🎯 Quick Check" : "? Quiz"}
                   </p>
                   <p
-                    className={`mb-4 ${
+                    className={`mb-6 text-base leading-relaxed font-medium ${
                       isKids ? "text-purple-700" : "text-purple-100"
                     }`}
                   >
                     {currentStep.quiz.question}
                   </p>
 
-                  <div className="space-y-2 mb-4">
+                  <div className="space-y-3 mb-6">
                     {currentStep.quiz.options.map((option, idx) => (
-                      <button
+                      <motion.button
                         key={idx}
                         onClick={() => {
                           if (!quizState.answered) {
@@ -557,25 +578,27 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                             });
                           }
                         }}
-                        className={`w-full p-3 rounded-lg text-left transition ${
+                        whileHover={!quizState.answered ? { scale: 1.01, y: -2 } : {}}
+                        whileTap={!quizState.answered ? { scale: 0.99 } : {}}
+                        className={`w-full p-4 rounded-lg text-left transition-all duration-200 font-medium ${
                           quizState.selectedIndex === idx
                             ? idx === currentStep.quiz!.correctAnswer
                               ? isKids
-                                ? "bg-green-200 border-2 border-green-400 text-green-800"
-                                : "bg-green-500/30 border-2 border-green-500 text-green-100"
+                                ? "bg-green-200 border-2 border-green-400 text-green-800 shadow-lg"
+                                : "bg-green-500/30 border-2 border-green-500 text-green-100 shadow-lg shadow-green-500/30"
                               : isKids
-                                ? "bg-red-200 border-2 border-red-400 text-red-800"
-                                : "bg-red-500/30 border-2 border-red-500 text-red-100"
+                                ? "bg-red-200 border-2 border-red-400 text-red-800 shadow-lg"
+                                : "bg-red-500/30 border-2 border-red-500 text-red-100 shadow-lg shadow-red-500/30"
                             : isKids
                               ? "bg-white border border-purple-200 text-purple-700 hover:bg-purple-50"
                               : "bg-slate-800 border border-purple-500/30 text-purple-100 hover:bg-slate-700"
                         } ${quizState.answered ? "cursor-default" : "cursor-pointer"}`}
                         disabled={quizState.answered}
                       >
-                        {idx === currentStep.quiz!.correctAnswer && quizState.answered && "✓ "}
-                        {idx !== currentStep.quiz!.correctAnswer && quizState.answered && idx === quizState.selectedIndex && "✗ "}
+                        {idx === currentStep.quiz!.correctAnswer && quizState.answered && <span className="font-bold mr-2">✓</span>}
+                        {idx !== currentStep.quiz!.correctAnswer && quizState.answered && idx === quizState.selectedIndex && <span className="font-bold mr-2">✗</span>}
                         {option}
-                      </button>
+                      </motion.button>
                     ))}
                   </div>
 
