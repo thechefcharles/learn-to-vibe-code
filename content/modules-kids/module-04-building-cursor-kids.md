@@ -113,19 +113,39 @@ Now whenever you ask Cursor a question, it reads this file first. No more repeat
 
 ---
 
-## Lesson 4.3 — Prompting in Cursor (~45 min)
+## Lesson 4.3 — Full-Feature Prompts with Cursor (~45 min)
 
 Open `app/page.tsx` and delete everything. This is where we'll build.
 
-**Your first prompt in Cursor:**
+Instead of asking for pieces one at a time, you'll **write ONE BIG prompt that describes the entire feature**, and Cursor will build it all at once. This is way faster and more organized!
 
-*"Create a Next.js page component that shows a pet tracker app. It should have a form to add a pet (name, breed, photo URL). Below the form, show a grid of all pets added. Each pet card shows the name, breed, and photo. Add a delete button on each card. Use TypeScript, Tailwind for styling, and store pets in React state (not a database yet). Return only the component code."*
+**Your first full-feature prompt in Cursor:**
 
-Cursor will suggest the code. Read it. If it looks good, accept it. If something's wrong, ask:
+Open **Composer** (Cmd+I) and paste this:
 
-*"The photo input should be a URL text field. Add a button to delete pets that actually removes them from the list."*
+```
+Build a complete pet tracker app with:
 
-This is the in-editor flow: prompt → read → verify → refine.
+1. A Pet type with fields: id, name, breed, photoUrl
+
+2. A page component at app/page.tsx that:
+   - Shows a form to add a pet (name input, breed input, photo URL input)
+   - Below the form, show a grid of all pets
+   - Each pet card displays: photo, name, breed
+   - Each pet card has a delete button
+   - When you add a pet, it appears in the grid
+   - When you delete a pet, it disappears
+
+3. Use TypeScript for types, Tailwind CSS for styling, React state for storing pets (not database yet)
+
+4. Make it look nice and be easy to use.
+```
+
+Cursor will generate the entire feature. Read it carefully. Does it look good? If yes, accept it all at once. If something's wrong, ask:
+
+*"The delete button doesn't work. Fix it so pets actually get removed when you click delete."*
+
+This is the power move: one big prompt = one big feature = done! ⚡
 
 ---
 
@@ -184,19 +204,26 @@ This tells Cursor "here's the exact file I'm talking about" without having to ex
 
 ---
 
-## Lesson 4.6 — Using Composer for Multi-File Changes (~30 min)
+## Lesson 4.6 — Multi-File Changes with Composer (~30 min)
 
-For bigger changes that touch multiple files, use **Composer (Cmd+I)** instead of Cmd+K.
+For bigger changes that touch multiple files, **Composer (Cmd+I) is your power move!**
 
-**Example:** "Add a header with a nav link to the app. Create a Header component. Import it in the main layout."
+**Example:** "Add a header component with a nav link to the app. Create Header.tsx, import it in layout.tsx, and make sure the nav link goes to /pets."
 
 Composer will:
-1. Create the header component
-2. Update the main layout
-3. Show you ALL changes in one diff
-4. Let you review each file before accepting
+1. Create the Header component for you
+2. Update the layout to use it
+3. Show ALL changes in one unified diff
+4. You review everything before accepting
 
-**This is powerful** because one prompt can fix multiple files at once. No more "oh, I also need to update this file too."
+**This is the superpower:** one prompt → multiple files updated → one unified view → accept or reject. No more "oops, I also needed to update this other file!" 💪
+
+**Remember the workflow:**
+1. Write a full-feature prompt (it can touch multiple files!)
+2. Composer shows you everything that will change
+3. Read through the entire diff
+4. Accept it all at once
+5. Test in your browser
 
 ---
 
@@ -225,11 +252,11 @@ Cursor would guide you through the changes. This is still Modules 4-5 territory.
 
 ## Activity: Build the Pet Tracker 🐕
 
-Follow the lessons step by step and build the pet tracker.
+Build the pet tracker using Composer with one full-feature prompt!
 
 ### Step-by-step instructions:
 
-**Step 1: Create `.cursorrules`** at the root of your project with:
+**Step 1: Create `.cursorrules`** at the root of your project:
 ```
 # .cursorrules
 This is a Next.js App Router + TypeScript + Tailwind app.
@@ -238,34 +265,43 @@ Keep components small and focused.
 Mock data goes in lib/mockData.ts.
 ```
 
-**Step 2: Open `app/page.tsx` and clear it.** Use Cmd+L chat to ask:
+**Step 2: Open `app/page.tsx`, clear it, and open Composer (Cmd+I).**
+
+**Step 3: Write ONE BIG prompt that builds the entire feature:**
 ```
-Create a page component for a pet tracker with:
-- A form to add a pet (name, breed, photo URL)
-- A grid showing all pets
-- Each pet card has: photo, name, breed, delete button
-Use TypeScript, Tailwind CSS, React state for now (no database yet).
+Build a complete pet tracker app:
+
+1. Create a Pet type with: id, name, breed, photoUrl
+
+2. Create the page at app/page.tsx that:
+   - Shows a form with inputs for name, breed, photo URL
+   - Below the form, show all pets in a grid
+   - Each pet card shows: photo, name, breed, delete button
+   - When you add a pet, it appears in the grid
+   - When you delete, the pet disappears from the list
+
+3. Use TypeScript, Tailwind CSS, and React state (no database yet)
+4. Make it look nice and easy to use
 ```
 
-**Step 3: Review the code** Cursor generates. Read it carefully. Does it look good?
+**Step 4: Review the full unified diff** that Cursor generates. Does it look right?
 
-**Step 4: Test it** — save, look at localhost:3000, try adding a pet.
+**Step 5: Accept the entire change** and test at localhost:3000.
 
-**Step 5: If something's wrong**, use Cmd+L to ask:
+**Step 6: If something's broken**, ask Cursor with Cmd+K:
 ```
-The delete button doesn't work. Here's the error: [paste error].
-The pet stays in the list. What's wrong?
+The delete button doesn't work. Fix it.
 ```
 
-**Step 6: Iterate** — keep refining with Cmd+K and Cmd+L until it works perfectly.
+Then re-test.
 
 ### Submission:
 - Screenshot of your working pet tracker showing:
   - The add form visible
   - At least 2 pets in the grid
   - Running at localhost:3000
-- List 2 prompts you used (and what they fixed)
-- Which Cursor mode (Tab, Cmd+K, Chat, Composer) was most useful?
+- One full-feature prompt you used
+- What was the easiest part? The hardest?
 
 ---
 
