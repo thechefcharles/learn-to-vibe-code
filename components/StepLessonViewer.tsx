@@ -31,9 +31,16 @@ interface StepQuizState {
 interface StepLessonViewerProps {
   steps: ModuleStepSequence;
   moduleId: number;
+  unlockedModules?: Set<number>;
+  completedModules?: Set<number>;
 }
 
-export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
+export function StepLessonViewer({
+  steps,
+  moduleId,
+  unlockedModules,
+  completedModules,
+}: StepLessonViewerProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
   const [showHints, setShowHints] = useState(false);
@@ -248,6 +255,9 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               completedSteps={completedSteps}
               onJumpToStep={handleJumpToStep}
               isKids={isKids}
+              moduleId={moduleId}
+              unlockedModules={unlockedModules}
+              completedModules={completedModules}
             />
         </div>
 

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import React from 'react';
 import { BookOpen, Grid3x3 } from 'lucide-react';
 import { ModuleTreeView } from './ModuleTreeView';
 import { CourseLessonHeader } from './CourseLessonHeader';
@@ -92,7 +93,13 @@ export function LessonViewToggle({
 
       {/* Content: Lesson or Modules */}
       {view === 'lesson' ? (
-        children
+        typeof children === 'object' && children && 'props' in children
+          ? // If children is a React element, clone it with additional props
+            React.cloneElement(children as React.ReactElement, {
+              unlockedModules,
+              completedModules,
+            } as any)
+          : children
       ) : (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/40 backdrop-blur rounded-lg border border-slate-700/50 p-6">

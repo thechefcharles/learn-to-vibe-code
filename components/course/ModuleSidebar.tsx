@@ -1,6 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { ChevronDown } from 'lucide-react';
+import { getModuleMetadata } from '@/lib/module-metadata';
 import type { ModuleStepSequence } from '@/lib/module-steps';
 
 interface ModuleSidebarProps {
@@ -12,6 +17,9 @@ interface ModuleSidebarProps {
   currentSectionIndex?: number;
   viewedSections?: Set<number>;
   onJumpToSection?: (sectionIndex: number) => void;
+  moduleId: number;
+  unlockedModules?: Set<number>;
+  completedModules?: Set<number>;
 }
 
 export function ModuleSidebar({
@@ -23,7 +31,21 @@ export function ModuleSidebar({
   currentSectionIndex,
   viewedSections,
   onJumpToSection,
+  moduleId,
+  unlockedModules,
+  completedModules,
 }: ModuleSidebarProps) {
+  const router = useRouter();
+  const [showModuleDropdown, setShowModuleDropdown] = useState(false);
+
+  const isCurrentModule = true; // Always true since we navigate away
+  const isLocked = unlockedModules && !unlockedModules.has(moduleId);
+
+  const handleModuleSelect = (newModuleId: number) => {
+    setShowModuleDropdown(false);
+    // Navigate to the selected module's first lesson
+    router.push(`/course/${String(newModuleId).padStart(2, '0')}`);
+  };
   const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
 
   return (
@@ -34,6 +56,78 @@ export function ModuleSidebar({
           : 'bg-slate-800/50 border-slate-700'
       }`}
     >
+      {/* Module Selector Dropdown */}
+      <div className="mb-4 relative">
+        <button
+          onClick={() => setShowModuleDropdown(!showModuleDropdown)}
+          className={`w-full flex items-center justify-between px-3 py-2 rounded-lg border transition-colors ${
+            isKids
+              ? 'bg-purple-100 border-purple-300 text-purple-900 hover:bg-purple-200'
+              : 'bg-slate-700/50 border-slate-600 text-white hover:bg-slate-700'
+          }`}
+        >
+          <span className="text-sm font-semibold">
+            Module {String(moduleId).padStart(2, '0')}
+          </span>
+          <ChevronDown
+            className={`w-4 h-4 transition-transform ${
+              showModuleDropdown ? 'rotate-180' : ''
+            }`}
+          />
+        </button>
+
+        {/* Dropdown Menu */}
+        {showModuleDropdown && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`absolute top-full left-0 right-0 mt-1 rounded-lg border z-50 max-h-48 overflow-y-auto ${
+              isKids
+                ? 'bg-purple-50 border-purple-200'
+                : 'bg-slate-800 border-slate-600'
+            }`}
+          >
+            {Array.from({ length: 16 }).map((_, idx) => {
+              const modId = idx;
+              const meta = getModuleMetadata(modId);
+              const isUnlocked = unlockedModules?.has(modId) ?? true;
+              const isCompleted = completedModules?.has(modId) ?? false;
+              const isSelected = modId === moduleId;
+
+              return (
+                <button
+                  key={modId}
+                  onClick={() => handleModuleSelect(modId)}
+                  disabled={!isUnlocked}
+                  className={`w-full text-left px-3 py-2 text-sm transition-colors border-b ${
+                    isSelected
+                      ? isKids
+                        ? 'bg-purple-200 text-purple-900'
+                        : 'bg-slate-700 text-white'
+                      : isUnlocked
+                      ? isKids
+                        ? 'bg-purple-50 text-purple-900 hover:bg-purple-100'
+                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                      : isKids
+                      ? 'bg-purple-50/50 text-purple-600 opacity-60'
+                      : 'bg-slate-800/50 text-slate-500 opacity-60'
+                  } ${!isUnlocked ? 'cursor-not-allowed' : 'cursor-pointer'} last:border-b-0`}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                      <span className="font-medium">Module {String(modId).padStart(2, '0')}</span>
+                      {!isUnlocked && <span className="text-xs">🔒</span>}
+                      {isCompleted && <span className="text-xs">✓</span>}
+                    </div>
+                    <span className="text-xs text-slate-500 truncate">{meta.title}</span>
+                  </div>
+                </button>
+              );
+            })}
+          </motion.div>
+        )}
+      </div>
+
       {/* Lessons Title */}
       <h3
         className={`text-sm font-bold uppercase tracking-wider mb-4 ${
@@ -43,46 +137,49 @@ export function ModuleSidebar({
         Lessons
       </h3>
 
-      {/* Progress Bar */}
-      <div
-        className={`mb-6 p-3 rounded-lg ${
-          isKids ? 'bg-purple-100' : 'bg-slate-700'
-        }`}
-      >
-        <div className="flex justify-between items-center mb-2">
-          <span className={`text-xs font-semibold ${isKids ? 'text-purple-900' : 'text-white'}`}>
-            {Math.round(progress)}%
-          </span>
-          <span className={`text-xs ${isKids ? 'text-purple-700' : 'text-slate-400'}`}>
-            {currentStepIndex + 1}/{steps.steps.length}
-          </span>
-        </div>
+      {/* Progress Bar - Only show for current module */}
+      {isCurrentModule && (
         <div
-          className={`h-2 rounded-full overflow-hidden ${
-            isKids ? 'bg-purple-200' : 'bg-slate-600'
+          className={`mb-6 p-3 rounded-lg ${
+            isKids ? 'bg-purple-100' : 'bg-slate-700'
           }`}
         >
-          <motion.div
-            className={`h-full ${
-              isKids
-                ? 'bg-gradient-to-r from-purple-500 to-pink-500'
-                : 'bg-gradient-to-r from-cyan-500 to-purple-600'
+          <div className="flex justify-between items-center mb-2">
+            <span className={`text-xs font-semibold ${isKids ? 'text-purple-900' : 'text-white'}`}>
+              {Math.round(((currentStepIndex + 1) / steps.steps.length) * 100)}%
+            </span>
+            <span className={`text-xs ${isKids ? 'text-purple-700' : 'text-slate-400'}`}>
+              {currentStepIndex + 1}/{steps.steps.length}
+            </span>
+          </div>
+          <div
+            className={`h-2 rounded-full overflow-hidden ${
+              isKids ? 'bg-purple-200' : 'bg-slate-600'
             }`}
-            initial={{ width: 0 }}
-            animate={{ width: `${progress}%` }}
-            transition={{ duration: 0.3 }}
-          />
+          >
+            <motion.div
+              className={`h-full ${
+                isKids
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500'
+                  : 'bg-gradient-to-r from-cyan-500 to-purple-600'
+              }`}
+              initial={{ width: 0 }}
+              animate={{ width: `${((currentStepIndex + 1) / steps.steps.length) * 100}%` }}
+              transition={{ duration: 0.3 }}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
-      {/* Steps List */}
-      <div className="space-y-2">
-        {steps.steps.map((step, index) => {
-          const isCompleted = completedSteps.has(index);
-          const isCurrent = currentStepIndex === index;
+      {/* Steps List - Current Module */}
+      {isCurrentModule && (
+        <div className="space-y-2">
+          {steps.steps.map((step, index) => {
+            const isCompleted = completedSteps.has(index);
+            const isCurrent = currentStepIndex === index;
 
-          return (
-            <div key={index}>
+            return (
+              <div key={index}>
               <motion.button
                 onClick={() => onJumpToStep(index)}
                 className={`w-full text-left px-3 py-2 rounded-lg transition-all relative border-l-3 ${
@@ -170,32 +267,63 @@ export function ModuleSidebar({
             </div>
           );
         })}
-      </div>
-
-      {/* Milestone Badge */}
-      {progress > 0 && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className={`mt-6 p-3 rounded-lg text-center text-sm font-semibold ${
-            progress === 100
-              ? isKids
-                ? 'bg-gradient-to-r from-yellow-100 to-orange-100 text-orange-900'
-                : 'bg-gradient-to-r from-yellow-500/20 to-orange-500/20 text-yellow-300'
-              : isKids
-              ? 'bg-blue-100 text-blue-900'
-              : 'bg-blue-500/20 text-blue-300'
-          }`}
-        >
-          {progress === 100
-            ? '🎉 Complete!'
-            : progress >= 75
-            ? '🔥 Almost there!'
-            : progress >= 50
-            ? '💪 Halfway!'
-            : '🚀 Getting started'}
-        </motion.div>
+        </div>
       )}
+
+      {/* Lessons List - Other Modules (preview mode) */}
+      {!isCurrentModule && (
+        <div className="space-y-2">
+          {isLocked ? (
+            <div
+              className={`p-4 rounded-lg text-center text-sm ${
+                isKids
+                  ? 'bg-purple-100 text-purple-900'
+                  : 'bg-slate-700/50 text-slate-400'
+              }`}
+            >
+              <p>🔒 Module locked</p>
+              <p className="text-xs mt-1">Complete the previous module to unlock</p>
+            </div>
+          ) : (
+            // Placeholder list for other modules
+            <div className={`p-3 rounded-lg text-sm ${
+              isKids
+                ? 'bg-purple-100/50 text-purple-900'
+                : 'bg-slate-700/30 text-slate-400'
+            }`}>
+              <p className="text-xs">Lessons for this module would appear here</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Milestone Badge - Only for current module */}
+      {isCurrentModule && (() => {
+        const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
+        return progress > 0 ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className={`mt-6 p-3 rounded-lg text-center text-sm font-semibold ${
+              progress === 100
+                ? isKids
+                  ? 'bg-gradient-to-r from-yellow-100 to-orange-100 text-orange-900'
+                  : 'bg-gradient-to-r from-yellow-500/20 to-orange-500/20 text-yellow-300'
+                : isKids
+                ? 'bg-blue-100 text-blue-900'
+                : 'bg-blue-500/20 text-blue-300'
+            }`}
+          >
+            {progress === 100
+              ? '🎉 Complete!'
+              : progress >= 75
+              ? '🔥 Almost there!'
+              : progress >= 50
+              ? '💪 Halfway!'
+              : '🚀 Getting started'}
+          </motion.div>
+        ) : null;
+      })()}
     </div>
   );
 }
