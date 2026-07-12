@@ -147,7 +147,7 @@ Translation:
 
 ---
 
-## Lesson 7.2 — Why you need a backend (~30 min)
+## Lesson 7.1 — Why you need a backend (~30 min)
 
 Before diving into Supabase setup, understand what a backend solves.
 
@@ -157,7 +157,7 @@ Supabase bundles all three: a **Postgres database**, **Auth**, and **Row Level S
 
 ---
 
-## Lesson 7.3 — Create a project & connect Next.js (~45 min)
+## Lesson 7.2 — Create a project & connect Next.js (~45 min)
 
 This continues Objective 2.
 
@@ -228,7 +228,7 @@ The **key difference:** browser clients are used in `"use client"` components an
 
 ---
 
-## Lesson 7.4 — Model your data with Claude Code (~45 min)
+## Lesson 7.3 — Model your data with Claude Code (~45 min)
 
 Continue Objective 2 (modeling data). Turn your Module 3 data model into real Postgres tables. **Use Claude Code to generate the SQL migrations from your spec:**
 
@@ -309,7 +309,7 @@ Table Editor showing: clients and invoices tables with columns (id, user_id, nam
 
 ---
 
-## Lesson 7.5 — Replace mock data with real queries (~60 min)
+## Lesson 7.4 — Replace mock data with real queries (~60 min)
 
 Complete Objective 2 (modeling data). Swap the hard-coded arrays for live reads/writes.
 
@@ -395,7 +395,7 @@ export default function ClientForm() {
 
 ---
 
-## Lesson 7.6 — Authentication & RLS with Claude Code (~90 min)
+## Lesson 7.5 — Authentication & RLS with Claude Code (~90 min)
 
 Address Objective 3 (auth + authorization). Instead of writing boilerplate manually, **use Claude Code to orchestrate authentication setup and Row Level Security policies:**
 
@@ -488,7 +488,7 @@ Right: Two users logged in, each seeing only their own clients (proof RLS is wor
 
 ---
 
-## Lesson 7.8 — Configuration vs. secrets (~30 min)
+## Lesson 7.6 — Configuration vs. secrets (~30 min)
 
 Not all env vars are created equal. **Config** is anything you might change between environments — URLs, thresholds, feature flags, timeouts. **Secrets** are credentials you *never* share — API keys, passwords, signing keys. This distinction matters for security and deployment.
 
@@ -561,7 +561,7 @@ STRIPE_SECRET_KEY=sk_live_xxx  # ← never shared!
 
 ---
 
-## Lesson 7.9 — Supabase vs. the alternatives (~30 min)
+## Lesson 7.7 — Supabase vs. the alternatives (~30 min)
 
 Address Objective 4 (comparison and justification).
 
@@ -788,7 +788,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 ## Tools & alternatives (this module)
 
-Default: **Supabase** on **Next.js**, using `@supabase/ssr`. Alternatives in Lesson 7.8. Great module to build partly with Claude Code (Module 5) — the client/server boilerplate is agent-friendly, while *you* own the data model and RLS policies.
+Default: **Supabase** on **Next.js**, using `@supabase/ssr`. Alternatives in Lesson 7.6. Great module to build partly with Claude Code (Module 5) — the client/server boilerplate is agent-friendly, while *you* own the data model and RLS policies.
 
 ---
 
