@@ -2,7 +2,7 @@ import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { StepLessonViewer } from "@/components/StepLessonViewer";
 import { ModuleChecklist } from "@/components/ModuleChecklist";
 import { CourseLessonHeader } from "@/components/course/CourseLessonHeader";
-import { CoursePageSidebar } from "@/components/course/CoursePageSidebar";
+import { CourseSidebar } from "@/components/course/CourseSidebar";
 import { CoursePageInteractive } from "@/components/course/CoursePageInteractive";
 import { ShareLesson } from "@/components/course/ShareLesson";
 import { getModule } from "@/lib/content";
@@ -81,6 +81,32 @@ export default async function LessonPage(props: LessonPageProps) {
   const checklistItems = user ? await getChecklistItems(moduleId) : [];
   const progress = user ? await getUserModuleProgress(moduleId) : null;
 
+  // Load all module progress for tree view
+  const { getAllModuleProgress } = await import("@/lib/actions/course");
+  const allProgress = user ? await getAllModuleProgress() : [];
+
+  // Build sets of unlocked and completed modules
+  const unlockedModules = new Set<number>();
+  const completedModules = new Set<number>();
+
+  allProgress.forEach((p: any) => {
+    if (p.status === "unlocked" || p.status === "completed") {
+      unlockedModules.add(p.module_id);
+    }
+    if (p.status === "completed") {
+      completedModules.add(p.module_id);
+    }
+  });
+
+  // Build lessons structure for tree view
+  const lessonsByModule: Record<number, { id: number; title: string; sections?: any[] }[]> = {};
+  for (let i = 0; i < 16; i++) {
+    lessonsByModule[i] = [
+      { id: 0, title: "Main Lesson" },
+      // Additional lessons would be loaded here from module structure
+    ];
+  }
+
   // Convert checklist items to checked object
   const checked: Record<string, boolean> = {};
   checklistItems.forEach((item: any) => {
@@ -117,12 +143,16 @@ export default async function LessonPage(props: LessonPageProps) {
         <div className="flex gap-6">
           {/* Sidebar */}
           {!isKids && (
-            <CoursePageSidebar
+            <CourseSidebar
+              userId={user?.id}
               moduleId={moduleId}
               lessonNumber={moduleId}
               lessonTitle={pageTitle}
               estimatedMinutes={30}
               user={user}
+              unlockedModules={unlockedModules}
+              completedModules={completedModules}
+              lessonsByModule={lessonsByModule}
             />
           )}
 
