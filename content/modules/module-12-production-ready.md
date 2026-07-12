@@ -340,25 +340,57 @@ Every tool returns `{status, result, error, metrics}`. The agent (or your code) 
 
 ---
 
-## Lesson 12.2 — Testing with AI (~75 min)
+## Lesson 12.2 — Generate tests with Claude Code and verify (~75 min)
 
-Begins Objective 2. Tests are code that checks your code, so you can change things confidently. Three levels:
+Begins Objective 2. Tests are code that checks your code, so you can change things confidently. **Use Claude Code to generate tests, then you review and verify they actually work.**
 
+Three levels of tests:
 - **Unit tests** — one function in isolation (e.g. "an invoice past its due date is flagged overdue"). Tools: Vitest or Jest.
 - **Integration tests** — pieces together (saving a client actually writes to the DB).
 - **E2E tests** — drive the real app like a user, in a browser. Tool: Playwright.
 
-**Concrete unit test example (Vitest):**
+### Using Claude Code to generate tests
+
+**Step 1 — Identify what to test.** Pick a core function from your app (e.g., `isOverdue`, `calculateTax`, `validateEmail`, or a key user flow).
+
+**Step 2 — Prompt Claude Code to generate tests:**
+
+```bash
+claude
+```
+
+Send:
+
+```
+Generate comprehensive tests for my invoice tracker.
+
+I need:
+1. Unit tests (Vitest) for these functions:
+   - isOverdue(invoice) — returns true if invoice.dueDate is in the past
+   - calculateTotalInvoices(invoices) — sums all invoice amounts
+   
+2. One E2E test (Playwright) for this flow:
+   - User logs in with demo@example.com / password
+   - Navigates to /invoices
+   - Sees the invoices list
+   - Filters by "unpaid" status
+   - Verifies results update
+
+For unit tests:
+- Cover happy path and edge cases (e.g., today's date, dates in future)
+- Use realistic test data
+
+For E2E test:
+- Assume a demo user exists in Supabase
+- Use proper Playwright selectors
+- Include assertions that check results
+
+Generate the test files and setup instructions (any npm packages needed).
+```
+
+**Step 3 — Review Claude Code's output.** It will generate test files like:
 
 ```typescript
-// lib/invoiceStatus.ts
-export function isOverdue(invoice: Invoice): boolean {
-  const daysOverdue = Math.floor(
-    (Date.now() - new Date(invoice.dueDate).getTime()) / (1000 * 60 * 60 * 24)
-  );
-  return daysOverdue > 0;
-}
-
 // lib/__tests__/invoiceStatus.test.ts
 import { describe, it, expect } from "vitest";
 import { isOverdue } from "../invoiceStatus";
@@ -381,57 +413,19 @@ describe("isOverdue", () => {
 });
 ```
 
-**Concrete E2E test example (Playwright):**
+Check each test:
+- ✅ Does it test what you care about? (not just `expect(true).toBe(true)`)
+- ✅ Does it cover happy path AND edge cases?
+- ✅ Are assertions meaningful (checking return values, not just that the function ran)?
 
-```typescript
-// e2e/invoices.spec.ts
-import { test, expect } from "@playwright/test";
-
-test("user can view and filter invoices", async ({ page }) => {
-  // Sign in (seed a demo user first)
-  await page.goto("/login");
-  await page.fill("input[type=email]", "demo@example.com");
-  await page.fill("input[type=password]", "demo-password");
-  await page.click("button:has-text('Sign In')");
-
-  // Navigate to invoices
-  await page.goto("/invoices");
-  
-  // Verify invoices list loads
-  await expect(page.locator("h1")).toContainText("Invoices");
-  const rows = page.locator("table tbody tr");
-  await expect(rows).toBeTruthy();
-  
-  // Filter to unpaid
-  await page.selectOption("[name=status]", "unpaid");
-  
-  // Verify results updated
-  await expect(page.locator("text=No unpaid invoices")).toBeHidden();
-});
-```
-
-AI writes tests well — give it a function and ask for unit tests covering normal *and* edge cases. **But review the tests:** an AI can write a test that passes but checks the wrong thing, giving false confidence. For example:
-
-```typescript
-// ❌ BAD TEST: passes but checks nothing
-it("invokes the function", () => {
-  isOverdue(someInvoice);
-  expect(true).toBe(true); // Always true!
-});
-
-// ✅ GOOD TEST: checks the actual return value
-it("returns true for overdue invoices", () => {
-  const overdue = { dueDate: new Date(Date.now() - 10000).toISOString() };
-  expect(isOverdue(overdue as any)).toBe(true);
-});
-```
-
-Run tests locally and on CI:
+**Step 4 — Run the tests.** Execute Claude Code's setup instructions, then:
 
 ```bash
 npm run test           # Unit + integration
 npm run test:e2e       # Playwright E2E
 ```
+
+**Watch for test failures.** If a test fails, it's useful feedback — the test found a real bug (or the test itself is wrong). Debug with Claude Code: "This test is failing — can you explain what the assertion checks and fix either the test or the function?"
 
 ---
 
@@ -441,223 +435,132 @@ Terminal showing: `npm run test` output with 25 unit tests passing; `npm run tes
 
 ---
 
-> **Common gotchas (build-verified):** (1) `@playwright/test` (runner) ≠ `playwright` (library) — install the right one. (2) Vitest and Playwright **double-collect** each other's specs unless you scope `include`/`testDir` — keep them in separate folders. (3) Once auth gates routes, **E2E/screenshot scripts must sign in first**, or every test hits a 302 to login. Seed a demo user and log in at the start. (4) Review AI-written tests critically — a passing test doesn't prove code correctness, only that the assertion passes. Check: does the test verify what you intended?
-> 
+**Critical:** **Review Claude Code's tests, don't blind-accept them.** A test can pass but check the wrong thing:
+
+```typescript
+// ❌ BAD TEST (passes but meaningless)
+it("invokes the function", () => {
+  isOverdue(someInvoice);
+  expect(true).toBe(true); // Always true!
+});
+
+// ✅ GOOD TEST (checks actual return value)
+it("returns true for overdue invoices", () => {
+  const overdue = { dueDate: new Date(Date.now() - 10000).toISOString() };
+  expect(isOverdue(overdue as any)).toBe(true);
+});
+```
+
+Your job: read the test, understand what it's asserting, and verify that's what you care about.
 
 ---
 
-## Lesson 12.3 — Error handling & resilient UX (~50 min)
+## Lesson 12.3-12.5 — Harden with Claude Code (error handling, security, a11y/perf) (~120 min)
 
-Continues Objective 2. Real apps hit failures. Every data-driven screen needs three states: **Loading** (spinner/skeleton), **Empty** ("No invoices yet — create your first," not a blank table), **Error** (friendly message + retry, never a raw stack trace).
+Continues & completes Objective 2–3. **Use Claude Code to generate error handling, security fixes, and accessibility/performance improvements. You verify each by testing.**
 
-**Concrete example — loading/empty/error states in a component:**
+### Three hardening tasks, Claude Code orchestrates
 
-```tsx
-// app/invoices/page.tsx
-"use client"
+**Task 1 — Error handling & resilient UX (40 min)**
 
-import { useEffect, useState } from "react";
-
-export default function InvoicesPage() {
-  const [invoices, setInvoices] = useState(null);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    async function load() {
-      try {
-        const res = await fetch("/api/invoices");
-        if (!res.ok) throw new Error("Failed to load");
-        const data = await res.json();
-        setInvoices(data);
-      } catch (err) {
-        setError(err.message);
-      }
-    }
-    load();
-  }, []);
-
-  // Loading state
-  if (invoices === null && !error) {
-    return <div className="p-4"><div className="animate-pulse bg-gray-200 h-10 rounded" /></div>;
-  }
-
-  // Error state
-  if (error) {
-    return (
-      <div className="p-4 bg-red-50 border border-red-200 rounded">
-        <h2 className="font-bold text-red-800">Failed to load invoices</h2>
-        <p className="text-red-700">{error}</p>
-        <button onClick={() => window.location.reload()} className="mt-2 px-4 py-2 bg-red-600 text-white rounded">
-          Try Again
-        </button>
-      </div>
-    );
-  }
-
-  // Empty state
-  if (invoices.length === 0) {
-    return (
-      <div className="p-4 text-center">
-        <h2 className="text-lg font-bold">No invoices yet</h2>
-        <p>Create your first invoice to get started.</p>
-        <a href="/invoices/new" className="mt-2 inline-block px-4 py-2 bg-blue-600 text-white rounded">
-          Create Invoice
-        </a>
-      </div>
-    );
-  }
-
-  // Happy path
-  return (
-    <div>
-      <h1>Invoices</h1>
-      <table>
-        <tbody>
-          {invoices.map(inv => (
-            <tr key={inv.id}>
-              <td>{inv.clientName}</td>
-              <td>${inv.amount}</td>
-              <td>{inv.status}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-```
-
-In code: wrap risky operations (DB calls, the agent workflow) in try/catch, handle the error path, never show raw errors to users. In Next.js, use error boundaries and loading files. Ask AI to "add loading, empty, and error states to this component" — then verify each state by testing:
+Every data-driven screen needs three states: Loading, Empty, Error. Prompt Claude Code:
 
 ```bash
-# Test loading: intercept network requests
-# Test empty: mock API to return []
-# Test error: mock API to throw
+claude
 ```
+
+```
+Add loading, empty, and error states to these pages:
+- app/invoices/page.tsx
+- app/clients/page.tsx
+
+Each page should:
+1. Show a loading spinner while fetching
+2. Show "No X yet — create one" if the list is empty
+3. Show a friendly error message + retry button if the fetch fails
+
+Use shadcn/ui components where available (Skeleton for loading, Button for retry).
+Never show raw error messages to users.
+```
+
+Claude Code will generate components with try/catch, state management, and all three states. Your job: test each state:
+
+```bash
+# Test locally by:
+# - Stopping the backend (to trigger error)
+# - Mocking empty results
+# - Watching for loading state
+```
+
+**Task 2 — Security hardening (40 min)**
+
+Prompt Claude Code to review and fix security:
+
+```
+Review my app for security issues:
+1. Input validation: do all forms validate on the server?
+2. RLS policies: is row-level security enabled on every table?
+3. Secrets: are all API keys in env vars (not code)?
+4. Dependencies: any vulnerable packages? (run npm audit)
+
+For each issue found:
+- Show me the bad code
+- Propose a fix
+- Generate the fixed version
+
+Start with: [paste your data models, form handlers, and API routes]
+```
+
+Claude Code will review and propose fixes. Your verification:
+- ✅ Read the proposed fixes (do they make sense?)
+- ✅ Apply them to your code
+- ✅ **Test with two accounts:** log in as User A, confirm you see only User A's data. Log in as User B, confirm they see only User B's data (and can't access User A's)
+- ✅ Run `npm audit` to confirm no critical vulnerabilities
+
+**Task 3 — Accessibility & performance (40 min)**
+
+Prompt Claude Code to improve both:
+
+```
+Audit my app for accessibility and performance:
+
+1. RUN A LIGHTHOUSE AUDIT:
+   - Open the app in Chrome
+   - Press F12 → Lighthouse tab
+   - Run Accessibility audit (note the score)
+   - Run Performance audit (note LCP, INP, CLS)
+
+2. SUGGEST FIXES:
+   Based on common issues, improve:
+   - Labels on all form inputs
+   - Alt text on all images
+   - Semantic HTML (use <button> not <div>)
+   - Keyboard navigation (tab through the app)
+   - Image sizing (compress large images)
+   - Unused CSS/JS (tree-shaking, lazy loading)
+
+Generate fixes for the top 3 issues.
+```
+
+Claude Code will propose fixes. Your verification:
+- ✅ Apply the fixes to your code
+- ✅ Re-run Lighthouse → verify scores improved
+- ✅ Tab through the app using only keyboard → confirm everything is reachable
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Empty & Error States]**
+**[SCREENSHOT PLACEHOLDER: Lighthouse Report Before/After]**
 
-Three screenshots: (1) Loading state with spinner, (2) Empty state with "No invoices yet" message and Create button, (3) Error state with friendly error + Retry button. Proof: UX handles all states gracefully.
-
----
+Two Lighthouse reports: before (Accessibility 72, Performance 65), after (Accessibility 88, Performance 82). Proof: hardening improved metrics.
 
 ---
 
-## Lesson 12.4 — Security hardening (~60 min)
+### Why Claude Code + your verification?
 
-Completes Objective 2 and is non-negotiable. Pull together the course's security threads:
+- **Claude Code generates** the boilerplate: error handling wrappers, RLS fixes, WCAG improvements
+- **You verify** by testing: does the loading state actually show? Can User B see User A's data? Does the keyboard work?
 
-- **Authorization on every path** — RLS (Module 7) enforces data access in the DB; confirm it's on for *every* table, tested with two accounts. Gate protected pages so logged-out users can't reach them.
-- **Input validation** — never trust user input; validate on the server, not just the browser.
-- **Secrets** — env vars only, never in the repo (Modules 9–10); server-only keys for privileged operations.
-- **Least privilege** — code and agents get only the access they need (Module 11).
-- **Dependencies** — keep packages updated; AI can flag known-vulnerable ones.
-
-**Concrete security fixes:**
-
-**Bad: No input validation (SSRF/XSS risk)**
-```typescript
-// ❌ DANGEROUS: trusts user input directly
-export async function saveInvoice(clientEmail: string) {
-  const client = await supabase
-    .from("clients")
-    .insert({ email: clientEmail });
-  return client;
-}
-```
-
-**Good: Validate on server**
-```typescript
-// ✅ SAFE: validates before using
-export async function saveInvoice(clientEmail: string) {
-  // Validate format
-  if (!clientEmail.includes("@") || clientEmail.length > 255) {
-    throw new Error("Invalid email");
-  }
-  
-  // Sanitize (remove extra whitespace)
-  const clean = clientEmail.trim().toLowerCase();
-  
-  const client = await supabase
-    .from("clients")
-    .insert({ email: clean });
-  return client;
-}
-```
-
-**Bad: Missing RLS check (data exposure)**
-```sql
--- ❌ DANGEROUS: anyone can read anyone's data
-CREATE TABLE invoices (
-  id UUID PRIMARY KEY,
-  user_id UUID NOT NULL,
-  amount INT NOT NULL
-);
--- No RLS enabled!
-```
-
-**Good: RLS on every table**
-```sql
--- ✅ SAFE: data access controlled by RLS
-ALTER TABLE invoices ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "users read own invoices" ON invoices
-  FOR SELECT USING (auth.uid() = user_id);
-
-CREATE POLICY "users update own invoices" ON invoices
-  FOR UPDATE USING (auth.uid() = user_id);
-```
-
-**Test with two accounts:** sign in as User A, confirm you see only User A's data. Sign in as User B, confirm you see only User B's data (and can't access User A's via API).
-
-**Bad: Secrets in code**
-```typescript
-// ❌ DANGEROUS: API key in the repo!
-const STRIPE_SECRET = "sk_live_abc123";
-```
-
-**Good: Secrets in env vars**
-```typescript
-// ✅ SAFE: loaded from env at runtime
-const STRIPE_SECRET = process.env.STRIPE_SECRET_KEY;
-if (!STRIPE_SECRET) throw new Error("Missing STRIPE_SECRET_KEY");
-```
-
-**AI + security caveat:** AI will happily write insecure code — skip validation, over-expose data, leave RLS off. Security is where you verify *hardest*. Ask AI to review specifically for security issues, then confirm its findings by:
-1. Reading the code yourself
-2. Testing with two accounts
-3. Checking `.gitignore` for secrets
-4. Running a dependency audit: `npm audit`
-
----
-
-## Lesson 12.5 — Accessibility & performance (~60 min)
-
-This delivers Objective 3 — the two production qualities beginners most often skip.
-
-**Accessibility (a11y)** — real users include people using keyboards and screen readers, and it's often a legal requirement. The basics that cover most of it:
-
-- **Semantic HTML** — real `<button>`, `<label>`, headings in order (not `<div>` soup).
-- **Keyboard nav** — everything usable without a mouse; visible focus states.
-- **Contrast** — text meets WCAG contrast ratios.
-- **Labels & alt text** — form inputs have labels; images have alt.
-
-Run a quick audit (browser Lighthouse / axe) and fix the top issues. A component library like shadcn/ui (Module 6) gives you a lot of this for free.
-
-**Performance (Core Web Vitals)** — measure before optimizing. Watch **LCP** (load speed), **INP** (responsiveness), **CLS** (layout stability) via Lighthouse. Common wins: don't fetch everything client-side (use server components), paginate large lists, and size images. Set a simple budget and check it.
-
----
-
-**[SCREENSHOT PLACEHOLDER: Lighthouse Report]**
-
-Lighthouse audit showing: Accessibility score (e.g., 85+), Performance score (LCP, INP, CLS metrics). Proof: quality metrics meet production bar.
-
----
-
-> **AI caveat:** AI rarely adds a11y or thinks about performance unless you ask. Prompt for them explicitly ("make this accessible: labels, keyboard, contrast") and verify with a real audit.
-> 
+This split keeps you in control of the hardening while Claude Code handles the mechanical work.
 
 ---
 
