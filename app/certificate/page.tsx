@@ -5,7 +5,7 @@ import { getCertificateHTML } from "@/lib/certificate";
 
 export const metadata = {
   title: "Certificate — Learn to Vibe Code",
-  description: "View and share your Accredited Vibe Code Certificate.",
+  description: "View and share your Learn to Vibe Code Certificate.",
 };
 
 export default async function CertificatePage() {
@@ -65,7 +65,7 @@ export default async function CertificatePage() {
             ← Back to Dashboard
           </Link>
           <h1 className="text-4xl font-bold text-white mb-2">📜 Your Certificate</h1>
-          <p className="text-slate-400">Congratulations on completing the Accredited Vibe Coding Course!</p>
+          <p className="text-slate-400">Congratulations on completing Learn to Vibe Code!</p>
         </div>
 
         <div className="bg-white rounded-lg p-8 mb-8 shadow-lg">
@@ -105,7 +105,7 @@ export default async function CertificatePage() {
           <div className="space-y-2 text-slate-400 text-sm">
             <p>✅ <strong>Verifiable:</strong> Your certificate ID is registered in our database.</p>
             <p>✅ <strong>Professional:</strong> Suitable for LinkedIn, resumes, and professional portfolios.</p>
-            <p>✅ <strong>Accreditation-Ready:</strong> 93 contact hours, 9.3 CEUs.</p>
+            <p>✅ <strong>Comprehensive:</strong> 93 hours of quality content and assessment.</p>
             <p>✅ <strong>Permanent:</strong> Your certificate is saved and accessible anytime.</p>
           </div>
         </div>

@@ -25,7 +25,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Learn To Vibe Code",
-  description: "Master AI-powered full-stack development. Free, accredited, gamified.",
+  description: "Master AI-powered full-stack development. Free and gamified.",
   icons: {
     icon: "/favicon.png",
   },

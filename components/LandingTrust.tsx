@@ -24,7 +24,7 @@ export function LandingTrust() {
           <p className="text-lg mb-6">We built this course because we couldn't find one combining real skills with AI development. Battle-tested with real learners.</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center text-sm">
             <div><p className="font-bold text-2xl text-violet-300">500+</p><p>Learners</p></div>
-            <div><p className="font-bold text-2xl text-violet-300">9.3</p><p>CEUs</p></div>
+            <div><p className="font-bold text-2xl text-violet-300">16</p><p>Modules</p></div>
             <div><p className="font-bold text-2xl text-violet-300">100%</p><p>Free</p></div>
           </div>
         </motion.div>

@@ -45,7 +45,7 @@ const stages: Stage[] = [
   {
     id: 6,
     label: "Certificate",
-    description: "Earn your verifiable completion certificate and 9.3 CEUs",
+    description: "Earn your verifiable completion certificate",
     shortLabel: "6",
   },
 ];

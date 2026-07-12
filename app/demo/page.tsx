@@ -98,7 +98,7 @@ export default function DemoPage() {
                   { icon: "🎯", title: "Hands-On Quizzes", desc: "3 questions per module, instant feedback" },
                   { icon: "📦", title: "Deliverables", desc: "Real projects with auto-checking" },
                   { icon: "🎓", title: "Capstone Project", desc: "Build something real + defend it" },
-                  { icon: "🏆", title: "Certification", desc: "Professional credential (9.3 CEUs)" },
+                  { icon: "🏆", title: "Certification", desc: "Professional credential for your portfolio" },
                   { icon: "🎮", title: "Gamification", desc: "Earn XP, badges, and streaks" },
                   { icon: "📊", title: "Progress Tracking", desc: "Dashboard shows your journey" },
                 ].map((feature, idx) => (
@@ -116,7 +116,7 @@ export default function DemoPage() {
 
           <div className="mt-8 pt-8 border-t border-slate-700 text-center">
             <p className="text-slate-400 mb-4">
-              <span className="font-semibold text-white">93 hours</span> of content • <span className="font-semibold text-white">9.3 CEUs</span> accredited
+              <span className="font-semibold text-white">93 hours</span> of world-class content
             </p>
             <Link
               href="/auth/sign-up"
@@ -140,9 +140,9 @@ export default function DemoPage() {
             </div>
             <div>
               <div className="text-3xl mb-3">📜</div>
-              <h3 className="font-semibold text-white mb-2">Accredited Credential</h3>
+              <h3 className="font-semibold text-white mb-2">Professional Certificate</h3>
               <p className="text-slate-400 text-sm">
-                Earn a professional certificate worth 9.3 CEUs recognized by employers and accreditors.
+                Earn a professional certificate to showcase your skills on your resume and portfolio.
               </p>
             </div>
             <div>
