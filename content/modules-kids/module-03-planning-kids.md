@@ -1,6 +1,6 @@
 # Module 3: Plan Before You Code! 📋
 
-**Stage:** Foundations · **Level:** Beginner · **Duration:** ~4 hours · **XP:** 400
+**Stage:** Foundations · **Level:** Beginner · **Duration:** ~5 hours · **XP:** 500
 
 **What you need:** Modules 1-2 (know how AI thinks, know how to prompt)
 
@@ -10,13 +10,138 @@
 
 By the end of this module, you'll be able to:
 
-1. **Write** a spec for your app (what it does, who uses it, what's MVP)
-2. **Turn** your spec into a technical plan (data model, screens, tasks)
-3. **Order** your tasks so you build things in the right sequence
+1. **Clarify** a vague idea into a real project vision 💡
+2. **Organize** your project with Notion and repo structure 📁
+3. **Write** a spec for your app (what it does, who uses it, what's MVP) 📝
+4. **Turn** your spec into a technical plan (data model, screens, tasks) 🛠️
+5. **Order** your tasks so you build things in the right sequence ⚡
 
 ---
 
-## Lesson 3.1 — Why Plan When AI Is So Fast? ⚡ (~30 min)
+## Lesson 3.1 — Clarify Your Idea, Set Up Your Project (~60 min)
+
+You have an idea, but it's fuzzy. "I want to build a pet tracker app." Nice! But what does it actually *do*? Who uses it? What doesn't it do?
+
+Before you spec anything, **you need to clarify your idea and set up your project structure.** This lesson teaches you to use Claude, Notion, and your repo to organize like a pro. 🎯
+
+### Part 1: Interview Claude to Clarify Your Idea (15 min)
+
+Open Claude Code or ChatGPT and ask it to interview you:
+
+```
+I want to build a pet tracker app. 
+
+Please interview me with 5-7 questions to help me think through:
+- What problem does it solve?
+- Who will use it?
+- What's the MVP (bare minimum)?
+- What are we NOT building?
+- How do we know it works?
+
+Ask one question at a time and wait for my answers.
+```
+
+Claude will ask questions like:
+- "What kind of pets? Just dogs and cats, or any pet?"
+- "Should owners be able to track multiple pets?"
+- "Do you want reminders (vet checkups, feeding times)?"
+- "Can parents or vets see the app?"
+
+**Your answers become your project brief** — the clear picture of what you're building. 💭
+
+### Part 2: Design Your Notion Home for This Project (15 min)
+
+Your project lives in **two places:**
+1. **Notion** = where you think and make decisions 🧠
+2. **Repo** = where you write code 💻
+
+In Notion, create a simple dashboard with:
+
+**📍 Project Brief** (1 page summarizing: problem, users, core features, out-of-scope, success)
+
+**🗺️ Build Roadmap** (phases: what you're building when)
+
+**🎨 Design Ideas** (sketches, wireframes, user flow notes)
+
+**🔬 Research** (things you discovered, alternatives you considered)
+
+Example:
+
+```
+# Pet Tracker — Project Home 🐾
+
+## Project Brief
+Problem: Pet owners forget when to feed, walk, or take pets to the vet.
+Users: Pet owners (age 16+) with 1-3 pets.
+Core Features: Log feeding times, log walks, get reminders.
+Out of Scope: Social/sharing, breed info, vet directory.
+Success: Owner uses it daily for 2 weeks to track 2 pets.
+
+## Roadmap
+Phase 1: Auth + Add pet + Log feedings & walks
+Phase 2: Reminders
+Phase 3: Multiple pets
+
+## Design Ideas
+- Simple dashboard: today's tasks (feeding, walks)
+- Pet card: show pet photo, name, last fed time
+- Big button: "I just fed [pet name]"
+```
+
+This is your project notebook. Everything non-code goes here! 📓
+
+### Part 3: Scaffold Your Repo (15 min)
+
+Ask Claude:
+
+```
+I'm building a pet tracker app in Next.js.
+Set up my project folder structure and create my initial files:
+- Folder structure (app/, components/, lib/, etc.)
+- CLAUDE.md (how AI should help me)
+- FEATURES.md (all features I want to build)
+- Initial package.json template
+```
+
+Claude will give you the structure. Create the folders and files, then commit:
+
+```bash
+git add .
+git commit -m "chore: project scaffolding for pet tracker"
+```
+
+Your repo is now ready to build in! ✨
+
+### Part 4: Create Your Feature Checklist (15 min)
+
+In your repo, create `FEATURES.md` with all the features you want:
+
+```markdown
+# Pet Tracker — Feature List
+
+## Phase 1
+- [ ] Sign up and log in
+- [ ] Add a pet (name, type, photo)
+- [ ] Log a feeding (mark pet as fed)
+- [ ] Log a walk (mark pet as walked)
+- [ ] Dashboard showing last fed & walked times
+
+## Phase 2
+- [ ] Get reminders (email when overdue)
+- [ ] Track multiple pets
+- [ ] View history (past feedings/walks)
+
+## Nice-to-Haves
+- [ ] Pet birthday tracking
+- [ ] Health checkup reminders
+- [ ] Share with family members
+```
+
+As you build, check things off! This keeps you focused. ☑️
+
+---
+
+## Lesson 3.2 — Why Plan When AI Is So Fast? ⚡ (~30 min)
 
 Sounds backwards, right? "But the AI can write code in seconds, why plan?"
 
@@ -30,7 +155,7 @@ The rule: **Decide what you're building and in what order BEFORE you ask the AI 
 
 ---
 
-## Lesson 3.2 — Build Your Plan with Claude Code (~60 min)
+## Lesson 3.3 — Build Your Plan with Claude Code (~60 min)
 
 A spec is just a written description of what your app should do. Instead of manually writing it yourself, you'll **use Claude Code to interview you and build the entire plan automatically**. This saves time and makes sure you don't miss anything. 🚀
 
@@ -94,7 +219,7 @@ After each step, show me the output and ask if I want to change anything!
 
 ---
 
-## Lesson 3.3 — Your Technical Plan (Already Made!) (~30 min)
+## Lesson 3.4 — Your Technical Plan (Already Made!) (~30 min)
 
 Good news: **Claude Code already created your technical plan** when you ran the planning workflow in Lesson 3.2! 🎉
 
@@ -117,7 +242,7 @@ Claude Code will revise the entire plan to match what you want. Easy! ✨
 
 ---
 
-## Lesson 3.4 — Understand Your Build Order (~30 min)
+## Lesson 3.5 — Understand Your Build Order (~30 min)
 
 You can't build everything at once. Some tasks depend on others. **Claude Code already figured this out for you!** 🎯
 
@@ -141,7 +266,7 @@ When Claude Code created your plan, it ordered the tasks logically. Here's why t
 
 ---
 
-## Lesson 3.5 — Writing Your Plan as a Prompt (~45 min)
+## Lesson 3.6 — Writing Your Plan as a Prompt (~45 min)
 
 After all this planning, you have a document. That document becomes your AI prompt!
 
@@ -335,17 +460,22 @@ options: id, poll_id, text, vote_count
 
 ## Knowledge Check (Mapped to Your Objectives)
 
-**Objective 1 — Produce a spec (Quiz Q3-k1, Q3-k2):**
-- Q3-k1: "Why does planning matter when AI codes fast?" ✅ Tests value of planning
-- Q3-k2: "A lightweight spec must include all EXCEPT:" ✅ Tests spec content
+**Objective 1 — Clarify idea & scaffold project (Quiz Q3-k1, Q3-k2):**
+- Q3-k1: "You have a rough idea. Who do you ask to help you clarify it?" ✅ Tests who to use as thinking partner
+- Q3-k2: "Which belongs in Notion, which belongs in your repo?" ✅ Tests Notion vs repo judgment
+- **Written check:** Write a project brief (problem, users, 3-4 core features, out-of-scope, success) for your idea.
+
+**Objective 2 — Produce a spec (Quiz Q3-k3, Q3-k4):**
+- Q3-k3: "Why does planning matter when AI codes fast?" ✅ Tests value of planning
+- Q3-k4: "A lightweight spec must include all EXCEPT:" ✅ Tests spec content
 - **Written check:** For "an app to organize school supplies," write a one-page MVP spec with: problem, users, 4-5 core features, out-of-scope, success criteria.
 
-**Objective 2 — Translate to technical plan (Quiz Q3-k4):**
-- Q3-k4: "When planning an app, what should you design first?" ✅ Tests planning order
+**Objective 3 — Translate to technical plan (Quiz Q3-k5):**
+- Q3-k5: "When planning an app, what should you design first?" ✅ Tests planning order
 - **Written check:** For the "school supplies" app, propose: (1) a data model (table names + fields), (2) a screen list (5-7 screens), (3) build milestones.
 
-**Objective 3 — Sequence with dependencies (Quiz Q3-k3):**
-- Q3-k3: "A dependency means:" ✅ Tests dependency understanding
+**Objective 4 — Sequence with dependencies (Quiz Q3-k6):**
+- Q3-k6: "A dependency means:" ✅ Tests dependency understanding
 - **Written check:** For the "school supplies" app, list 6-8 build tasks in order. For at least 3, explain what must exist first.
 
 **Scenario-based judgment checks (all objectives):**

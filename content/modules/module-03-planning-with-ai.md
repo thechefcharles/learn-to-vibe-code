@@ -14,13 +14,295 @@
 
 By the end of this module, the learner can:
 
-1. **Produce** a written product spec and task breakdown from a raw idea using AI. *(Create)*
-2. **Translate** requirements into a technical plan (data model, screens, milestones). *(Apply)*
-3. **Sequence** a feature into dependencies and an ordered build plan. *(Analyze)*
+1. **Clarify** a vague idea into a concrete project vision and scaffold repository infrastructure. *(Create)*
+2. **Produce** a written product spec and task breakdown from a raw idea using AI. *(Create)*
+3. **Translate** requirements into a technical plan (data model, screens, milestones). *(Apply)*
+4. **Sequence** a feature into dependencies and an ordered build plan. *(Analyze)*
 
 ---
 
-## Lesson 3.1 — Why plan when AI writes code so fast? (~30 min)
+## Lesson 3.1 — From idea to infrastructure: Notion, repo structure, and features (~90 min)
+
+This lesson teaches you to scaffold a project properly *before* writing specs. It covers: clarifying a vague idea into a project vision, designing your Notion structure (where architectural thinking lives), scaffolding repository structure (where code and configuration live), and creating a feature list that becomes your living checklist.
+
+**Why this lesson comes first:** You can't spec what you haven't clarified, and you can't build what you haven't structured. This lesson is the bridge between "I have a vague idea" and "I'm ready to write a detailed spec."
+
+### Part 1: Brainstorm & Clarify Your Idea (30 min)
+
+Start with a vague idea: "I want to build a project management tool" or "a note-taking app for developers."
+
+**Use Claude with design thinking prompts to clarify:**
+
+Prompt Claude Code (or chat) with:
+
+```
+I have a rough idea: [YOUR VAGUE IDEA]
+
+Please interview me to clarify this into a concrete project vision:
+1. What problem does it solve? (Be specific — not "it's useful," but "my team wastes 30 min daily updating status")
+2. Who uses it, and what are they trying to accomplish?
+3. What are the 3–5 core features (MVP only, not all features)?
+4. What's explicitly out of scope? (Name things you're NOT building)
+5. How do users know it works? (Measurable success)
+
+After I answer, draft a one-page project brief with these 5 sections.
+```
+
+Claude will ask clarifying questions and help you go from vague to concrete. The output is your **project brief** — one page, crystal clear on what you're building and why.
+
+**Example output:**
+```
+PROJECT BRIEF — Task Planner
+
+PROBLEM: Software teams lose context switching between Slack, GitHub, and email. 
+Status updates happen everywhere; nothing is a source of truth.
+
+USERS: 
+- Engineering managers who need to unblock teammates
+- Individual developers who want visibility into what's blocking them
+
+CORE FEATURES (MVP)
+1. Create tasks (title, description, assignee, due date)
+2. Link tasks to GitHub PRs (auto-updates as PRs move)
+3. Task status dashboard (grouped by owner, status)
+4. Team view (see who's blocked and why)
+
+OUT OF SCOPE
+- Real-time collaboration / comments (v2)
+- Time tracking (future)
+- Integrations with Slack, Linear, Jira (v2)
+
+SUCCESS: 
+A team of 5 engineers uses it daily for 2 weeks. 
+90% of status updates happen here, not Slack.
+```
+
+**Your turn:** Spend 20 minutes interviewing Claude, then save the brief. This is your north star for the entire project.
+
+---
+
+### Part 2: Design Your Notion Structure (20 min)
+
+Architectural thinking doesn't live in code — it lives in **Notion**. This is where you document *decisions*, not *implementation*.
+
+**Ask Claude:**
+
+```
+For my project "[PROJECT BRIEF]", what documents should I keep in Notion?
+
+Suggest categories and what each should contain:
+- Architecture overview (stack, key modules, data flow)
+- Design brief (goals, constraints, user flows)
+- Roadmap (phases, priorities, known blockers)
+- Team processes (pair programming norms, code review process)
+- Research & explorations (design spikes, decision logs, alternatives considered)
+
+For each, give me 2–3 examples of what I'd write there.
+```
+
+**Claude will suggest a Notion structure.** It might look like this:
+
+```
+📐 Architecture Overview
+  ├─ Tech stack (Next.js, Supabase, Vercel)
+  ├─ Key modules (auth, tasks, linking, dashboard)
+  └─ Data flow diagram (users → tasks → GitHub sync)
+
+🎨 Design Brief
+  ├─ Goals (clarity, speed, GitHub integration)
+  ├─ User flows (create task, link PR, check status)
+  └─ Constraints (GitHub rate limits, real-time sync limits)
+
+🗓️ Roadmap
+  ├─ Phase 1: MVP (tasks, basic status)
+  ├─ Phase 2: GitHub linking
+  └─ Phase 3: Team views & analytics
+  ├─ Known blockers (GitHub auth flow is complex)
+
+👥 Team Processes
+  ├─ Code review (pairing on GitHub linking logic)
+  ├─ Design decisions (when to write to Notion vs decisions.md)
+  └─ Async updates (daily standup as Notion status update)
+
+🔬 Research & Explorations
+  ├─ GitHub API spike (what's available? Rate limits?)
+  ├─ Supabase RLS for team data (how to model read/write access?)
+  └─ Considered: Linear vs GitHub Issues (chose GitHub for API maturity)
+```
+
+**Create this structure in Notion.** Link: this is the *opposite* of Module 0.7 (repo vs. Notion). Notion keeps architectural thinking and research; your repo keeps versioned code.
+
+**Key insight:** If it belongs to *all phases* of the project and is rarely code, put it in Notion. If it's versioned, tested, or deployed, put it in the repo.
+
+---
+
+### Part 3: Scaffold Your Repository (20 min)
+
+**Ask Claude:**
+
+```
+For my project "[PROJECT BRIEF]", set up a complete folder structure and configuration files.
+
+Create:
+1. A folder scaffolding (app/, lib/, components/, tests/, public/, etc.)
+2. Initial CLAUDE.md (project goals, AI workflow rules, testing expectations, deployment gates)
+3. decisions.md (early decisions: "chosen Next.js because X", "using Supabase because Y")
+4. .mcp.json (which MCP servers are enabled and why, even if empty for now)
+5. .gitignore, tsconfig.json, package.json template
+
+Return the folder tree and the content for each config file.
+```
+
+**Claude will generate:**
+
+A complete folder structure (tailored to your tech stack), starter config files, and a CLAUDE.md that frames how AI will help you build.
+
+**Example (task planner):**
+
+```
+project-root/
+├── app/
+│   ├── (auth)/          # auth routes
+│   ├── dashboard/       # task dashboard
+│   ├── tasks/           # task CRUD
+│   └── layout.tsx
+├── components/
+│   ├── TaskForm.tsx
+│   ├── TaskList.tsx
+│   └── GitHubSync.tsx
+├── lib/
+│   ├── github.ts        # GitHub API client
+│   ├── supabase.ts      # DB queries
+│   └── actions/         # server actions
+├── tests/
+│   └── (write tests here)
+├── public/
+├── CLAUDE.md            # AI workflow guide
+├── decisions.md         # architecture choices
+├── FEATURES.md          # feature checklist
+├── .mcp.json
+├── tsconfig.json
+├── package.json
+└── .gitignore
+```
+
+**Commit this scaffolding as your first commit:**
+
+```bash
+git add .
+git commit -m "chore: project scaffolding"
+```
+
+**Why:** Your repo structure reflects your project thinking. Good structure supports good thinking.
+
+---
+
+### Part 4: Create Your Feature List (20 min)
+
+**Ask Claude:**
+
+```
+Generate a comprehensive feature list for "[PROJECT BRIEF]".
+
+Format:
+## [Category] (Phase X)
+- [ ] Feature name (complexity: small/medium/large)
+- [ ] Feature name, depends on: [prerequisites]
+- ...
+
+Categories: Authentication, Core Features, Analytics, Admin/Internal, Nice-to-Haves
+
+For each feature, estimate complexity and note dependencies.
+```
+
+**Claude will return a structured feature list.** Store it as `FEATURES.md` in your repo root:
+
+```markdown
+# Task Planner — Feature List
+
+## Authentication (Phase 1)
+- [ ] Email/password signup (small)
+- [ ] Email verification (small, depends on: signup)
+- [ ] Password reset (small)
+- [ ] GitHub OAuth (medium)
+
+## Core Features (Phase 1–2)
+- [ ] Create task (medium)
+- [ ] Edit task (medium, depends on: create task)
+- [ ] Delete task (small, depends on: create task)
+- [ ] List tasks (medium, depends on: create task)
+- [ ] Task status (small, depends on: create task)
+- [ ] Assign task to user (medium, depends on: auth, create task)
+
+## GitHub Integration (Phase 2)
+- [ ] Link task to GitHub PR (large, depends on: GitHub OAuth, create task)
+- [ ] Auto-update status from PR (large, depends on: link to PR)
+- [ ] Sync PR comments to task (medium, depends on: link to PR)
+
+## Dashboard & Analytics (Phase 3)
+- [ ] Personal task dashboard (medium, depends on: list tasks)
+- [ ] Team task view (medium, depends on: list tasks, assign task)
+- [ ] Blocked tasks highlight (small, depends on: task status)
+
+## Admin/Internal
+- [ ] Rollback GitHub sync if broken (medium)
+- [ ] Rate limit monitoring (small)
+```
+
+**This is your living checklist.** As you build each feature, mark it done. It keeps you from building extra stuff you don't need, and it's a single source of truth for progress.
+
+---
+
+### Part 5: Connect the Pieces (10 min)
+
+You now have four interconnected artifacts:
+
+1. **Project brief** (Notion) — your north star
+2. **Notion structure** (Notion) — where decisions and research live
+3. **Repo scaffolding** (Git) — where code and versioning lives
+4. **Feature list** (Repo: FEATURES.md) — your checklist
+
+**How they work together:**
+
+- **Notion** holds: project vision, architectural decisions, design research, roadmap, team processes
+- **Repo** holds: versioned code, configuration (CLAUDE.md, decisions.md, .mcp.json), feature list
+- **Both stay in sync** via the project brief and decisions.md (single source of truth for "why did we choose X?")
+
+**Before you move to Lesson 3.2 (spec writing),** you have:
+- A clear project vision (brief)
+- Notion structure ready (for decisions and research)
+- Repo scaffolded (folder structure, config, CLAUDE.md)
+- Feature list as your checklist (FEATURES.md)
+- First commit: "project scaffolding"
+
+**This is the foundation.** Specs, data models, and build orders come next — but they're built on top of clear thinking and solid structure.
+
+---
+
+## Knowledge check
+
+**Q3-1a:** You have a vague idea: "I want to build a fitness app." What's the first prompt you'd give Claude to clarify it? (Open-ended, then reveal good example)
+
+**Q3-1b:** You need to decide where to document these items — Notion or Repo?
+1. "We chose Supabase because of RLS" → **Repo** (`decisions.md`)
+2. "Our data model has users, workouts, and goals" → **Repo** (`FEATURES.md`, schema docs)
+3. "Design research: users want offline-first app" → **Notion**
+4. "Build order: auth first, then workouts, then analytics" → **Repo** (`decisions.md` / `FEATURES.md`)
+5. "Architectural sketch: three layers (API, DB, UI)" → **Notion**
+6. "We won't support social features in MVP" → **Repo** (`FEATURES.md` out-of-scope section)
+
+---
+
+## Practical deliverable
+
+**Submit:**
+1. Screenshots of your Notion structure (showing at least 3 categories)
+2. Your repo scaffolding: git log output showing "chore: project scaffolding" commit
+3. Your FEATURES.md (showing at least 15 features, organized by category, with complexity and dependencies noted)
+
+---
+
+## Lesson 3.2 — Why plan when AI writes code so fast? (~30 min)
 
 The faster the tool, the more a bad plan costs. AI can generate a screen in seconds — but if you haven't decided what data it needs, how it connects to the next screen, or what "done" means, you'll generate ten screens that don't fit together and spend far longer untangling them than planning would have taken.
 
@@ -30,9 +312,9 @@ Reframe planning for the AI era: it's not overhead, it's **the context you'll fe
 
 ---
 
-## Lesson 3.2 — From raw idea to a spec, with Claude Code (~60 min)
+## Lesson 3.3 — From raw idea to a spec, with Claude Code (~60 min)
 
-This delivers Objective 1. A spec is a short written description of what the software should do — you don't need a formal template, you need clarity. **Use Claude Code as your planning orchestrator.**
+This delivers Objective 2. A spec is a short written description of what the software should do — you don't need a formal template, you need clarity. **Use Claude Code as your planning orchestrator.**
 
 **A lightweight spec answers:**
 
@@ -103,9 +385,9 @@ After each step, show me the output and ask if I want to revise or move on.
 
 ---
 
-## Lesson 3.3 — Translating the spec into a technical plan (~60 min)
+## Lesson 3.4 — Translating the spec into a technical plan (~60 min)
 
-This delivers Objective 2. A spec says *what*; a technical plan says *how*. Translate each feature into three things:
+This delivers Objective 3. A spec says *what*; a technical plan says *how*. Translate each feature into three things:
 
 - **Data model** — what the app stores. For the invoice tracker: `clients` (name, email), `invoices` (client, amount, due date, status). This previews Module 7 (Supabase/Postgres).
 - **Screens / views** — what the user sees: a client list, an invoice list, a "new invoice" form, a dashboard. Each maps to features in the spec.
@@ -139,9 +421,9 @@ Prompt the AI for a first draft of each ("Given this spec, propose a simple data
 
 ---
 
-## Lesson 3.4 — Sequencing: dependencies and build order (~60 min)
+## Lesson 3.5 — Sequencing: dependencies and build order (~60 min)
 
-This delivers Objective 3. Not all tasks are equal — some must come before others. Teach learners to spot **dependencies** and order work so they're never blocked.
+This delivers Objective 4. Not all tasks are equal — some must come before others. Teach learners to spot **dependencies** and order work so they're never blocked.
 
 **Rule of thumb:** build foundations before the things that rely on them. You can't display invoices before you can store one; you can't store one before the data model exists; a per-user app needs auth before user-owned data.
 
@@ -382,9 +664,13 @@ votes
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Produce a spec (Quiz Q3-1, Q3-2):**
-- Q3-1: "Why plan when AI writes code fast?" ✅ Tests value of planning
-- Q3-2: "A lightweight spec should include all EXCEPT:" ✅ Tests spec content
+**Objective 1 — Clarify idea & scaffold infrastructure (Quiz Q3-1, Q3-2):**
+- Q3-1a: "You have a vague idea. What's the first prompt to Claude?" ✅ Tests clarification prompts
+- Q3-1b: "Which items belong in Notion vs repo?" ✅ Tests Notion vs repo judgment
+
+**Objective 2 — Produce a spec (Quiz Q3-3, Q3-4):**
+- Q3-3: "Why plan when AI writes code fast?" ✅ Tests value of planning
+- Q3-4: "A lightweight spec should include all EXCEPT:" ✅ Tests spec content
 - *Written check:* From the scenario "a small gym wants an app to book classes," write a one-page MVP spec with: problem statement, target users, 4–5 core features, explicit out-of-scope items, and success criteria.
   - **SAMPLE OUTPUT (what good looks like):**
     ```
@@ -403,8 +689,8 @@ votes
     SUCCESS: Members book 80% of their classes through the app within first week.
     ```
 
-**Objective 2 — Translate to technical plan (Quiz Q3-4):**
-- Q3-4: "For a note-taking app, what should you plan first?" ✅ Tests technical planning order
+**Objective 3 — Translate to technical plan (Quiz Q3-5):**
+- Q3-5: "For a note-taking app, what should you plan first?" ✅ Tests technical planning order
 - *Written check:* For the gym booking app above, propose: (1) a data model (table names, key fields, relationships), (2) a screen list (5–7 screens), and (3) three milestones.
   - **SAMPLE DATA MODEL:**
     ```
@@ -423,8 +709,8 @@ votes
     - v1: Book class + my bookings
     - v2: Notifications + capacity alerts
 
-**Objective 3 — Sequence with dependencies (Quiz Q3-3):**
-- Q3-3: "A dependency means:" ✅ Tests dependency understanding
+**Objective 4 — Sequence with dependencies (Quiz Q3-6):**
+- Q3-6: "A dependency means:" ✅ Tests dependency understanding
 - *Written check:* For the gym booking app, list the build tasks in order (8–10 tasks) and for at least 3 tasks, state what must exist first.
   - **SAMPLE BUILD ORDER:**
     ```
