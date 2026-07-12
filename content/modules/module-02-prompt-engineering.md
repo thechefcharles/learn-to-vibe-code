@@ -255,9 +255,20 @@ Return the updated code only.
 
 ---
 
+**WEAK PROMPT 6:** "fix my UI. It's weird."
+
+**Rewrite with multimodal:**
+```
+Here's a screenshot of my form [paste image]. The labels are stacked on top of the inputs with no space, the button is tiny, and the error message color is hard to see. Make it clean: add space between label and input, make the button bigger, use a red error color for readability. Use shadcn/ui if you have it.
+```
+
+**What improved:** By pasting the screenshot, Claude can see the exact visual problem instead of guessing from vague text. The strong prompt names specific problems (stacked labels, tiny button, hard-to-see error color) that Claude now verifies directly in the image. This is 10x faster than a text-only description.
+
+---
+
 ### Activity instructions for learners:
 
-1. **For each of the five weak prompts above:**
+1. **For each of the six weak prompts above:**
    - Paste the weak prompt into Claude Code or ChatGPT
    - Run it and note what the output is missing or gets wrong
    - Now paste the rewritten prompt
@@ -265,9 +276,10 @@ Return the updated code only.
    - Write one sentence: "What was better in the strong version?"
 
 2. **Submit:**
-   - Your rewritten version of at least 3 of the 5 prompts
+   - Your rewritten version of at least 4 of the 6 prompts (including Prompt 6, the multimodal one)
    - Side-by-side before/after outputs for at least one pair
    - For each rewrite, one sentence on the improvement
+   - **Bonus:** For Prompt 6 (multimodal), actually capture a screenshot of a UI and rewrite it following the strong prompt format
 
 ---
 
