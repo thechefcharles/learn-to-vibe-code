@@ -1,6 +1,6 @@
 # Module 7: Supabase (Your App's Brain!) 🧠
 
-**Stage:** Production · **Level:** Intermediate · **Duration:** ~6 hours · **XP:** 600
+**Stage:** Production · **Level:** Intermediate · **Duration:** ~6.5 hours · **XP:** 600
 
 **What you need:** Modules 0-6
 
@@ -16,7 +16,74 @@ By the end of this module, you'll be able to:
 
 ---
 
-## Lesson 7.1 — What's a Database? (~30 min)
+## Lesson 7.0 — What's a Database? (Tables, Keys, and Rules) (~25 min)
+
+Before you set up Supabase, know what you're doing.
+
+### What's a Table?
+
+A table is like a spreadsheet. Each row is one record.
+
+Example: a "pets" table:
+
+| id  | name    | breed     | age | favorite_food |
+|-----|---------|-----------|-----|---------------|
+| 1   | Bella   | Labrador  | 3   | Chicken       |
+| 2   | Max     | Poodle    | 5   | Treats        |
+| 3   | Luna    | Husky     | 2   | Salmon        |
+
+Each pet gets a unique number (id). You use that to find it later.
+
+### Why Primary Key?
+
+The `id` is the primary key. No two pets have the same id. So when you say "show pet 1," it's always Bella.
+
+### Why User ID?
+
+In a real app with multiple people, each pet has a user_id. This says "this pet belongs to this person."
+
+If you have 100 users with 5 pets each, you have 500 pets. User IDs separate them: "show me all pets where user_id = 1" gets only MY pets.
+
+### What's Row-Level Security (RLS)?
+
+RLS is a security rule: "you can only see your own data."
+
+Example: User 1 can only see pets where user_id = 1. User 2 can only see their own pets. No peeking at each other's data.
+
+Supabase enforces this automatically.
+
+### The Pattern
+
+Every app table follows the same pattern:
+
+1. **id:** unique identifier (every pet gets a number)
+2. **user_id:** who owns this (so User 1 can't see User 2's pets)
+3. **Data columns:** what you actually care about (name, breed, age, food)
+4. **RLS rule:** "you can only see rows where user_id = your ID"
+
+That's it. Same pattern in every module.
+
+### Knowledge Check
+
+1. **Q7-0a:** "Why does every pet need a user_id?"
+   - a) Supabase requires it
+   - b) So the RLS rule can say "you can only see YOUR pets"
+   - c) To track when it was created
+   - d) To make the database bigger
+
+   **Correct:** b) — user_id is how RLS knows which data is yours.
+
+2. **Q7-0b:** "What does RLS mean?"
+   - a) Really long sentences
+   - b) A security rule: "you can only read/write your own data"
+   - c) Rust language something
+   - d) Reverse lookup system
+
+   **Correct:** b) — RLS is the security guard: "is this your data? Yes? You can see it. No? Blocked."
+
+---
+
+## Lesson 7.2 — What's a Database? (~30 min)
 
 A database is just a fancy spreadsheet in the cloud. It stores your data.
 
@@ -35,7 +102,7 @@ A database is just a fancy spreadsheet in the cloud. It stores your data.
 
 ---
 
-## Lesson 7.2 — Set Up Supabase & Create Your Database with Claude Code (~30 min)
+## Lesson 7.3 — Set Up Supabase & Create Your Database with Claude Code (~30 min)
 
 **Step 1: Create a Supabase project**
 
@@ -101,7 +168,7 @@ Boom! Your database tables are created. 🎉
 
 ---
 
-## Lesson 7.3 — Connect Your App to Supabase (Claude Code Handles It!) (~60 min)
+## Lesson 7.4 — Connect Your App to Supabase (Claude Code Handles It!) (~60 min)
 
 Your Next.js app needs to talk to Supabase. Let Claude Code set it up!
 
@@ -167,7 +234,7 @@ No more mock data! Your app now uses a real database. 🎉
 
 ---
 
-## Lesson 7.4 — Read, Write, Delete (~60 min)
+## Lesson 7.5 — Read, Write, Delete (~60 min)
 
 Three operations:
 
@@ -190,7 +257,7 @@ You don't write these yourself — Cursor/Claude Code does. You just understand 
 
 ---
 
-## Lesson 7.5 — Security & Auth (~45 min)
+## Lesson 7.6 — Security & Auth (~45 min)
 
 Supabase has security rules (RLS = Row-Level Security).
 
