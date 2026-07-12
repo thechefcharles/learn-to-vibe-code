@@ -197,33 +197,24 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
     }
 
     // Unordered list with checkmarks or dashes
-    if (line.match(/^[\s]*[-•]\s+/) || line.match(/^[\s]*✅\s+/)) {
+    if (line.match(/^[\s]*[-•]\s+(.*)/) || line.match(/^[\s]*[-•]\s+✅/) || line.match(/^[\s]*✅\s+/)) {
       const listLines: string[] = [];
 
-      // Collect all consecutive list items
-      while (i < lines.length && (lines[i].match(/^[\s]*[-•✅]\s+/) || lines[i].trim() === "")) {
+      // Collect all consecutive list items (including dashes followed by checkmarks)
+      while (i < lines.length && (lines[i].match(/^[\s]*[-•]\s+/) || lines[i].match(/^[\s]*✅\s+/) || lines[i].trim() === "")) {
         if (lines[i].trim() !== "") {
           listLines.push(lines[i]);
         }
         i++;
       }
 
-      // Check if this is a checkmark list
-      const isCheckmarkList = listLines.some(item => item.includes("✅") || item.includes("✓"));
-      const hasCheckmarkPrefix = listLines.some(item => item.match(/^[\s]*✅/) || item.match(/^[\s]*✓/));
+      // Check if this is a checkmark list (items contain ✅ or ✓ after the dash/bullet)
+      const isCheckmarkList = listLines.some(item => {
+        // Match: "- ✅ text" or "✅ text"
+        return item.match(/^[\s]*[-•]?\s*✅/) || item.match(/^[\s]*[-•]?\s*✓/);
+      });
 
-      // Determine if there's a "By the end" header before this list
-      let hasPreHeader = false;
-      if (elements.length > 0) {
-        const lastEl = elements[elements.length - 1] as any;
-        if (lastEl?.key && lastEl.key.startsWith("p-") &&
-            (lastEl.props?.children as string)?.toLowerCase?.().includes("by the end")) {
-          hasPreHeader = true;
-          elements.pop();
-        }
-      }
-
-      if (isCheckmarkList && hasCheckmarkPrefix) {
+      if (isCheckmarkList && listLines.length > 0) {
         // Render as special checkmark card
         elements.push(
           <motion.div
@@ -233,22 +224,27 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
             transition={{ duration: 0.3 }}
             className="rounded-lg p-4 mb-8 border bg-emerald-500/10 border-emerald-500/30"
           >
-            <p className="text-xs text-emerald-400 uppercase tracking-wider mb-3 font-bold">
+            <p className="text-xs text-emerald-400 uppercase tracking-wider mb-4 font-bold">
               ✓ BY THE END
             </p>
-            <ul className="space-y-2">
+            <ul className="space-y-2.5">
               {listLines.map((item, idx) => {
-                const cleanItem = item.replace(/^[\s]*[-•✅✓]\s+/, "").trim();
+                // Remove dash/bullet and checkmark emoji
+                const cleanItem = item
+                  .replace(/^[\s]*[-•]\s*/, "")
+                  .replace(/^✅\s*/, "")
+                  .replace(/^✓\s*/, "")
+                  .trim();
                 return (
                   <motion.li
                     key={idx}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.2, delay: idx * 0.05 }}
-                    className="flex items-center gap-3 text-slate-200 text-sm"
+                    className="flex items-start gap-3 text-slate-200 text-sm leading-relaxed"
                   >
-                    <span className="text-emerald-400 font-bold text-lg flex-shrink-0">✓</span>
-                    <span>{renderInline(cleanItem)}</span>
+                    <span className="text-emerald-400 font-bold text-base flex-shrink-0 mt-0.5">✓</span>
+                    <span className="pt-0.5">{renderInline(cleanItem)}</span>
                   </motion.li>
                 );
               })}
@@ -258,11 +254,11 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
       } else {
         // Regular list
         elements.push(
-          <ul key={`list-${i}`} className="space-y-2 mb-4 ml-4">
+          <ul key={`list-${i}`} className="space-y-2 mb-8 ml-4">
             {listLines.map((item, idx) => {
               const cleanItem = item.replace(/^[\s]*[-•]\s+/, "").trim();
               return (
-                <li key={idx} className="text-slate-300 leading-relaxed list-disc">
+                <li key={idx} className="text-slate-300 leading-[1.75] list-disc">
                   {renderInline(cleanItem)}
                 </li>
               );

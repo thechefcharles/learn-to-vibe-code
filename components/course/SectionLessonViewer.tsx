@@ -158,7 +158,7 @@ export function SectionLessonViewer({
       </div>
 
       {/* Section Content */}
-      <div className={`prose max-w-none ${isKids ? 'prose-purple' : 'prose-invert'}`}>
+      <div className={`prose max-w-none leading-[1.75] ${isKids ? 'prose-purple' : 'prose-invert'}`}>
         <MarkdownRenderer content={currentSection.content} />
       </div>
 
@@ -177,14 +177,17 @@ export function SectionLessonViewer({
 
       {/* Tip */}
       {currentSection.tip && (
-        <div className={`p-4 rounded-lg border ${
-          isKids
-            ? 'bg-blue-50 border-blue-200 text-blue-900'
-            : 'bg-blue-500/10 border-blue-500/30 text-blue-300'
-        }`}>
-          <div className="font-semibold">💡 Tip</div>
-          <p>{currentSection.tip}</p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`p-4 rounded-lg border ${
+            isKids
+              ? 'bg-blue-50 border-blue-200 text-blue-900'
+              : 'bg-blue-500/10 border-blue-500/30 text-blue-300'
+          }`}>
+          <p className="font-bold text-sm uppercase tracking-wider mb-2">💡 Tip</p>
+          <p className="text-sm leading-relaxed">{currentSection.tip}</p>
+        </motion.div>
       )}
 
       {/* Hints */}
