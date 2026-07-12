@@ -37,15 +37,15 @@ export function CourseLessonHeader({
   return (
     <>
       {/* Main Header */}
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-gradient-to-b from-slate-900/95 to-slate-900/80 backdrop-blur-lg">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-gradient-to-b from-slate-900/95 to-slate-900/80 backdrop-blur-lg overflow-visible">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
           <div className="flex items-center justify-between gap-4">
             {/* Left: Logo + Breadcrumb (hidden on mobile) */}
             <div className="flex items-center gap-3 min-w-0 flex-shrink-0">
               <Link
-                href="/course"
+                href="/dashboard"
                 className="flex items-center gap-2 hover:opacity-80 transition"
-                title="Back to Course"
+                title="Back to Dashboard"
               >
                 <div className="scale-75 sm:scale-100">
                   <Logo variant="cosmic-mark" size="sm" />
@@ -56,10 +56,10 @@ export function CourseLessonHeader({
               <div className="hidden md:flex items-center gap-2 text-xs text-slate-400">
                 <span>→</span>
                 <Link
-                  href="/course"
+                  href="/dashboard"
                   className="hover:text-slate-300 transition"
                 >
-                  Course
+                  Learning
                 </Link>
                 <span>→</span>
                 <span className="text-slate-500">{moduleName}</span>
@@ -121,10 +121,10 @@ export function CourseLessonHeader({
           {/* Mobile Breadcrumb */}
           <div className="flex items-center gap-2 text-xs text-slate-400">
             <Link
-              href="/course"
+              href="/dashboard"
               className="hover:text-slate-300 transition"
             >
-              Course
+              Learning
             </Link>
             <span>→</span>
             <span className="text-slate-500">{moduleName}</span>
@@ -145,7 +145,7 @@ export function CourseLessonHeader({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
-          className="md:hidden fixed top-32 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-white/10"
+          className="md:hidden fixed top-0 left-0 right-0 z-50 pt-32 bg-slate-900/95 backdrop-blur-lg border-b border-white/10 pointer-events-auto"
         >
           <div className="max-w-7xl mx-auto px-3 py-4 flex flex-col gap-3">
             {/* Theme Switcher in Mobile Menu */}
