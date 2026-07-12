@@ -35,17 +35,38 @@ export function ModuleSidebar({
   unlockedModules,
   completedModules,
 }: ModuleSidebarProps) {
-  const router = useRouter();
   const [showModuleDropdown, setShowModuleDropdown] = useState(false);
+  const [selectedModuleId, setSelectedModuleId] = useState(moduleId);
+  const [selectedModuleSteps, setSelectedModuleSteps] = useState<ModuleStepSequence | null>(null);
 
-  const isCurrentModule = true; // Always true since we navigate away
-  const isLocked = unlockedModules && !unlockedModules.has(moduleId);
+  const isViewingOtherModule = selectedModuleId !== moduleId;
 
   const handleModuleSelect = (newModuleId: number) => {
     setShowModuleDropdown(false);
-    // Navigate to the selected module's first lesson
-    router.push(`/course/${String(newModuleId).padStart(2, '0')}`);
+    setSelectedModuleId(newModuleId);
+
+    // If selecting the current module, clear preview
+    if (newModuleId === moduleId) {
+      setSelectedModuleSteps(null);
+      return;
+    }
+
+    // Load steps for the selected module
+    if (newModuleId !== moduleId) {
+      loadModuleSteps(newModuleId);
+    }
   };
+
+  const loadModuleSteps = async (newModuleId: number) => {
+    try {
+      const { getModuleSteps } = await import('@/lib/module-steps');
+      const loadedSteps = getModuleSteps(newModuleId, isKids ? 'kids' : 'adult');
+      setSelectedModuleSteps(loadedSteps);
+    } catch (error) {
+      console.error('Failed to load module steps:', error);
+    }
+  };
+
   const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
 
   return (
@@ -67,7 +88,7 @@ export function ModuleSidebar({
           }`}
         >
           <span className="text-sm font-semibold">
-            Module {String(moduleId).padStart(2, '0')}
+            Module {String(selectedModuleId).padStart(2, '0')}
           </span>
           <ChevronDown
             className={`w-4 h-4 transition-transform ${
@@ -92,7 +113,7 @@ export function ModuleSidebar({
               const meta = getModuleMetadata(modId);
               const isUnlocked = unlockedModules?.has(modId) ?? true;
               const isCompleted = completedModules?.has(modId) ?? false;
-              const isSelected = modId === moduleId;
+              const isSelected = modId === selectedModuleId;
 
               return (
                 <button
@@ -138,7 +159,7 @@ export function ModuleSidebar({
       </h3>
 
       {/* Progress Bar - Only show for current module */}
-      {isCurrentModule && (
+      {!isViewingOtherModule && (
         <div
           className={`mb-6 p-3 rounded-lg ${
             isKids ? 'bg-purple-100' : 'bg-slate-700'
@@ -171,8 +192,8 @@ export function ModuleSidebar({
         </div>
       )}
 
-      {/* Steps List - Current Module */}
-      {isCurrentModule && (
+      {/* Steps List - Current Module or Selected Other Module */}
+      {!isViewingOtherModule && (
         <div className="space-y-2">
           {steps.steps.map((step, index) => {
             const isCompleted = completedSteps.has(index);
@@ -271,9 +292,22 @@ export function ModuleSidebar({
       )}
 
       {/* Lessons List - Other Modules (preview mode) */}
-      {!isCurrentModule && (
-        <div className="space-y-2">
-          {isLocked ? (
+      {isViewingOtherModule && (
+        <div className="space-y-2 opacity-60 pointer-events-none select-none">
+          {/* Preview badge for other modules */}
+          <motion.div
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className={`p-2 rounded-lg text-xs text-center font-medium mb-2 ${
+              isKids
+                ? 'bg-amber-100 text-amber-900 border border-amber-300'
+                : 'bg-amber-500/20 text-amber-200 border border-amber-500/50'
+            }`}
+          >
+            👀 Preview Mode
+          </motion.div>
+
+          {unlockedModules && !unlockedModules.has(selectedModuleId) ? (
             <div
               className={`p-4 rounded-lg text-center text-sm ${
                 isKids
@@ -284,21 +318,40 @@ export function ModuleSidebar({
               <p>🔒 Module locked</p>
               <p className="text-xs mt-1">Complete the previous module to unlock</p>
             </div>
+          ) : selectedModuleSteps ? (
+            // Show lessons from selected module in preview mode
+            <div className="space-y-1">
+              {selectedModuleSteps.steps.map((step, index) => (
+                <div
+                  key={index}
+                  className={`p-2 rounded text-sm ${
+                    isKids
+                      ? 'bg-purple-100/50 text-purple-900'
+                      : 'bg-slate-700/30 text-slate-300'
+                  }`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className="flex-shrink-0 font-bold text-xs">{index + 1}</span>
+                    <span className="truncate text-xs">{step.title}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
           ) : (
-            // Placeholder list for other modules
+            // Loading or placeholder
             <div className={`p-3 rounded-lg text-sm ${
               isKids
                 ? 'bg-purple-100/50 text-purple-900'
                 : 'bg-slate-700/30 text-slate-400'
             }`}>
-              <p className="text-xs">Lessons for this module would appear here</p>
+              <p className="text-xs">Loading lessons...</p>
             </div>
           )}
         </div>
       )}
 
       {/* Milestone Badge - Only for current module */}
-      {isCurrentModule && (() => {
+      {!isViewingOtherModule && (() => {
         const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
         return progress > 0 ? (
           <motion.div
