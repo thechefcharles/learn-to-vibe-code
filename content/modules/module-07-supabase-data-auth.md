@@ -105,9 +105,41 @@ The **key difference:** browser clients are used in `"use client"` components an
 
 ---
 
-## Lesson 7.3 — Model your data in Postgres (~45 min)
+## Lesson 7.3 — Model your data with Claude Code (~45 min)
 
-The modeling half of Objective 1. Turn the Module 3 data model into real tables. Each gets a primary key (`id`) and a `user_id` linking rows to the logged-in user. Run in the Supabase SQL editor:
+The modeling half of Objective 1. Turn your Module 3 data model into real Postgres tables. **Use Claude Code to generate the SQL migrations from your spec:**
+
+### Automating data model generation
+
+**Step 1 — Gather your Module 3 data model.** Open your `spec.md` or `data-model.md` file from planning.
+
+**Step 2 — Prompt Claude Code to generate Postgres schema:**
+
+```bash
+claude
+```
+
+Then send:
+
+```
+I'm setting up a Supabase project for my invoice tracker.
+My data model from planning:
+
+[PASTE YOUR MODULE 3 DATA MODEL — table names, fields, relationships]
+
+Generate complete Postgres CREATE TABLE statements that:
+1. Use UUID primary keys with gen_random_uuid()
+2. Add user_id field to every table (default auth.uid())
+3. Add relationships (foreign keys) between tables
+4. Add created_at timestamps (default now())
+5. Set appropriate column types (text, numeric, date, uuid, timestamptz)
+6. Include NOT NULL constraints where needed
+
+Make sure the relationships match my spec exactly.
+Format as SQL I can paste directly into Supabase's SQL editor.
+```
+
+**Step 3 — Review Claude Code's SQL output.** It will generate:
 
 ```sql
 create table clients (
@@ -129,7 +161,20 @@ create table invoices (
 );
 ```
 
-Note `user_id ... default auth.uid()` so inserts populate ownership automatically. The relationships mirror the Module 3 build order.
+Check:
+- ✅ All tables have `user_id` (for per-user security later)
+- ✅ All tables have `id` (primary key) and `created_at` (audit trail)
+- ✅ Relationships match your spec (e.g., invoices.client_id → clients.id)
+- ✅ Column types are correct (uuid, text, numeric, date)
+
+**Step 4 — Run the SQL in Supabase.** Copy Claude Code's output, go to Supabase → SQL Editor, paste, and run. Tables are created.
+
+**Why Claude Code for this?**
+
+- **Automation:** you describe the tables once (in planning), Claude Code generates production-ready SQL
+- **Correctness:** it knows Postgres idioms (uuid vs. int, foreign key syntax, defaults)
+- **Consistency:** every table gets user_id and created_at automatically, preventing oversights
+- **Speed:** less manual SQL to write, more time to verify and iterate
 
 ---
 
@@ -227,51 +272,134 @@ export default function ClientForm() {
 
 ---
 
-## Lesson 7.5 — Authentication: user accounts (~45 min)
+## Lesson 7.5 — Authentication & RLS with Claude Code (~90 min)
 
-This begins Objective 2. Supabase Auth handles sign-up/sign-in. Enable email/password in the dashboard, then:
+This completes Objective 2 (auth + authorization). Instead of writing boilerplate manually, **use Claude Code to orchestrate authentication setup and Row Level Security policies:**
 
-```tsx
-"use client";
-import { createClient } from "@/lib/supabase/client";
-async function signIn(email: string, password: string) {
-  const supabase = createClient();
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
-  if (error) alert(error.message);
-}
+### Automating auth and RLS
+
+**Step 1 — Enable email/password auth in Supabase dashboard** (manual one-time):
+- Go to Supabase → Authentication → Providers
+- Enable "Email" provider
+- Optionally: in Settings → Auth, turn on "Enable email confirmations" or disable it for testing
+
+**Step 2 — Use Claude Code to generate auth components and RLS policies:**
+
+```bash
+claude
 ```
 
-Once signed in, Supabase stores the session in a cookie (why `@supabase/ssr` matters) and every request carries *who* is making it. That identity is the key to the next lesson.
+Send this prompt:
 
-*[SCREENSHOT: the Supabase Auth users list after a test signup.]*
+```
+I'm setting up auth and RLS for my Supabase invoice tracker.
+
+My tables: clients, invoices (both have user_id fields)
+
+Please generate:
+
+1. AUTH COMPONENTS (sign-up, sign-in, sign-out flows):
+   - A sign-up form (email, password, password confirm)
+   - A sign-in form (email, password)
+   - A sign-out button
+   - A useAuth hook to get the current user
+   All using @supabase/ssr with the createClient pattern
+
+2. RLS POLICIES (for database security):
+   For each table (clients, invoices):
+   - enable row level security
+   - create a policy allowing users to see/edit only their own rows
+   - use (auth.uid() = user_id) for filtering
+
+3. FORM ACTIONS (wire auth to the app):
+   - signUp(email, password) server action
+   - signIn(email, password) server action
+   - signOut() server action
+
+Format the SQL for Supabase's SQL editor.
+Format the TSX for my Next.js app.
+
+My goal: users can sign up, sign in, and only see their own clients/invoices.
+```
+
+**Step 3 — Review Claude Code's output.**
+
+For auth components, check:
+- ✅ Forms include validation (non-empty email, password length)
+- ✅ Error messages shown to users
+- ✅ Success handling (redirect or state update after auth)
+- ✅ Using @supabase/ssr (not hardcoding keys)
+
+For RLS policies, check:
+- ✅ `alter table ... enable row level security;` for every table
+- ✅ Policy condition uses `auth.uid() = user_id`
+- ✅ `using` and `with check` both set (not just one)
+- ✅ No typos in table/column names
+
+**Step 4 — Apply the code.** 
+- Paste RLS SQL into Supabase → SQL Editor and run
+- Create auth components in your app (e.g., `app/auth/SignUp.tsx`, `app/auth/SignIn.tsx`)
+- Add server actions in `app/auth/actions.ts`
+
+**Step 5 — Test.**
+1. Sign up with email/password
+2. Verify you see your clients/invoices
+3. Sign out and sign in as a different user
+4. **Critical:** verify the second user can NOT see the first user's data (this proves RLS works)
+
+If a user sees another user's data, RLS isn't enabled correctly. Debug with Claude Code: "Check my RLS policies — why is User A seeing User B's data?"
+
+**Why Claude Code for auth + RLS?**
+
+- **End-to-end orchestration:** sign-up → sign-in → RLS policies all generated consistently
+- **Boilerplate elimination:** auth form and RLS SQL are verbose; Claude Code handles it
+- **Security-first:** it always includes the `with check` clause (prevents privilege escalation)
+- **Verification:** you test with two accounts (the real proof); Claude Code provided the machinery
 
 ---
 
-## Lesson 7.6 — Authorization with Row Level Security (~45 min)
+**[SCREENSHOT PLACEHOLDER: Auth flow and RLS verification]**
 
-Completes Objective 2 and is the most important security concept in the course. **RLS** is a per-table rule deciding which rows a user may see or change. In Supabase it's **default-deny**: turn it on with no policy and *nobody* reads anything — safe by default.
-
-```sql
-alter table clients enable row level security;
-
-create policy "users manage own clients"
-  on clients for all
-  using (auth.uid() = user_id)
-  with check (auth.uid() = user_id);
-```
-
-`using` controls readable/updatable rows; `with check` controls what can be inserted or reassigned (without it, a user could set a row's `user_id` to someone else). Repeat for `invoices`. Now the same query from 7.4 returns only the current user's rows — the database enforces security, not your app code. (Note: RLS controls *rows*; make sure the table is also exposed to the Data API via `anon`/`authenticated` grants — that controls *table access*.)
-
-> **Watch-out:** an AI will happily write app code that forgets RLS. Confirm it's enabled and test with two accounts — log in as A, then B, and verify they can't see each other's data.
-> 
-
-*[SCREENSHOT: an RLS policy on the clients table.]*
+Left: Sign-up and sign-in forms in the app.
+Right: Two users logged in, each seeing only their own clients (proof RLS is working).
 
 ---
 
 ## Lesson 7.7 — Configuration vs. secrets (~30 min)
 
 Not all env vars are created equal. **Config** is anything you might change between environments — URLs, thresholds, feature flags, timeouts. **Secrets** are credentials you *never* share — API keys, passwords, signing keys. This distinction matters for security and deployment.
+
+### For kids
+
+Keep it simple: **Config = things you can show people. Secrets = things you never show anyone.**
+
+**Config examples:**
+- Where the database is (localhost for you, production server for others)
+- How many times to retry something
+- Timeouts (how long to wait before giving up)
+
+**Secret examples:**
+- Supabase API keys
+- Database passwords
+- Anything with "secret" or "key" in the name
+
+**The rule:** If it's an API key or password, **put it in `.env.local`** (a file you don't push to GitHub). Everything else can go in a config file and pushed to GitHub safely.
+
+Example:
+```
+# config.yaml (safe to commit)
+database_url: postgresql://localhost/invoice_tracker
+timeout_ms: 5000
+
+# .env.local (git-ignored, secret)
+SUPABASE_API_KEY=sb_secret_xxx
+```
+
+**Deliverable:** Check your `.gitignore` file has `.env.local`. If not, add it.
+
+---
+
+### For adults
 
 **Config lives in files or environment vars that are okay to version-control** (or committed with safe values):
 - Database connection string (non-prod)
@@ -304,7 +432,9 @@ STRIPE_SECRET_KEY=sk_live_xxx  # ← never shared!
 
 **Red flag:** if a key starts with `secret`, `private`, or `token`, it's a secret. If it's your publishable key, it's config (safe for the browser). If you're not 100% sure, treat it as a secret.
 
-**In production:** Vercel stores secrets in project env vars, inaccessible to everyone but the deployment. When you deploy, Vercel injects them at build time. You never type them into code or screenshots.
+**Lifecycle:** Locally, secrets come from `.env.local` (loaded at dev/build time). In production, Vercel stores secrets in project settings (inaccessible except at deploy), injects them at build/runtime, and you never type them into code or screenshots. Commit `.env.local` to `.gitignore` and ensure CI/CD skips the local file—only production secrets come from Vercel env vars.
+
+**Audit trail:** Log which secrets are in use and when they rotate. For a capstone, documenting secrets management in your CLAUDE.md shows security discipline.
 
 ---
 
