@@ -121,21 +121,72 @@ Keep components small and typed.
 
 ---
 
-## Lesson 4.4 — Build a feature end to end (~90 min)
+## Lesson 4.4 — Build a feature end to end with full-feature prompts (~90 min)
 
 This delivers Objective 1. Follow the Module 3 plan for the "clients" slice: a type, a list view, a create form. Mock data now; wired to Supabase in Module 7.
 
-**Step 1 — Define the data shape** (`types/client.ts`):
+### The automation-first approach: one full-feature prompt
 
-```tsx
-export type Client = { id: string; name: string; email: string };
+Instead of building incrementally (define type → build list → add form), **use Cursor's Composer (Cmd+I) to build the entire feature in one prompt:**
+
+**Step 1 — Reference your plan.** In Cursor, open your `spec.md` and `build-order.md` from Module 3. You'll paste these as context.
+
+**Step 2 — Open Composer** (Cmd+I) and write a comprehensive feature prompt:
+
+```
+Based on this spec and build order:
+[PASTE YOUR MODULE 3 SPEC AND BUILD PLAN]
+
+Build the complete "clients" slice for an invoice tracker:
+
+1. Create a `types/client.ts` file with a Client type (id, name, email)
+2. Build a server component at `app/clients/page.tsx` that:
+   - Displays a list of mock clients in a clean Tailwind table
+   - Shows columns: Name, Email, and Action (Edit/Delete buttons for later)
+   - Uses semantic HTML for accessibility
+3. Build a client component at `app/components/ClientForm.tsx` that:
+   - Provides inputs for name and email
+   - Validates that both fields are required
+   - Includes a "Create Client" button
+   - Shows form errors if validation fails
+4. Add a route that renders the form below the list (or in a modal)
+5. Wire the form to add clients to the mock array (client-side for now)
+6. Verify the table re-renders when a new client is added
+
+Use Tailwind for styling. Keep components small and typed. 
+Add comments where the logic isn't obvious.
+Reference @types/client.ts when importing.
+
+This is the foundational feature for the invoice tracker — get it solid.
 ```
 
-**Step 2 — Build the list view.** In chat (Cmd+L), prompt five-ingredient style: "Create a server component at `app/clients/page.tsx` that renders a list of clients from a mock array, showing name and email in a Tailwind table. Use the `Client` type from `@types/client.ts`." Review the diff, accept.
+**Step 3 — Review the unified diff.** Composer will show all files it's creating/modifying in one diff. Step through file by file:
+- Does the type match your spec?
+- Is the table styled well and accessible?
+- Is the form validation solid?
+- Are imports correct?
 
-**Step 3 — Add a create form** — a client component with name/email fields and basic validation. Verify it renders and validates before moving on — **prompt → verify → next** (Module 2).
+**Step 4 — Accept the diff.** After review, accept it all at once (don't blind-accept; actually read the code).
 
-At each step: read the generated code, run it, use Cmd+K to fix anything off. You are the engineer (Module 1).
+**Step 5 — Test locally.**
+
+```bash
+npm run dev
+# Visit http://localhost:3000/clients
+# Try adding a client and verify the table updates
+```
+
+**Step 6 — Fix what's off.** If something doesn't work:
+- Read the error (Module 8 skill)
+- Use Cmd+K on the specific block to fix (e.g., "This import path is wrong, fix it")
+- Re-test
+
+**Why full-feature prompts over incremental edits?**
+
+- **Coherence:** Composer builds the feature once, so components fit together naturally
+- **Fewer round-trips:** one prompt → one unified diff → done, vs. five small prompts
+- **Spec-driven:** you're building exactly what you planned, not improvising
+- **Verification:** stepping through one diff is easier than reviewing five small changes
 
 ---
 
@@ -146,8 +197,9 @@ At each step: read the generated code, run it, use Cmd+K to fix anything off. Yo
 - A Tailwind-styled table is visible with:
   - Header row: "Name" and "Email" columns
   - 3–5 sample rows with mock client data (e.g., "Acme Corp", "acme@example.com")
-  - Clean, readable table styling (no generic AI look)
-- Proof that: prompt → ran → works
+  - A form below or to the side with "Create Client" button
+  - Clean, readable styling
+- Proof that the full feature works end-to-end from one Composer prompt
 
 ---
 
