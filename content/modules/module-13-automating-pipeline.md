@@ -137,6 +137,12 @@ claude mcp list
 
 This setup is the foundation of the automated pipeline (Lesson 13.6). Claude Code can now inspect, create, and monitor the entire system without you copy-pasting between dashboards.
 
+> **For kids:**
+> This wires your tools together so Claude Code can use them. You don't need to do this yet (it's advanced), but see how the pieces connect: Claude talks to Supabase (to understand your data), GitHub (to open PRs), and Vercel (to deploy). It's like giving Claude hands to act on the systems you use.
+
+> **For adults:**
+> This is the operational pattern for Phase 8+. Wiring MCP servers is how you build production automation — it's the infrastructure layer that enables end-to-end pipeline orchestration (Lesson 13.6). Every production system needs this setup: ChatOps without the chat UI, or an agentic CI/CD that can reason about your entire stack.
+
 ---
 
 **MCP vs. CLI — both matter:** MCP for interactive read/act (inspect a schema, check a deploy, comment on a PR); the matching **CLIs** (`gh`, `supabase`, `vercel`) for versioned, scripted operations, which Claude Code runs via its shell. Rule: **MCP for current-state, CLI for migrations/history.** Teach both; they're complementary.
