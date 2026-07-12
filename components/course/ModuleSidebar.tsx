@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
 import { getModuleMetadata } from '@/lib/module-metadata';
+import { logEvent } from '@/lib/actions/analytics';
 import type { ModuleStepSequence } from '@/lib/module-steps';
 
 interface ModuleSidebarProps {
@@ -40,6 +41,22 @@ export function ModuleSidebar({
   const [selectedModuleSteps, setSelectedModuleSteps] = useState<ModuleStepSequence | null>(null);
 
   const isViewingOtherModule = selectedModuleId !== moduleId;
+
+  const handleJumpToStep = (index: number) => {
+    // Log the jump
+    logEvent({
+      event_type: 'lesson_jump',
+      module_id: moduleId,
+      lesson_id: index,
+      data: {
+        from: currentStepIndex,
+        to: index,
+        type: 'sidebar_jump',
+      },
+    });
+    // Call original handler
+    onJumpToStep(index);
+  };
 
   const handleModuleSelect = (newModuleId: number) => {
     setShowModuleDropdown(false);
@@ -202,7 +219,7 @@ export function ModuleSidebar({
             return (
               <div key={index}>
               <motion.button
-                onClick={() => onJumpToStep(index)}
+                onClick={() => handleJumpToStep(index)}
                 className={`w-full text-left px-3 py-2 rounded-lg transition-all relative border-l-3 ${
                   isCurrent
                     ? isKids

@@ -20,6 +20,7 @@ import { VideoBackground } from "./kids-landing/VideoBackground";
 import { MouseTrail } from "./kids-landing/MouseTrail";
 import { SectionLessonViewer } from "@/components/course/SectionLessonViewer";
 import { awardXP } from "@/lib/actions/gamification";
+import { logEvent } from "@/lib/actions/analytics";
 import type { ModuleStep, ModuleStepSequence } from "@/lib/module-steps";
 
 interface StepQuizState {
@@ -118,6 +119,18 @@ export function StepLessonViewer({
         answered: false,
         selectedIndex: null,
         showExplanation: false,
+      });
+
+      // Log navigation event
+      logEvent({
+        event_type: 'lesson_jump',
+        module_id: moduleId,
+        lesson_id: nextStepIndex,
+        data: {
+          from: currentStepIndex,
+          to: nextStepIndex,
+          type: 'natural_progression',
+        },
       });
 
       // Reset lesson completion trigger when moving to next lesson
@@ -607,10 +620,24 @@ export function StepLessonViewer({
                         key={idx}
                         onClick={() => {
                           if (!quizState.answered && !isPreviewMode) {
+                            const isCorrect = idx === currentStep.quiz!.correctAnswer;
                             setQuizState({
                               answered: true,
                               selectedIndex: idx,
                               showExplanation: true,
+                            });
+
+                            // Log quiz attempt
+                            logEvent({
+                              event_type: 'quiz_answer',
+                              module_id: moduleId,
+                              lesson_id: currentStepIndex,
+                              data: {
+                                questionIndex: currentStepIndex,
+                                selectedOption: idx,
+                                correct: isCorrect,
+                                question: currentStep.quiz?.question,
+                              },
                             });
                           }
                         }}
