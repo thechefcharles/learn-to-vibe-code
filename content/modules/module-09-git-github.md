@@ -293,6 +293,99 @@ Now the merge is complete! ✅
 
 ---
 
+## Lesson 9.4b (Optional) — Collaborating on a Shared Branch (~30 min)
+
+Module 9.4 covered merge conflicts in a solo scenario (you edit the same file twice, create a conflict). This lesson is a step up: **what if two teammates edit the same file?**
+
+### Scenario: Two Developers, One Branch
+
+Branch: `add-user-roles` (implementing role-based access)
+
+Developer A edits `/src/roles/admin.ts`:
+```typescript
+export const AdminRole = {
+  permissions: ["read:users", "write:users", "delete:users"],
+  name: "Admin"
+};
+```
+
+Developer B edits the same file `/src/roles/admin.ts`, adding:
+```typescript
+export const AdminRole = {
+  permissions: ["read:users", "write:users"],
+  name: "Administrator",
+  description: "Full access"
+};
+```
+
+Both push to the same branch. Conflict!
+
+### Resolution Workflow
+
+1. **Developer A** commits and pushes first (no conflict)
+2. **Developer B** tries to push, gets: "rejected — remote has changes"
+3. **Developer B** pulls locally: `git pull`
+4. Git shows a conflict:
+
+```
+<<<<<<< HEAD (Developer B's version)
+export const AdminRole = {
+  permissions: ["read:users", "write:users"],
+  name: "Administrator",
+  description: "Full access"
+};
+=======
+export const AdminRole = {
+  permissions: ["read:users", "write:users", "delete:users"],
+  name: "Admin"
+};
+>>>>>>> origin/add-user-roles (Developer A's version)
+```
+
+5. **Developer B** must decide: which version is right? Or merge both?
+
+In this case, the versions disagree on:
+- Permissions: A added `delete:users`, B didn't
+- Name: A says "Admin", B says "Administrator"
+- Description: A has none, B added one
+
+6. **Developer B** resolves by **talking to Developer A** (or reading the commit message). They decide:
+   - Use B's name and description (better UX)
+   - Use A's permissions (more permissive, as intended)
+   - Result:
+
+```typescript
+export const AdminRole = {
+  permissions: ["read:users", "write:users", "delete:users"],
+  name: "Administrator",
+  description: "Full access"
+};
+```
+
+7. **Developer B** marks resolved: `git add src/roles/admin.ts`
+8. **Developer B** completes the merge: `git commit -m "Merge add-user-roles: resolve role definitions"`
+9. **Developer B** pushes: `git push`
+
+### Key Lesson
+
+Conflicts in team settings require **communication**. The code conflict is mechanical (git can't merge); the business logic conflict is human (which version is correct?). In a real team, you'd:
+- Chat on Slack: "Hey, I'm rebasing add-user-roles, there's a conflict in roles/admin.ts. Did you intend to remove delete:users?"
+- Read commit messages carefully
+- Ask the other developer
+
+### Knowledge Check
+
+**Q9-4b:** "You and a teammate both edited `/config/api.ts`. Git shows a conflict. Your version sets timeout=30, their version sets timeout=60. What should you do?"
+
+a) Always pick your version (you wrote it first)
+b) Always pick their version (they pushed last)
+c) Talk to your teammate and decide together based on the reason for the change
+d) Just pick one at random
+
+**Correct:** c) — Conflicts require judgment. Understand why each of you made the change, then decide together.
+
+---
+
 ## Lesson 9.5 — Git with AI, safely (~20 min)
 
 - **Commit messages & PR descriptions** — AI writes good ones from your diff.
