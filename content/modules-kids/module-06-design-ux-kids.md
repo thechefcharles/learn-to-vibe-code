@@ -38,77 +38,58 @@ Good design isn't magic. It's rules:
 
 ---
 
-## Lesson 6.2 — Tailwind CSS (Your Design Superpower) (~60 min)
+## Lesson 6.2 — shadcn/ui (Pre-Built Pretty Components) (~40 min)
 
-Tailwind CSS is a CSS library that's already in your Next.js app. It's classes that control how things look:
+Instead of styling everything from scratch, you can use **shadcn/ui** — a library of beautiful, ready-made components. Think of it like getting free furniture that already matches!
 
+**What you get:**
+- Buttons that look professional
+- Inputs that work great
+- Cards, tables, dialogs (popups) — all styled and ready
+- Everything is accessible (works for everyone)
+- Everything uses Tailwind underneath, so you can customize
+
+**How to install:**
+
+```bash
+npx shadcn@latest init
+npx shadcn@latest add button input card table
 ```
-className="text-xl font-bold text-blue-600"
-```
 
-Means: big text, bold, blue.
+That's it! Now you have beautiful components.
 
-Instead of writing CSS, you add classes.
-
-**Common classes:**
-
-- `text-lg`, `text-xl`, `text-2xl` = font sizes
-- `font-bold`, `font-semibold` = boldness
-- `bg-blue-500`, `bg-red-600` = background colors
-- `p-4`, `m-8` = padding & margins (spacing)
-- `rounded-lg`, `rounded-full` = rounded corners
-
-**Concrete examples — before and after:**
+**Before and After:**
 
 ```tsx
-// ❌ BEFORE — boring, cramped, no style
-export default function PetCard({ pet }) {
-  return (
-    <div style={{ border: '1px solid gray', padding: '5px' }}>
-      <h3>{pet.name}</h3>
-      <p>{pet.breed}</p>
-      <button>View</button>
-    </div>
-  );
-}
+// ❌ BEFORE — basic, unstyled
+<button>View</button>
 
-// ✅ AFTER — colorful, spacious, styled with Tailwind
-export default function PetCard({ pet }) {
-  return (
-    <div className="border-2 border-blue-300 rounded-lg p-6 bg-blue-50 hover:shadow-lg transition">
-      <h3 className="text-xl font-bold text-blue-900">{pet.name}</h3>
-      <p className="text-sm text-slate-600 mt-2">{pet.breed}</p>
-      <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-        View
-      </button>
-    </div>
-  );
-}
+// ✅ AFTER — with shadcn button component
+import { Button } from "@/components/ui/button"
+
+<Button variant="default">View</Button>
 ```
 
-**The hack:** Ask Cursor or Claude Code: *"Make this button look better with Tailwind. Use blue colors, add padding, round the corners, and center the text."*
+The shadcn button looks polished, has hover effects, accessibility built-in, and way more!
 
-It applies Tailwind classes.
+**The hack:** Use shadcn components instead of plain HTML tags. Your app looks professional without extra work. 🎉
 
 ---
 
-## Lesson 6.3 — Color Palette (~30 min)
+## Lesson 6.3 — Design Direction (Tell Claude Code How to Make It Look) (~45 min)
 
-Don't pick colors randomly. Pick 3-5 colors that work together:
+Here's the superpower: instead of manually tweaking every component, you **tell Claude Code your design vision, and it applies it to your whole app at once!**
 
-**Option 1: Use a tool** (try Coolors.co or a color palette website)
+Design direction is three things:
+1. **Hierarchy** — What's most important? Make titles big, details small.
+2. **Spacing** — Breathing room between things. Don't cram everything together.
+3. **Color** — A simple palette: one main color, neutral background, one accent for buttons.
 
-**Option 2: Ask AI:** *"Suggest a color palette for a pet tracker app (warm, playful, kid-friendly). Give me hex codes."*
-
-AI suggests something like:
-- Primary: #FF6B9D (pink)
-- Accent: #4ECDC4 (teal)
-- Neutral: #F0F0F0 (light gray)
-
-Then use them consistently:
-- Buttons = primary color
-- Hover states = accent color
-- Backgrounds = neutral color
+**Example design direction:**
+- Titles should be 28px, bold, dark
+- Body text should be 14px, gray
+- Buttons should be blue with white text
+- Everything should have breathing room
 
 ---
 
@@ -131,88 +112,174 @@ Accessibility means people with disabilities can use your app.
 
 ---
 
-## Lesson 6.5 — Using AI to Design (~60 min)
+## Lesson 6.4 — Claude Code Applies Your Design Direction (~60 min)
 
-Here's where it gets fun: show the AI a design you like, and it builds your UI to match.
+This is the automation-first approach: instead of manually tweaking every color, spacing, and component, **you tell Claude Code your design direction, and it applies it to your entire app!** ✨
 
-1. Screenshot a design you like (from another app, website, etc.)
-2. Paste it into Cursor
-3. Prompt: *"Build a component that looks like this screenshot. Use Tailwind CSS and match the colors/layout/spacing as closely as you can."*
+**Step 1: Tell Claude Code your design vision**
 
-AI builds it. You test. You adjust:
+Open Claude Code:
 
-*"Make the buttons bigger and the spacing tighter."*
+```bash
+claude
+```
 
-AI adjusts.
+Then paste something like this:
 
-**This is Objective 4 from Module 2:** multimodal prompting! Show, don't tell.
+```
+I'm styling my pet tracker app with these design rules:
+
+Hierarchy:
+- Titles should be 28px, bold, dark gray
+- Subtitles should be 16px, lighter gray
+- Body text should be 14px, dark gray
+
+Spacing:
+- Between sections: 24px gap
+- Inside cards: 16px padding
+- Between buttons: 8px
+
+Color Palette:
+- Main color: blue (#3b82f6)
+- Background: light gray (#f9fafb)
+- Text: dark gray (#1f2937)
+- Buttons: blue text on light blue background, darker blue on hover
+
+Please restyle my pet tracker using shadcn/ui components:
+1. Apply these design rules to all pages
+2. Use shadcn buttons, inputs, cards
+3. Make sure it looks good on phones too
+
+Show me what it looks like and I'll tell you if I want to adjust.
+```
+
+**Step 2: Claude Code applies it to your whole app** — not one piece at a time, but everything at once! 🎯
+
+**Step 3: Review the changes** in your browser. Does it look good?
+
+**Step 4: Ask for adjustments:**
+- *"The blue is too bright, make it a softer blue"*
+- *"The spacing between cards is too tight, make it wider"*
+- *"Make the buttons bigger"*
+
+Claude Code adjusts the whole app to match.
+
+**Why this is amazing:**
+- One prompt applies your design everywhere (consistent!)
+- You don't have to manually edit each component
+- Changes propagate across your entire app
+- Faster than tweaking manually
 
 ---
 
-## Activity: Redesign Your App 🎨
+## Activity: Restyle Your Entire App with Claude Code! 🎨
 
-Pick one page from your pet tracker and redesign it. Here's the step-by-step:
+Use Claude Code to apply a complete design direction to your entire pet tracker app at once. This is automation-first design!
 
-### Step 1: Capture a "before" screenshot (5 min)
+### Step 1: Capture "before" (2 min)
 1. Run your app: `npm run dev`
-2. Open `http://localhost:3000/pets` (or your pet list page)
-3. Take a screenshot of how it looks RIGHT NOW (boring!)
-4. Save it — you'll show this as your "before"
+2. Screenshot your page at http://localhost:3000 (looks plain, right?)
+3. Save it as your "before" screenshot
 
-### Step 2: Pick a color palette (5 min)
+### Step 2: Install shadcn/ui (2 min)
 
-**Option A:** Visit [Coolors.co](https://coolors.co/), click "Generate," and pick a palette you like.
-
-**Option B:** Use AI. Ask Claude Code:
-```
-Suggest a fun color palette for a pet tracker (3-4 colors).
-Include hex codes. Make it playful and kid-friendly.
+In your terminal:
+```bash
+npx shadcn@latest init
+npx shadcn@latest add button card input
 ```
 
-Example palette:
-- Primary: `#FF6B9D` (pink) → use for buttons, headings
-- Accent: `#4ECDC4` (teal) → use for hover states
-- Neutral: `#F7F7F7` (light gray) → use for backgrounds
+Now you have beautiful components ready to use!
 
-### Step 3: Restyle one component (20 min)
+### Step 3: Write your design direction (5 min)
 
-Use **Cursor** with this prompt:
+Think about:
+- **Colors:** Pick a main color (blue? green? purple?) and stick with it
+- **Spacing:** Should things be tight or spacious?
+- **Fonts:** Big titles, medium text, small details
+
+Example:
+- Main color: blue
+- Background: light gray
+- Spacing: medium (16px padding, 8px gaps)
+- Titles: big and bold
+- Text: readable gray
+
+### Step 4: Let Claude Code restyle your entire app! (15 min)
+
+Open Claude Code:
+```bash
+claude
+```
+
+Paste something like this:
 
 ```
-Redesign the PetCard component using Tailwind CSS:
-- Use a blue/teal color scheme (bg-blue-50, text-blue-900, bg-blue-500 for buttons)
-- Add spacing (p-6 for padding, mt-4 for gaps between elements)
-- Make it look modern and clean
-- Add hover effects (hover:shadow-lg, hover:bg-blue-600)
-- Keep it simple and readable
-- Use large font sizes (text-lg, text-xl for titles)
+Please restyle my entire pet tracker app with this design direction:
+
+Color Palette:
+- Main color: Blue (#3b82f6)
+- Background: Light gray (#f9fafb)
+- Text: Dark gray (#1f2937)
+- Buttons: Blue background with white text
+
+Hierarchy:
+- Page title: 28px, bold, dark gray
+- Section headers: 20px, bold, dark gray
+- Body text: 14px, gray
+
+Spacing:
+- Between major sections: 24px gap
+- Card padding: 16px
+- Between inline elements: 8px
+
+Requirements:
+- Use shadcn/ui Button, Card, and Input components
+- Make sure it looks good on phones too (responsive)
+- Add hover effects to buttons
+- Keep everything consistent
+
+Apply this to all pages of my pet tracker.
+Show me the changes!
 ```
 
-Review the diff:
-- ✅ Does it use Tailwind classes? (`p-6`, `text-xl`, `bg-blue-500`, etc.)
-- ✅ Does the color scheme feel consistent?
-- ✅ Is there enough spacing (no cramped look)?
-- ✅ Are buttons big and clickable?
+### Step 5: Review the changes (5 min)
+- Does your app look better?
+- Are colors consistent?
+- Is spacing generous?
+- Do buttons look clickable?
 
-### Step 4: Test accessibility (5 min)
-1. Open your app in the browser
+### Step 6: Ask for adjustments (5 min)
+
+If something's not quite right, ask Claude Code:
+- *"Make the blue lighter"*
+- *"Add more spacing between cards"*
+- *"Make buttons bigger"*
+
+Claude Code adjusts and shows you the result!
+
+### Step 7: Test on a phone! (3 min)
+
+This is important: does your app work on a small screen?
+1. Resize your browser to 375px width (use DevTools)
 2. Check:
-   - Can you read all text clearly? (contrast is good)
-   - Are buttons big enough to click? (~44px tall)
-   - Do hover states work? (buttons change color when you hover)
+   - Can you read everything?
+   - Are buttons big enough to tap?
+   - No horizontal scroll (everything visible)?
+3. If something breaks, tell Claude Code: *"Make the layout responsive for phones"*
 
-### Step 5: Take an "after" screenshot (5 min)
-Same page, same view. Now compare!
-
-### Step 6: Optional — style another page
-- Repeat steps 3-5 for `/clients` or your invoices page
-- Keep using the same colors (consistency!)
+### Step 8: Capture "after" (2 min)
+Screenshot your styled app at desktop size AND phone size!
 
 ### Deliverable:
-- Before screenshot (boring/plain)
-- After screenshot (styled with Tailwind)
-- 2-3 sentence explanation of what you changed
-  - *Example:* "I added padding (p-6) for breathing room, used blue colors for hierarchy, and made buttons bigger with hover effects. The app looks modern now instead of plain."*
+- Before screenshot (plain)
+- After screenshot (styled) at desktop
+- After screenshot (styled) at phone size (~375px)
+- 3-4 sentences explaining:
+  - What design direction you chose
+  - How Claude Code applied it to your entire app
+  - What looks better now
+  - *Example:* "I chose a blue and gray color scheme with generous spacing. Claude Code applied it to all pages at once, so everything is consistent. The app looks professional now, and it works great on phones too!"*
 
 ---
 
