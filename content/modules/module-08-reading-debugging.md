@@ -21,6 +21,22 @@ By the end of this module, the learner can:
 
 ---
 
+## Debugging: You First, AI Second
+
+The course teaches "you are the engineer; AI is the tool." This module emphasizes it: **you debug first, using your own skills. AI helps verify, not replace.**
+
+Why? Because:
+1. You learn debugging skills that outlast any AI tool
+2. You'll hit bugs that AI can't solve
+3. Understanding the root cause (not just the fix) makes you better at preventing future bugs
+4. In team settings, you need to communicate the bug to others
+
+The pattern: **Read → Isolate → Reproduce → Debug → Verify (optionally with AI) → Fix → Test**
+
+Each step uses your own judgment. AI is your verification partner, not your debugging proxy.
+
+---
+
 ## Lesson 8.1 — Reading code you didn't write (~45 min)
 
 This delivers Objective 1 — the skill the whole course's "don't ship what you can't explain" rule depends on. AI generates code faster than you can comfortably read it; the discipline is reading it *efficiently*. You can't debug — or defend at the capstone — code you can't read.
@@ -338,6 +354,19 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 ---
 
 ## Knowledge check (mapped to objectives)
+
+### Learner-First Approach: Core Principle
+
+**Q8-1 (Learner-first philosophy):** "You see an error: 'Cannot read property "email" of undefined.' What's your first step?"
+
+a) Copy the error and paste it to Claude
+b) Read the stack trace and find the line where "email" is being accessed
+c) Restart the app and hope it goes away
+d) Add random null checks until it stops failing
+
+**Correct:** b) — Read the stack trace. Find the exact line. Understand what's undefined. *Then* decide if you need help.
+
+---
 
 **Objective 1 — Read & explain (Quiz Q8-1):**
 - Q8-1: Tests understanding of reading code you don't own
