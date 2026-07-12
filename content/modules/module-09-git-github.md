@@ -34,11 +34,14 @@ This delivers Objective 1. Version control records the history of your project s
 
 ---
 
-## Lesson 9.2 — Git basics: commit and push to GitHub (~50 min)
+## Lesson 9.2 — Initialize Git & push to GitHub with Claude Code (~50 min)
 
-Begins Objective 2.
+Begins Objective 2. **Use Claude Code to manage the Git initialization and first push:**
 
-**Step 1 — Protect your secrets first.** Confirm `.env.local` is in `.gitignore` (create-next-app adds it). Never commit API keys (your Supabase keys from Module 7).
+### Automating Git setup
+
+**Step 1 — Protect your secrets first** (manual check):
+Confirm `.env.local` is in `.gitignore` (create-next-app adds it). Never commit API keys.
 
 ```
 # .gitignore (already includes)
@@ -47,72 +50,195 @@ node_modules
 .next
 ```
 
-**Step 2 — Initialize and commit:**
+**Step 2 — Prompt Claude Code to initialize Git:**
 
 ```bash
-git init
-git add .
-git commit -m "Initial commit: invoice tracker with clients, invoices, auth"
+claude
 ```
 
-**What you'll see:**
-```
-[main (root-commit) a1b2c3d] Initial commit: invoice tracker with clients, invoices, auth
- 15 files changed, 450 insertions(+)
- create mode 100644 app/clients/page.tsx
- create mode 100644 app/invoices/page.tsx
- ...
-```
+Then send:
 
-**Step 3 — Create a repo on GitHub and push:**
-
-1. Go to [github.com/new](https://github.com/new) and create a repo (name: `invoice-tracker`, no README)
-2. Copy the commands GitHub shows
-3. Run them in your terminal:
-   ```bash
-   git remote add origin https://github.com/YOU/invoice-tracker.git
-   git branch -M main
-   git push -u origin main
-   ```
-
-**What you'll see:**
 ```
-Enumerating objects: 15, done.
-Counting objects: 100% (15/15), done.
-...
- * [new branch]      main -> main
-Branch 'main' set up to track remote branch 'main' from 'origin'.
+I need to initialize Git in my invoice-tracker project and push it to GitHub.
+
+My project is at: [your local project path]
+My GitHub username: [your username]
+Repo name: invoice-tracker
+
+Please:
+1. Initialize the git repository
+2. Add all files (except those in .gitignore)
+3. Create an initial commit with a descriptive message about my invoice tracker
+4. Show me the GitHub commands to create and connect the remote
+5. Push everything to GitHub
+
+Make the commit message describe what the app does.
+Verify that .env.local is NOT included (should be gitignored).
 ```
 
-Then on GitHub, refresh the repo page—your code is there! ✅
+**Step 3 — Review Claude Code's output.** It will:
+- Show `git init`, `git add .`, `git commit -m "..."` commands
+- Generate a clear commit message describing your app
+- Provide the GitHub remote URL and push command
+- **Verify** that `.env.local` is in `.gitignore` (not being committed)
+
+**Step 4 — Create the repo on GitHub** (manual one-time):
+1. Go to [github.com/new](https://github.com/new)
+2. Name it `invoice-tracker`, no README
+3. Click "Create Repository"
+4. Copy the URL GitHub shows
+
+**Step 5 — Follow Claude Code's push instructions.** It will have shown you:
+```bash
+git remote add origin https://github.com/YOU/invoice-tracker.git
+git push -u origin main
+```
+
+Run these in your terminal.
+
+**Step 6 — Verify on GitHub.** Refresh [github.com/YOU/invoice-tracker](https://github.com/YOU/invoice-tracker) — your code is there! ✅
 
 ---
 
 **[SCREENSHOT PLACEHOLDER: GitHub Repo Page]**
 
-GitHub showing: repo name, file tree (app/, lib/, package.json, etc.), commit history on the left. Proof: code is pushed and visible on GitHub.
+GitHub showing: repo name, file tree (app/, lib/, package.json, etc.), commit history. Proof: code is pushed and visible.
 
 ---
 
-Commit small, logical chunks with clear messages ("Add invoice status filter," not "stuff"). Good history is a capstone rubric criterion.
+**Why Claude Code for this?**
+
+- **Automation:** Git initialization is boilerplate; Claude Code handles it
+- **Good commit messages:** Claude Code writes descriptive messages, not "stuff"
+- **Safety:** it verifies `.env.local` isn't included before pushing
+- **Speed:** what takes 5 manual commands is orchestrated in one prompt
 
 ---
 
-## Lesson 9.3 — Branches and pull requests (~50 min)
+## Lesson 9.3 — Branches and pull requests with Claude Code (~50 min)
 
-Completes Objective 2 — the professional workflow. Instead of editing `main` directly, make a **branch** per change, then open a **pull request (PR)** to merge it back.
+Completes Objective 2 — the professional workflow. Instead of editing `main` directly, **use Claude Code to orchestrate feature branches and pull requests:**
+
+### Automating the branch workflow
+
+**Step 1 — Decide on a feature to build.** For example: "Add invoice sorting by due date."
+
+**Step 2 — Prompt Claude Code to manage the workflow:**
 
 ```bash
-git checkout -b add-invoice-filter
-# ...changes, commits...
-git push -u origin add-invoice-filter
+claude
 ```
 
-On GitHub, open a PR from that branch into `main`. The PR shows the diff, lets you (or a teammate) review, and merges when approved. This is where Vercel posts preview deploys (Module 10).
+Then send:
 
-*[SCREENSHOT: a GitHub pull request showing the diff and merge button.]*
+```
+I want to add a new feature to my invoice-tracker: [your feature description]
 
-**Why branches + PRs even solo:** `main` stays working, each change is isolated and reviewable, and you build the exact habit employers expect.
+Please orchestrate the full Git workflow:
+1. Create a feature branch with a clear name (format: feature/description)
+2. Make the code changes needed for this feature
+3. Create a descriptive commit message
+4. Push the branch to GitHub
+5. Show me how to open a PR on GitHub
+
+Keep changes focused on just this one feature—no refactoring or scope creep.
+Make sure the commit message explains why the change is needed.
+```
+
+**Step 3 — Claude Code will:**
+- Create a branch with a clear name (e.g., `feature/add-invoice-sort`)
+- Make focused code changes
+- Write a descriptive commit message
+- Show you the push command
+- Explain how to open a PR on GitHub
+
+**Step 4 — Test locally first.** Before pushing, run the app and verify the feature works:
+
+```bash
+npm run dev
+# Test the feature in your browser
+```
+
+**Step 5 — Follow Claude Code's push instructions:**
+
+```bash
+git push -u origin feature/add-invoice-sort
+```
+
+**Step 6 — Open the PR on GitHub** (Claude Code will guide you):
+1. Go to your repo on GitHub
+2. Click "New Pull Request" or use the banner that appears
+3. Select `feature/add-invoice-sort` → `main`
+4. Add a description (Claude Code will suggest one)
+5. Click "Create Pull Request"
+
+**Step 7 — Merge the PR** (solo workflow):
+1. Review the diff on GitHub
+2. Click "Merge pull request" → "Confirm merge"
+3. Click "Delete branch" (clean up)
+
+On GitHub, refresh `main` — your feature is now live! ✅
+
+---
+
+**[SCREENSHOT: a GitHub pull request showing the diff and merge button]**
+
+---
+
+**Why Claude Code for branches + PRs?**
+
+- **Automation:** Claude Code creates branches, makes changes, and commits in one flow
+- **Clear branch naming:** it follows `feature/`, `fix/`, `docs/` conventions automatically
+- **Focused changes:** Claude Code keeps the feature scope tight (no scope creep)
+- **Good PR descriptions:** it writes clear summaries of what changed and why
+- **Professional workflow:** this is the exact habit employers expect
+
+### Branch naming convention
+
+To keep your history readable, use a consistent **naming pattern** for branches. The default pattern is:
+
+```
+<type>/<short-description>
+```
+
+Where `<type>` is one of:
+- `feature/` — a new feature ("feature/add-invoice-filter")
+- `fix/` — a bug fix ("fix/auth-logout-error")
+- `docs/` — documentation only ("docs/update-readme")
+- `refactor/` — code cleanup, no behavior change ("refactor/simplify-client-list")
+
+**Examples:**
+- ✅ `feature/add-payment-tracking`
+- ✅ `fix/handle-empty-invoices-list`
+- ✅ `docs/add-setup-guide`
+- ❌ `asdf`, `stuff`, `wip` (unclear; avoid)
+
+**Why it matters:** a readable branch history makes it obvious what each change was about. When you (or a teammate) look back at the repo, `feature/add-invoice-sort` tells you exactly what that PR was for.
+
+**For your capstone:** Create a `BRANCHING.md` file in your project root documenting your naming convention:
+
+```markdown
+# Branching Strategy
+
+## Pattern
+`<type>/<description>` where type is: feature, fix, docs, refactor
+
+## Examples
+- feature/add-invoice-status-filter
+- fix/rls-policy-for-clients
+- docs/update-deployment-guide
+- refactor/extract-invoice-logic
+
+## Workflow
+1. Create a branch: `git checkout -b feature/your-feature`
+2. Make changes and commit frequently with clear messages
+3. Push: `git push -u origin feature/your-feature`
+4. Open a PR with a description of what changed and why
+5. Review your own changes (or have a teammate review)
+6. Merge when approved
+```
+
+This becomes part of your project governance (like CLAUDE.md from Module 0) and makes onboarding teammates (or future-you) much smoother.
 
 ---
 
