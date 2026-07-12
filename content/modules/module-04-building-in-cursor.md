@@ -250,6 +250,60 @@ This delivers Objective 3.
 
 ---
 
+## Lesson 4.7 — Pause and Reflect: Cursor vs. Claude Code (~30 min)
+
+You've spent ~3 hours in Cursor (Modules 4). You're about to enter Claude Code (Module 5). Before you do, reflect: which tool for which task?
+
+### Decision Tree
+
+**Is the change local and focused?** (e.g., "fix this component", "update this test")
+→ Use Cursor. Fast feedback loop, easy to verify each small change.
+
+**Is the change multi-file and cross-cutting?** (e.g., "add a new feature across 5 files", "refactor the auth layer")
+→ Use Claude Code. Orchestrates multiple files, reviews the full diff.
+
+**Do you need to see the code changing in real-time?**
+→ Use Cursor. You watch autocomplete suggest lines, accept/reject in-editor.
+
+**Do you prefer to describe the goal and see the full result?**
+→ Use Claude Code. You prompt "build X", it builds, you review the diff.
+
+**Are you debugging and need to iterate fast?**
+→ Use Cursor. Quick tests, quick fixes, quick feedback.
+
+**Are you on a feature branch with a complex sequence of steps?**
+→ Use Claude Code. It can manage the full sequence, write commit messages, show you the diff.
+
+### The Real Answer
+
+Use both. Most projects need both:
+- Cursor for tweaks and quick fixes
+- Claude Code for features and orchestration
+
+The skill is knowing when to switch. Don't spend 30 minutes in Cursor when Claude Code could do it in 5. Don't spend 30 minutes in Claude Code when a quick Cursor fix is simpler.
+
+### Practice: Redo Module 4 in Claude Code
+
+Pick one of the Module 4 tasks (e.g., "style the clients page") and redo it in Claude Code. Compare:
+- How long did each take?
+- Which felt more natural to you?
+- Did you prefer seeing the changes in-editor (Cursor) or reviewing diffs (Claude Code)?
+
+Your preference + the task characteristics should guide your choice going forward.
+
+### Knowledge Check
+
+**Q4-7:** "You need to fix a typo in one component and add error states to five components. What's your strategy?"
+
+a) Use Cursor for both—it's simpler
+b) Use Claude Code for both—it's faster
+c) Use Cursor for the typo (focused), Claude Code for the error states (multi-file)
+d) Ask a teammate
+
+**Correct:** c) — Match the tool to the scope. Local = Cursor. Cross-cutting = Claude Code.
+
+---
+
 ## Hands-on activity (~60 min, folded in)
 
 **"Ship the clients feature."** Build the invoice tracker's clients slice using Cursor's editing modes and multi-file workflow.

@@ -23,6 +23,16 @@ By the end of this module, the learner can:
 
 ---
 
+## Recap: Tool Choice
+
+Module 4 taught in-editor (Cursor). Module 4.7 asked you to reflect on when to use Cursor vs. Claude Code.
+
+Here's the TL;DR: **Use Cursor for focused edits, Claude Code for orchestration.**
+
+Module 5 teaches orchestration—multi-file builds, sequencing, reviewing diffs. You'll use Claude Code heavily here. But you'll still use Cursor (from Module 4) in real projects. The skill is knowing which one to reach for.
+
+---
+
 ## Lesson 5.1 — Setup & the agentic mindset (~45 min)
 
 **Step 1 — Install Claude Code** and sign in; open your terminal in the `invoice-tracker` folder from Module 4.
