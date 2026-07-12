@@ -170,7 +170,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           <div
             className="text-3xl sm:text-5xl font-black tracking-tighter flex-1 text-center"
             style={{
-              background: isKids
+              backgroundImage: isKids
                 ? "linear-gradient(to right, #8b5cf6, #ec4899)"
                 : "linear-gradient(to right, #06b6d4, #a78bfa, #ec4899)",
               WebkitBackgroundClip: "text",

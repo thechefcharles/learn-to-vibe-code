@@ -34,12 +34,23 @@ Contrast: a normal function does exactly what you coded; an agent *decides* with
 
 ## Lesson 11.2 — The building blocks (~45 min)
 
-- **Tools (function calling)** — functions you define and describe so the model can request a call with arguments; your code runs it and returns the result. Example tools: `getOverdueInvoices()`, `draftReminderEmail(invoice)`, `sendEmail(draft)`.
-- **CLI tools** — agents can also call command-line scripts and executables. Instead of a built-in function, the agent invokes a script with arguments and parses the output. Example: an agent could call `./scripts/backup.sh --database invoices` or `npm run build --env production`. This is how Claude Code calls your tools — the agent describes what it wants ("run the test suite"), Claude Code finds the right CLI tool, invokes it, and returns the result. CLI tools are powerful for automation workflows because they can leverage existing scripts, system commands, and build tools without rewriting them as functions.
-- **The agent loop** — the model reasons, optionally calls a tool (function or CLI), reads the result, repeats until done (ReAct-style: reason → act → observe).
-- **MCP (Model Context Protocol)** — a standard way to give agents access to tools/data, so you can plug in capabilities (and swap models) without rewiring. You met MCP-style tools in Claude Code.
+**Tools — what agents use to take action:**
 
-Keep it concrete: an agent is a loop of *decide → call a tool (function, CLI, or MCP) → look at the result → decide again*.
+- **Functions (TypeScript/JavaScript)** — functions you write that the agent can call. Example: `getOverdueInvoices()` queries your database and returns invoices.
+  - **For kids:** Think of this like giving the agent a helper function it can call. You write the function, describe what it does, and the agent decides when to use it.
+  - **For adults:** Teach about tool descriptions (JSON schema), input validation, error handling. Tools are your contract between the agent and your system.
+
+- **CLI tools (scripts)** — command-line programs and shell scripts that the agent can invoke. Example: `npm run build`, `./scripts/backup.sh`, `python migrate.py`.
+  - **For kids:** These are like giving the agent access to terminal commands. Instead of writing a function, you give it a script it can run.
+  - **For adults:** Claude Code uses MCP to call CLI tools. This is how you integrate existing automation (build scripts, database migrations, deployment tools) without rewriting them as functions. The agent invokes `npm run test`, parses the output, and reports pass/fail.
+
+- **The agent loop** — the reasoning cycle: (1) Agent reads the goal, (2) Decides which tool to call, (3) Calls it with arguments, (4) Reads the result, (5) Repeats until done (ReAct pattern: **Re**ason → **Act** → **Observe**).
+
+- **MCP (Model Context Protocol)** — a standard way to plug capabilities in (GitHub, Supabase, Vercel, Notion). You met MCP in Claude Code.
+
+**For kids:** An agent is like a smart assistant that keeps saying "what should I do next?" It looks at tools (functions, scripts, external services) and decides which ones to use.
+
+**For adults:** Agents follow the ReAct loop: reason (what's my goal?), act (call a tool), observe (what happened?), repeat. Tooling is modular—functions, CLIs, and MCP services are interchangeable as long as they accept inputs and return parseable outputs. This is why tool contracts (Module 12) matter.
 
 ---
 
