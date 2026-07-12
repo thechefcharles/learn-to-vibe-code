@@ -16,6 +16,22 @@ By the end of this module, you'll be able to:
 
 ---
 
+## Debugging: YOU First, AI Second
+
+You own this. Claude can help, but YOU fix bugs.
+
+**Pattern: Read → Test → Debug → Fix → Test again**
+
+1. Read the error (understand what went wrong)
+2. Test: make it fail on purpose (reproduce it)
+3. Debug: change one thing, test it
+4. Fix it for real
+5. Test: make sure it's fixed
+
+If Claude helps, that's step 4.5—you still do steps 1-4 yourself.
+
+---
+
 ## Lesson 8.1 — Reading Code Like a Programmer (~60 min)
 
 Code is instructions. Read it top-to-bottom:
@@ -264,13 +280,16 @@ function addPet() {
 
 Here are your three quiz questions. Study these!
 
-**Q8-k1:** When your code breaks, the first thing to do is:
-- (a) Ask the AI to fix it immediately
-- (b) **Read the error message (it tells you what went wrong!)** ✓
-- (c) Rewrite everything
-- (d) Restart your computer
+**Q8-k1:** You see an error: "pet.name is undefined."
 
-*Why:* Error messages are GOLD! They tell you exactly what's broken and where. The error message is your best friend. Always read it first!
+What do you do first?
+
+- (a) Ask Claude what's wrong
+- (b) **Read the error and find the line where pet.name is used** ✓
+- (c) Delete the code and start over
+- (d) Restart the app
+
+*Why:* Read first. Understand the error. THEN decide if you need help.
 
 **Q8-k2:** If you can't explain a line of AI code after reading it carefully, you should:
 - (a) Ship it anyway
