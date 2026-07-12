@@ -17,51 +17,56 @@ By the end of this module, you'll be able to:
 
 ---
 
-## Lesson 12.1 — Testing (~30 min)
+## Lesson 12.1 — Automated Testing with Claude Code (~30 min)
 
-Testing = checking that your code works.
+Testing = checking that your code works (now and in the future!).
 
-**Manual testing:** You click buttons, see if they work. ✓ But time-consuming.
+**Manual testing:** You click buttons, see if they work. ✓ But tedious.
 
-**Automated testing:** Write code that tests your code. ✓ Runs automatically. Catches regressions.
+**Automated testing:** Write code that tests your code. ✓ Runs automatically. Catches bugs!
 
-**Concrete test example:**
+### Let Claude Code Write Tests For You
 
+Open Claude Code:
+
+```bash
+claude
+```
+
+Paste:
+
+```
+Write automated tests for my pet tracker.
+
+I need tests for:
+1. Adding a pet (happy path + error cases)
+2. Deleting a pet
+3. Displaying all pets
+
+Use Vitest for unit tests.
+Include edge cases like:
+- Empty name or breed
+- Deleting a pet that doesn't exist
+- Loading with no pets
+
+Generate test files and show me how to run them.
+```
+
+Claude Code will:
+- Generate test files ✅
+- Cover happy paths + edge cases ✅
+- Show you how to run them ✅
+
+**Your job:** Review the tests (do they make sense?), then run them!
+
+**Example test:**
 ```javascript
-// lib/addPet.ts
-export function addPet(name: string, breed: string) {
-  if (!name || !breed) throw new Error("Missing name or breed");
-  return { id: Math.random(), name, breed };
-}
-
-// lib/__tests__/addPet.test.ts
-import { describe, it, expect } from "vitest";
-import { addPet } from "../addPet";
-
-describe("addPet", () => {
-  // Happy path
-  it("adds a pet with name and breed", () => {
-    const pet = addPet("Buddy", "Retriever");
-    expect(pet.name).toBe("Buddy");
-    expect(pet.breed).toBe("Retriever");
-  });
-
-  // Edge cases
-  it("throws if name is missing", () => {
-    expect(() => addPet("", "Retriever")).toThrow();
-  });
-
-  it("throws if breed is missing", () => {
-    expect(() => addPet("Buddy", "")).toThrow();
-  });
+it("throws error if name is empty", () => {
+  expect(() => addPet("", "Retriever")).toThrow();
 });
 ```
 
-Run tests: `npm run test` → all pass ✅
-
-Prompt Claude Code: *"Write Vitest tests for the addPet function covering normal cases and edge cases."*
-
-Claude writes them. You review (does each test check what you care about?). Then run them.
+This checks: "If I try to add a pet with no name, does it throw an error?" ✅
 
 ---
 
@@ -118,29 +123,62 @@ export function PetsPage() {
 
 ---
 
-## Lesson 12.3 — Performance & Accessibility (~30 min)
+## Lesson 12.3 — Performance & Accessibility Audits (~45 min)
 
 **Performance = speed.** Slow apps = users leave.
 
-**Check with Lighthouse:**
-1. Open your app in Chrome
-2. Press F12 (open DevTools)
-3. Go to "Lighthouse" tab
-4. Click "Analyze page load"
-5. Look at LCP (time to see content), INP (responsiveness), CLS (layout shifts)
+**Accessibility = everyone can use it.** Blind users, keyboard-only users, slow internet — your app should work for everyone.
 
-**Quick wins:**
-- Don't load ALL pets at once (paginate)
-- Compress images (make file sizes smaller)
-- Use server components (load data on server, not in browser)
+### Let Claude Code Audit Your App
 
-**Accessibility = everyone can use it.** That means:
-- Keyboard nav (Tab works everywhere)
-- Labels on forms (screen readers can read them)
-- Good contrast (text dark enough to read)
-- Alt text on images (describe what you see)
+Open Claude Code:
 
-Prompt Claude Code: *"Make this page accessible: add form labels, use semantic HTML, check contrast, add alt text to images."*
+```bash
+claude
+```
+
+Paste:
+
+```
+Audit my pet tracker app for production readiness.
+
+Check these:
+1. Performance:
+   - Is loading slow?
+   - Are images optimized?
+   - Are there unnecessary re-renders?
+
+2. Accessibility:
+   - Are form fields labeled?
+   - Is text readable (good contrast)?
+   - Can I navigate with Tab key?
+   - Do images have alt text?
+
+3. Error handling:
+   - Does the app show loading states?
+   - Does it show friendly error messages?
+   - Is there a "no pets yet" message?
+
+Review my app code and tell me:
+- What's production-ready ✅
+- What needs fixing ⚠️
+- How to fix it
+
+Show me specific code changes if needed!
+```
+
+Claude Code will:
+- Review your code ✅
+- Find issues ✅
+- Suggest fixes ✅
+- Even write code for you ✅
+
+**Key things to fix:**
+- Add alt text to images (describe what you see)
+- Add labels to form inputs (so screen readers work)
+- Show "Loading..." spinners while fetching
+- Show friendly error messages if something breaks
+- Make sure you can use Tab to navigate
 
 ---
 
