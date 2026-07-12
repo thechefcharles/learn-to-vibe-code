@@ -125,7 +125,9 @@ Here's what a strong prompt looks like (five ingredients: task, context, constra
 
 ```
 Task: Add an invoices feature to the invoice-tracker.
-Context: The app has a clients feature (app/clients) with mock data. I've built it with Next.js App Router, TypeScript, and Tailwind.
+Context: I completed Module 3 planning. My spec says the app is [your app name], built on [your stack choice], with these core features: [your features from your feature list]. My data model includes [your tables]. My build order is [your sequence].
+
+Now I'm building the [next feature] feature based on my plan.
 Constraints: Mock data (no database yet—that's Module 7). Follow the folder structure and patterns of app/clients. Each invoice references a clientId.
 Tone: Be professional and skip explanations—I'll review the plan first.
 Examples: Invoice type should have fields: id (uuid), clientId (string), amount (number), dueDate (Date), status ('draft' | 'sent' | 'paid').
@@ -493,6 +495,14 @@ These are the questions you'll see on the quiz. Study these to prepare:
 - (d) TypeScript type definitions
 
 *Why:* Notion is for strategic context (what to build, in what order, why). CLAUDE.md is for implementation guardrails (how to build, tech stack, patterns).
+
+**Q5-7:** You finished Module 3 planning and created spec.md. You're starting Module 5. What should you do first?
+- (a) Ask Claude Code to build whatever sounds interesting
+- (b) **Paste your spec.md into Claude Code and reference it in your prompt** ✓
+- (c) Build a generic invoice app first, then customize later
+- (d) Skip the spec—Claude Code doesn't need context
+
+*Why:* Your spec is Claude Code's context. The better the context, the better the output. Use the plan you created to guide Claude Code's building.
 
 ---
 

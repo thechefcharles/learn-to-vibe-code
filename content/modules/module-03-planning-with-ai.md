@@ -823,4 +823,10 @@ Storing both makes queries simpler. Revised the data model to add a due_date col
 - Order work by dependencies: build what other things rely on first.
 - The plan you produce becomes the reusable context and the decomposed prompt list for the Building stage.
 
+---
+
+## Next: Use Your Plan in Module 4
+
+You now have a spec, data model, screens, and build order. In Module 4, you'll use these directly. When Module 4 asks you to build features, you'll open your spec and reference it—this is the proof that planning works.
+
 [Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)

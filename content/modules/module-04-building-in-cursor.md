@@ -121,13 +121,39 @@ Keep components small and typed.
 
 ---
 
-## Lesson 4.4 — Build a feature end to end with full-feature prompts (~90 min)
+## Lesson 4.4 — Incremental Prompts for Cohesive Edits (~45 min)
 
-This delivers Objective 1. Follow the Module 3 plan for the "clients" slice: a type, a list view, a create form. Mock data now; wired to Supabase in Module 7.
+**Use your Module 3 spec.** Open the spec.md and screens.md you created in Module 3. You're about to build real features from your own plan—not a generic example. This proves that planning works.
 
-### The automation-first approach: one full-feature prompt
+The key: break a feature into small, focused prompts. Instead of "build the clients feature all at once," you'll ask Cursor to:
+1. Create the types
+2. Create the list view
+3. Create the detail view
+4. Wire it together
 
-Instead of building incrementally (define type → build list → add form), **use Cursor's Composer (Cmd+I) to build the entire feature in one prompt:**
+This is incremental building: each prompt is focused, and you review the diff between prompts.
+
+### Example: Your First Cursor Prompt (Based on Your Plan)
+
+If your Module 3 plan has a "clients" feature, your first Cursor prompt might look like:
+
+```
+Based on my spec (your project brief), I need to build a clients management page.
+
+From my data model, clients have: id, name, email, phone, created_at, user_id.
+From my screens, the clients page should show:
+- A table of all clients
+- A button to create a new client
+- Options to edit/delete each client
+
+Please create types/client.ts with the Client type, then build app/clients/page.tsx as a table using shadcn/ui and TypeScript.
+```
+
+Use your *own* spec, data model, and screen descriptions. Cursor will build to your requirements, not a generic example.
+
+---
+
+### How to execute: Step-by-step with Cursor
 
 **Step 1 — Reference your plan.** In Cursor, open your `spec.md` and `build-order.md` from Module 3. You'll paste these as context.
 
