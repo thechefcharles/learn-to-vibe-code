@@ -188,6 +188,43 @@ Claude Code will handle the repetitive steps. You focus on testing.
 
 ---
 
+## Lesson 10.5 — Set Up Auth So Sign-In Works (~20 min)
+
+When you sign in to your pet tracker, Supabase sends a link back to your app. If Supabase doesn't know your live URL, sign-in breaks.
+
+### The 6 Steps
+
+**Step 1:** Open your Supabase dashboard (where you created your database in Module 7)
+
+**Step 2:** Click **Authentication** on the left sidebar
+
+**Step 3:** Click **URL Configuration**
+
+**Step 4:** Copy your Vercel URL from your Vercel dashboard
+- Example: `https://pet-tracker-abc123.vercel.app`
+- Paste it into the **Site URL** field
+
+**Step 5:** In **Redirect URLs**, add this line:
+```
+https://pet-tracker-abc123.vercel.app/auth/callback
+```
+(Replace `pet-tracker-abc123` with your actual Vercel project name)
+
+**Step 6:** Click **Save**
+
+### Test It
+
+Go to your live URL, try to sign in. It should work now!
+
+### Troubleshooting
+
+- **Sign-in still doesn't work?** Double-check:
+  - Your Vercel URL matches exactly (including `https://`)
+  - The redirect URL ends with `/auth/callback`
+  - You clicked Save
+
+---
+
 ## Activity: Deploy Your App to the Internet! 🚀
 
 Deploy your pet tracker twice: once manually to learn, then Claude Code automates it next time.
