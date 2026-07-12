@@ -1,0 +1,229 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import dynamic from 'next/dynamic';
+import { usePreferredMotion } from '@/lib/hooks/usePreferredMotion';
+
+const Confetti = dynamic(
+  () => import('@/components/Confetti').then((mod) => mod.Confetti),
+  { ssr: false }
+);
+
+interface MilestoneModalProps {
+  isOpen: boolean;
+  type: 'module_complete' | 'badge_earned';
+  moduleNumber?: number;
+  badgeName?: string;
+  xpEarned?: number;
+  onClose: () => void;
+}
+
+export function MilestoneModal({
+  isOpen,
+  type,
+  moduleNumber,
+  badgeName,
+  xpEarned,
+  onClose,
+}: MilestoneModalProps) {
+  const [showConfetti, setShowConfetti] = useState(false);
+  const prefersReducedMotion = usePreferredMotion();
+
+  useEffect(() => {
+    if (isOpen && !prefersReducedMotion) {
+      setShowConfetti(true);
+      // Stop confetti after 3 seconds
+      const timer = setTimeout(() => setShowConfetti(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen, prefersReducedMotion]);
+
+  const isModuleComplete = type === 'module_complete';
+  const iconColor = isModuleComplete ? 'text-amber-400' : 'text-indigo-400';
+  const borderColor = isModuleComplete
+    ? 'border-amber-500/30'
+    : 'border-indigo-500/30';
+  const glowColor = isModuleComplete
+    ? 'shadow-amber-500/20'
+    : 'shadow-indigo-500/20';
+
+  return (
+    <>
+      {showConfetti && <Confetti />}
+
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={onClose}
+            />
+
+            {/* Modal */}
+            <motion.div
+              className="fixed inset-0 flex items-center justify-center z-50 p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <motion.div
+                className={`
+                  relative w-full max-w-md p-8 rounded-2xl
+                  bg-gradient-to-br from-slate-800 to-slate-900
+                  border border-slate-700/50 ${borderColor}
+                  backdrop-blur-sm
+                  shadow-2xl ${glowColor}
+                  animate-in fade-in zoom-in-95 duration-300
+                `}
+                initial={{ scale: 0.95, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.95, opacity: 0, y: 20 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+              >
+                {/* Close Button */}
+                <button
+                  onClick={onClose}
+                  className="absolute top-4 right-4 p-2 text-slate-400 hover:text-slate-200
+                    transition-colors duration-200 text-xl"
+                  aria-label="Close modal"
+                >
+                  ✕
+                </button>
+
+                {/* Content */}
+                <div className="flex flex-col items-center text-center">
+                  {/* Icon */}
+                  <motion.div
+                    className={`text-6xl mb-6 ${iconColor}`}
+                    animate={
+                      prefersReducedMotion
+                        ? {}
+                        : {
+                            scale: [1, 1.15, 1],
+                            rotate: [0, -5, 5, 0],
+                          }
+                    }
+                    transition={{
+                      duration: 1.2,
+                      ease: 'easeInOut',
+                      repeat: 1,
+                    }}
+                  >
+                    {isModuleComplete ? '🏆' : '⭐'}
+                  </motion.div>
+
+                  {/* Main Message */}
+                  <h2 className="text-2xl font-bold text-white mb-2">
+                    {isModuleComplete
+                      ? `Module ${moduleNumber} Complete! 🎉`
+                      : 'Badge Unlocked! ⭐'}
+                  </h2>
+
+                  {/* Secondary Message */}
+                  {isModuleComplete ? (
+                    <div className="space-y-4 w-full mt-4">
+                      <div className="text-slate-300">
+                        You've mastered this module!
+                      </div>
+                      {xpEarned && (
+                        <motion.div
+                          className="bg-slate-700/50 rounded-lg p-3 border border-slate-600/50"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.2 }}
+                        >
+                          <div className="text-amber-400 font-semibold text-lg">
+                            +{xpEarned} XP Earned
+                          </div>
+                        </motion.div>
+                      )}
+                      <motion.div
+                        className="text-slate-300 text-sm"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        Next module unlocked! Ready to continue?
+                      </motion.div>
+                    </div>
+                  ) : (
+                    <div className="space-y-4 w-full mt-4">
+                      <div className="text-slate-300">
+                        You unlocked the{' '}
+                        <span className="text-indigo-400 font-semibold">
+                          {badgeName}
+                        </span>{' '}
+                        badge!
+                      </div>
+                      {xpEarned && (
+                        <motion.div
+                          className="bg-slate-700/50 rounded-lg p-3 border border-slate-600/50"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.2 }}
+                        >
+                          <div className="text-indigo-400 font-semibold text-lg">
+                            +{xpEarned} XP
+                          </div>
+                        </motion.div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* Action Buttons */}
+                <div className="mt-8 flex gap-3">
+                  <button
+                    onClick={onClose}
+                    className={`
+                      flex-1 px-4 py-3 rounded-lg font-medium
+                      transition-all duration-200
+                      ${
+                        isModuleComplete
+                          ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30 hover:bg-amber-500/20'
+                          : 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 hover:bg-indigo-500/20'
+                      }
+                    `}
+                  >
+                    Continue Learning
+                  </button>
+                  <motion.button
+                    onClick={onClose}
+                    className={`
+                      px-4 py-3 rounded-lg font-medium text-lg
+                      transition-all duration-200
+                      ${
+                        isModuleComplete
+                          ? 'bg-amber-500/20 text-amber-400 border border-amber-500/50 hover:bg-amber-500/30'
+                          : 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/50 hover:bg-indigo-500/30'
+                      }
+                    `}
+                    whileHover={
+                      prefersReducedMotion
+                        ? {}
+                        : { scale: 1.05 }
+                    }
+                    whileTap={
+                      prefersReducedMotion
+                        ? {}
+                        : { scale: 0.95 }
+                    }
+                  >
+                    →
+                  </motion.button>
+                </div>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
