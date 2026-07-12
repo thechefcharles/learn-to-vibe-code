@@ -33,85 +33,57 @@ Every coder has tools, just like every gamer has gear. Here's yours, and which "
 
 ---
 
-## Lesson 0.2 — Install the Tools (~30 min)
+## Lesson 0.2 — Install the Tools with Claude Code (~30 min)
 
 ### What is a Terminal? 💻
 
-First things first: a **terminal** is a text-based way to talk to your computer. Instead of clicking buttons, you type commands. It's easier than it sounds — we'll just copy-paste commands.
+First things first: a **terminal** is a text-based way to talk to your computer. Instead of clicking buttons, you type commands. But here's the cool part — **Claude Code will help you do it!** Instead of you hunting down downloads and clicking installers, you just ask Claude Code, and it tells you exactly what to do.
 
 **Mac:** Open Spotlight (Cmd+Space), type "Terminal", press Enter.
 **Windows:** Press Win+R, type "powershell", press Enter.
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Terminal Windows]**
-Left: Mac Terminal open. Right: Windows PowerShell open. Both showing a command prompt ready for input.
+### The Smart Setup: Let Claude Code Guide You
+
+Instead of manually visiting websites and downloading software, you'll **ask Claude Code to orchestrate your setup**. Claude Code knows the latest versions, what works best, and how to verify everything — it's like having a setup wizard that actually knows what it's doing! 🧙‍♂️
+
+**Your job:** describe what you need, follow Claude Code's step-by-step guidance, and answer a few questions. Claude Code handles the research and troubleshooting.
+
+### Setting up Node.js, Cursor, and Claude Code
+
+**Step 1:** Open a terminal (Mac: Cmd+Space → "Terminal"; Windows: Win+R → "powershell").
+
+**Step 2:** Start Claude Code:
+
+```bash
+claude
+```
+
+**Step 3:** Copy this and paste it into Claude Code:
+
+```
+Help me set up my development environment for Next.js. I need:
+1. Node.js LTS (latest stable version)
+2. Cursor installed and signed in
+3. Claude Code installed and verified
+
+Tell me the exact steps for my OS [Mac/Windows], the version numbers I should see, 
+and the commands to check everything works. I'll follow your guidance step by step!
+```
+
+**Step 4:** Claude Code will give you:
+- Exact download links for your computer
+- Step-by-step install instructions
+- Verification commands to run
+- What version numbers you should see
+
+**Step 5:** Follow Claude Code's steps. If something doesn't work, tell Claude Code the error — it can troubleshoot on the spot! 🛠️
 
 ---
 
-### Installing Node.js
-
-Node.js is the engine that runs your code on your computer.
-
-**Step 1:** Go to [https://nodejs.org](https://nodejs.org)
-
-**Step 2:** Download the **LTS version** (it's the safe, stable one). Click the big green button.
-
-**Step 3:** Run the installer. Accept all the defaults.
-
-**Step 4:** Open your Terminal (Mac) or PowerShell (Windows) and run:
-
-```bash
-node --version
-npm --version
-```
-
-**You should see version numbers like `v22.12.0` and `10.5.0`.** If you see them, you're done! 🎉
-
-**Troubleshooting:** If you see `command not found`, close the terminal completely and reopen it. If it still doesn't work, reinstall Node.
-
----
-
-**[SCREENSHOT PLACEHOLDER: Node.js Version Output]**
-Terminal showing `node --version` and `npm --version` commands with version numbers displayed.
-
----
-
-### Installing Cursor
-
-Cursor is your AI code editor. It's based on VS Code and super friendly.
-
-**Step 1:** Go to [https://cursor.com](https://cursor.com)
-
-**Step 2:** Click "Download" and pick your operating system (Mac or Windows).
-
-**Step 3:** Run the installer. Follow the prompts.
-
-**Step 4:** Open Cursor. You'll see a welcome screen. Click "Sign in with GitHub" (we'll set up GitHub next).
-
-**Step 5:** Follow the sign-in flow. Done! ✅
-
-### Installing Claude Code
-
-Claude Code is your second AI buddy — it works in the terminal to help with bigger tasks.
-
-**Step 1:** Go to [https://claude.com/download](https://claude.com/download) and follow the install for your OS (Mac or Windows).
-
-**Step 2:** Open your Terminal/PowerShell and run:
-
-```bash
-claude --version
-```
-
-**You should see a version number like `0.5.2`.** If yes, you're done with this part.
-
-**Step 3:** Sign in by running:
-
-```bash
-claude login
-```
-
-Follow the link, copy your API token from your Claude account, and paste it into the terminal. Now you're connected! 🔗
+**[SCREENSHOT PLACEHOLDER: Claude Code Setup Guide]**
+Terminal window showing Claude Code responding to a setup request with install steps, version numbers, and verification commands.
 
 ---
 
@@ -151,78 +123,154 @@ Most learners stay under $10-20/month total for AI helpers if they're just learn
 
 ---
 
-## Lesson 0.5 — Verify Everything Works (~25 min)
+## Lesson 0.5 — Verify Everything Works with Claude Code (~25 min)
 
-Time to prove everything works together! We're gonna create a tiny test app, verify it runs, then delete it. This proves the whole chain works.
+Time to prove everything works together! Instead of you doing each test manually, **Claude Code will create a verification checklist and walk you through it**. It's like having a safety inspector check all your gear before the adventure! ✅
 
-**Step 1:** Open a Terminal/PowerShell and run:
+**Step 1:** Start Claude Code in your terminal:
 
 ```bash
-npx create-next-app@latest my-test-app
+claude
 ```
 
-Answer the prompts:
-- "Would you like to use TypeScript?" → `No`
-- "Would you like to use ESLint?" → `No`
-- "Would you like to use Tailwind CSS?" → `Yes`
-- Accept defaults for everything else
+**Step 2:** Paste this into Claude Code:
 
-This takes 2-3 minutes. Wait for it to finish.
+```
+I've installed Node.js, Cursor, and Claude Code. 
+Create a verification checklist and walk me through it:
+1. Check Node.js and npm versions
+2. Verify I can create and run a Next.js app
+3. Test that Cursor can open the project
+4. Confirm Claude Code is working
+5. Verify I'm logged into GitHub, Supabase, and Vercel
+
+Run the commands for me and tell me if everything passed. 
+If anything is missing or broken, help me fix it!
+```
+
+**Step 3:** Claude Code will:
+- Run verification commands for your computer
+- Show you the version numbers
+- Create a temporary test app
+- Check that Cursor can open it
+- Ask you to confirm you're logged into GitHub, Supabase, and Vercel
+- Tell you if anything is broken
+- Clean up the test app for you
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: create-next-app Running]**
-Terminal showing the `npx create-next-app@latest my-test-app` command with prompts and responses, ending with "✓ Created my-test-app" or similar success message.
+**[SCREENSHOT PLACEHOLDER: Claude Code Verification Checklist]**
+Terminal showing Claude Code running verification commands and providing a summary like "✅ All checks passed! You're ready for Module 1!"
 
 ---
 
-**Step 2:** Start the app:
+**Step 4:** Read Claude Code's summary. If all checks say ✅, you're ready to roll! 🚀
 
+If Claude Code finds a problem, it will:
+- Tell you exactly what failed (like "npm not found")
+- Explain why it happened
+- Show you how to fix it
+- Re-check after you fix it to make sure it worked
+
+### If You Prefer Manual Verification
+
+If Claude Code isn't working yet, you can check things manually:
+
+**In your terminal, run these:**
 ```bash
-cd my-test-app
+node --version    # Should show v18 or higher
+npm --version     # Should show 10.0.0 or higher
+claude --version  # Should show a version number
+```
+
+**Then create a quick test app:**
+```bash
+npx create-next-app@latest hello-check
+cd hello-check
 npm run dev
 ```
 
-**You should see:**
-```
-▲ Next.js 16.2.10
-- Local:         http://localhost:3000
-```
+**Open http://localhost:3000 in your browser** — you should see the Next.js starter page.
 
-**Step 3:** Open your browser and go to [http://localhost:3000](http://localhost:3000)
+**In Cursor:** File → Open Folder → select the `hello-check` folder.
 
-**You should see a Next.js starter page with a logo.** If yes, your setup works! 🚀
-
----
-
-**[SCREENSHOT PLACEHOLDER: Cursor with Project Open]**
-Cursor window showing the my-test-app project: left sidebar displays the file tree (app/, node_modules/, public/, etc.), main editor area visible, window title shows "my-test-app".
-
----
-
-**Step 4:** Test the AI helpers:
-- Open Cursor and click File → Open Folder → select `my-test-app`
-- In Terminal, run `claude --version` — should show a version number
-- Check that you're logged into GitHub, Supabase, and Vercel (just go to their websites)
-
-**Step 5:** Clean up:
-- Close the terminal (Ctrl+C to stop the app first)
-- Delete the `my-test-app` folder (drag it to Trash)
-
-**You're done!** 🎉
+**When done:** Press Ctrl+C in the terminal to stop the app, then delete the `hello-check` folder.
 
 ### Troubleshooting 🔧
 
-**`command not found: npx`** — Node didn't install properly. Close terminal, reinstall Node, then reopen terminal.
+**`claude` command not found** — Close the terminal completely and reopen it. Sometimes PATH needs a restart.
 
-**`create-next-app` takes forever** — It's slow on first run. That's normal. Give it 3-5 minutes.
+**`command not found: npx`** — Node didn't install properly. Reinstall Node.js from nodejs.org, close the terminal, then reopen it.
 
-**Port 3000 already in use** — Another app is using it. Either close that app or run:
-```bash
-npm run dev -- -p 3001
+**Port 3000 already in use** — Run: `npm run dev -- -p 3001` instead.
+
+**Browser shows "Cannot connect"** — Wait 10 seconds and refresh. Check the terminal for any error messages.
+
+---
+
+## Lesson 0.6 — Project Rules: Keeping Your Code Organized 📋
+
+Before you start building, every good project needs **a few simple rules** to stay clean and organized. Think of these like the rules of a game — they keep everything running smoothly!
+
+### The Three Rules Documents
+
+Every app you build will have three lightweight rule files:
+
+**1. CLAUDE.md — Your Project's Rulebook** 📖
+
+This is a file that lives in your project and lists the non-negotiable rules. Examples:
+- "Never save passwords or API keys in the code (they go in a special .env file)"
+- "Before pushing code to GitHub, always run the safety checks"
+- "Write clear commit messages like 'add login page' instead of 'stuff'"
+
+**Why it matters:** It keeps you and Claude Code on the same page. When you ask Claude Code to help you build, it reads CLAUDE.md and follows your rules automatically!
+
+**For your capstone project**, you'll write 3-5 simple rules. Example:
+```
+# My App — Rules
+
+1. Never save API keys in code (use .env instead)
+2. Write clear commit messages
+3. Run tests before pushing to GitHub
+4. Keep the database clean (use migrations)
 ```
 
-**Browser shows "Cannot connect"** — Make sure the terminal says "Local: http://localhost:3000" with no errors. Wait 10 seconds and refresh.
+---
+
+**2. decisions.md — Why You Made Choices** 🤔
+
+This is a simple list of important decisions you made while building. Examples:
+- "We picked Supabase because it has login built-in"
+- "We used Vercel because it's free and super fast"
+- "We chose Tailwind for styling because it's easy to learn"
+
+**Why it matters:** A month from now, you'll ask "why did we do this?" decisions.md is your answer sheet!
+
+**For your capstone**, keep it simple:
+```
+## Decisions
+
+- Used Supabase (it has login and database in one place)
+- Used Vercel (one-click deploy from GitHub)
+- Picked Tailwind (fast and easy to style)
+```
+
+---
+
+**3. .mcp.json — Claude Code's Configuration** ⚙️
+
+This is a super advanced file that tells Claude Code which tools to connect to (GitHub, Supabase, etc.). **Don't worry about this yet!** You'll learn about it in Module 13. Just know it exists.
+
+---
+
+### Your Job Right Now
+
+Nothing! You'll create these files for your capstone project (Module 16). Just remember:
+- **CLAUDE.md** = your project's rules
+- **decisions.md** = why you made choices
+- **.mcp.json** = Claude Code's connections (later)
+
+These three documents are like a game manual — they help you stay organized and help Claude Code help you better!
 
 ---
 
