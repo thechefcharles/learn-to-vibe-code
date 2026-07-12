@@ -157,7 +157,17 @@ export default async function LessonPage(props: LessonPageProps) {
           )}
 
           {/* Main Content */}
-          <div className={`flex-1 ${!isKids ? "min-w-0" : ""}`}>
+          <div className={`flex-1 ${!isKids ? "min-w-0" : ""} ${!unlockedModules.has(moduleId) ? "opacity-60 pointer-events-none select-none" : ""}`}>
+            {/* Preview Badge for Locked Content */}
+            {!unlockedModules.has(moduleId) && !isKids && (
+              <div className="mb-6 p-4 bg-amber-500/20 border border-amber-500/50 rounded-lg flex items-center gap-3">
+                <span className="text-2xl">🔒</span>
+                <div>
+                  <p className="font-semibold text-amber-200">Preview Mode</p>
+                  <p className="text-sm text-amber-100">This module is locked. Complete the previous module to unlock.</p>
+                </div>
+              </div>
+            )}
             <article className={`prose prose-invert max-w-none mb-12 ${isKids ? "" : ""}`}>
               <MarkdownRenderer content={module.content} />
             </article>
