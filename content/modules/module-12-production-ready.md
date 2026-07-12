@@ -31,11 +31,47 @@ Reframe for AI builders: AI helps you *reach* production-ready faster (it writes
 
 ### 12.1a — Configuration discipline (~45 min)
 
-Production apps live in multiple environments: your local machine, CI/CD pipelines, staging, and production. Each environment has different needs — a test database vs. production, short timeouts for local dev vs. resilient timeouts for production, feature flags toggled differently. **Configuration discipline** is separating *things you might change* (config) from *things you never share* (secrets).
+Production apps live in multiple environments: your local machine, staging, and production. Each needs different settings—a test database vs. production, short timeouts for dev vs. resilient timeouts for prod. **Configuration discipline** means separating *things you might change* (config) from *things you never share* (secrets).
+
+#### For kids
+
+**Config** = things you might change. **Secrets** = things you never share, ever.
+
+**Config examples:**
+- Database name: `invoice_tracker_dev` locally, `invoices` on production
+- Timeout: 2 seconds locally, 10 seconds on production (production is slow sometimes)
+- Feature flags: "is payments on?" (no locally, yes on production)
+
+**Secret examples:**
+- Supabase API key
+- Database password
+- Stripe secret key
+
+**The simple rule:** Put secrets in `.env.local` (git-ignored). Put everything else you might change in `config.yaml` (safe to commit).
+
+Example:
+```yaml
+# config.yaml (safe to commit)
+database: invoice_tracker_dev
+timeout_ms: 2000
+enable_payments: false
+```
+
+```
+# .env.local (git-ignored, secret)
+SUPABASE_KEY=sb_secret_xxx
+DATABASE_PASSWORD=mypassword123
+```
+
+**Deliverable:** Identify 2–3 hardcoded values in your capstone (timeouts, URLs, feature flags) and move them to `config/` instead of leaving them in code.
+
+---
+
+#### For adults
 
 **Config files** (versioned in git, safe to commit):
-- Environment-specific values: database connection strings for test/staging/prod
-- Feature flags: which features are enabled
+- Environment-specific values: database connection strings for dev/staging/prod
+- Feature flags: which features are enabled (canary, beta, etc.)
 - Thresholds: timeouts, retry limits, rate limits
 - Public URLs and endpoints
 
@@ -58,7 +94,7 @@ timeouts:
 ```yaml
 # config/production.yaml
 database:
-  url: postgresql://prod-db.example.com/invoices  # ← swapped at deploy time
+  url: postgresql://prod-db.example.com/invoices
   pool_size: 25
 
 features:
@@ -66,7 +102,7 @@ features:
   enable_payments: true
 
 timeouts:
-  db_query_ms: 10000    # ← longer for resilience
+  db_query_ms: 10000
   external_api_ms: 15000
 ```
 
@@ -74,9 +110,10 @@ timeouts:
 - Database passwords and service keys
 - API keys (Anthropic, Stripe, SendGrid)
 - Signing certificates
-- Auth tokens
+- OAuth tokens
+- JWT secrets
 
-Load secrets at runtime, never in config files:
+Load secrets at runtime, never in config:
 ```typescript
 // lib/config.ts
 export const config = {
@@ -85,20 +122,45 @@ export const config = {
     password: process.env.DATABASE_PASSWORD, // Never in config!
   },
   anthropic: {
-    apiKey: process.env.ANTHROPIC_API_KEY, // Secret only
+    apiKey: process.env.ANTHROPIC_API_KEY, // Secrets only
   },
 };
 ```
 
-In deployment: Vercel injects secrets as env vars at build/runtime. Your code reads them from `process.env`, never touches config files for secrets. This separation means a teammate can safely clone your repo without exposing production credentials, and you can swap configs (test vs. prod) without touching secrets.
+**Deployment:** Vercel stores secrets in project settings (inaccessible to the code), injects them at build/runtime as env vars. Your code reads `process.env.SOME_SECRET`, never touches config files for credentials. This means teammates can clone your repo safely (config is open, secrets come from Vercel), and you can swap environments (dev ↔ prod) just by loading a different config file.
 
-**Check:** if a value starts with `secret`, `token`, `key`, or `password`, it's a secret. If it's something you'd reasonably version-control or commit with a placeholder value, it's config.
+**Audit:** Document which secrets your capstone uses and how they're managed (Vercel env vars, rotation policy, access control). This becomes part of your security checklist in your CLAUDE.md.
+
+**Check:** if a value starts with `secret`, `token`, `key`, `password`, or `credential`, it's a secret. If you'd reasonably version-control it or commit with a placeholder, it's config.
 
 ---
 
 ### 12.1b — Golden fixtures (~45 min)
 
 **Golden fixtures** are known-good test data — versioned JSON files representing exact, stable states of your app. When you run tests, you load a fixture, run the workflow, and verify the output matches expected behavior. This is essential for regression testing: you catch the moment code changes unintentionally break a previously working flow.
+
+#### For kids
+
+**Golden fixtures** = test data files you reuse every time. Think of them as a "frozen snapshot" of what your data looks like. When you find a bug (like "what if a name has an apostrophe?"), you add that example to the fixture so you never forget to test it again.
+
+Simple example:
+```json
+// fixtures/invoices.json
+{
+  "invoices": [
+    { "id": "inv-001", "client_name": "O'Reilly Media", "amount": 1500.50, "status": "overdue" },
+    { "id": "inv-002", "client_name": "Acme & Sons", "amount": 2000.00, "status": "paid" }
+  ]
+}
+```
+
+When you run your test, you load this file and check: "Does my code handle names with apostrophes and ampersands?" If it breaks, the fixture is right there in git to show what data caused it.
+
+**Deliverable:** Create `fixtures/invoices.json` with 3-5 realistic records (include edge cases like names with quotes or special characters). Write one test that loads this fixture and checks something — for example, "can we find overdue invoices?" Run the test and pass.
+
+---
+
+#### For adults
 
 **Why golden fixtures matter:** Tests often use mocked or randomly generated data. But real data has edge cases — an invoice with a client name containing a quote character, a date field bordering midnight UTC, a currency with fractional units. Fixtures freeze those real edge cases in version control.
 
@@ -151,13 +213,52 @@ describe("reminders", () => {
 
 If someone changes the reminder logic and it breaks on names with apostrophes, the golden fixture catches it immediately. The fixture is versioned in git, so the team knows exactly what data triggered the bug.
 
-**Calibration:** create fixtures from real data (scrub for privacy), include edge cases (quotes, special characters, boundary times), and keep them small (3-5 representative records). As bugs surface, add them to the fixtures to prevent regressions.
+**Calibration:** create fixtures from real data (scrub for privacy), include edge cases (quotes, special characters, boundary times), and keep them small (3-5 representative records). As bugs surface, add them to the fixtures to prevent regressions. **Fixtures live in git so everyone sees what data broke the system** — this is your team's collective memory of edge cases.
 
 ---
 
 ### 12.1c — Tool contracts (~45 min)
 
 Tools (from Module 11) are functions or CLI commands your agent can call. A **tool contract** is a standardized interface for tool output — every tool returns the same shape: status, result/error, metrics. This makes tools predictable and composable.
+
+#### For kids
+
+A **tool contract** is a promise: "Every time you call me, I'll always return the same shape of answer." This helps the agent know what to expect.
+
+**Simple rule:** Every tool returns:
+```json
+{
+  "status": "success" or "error",
+  "result": { /* what you got */ },
+  "error_message": "what went wrong (if any)"
+}
+```
+
+Example: A tool that sends an email always returns this shape, so the agent knows "if status is success, look at result.sent; if status is error, read error_message."
+
+```typescript
+// ✅ Good: always the same shape
+export async function sendEmail(email: string, subject: string) {
+  try {
+    const result = await mailer.send({ email, subject });
+    return {
+      status: "success",
+      result: { sent: true, message_id: result.id }
+    };
+  } catch (err) {
+    return {
+      status: "error",
+      error_message: err.message
+    };
+  }
+}
+```
+
+**Deliverable:** Pick one tool from your capstone (e.g., "fetch user data" or "send notification"). Write out its contract: What does it return on success? What if it fails? Create a simple schema (JSON or TypeScript interface) that documents this. Show that you understand: tools need predictable output so agents can use them reliably.
+
+---
+
+#### For adults
 
 **Bad tool output:** inconsistent shapes, no clear success/failure signal:
 ```typescript
@@ -172,7 +273,7 @@ export async function sendEmail(email: string, subject: string, body: string) {
 }
 ```
 
-**Good tool contract:** standardized JSON with status, result, and metrics:
+**Good tool contract:** standardized JSON with status, result, metrics, and observability:
 ```typescript
 // ✅ Consistent: always returns {status, result, error, metrics}
 interface ToolOutput {
@@ -233,9 +334,9 @@ export async function sendEmail(email: string, subject: string, body: string): P
 }
 ```
 
-Every tool returns `{status, result, error, metrics}`. The agent (or your code) checks `status` to know what happened. Metrics let you measure reliability over time — are emails taking longer? How often do retries happen? This is how you build observability.
+Every tool returns `{status, result, error, metrics}`. The agent (or your code) checks `status` to know what happened.
 
-**Link to stability:** with a tool contract, you can swap implementations (Sendgrid → AWS SES) without changing the contract. The agent sees the same interface. You can also log and replay failures — since every tool call returns metrics, you can debug "why did email #5 fail?" by inspecting the metrics and the error.
+**Link to stability & observability:** with a tool contract, you can swap implementations (Sendgrid → AWS SES) without changing the contract. The agent sees the same interface. More critically, **since every call has `duration_ms`, `attempts`, and `timestamp`, you can debug operational issues** — "why did call #5 fail?" becomes traceable: inspect the metrics (did it timeout? retry twice?), the status, and the error message. This is how you build production observability. Over time, you can analyze patterns: are calls getting slower? Do certain conditions trigger retries?
 
 ---
 
