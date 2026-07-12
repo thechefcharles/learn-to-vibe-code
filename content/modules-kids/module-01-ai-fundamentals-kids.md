@@ -241,28 +241,66 @@ export default UserProfile;
 
 ---
 
-## Knowledge Check (Mapped to Your Learning Objectives)
+## Quiz: What You Should Know About AI
 
-**Objective 1 — Explain how AI works & fails:**
-- Quiz questions Q1-k1-2 test this
-- **Written check:** In 2–3 sentences, explain to a 10-year-old how an AI writes code. Then name 3 failure modes (hallucination, outdated knowledge, forgot your prompt) with one-line examples.
+**Learning Objective Alignment:** 3 questions, one per objective. Pass = all 3 correct.
 
-**Objective 2 — What AI is good/bad at:**
-- Quiz question Q1-k1-4 tests this
-- **Written check:** For each stage below, should you trust the AI a lot or verify carefully?
-  - Planning what to build
-  - Writing code
-  - Fixing broken code
-  - Handling passwords/security
+### Q1-k1: How AI Actually Works (Objective 1)
 
-**Objective 3 — Trust vs. verify:**
-- Quiz question Q1-k1-3 tests this
-- Activity "Spot the AI Mistake!" gives you practice
-- **Scenario check:** For each, decide **TRUST** or **VERIFY** in one sentence why:
-  - (a) Quick script to rename files on your computer
-  - (b) Code that handles user login and password storage
-  - (c) A function using a brand-new library from last month
-  - (d) Boilerplate for a normal login form (everyone builds these)
+You ask Claude: "What's my favorite pet's name?"
+
+Claude doesn't look up your pet. Claude guesses the next word based on patterns it learned from training. So Claude might say "Fluffy" because that's a common pet name.
+
+How did Claude decide to say "Fluffy"?
+
+a) It looked it up in a database
+b) It predicted the most likely next word based on patterns, one word at a time
+c) It read your mind
+d) It asked the internet
+
+**Correct:** b) — Claude predicts next words. It doesn't know YOUR pet, but it knows "Fluffy" is a common pet name, so it guesses that.
+
+---
+
+### Q1-k2: Trust or Test? (Objective 2)
+
+You ask Claude: "Write code to add two numbers."
+
+Claude returns:
+```python
+def add(a, b):
+    return a + b
+```
+
+Should you:
+
+a) Trust it and use it—Claude knows Python
+b) Test it by running it to make sure it works
+c) Assume it's wrong because AI makes mistakes
+d) Rewrite it from scratch
+
+**Correct:** b) — Code is concrete (works or doesn't). Test it. Takes 10 seconds and proves it's right.
+
+---
+
+### Q1-k3: What AI Can't Do (Objective 3)
+
+You ask Claude: "Write code to detect if a photo is a dog or cat."
+
+Claude writes code. But it fails sometimes—sometimes it says "dog" when it's a cat, and vice versa.
+
+Why did Claude fail?
+
+a) Claude is bad at programming
+b) Telling AI to do something hard (recognizing animals) is tough. It will make mistakes on edge cases.
+c) You should use a different AI
+d) AI is useless
+
+**Correct:** b) — Some problems are hard. AI can write code that works 90% of the time, but edge cases exist. Your job is to test it and improve it.
+
+---
+
+**Passing:** All 3 correct. If you get 2/3, revisit the module before moving on.
 
 ---
 
