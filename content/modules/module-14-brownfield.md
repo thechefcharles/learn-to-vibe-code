@@ -37,6 +37,7 @@ This delivers Objective 1. A repeatable way to map an unfamiliar codebase, using
 - **Ask the agent to map it:** "Summarize this repo's architecture, main modules, and how a request flows through it." Then verify against the actual files (the AI can be wrong).
 - **Find the seams:** where's the data layer, routing, auth, tests? Trace one real feature end to end.
 - **Note the conventions:** naming, folder patterns, state management — you'll match them, not fight them.
+- **Read decisions.md or DECISION_LOG.md if it exists:** repos often document *why* key choices were made — why Supabase over Firebase, why server components over client, why this folder structure. Understanding the reasoning behind architectural choices prevents you from fighting the codebase or proposing changes that contradict earlier decisions. It's the "why" behind the structure.
 
 ---
 
