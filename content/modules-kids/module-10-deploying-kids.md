@@ -27,27 +27,128 @@ Example: Your pet tracker at `my-pet-tracker.vercel.app` (or your own domain).
 
 ---
 
-## Lesson 10.2 — Vercel Basics (~30 min)
+## Lesson 10.2 — Deploy Step-by-Step on Vercel (~45 min)
 
-Vercel is a platform that hosts Next.js apps (perfect for us!).
+Before Claude Code automates deployment, let's understand what happens when you deploy.
 
-**What you do:**
-1. Go to [vercel.com](https://vercel.com)
-2. Click "Sign up" and choose GitHub
-3. Authorize it to see your repos
+### What Is Deployment?
 
-**What Vercel does:**
-- Watches your GitHub repo
-- When you push, Vercel automatically builds and deploys it
-- Your app lives at a URL like `pet-tracker-abc123.vercel.app`
+"Deployment" = uploading your app to the internet so others can use it.
 
-That's the whole concept! Really.
+Right now:
+- Your app runs on YOUR computer (`localhost:3000`)
+- Only you can access it
+- If you close your laptop, it stops
+
+After deployment:
+- Your app runs on a SERVER (Vercel's computer)
+- Anyone with the URL can access it
+- It runs 24/7, even when your laptop is closed
+
+### How Deployment Works: 3 Steps
+
+**Step 1: Build**
+You write code. The computer compiles it (JavaScript → optimized bundles). This is `npm run build`.
+
+**Step 2: Connect to Vercel**
+You push your code to GitHub. Vercel watches GitHub. When you push, Vercel automatically rebuilds and redeploys.
+
+**Step 3: Add Environment Variables**
+Your app needs secrets (Supabase key, API keys). These can't go in your code (GitHub is public!). So you add them to Vercel's environment variables.
+
+**Example:**
+- Code says: `const client = Supabase.init(process.env.NEXT_PUBLIC_SUPABASE_URL)`
+- You add to Vercel: `NEXT_PUBLIC_SUPABASE_URL = https://yourproject.supabase.co`
+- Vercel injects it when running your app
+
+### Practice: Set Up Vercel Manually
+
+#### Step 1: Create a Vercel account
+Go to [vercel.com](https://vercel.com). Sign up with GitHub.
+
+#### Step 2: Import your pet tracker from GitHub
+- Click "New project"
+- Select your `pet-tracker` repo
+- Click "Import"
+- Vercel will scan your code and detect: "This is a Next.js app"
+
+#### Step 3: Add environment variables in Vercel UI
+Vercel will ask: "Do you have any environment variables?"
+
+Click "Add Environment Variable" and fill in:
+- **Name:** `NEXT_PUBLIC_SUPABASE_URL`
+- **Value:** `https://yourproject.supabase.co` (copy from Supabase)
+
+Add another:
+- **Name:** `NEXT_PUBLIC_SUPABASE_KEY`
+- **Value:** `sb_anon_xxx` (copy from Supabase)
+
+**Why "NEXT_PUBLIC"?** These keys are OK to expose (they're read-only). If you had a SECRET key, you'd NOT use NEXT_PUBLIC.
+
+#### Step 4: Click "Deploy"
+Vercel:
+1. Runs `npm install` (download packages)
+2. Runs `npm run build` (compile your code)
+3. Uploads the bundle to Vercel's servers
+4. Shows you a live URL: `https://pet-tracker-xyz.vercel.app`
+
+#### Step 5: Test it
+Open the live URL. Add a pet, refresh the page. Verify it works (it should—same code as your laptop).
+
+### What Just Happened?
+
+You deployed an app! You:
+- Connected GitHub to Vercel
+- Added environment variables manually
+- Clicked deploy
+- Now anyone can access your app
+
+**This is CI/CD (Continuous Integration/Continuous Deployment):**
+- Continuous Integration = every time you push to GitHub, Vercel rebuilds
+- Continuous Deployment = rebuilds are deployed automatically
+
+You don't have to click "deploy" manually every time. Push to GitHub → Vercel sees it → rebuilds + deploys automatically.
+
+### Troubleshooting
+
+**"Build failed"**
+- Check the build logs (Vercel shows them)
+- Common error: missing env var
+- Fix: Add the missing variable to Vercel UI, redeploy
+
+**"Blank page / 404"**
+- Check the URL (did you copy it right?)
+- Check the app works on your laptop first
+- Check Vercel shows "Deployment: Success"
+
+**"Environment variable missing"**
+- Error message: "Cannot read property 'url' of undefined"
+- This means `process.env.NEXT_PUBLIC_SUPABASE_URL` is missing
+- Fix: Add it to Vercel's environment variables
+
+### Key Takeaway
+
+Deployment isn't magic. It's:
+1. Push code to GitHub
+2. Add secrets to Vercel (environment variables)
+3. Click deploy (or it deploys automatically)
+4. Your app runs on the internet
+
+Next, Claude Code will automate this. But you understand what's happening.
 
 ---
 
-## Lesson 10.3 — Deploy with Claude Code (~20 min)
+## Lesson 10.3 — Automate Deployment with Claude Code (~20 min)
 
-Instead of clicking through Vercel's UI, let Claude Code orchestrate the entire deployment!
+You've deployed once manually. Now Claude Code can do it for all your future deployments.
+
+**Why this works:**
+- You understand the steps (build, connect, env vars, deploy)
+- Claude Code knows Vercel's API and can do all steps automatically
+- It can deploy in 2 minutes; it would take you 15 manually
+
+**What you're doing:** Verification + decision-making.
+**What Claude Code is doing:** API calls + form filling.
 
 Open Claude Code:
 
@@ -66,23 +167,14 @@ My Supabase credentials (from Module 7):
 - NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: [your key]
 
 Please:
-1. Guide me through signing up for Vercel (if needed)
+1. Help me sign up for Vercel (if needed)
 2. Import my pet-tracker repo to Vercel
 3. Add the Supabase environment variables
-4. Trigger the first deployment
+4. Check that auto-deploy is enabled
 5. Give me the live URL when it's ready
-
-I want to test it in my browser right after!
 ```
 
-Claude Code will:
-- Help you set up Vercel ✅
-- Import your GitHub repo ✅
-- Add your secrets as env vars ✅
-- Deploy your app ✅
-- Give you a live URL ✅
-
-That's it! Your app is on the internet.
+Claude Code will handle the repetitive steps. You focus on testing.
 
 ---
 
@@ -98,69 +190,85 @@ That's it! Your app is on the internet.
 
 ## Activity: Deploy Your App to the Internet! 🚀
 
-Use Claude Code to deploy your pet tracker in minutes!
+Deploy your pet tracker twice: once manually to learn, then Claude Code automates it next time.
 
-### Step 1: Get your Supabase credentials ready (1 min)
+### Step 1: Manual deployment (20 min)
 
-From Module 7, find:
-- Your Supabase project URL (settings → API)
-- Your Publishable Key
+Follow Lesson 10.2's steps:
+1. Go to Vercel.com
+2. Create account / sign in with GitHub
+3. Import your `pet-tracker` GitHub repo
+4. Add environment variables (NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_KEY)
+5. Click "Deploy"
+6. Wait for build to complete
+7. Open the live URL and verify your app works
 
-Copy these — you'll paste them in Claude Code.
+**Deliverable:** Screenshot of your app running at `*.vercel.app`
 
-### Step 2: Prepare your GitHub repo (1 min)
+### Step 2: Understand the deployment (5 min)
 
-Make sure:
-- Your code is pushed to GitHub (from Module 9)
-- Your `.env.local` is in `.gitignore` (NOT committed)
+Vercel showed you build logs during Step 1. Answer:
+- ✓ What command did Vercel run? (`npm install`, `npm run build`)
+- ✓ Did the build succeed or fail?
+- ✓ Did your environment variables get injected?
 
-### Step 3: Deploy with Claude Code (5 min)
+### Step 3: Push a code change (5 min)
 
-Open Claude Code:
+On your laptop:
+1. Change something in your app (e.g., title from "Pet Tracker" to "My Pets")
+2. Commit and push to GitHub:
+   ```bash
+   git add .
+   git commit -m "Change title"
+   git push
+   ```
+
+Go back to Vercel. You should see:
+- New deployment started automatically
+- It rebuilds with your change
+- Live URL updates automatically
+
+(This is CI/CD—automatic rebuilds on push.)
+
+### Step 4: Ask Claude Code to handle future deployments (10 min)
+
+Now that you understand the process, open Claude Code:
+
 ```bash
 claude
 ```
 
 Paste:
 ```
-I want to deploy my pet tracker to Vercel.
+My pet tracker is deployed to Vercel at https://pet-tracker-xyz.vercel.app
 
-My GitHub repo: https://github.com/YOUR-USERNAME/pet-tracker
-My Supabase URL: [paste your Supabase URL]
-My Supabase Key: [paste your Publishable Key]
+The environment variables are:
+- NEXT_PUBLIC_SUPABASE_URL
+- NEXT_PUBLIC_SUPABASE_KEY
 
-Please:
-1. Help me sign up for Vercel (if I haven't)
-2. Import my pet-tracker repo to Vercel
-3. Add the Supabase environment variables
-4. Deploy the app
-5. Give me the live URL
+From now on, every time I push to GitHub, I want Vercel to:
+1. Rebuild automatically
+2. Redeploy automatically
+3. Report any build errors
 
-I'll test it in my browser right after!
+Can you verify this is set up in Vercel? If not, fix it.
 ```
 
-Claude Code orchestrates everything. Just follow its guidance!
+Claude Code will:
+- Check Vercel's deployment settings
+- Verify auto-rebuild is enabled
+- Ensure environment variables are set
+- Report: "All good, your app will auto-deploy on every push"
 
-### Step 4: Test your live app (2 min)
+### Step 5: Verify it works (5 min)
 
-1. Click the live URL Claude Code gives you
-2. Your pet tracker is on the internet! 🌍
-3. Add a pet, refresh the page
-4. It's still there! (Vercel + Supabase working together)
-
-### Step 5: Share it! (1 min)
-
-Send your live URL to a friend:
-```
-https://pet-tracker-abc123.vercel.app
-```
-
-They can visit and use your app!
+Make another small code change, push to GitHub, and watch Vercel auto-deploy. Done!
 
 ### Deliverable:
 - Your live Vercel URL
 - Screenshot of your app working on the internet
 - Proof it works (add a pet on the live site, screenshot it)
+- Proof that auto-deploy works (code change pushed → live app updated)
 
 ---
 
@@ -168,29 +276,29 @@ They can visit and use your app!
 
 Here are your three quiz questions. Study these!
 
-**Q10-k1:** What does 'CI/CD' mean here?
-- (a) Manual uploads
-- (b) **Push to GitHub → auto-build and auto-deploy** ✓
-- (c) Copying files manually
-- (d) Email code to a server
+**Q10-k1:** What does "CI/CD" mean?
+- (a) Computer Installation/Debugging
+- (b) **Continuous Integration/Continuous Deployment** ✓
+- (c) Cloud Internet/Database
+- (d) Checking Important/Code Downloads
 
-*Why:* CI/CD is automation magic! You push code to GitHub, and Vercel automatically builds and deploys it. No manual steps. That's the whole point of using GitHub + Vercel together!
+*Why:* CI = every time you push to GitHub, Vercel rebuilds. CD = rebuilds deploy automatically. You don't click "deploy" manually—it's automatic.
 
-**Q10-k2:** Your app works at home but breaks on Vercel because:
-- (a) Restart your laptop
-- (b) **You forgot to set environment variables on Vercel** ✓
-- (c) Rewrite it
-- (d) Buy a domain
+**Q10-k2:** Why do you add environment variables to Vercel instead of putting them in your code?
+- (a) It's faster
+- (b) **GitHub is public; you can't hardcode secrets there** ✓
+- (c) Vercel requires it
+- (d) It's more fun
 
-*Why:* Your Supabase secrets live in `.env.local` at home (safe, never pushed to GitHub). On Vercel, you have to tell it those secrets via Settings → Environment Variables. Without them, your app doesn't know how to connect to the database!
+*Why:* Secrets (API keys, database passwords) can't live in code because GitHub is public. Anyone could see them! Vercel injects them securely at runtime.
 
-**Q10-k3:** A 'preview deploy' is:
-- (a) The live production app
-- (b) **A test version of a branch/PR before merging** ✓
-- (c) A screenshot
-- (d) Your local computer
+**Q10-k3:** You pushed code to GitHub. Vercel automatically rebuilds and deploys. Which step did you NOT do manually?
+- (a) Write the code
+- (b) Push to GitHub
+- (c) **Click the "Deploy" button** ✓
+- (d) Test the live app
 
-*Why:* Every PR gets a live preview URL! You can test your changes on a real server before merging to `main`. If something's broken, you fix it. If it looks good, you merge and it auto-deploys to production.
+*Why:* CI/CD means deploy happens automatically when you push. You don't click anything—that's the automation magic!
 
 ---
 
@@ -198,38 +306,38 @@ Here are your three quiz questions. Study these!
 
 ### Written checks:
 
-1. **What's the difference between development and deployment?**
-   - *Example answer:* "Development is building on your computer. Deployment is putting your app on the internet where everyone can use it. Development = localhost; Deployment = live URL."
+1. **What are the 3 main steps of deployment?**
+   - *Example answer:* "Build (compile code), Connect (push to GitHub), Add secrets (environment variables on Vercel), Deploy (click deploy or auto-deploy on push)."
 
-2. **How does Vercel auto-deploy?**
-   - *Example answer:* "When you push code to GitHub, Vercel automatically builds your app and puts it online. You don't have to click anything—it's automatic!"
+2. **Why would you ever manually deploy if CI/CD is automatic?**
+   - *Example answer:* "You manually deploy once to understand what happens. After that, CI/CD automates it. You learn the steps first, then let tools handle it."
 
-3. **Why are environment variables secret?**
-   - *Example answer:* "Environment variables like Supabase keys are like passwords. If someone sees them, they can access your database. So they go in Vercel Settings, not in your code on GitHub."
+3. **What happens if you set environment variables on Vercel but forget to redeploy?**
+   - *Example answer:* "The old build is already built without the new secrets. You must redeploy so it rebuilds with the new variables."
 
 ### Scenario-based judgment checks:
 
 *For each scenario, explain what's happening and what to do.*
 
-- **(a) You deployed but the app shows an empty page or an error.** Everything was working locally!
-  - ✅ **Likely cause:** Supabase keys aren't set up on Vercel. Fix: Add env vars in Vercel Settings, redeploy.
-  - ❌ **Avoid:** Thinking something is broken. The code is fine; the config is missing.
+- **(a) You manually deployed to Vercel. Build succeeded. But the live app shows a blank page.**
+  - ✅ **Likely cause:** Environment variables are missing (app can't connect to Supabase). Fix: Add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_KEY to Vercel Settings, then redeploy.
+  - ❌ **Avoid:** Rewriting code. The code is fine; the config is missing.
 
-- **(b) You're waiting for Vercel to deploy but it's been 10+ minutes.** Normally it's fast.
-  - ✅ **Check:** Go to Vercel → Deployments. Did the build actually start? If it failed, click it to see the error.
-  - ❌ **Avoid:** Giving up. There's a reason it's slow—diagnose it.
+- **(b) You added a feature, pushed to GitHub.** You expect Vercel to auto-deploy, but 10 minutes later it's still showing the old version.
+  - ✅ **Check:** Go to Vercel → Deployments. Did a new build start? If not, check if you pushed to the right branch (usually `main`). If the build failed, click it to see the error.
+  - ❌ **Avoid:** Assuming Vercel is broken. Diagnose the git push and build logs first.
 
-- **(c) You added a new feature locally, pushed to GitHub, but the live site didn't update.** Should auto-deploy!
-  - ✅ **Check:** Did you push to the right branch (usually `main`)? Check Vercel → Deployments to see if a new build started.
-  - ❌ **Avoid:** Assuming Vercel is broken. Usually it's a git push issue.
+- **(c) You forgot to add environment variables, then added them to Vercel.** Will the old deployment magically work now?
+  - ✅ **No!** The old deployment is already built without the secrets. You must click "Redeploy" so it rebuilds with the new vars. Or push any code change to trigger a new build.
+  - ❌ **Avoid:** Waiting and hoping. Old builds stay old.
 
-- **(d) You shared your live URL but your friend can't access it.** Says "Connection refused" or similar.
-  - ✅ **Likely:** Your app crashed or the URL is wrong. Check Vercel → Deployments. Is there a green checkmark? Is the URL correct?
-  - ❌ **Avoid:** Blaming their internet. Diagnose your deploy first.
+- **(d) You shared your live Vercel URL with a friend. They can't access it.**
+  - ✅ **Check:** Did the build actually succeed? Go to Vercel → Deployments. Is there a green checkmark? If the build failed, check the logs. If it passed, verify the URL is correct.
+  - ❌ **Avoid:** Blaming their internet. Diagnose your build first.
 
-- **(e) You forgot to add env vars and the app doesn't work.** Now you added them—does the old deploy magically work?
-  - ✅ **No!** Old builds are already built. You must **Redeploy** in Vercel so it rebuilds with the new vars.
-  - ❌ **Avoid:** Waiting and hoping. You have to redeploy.
+- **(e) You manually deployed once (following Lesson 10.2). Now you want Claude Code to handle future deployments.**
+  - ✅ **Good!** You understand the steps. Claude Code can automate them: check Vercel settings, ensure auto-rebuild is on, verify env vars are set.
+  - ❌ **Avoid:** Jumping to Claude Code without understanding manual deployment. You need to know what you're automating.
 
 ---
 
