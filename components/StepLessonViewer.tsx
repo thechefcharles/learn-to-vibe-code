@@ -182,9 +182,13 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             {steps.moduleName}
           </div>
           {/* Time indicator in top right of header */}
-          <div className="ml-6 mr-2 flex-shrink-0">
+          <motion.div
+            className="ml-6 mr-2 flex-shrink-0"
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.2 }}
+          >
             <div
-              className="flex items-center gap-2 p-2 rounded-lg bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 backdrop-blur-sm"
+              className="flex items-center gap-2 p-2 rounded-lg bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 backdrop-blur-sm transition-all duration-200 hover:border-cyan-500/40 hover:shadow-lg hover:shadow-cyan-500/20"
               title={`${remaining} minutes remaining out of ${total} total`}
               role="img"
               aria-label={`${remaining} of ${total} minutes remaining in this module`}
@@ -227,7 +231,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
 
@@ -252,15 +256,19 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
-          className={`rounded-2xl border backdrop-blur-md p-4 sm:p-6 ${
+          className={`rounded-2xl border backdrop-blur-md p-6 sm:p-8 relative ${
             isKids
               ? "bg-white/10 border-white/20"
               : "bg-white/5 border-white/10"
           }`}
+          style={{
+            borderLeft: "3px solid",
+            borderLeftImage: "linear-gradient(to bottom, #06b6d4, #a78bfa) 1"
+          }}
           data-step-container
         >
           {/* Lesson Title */}
-          <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-white">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-white font-semibold">
             Lesson {currentStepIndex + 1}: {currentStep.title}
           </h2>
 
@@ -270,7 +278,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ type: "spring", stiffness: 300 }}
-              className={`mb-4 p-4 rounded-lg text-center font-bold text-lg ${
+              className={`mb-6 p-4 rounded-lg text-center font-bold text-lg ${
                 isKids
                   ? "bg-yellow-100 text-yellow-700 border-2 border-yellow-400"
                   : "bg-yellow-500/20 text-yellow-300 border border-yellow-500"
@@ -279,6 +287,54 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               {milestoneText}
             </motion.div>
           )}
+
+          {/* Info Box - Time & Difficulty */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className={`rounded-lg p-3 mb-8 border flex flex-col sm:flex-row gap-4 sm:gap-6 ${
+              isKids
+                ? "bg-blue-50 border-blue-200"
+                : "bg-blue-500/10 border-blue-500/30"
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <span className="text-lg">⏱️</span>
+              <div>
+                <p className={`text-xs font-semibold uppercase tracking-wider ${isKids ? 'text-blue-900' : 'text-blue-300'}`}>
+                  Estimated Time
+                </p>
+                <p className={`text-sm font-medium ${isKids ? 'text-blue-900' : 'text-blue-200'}`}>
+                  {currentStep.duration} minutes
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-lg">📊</span>
+              <div>
+                <p className={`text-xs font-semibold uppercase tracking-wider ${isKids ? 'text-blue-900' : 'text-blue-300'}`}>
+                  Difficulty
+                </p>
+                <p className={`text-sm font-medium capitalize ${isKids ? 'text-blue-900' : 'text-blue-200'}`}>
+                  {currentStep.difficulty}
+                </p>
+              </div>
+            </div>
+            {currentStep.xpReward > 0 && (
+              <div className="flex items-center gap-2">
+                <span className="text-lg">⭐</span>
+                <div>
+                  <p className={`text-xs font-semibold uppercase tracking-wider ${isKids ? 'text-blue-900' : 'text-blue-300'}`}>
+                    XP Reward
+                  </p>
+                  <p className={`text-sm font-medium ${isKids ? 'text-blue-900' : 'text-blue-200'}`}>
+                    +{currentStep.xpReward} XP
+                  </p>
+                </div>
+              </div>
+            )}
+          </motion.div>
 
           {currentStep.sections ? (
             <div className="mb-6">
@@ -320,7 +376,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             <>
               {/* Content */}
               <div
-                className={`prose prose-invert max-w-none mb-6 ${
+                className={`prose prose-invert max-w-none mb-8 leading-[1.75] ${
                   isKids ? "prose-invert-kids" : ""
                 }`}
               >
@@ -561,20 +617,21 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           />
           {/* Navigation Inside Box */}
           <div className="mt-8 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-4">
-            <button
+            <motion.button
               onClick={handleBack}
               disabled={isFirstStep}
-              className={`w-full sm:w-auto px-4 py-2 rounded-lg text-sm font-medium transition ${
+              whileHover={!isFirstStep ? { y: -2 } : {}}
+              className={`w-full sm:w-auto px-6 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                 isFirstStep
                   ? "opacity-30 cursor-not-allowed text-slate-500"
-                  : "text-slate-300 hover:text-white hover:bg-white/10"
+                  : "text-slate-300 hover:text-white hover:bg-white/10 active:scale-95"
               }`}
             >
               ← Previous
-            </button>
+            </motion.button>
 
             <div className="flex flex-col items-center gap-2">
-              <div className="text-xs text-slate-500">
+              <div className="text-xs text-slate-500 font-semibold">
                 {isLastStep ? (
                   <span className="text-emerald-400">✓ Complete! +{currentStep.xpReward} XP</span>
                 ) : (
@@ -587,15 +644,16 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               <span className="text-slate-600 text-xs mt-1 sm:hidden">Swipe to navigate</span>
             </div>
 
-            <button
+            <motion.button
               onClick={isLastStep ? () => (window.location.href = `/course`) : handleNext}
               disabled={currentStep.sections ? lessonCompletedTrigger !== currentStepIndex : false}
-              className={`w-full sm:w-auto px-4 py-2 rounded-lg text-sm font-medium transition text-white ${
+              whileHover={!(currentStep.sections && lessonCompletedTrigger !== currentStepIndex) ? { scale: 1.02, y: -2 } : {}}
+              className={`w-full sm:w-auto px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white ${
                 currentStep.sections && lessonCompletedTrigger !== currentStepIndex
                   ? "opacity-30 cursor-not-allowed"
                   : isLastStep
-                    ? "bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600"
-                    : "bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600"
+                    ? "bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 shadow-lg hover:shadow-emerald-500/50"
+                    : "bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/50"
               }`}
             >
               {currentStep.sections && lessonCompletedTrigger !== currentStepIndex
@@ -603,7 +661,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                 : isLastStep
                   ? "Back to Course"
                   : "Next →"}
-            </button>
+            </motion.button>
           </div>
         </motion.div>
         </div>

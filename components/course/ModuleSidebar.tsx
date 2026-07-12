@@ -85,18 +85,18 @@ export function ModuleSidebar({
             <div key={index}>
               <motion.button
                 onClick={() => onJumpToStep(index)}
-                className={`w-full text-left px-3 py-2 rounded-lg transition-all ${
+                className={`w-full text-left px-3 py-2 rounded-lg transition-all relative border-l-3 ${
                   isCurrent
                     ? isKids
-                      ? 'bg-purple-300 text-purple-900 shadow-lg'
-                      : 'bg-cyan-500/30 text-white shadow-lg'
+                      ? 'bg-purple-300/40 text-purple-900 shadow-lg border-l-purple-500 font-semibold'
+                      : 'bg-purple-500/30 text-white shadow-lg border-l-purple-400 font-semibold'
                     : isCompleted
                     ? isKids
-                      ? 'bg-green-400 text-white shadow-lg hover:bg-green-500'
-                      : 'bg-green-600 text-white shadow-lg hover:bg-green-700'
+                      ? 'bg-green-400/30 text-white shadow-lg hover:bg-green-400/40 border-l-green-500'
+                      : 'bg-green-600/30 text-white shadow-lg hover:bg-green-600/40 border-l-green-500'
                     : isKids
-                    ? 'bg-white/50 text-purple-900 hover:bg-white/70'
-                    : 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                    ? 'bg-white/30 text-purple-900 hover:bg-white/50 border-l-transparent'
+                    : 'bg-slate-700/30 text-slate-300 hover:bg-slate-700/50 border-l-slate-600'
                 }`}
                 whileHover={{ x: 4 }}
               >
