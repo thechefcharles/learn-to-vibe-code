@@ -104,9 +104,7 @@ export default async function LessonPage(props: LessonPageProps) {
     }
   }
 
-  const lessonUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}/course/${moduleId}`
-    : `https://learn2vibecode.com/course/${moduleId}`;
+  const lessonUrl = `https://learn2vibecode.com/course/${moduleId}`;
 
   return (
     <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
