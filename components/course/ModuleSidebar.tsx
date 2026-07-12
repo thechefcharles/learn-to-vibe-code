@@ -36,11 +36,16 @@ export function ModuleSidebar({
   unlockedModules,
   completedModules,
 }: ModuleSidebarProps) {
+  const router = useRouter();
   const [showModuleDropdown, setShowModuleDropdown] = useState(false);
   const [selectedModuleId, setSelectedModuleId] = useState(moduleId);
   const [selectedModuleSteps, setSelectedModuleSteps] = useState<ModuleStepSequence | null>(null);
 
   const isViewingOtherModule = selectedModuleId !== moduleId;
+
+  const handlePreviewLessonClick = (previewModuleId: number) => {
+    router.push(`/course/${String(previewModuleId).padStart(2, '0')}`);
+  };
 
   const handleJumpToStep = (index: number) => {
     // Log the jump
@@ -310,7 +315,7 @@ export function ModuleSidebar({
 
       {/* Lessons List - Other Modules (preview mode) */}
       {isViewingOtherModule && (
-        <div className="space-y-2 opacity-60 pointer-events-none select-none">
+        <div className="space-y-2">
           {/* Preview badge for other modules */}
           <motion.div
             initial={{ opacity: 0, y: -5 }}
@@ -336,22 +341,23 @@ export function ModuleSidebar({
               <p className="text-xs mt-1">Complete the previous module to unlock</p>
             </div>
           ) : selectedModuleSteps ? (
-            // Show lessons from selected module in preview mode
-            <div className="space-y-1">
+            // Show lessons from selected module in preview mode - clickable but grayed out
+            <div className="space-y-1 opacity-60">
               {selectedModuleSteps.steps.map((step, index) => (
-                <div
+                <button
                   key={index}
-                  className={`p-2 rounded text-sm ${
+                  onClick={() => handlePreviewLessonClick(selectedModuleId)}
+                  className={`w-full p-2 rounded text-sm transition-colors text-left ${
                     isKids
-                      ? 'bg-purple-100/50 text-purple-900'
-                      : 'bg-slate-700/30 text-slate-300'
+                      ? 'bg-purple-100/50 hover:bg-purple-100 text-purple-900'
+                      : 'bg-slate-700/30 hover:bg-slate-700/50 text-slate-300 hover:text-slate-200'
                   }`}
                 >
                   <div className="flex items-center gap-2">
                     <span className="flex-shrink-0 font-bold text-xs">{index + 1}</span>
                     <span className="truncate text-xs">{step.title}</span>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           ) : (
