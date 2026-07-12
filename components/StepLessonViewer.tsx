@@ -628,7 +628,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                       <p className="text-sm">{currentStep.quiz.explanation}</p>
                     </motion.div>
                   )}
-                </div>
+                </motion.div>
               )}
             </>
           )}
