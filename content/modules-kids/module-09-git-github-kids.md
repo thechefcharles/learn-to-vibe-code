@@ -28,145 +28,170 @@ Think of commits like checkpoints in a video game. You save progress, then if so
 
 ---
 
-## Lesson 9.2 — Create a GitHub Repo (~20 min)
+## Lesson 9.2 — Push Your Code to GitHub (Claude Code Handles Git!) (~30 min)
+
+GitHub is where your code lives online. But manually running Git commands is tedious. Let Claude Code do it!
+
+**Step 1: Create a GitHub repo** (this part is manual, but quick)
 
 Go to github.com and click "New Repository":
-
 1. Name it `pet-tracker`
-2. Add a description: "A fun app to track your pets!"
-3. Make it public (everyone can see it, not secret)
-4. Click "Create Repository"
+2. Make it public (everyone can see it)
+3. Click "Create Repository"
 
-GitHub gives you instructions. Copy them and run in your terminal:
+GitHub shows you a URL. Copy it (looks like `https://github.com/YOUR-USERNAME/pet-tracker.git`).
 
+**Step 2: Let Claude Code handle the Git setup and push**
+
+Open Claude Code:
 ```bash
-git init
-git add .
-git commit -m "First version of pet tracker"
-git branch -M main
+claude
+```
+
+Paste something like this:
+
+```
+I need to push my pet tracker app to GitHub.
+
+My GitHub repo URL: https://github.com/YOUR-USERNAME/pet-tracker.git
+
+Please:
+1. Initialize git in my project
+2. Add all files (make sure .env.local is NOT included — it should be in .gitignore)
+3. Create an initial commit with a descriptive message about my pet tracker app
+4. Connect to GitHub
+5. Push everything to GitHub
+
+Tell me the exact commands to run. Verify that .env.local is ignored before pushing!
+```
+
+Claude Code will:
+- Initialize Git ✅
+- Create a clear commit message ✅
+- Verify your secrets aren't being committed ✅
+- Show you the push command ✅
+
+**Step 3: Copy and run the commands Claude Code gives you**
+
+It will look something like:
+```bash
 git remote add origin https://github.com/YOUR-USERNAME/pet-tracker.git
 git push -u origin main
 ```
 
-**What you'll see:**
-```
-Enumerating objects: 20, done.
-...
- * [new branch]      main -> main
-Branch 'main' set up to track remote branch 'main'
-```
+**Step 4: Verify on GitHub**
 
-Boom! Your code is on GitHub now. 🚀
+Go to your GitHub repo URL and refresh. Your code is there! 🎉
 
 ---
 
-## Lesson 9.3 — Commits (~45 min)
+## Lesson 9.3 — Making Changes & Commits (~45 min)
 
-A commit is a snapshot of your code at one moment.
+After your code is on GitHub, you'll make changes and save them.
 
-**How to make commits:**
+**Branches:** Instead of editing `main` directly, you create a temporary branch for each feature.
 
-```bash
-git add .
-git commit -m "Added pet delete button"
-git push
-```
+Why? So if something breaks, your main branch stays safe and working.
 
-- `git add .` = "I'm ready to save these changes"
-- `git commit -m "..."` = "Save it with this message"
-- `git push` = "Send it to GitHub"
+**Example workflow:**
+
+1. **Create a branch** (for your new feature): `git checkout -b add-pet-delete-button`
+2. **Make changes** (add a delete button to your pet cards)
+3. **Commit** (save with a message): `git commit -m "Add delete button to pet cards"`
+4. **Push** (send to GitHub): `git push -u origin add-pet-delete-button`
+5. **Open a PR** (Pull Request = "I have changes, please review!"): Go to GitHub, click "Compare & pull request"
+6. **Merge** (bring changes into main): Click "Merge pull request" on GitHub
 
 **Good commit messages:**
-- ✅ "Added delete button"
-- ✅ "Fixed bug where pets weren't loading"
-- ✅ "Updated color scheme to blue"
+- ✅ "Add delete button"
+- ✅ "Fix pet sorting bug"
+- ✅ "Update color scheme"
 
 Bad:
 - ❌ "stuff"
-- ❌ "changes"
-- ❌ "ahhhhh"
+- ❌ "fix"
+- ❌ "ahhh"
 
----
-
-## Lesson 9.4 — Branches (~45 min)
-
-Branches are like alternate timelines. You make changes on a branch, test them, then merge back to main.
-
-```bash
-git branch my-feature
-git checkout my-feature
-```
-
-Now you're on `my-feature` branch. Make changes, commit, then:
-
-```bash
-git checkout main
-git merge my-feature
-```
-
-Now those changes are in main.
-
-Why? So you don't accidentally break the working version.
+**The rule:** Each commit should do ONE thing and explain it clearly.
 
 ---
 
 ## Activity: Push Your Project to GitHub 🚀
 
-Follow these steps to get your pet tracker on GitHub!
+Get your pet tracker on GitHub using Claude Code to manage the Git workflow!
 
 ### Step 1: Create a GitHub repo (2 min)
 1. Go to [github.com/new](https://github.com/new)
 2. Name it `pet-tracker`
 3. Click "Create Repository"
-4. Copy the commands GitHub shows (you'll use them below)
+4. Copy the URL it shows you (e.g., `https://github.com/YOUR-USERNAME/pet-tracker.git`)
 
-### Step 2: Push your code (5 min)
-1. Open your terminal in your pet tracker folder
-2. Run:
-   ```bash
-   git init
-   git add .
-   git commit -m "First version of pet tracker"
-   git branch -M main
-   git remote add origin https://github.com/YOUR-USERNAME/pet-tracker.git
-   git push -u origin main
-   ```
-3. Wait for it to finish
-4. Go back to GitHub and refresh—your code is there! ✅
+### Step 2: Push your code with Claude Code (5 min)
 
-### Step 3: Make a change on a branch (5 min)
-
-**3a. Create a new branch:**
+Open Claude Code:
 ```bash
-git checkout -b add-pet-delete-button
+claude
 ```
 
-**3b. Make a small change:**
-- Add a delete button to your pet cards
-- Test it works
+Paste:
+```
+I need to push my pet tracker to GitHub.
+Repo URL: https://github.com/YOUR-USERNAME/pet-tracker.git
+
+Please:
+1. Initialize git
+2. Add all files (verify .env.local is NOT included)
+3. Create an initial commit with a message about my pet tracker
+4. Push to GitHub
+
+Show me the commands and verify the push succeeded!
+```
+
+Claude Code will orchestrate everything. Just run the commands it shows you!
+
+### Step 3: Make a feature change on a branch (5 min)
+
+**3a. Use Claude Code to create and manage your branch:**
+
+Open Claude Code:
+```bash
+claude
+```
+
+Paste:
+```
+I want to add a feature to my pet tracker:
+Feature: "Add a delete button to pet cards so users can remove pets"
+
+Please:
+1. Create a feature branch with a clear name
+2. Guide me on what code to change
+3. Create a good commit message
+4. Push the branch to GitHub
+5. Show me how to open a PR
+
+Keep it focused—just the delete button feature!
+```
+
+**3b. Make the code change:**
+- Add a delete button to your pet cards in Cursor/Composer
 
 **3c. Commit and push:**
-```bash
-git add .
-git commit -m "Add delete button to pet cards"
-git push -u origin add-pet-delete-button
-```
+Follow Claude Code's instructions to commit and push
 
-### Step 4: Open a PR (3 min)
+### Step 4: Open a PR and merge (3 min)
 1. Go to your GitHub repo
-2. You'll see a green "Compare & pull request" button
-3. Click it
-4. Add a description: "Let users delete pets from their list"
-5. Click "Create Pull Request"
-6. Click the green "Merge pull request" button to merge it
-7. Click "Delete branch"
+2. You'll see a "Compare & pull request" button
+3. Click it, add a description, and create the PR
+4. Click "Merge pull request" to merge it
+5. Delete the branch
 
-You've shipped a change! 🚀
+You've shipped a feature! 🚀
 
 ### Deliverable:
 - Your GitHub repo link
-- Screenshot of your repo page (showing commits)
-- Screenshot of your merged PR
+- Screenshot of your repo page (showing 2+ commits)
+- Screenshot of your merged PR showing the changes
 
 ---
 
