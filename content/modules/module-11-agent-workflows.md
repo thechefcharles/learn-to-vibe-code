@@ -17,7 +17,8 @@ By the end of this module, the learner can:
 1. **Design and build** a multi-step agent/tool workflow that automates a real task. *(Create)*
 2. **Break down** a workflow into agent responsibilities, tools, and hand-offs. *(Analyze)*
 3. **Structure** an AI call behind a stable interface so it is testable and swappable. *(Apply)*
-4. **Assess** the reliability and failure modes of an agentic workflow. *(Evaluate)*
+4. **Test** agentic workflows for reliability—happy path, tool failure recovery, loop limits. *(Apply)*
+5. **Assess** the reliability and failure modes of an agentic workflow. *(Evaluate)*
 
 > **Version note:** agent frameworks and APIs change fast. Teach the durable patterns — tools, orchestration, hand-offs, human-in-the-loop, failure handling — so the skill outlives any framework.
 > 
@@ -303,6 +304,173 @@ App showing: 3 AI-drafted reminder emails with Approve/Edit/Reject buttons. Each
 
 ---
 
+## Lesson 11.5a — Test Your Agent (~45 min)
+
+An agent that crashes is worse than no agent. Testing proves reliability.
+
+### Why Test Agents?
+
+Agents loop. Each loop calls tools, which might fail (API timeout, invalid input, permission denied). A loop that doesn't handle failure will:
+- Retry forever (infinite loop)
+- Return garbage (wrong result, no error)
+- Crash the system (unhandled exception)
+
+Tests catch these before production.
+
+### What to Test
+
+Three things:
+
+1. **Happy path:** Agent succeeds, returns correct result
+2. **Tool failure:** Agent handles a tool failing gracefully
+3. **Loop limits:** Agent stops before hitting token limits or max iterations
+
+### Example: Pet Tips Agent (From Lesson 11.3)
+
+Recall the agent:
+
+```python
+# Simplified agent from Lesson 11.3
+agent = Agent(
+    tools=[lookup_pet_breed, fetch_training_tips],
+    system_prompt="You are a helpful pet advisor...",
+    max_iterations=5,
+    max_tokens=1000
+)
+```
+
+#### Test 1: Happy Path — Agent Succeeds
+
+```python
+# tests/agents/test_pet_advisor.py
+
+import pytest
+from unittest.mock import Mock, patch
+from app.agents.pet_advisor import PetAdvisorAgent
+
+@pytest.fixture
+def agent():
+    return PetAdvisorAgent()
+
+def test_pet_advisor_happy_path(agent):
+    # Mock tool responses
+    mock_breed_lookup = Mock(return_value={
+        "breed": "Golden Retriever",
+        "size": "large",
+        "temperament": "friendly"
+    })
+    mock_tips = Mock(return_value=[
+        "Start training at 8 weeks",
+        "Use positive reinforcement"
+    ])
+    
+    # Patch the agent's tools
+    with patch.object(agent, 'lookup_pet_breed', mock_breed_lookup):
+        with patch.object(agent, 'fetch_training_tips', mock_tips):
+            # Ask the agent
+            result = agent.run("How do I train a Golden Retriever?")
+            
+            # Verify
+            assert result is not None
+            assert "training" in result.lower()
+            mock_breed_lookup.assert_called_once()
+            mock_tips.assert_called_once()
+```
+
+**What this tests:**
+- Agent runs without crashing
+- Agent calls the right tools
+- Agent returns a meaningful result
+
+#### Test 2: Tool Failure — Agent Handles Gracefully
+
+```python
+def test_pet_advisor_tool_fails(agent):
+    # Simulate tool failure (API timeout)
+    mock_breed_lookup = Mock(side_effect=TimeoutError("API timeout"))
+    mock_tips = Mock(return_value=["Fallback tip"])
+    
+    with patch.object(agent, 'lookup_pet_breed', mock_breed_lookup):
+        with patch.object(agent, 'fetch_training_tips', mock_tips):
+            # Agent should not crash; should handle gracefully
+            result = agent.run("How do I train a Golden Retriever?")
+            
+            # Verify
+            assert result is not None  # Agent recovers
+            assert "fallback" in result.lower() or "sorry" in result.lower()
+            # Agent logged the error (check logs)
+```
+
+**What this tests:**
+- Agent doesn't crash when a tool fails
+- Agent has a fallback (fallback response, second tool, etc.)
+- Error is logged for debugging
+
+#### Test 3: Loop Limit — Agent Stops
+
+```python
+def test_pet_advisor_loop_limit(agent):
+    # Mock tools that always trigger another loop
+    # (simulate an agent that wants to call tools infinitely)
+    mock_breed_lookup = Mock(return_value={"breed": "Unknown"})
+    mock_tips = Mock(return_value=[])
+    
+    with patch.object(agent, 'lookup_pet_breed', mock_breed_lookup):
+        with patch.object(agent, 'fetch_training_tips', mock_tips):
+            with patch.object(agent, 'max_iterations', 5):
+                result = agent.run("Tell me everything about every dog breed")
+                
+                # Verify
+                assert result is not None
+                # Check loop didn't exceed limit
+                assert agent.iteration_count <= 5
+                assert mock_breed_lookup.call_count <= 5
+```
+
+**What this tests:**
+- Agent respects max_iterations (doesn't loop forever)
+- Agent returns a result even if incomplete
+- Telemetry captured (iteration count, tool calls)
+
+### How to Run These Tests
+
+```bash
+pytest tests/agents/test_pet_advisor.py -v
+```
+
+Expected output:
+
+```
+tests/agents/test_pet_advisor.py::test_pet_advisor_happy_path PASSED
+tests/agents/test_pet_advisor.py::test_pet_advisor_tool_fails PASSED
+tests/agents/test_pet_advisor.py::test_pet_advisor_loop_limit PASSED
+
+===== 3 passed in 0.45s =====
+```
+
+### Hands-On Activity Addition
+
+**Update Module 11 hands-on activity to require:**
+
+Step 1: Design the agent (as before)
+Step 2: Build the agent (as before)
+Step 3: Test the agent — write at least one test covering happy path + one covering tool failure
+
+This ensures learners ship tested agents, not untested workflows.
+
+### Knowledge Check
+
+**Q11-5a:** "Your pet advisor agent calls a tool that times out. The agent should:"
+
+a) Crash and log an error
+b) Retry the tool infinitely
+c) Catch the error, log it, and continue with a fallback
+d) Return null
+
+**Correct:** c) — Agents must handle tool failures gracefully. Crashing or retrying forever are both bad. Fallbacks and error logging are good.
+
+---
+
 ## Lesson 11.6 — Reliability & failure modes (~55 min)
 
 Delivers Objective 4 — what separates a demo from a product. Anticipate each failure:
@@ -351,7 +519,14 @@ Delivers Objective 4 — what separates a demo from a product. Anticipate each f
 2. List ≥2 guardrails (input validation, loop limits, retry logic, logging, least privilege)
 3. Implement them in code (not just in docs)
 
-### Step 6: Test end-to-end (15 min)
+### Step 6: Write tests for your agent (15 min)
+1. Write at least 2 tests (using pytest or your test framework):
+   - **Happy path:** Agent succeeds with mocked tools, returns correct output
+   - **Tool failure:** Agent handles a tool timeout/error gracefully
+2. Run tests locally: `pytest tests/agents/test_your_agent.py -v`
+3. Verify all tests pass before submitting
+
+### Step 7: Test end-to-end (15 min)
 1. Run locally: `npm run dev`
 2. Trigger the workflow (e.g., visit `/admin/triage-queue`)
 3. Verify: fetch → agent loop → queue render → approval → action all work
@@ -361,6 +536,7 @@ Delivers Objective 4 — what separates a demo from a product. Anticipate each f
 - A working workflow in your invoice-tracker (or new Next.js app)
 - Workflow design doc: responsibilities/tools/hand-offs/pattern choice + justification
 - Code: tools, interface, production + stub implementations, checkpoint UI, guardrails
+- Agent tests: at least 2 test cases (happy path + tool failure) with passing test output
 - Write-up (1 page): failure modes and how each guardrail mitigates them
 
 ---
