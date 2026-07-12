@@ -45,96 +45,122 @@ That's the whole concept! Really.
 
 ---
 
-## Lesson 10.3 — Deploy in One Click (~20 min)
+## Lesson 10.3 — Deploy with Claude Code (~20 min)
 
-1. Go to vercel.com
-2. Click "Import Project"
-3. Find your GitHub repo (pet-tracker)
-4. Click "Deploy"
-5. Wait 30 seconds
-6. You get a live URL!
+Instead of clicking through Vercel's UI, let Claude Code orchestrate the entire deployment!
 
-Vercel automatically:
-- Watches your GitHub repo
-- Deploys when you push changes
-- Gives you a public URL
-- Handles all the server stuff
+Open Claude Code:
+
+```bash
+claude
+```
+
+Paste something like:
+
+```
+I want to deploy my pet tracker to Vercel.
+
+My GitHub repo is at: https://github.com/YOUR-USERNAME/pet-tracker
+My Supabase credentials (from Module 7):
+- NEXT_PUBLIC_SUPABASE_URL: [your URL]
+- NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: [your key]
+
+Please:
+1. Guide me through signing up for Vercel (if needed)
+2. Import my pet-tracker repo to Vercel
+3. Add the Supabase environment variables
+4. Trigger the first deployment
+5. Give me the live URL when it's ready
+
+I want to test it in my browser right after!
+```
+
+Claude Code will:
+- Help you set up Vercel ✅
+- Import your GitHub repo ✅
+- Add your secrets as env vars ✅
+- Deploy your app ✅
+- Give you a live URL ✅
+
+That's it! Your app is on the internet.
 
 ---
 
-## Lesson 10.4 — Your Own Domain (Optional) (~30 min)
+## Lesson 10.4 — What Happens After Deploy (~30 min)
 
-You can use `my-pet-tracker.vercel.app` OR buy a custom domain like `mypetracker.com`.
+**Auto-updates:** When you push code to GitHub, Vercel automatically rebuilds and redeploys. No clicking needed!
 
-Domains cost ~$10/year. Optional for this course.
+**Preview URLs:** Every PR you make gets its own live preview URL. You can test changes before merging.
 
----
-
-## Lesson 10.5 — Environment Variables (~30 min)
-
-Your Supabase keys are secret (don't share them!).
-
-On your computer, they live in `.env.local` (gitignored).
-
-On Vercel, they go in Settings → Environment Variables.
-
-Prompt Claude Code: *"Set up environment variables for Supabase on Vercel."*
-
-It'll guide you.
+**Domains:** You get a free domain like `pet-tracker-abc123.vercel.app`. Later, you can add a custom domain.
 
 ---
 
-## Activity: Deploy Your App 🚀
+## Activity: Deploy Your App to the Internet! 🚀
 
-Follow these steps to put your pet tracker on the real internet!
+Use Claude Code to deploy your pet tracker in minutes!
 
-### Step 1: Sign up for Vercel (2 min)
-1. Go to [vercel.com](https://vercel.com)
-2. Click "Sign up"
-3. Choose "GitHub" and click "Authorize"
-4. Done!
+### Step 1: Get your Supabase credentials ready (1 min)
 
-### Step 2: Import your repo (3 min)
-1. Click "New Project"
-2. Find your `pet-tracker` repo
-3. Click "Import"
-4. Vercel detects it's a Next.js app ✓
-5. Click "Deploy"
+From Module 7, find:
+- Your Supabase project URL (settings → API)
+- Your Publishable Key
 
-### Step 3: Wait for the build (2 min)
-Vercel builds and deploys your app. You'll see:
-- Building... (spinning)
-- Ready! (green checkmark)
-- Your live URL: `pet-tracker-abc123.vercel.app`
+Copy these — you'll paste them in Claude Code.
 
-### Step 4: Test it! (2 min)
-1. Click the live URL
+### Step 2: Prepare your GitHub repo (1 min)
+
+Make sure:
+- Your code is pushed to GitHub (from Module 9)
+- Your `.env.local` is in `.gitignore` (NOT committed)
+
+### Step 3: Deploy with Claude Code (5 min)
+
+Open Claude Code:
+```bash
+claude
+```
+
+Paste:
+```
+I want to deploy my pet tracker to Vercel.
+
+My GitHub repo: https://github.com/YOUR-USERNAME/pet-tracker
+My Supabase URL: [paste your Supabase URL]
+My Supabase Key: [paste your Publishable Key]
+
+Please:
+1. Help me sign up for Vercel (if I haven't)
+2. Import my pet-tracker repo to Vercel
+3. Add the Supabase environment variables
+4. Deploy the app
+5. Give me the live URL
+
+I'll test it in my browser right after!
+```
+
+Claude Code orchestrates everything. Just follow its guidance!
+
+### Step 4: Test your live app (2 min)
+
+1. Click the live URL Claude Code gives you
 2. Your pet tracker is on the internet! 🌍
-3. Add a pet, refresh—it's still there!
+3. Add a pet, refresh the page
+4. It's still there! (Vercel + Supabase working together)
 
-### Step 5: Add environment variables (3 min)
-If you set up Supabase in your app:
+### Step 5: Share it! (1 min)
 
-1. In Vercel, go to **Settings → Environment Variables**
-2. Add your Supabase URL and key (from Module 7):
-   ```
-   NEXT_PUBLIC_SUPABASE_URL
-   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-   ```
-3. Click "Save"
-4. Go back to **Deployments** and click "Redeploy" on the latest build
-5. Wait ~1 min for the new build
-6. Your live app now works with Supabase!
-
-### Step 6: Share it! (1 min)
-Send your live URL to a friend and have them try it!
+Send your live URL to a friend:
 ```
 https://pet-tracker-abc123.vercel.app
 ```
 
+They can visit and use your app!
+
 ### Deliverable:
-- Your live Vercel URL (screenshot showing it works)
-- Screenshot of your pet tracker running on the internet
+- Your live Vercel URL
+- Screenshot of your app working on the internet
+- Proof it works (add a pet on the live site, screenshot it)
 
 ---
 
