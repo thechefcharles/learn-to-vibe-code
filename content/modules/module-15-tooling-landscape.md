@@ -5,7 +5,36 @@
 **Prerequisites:** Modules 1–14. Learners have built a full app on the default stack and seen the per-module "alternatives" callouts. This module consolidates them into one comparative view and a repeatable way to choose.
 
 > The whole course taught one opinionated stack so learners could go deep without decision paralysis. This final module zooms out: it gathers every alternative named along the way, teaches *how* to evaluate tools, and has learners defend stack choices for scenarios other than the invoice tracker. The point is transfer — walk into any project and pick sensibly. This is the course's highest-order skill: judgment.
-> 
+>
+
+---
+
+## Module 15: The Tooling Landscape (Reinforcement, Not Doubt)
+
+You've spent 93 hours learning one stack: **Next.js, Supabase, Tailwind, TypeScript, Vercel**.
+
+This module isn't saying "you might have chosen wrong." It's saying "you chose well. Here's why, and what other choices exist for different constraints."
+
+### The Default Stack You Learned
+
+- **Frontend:** Next.js + React (App Router, full-stack capability, production-ready)
+- **Database:** Supabase (PostgreSQL with RLS, auth built-in, no vendor lock-in)
+- **Styling:** Tailwind + shadcn/ui (utility-first, accessible components, professional look)
+- **Language:** TypeScript (type safety, better developer experience, scales to teams)
+- **Deployment:** Vercel (zero-config Next.js, fast CDN, excellent DX)
+
+This stack is:
+- ✅ Used by professional teams (not a learning toy)
+- ✅ Production-ready (powers real SaaS apps)
+- ✅ Scalable (from side project to millions of users)
+- ✅ Well-documented (huge community)
+- ✅ Economical (free tier to start, pay as you grow)
+
+**For your capstone, this stack is the safe choice.** Don't second-guess it.
+
+This module is for *after* your capstone: if you hit a constraint this stack doesn't handle well, here's what to consider instead.
+
+---
 
 ## Learning objectives
 
@@ -59,13 +88,13 @@ Meta-lesson: there's no "best" tool, only the best *fit* for a project and team 
 
 ## Lesson 15.4 — Choosing a stack for a scenario (~40 min)
 
-Delivers Objective 2 — the course's top skill. Work scenarios where the default may or may not be the answer:
+Delivers Objective 2 — the course's top skill. Three key scenarios where you might deviate from the default:
 
-- **Realtime / mobile-first app** → Firebase's realtime + mobile SDKs may beat Supabase; weigh NoSQL/lock-in.
-- **SQL-heavy internal tool, team already on VS Code** → keep Postgres; VS Code + Copilot over Cursor to match the team.
-- **Python API with a long-running worker** → Railway/Render over Vercel.
-- **Cost-sensitive solo MVP** → the default stack is close to ideal; consider free/open-source (Cline) to cut cost.
-- **Enterprise with strict compliance** → more control (self-managed Postgres, AWS/Cloudflare).
+- **Scenario 1: Real-time collaboration required** (e.g., Figma-like co-editing, live multiplayer). Firebase Realtime DB or Supabase Realtime is built-in; default Supabase works, but Firebase may feel more natural here. Weigh lock-in vs. ecosystem fit.
+
+- **Scenario 2: Enterprise with strict compliance** (e.g., healthcare, finance, government). You may need self-managed Postgres on AWS/Azure, more audit trails, and vendor control. Trade off convenience for control.
+
+- **Scenario 3: Static or simple site** (e.g., portfolio, docs, blog). Plain HTML/CSS/JS hosted on Netlify, or a lightweight static generator (11ty, Hugo). No database, no app complexity needed. The default stack is overkill.
 
 For each, state a recommendation *and the reasons*, referencing the 15.3 criteria. "It depends" is only good followed by "...on these factors, so I'd choose X."
 
@@ -121,6 +150,17 @@ These are the three questions you'll see on the quiz. Study these to prepare:
   - Database: **Firebase** (not Supabase — realtime is built-in, essential for collaboration)
   - Deployment: Vercel (default — works with SvelteKit)
   - Justification: Realtime is the constraint; Firebase + SvelteKit fit better than default stack.
+
+### Judgment check: Don't Panic
+
+**Q15-1:** "You finished the course with Next.js + Supabase. A friend says 'You should have used Vue + Firebase instead.' You should:"
+
+a) Panic—you chose the wrong stack
+b) Acknowledge both work, but stick with your choice for consistency
+c) Rewrite everything in Vue
+d) Ask which is objectively better
+
+**Correct:** b) — Professional judgment means: the stack you chose is solid. Yes, alternatives exist. For your capstone, consistency and depth > switching tools. You learned one stack deeply; that's stronger than switching tools mid-project.
 
 ### Scenario-based judgment checks:
 
