@@ -3,30 +3,31 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useLessonStats } from '@/lib/hooks/useLessonStats';
-import { useUser } from '@/lib/hooks/useUser';
+import { useBookmarks } from '@/lib/hooks/useBookmarks';
 import { BookmarkButton } from '@/components/course/BookmarkButton';
 import { usePreferredMotion } from '@/lib/hooks/usePreferredMotion';
+import { NextLessonPreview } from '@/components/course/NextLessonPreview';
 import type { User } from '@supabase/supabase-js';
 
 interface CoursePageSidebarProps {
+  userId?: string;
   moduleId: number;
-  stepIndex?: number;
-  stepTitle?: string;
-  timeEstimate?: number; // in minutes
-  nextModuleId?: number | null;
-  nextLessonTitle?: string;
+  lessonNumber: number;
+  lessonTitle: string;
+  estimatedMinutes: number;
+  user: User | null;
 }
 
 export function CoursePageSidebar({
+  userId,
   moduleId,
-  stepIndex = 0,
-  stepTitle = 'Step',
-  timeEstimate = 30,
-  nextModuleId,
-  nextLessonTitle,
+  lessonNumber,
+  lessonTitle,
+  estimatedMinutes,
+  user,
 }: CoursePageSidebarProps) {
-  const { user } = useUser();
   const stats = useLessonStats(user);
+  const { bookmarks } = useBookmarks();
   const prefersReducedMotion = usePreferredMotion();
 
   // Define level tiers
@@ -82,10 +83,10 @@ export function CoursePageSidebar({
             {/* XP & Level */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-sm text-slate-400">Level</span>
-                <span className="text-lg font-bold text-white">{stats.level}</span>
+                <span className="text-sm text-slate-400" aria-label="Current level">Level</span>
+                <span className="text-lg font-bold text-white" aria-label={`Level ${stats.level}`}>{stats.level}</span>
               </div>
-              <div className="text-xs text-slate-500">{levelTier}</div>
+              <div className="text-xs text-slate-500" aria-label={`Tier: ${levelTier}`}>{levelTier}</div>
 
               {/* XP Progress Bar */}
               <div className="space-y-1.5">
@@ -96,6 +97,11 @@ export function CoursePageSidebar({
                 <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
                   <motion.div
                     className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
+                    role="progressbar"
+                    aria-valuenow={levelPercentage}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-label={`XP progress: ${levelPercentage}% to next level`}
                     initial={{ width: 0 }}
                     animate={{ width: `${levelPercentage}%` }}
                     transition={{ duration: prefersReducedMotion ? 0 : 0.5 }}
@@ -107,12 +113,12 @@ export function CoursePageSidebar({
             {/* Streak & Badges */}
             <div className="pt-2 border-t border-white/5 space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-400">🔥 Streak</span>
-                <span className="font-semibold text-orange-400">{stats.streakCurrent}</span>
+                <span className="text-slate-400" aria-label="Current streak">🔥 Streak</span>
+                <span className="font-semibold text-orange-400" aria-label={`${stats.streakCurrent} day streak`}>{stats.streakCurrent}</span>
               </div>
               <div className="flex items-center justify-between text-sm">
-                <span className="text-slate-400">🏆 Badges</span>
-                <span className="font-semibold text-emerald-400">{stats.badgesCount}</span>
+                <span className="text-slate-400" aria-label="Badges earned">🏆 Badges</span>
+                <span className="font-semibold text-emerald-400" aria-label={`${stats.badgesCount} badges earned`}>{stats.badgesCount}</span>
               </div>
             </div>
           </motion.div>
@@ -139,7 +145,7 @@ export function CoursePageSidebar({
               <p className="text-xs font-bold uppercase tracking-wider text-indigo-300 mb-1">
                 Time Estimate
               </p>
-              <p className="text-2xl font-bold text-white">{timeEstimate}</p>
+              <p className="text-2xl font-bold text-white" aria-label={`Estimated time: ${estimatedMinutes} minutes`}>{estimatedMinutes}</p>
               <p className="text-xs text-slate-400">minutes</p>
             </div>
             <div className="text-3xl">⏱️</div>
@@ -147,19 +153,20 @@ export function CoursePageSidebar({
         </motion.div>
 
         {/* Bookmark Button */}
-        {user && stepTitle && (
+        {user && lessonTitle && (
           <motion.div
             variants={itemVariants}
             className="flex gap-2"
           >
             <BookmarkButton
               moduleId={moduleId}
-              stepIndex={stepIndex}
-              stepTitle={stepTitle}
+              stepIndex={lessonNumber}
+              stepTitle={lessonTitle}
             />
             <button
               className="flex-1 bg-slate-800/40 backdrop-blur-lg border border-white/10 rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-700/50 hover:border-white/20 transition"
               title="Share this lesson"
+              aria-label={`Share ${lessonTitle}`}
             >
               📤 Share
             </button>
@@ -167,27 +174,12 @@ export function CoursePageSidebar({
         )}
 
         {/* Next Lesson Preview */}
-        {nextModuleId !== null && nextModuleId !== undefined && nextLessonTitle && (
-          <motion.div
-            variants={itemVariants}
-            className="bg-gradient-to-br from-emerald-500/10 to-teal-500/10 backdrop-blur-lg border border-emerald-500/30 rounded-lg p-4 space-y-2"
-          >
-            <p className="text-xs font-bold uppercase tracking-wider text-emerald-300">
-              Next Lesson
-            </p>
-            <Link
-              href={`/course/${nextModuleId}`}
-              className="block group"
-            >
-              <p className="text-sm font-semibold text-white group-hover:text-emerald-300 transition line-clamp-2">
-                {nextLessonTitle}
-              </p>
-              <p className="text-xs text-slate-400 group-hover:text-slate-300 transition mt-2">
-                Module {String(nextModuleId).padStart(2, '0')} →
-              </p>
-            </Link>
-          </motion.div>
-        )}
+        <motion.div variants={itemVariants}>
+          <NextLessonPreview
+            moduleId={moduleId + 1}
+            lessonNumber={lessonNumber + 1}
+          />
+        </motion.div>
 
         {/* Login Prompt */}
         {!user && !stats.loading && (

@@ -8,7 +8,6 @@ interface LessonStats {
   xp: number;
   level: number;
   streakCurrent: number;
-  streakLongest: number;
   badgesCount: number;
   loading: boolean;
 }
@@ -18,7 +17,6 @@ export function useLessonStats(user: User | null): LessonStats {
     xp: 0,
     level: 0,
     streakCurrent: 0,
-    streakLongest: 0,
     badgesCount: 0,
     loading: true,
   });
@@ -46,12 +44,12 @@ export function useLessonStats(user: User | null): LessonStats {
         // Fetch streaks
         const { data: streakData } = await supabase
           .from('streaks')
-          .select('current, longest')
+          .select('current')
           .eq('user_id', user.id)
           .single();
 
         // Fetch badges count
-        const { data: badgesData, count: badgesCount } = await supabase
+        const { count: badgesCount } = await supabase
           .from('badges')
           .select('id', { count: 'exact' })
           .eq('user_id', user.id);
@@ -60,7 +58,6 @@ export function useLessonStats(user: User | null): LessonStats {
           xp: xpData?.points || 0,
           level: xpData?.level || 1,
           streakCurrent: streakData?.current || 0,
-          streakLongest: streakData?.longest || 0,
           badgesCount: badgesCount || 0,
           loading: false,
         });
