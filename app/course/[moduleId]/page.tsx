@@ -2,7 +2,7 @@ import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { StepLessonViewer } from "@/components/StepLessonViewer";
 import { ModuleChecklist } from "@/components/ModuleChecklist";
 import { CourseLessonHeader } from "@/components/course/CourseLessonHeader";
-import { CourseSidebar } from "@/components/course/CourseSidebar";
+import { LessonViewToggle } from "@/components/course/LessonViewToggle";
 import { CoursePageInteractive } from "@/components/course/CoursePageInteractive";
 import { ShareLesson } from "@/components/course/ShareLesson";
 import { getModule } from "@/lib/content";
@@ -122,8 +122,21 @@ export default async function LessonPage(props: LessonPageProps) {
       return (
         <CoursePageInteractive moduleNumber={moduleId} user={user}>
           <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
-            {!isKids && <CourseLessonHeader moduleId={String(moduleId)} lessonTitle={pageTitle} user={user} version={userVersion} />}
-            <StepLessonViewer steps={steps} moduleId={moduleId} />
+            {!isKids ? (
+              <LessonViewToggle
+                moduleId={moduleId}
+                lessonTitle={pageTitle}
+                user={user}
+                version={userVersion}
+                unlockedModules={unlockedModules}
+                completedModules={completedModules}
+                lessonsByModule={lessonsByModule}
+              >
+                <StepLessonViewer steps={steps} moduleId={moduleId} />
+              </LessonViewToggle>
+            ) : (
+              <StepLessonViewer steps={steps} moduleId={moduleId} />
+            )}
           </div>
         </CoursePageInteractive>
       );
@@ -140,24 +153,7 @@ export default async function LessonPage(props: LessonPageProps) {
 
         {/* Main Layout */}
         <div className={`max-w-7xl mx-auto px-4 ${!isKids ? "pt-4 sm:pt-6 pb-12" : "py-12"}`}>
-        <div className="flex gap-6">
-          {/* Sidebar */}
-          {!isKids && (
-            <CourseSidebar
-              userId={user?.id}
-              moduleId={moduleId}
-              lessonNumber={moduleId}
-              lessonTitle={pageTitle}
-              estimatedMinutes={30}
-              user={user}
-              unlockedModules={unlockedModules}
-              completedModules={completedModules}
-              lessonsByModule={lessonsByModule}
-            />
-          )}
-
-          {/* Main Content */}
-          <div className={`flex-1 ${!isKids ? "min-w-0" : ""} ${!unlockedModules.has(moduleId) ? "opacity-60 pointer-events-none select-none" : ""}`}>
+        <div className={`${!unlockedModules.has(moduleId) ? "opacity-60 pointer-events-none select-none" : ""}`}>
             {/* Preview Badge for Locked Content */}
             {!unlockedModules.has(moduleId) && !isKids && (
               <div className="mb-6 p-4 bg-amber-500/20 border border-amber-500/50 rounded-lg flex items-center gap-3">
@@ -238,7 +234,6 @@ export default async function LessonPage(props: LessonPageProps) {
             )}
           </div>
         </div>
-      </div>
       </div>
     </CoursePageInteractive>
   );
