@@ -2,6 +2,11 @@ import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { StepLessonViewer } from "@/components/StepLessonViewer";
 import { ModuleChecklist } from "@/components/ModuleChecklist";
 import { CourseLessonHeader } from "@/components/course/CourseLessonHeader";
+import { CoursePageSidebar } from "@/components/course/CoursePageSidebar";
+import { KeyboardShortcutsPanel } from "@/components/course/KeyboardShortcutsPanel";
+import { MilestoneModal } from "@/components/course/MilestoneModal";
+import { ShareLesson } from "@/components/course/ShareLesson";
+import { MobileMenuBurger } from "@/components/course/MobileMenuBurger";
 import { getModule } from "@/lib/content";
 import { getModuleMetadata } from "@/lib/module-metadata";
 import { getModuleSteps, hasModuleSteps } from "@/lib/module-steps";
@@ -99,73 +104,120 @@ export default async function LessonPage(props: LessonPageProps) {
     }
   }
 
+  const lessonUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}/course/${moduleId}`
+    : `https://learn2vibecode.com/course/${moduleId}`;
+
   return (
     <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
-      {/* New Header Component */}
+      {/* Header */}
       {!isKids && <CourseLessonHeader moduleId={String(moduleId)} lessonTitle={pageTitle} user={user} />}
 
-      {/* Content */}
-      <div className={`max-w-4xl mx-auto px-4 ${!isKids ? "pt-4 sm:pt-6 pb-12" : "py-12"}`}>
-        <article className="prose prose-invert max-w-none mb-12">
-          <MarkdownRenderer content={module.content} />
-        </article>
+      {/* Mobile Menu Burger */}
+      {!isKids && <MobileMenuBurger isOpen={false} onClose={() => {}} user={user} />}
 
-        {/* Navigation */}
-        <div className={`flex gap-4 mt-16 pt-8 border-t ${isKids ? "border-purple-200" : "border-slate-700"}`}>
-          {prevModule !== null ? (
-            <Link
-              href={`/course/${prevModule}`}
-              className={`flex-1 p-4 rounded-lg transition text-left ${isKids ? "bg-purple-100 hover:bg-purple-200 border border-purple-300" : "bg-slate-800 hover:bg-slate-700 border border-slate-600"}`}
-            >
-              <p className={`text-xs mb-1 ${isKids ? "text-purple-600" : "text-slate-400"}`}>← Previous Module</p>
-              <p className={`font-bold ${isKids ? "text-purple-700" : "text-white"}`}>
-                {getModuleMetadata(prevModule).title}
-              </p>
-            </Link>
-          ) : (
-            <div className="flex-1" />
+      {/* Main Layout */}
+      <div className={`max-w-7xl mx-auto px-4 ${!isKids ? "pt-4 sm:pt-6 pb-12" : "py-12"}`}>
+        <div className="flex gap-6">
+          {/* Sidebar */}
+          {!isKids && (
+            <CoursePageSidebar
+              moduleId={moduleId}
+              lessonNumber={moduleId}
+              lessonTitle={pageTitle}
+              estimatedMinutes={meta.estimatedMinutes || 30}
+              user={user}
+            />
           )}
 
-          {nextModule !== null ? (
-            <Link
-              href={`/course/${nextModule}`}
-              className={`flex-1 p-4 rounded-lg transition text-right ${isKids ? "bg-purple-100 hover:bg-purple-200 border border-purple-300" : "bg-slate-800 hover:bg-slate-700 border border-slate-600"}`}
-            >
-              <p className={`text-xs mb-1 ${isKids ? "text-purple-600" : "text-slate-400"}`}>Next Module →</p>
-              <p className={`font-bold ${isKids ? "text-purple-700" : "text-white"}`}>
-                {getModuleMetadata(nextModule).title}
-              </p>
-            </Link>
-          ) : (
-            <Link
-              href="/capstone"
-              className={`flex-1 p-4 rounded-lg transition text-right ${isKids ? "bg-gradient-to-r from-purple-300 to-pink-300 hover:from-purple-400 hover:to-pink-400 border border-purple-400" : "bg-purple-800/30 hover:bg-purple-800/50 border border-purple-500"}`}
-            >
-              <p className={`text-xs mb-1 ${isKids ? "text-purple-700 font-bold" : "text-purple-400"}`}>{isKids ? "Final Project →" : "Next: Capstone →"}</p>
-              <p className={`font-bold ${isKids ? "text-purple-900" : "text-white"}`}>
-                {isKids ? "Build Your App 🚀" : "Build & Defend Your Project"}
-              </p>
-            </Link>
-          )}
-        </div>
+          {/* Main Content */}
+          <div className={`flex-1 ${!isKids ? "min-w-0" : ""}`}>
+            <article className={`prose prose-invert max-w-none mb-12 ${isKids ? "" : ""}`}>
+              <MarkdownRenderer content={module.content} />
+            </article>
 
-        {/* Checklist */}
-        {user ? (
-          <ModuleChecklist
-            moduleId={moduleId}
-            initialChecked={checked}
-          />
-        ) : (
-          <div className={`mt-12 p-6 rounded-lg border ${isKids ? "bg-purple-100 border-purple-300" : "bg-slate-800 border-slate-700"}`}>
-            <p className={`text-center ${isKids ? "text-purple-700" : "text-slate-400"}`}>
-              <Link href="/auth/sign-in" className={isKids ? "text-purple-600 hover:text-purple-800 font-bold" : "text-blue-400 hover:text-blue-300"}>
-                Sign in
-              </Link>{" "}
-              {isKids ? "to track your progress and collect badges! 🏆" : "to track your progress"}
-            </p>
+            {/* Share Buttons */}
+            {!isKids && (
+              <ShareLesson
+                moduleName={`Module ${String(moduleId).padStart(2, '0')}`}
+                lessonTitle={pageTitle}
+                url={lessonUrl}
+              />
+            )}
+
+            {/* Navigation */}
+            <div className={`flex gap-4 mt-16 pt-8 border-t ${isKids ? "border-purple-200" : "border-slate-700"}`}>
+              {prevModule !== null ? (
+                <Link
+                  href={`/course/${prevModule}`}
+                  className={`flex-1 p-4 rounded-lg transition text-left ${isKids ? "bg-purple-100 hover:bg-purple-200 border border-purple-300" : "bg-slate-800 hover:bg-slate-700 border border-slate-600"}`}
+                >
+                  <p className={`text-xs mb-1 ${isKids ? "text-purple-600" : "text-slate-400"}`}>← Previous Module</p>
+                  <p className={`font-bold ${isKids ? "text-purple-700" : "text-white"}`}>
+                    {getModuleMetadata(prevModule).title}
+                  </p>
+                </Link>
+              ) : (
+                <div className="flex-1" />
+              )}
+
+              {nextModule !== null ? (
+                <Link
+                  href={`/course/${nextModule}`}
+                  className={`flex-1 p-4 rounded-lg transition text-right ${isKids ? "bg-purple-100 hover:bg-purple-200 border border-purple-300" : "bg-slate-800 hover:bg-slate-700 border border-slate-600"}`}
+                >
+                  <p className={`text-xs mb-1 ${isKids ? "text-purple-600" : "text-slate-400"}`}>Next Module →</p>
+                  <p className={`font-bold ${isKids ? "text-purple-700" : "text-white"}`}>
+                    {getModuleMetadata(nextModule).title}
+                  </p>
+                </Link>
+              ) : (
+                <Link
+                  href="/capstone"
+                  className={`flex-1 p-4 rounded-lg transition text-right ${isKids ? "bg-gradient-to-r from-purple-300 to-pink-300 hover:from-purple-400 hover:to-pink-400 border border-purple-400" : "bg-purple-800/30 hover:bg-purple-800/50 border border-purple-500"}`}
+                >
+                  <p className={`text-xs mb-1 ${isKids ? "text-purple-700 font-bold" : "text-purple-400"}`}>{isKids ? "Final Project →" : "Next: Capstone →"}</p>
+                  <p className={`font-bold ${isKids ? "text-purple-900" : "text-white"}`}>
+                    {isKids ? "Build Your App 🚀" : "Build & Defend Your Project"}
+                  </p>
+                </Link>
+              )}
+            </div>
+
+            {/* Checklist */}
+            {user ? (
+              <ModuleChecklist
+                moduleId={moduleId}
+                initialChecked={checked}
+              />
+            ) : (
+              <div className={`mt-12 p-6 rounded-lg border ${isKids ? "bg-purple-100 border-purple-300" : "bg-slate-800 border-slate-700"}`}>
+                <p className={`text-center ${isKids ? "text-purple-700" : "text-slate-400"}`}>
+                  <Link href="/auth/sign-in" className={isKids ? "text-purple-600 hover:text-purple-800 font-bold" : "text-blue-400 hover:text-blue-300"}>
+                    Sign in
+                  </Link>{" "}
+                  {isKids ? "to track your progress and collect badges! 🏆" : "to track your progress"}
+                </p>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
+
+      {/* Keyboard Shortcuts Panel */}
+      {!isKids && (
+        <KeyboardShortcutsPanel isOpen={false} onClose={() => {}} />
+      )}
+
+      {/* Milestone Modal */}
+      {!isKids && (
+        <MilestoneModal
+          isOpen={false}
+          type="module_complete"
+          moduleNumber={moduleId}
+          onClose={() => {}}
+        />
+      )}
     </div>
   );
 }

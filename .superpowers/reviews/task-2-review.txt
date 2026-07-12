@@ -1,0 +1,310 @@
+9493259 feat: add CoursePageSidebar component and useLessonStats hook (Task 2)
+---
+ components/course/CoursePageSidebar.tsx | 212 ++++++++++++++++++++++++++++++++
+ lib/hooks/useLessonStats.ts             |  80 ++++++++++++
+ 2 files changed, 292 insertions(+)
+---
+diff --git a/components/course/CoursePageSidebar.tsx b/components/course/CoursePageSidebar.tsx
+new file mode 100644
+index 0000000..947eee4
+--- /dev/null
++++ b/components/course/CoursePageSidebar.tsx
+@@ -0,0 +1,212 @@
++'use client';
++
++import { motion } from 'framer-motion';
++import Link from 'next/link';
++import { useLessonStats } from '@/lib/hooks/useLessonStats';
++import { useUser } from '@/lib/hooks/useUser';
++import { BookmarkButton } from '@/components/course/BookmarkButton';
++import { usePreferredMotion } from '@/lib/hooks/usePreferredMotion';
++import type { User } from '@supabase/supabase-js';
++
++interface CoursePageSidebarProps {
++  moduleId: number;
++  stepIndex?: number;
++  stepTitle?: string;
++  timeEstimate?: number; // in minutes
++  nextModuleId?: number | null;
++  nextLessonTitle?: string;
++}
++
++export function CoursePageSidebar({
++  moduleId,
++  stepIndex = 0,
++  stepTitle = 'Step',
++  timeEstimate = 30,
++  nextModuleId,
++  nextLessonTitle,
++}: CoursePageSidebarProps) {
++  const { user } = useUser();
++  const stats = useLessonStats(user);
++  const prefersReducedMotion = usePreferredMotion();
++
++  // Define level tiers
++  const getLevelTier = (level: number): string => {
++    if (level <= 3) return 'Foundations';
++    if (level <= 6) return 'Building';
++    if (level <= 9) return 'Production';
++    return 'Landscape';
++  };
++
++  const levelTier = getLevelTier(stats.level);
++  const levelPercentage = ((stats.xp % 1000) / 1000) * 100;
++
++  const containerVariants = {
++    hidden: { opacity: 0, y: 20 },
++    visible: {
++      opacity: 1,
++      y: 0,
++      transition: {
++        duration: prefersReducedMotion ? 0 : 0.3,
++        staggerChildren: prefersReducedMotion ? 0 : 0.05,
++      },
++    },
++  };
++
++  const itemVariants = {
++    hidden: { opacity: 0, y: 10 },
++    visible: {
++      opacity: 1,
++      y: 0,
++      transition: { duration: prefersReducedMotion ? 0 : 0.2 },
++    },
++  };
++
++  return (
++    <motion.aside
++      className="hidden lg:block sticky top-20 h-fit w-72 flex-shrink-0"
++      variants={containerVariants}
++      initial="hidden"
++      animate="visible"
++    >
++      <div className="space-y-4">
++        {/* User Stats Card */}
++        {user && !stats.loading && (
++          <motion.div
++            variants={itemVariants}
++            className="bg-slate-800/40 backdrop-blur-lg border border-white/10 rounded-lg p-4 space-y-3"
++          >
++            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">
++              Your Stats
++            </h3>
++
++            {/* XP & Level */}
++            <div className="space-y-2">
++              <div className="flex items-center justify-between">
++                <span className="text-sm text-slate-400">Level</span>
++                <span className="text-lg font-bold text-white">{stats.level}</span>
++              </div>
++              <div className="text-xs text-slate-500">{levelTier}</div>
++
++              {/* XP Progress Bar */}
++              <div className="space-y-1.5">
++                <div className="flex items-center justify-between text-xs">
++                  <span className="text-slate-400">XP</span>
++                  <span className="text-slate-500">{stats.xp % 1000} / 1000</span>
++                </div>
++                <div className="h-2 bg-slate-700/50 rounded-full overflow-hidden">
++                  <motion.div
++                    className="h-full bg-gradient-to-r from-indigo-500 to-purple-500"
++                    initial={{ width: 0 }}
++                    animate={{ width: `${levelPercentage}%` }}
++                    transition={{ duration: prefersReducedMotion ? 0 : 0.5 }}
++                  />
++                </div>
++              </div>
++            </div>
++
++            {/* Streak & Badges */}
++            <div className="pt-2 border-t border-white/5 space-y-2">
++              <div className="flex items-center justify-between text-sm">
++                <span className="text-slate-400">🔥 Streak</span>
++                <span className="font-semibold text-orange-400">{stats.streakCurrent}</span>
++              </div>
++              <div className="flex items-center justify-between text-sm">
++                <span className="text-slate-400">🏆 Badges</span>
++                <span className="font-semibold text-emerald-400">{stats.badgesCount}</span>
++              </div>
++            </div>
++          </motion.div>
++        )}
++
++        {/* Loading State */}
++        {stats.loading && (
++          <motion.div
++            variants={itemVariants}
++            className="bg-slate-800/40 backdrop-blur-lg border border-white/10 rounded-lg p-4 space-y-3"
++          >
++            <div className="h-4 bg-slate-700/50 rounded animate-pulse" />
++            <div className="h-4 bg-slate-700/50 rounded animate-pulse" />
++          </motion.div>
++        )}
++
++        {/* Time Estimate Card */}
++        <motion.div
++          variants={itemVariants}
++          className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 backdrop-blur-lg border border-indigo-500/30 rounded-lg p-4"
++        >
++          <div className="flex items-start justify-between">
++            <div>
++              <p className="text-xs font-bold uppercase tracking-wider text-indigo-300 mb-1">
++                Time Estimate
++              </p>
++              <p className="text-2xl font-bold text-white">{timeEstimate}</p>
++              <p className="text-xs text-slate-400">minutes</p>
++            </div>
++            <div className="text-3xl">⏱️</div>
++          </div>
++        </motion.div>
++
++        {/* Bookmark Button */}
++        {user && stepTitle && (
++          <motion.div
++            variants={itemVariants}
++            className="flex gap-2"
++          >
++            <BookmarkButton
++              moduleId={moduleId}
++              stepIndex={stepIndex}
++              stepTitle={stepTitle}
++            />
++            <button
++              className="flex-1 bg-slate-800/40 backdrop-blur-lg border border-white/10 rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-slate-700/50 hover:border-white/20 transition"
++              title="Share this lesson"
++            >
++              📤 Share
++            </button>
++          </motion.div>
++        )}
++
++        {/* Next Lesson Preview */}
++        {nextModuleId !== null && nextModuleId !== undefined && nextLessonTitle && (
++          <motion.div
++            variants={itemVariants}
++            className="bg-gradient-to-br from-emerald-500/10 to-teal-500/10 backdrop-blur-lg border border-emerald-500/30 rounded-lg p-4 space-y-2"
++          >
++            <p className="text-xs font-bold uppercase tracking-wider text-emerald-300">
++              Next Lesson
++            </p>
++            <Link
++              href={`/course/${nextModuleId}`}
++              className="block group"
++            >
++              <p className="text-sm font-semibold text-white group-hover:text-emerald-300 transition line-clamp-2">
++                {nextLessonTitle}
++              </p>
++              <p className="text-xs text-slate-400 group-hover:text-slate-300 transition mt-2">
++                Module {String(nextModuleId).padStart(2, '0')} →
++              </p>
++            </Link>
++          </motion.div>
++        )}
++
++        {/* Login Prompt */}
++        {!user && !stats.loading && (
++          <motion.div
++            variants={itemVariants}
++            className="bg-slate-800/40 backdrop-blur-lg border border-white/10 rounded-lg p-4 text-center space-y-3"
++          >
++            <p className="text-sm text-slate-400">
++              Sign in to track your progress and earn badges
++            </p>
++            <Link
++              href="/auth/sign-in"
++              className="block bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold py-2 rounded-lg transition text-sm"
++            >
++              Sign In
++            </Link>
++          </motion.div>
++        )}
++      </div>
++    </motion.aside>
++  );
++}
+diff --git a/lib/hooks/useLessonStats.ts b/lib/hooks/useLessonStats.ts
+new file mode 100644
+index 0000000..784e471
+--- /dev/null
++++ b/lib/hooks/useLessonStats.ts
+@@ -0,0 +1,80 @@
++'use client';
++
++import { useEffect, useState } from 'react';
++import { createClient } from '@/lib/supabase/client';
++import type { User } from '@supabase/supabase-js';
++
++interface LessonStats {
++  xp: number;
++  level: number;
++  streakCurrent: number;
++  streakLongest: number;
++  badgesCount: number;
++  loading: boolean;
++}
++
++export function useLessonStats(user: User | null): LessonStats {
++  const [stats, setStats] = useState<LessonStats>({
++    xp: 0,
++    level: 0,
++    streakCurrent: 0,
++    streakLongest: 0,
++    badgesCount: 0,
++    loading: true,
++  });
++
++  useEffect(() => {
++    async function fetchStats() {
++      if (!user) {
++        setStats((prev) => ({
++          ...prev,
++          loading: false,
++        }));
++        return;
++      }
++
++      try {
++        const supabase = createClient();
++
++        // Fetch XP and level
++        const { data: xpData } = await supabase
++          .from('xp')
++          .select('points, level')
++          .eq('user_id', user.id)
++          .single();
++
++        // Fetch streaks
++        const { data: streakData } = await supabase
++          .from('streaks')
++          .select('current, longest')
++          .eq('user_id', user.id)
++          .single();
++
++        // Fetch badges count
++        const { data: badgesData, count: badgesCount } = await supabase
++          .from('badges')
++          .select('id', { count: 'exact' })
++          .eq('user_id', user.id);
++
++        setStats({
++          xp: xpData?.points || 0,
++          level: xpData?.level || 1,
++          streakCurrent: streakData?.current || 0,
++          streakLongest: streakData?.longest || 0,
++          badgesCount: badgesCount || 0,
++          loading: false,
++        });
++      } catch (error) {
++        console.error('Failed to fetch lesson stats:', error);
++        setStats((prev) => ({
++          ...prev,
++          loading: false,
++        }));
++      }
++    }
++
++    fetchStats();
++  }, [user?.id]);
++
++  return stats;
++}
