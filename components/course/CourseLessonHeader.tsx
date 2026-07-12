@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Logo } from '@/components/Logo';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 import { ProfileMenu } from '@/components/dashboard/ProfileMenu';
+import { usePreferredMotion } from '@/lib/hooks/usePreferredMotion';
 import type { User } from '@supabase/supabase-js';
 
 interface CourseLessonHeaderProps {
@@ -22,6 +23,7 @@ export function CourseLessonHeader({
   onMobileMenuToggle,
 }: CourseLessonHeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const prefersReducedMotion = usePreferredMotion();
 
   const handleMobileMenuToggle = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -94,17 +96,17 @@ export function CourseLessonHeader({
                 <motion.span
                   className="w-5 h-0.5 bg-white/80 rounded-full block"
                   animate={isMobileMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
                 />
                 <motion.span
                   className="w-5 h-0.5 bg-white/80 rounded-full block"
                   animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
                 />
                 <motion.span
                   className="w-5 h-0.5 bg-white/80 rounded-full block"
                   animate={isMobileMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
-                  transition={{ duration: 0.2 }}
+                  transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
                 />
               </button>
             </div>
@@ -113,7 +115,7 @@ export function CourseLessonHeader({
       </header>
 
       {/* Mobile Breadcrumb & Info */}
-      <div className="md:hidden sticky top-16 z-39 bg-gradient-to-b from-slate-900/90 to-slate-900/60 backdrop-blur-md border-b border-white/5 px-3 py-2">
+      <div className="md:hidden sticky top-16 z-30 bg-gradient-to-b from-slate-900/90 to-slate-900/60 backdrop-blur-md border-b border-white/5 px-3 py-2">
         <div className="flex flex-col gap-2">
           {/* Mobile Breadcrumb */}
           <div className="flex items-center gap-2 text-xs text-slate-400">
@@ -136,11 +138,13 @@ export function CourseLessonHeader({
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <motion.div
+        <motion.nav
+          role="navigation"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="md:hidden fixed top-32 left-0 right-0 z-30 bg-slate-900/95 backdrop-blur-lg border-b border-white/10"
+          transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
+          className="md:hidden fixed top-32 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-white/10"
         >
           <div className="max-w-7xl mx-auto px-3 py-4 flex flex-col gap-3">
             {/* Theme Switcher in Mobile Menu */}
@@ -164,7 +168,7 @@ export function CourseLessonHeader({
               </Link>
             )}
           </div>
-        </motion.div>
+        </motion.nav>
       )}
     </>
   );
