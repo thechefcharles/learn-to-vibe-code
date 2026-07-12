@@ -42,6 +42,7 @@ export function StepLessonViewer({
   completedModules,
 }: StepLessonViewerProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [naturallyReachedStep, setNaturallyReachedStep] = useState(0); // Only updated via Next button
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
   const [showHints, setShowHints] = useState(false);
   const [stepStartTime] = useState(Date.now());
@@ -74,6 +75,7 @@ export function StepLessonViewer({
   const currentStep = steps.steps[currentStepIndex];
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === steps.steps.length - 1;
+  const isPreviewMode = currentStepIndex > naturallyReachedStep;
 
   // Load saved progress from localStorage
   useEffect(() => {
@@ -102,7 +104,9 @@ export function StepLessonViewer({
       const newCompleted = new Set(completedSteps);
       newCompleted.add(currentStepIndex);
       setCompletedSteps(newCompleted);
-      setCurrentStepIndex(currentStepIndex + 1);
+      const nextStepIndex = currentStepIndex + 1;
+      setCurrentStepIndex(nextStepIndex);
+      setNaturallyReachedStep(Math.max(naturallyReachedStep, nextStepIndex));
       setQuizState({
         answered: false,
         selectedIndex: null,
@@ -262,7 +266,19 @@ export function StepLessonViewer({
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 max-w-3xl">
+        <div className={`flex-1 max-w-3xl ${isPreviewMode ? 'opacity-60 pointer-events-none select-none' : ''}`}>
+        {/* Preview Mode Badge */}
+        {isPreviewMode && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-4 p-3 rounded-lg bg-amber-500/20 border border-amber-500/50 flex items-center gap-2 text-amber-200"
+          >
+            <span className="text-lg">👀</span>
+            <span className="text-sm font-medium">Preview Mode — Complete earlier lessons to unlock</span>
+          </motion.div>
+        )}
+
         {/* Step Indicator */}
         <motion.div
           key={currentStepIndex}
@@ -583,7 +599,7 @@ export function StepLessonViewer({
                       <motion.button
                         key={idx}
                         onClick={() => {
-                          if (!quizState.answered) {
+                          if (!quizState.answered && !isPreviewMode) {
                             setQuizState({
                               answered: true,
                               selectedIndex: idx,
@@ -591,8 +607,8 @@ export function StepLessonViewer({
                             });
                           }
                         }}
-                        whileHover={!quizState.answered ? { scale: 1.01, y: -2 } : {}}
-                        whileTap={!quizState.answered ? { scale: 0.99 } : {}}
+                        whileHover={!quizState.answered && !isPreviewMode ? { scale: 1.01, y: -2 } : {}}
+                        whileTap={!quizState.answered && !isPreviewMode ? { scale: 0.99 } : {}}
                         className={`w-full p-4 rounded-lg text-left transition-all duration-200 font-medium ${
                           quizState.selectedIndex === idx
                             ? idx === currentStep.quiz!.correctAnswer
@@ -605,8 +621,8 @@ export function StepLessonViewer({
                             : isKids
                               ? "bg-white border border-purple-200 text-purple-700 hover:bg-purple-50"
                               : "bg-slate-800 border border-purple-500/30 text-purple-100 hover:bg-slate-700"
-                        } ${quizState.answered ? "cursor-default" : "cursor-pointer"}`}
-                        disabled={quizState.answered}
+                        } ${quizState.answered || isPreviewMode ? "cursor-default" : "cursor-pointer"}`}
+                        disabled={quizState.answered || isPreviewMode}
                       >
                         {idx === currentStep.quiz!.correctAnswer && quizState.answered && <span className="font-bold mr-2">✓</span>}
                         {idx !== currentStep.quiz!.correctAnswer && quizState.answered && idx === quizState.selectedIndex && <span className="font-bold mr-2">✗</span>}
@@ -682,17 +698,19 @@ export function StepLessonViewer({
 
             <motion.button
               onClick={isLastStep ? () => (window.location.href = `/course`) : handleNext}
-              disabled={currentStep.sections ? lessonCompletedTrigger !== currentStepIndex : false}
-              whileHover={!(currentStep.sections && lessonCompletedTrigger !== currentStepIndex) ? { scale: 1.02, y: -2 } : {}}
+              disabled={isPreviewMode || (currentStep.sections ? lessonCompletedTrigger !== currentStepIndex : false)}
+              whileHover={!isPreviewMode && !(currentStep.sections && lessonCompletedTrigger !== currentStepIndex) ? { scale: 1.02, y: -2 } : {}}
               className={`w-full sm:w-auto px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white ${
-                currentStep.sections && lessonCompletedTrigger !== currentStepIndex
+                isPreviewMode || (currentStep.sections && lessonCompletedTrigger !== currentStepIndex)
                   ? "opacity-30 cursor-not-allowed"
                   : isLastStep
                     ? "bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 shadow-lg hover:shadow-emerald-500/50"
                     : "bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/50"
               }`}
             >
-              {currentStep.sections && lessonCompletedTrigger !== currentStepIndex
+              {isPreviewMode
+                ? "Preview Mode"
+                : currentStep.sections && lessonCompletedTrigger !== currentStepIndex
                 ? "Complete all sections to continue"
                 : isLastStep
                   ? "Back to Course"
