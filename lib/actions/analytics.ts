@@ -32,9 +32,9 @@ export async function logEvent(event: AnalyticsEvent) {
 
 export async function getAnalyticsSummary() {
   try {
-    // Admin-only access
+    // Admin-only access (check server-controlled app_metadata, not client-writable user_metadata)
     const user = await getUser();
-    if (!user || user.user_metadata?.role !== 'admin') {
+    if (!user || user.app_metadata?.role !== 'admin') {
       return null;
     }
 

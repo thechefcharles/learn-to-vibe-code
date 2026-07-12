@@ -15,8 +15,8 @@ export default async function AnalyticsPage() {
     redirect('/auth/sign-in');
   }
 
-  // Admin-only access
-  const isAdmin = user.user_metadata?.role === 'admin';
+  // Admin-only access (check server-controlled app_metadata, not client-writable user_metadata)
+  const isAdmin = user.app_metadata?.role === 'admin';
   if (!isAdmin) {
     redirect('/');
   }
