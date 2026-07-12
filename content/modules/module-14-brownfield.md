@@ -37,7 +37,13 @@ This delivers Objective 1. A repeatable way to map an unfamiliar codebase, using
 - **Ask the agent to map it:** "Summarize this repo's architecture, main modules, and how a request flows through it." Then verify against the actual files (the AI can be wrong).
 - **Find the seams:** where's the data layer, routing, auth, tests? Trace one real feature end to end.
 - **Note the conventions:** naming, folder patterns, state management — you'll match them, not fight them.
-- **Read decisions.md or DECISION_LOG.md if it exists:** repos often document *why* key choices were made — why Supabase over Firebase, why server components over client, why this folder structure. Understanding the reasoning behind architectural choices prevents you from fighting the codebase or proposing changes that contradict earlier decisions. It's the "why" behind the structure.
+- **Read decisions.md or DECISION_LOG.md if it exists:** repos often document *why* key choices were made.
+
+  > **For kids:**
+  > If the repo has `decisions.md` (or `DECISION_LOG.md`), read it first. It explains why the code is the way it is — "why did they pick Supabase instead of Firebase?" or "why are there server components instead of client?" Understanding the "why" helps you respect the design instead of fighting it.
+
+  > **For adults:**
+  > Review `decisions.md` or `DECISION_LOG.md` immediately if present. It's your map to architectural reasoning: which trade-offs were made, why certain patterns were chosen, and what constraints shaped the system. This prevents well-intentioned refactors that contradict earlier decisions. Particularly useful in teams: architectural decisions are institutional knowledge, easy to forget, and expensive to re-litigate.
 
 ---
 
