@@ -38,6 +38,44 @@ Good design isn't magic. It's rules:
 
 ---
 
+## What Plain UI Looks Like (Before Design) 🙈
+
+When you ask Claude Code to build an app WITHOUT design direction, it looks like this:
+
+[SCREENSHOT: m06-before-clients]
+
+Or like this:
+
+[SCREENSHOT: m06-before-invoices]
+
+**Notice what's missing:**
+- **No hierarchy:** Everything looks the same size. You don't know what to look at first
+- **No spacing:** Everything is crammed together. It feels cramped and hard to read
+- **No color:** Just black text on white. Boring and lifeless
+- **No polish:** Looks like a placeholder, not a real app
+
+This is "plain UI." It **works**, but nobody wants to use it. Your pet tracker would technically run fine, but people would say "ew, that looks ugly."
+
+## Design Fixes All of That ✨
+
+By the end of this module, you'll know how to:
+1. **Add hierarchy** — make titles big and bold, keep details small
+2. **Add spacing** — give things breathing room
+3. **Pick colors** — use 2-3 colors that work together
+4. **Make it professional** — rounded corners, shadows, polish
+
+Then your app goes from "plain and boring" to "wow, that looks good!"
+
+The screenshot above? With design applied, it becomes:
+- Clear headings that stand out
+- Buttons that look clickable
+- Colors that guide your eye
+- Spacing that makes it relaxing to use
+
+**Your job this module:** Turn that plain app into one people actually enjoy using.
+
+---
+
 ## Lesson 6.2 — Apply Design with Tailwind by Hand (~30 min)
 
 Before you ask Claude Code to style everything, let's write some Tailwind classes ourselves. This isn't hard — you're just combining predefined class names.

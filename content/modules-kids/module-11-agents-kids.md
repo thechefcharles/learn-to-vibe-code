@@ -307,6 +307,77 @@ export async function runBirthdayWorkflow() {
 
 ---
 
+## Lesson 11.5a — Make Sure Your Agent Works (~30 min)
+
+An agent that crashes is worse than no agent. You need to test it.
+
+### What to Test
+
+1. **Happy path:** Agent works, returns right answer
+2. **Oops path:** Tool fails (API timeout), agent handles it
+3. **Infinite loop catch:** Agent doesn't loop forever
+
+### Example: Pet Tips Agent
+
+Recall your pet tips agent (from Lesson 11.3). Before you use it, test:
+
+**Test 1: It works**
+- You ask: "How do I train a Labrador?"
+- Agent calls tools (look up breed, get tips)
+- Agent returns helpful tips
+- ✅ PASS: Agent did what it should
+
+**Test 2: Tool fails, agent doesn't crash**
+- Imagine the "look up breed" tool fails (timeout)
+- Agent should NOT crash
+- Agent should say "I couldn't look that up, but here are general training tips"
+- ✅ PASS: Agent recovered
+
+**Test 3: Agent stops**
+- Agent is configured to loop max 5 times
+- You ask a weird question
+- Agent loops 5 times, then stops (doesn't loop forever)
+- ✅ PASS: Agent respected the limit
+
+### How to Test
+
+Write it out:
+
+```
+Test 1: Happy Path
+- Setup: Agent ready, breed lookup works
+- Action: Ask "How do I train a Labrador?"
+- Expect: Agent returns training tips
+- Result: ✅ PASS
+
+Test 2: Tool Fails
+- Setup: Agent ready, breed lookup times out
+- Action: Ask "How do I train a Labrador?"
+- Expect: Agent recovers with general tips (doesn't crash)
+- Result: ✅ PASS
+
+Test 3: Loop Limit
+- Setup: Agent configured with max 5 loops
+- Action: Ask a complex question that could loop forever
+- Expect: Agent stops after 5 loops
+- Result: ✅ PASS
+```
+
+Before you ship your agent, run these tests. If all pass, your agent is ready.
+
+### Knowledge Check
+
+**Q11-5a (kids):** Your pet tips agent stops responding after 10 requests. What happened?
+
+a) It crashed
+b) It hit the loop limit and stopped (as designed)
+c) The database is broken
+d) Claude Code quit
+
+**Correct:** b) — Loop limits protect you. Agents stop automatically so they don't run forever.
+
+---
+
 ## Activity: Build a Pet Tips Agent
 
 ### Step 1: Design the agent by hand (25 min)
