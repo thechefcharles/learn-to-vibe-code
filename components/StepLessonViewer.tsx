@@ -182,10 +182,10 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             {steps.moduleName}
           </div>
           {/* Time indicator in top right of header */}
-          <div className="ml-4 flex-shrink-0">
+          <div className="ml-6 mr-2 flex-shrink-0">
             <div
               className="flex items-center gap-2 p-2 rounded-lg bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 backdrop-blur-sm"
-              title={`${remaining} min left out of ${total} min total`}
+              title={`${remaining} minutes remaining out of ${total} total`}
               role="img"
               aria-label={`${remaining} of ${total} minutes remaining in this module`}
             >
@@ -219,8 +219,11 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                 />
               </svg>
               <div className="text-left leading-tight">
-                <span className={`block text-xs sm:text-sm font-bold bg-gradient-to-r ${isKids ? 'from-purple-400 to-purple-300 bg-clip-text text-transparent' : 'from-cyan-400 to-purple-400 bg-clip-text text-transparent'}`}>
-                  {remaining}/{total}
+                <span className={`block text-xs font-bold bg-gradient-to-r ${isKids ? 'from-purple-400 to-purple-300 bg-clip-text text-transparent' : 'from-cyan-400 to-purple-400 bg-clip-text text-transparent'}`}>
+                  {remaining}
+                </span>
+                <span className={`block text-[9px] uppercase tracking-widest font-semibold ${isKids ? 'text-purple-400/70' : 'text-cyan-400/70'}`}>
+                  min left
                 </span>
               </div>
             </div>
@@ -256,6 +259,11 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
           }`}
           data-step-container
         >
+          {/* Lesson Title */}
+          <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-white">
+            Lesson {currentStepIndex + 1}: {currentStep.title}
+          </h2>
+
           {/* Milestone Celebration */}
           {isMilestone && (
             <motion.div
