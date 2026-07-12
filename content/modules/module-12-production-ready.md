@@ -1,6 +1,6 @@
 # Module 12: Building Production-Ready Software
 
-**Stage:** Production · **Level:** Advanced · **Duration:** ~8 contact hours (0.8 CEU)
+**Stage:** Production · **Level:** Advanced · **Duration:** ~6 contact hours (0.6 CEU)
 
 **Prerequisites:** Modules 4–11. Learners have a deployed, database-backed app with auth, RLS, design, and an agent feature. This module turns a working app into a *trustworthy* one — direct preparation for the capstone.
 
@@ -8,7 +8,19 @@
 > 
 
 > **📸 Screenshots:** error/empty/loading states are auto-capturable (Playwright `?state=`); a passing test run is a terminal capture (or paste the text).
-> 
+>
+
+---
+
+## ⚡ Streamlined for Launch
+
+This module is **essentials only**: 6 hours instead of 8. We focus on what you *must* ship: tests, error states, security, accessibility, and performance.
+
+**Not covered:** advanced patterns like golden fixtures or tool contracts. These are powerful but optional — learn them after you ship your capstone.
+
+**Goal:** By the end of Module 12, you'll have a production-ready checklist. Complete it, and you're ready to ship.
+
+--- 
 
 ## Learning objectives
 
@@ -21,15 +33,13 @@ By the end of this module, the learner can:
 
 ---
 
-## Lesson 12.1 — What "production-ready" means (~30 min)
+## Lesson 12.1 — Production-Ready Foundation: Config + Tests (~75 min)
 
-Production-ready means the app holds up when real people use it in unexpected ways. Five pillars, each a lesson below: **tested**, **resilient** (handles errors/empty/loading), **secure**, **accessible & performant**, and **maintainable**.
+Production-ready means the app holds up when real people use it in unexpected ways. Five pillars: **tested**, **resilient** (handles errors/empty/loading), **secure**, **accessible & performant**, and **maintainable**.
 
 Reframe for AI builders: AI helps you *reach* production-ready faster (it writes tests, adds error handling, spots issues), but *you* set the bar and verify — the Module 1 principle at its highest stakes.
 
----
-
-### 12.1a — Configuration discipline (~45 min)
+### Configuration Discipline (~30 min)
 
 Production apps live in multiple environments: your local machine, staging, and production. Each needs different settings—a test database vs. production, short timeouts for dev vs. resilient timeouts for prod. **Configuration discipline** means separating *things you might change* (config) from *things you never share* (secrets).
 
@@ -133,214 +143,8 @@ export const config = {
 
 **Check:** if a value starts with `secret`, `token`, `key`, `password`, or `credential`, it's a secret. If you'd reasonably version-control it or commit with a placeholder, it's config.
 
----
 
-### 12.1b — Golden fixtures (~45 min)
-
-**Golden fixtures** are known-good test data — versioned JSON files representing exact, stable states of your app. When you run tests, you load a fixture, run the workflow, and verify the output matches expected behavior. This is essential for regression testing: you catch the moment code changes unintentionally break a previously working flow.
-
-#### For kids
-
-**Golden fixtures** = test data files you reuse every time. Think of them as a "frozen snapshot" of what your data looks like. When you find a bug (like "what if a name has an apostrophe?"), you add that example to the fixture so you never forget to test it again.
-
-Simple example:
-```json
-// fixtures/invoices.json
-{
-  "invoices": [
-    { "id": "inv-001", "client_name": "O'Reilly Media", "amount": 1500.50, "status": "overdue" },
-    { "id": "inv-002", "client_name": "Acme & Sons", "amount": 2000.00, "status": "paid" }
-  ]
-}
-```
-
-When you run your test, you load this file and check: "Does my code handle names with apostrophes and ampersands?" If it breaks, the fixture is right there in git to show what data caused it.
-
-**Deliverable:** Create `fixtures/invoices.json` with 3-5 realistic records (include edge cases like names with quotes or special characters). Write one test that loads this fixture and checks something — for example, "can we find overdue invoices?" Run the test and pass.
-
----
-
-#### For adults
-
-**Why golden fixtures matter:** Tests often use mocked or randomly generated data. But real data has edge cases — an invoice with a client name containing a quote character, a date field bordering midnight UTC, a currency with fractional units. Fixtures freeze those real edge cases in version control.
-
-Example fixture for invoice testing:
-```json
-// fixtures/invoices.json
-{
-  "invoices": [
-    {
-      "id": "inv-001",
-      "client_id": "client-123",
-      "client_name": "O'Reilly Media",
-      "amount": 1500.50,
-      "due_date": "2024-12-31T23:59:59Z",
-      "status": "overdue",
-      "created_at": "2024-01-01T00:00:00Z"
-    },
-    {
-      "id": "inv-002",
-      "client_id": "client-456",
-      "client_name": "Acme & Sons",
-      "amount": 2000.00,
-      "due_date": "2025-01-15T00:00:00Z",
-      "status": "paid",
-      "created_at": "2024-01-02T00:00:00Z"
-    }
-  ]
-}
-```
-
-In your test:
-```typescript
-import { readFileSync } from "fs";
-import { describe, it, expect } from "vitest";
-import { processReminders } from "@/lib/reminders";
-
-const fixtures = JSON.parse(readFileSync("fixtures/invoices.json", "utf8"));
-
-describe("reminders", () => {
-  it("drafts reminders only for overdue invoices", async () => {
-    const reminders = await processReminders(fixtures.invoices);
-    
-    // Golden check: expect exactly one reminder (for inv-001)
-    expect(reminders).toHaveLength(1);
-    expect(reminders[0].invoiceId).toBe("inv-001");
-    expect(reminders[0].body).toContain("O'Reilly Media"); // ← edge case: apostrophe handled
-  });
-});
-```
-
-If someone changes the reminder logic and it breaks on names with apostrophes, the golden fixture catches it immediately. The fixture is versioned in git, so the team knows exactly what data triggered the bug.
-
-**Calibration:** create fixtures from real data (scrub for privacy), include edge cases (quotes, special characters, boundary times), and keep them small (3-5 representative records). As bugs surface, add them to the fixtures to prevent regressions. **Fixtures live in git so everyone sees what data broke the system** — this is your team's collective memory of edge cases.
-
----
-
-### 12.1c — Tool contracts (~45 min)
-
-Tools (from Module 11) are functions or CLI commands your agent can call. A **tool contract** is a standardized interface for tool output — every tool returns the same shape: status, result/error, metrics. This makes tools predictable and composable.
-
-#### For kids
-
-A **tool contract** is a promise: "Every time you call me, I'll always return the same shape of answer." This helps the agent know what to expect.
-
-**Simple rule:** Every tool returns:
-```json
-{
-  "status": "success" or "error",
-  "result": { /* what you got */ },
-  "error_message": "what went wrong (if any)"
-}
-```
-
-Example: A tool that sends an email always returns this shape, so the agent knows "if status is success, look at result.sent; if status is error, read error_message."
-
-```typescript
-// ✅ Good: always the same shape
-export async function sendEmail(email: string, subject: string) {
-  try {
-    const result = await mailer.send({ email, subject });
-    return {
-      status: "success",
-      result: { sent: true, message_id: result.id }
-    };
-  } catch (err) {
-    return {
-      status: "error",
-      error_message: err.message
-    };
-  }
-}
-```
-
-**Deliverable:** Pick one tool from your capstone (e.g., "fetch user data" or "send notification"). Write out its contract: What does it return on success? What if it fails? Create a simple schema (JSON or TypeScript interface) that documents this. Show that you understand: tools need predictable output so agents can use them reliably.
-
----
-
-#### For adults
-
-**Bad tool output:** inconsistent shapes, no clear success/failure signal:
-```typescript
-// ❌ Inconsistent: sometimes returns object, sometimes string, unclear on errors
-export async function sendEmail(email: string, subject: string, body: string) {
-  try {
-    const result = await mailer.send({ email, subject, body });
-    return result; // What shape? Varies by mailer library
-  } catch (err) {
-    return err.message; // String, not an object!
-  }
-}
-```
-
-**Good tool contract:** standardized JSON with status, result, metrics, and observability:
-```typescript
-// ✅ Consistent: always returns {status, result, error, metrics}
-interface ToolOutput {
-  status: "success" | "error" | "timeout";
-  result?: Record<string, any>;
-  error?: string;
-  metrics: {
-    duration_ms: number;
-    attempts: number;
-    timestamp: string;
-  };
-}
-
-export async function sendEmail(email: string, subject: string, body: string): Promise<ToolOutput> {
-  const startTime = Date.now();
-  let attempts = 0;
-
-  try {
-    attempts += 1;
-    const result = await mailer.send({ email, subject, body });
-    
-    return {
-      status: "success",
-      result: {
-        sent: true,
-        message_id: result.id,
-        recipient: email,
-      },
-      metrics: {
-        duration_ms: Date.now() - startTime,
-        attempts,
-        timestamp: new Date().toISOString(),
-      },
-    };
-  } catch (err) {
-    if (Date.now() - startTime > 5000) {
-      return {
-        status: "timeout",
-        error: "Email service took too long",
-        metrics: {
-          duration_ms: Date.now() - startTime,
-          attempts,
-          timestamp: new Date().toISOString(),
-        },
-      };
-    }
-    
-    return {
-      status: "error",
-      error: err instanceof Error ? err.message : "Unknown error",
-      metrics: {
-        duration_ms: Date.now() - startTime,
-        attempts,
-        timestamp: new Date().toISOString(),
-      },
-    };
-  }
-}
-```
-
-Every tool returns `{status, result, error, metrics}`. The agent (or your code) checks `status` to know what happened.
-
-**Link to stability & observability:** with a tool contract, you can swap implementations (Sendgrid → AWS SES) without changing the contract. The agent sees the same interface. More critically, **since every call has `duration_ms`, `attempts`, and `timestamp`, you can debug operational issues** — "why did call #5 fail?" becomes traceable: inspect the metrics (did it timeout? retry twice?), the status, and the error message. This is how you build production observability. Over time, you can analyze patterns: are calls getting slower? Do certain conditions trigger retries?
-
----
-
-## Lesson 12.2 — Generate tests with Claude Code and verify (~75 min)
+## Lesson 12.2 — Write Tests: Unit, Integration & E2E (~60 min)
 
 Begins Objective 2. Tests are code that checks your code, so you can change things confidently. **Use Claude Code to generate tests, then you review and verify they actually work.**
 
@@ -455,7 +259,7 @@ Your job: read the test, understand what it's asserting, and verify that's what 
 
 ---
 
-## Lesson 12.3-12.5 — Harden with Claude Code (error handling, security, a11y/perf) (~120 min)
+## Lesson 12.3 — Harden: Error States, Security, A11y & Performance (~90 min)
 
 Continues & completes Objective 2–3. **Use Claude Code to generate error handling, security fixes, and accessibility/performance improvements. You verify each by testing.**
 
