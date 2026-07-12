@@ -158,7 +158,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
       <VideoBackground />
       <MouseTrail />
 
-      {/* Header — large module name with lesson number below */}
+      {/* Header — large module name */}
       <div
         className={`sticky top-0 z-40 backdrop-blur-xl border-b ${
           isKids
@@ -166,83 +166,30 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             : "bg-gradient-to-b from-cyan-500/10 via-purple-500/5 to-transparent border-white/10 shadow-[0_8px_32px_-8px_rgba(168,85,247,0.3)]"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12 flex flex-col items-center text-center gap-3">
+        <div className="max-w-7xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between relative">
           <div
-            className={`text-5xl sm:text-7xl font-black tracking-tighter ${
-              isKids
-                ? "text-purple-900"
-                : "text-white"
-            }`}
+            className="text-3xl sm:text-5xl font-black tracking-tighter flex-1 text-center"
+            style={{
+              background: isKids
+                ? "linear-gradient(to right, #8b5cf6, #ec4899)"
+                : "linear-gradient(to right, #06b6d4, #a78bfa, #ec4899)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              color: "transparent",
+            }}
           >
             {steps.moduleName}
           </div>
-          <div className={`text-lg sm:text-2xl font-bold ${isKids ? "text-purple-700" : "text-cyan-300"}`}>
-            Lesson {currentStepIndex + 1}: {currentStep.title}
-          </div>
-          {streak && (
-            <span className="text-orange-400 text-sm mt-2 font-semibold">🔥 {streak.current} day streak</span>
-          )}
-        </div>
-      </div>
-
-      {/* Main Content - Two Column Layout */}
-      <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8 flex gap-4 sm:gap-8 relative z-10 flex-1">
-        {/* Sidebar - Always visible */}
-        <div className="hidden lg:block w-64 flex-shrink-0">
-            <ModuleSidebar
-              steps={steps}
-              currentStepIndex={currentStepIndex}
-              completedSteps={completedSteps}
-              onJumpToStep={handleJumpToStep}
-              isKids={isKids}
-            />
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1 max-w-3xl">
-        {/* Step Indicator */}
-        <motion.div
-          key={currentStepIndex}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className={`rounded-2xl border backdrop-blur-md p-4 sm:p-6 ${
-            isKids
-              ? "bg-white/10 border-white/20"
-              : "bg-white/5 border-white/10"
-          }`}
-          data-step-container
-        >
-          {/* Lesson Title */}
-          <h2 className="text-2xl sm:text-3xl font-bold mb-6 text-white">
-            Lesson {currentStepIndex + 1}: {currentStep.title}
-          </h2>
-
-          {/* Milestone Celebration */}
-          {isMilestone && (
-            <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ type: "spring", stiffness: 300 }}
-              className={`mb-4 p-4 rounded-lg text-center font-bold text-lg ${
-                isKids
-                  ? "bg-yellow-100 text-yellow-700 border-2 border-yellow-400"
-                  : "bg-yellow-500/20 text-yellow-300 border border-yellow-500"
-              }`}
-            >
-              {milestoneText}
-            </motion.div>
-          )}
-
-          {/* Time Remaining Indicator - Top right of content box */}
-          <div className="mb-8 flex justify-end">
+          {/* Time indicator in top right of header */}
+          <div className="ml-4 flex-shrink-0">
             <div
-              className="flex items-center gap-3 flex-shrink-0 p-3 rounded-lg bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 backdrop-blur-sm"
+              className="flex items-center gap-2 p-2 rounded-lg bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 backdrop-blur-sm"
               title={`${remaining} min left out of ${total} min total`}
               role="img"
               aria-label={`${remaining} of ${total} minutes remaining in this module`}
             >
-              <svg width="48" height="48" viewBox="0 0 36 36" className="-rotate-90 flex-shrink-0">
+              <svg width="32" height="32" viewBox="0 0 36 36" className="-rotate-90 flex-shrink-0">
                 <defs>
                   <linearGradient id={timeGradientId} x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#06b6d4" />
@@ -272,15 +219,58 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
                 />
               </svg>
               <div className="text-left leading-tight">
-                <span className={`block text-sm sm:text-base font-bold bg-gradient-to-r ${isKids ? 'from-purple-400 to-purple-300 bg-clip-text text-transparent' : 'from-cyan-400 to-purple-400 bg-clip-text text-transparent'}`}>
+                <span className={`block text-xs sm:text-sm font-bold bg-gradient-to-r ${isKids ? 'from-purple-400 to-purple-300 bg-clip-text text-transparent' : 'from-cyan-400 to-purple-400 bg-clip-text text-transparent'}`}>
                   {remaining}/{total}
-                </span>
-                <span className={`block text-[10px] uppercase tracking-widest font-semibold ${isKids ? 'text-purple-400/70' : 'text-cyan-400/70'}`}>
-                  minutes
                 </span>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Main Content - Two Column Layout */}
+      <div className="max-w-7xl mx-auto px-4 py-2 sm:py-3 flex gap-4 sm:gap-8 relative z-10 flex-1">
+        {/* Sidebar - Always visible */}
+        <div className="hidden lg:block w-64 flex-shrink-0">
+            <ModuleSidebar
+              steps={steps}
+              currentStepIndex={currentStepIndex}
+              completedSteps={completedSteps}
+              onJumpToStep={handleJumpToStep}
+              isKids={isKids}
+            />
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 max-w-3xl">
+        {/* Step Indicator */}
+        <motion.div
+          key={currentStepIndex}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className={`rounded-2xl border backdrop-blur-md p-4 sm:p-6 ${
+            isKids
+              ? "bg-white/10 border-white/20"
+              : "bg-white/5 border-white/10"
+          }`}
+          data-step-container
+        >
+          {/* Milestone Celebration */}
+          {isMilestone && (
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: "spring", stiffness: 300 }}
+              className={`mb-4 p-4 rounded-lg text-center font-bold text-lg ${
+                isKids
+                  ? "bg-yellow-100 text-yellow-700 border-2 border-yellow-400"
+                  : "bg-yellow-500/20 text-yellow-300 border border-yellow-500"
+              }`}
+            >
+              {milestoneText}
+            </motion.div>
+          )}
 
           {currentStep.sections ? (
             <div className="mb-6">
