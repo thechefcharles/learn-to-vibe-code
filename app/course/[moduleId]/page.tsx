@@ -123,7 +123,7 @@ export default async function LessonPage(props: LessonPageProps) {
               moduleId={moduleId}
               lessonNumber={moduleId}
               lessonTitle={pageTitle}
-              estimatedMinutes={meta.estimatedMinutes || 30}
+              estimatedMinutes={30}
               user={user}
             />
           )}
