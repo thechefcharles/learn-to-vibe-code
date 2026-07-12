@@ -17,76 +17,178 @@ By the end of this module, you'll be able to:
 
 ---
 
-## Lesson 14.1 — Understanding Someone Else's Code (~45 min)
+## Lesson 14.1 — Claude Code Maps the Codebase for You (~45 min)
 
-Reading existing code is hard. Start by:
+Reading existing code from scratch is hard! Let Claude Code do the heavy lifting.
 
-1. **Find the entry point** — what runs first? (Usually `index.tsx` or `app.tsx`)
-2. **Trace the flow** — follow the data/logic through the app
-3. **Identify patterns** — how does this codebase organize things?
-4. **Ask the AI** — *"Explain the architecture of this codebase. Where would I add a new feature?"*
+**Without AI:** You read files for 30 minutes, still confused about the architecture.
 
-AI reads the whole project and tells you how it's organized.
+**With Claude Code:** It reads the entire codebase and summarizes it in 2 minutes! 🚀
+
+**Let Claude Code orient you:**
+
+Open Claude Code:
+```bash
+claude
+```
+
+Paste:
+
+```
+I'm new to this codebase. Please help me understand it:
+
+1. What does this app do? (2-3 sentences)
+2. What are the main parts? (auth, database, UI, etc.)
+3. Trace one feature end-to-end (e.g., how does adding a pet work?)
+4. What patterns/conventions does the code use?
+5. Where would I add a new feature? (which files?)
+```
+
+Claude Code will:
+- Summarize the whole app ✅
+- Show the architecture ✅
+- Trace data flow ✅
+- Identify patterns ✅
+- Point to the right files ✅
+
+Now you understand the layout. Much faster than reading all the code!
 
 ---
 
-## Lesson 14.2 — Making Changes Safely (~60 min)
+## Lesson 14.2 — Make Small, Safe Changes (~60 min)
 
-**Golden rule:** Make small changes, test after each one.
+**Golden rule:** Change the minimum, match the code around it, verify it works.
 
-1. Create a branch: `git branch my-feature`
-2. Make one change
-3. Test it
-4. Commit: `git commit -m "Added new feature"`
+**Workflow:**
+
+1. Create a branch: `git checkout -b feature-name`
+2. Make ONE small change
+3. Test it: `npm run dev` or `npm test`
+4. Commit: `git commit -m "Clear message"`
 5. Push: `git push`
 
-Don't change ten things and hope.
+**Don't:** Change 10 things and hope it works. That's chaos! 
+
+**Do:** One focused change, test, verify, commit. Repeat.
 
 ---
 
-## Lesson 14.3 — Using AI to Help (~45 min)
+## Lesson 14.3 — Claude Code Assists Your Debugging (~45 min)
 
-AI is amazing at understanding existing code:
+If code breaks, Claude Code helps you find the bug:
 
-*"I need to add a new feature (export pets as CSV). Here's my codebase. Where would I add this? What files need to change? What data does it need?"*
+Open Claude Code:
 
-Claude Code reads the whole project and tells you:
-- Exactly which files to modify
-- What new code to add
-- How it integrates with existing code
+```bash
+claude
+```
 
-Then it helps you add the feature without breaking anything.
+Paste:
+
+```
+My pet tracker is crashing when I search!
+Error: "Cannot read properties of undefined"
+
+I can reproduce it by:
+1. [describe exact steps]
+2. [error appears]
+
+Please help:
+1. Search the code for this error
+2. Find the line that's crashing
+3. Explain why it crashes
+4. Show me the data flow
+
+Then I'll fix it!
+```
+
+Claude Code will:
+- Find the crash location ✅
+- Explain the root cause ✅
+- Suggest a fix ✅
+- BUT: You make the actual fix and verify it works ✅
 
 ---
 
 ## Activity: Add a Feature to Existing Code 🏗️
 
-### Step 1: Pick a feature (2 min)
-Choose from your pet tracker:
+Use Claude Code to map the code, then add a focused feature.
+
+### Step 1: Let Claude Code map your pet tracker (5 min)
+
+Open Claude Code:
+```bash
+claude
+```
+
+Paste:
+
+```
+Map my pet tracker codebase.
+
+Tell me:
+1. What does this app do?
+2. What are the main parts? (UI, database, auth, etc.)
+3. How does adding a pet work? (trace it end-to-end)
+4. Where's the code for displaying pets?
+5. Where would I add an "export to CSV" feature?
+
+Show me file paths!
+```
+
+Claude Code will give you a complete map. You now understand the layout.
+
+### Step 2: Pick a feature to add (1 min)
+
+Choose one:
 - Export pets as CSV
 - Search by pet name  
 - Sort by breed
-- Add age calculator
+- Add a "favorite" button
 
-### Step 2: Understand the codebase (10 min)
-Prompt Claude Code: *"Explain the architecture of my pet tracker. Where would I add an export-to-CSV feature?"*
+### Step 3: Create a branch and make the change (10 min)
 
-Claude reads the whole project and tells you what files change.
+```bash
+git checkout -b add-my-feature
+```
 
-### Step 3: Add the feature (15 min)
-1. Create a branch: `git checkout -b add-export-csv`
-2. Ask Claude Code: *"Add export-to-CSV button to my pet list."*
-3. Test it: button appears, click it, file downloads ✓
+Ask Claude Code:
+```
+Add [feature name] to my pet tracker.
 
-### Step 4: Test and push (8 min)
-1. `npm test` (still passes ✓)
-2. `git commit -m "Add pet export to CSV" && git push`
-3. Open a PR on GitHub
+Based on the architecture, make a focused change:
+- Where should I add the code?
+- What's the minimal change?
+- How does it integrate with existing code?
+```
+
+Claude Code proposes the change. You review it, make sure it's small and focused, then accept it.
+
+### Step 4: Test and verify (3 min)
+
+```bash
+npm run dev
+```
+
+Test your feature:
+- Does it work? ✅
+- Does it match the existing code style? ✅
+- Did you break anything? ✅
+
+### Step 5: Commit and push (2 min)
+
+```bash
+git add .
+git commit -m "Add [feature name]"
+git push -u origin add-my-feature
+```
+
+Open a PR on GitHub.
 
 ### Deliverable:
 - Screenshot of the feature working
 - GitHub PR screenshot  
-- Commit message shown
+- List the files you changed (keep it small!)
 
 ---
 
