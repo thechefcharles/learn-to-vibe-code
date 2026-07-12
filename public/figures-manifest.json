@@ -100,6 +100,14 @@
       "path": "/figures/m06/m06-claude-design-prototype.png",
       "alt": "Claude Design generated prototype"
     },
+    "m06-before-clients": {
+      "path": "/figures/module-06-before-plain-ui-clients.svg",
+      "alt": "Plain UI screenshot of the invoice app's clients page before design: default system font, no hierarchy, cramped spacing, no colors. Shows what AI generates without design direction."
+    },
+    "m06-before-invoices": {
+      "path": "/figures/module-06-before-plain-ui-invoices.svg",
+      "alt": "Plain UI screenshot of the invoice app's invoices page before design: generic layout, no visual cues for status, tight spacing, monochrome. Motivates why design matters."
+    },
     "m07-signed-out": {
       "path": "/figures/m07/m07-01-signed-out.png",
       "alt": "App sign-out state showing login prompt"

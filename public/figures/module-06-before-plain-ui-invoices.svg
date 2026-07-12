@@ -1,0 +1,63 @@
+<svg width="1200" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- White background -->
+  <rect width="1200" height="600" fill="white"/>
+
+  <!-- Border to show it's a screenshot -->
+  <rect width="1200" height="600" fill="none" stroke="#ccc" stroke-width="1"/>
+
+  <!-- Page content - deliberately plain -->
+  <!-- Header -->
+  <text x="16" y="32" font-family="Arial, sans-serif" font-size="16" font-weight="normal" fill="#000">Invoices</text>
+
+  <!-- Button -->
+  <text x="16" y="56" font-family="Arial, sans-serif" font-size="14" fill="#000">New Invoice</text>
+
+  <!-- Table headers -->
+  <text x="16" y="80" font-family="Arial, sans-serif" font-size="14" fill="#000">Client</text>
+  <text x="300" y="80" font-family="Arial, sans-serif" font-size="14" fill="#000">Amount</text>
+  <text x="500" y="80" font-family="Arial, sans-serif" font-size="14" fill="#000">Status</text>
+  <text x="700" y="80" font-family="Arial, sans-serif" font-size="14" fill="#000">Date</text>
+  <text x="900" y="80" font-family="Arial, sans-serif" font-size="14" fill="#000">Actions</text>
+
+  <!-- Divider -->
+  <line x1="16" y1="84" x2="1184" y2="84" stroke="#ccc" stroke-width="1"/>
+
+  <!-- Table rows - cramped, no hierarchy, no visual distinction -->
+  <text x="16" y="104" font-family="Arial, sans-serif" font-size="14" fill="#000">Alice Corp</text>
+  <text x="300" y="104" font-family="Arial, sans-serif" font-size="14" fill="#000">$1,200.00</text>
+  <text x="500" y="104" font-family="Arial, sans-serif" font-size="14" fill="#000">Paid</text>
+  <text x="700" y="104" font-family="Arial, sans-serif" font-size="14" fill="#000">Jan 1, 2024</text>
+  <text x="900" y="104" font-family="Arial, sans-serif" font-size="14" fill="#000">View Edit</text>
+
+  <line x1="16" y1="108" x2="1184" y2="108" stroke="#f0f0f0" stroke-width="1"/>
+
+  <text x="16" y="128" font-family="Arial, sans-serif" font-size="14" fill="#000">Bob Inc</text>
+  <text x="300" y="128" font-family="Arial, sans-serif" font-size="14" fill="#000">$850.00</text>
+  <text x="500" y="128" font-family="Arial, sans-serif" font-size="14" fill="#000">Pending</text>
+  <text x="700" y="128" font-family="Arial, sans-serif" font-size="14" fill="#000">Jan 5, 2024</text>
+  <text x="900" y="128" font-family="Arial, sans-serif" font-size="14" fill="#000">View Edit</text>
+
+  <line x1="16" y1="132" x2="1184" y2="132" stroke="#f0f0f0" stroke-width="1"/>
+
+  <text x="16" y="152" font-family="Arial, sans-serif" font-size="14" fill="#000">Charlie Co</text>
+  <text x="300" y="152" font-family="Arial, sans-serif" font-size="14" fill="#000">$2,500.00</text>
+  <text x="500" y="152" font-family="Arial, sans-serif" font-size="14" fill="#000">Paid</text>
+  <text x="700" y="152" font-family="Arial, sans-serif" font-size="14" fill="#000">Jan 10, 2024</text>
+  <text x="900" y="152" font-family="Arial, sans-serif" font-size="14" fill="#000">View Edit</text>
+
+  <line x1="16" y1="156" x2="1184" y2="156" stroke="#f0f0f0" stroke-width="1"/>
+
+  <text x="16" y="176" font-family="Arial, sans-serif" font-size="14" fill="#000">Diana LLC</text>
+  <text x="300" y="176" font-family="Arial, sans-serif" font-size="14" fill="#000">$500.00</text>
+  <text x="500" y="176" font-family="Arial, sans-serif" font-size="14" fill="#000">Overdue</text>
+  <text x="700" y="176" font-family="Arial, sans-serif" font-size="14" fill="#000">Dec 15, 2023</text>
+  <text x="900" y="176" font-family="Arial, sans-serif" font-size="14" fill="#000">View Edit</text>
+
+  <!-- Annotation -->
+  <text x="16" y="250" font-family="Arial, sans-serif" font-size="12" fill="#999">This is what AI generates by default:</text>
+  <text x="16" y="270" font-family="Arial, sans-serif" font-size="12" fill="#999">• Generic layout (functional but bland)</text>
+  <text x="16" y="290" font-family="Arial, sans-serif" font-size="12" fill="#999">• No visual cues for status (Paid, Pending, Overdue all identical)</text>
+  <text x="16" y="310" font-family="Arial, sans-serif" font-size="12" fill="#999">• Tight spacing (dense, hard to parse quickly)</text>
+  <text x="16" y="330" font-family="Arial, sans-serif" font-size="12" fill="#999">• Monochrome (no accent color to guide attention)</text>
+  <text x="16" y="350" font-family="Arial, sans-serif" font-size="12" fill="#999">• No personality (could be 1990s accounting software)</text>
+</svg>

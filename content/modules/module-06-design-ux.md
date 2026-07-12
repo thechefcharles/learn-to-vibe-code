@@ -33,9 +33,38 @@ Show the tells: default system fonts, everything the same size and weight, no br
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Plain UI ("Before")]**
+### What Plain AI-Generated UI Looks Like
 
-Browser at `/clients`: bare table, default fonts, cramped spacing, no visual hierarchy. Shows what "AI-generated" looks like.
+Here's what your app looks like when Cursor or Claude Code builds it without any design direction:
+
+![m06-before-clients]
+
+![m06-before-invoices]
+
+**Notice:**
+- **Font:** Default system font (Arial, no personality, no brand)
+- **Spacing:** Text is crammed together; hard to scan at a glance
+- **Hierarchy:** All text is the same size and weight (heading = field label = button text)
+- **Color:** Black text, white background; no accent color to guide attention
+- **Visual distinction:** No borders, shadows, or visual cues (status badges look identical)
+
+This is *functional*. It works. Data is there. But it looks like something from 1995 — or worse, it screams "I used AI" in the worst way.
+
+### Why It Happens
+
+AI models (like Claude, and the language models inside Cursor) produce the *statistically most common* markup. On the internet, that's:
+- Default sans-serif fonts (Arial, Helvetica)
+- Minimal spacing (to fit more on screen)
+- Flat hierarchy (no size variation)
+- No custom colors (saves bandwidth)
+
+The model isn't being lazy—it's being statistically accurate. But accuracy ≠ good design.
+
+### Your Job
+
+You're going to learn the four levers that transform "plain" into "professional" (Lesson 6.2). Then you'll apply them using a component library and Claude Code (Lesson 6.4).
+
+The transformation is the most motivating moment in the course. Same data, same structure, completely different vibe.
 
 ---
 

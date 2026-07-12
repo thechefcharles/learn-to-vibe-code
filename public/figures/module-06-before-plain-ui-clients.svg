@@ -1,0 +1,58 @@
+<svg width="1200" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- White background -->
+  <rect width="1200" height="600" fill="white"/>
+
+  <!-- Border to show it's a screenshot -->
+  <rect width="1200" height="600" fill="none" stroke="#ccc" stroke-width="1"/>
+
+  <!-- Page content - deliberately plain -->
+  <!-- Header -->
+  <text x="16" y="32" font-family="Arial, sans-serif" font-size="16" font-weight="normal" fill="#000">Clients</text>
+
+  <!-- Button -->
+  <text x="16" y="56" font-family="Arial, sans-serif" font-size="14" fill="#000">New Client</text>
+
+  <!-- Table headers -->
+  <text x="16" y="80" font-family="Arial, sans-serif" font-size="14" fill="#000">Name</text>
+  <text x="300" y="80" font-family="Arial, sans-serif" font-size="14" fill="#000">Email</text>
+  <text x="600" y="80" font-family="Arial, sans-serif" font-size="14" fill="#000">Status</text>
+  <text x="900" y="80" font-family="Arial, sans-serif" font-size="14" fill="#000">Actions</text>
+
+  <!-- Divider -->
+  <line x1="16" y1="84" x2="1184" y2="84" stroke="#ccc" stroke-width="1"/>
+
+  <!-- Table rows - cramped, no hierarchy -->
+  <text x="16" y="104" font-family="Arial, sans-serif" font-size="14" fill="#000">Alice Corp</text>
+  <text x="300" y="104" font-family="Arial, sans-serif" font-size="14" fill="#000">alice@example.com</text>
+  <text x="600" y="104" font-family="Arial, sans-serif" font-size="14" fill="#000">Active</text>
+  <text x="900" y="104" font-family="Arial, sans-serif" font-size="14" fill="#000">Edit Delete</text>
+
+  <line x1="16" y1="108" x2="1184" y2="108" stroke="#f0f0f0" stroke-width="1"/>
+
+  <text x="16" y="128" font-family="Arial, sans-serif" font-size="14" fill="#000">Bob Inc</text>
+  <text x="300" y="128" font-family="Arial, sans-serif" font-size="14" fill="#000">bob@example.com</text>
+  <text x="600" y="128" font-family="Arial, sans-serif" font-size="14" fill="#000">Inactive</text>
+  <text x="900" y="128" font-family="Arial, sans-serif" font-size="14" fill="#000">Edit Delete</text>
+
+  <line x1="16" y1="132" x2="1184" y2="132" stroke="#f0f0f0" stroke-width="1"/>
+
+  <text x="16" y="152" font-family="Arial, sans-serif" font-size="14" fill="#000">Charlie Co</text>
+  <text x="300" y="152" font-family="Arial, sans-serif" font-size="14" fill="#000">charlie@example.com</text>
+  <text x="600" y="152" font-family="Arial, sans-serif" font-size="14" fill="#000">Active</text>
+  <text x="900" y="152" font-family="Arial, sans-serif" font-size="14" fill="#000">Edit Delete</text>
+
+  <line x1="16" y1="156" x2="1184" y2="156" stroke="#f0f0f0" stroke-width="1"/>
+
+  <text x="16" y="176" font-family="Arial, sans-serif" font-size="14" fill="#000">Diana LLC</text>
+  <text x="300" y="176" font-family="Arial, sans-serif" font-size="14" fill="#000">diana@example.com</text>
+  <text x="600" y="176" font-family="Arial, sans-serif" font-size="14" fill="#000">Active</text>
+  <text x="900" y="176" font-family="Arial, sans-serif" font-size="14" fill="#000">Edit Delete</text>
+
+  <!-- Annotation -->
+  <text x="16" y="250" font-family="Arial, sans-serif" font-size="12" fill="#999">This is what AI generates by default:</text>
+  <text x="16" y="270" font-family="Arial, sans-serif" font-size="12" fill="#999">• Default system font (Arial, no personality)</text>
+  <text x="16" y="290" font-family="Arial, sans-serif" font-size="12" fill="#999">• All text same size (no visual hierarchy)</text>
+  <text x="16" y="310" font-family="Arial, sans-serif" font-size="12" fill="#999">• Cramped spacing (hard to scan)</text>
+  <text x="16" y="330" font-family="Arial, sans-serif" font-size="12" fill="#999">• Black and white only (no accent color)</text>
+  <text x="16" y="350" font-family="Arial, sans-serif" font-size="12" fill="#999">• Minimal visual design (looks like 1990s HTML)</text>
+</svg>
