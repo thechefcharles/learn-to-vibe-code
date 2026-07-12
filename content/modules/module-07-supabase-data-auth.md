@@ -269,7 +269,46 @@ create policy "users manage own clients"
 
 ---
 
-## Lesson 7.7 — Supabase vs. the alternatives (~30 min)
+## Lesson 7.7 — Configuration vs. secrets (~30 min)
+
+Not all env vars are created equal. **Config** is anything you might change between environments — URLs, thresholds, feature flags, timeouts. **Secrets** are credentials you *never* share — API keys, passwords, signing keys. This distinction matters for security and deployment.
+
+**Config lives in files or environment vars that are okay to version-control** (or committed with safe values):
+- Database connection string (non-prod)
+- Feature flag thresholds
+- Timeout durations
+- Public API URLs
+
+Example config file (`config.yaml`):
+```yaml
+database_url: postgresql://localhost/invoice_tracker
+timeout_ms: 5000
+max_retries: 3
+public_api_endpoint: https://api.example.com
+```
+
+**Secrets never touch git.** They live in `.env.local` (locally, gitignored) and Vercel env vars (production):
+- Supabase API keys and URLs (especially secret keys)
+- Database passwords
+- OAuth tokens (GitHub, Google)
+- Stripe secret keys
+- Signing certificates
+
+Example `.env.local`:
+```
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_pub_xxx
+SUPABASE_SERVICE_ROLE_KEY=sb_secret_xxx  # ← never shared!
+STRIPE_SECRET_KEY=sk_live_xxx  # ← never shared!
+```
+
+**Red flag:** if a key starts with `secret`, `private`, or `token`, it's a secret. If it's your publishable key, it's config (safe for the browser). If you're not 100% sure, treat it as a secret.
+
+**In production:** Vercel stores secrets in project env vars, inaccessible to everyone but the deployment. When you deploy, Vercel injects them at build time. You never type them into code or screenshots.
+
+---
+
+## Lesson 7.8 — Supabase vs. the alternatives (~30 min)
 
 This delivers Objective 3.
 
