@@ -342,7 +342,7 @@ export function ModuleSidebar({
             </div>
           ) : selectedModuleSteps ? (
             // Show lessons from selected module in preview mode - clickable but grayed out
-            <div className="space-y-1 opacity-60">
+            <motion.div className="space-y-1 opacity-60" initial={{ opacity: 0 }} animate={{ opacity: 0.6 }} transition={{ duration: 0.2 }}>
               {selectedModuleSteps.steps.map((step, index) => (
                 <button
                   key={index}
@@ -359,16 +359,31 @@ export function ModuleSidebar({
                   </div>
                 </button>
               ))}
-            </div>
+            </motion.div>
           ) : (
-            // Loading or placeholder
-            <div className={`p-3 rounded-lg text-sm ${
-              isKids
-                ? 'bg-purple-100/50 text-purple-900'
-                : 'bg-slate-700/30 text-slate-400'
-            }`}>
-              <p className="text-xs">Loading lessons...</p>
-            </div>
+            // Loading spinner
+            <motion.div
+              className="flex flex-col items-center justify-center py-6 gap-3"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="flex gap-1">
+                {[0, 1, 2].map((i) => (
+                  <motion.div
+                    key={i}
+                    className={`w-2 h-2 rounded-full ${
+                      isKids ? 'bg-purple-500' : 'bg-indigo-500'
+                    }`}
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 0.6, delay: i * 0.1, repeat: Infinity }}
+                  />
+                ))}
+              </div>
+              <p className={`text-xs ${isKids ? 'text-purple-700' : 'text-slate-400'}`}>
+                Loading module...
+              </p>
+            </motion.div>
           )}
         </div>
       )}
