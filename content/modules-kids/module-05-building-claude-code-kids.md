@@ -6,6 +6,15 @@
 
 > **Why this matters:** Claude Code is the "agentic" way to build — you describe a goal at a high level, and the AI plans and executes across your whole project. It's faster for bigger tasks than Cursor's in-editor flow. This module teaches you when to use which tool and how to direct AI safely.
 
+## Recap: Tool Choice
+
+Module 4 used Cursor (in-editor, small changes).  
+This module uses Claude Code (big features, orchestration).
+
+**Simple rule:** Local = Cursor. Big = Claude Code. You'll use both for real projects.
+
+---
+
 ## What You'll Learn
 
 By the end of this module, you'll be able to:
