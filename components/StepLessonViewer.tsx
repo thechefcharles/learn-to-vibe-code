@@ -171,12 +171,12 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
             className={`text-5xl sm:text-7xl font-black tracking-tighter ${
               isKids
                 ? "text-purple-900"
-                : "bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-lg"
+                : "text-white"
             }`}
           >
             {steps.moduleName}
           </div>
-          <div className={`text-lg sm:text-2xl font-bold ${isKids ? "text-purple-700" : "bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent"}`}>
+          <div className={`text-lg sm:text-2xl font-bold ${isKids ? "text-purple-700" : "text-cyan-300"}`}>
             Lesson {currentStepIndex + 1}: {currentStep.title}
           </div>
           {streak && (
