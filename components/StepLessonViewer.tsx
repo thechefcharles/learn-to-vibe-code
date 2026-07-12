@@ -84,6 +84,12 @@ export function StepLessonViewer({
       const parsed = JSON.parse(saved);
       setCurrentStepIndex(parsed.currentStep || 0);
       setCompletedSteps(new Set(parsed.completedSteps || []));
+      // Load naturallyReachedStep - default to max completed step if not saved
+      if (parsed.naturallyReachedStep !== undefined) {
+        setNaturallyReachedStep(parsed.naturallyReachedStep);
+      } else if (parsed.completedSteps && parsed.completedSteps.length > 0) {
+        setNaturallyReachedStep(Math.max(...parsed.completedSteps));
+      }
     }
   }, [moduleId]);
 
@@ -94,9 +100,10 @@ export function StepLessonViewer({
       JSON.stringify({
         currentStep: currentStepIndex,
         completedSteps: Array.from(completedSteps),
+        naturallyReachedStep: naturallyReachedStep,
       })
     );
-  }, [currentStepIndex, completedSteps, moduleId]);
+  }, [currentStepIndex, completedSteps, moduleId, naturallyReachedStep]);
 
   const handleNext = () => {
     if (!isLastStep) {
