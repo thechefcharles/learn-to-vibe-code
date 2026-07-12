@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { MarkdownRenderer } from "./MarkdownRenderer";
 import { useVersion } from "@/lib/VersionContext";
 import { useKeyboardNavigation } from "@/lib/hooks/useKeyboardNavigation";
+import { useKeyboardShortcuts } from "@/lib/hooks/useKeyboardShortcuts";
 import { useModuleTimeRemaining } from "@/lib/hooks/useModuleTimeRemaining";
 import { useSwipeNavigation } from "@/lib/hooks/useSwipeNavigation";
 import { useUserStreak } from "@/lib/hooks/useUserStreak";
@@ -14,6 +15,7 @@ import { ModuleIntro } from "./course/ModuleIntro";
 import { KeyPointCard } from "./course/KeyPointCard";
 import { CodeBlockWithCopy } from "./course/CodeBlockWithCopy";
 import { StepResourcesFooter } from "./course/StepResourcesFooter";
+import { KeyboardShortcutsPanel } from "./course/KeyboardShortcutsPanel";
 import { VideoBackground } from "./kids-landing/VideoBackground";
 import { MouseTrail } from "./kids-landing/MouseTrail";
 import { SectionLessonViewer } from "@/components/course/SectionLessonViewer";
@@ -49,6 +51,7 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
   const streak = useUserStreak();
   const { user } = useUser();
   const timeGradientId = useId();
+  const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
 
   // Circular progress: filled portion represents time remaining out of total.
   const timeRingRadius = 16;
@@ -689,6 +692,12 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
         </motion.div>
         </div>
       </div>
+
+      {/* Keyboard Shortcuts Panel */}
+      <KeyboardShortcutsPanel
+        isOpen={shortcutsOpen}
+        onClose={() => setShortcutsOpen(false)}
+      />
 
     </div>
   );
