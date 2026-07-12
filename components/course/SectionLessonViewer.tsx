@@ -192,91 +192,132 @@ export function SectionLessonViewer({
 
       {/* Hints */}
       {currentSection.hints && currentSection.hints.length > 0 && (
-        <details className="space-y-2">
-          <summary className={`font-semibold cursor-pointer ${
-            isKids ? 'text-purple-600' : 'text-cyan-400'
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`rounded-lg p-4 mb-8 border ${
+            isKids
+              ? 'bg-blue-50 border-blue-200'
+              : 'bg-blue-500/10 border-blue-500/30'
+          }`}
+        >
+          <div className={`font-bold uppercase text-xs tracking-wider mb-3 cursor-pointer ${
+            isKids ? 'text-blue-700' : 'text-blue-300'
           }`}>
-            Hints ({currentSection.hints.length})
-          </summary>
-          <ul className="space-y-1">
+            💡 Hints ({currentSection.hints.length})
+          </div>
+          <ul className="space-y-2">
             {currentSection.hints.map((hint, i) => (
-              <li key={i} className={`text-sm ${isKids ? 'text-purple-700' : 'text-slate-300'}`}>
-                • {hint}
-              </li>
+              <motion.li
+                key={i}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.05 }}
+                className={`text-sm leading-relaxed flex items-start gap-2 ${isKids ? 'text-blue-700' : 'text-blue-200'}`}
+              >
+                <span className="flex-shrink-0 mt-0.5">•</span>
+                <span>{hint}</span>
+              </motion.li>
             ))}
           </ul>
-        </details>
+        </motion.div>
       )}
 
       {/* Resources */}
       {currentSection.resources && currentSection.resources.length > 0 && (
-        <div className={`p-4 rounded-lg border ${
-          isKids
-            ? 'bg-green-50 border-green-200'
-            : 'bg-green-500/10 border-green-500/30'
-        }`}>
-          <h4 className={`font-semibold mb-3 ${isKids ? 'text-green-900' : 'text-green-300'}`}>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`p-4 rounded-lg border mb-8 ${
+            isKids
+              ? 'bg-green-50 border-green-200'
+              : 'bg-green-500/10 border-green-500/30'
+          }`}
+        >
+          <h4 className={`font-bold uppercase text-xs tracking-wider mb-4 ${isKids ? 'text-green-900' : 'text-green-300'}`}>
             📚 Resources
           </h4>
           <ul className="space-y-2">
             {currentSection.resources.map((res, i) => (
-              <li key={i}>
+              <motion.li
+                key={i}
+                whileHover={{ x: 4 }}
+                className={`text-sm transition-all ${
+                  isKids ? 'text-green-700' : 'text-green-400'
+                }`}
+              >
                 <a
                   href={res.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`underline hover:opacity-80 ${
-                    isKids ? 'text-green-700' : 'text-green-400'
-                  }`}
+                  className="hover:opacity-80 transition-opacity"
                 >
-                  {res.title} ({res.type})
+                  {res.type === 'docs' ? '📖' : res.type === 'video' ? '🎥' : '📄'} {res.title}
                 </a>
-              </li>
+              </motion.li>
             ))}
           </ul>
-        </div>
+        </motion.div>
       )}
 
       {/* Challenge */}
       {currentSection.challenge && (
-        <div className={`p-4 rounded-lg border ${
-          isKids
-            ? 'bg-orange-50 border-orange-200'
-            : 'bg-orange-500/10 border-orange-500/30'
-        }`}>
-          <h4 className={`font-semibold mb-2 ${isKids ? 'text-orange-900' : 'text-orange-300'}`}>
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`p-4 rounded-lg border mb-8 ${
+            isKids
+              ? 'bg-orange-50 border-orange-200'
+              : 'bg-orange-500/10 border-orange-500/30'
+          }`}
+        >
+          <h4 className={`font-bold uppercase text-xs tracking-wider mb-3 ${isKids ? 'text-orange-900' : 'text-orange-300'}`}>
             🎯 Challenge
           </h4>
-          <p className={`mb-3 ${isKids ? 'text-orange-800' : 'text-orange-200'}`}>
+          <p className={`mb-4 leading-relaxed ${isKids ? 'text-orange-800' : 'text-orange-200'}`}>
             {currentSection.challenge.description}
           </p>
-          <div className={`text-sm p-2 rounded ${
-            isKids ? 'bg-orange-100 text-orange-900' : 'bg-orange-900/30 text-orange-300'
-          }`}>
-            <div className="font-semibold">Action:</div>
-            {currentSection.challenge.action}
-          </div>
-        </div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.1 }}
+            className={`text-sm p-3 rounded border ${
+              isKids
+                ? 'bg-orange-100 text-orange-900 border-orange-200'
+                : 'bg-orange-900/30 text-orange-300 border-orange-500/30'
+            }`}
+          >
+            <div className="font-bold uppercase text-xs tracking-wider mb-2">Action:</div>
+            <div className="font-mono text-xs leading-relaxed">{currentSection.challenge.action}</div>
+          </motion.div>
+        </motion.div>
       )}
 
       {/* Viewed status indicator */}
-      <div className={`text-xs ${isKids ? 'text-purple-600' : 'text-slate-400'}`}>
-        {allSectionsViewed ? '✓ All sections completed' : `${viewedSections.size} of ${sections.length} sections viewed`}
-      </div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className={`text-xs font-semibold uppercase tracking-wider mb-4 ${isKids ? 'text-purple-600' : 'text-slate-400'}`}
+      >
+        {allSectionsViewed ? (
+          <span className={isKids ? 'text-purple-700' : 'text-emerald-400'}>✓ All sections completed</span>
+        ) : (
+          <span>{viewedSections.size} of {sections.length} sections viewed</span>
+        )}
+      </motion.div>
 
       {/* Navigation */}
       <div className="flex gap-4 pt-6 border-t border-slate-700">
         <motion.button
           onClick={() => setSectionIndex(Math.max(0, sectionIndex - 1))}
           disabled={isFirstSection}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className={`px-4 py-2 rounded-lg font-semibold transition-all ${
+          whileHover={!isFirstSection ? { y: -2 } : {}}
+          className={`px-6 py-2.5 rounded-lg font-bold transition-all duration-200 uppercase text-sm tracking-wider ${
             isFirstSection
-              ? 'opacity-50 cursor-not-allowed'
+              ? 'opacity-30 cursor-not-allowed text-slate-500'
               : isKids
-              ? 'bg-purple-500 text-white hover:bg-purple-600'
-              : 'bg-slate-700 text-white hover:bg-slate-600'
+              ? 'bg-purple-500 text-white hover:bg-purple-600 shadow-lg'
+              : 'bg-slate-700 text-slate-300 hover:bg-slate-600 hover:text-white'
           }`}
         >
           ← Back
@@ -284,15 +325,14 @@ export function SectionLessonViewer({
 
         {isLastSection ? (
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={allSectionsViewed ? { scale: 1.02, y: -2 } : {}}
             disabled={!allSectionsViewed}
-            className={`ml-auto px-4 py-2 rounded-lg font-semibold transition-all ${
+            className={`ml-auto px-6 py-2.5 rounded-lg font-bold transition-all duration-200 uppercase text-sm tracking-wider ${
               allSectionsViewed
                 ? isKids
-                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600'
-                  : 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white hover:from-cyan-600 hover:to-purple-700'
-                : 'opacity-50 cursor-not-allowed'
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-lg'
+                  : 'bg-gradient-to-r from-cyan-500 to-purple-600 text-white hover:from-cyan-600 hover:to-purple-700 shadow-lg shadow-purple-500/50'
+                : 'opacity-30 cursor-not-allowed'
             }`}
           >
             Lesson Complete! 🎉
