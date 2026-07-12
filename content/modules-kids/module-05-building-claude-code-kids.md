@@ -47,7 +47,75 @@ Use Cursor for edits, Claude Code for building new features.
 
 ---
 
-## Lesson 5.2 — CLAUDE.md: Your Project Memory (~30 min)
+## Lesson 5.2 — Design Your App's Structure by Hand (~30 min)
+
+Before you ask Claude Code to "figure out the structure," let's think about files and folders ourselves. This is called **architecture**.
+
+### How Apps Are Organized
+
+Your pet tracker has features: add a pet, show pets, delete a pet. Each feature needs code.
+
+Where does that code live? In separate files:
+
+- **Components folder** (`app/components/`): Reusable pieces (PetCard, PetForm, PetList)
+- **Pages folder** (`app/`): Full pages (home, about, settings)
+- **Utilities folder** (`lib/`): Helper functions (formatDate, validateEmail)
+- **Data folder** (`lib/api/`): Functions that talk to the database
+
+**Why?** If every line of code lived in ONE file, it would be 10,000 lines long—impossible to find anything.
+
+### Example: Pet Tracker Architecture
+
+Your pet tracker needs:
+
+**Feature 1: Add a pet**
+- File 1: `app/components/PetForm.tsx` (the form UI)
+- File 2: `app/actions/addPet.ts` (the logic to save to database)
+- File 3: `app/page.tsx` (imports and displays PetForm)
+
+**Feature 2: Show pets**
+- File 1: `app/components/PetList.tsx` (displays the list)
+- File 2: `app/components/PetCard.tsx` (displays one pet)
+- File 3: `app/page.tsx` (uses PetList)
+
+**Feature 3: Delete a pet**
+- File 1: `app/actions/deletePet.ts` (delete logic)
+- File 2: `app/components/PetCard.tsx` (has the delete button)
+
+### Practice: Sketch Your App's Files
+
+Take a feature you want to build (e.g., "Add a pet"). Sketch the files it needs:
+
+1. **UI Component** — What does the user see? (form, buttons, input fields) → File name?
+2. **Logic** — What happens when they click submit? → File name?
+3. **Data** — Does it talk to the database? → File name?
+
+Example answer:
+- UI: `components/PetForm.tsx`
+- Logic: `actions/addPet.ts`
+- Data: calls database via Supabase client
+
+**Challenge:** Sketch the files for "Delete a pet feature."
+
+Answer:
+- The delete button lives in: `components/PetCard.tsx`
+- The delete logic lives in: `actions/deletePet.ts`
+- The button calls the action when clicked
+
+### Why This Matters
+
+When you ask Claude Code to "build the feature," it will create files with these names. If you've already sketched the structure:
+- You can verify Claude Code didn't over-complicate it
+- You understand WHERE each part lives
+- You can modify it later (add to PetForm, change deletePet logic, etc.)
+
+**Without sketching:** Claude Code builds it, you accept it, you don't understand the structure, you're stuck when something breaks.
+
+**With sketching:** Claude Code builds it EXACTLY as you designed, you understand it completely.
+
+---
+
+## Lesson 5.3 — CLAUDE.md: Your Project Memory (~30 min)
 
 Just like `.cursorrules` in Cursor (Module 4), Claude Code reads a file called **CLAUDE.md** at the start of every session. This tells the AI your project's rules and conventions.
 
@@ -68,7 +136,7 @@ Now the AI always remembers your stack and patterns. No more repeating "I'm usin
 
 ---
 
-## Lesson 5.3 — Plan Mode: Propose Before Doing (~30 min)
+## Lesson 5.4 — Plan Mode: Propose Before Doing (~30 min)
 
 Before Claude Code makes big changes, use **Plan mode** to see what it *plans* to do before it does it.
 
@@ -91,7 +159,7 @@ Only after you approve does it actually make the changes!
 
 ---
 
-## Lesson 5.4 — The Agentic Workflow (~45 min)
+## Lesson 5.5 — The Agentic Workflow (~45 min)
 
 The pattern:
 
@@ -123,7 +191,21 @@ The agentic flow:
 
 ---
 
-## Lesson 5.5 — Prompting for Claude Code (~60 min)
+## Lesson 5.6 — Prompting for Claude Code (~60 min)
+
+You've sketched your app's files. Now Claude Code writes them all for you.
+
+**Why this works:**
+- You've already designed the structure (which files, what each does)
+- Claude Code knows file patterns (components have hooks, actions are async functions, etc.)
+- It can create 10 files in 30 seconds; it would take you 30 minutes
+
+**What you're doing:** Architecture + thinking. 
+**What Claude Code is doing:** Typing + pattern-matching.
+
+You own the hard part (design). Claude Code owns the tedious part (implementation). This is the partnership.
+
+### How to Write Good Prompts
 
 The prompts are different from Cursor. They're higher-level, more about goals than implementation.
 
@@ -139,7 +221,7 @@ The prompts are different from Cursor. They're higher-level, more about goals th
 
 ---
 
-## Lesson 5.6 — Build a Feature With Claude Code (~90 min)
+## Lesson 5.7 — Build a Feature With Claude Code (~90 min)
 
 Let's upgrade your pet tracker with Claude Code.
 
@@ -167,7 +249,7 @@ Claude Code fixes it.
 
 ---
 
-## Lesson 5.7 — Debugging at Scale (~30 min)
+## Lesson 5.8 — Debugging at Scale (~30 min)
 
 With a whole project changing, things can break. When they do:
 
@@ -179,7 +261,7 @@ With a whole project changing, things can break. When they do:
 
 ---
 
-## Lesson 5.8 — Cursor vs Claude Code: Which Tool for Which Task? (~45 min)
+## Lesson 5.9 — Cursor vs Claude Code: Which Tool for Which Task? (~45 min)
 
 Don't think of Cursor and Claude Code as competitors — use both for different jobs:
 
@@ -198,126 +280,150 @@ Don't think of Cursor and Claude Code as competitors — use both for different 
 
 ## Activity: Upgrade Your Pet Tracker 🐕
 
-Use Claude Code with a CLAUDE.md file to add a new feature (pick one):
+Use Claude Code with a CLAUDE.md file to add a new feature. **But first, sketch the architecture by hand.**
+
+Pick one feature:
 
 - Favorite system (heart to mark favorites)
 - Categories (group pets by type)
 - Birthday reminders
 - Photo gallery (multiple photos per pet)
 
-### Concrete example: Favorite system
+### Step 1: Sketch the architecture (10 min)
 
-Here's what a good goal prompt looks like:
+**Before you open Claude Code**, answer these questions for your chosen feature.
 
-*"Add a favorite system to the pet tracker. Users can click a heart icon to mark pets as favorites. Show a count of favorites on each pet card. Sort the list so favorites appear first. Store favorite status in mock data (Supabase later). Follow the patterns in app/pets."*
+**Example: Favorite system**
 
-**What code looks like after Claude Code generates it:**
+1. **What does the user see?** (form, buttons, inputs, cards)
+   - Answer: Heart icon on each pet card, favorite count
+   - → File name: `app/components/PetCard.tsx` (has heart button)
 
-```typescript
-// types/pet.ts (updated)
-export interface Pet {
-  id: string;
-  name: string;
-  breed: string;
-  age: number;
-  favorite: boolean;  // NEW
-  createdAt: Date;
-}
+2. **What happens when they click?** (logic, functions)
+   - Answer: Toggle favorite status, save to database
+   - → File name: `app/actions/toggleFavorite.ts` (async function)
+
+3. **Does it save to the database?** (database operations)
+   - Answer: Yes, saves to Supabase
+   - → Function: `toggleFavorite` calls Supabase client
+
+**Your turn:** Sketch the files for YOUR chosen feature:
+
+- UI (what the user sees) → File name?
+- Logic (what happens on click/submit) → File name?
+- Data (does it touch the database?) → Function name?
+
+Write your sketch down (or draw it). Don't continue to Step 2 until you can explain your architecture.
+
+### Step 2: Create CLAUDE.md (~5 min)
+
+Create a CLAUDE.md file at your project root:
+
+```markdown
+# CLAUDE.md
+
+This is a Next.js App Router app built with TypeScript and Tailwind.
+It's a pet tracker with mock data.
+Use server components by default.
+Follow the patterns in app/pets.
 ```
 
-```tsx
-// app/pets/pet-card.tsx (updated)
-'use client';
-import { useState } from 'react';
+### Step 3: Ask Claude Code to build it (~10 min)
 
-export default function PetCard({ pet }: { pet: Pet }) {
-  const [isFavorite, setIsFavorite] = useState(pet.favorite);
+Run Claude Code:
 
-  return (
-    <div className="border rounded p-4">
-      <h3>{pet.name}</h3>
-      <p>{pet.breed}, {pet.age} years old</p>
-      <button onClick={() => setIsFavorite(!isFavorite)}>
-        {isFavorite ? '❤️' : '🤍'} {pet.favorites || 0}
-      </button>
-    </div>
-  );
-}
+```bash
+cd your-project
+claude
 ```
 
-### Step-by-step walkthrough:
+**Tell Claude Code your architecture.** For example:
 
-1. **Create CLAUDE.md** at your project root:
-   ```markdown
-   # CLAUDE.md
-   
-   This is a Next.js App Router app built with TypeScript and Tailwind.
-   It's a pet tracker with mock data.
-   Use server components by default.
-   Follow the patterns in app/pets.
-   ```
+*"Add a favorite system to the pet tracker. Here's my architecture:*
+*- UI: PetCard.tsx (has a heart icon and favorite count)*
+*- Logic: actions/toggleFavorite.ts (async function that calls Supabase)*
+*- Display: PetList.tsx (sorts favorites to the top)*
 
-2. **Run Claude Code:**
-   ```bash
-   cd your-project
-   claude
-   ```
+*Create these files following this structure."*
 
-3. **Use `/plan` first:**
-   ```
-   /plan Add a favorite system...
-   ```
-   Claude Code responds with a plan. Read it and ask questions if anything is unclear.
+Claude Code will ask questions or propose a plan. Review it!
 
-4. **Approve and execute** (after reviewing the plan):
-   ```
-   /plan output looks good. Execute it.
-   ```
+### Step 4: Use `/plan` to review (~5 min)
 
-5. **Review the diff** — Claude Code shows what files changed. Check:
-   - New favorite field added to Pet type
-   - Heart button appears on each card
-   - Favorites are sorted to the top
-   - No red error squiggles in your editor
+If Claude Code doesn't automatically show a plan, type `/plan` and your goal:
 
-6. **Test it:**
-   ```bash
-   npm run dev
-   ```
-   Click hearts, refresh, see favorites persist (during the session, with mock data).
+```
+/plan Add a favorite system with the architecture I described above
+```
 
-7. **Iterate** if needed:
-   ```
-   The favorites aren't persisting after a page reload. Debug it.
-   ```
+Claude Code responds with a numbered plan. Check:
+- Does it match YOUR sketch?
+- Does it make sense?
+- Is anything missing?
+
+If yes, say: *"Plan looks good. Execute it."*
+
+If no, refine it: *"In step 2, I want the favorite button to also show [detail]. Please adjust."*
+
+### Step 5: Review the diff (~10 min)
+
+Claude Code shows what files changed. Check:
+- ✓ Files match your sketch
+- ✓ New favorite field added to Pet type
+- ✓ Heart button appears on each card
+- ✓ Favorites are sorted to the top
+- ✓ No red error squiggles in your editor
+
+### Step 6: Test it (~5 min)
+
+Run your app:
+
+```bash
+npm run dev
+```
+
+- Click hearts
+- Refresh the page
+- See favorites persist (during the session, with mock data)
+
+### Step 7: Iterate if needed (~10 min)
+
+If something's wrong:
+
+```
+The favorites aren't persisting after a page reload. Debug it.
+```
+
+Claude Code fixes it.
 
 ### Deliverable:
-- Screenshot of your new feature working
+- Your architecture sketch (written or drawn)
 - Your CLAUDE.md file
-- One example of a plan you refined before executing
+- Screenshot of your new feature working
+- One example of a plan you refined before executing (paste the conversation)
 - One sentence on which small task you'd do in Cursor instead (e.g., "Adjusting the button color")
 
 ---
 
 ## Quiz Questions (Preview)
 
-These are the three questions on your quiz. Study these first!
+These are the four questions on your quiz. Study these first!
 
-**Q5-k1:** Claude Code works differently from Cursor because it thinks in:
+**Q5-k1:** Before asking Claude Code to build a feature, what should you do?
+- (a) Just describe it and let Claude Code figure it out
+- (b) **Sketch which files you need and what each does** ✓
+- (c) Start coding by hand
+- (d) Ask Claude Code for suggestions
+
+*Why:* Sketching means you understand the architecture. When Claude Code builds it, you can verify it matches YOUR design. This is the difference between understanding your app and accepting whatever the AI gives you.
+
+**Q5-k2:** Claude Code works differently from Cursor because it thinks in:
 - (a) Edits first, goals second
 - (b) **Goals first, then figures out the edits** ✓
 - (c) Files first, folders second
 - (d) Tests first
 
 *Why:* Claude Code is agentic — you describe the GOAL (like "add a favorites feature"), and it figures out all the steps and files needed. Cursor makes you guide every edit manually.
-
-**Q5-k2:** `CLAUDE.md` in Claude Code is like:
-- (a) package.json
-- (b) **A Cursor rules file** ✓
-- (c) .gitignore
-- (d) A comment
-
-*Why:* CLAUDE.md tells Claude Code your project's rules and conventions, just like `.cursorrules` does in Cursor. It's the AI's memory of your stack and patterns.
 
 **Q5-k3:** Why use plan mode?
 - (a) It's faster
@@ -327,47 +433,67 @@ These are the three questions on your quiz. Study these first!
 
 *Why:* Plan mode (`/plan`) is your safety net! The AI proposes what it will do, you review it, and only THEN does it make changes. No more surprises!
 
+**Q5-k4:** `CLAUDE.md` in Claude Code is like:
+- (a) package.json
+- (b) **A Cursor rules file** ✓
+- (c) .gitignore
+- (d) A comment
+
+*Why:* CLAUDE.md tells Claude Code your project's rules and conventions, just like `.cursorrules` does in Cursor. It's the AI's memory of your stack and patterns.
+
 ---
 
 ## Knowledge Check (Mapped to Your Objectives)
 
-**Objective 1 — Orchestrate multi-file features (Quiz Q5-k1):**
-- Q5-k1: "The mindset shift from Cursor to Claude Code is thinking in:" ✅ edits vs. goals
-- **Written check:** Submit your goal prompt for adding a feature + screenshot of it working
+**Objective 1 — Design app architecture by hand (Lesson 5.2):**
+- Q5-k1: "Before asking Claude Code to build a feature, what should you do?"
+  - ✅ (b) Sketch which files you need and what each does
+- **Written check:** Show your architecture sketch for the feature you built
 
-**Objective 2 — Use CLAUDE.md and Plan mode (Quiz Q5-k2, Q5-k3):**
-- Q5-k2: "What should go in CLAUDE.md?" ✅ Tests understanding of persistent context
-- Q5-k3: "What does `/plan` do?" ✅ Tests understanding of plan mode
+**Objective 2 — Orchestrate multi-file features with Claude Code (Quiz Q5-k2):**
+- Q5-k2: "Claude Code works differently from Cursor because it thinks in:"
+  - ✅ (b) Goals first, then figures out the edits
+- **Written check:** Submit your goal prompt + screenshot of it working
+
+**Objective 3 — Use CLAUDE.md and Plan mode (Quiz Q5-k3, Q5-k4):**
+- Q5-k3: "What does `/plan` do?"
+  - ✅ (b) So the AI shows you its plan before changing code (you can say yes/no)
+- Q5-k4: "CLAUDE.md is like:"
+  - ✅ (b) A Cursor rules file
 - **Written check:** Show a plan Claude Code proposed, any refinement you made, and why
 
-**Objective 3 — Choose the right tool (Lesson 5.8 knowledge):**
+**Objective 4 — Choose the right tool (Lesson 5.9 knowledge):**
 - **Practical check:** For four tasks, pick Cursor or Claude Code and explain:
   - (a) Rename a type everywhere (Cursor? Claude Code?)
   - (b) Adjust one button's color (Cursor? Claude Code?)
   - (c) Add a whole new feature (Cursor? Claude Code?)
   - (d) Fix a typo in one file (Cursor? Claude Code?)
 
-**Scenario-based judgment checks:**
+**Architecture-focused judgment checks:**
 
 *For each scenario, explain what you'd do.*
 
-- **(a) Confusing plan:** Claude Code proposes a 5-step plan you don't fully understand. What do you do?
-  - ✅ **Right:** Ask it to explain step 3 in more detail before you approve.
-  - ❌ **Wrong:** Just approve and hope it works, or reject and start over.
+- **(a) Architecture check:** Claude Code creates files with names you didn't sketch. What do you do?
+  - ✅ **Right:** Ask it to rename the files to match your architecture sketch. You understand your app better if files match your design.
+  - ❌ **Wrong:** Accept it anyway. File names don't matter.
 
-- **(b) One prompt vs. many edits:** Which is better for adding a whole new feature — one Claude Code prompt or multiple Cursor edits?
-  - ✅ **Right:** One Claude Code prompt. It figures out all the files at once. Faster, less mistake-prone.
-  - ❌ **Wrong:** Multiple Cursor edits. You'd have to remember what to edit in each file.
+- **(b) Missing a file:** You sketched 3 files, but Claude Code only creates 2. What do you do?
+  - ✅ **Right:** Ask: "Where did my third file go? Should it be in [location]?"
+  - ❌ **Wrong:** Accept it and hope it works.
 
-- **(c) Which tool?** You want to tweak a button's color. Cursor or Claude Code?
+- **(c) Confusing plan:** Claude Code proposes a 5-step plan you don't fully understand. What do you do?
+  - ✅ **Right:** Ask it to explain step 3 in more detail before you approve. You should understand your own app.
+  - ❌ **Wrong:** Just approve and hope it works.
+
+- **(d) Which tool?** You want to tweak a button's color. Cursor or Claude Code?
   - ✅ **Right:** Cursor. You see the color change instantly in one file. Fast and focused.
   - ❌ **Wrong:** Claude Code. Overkill for one color tweak.
 
-- **(d) Multiple tools:** You're adding a new feature. Which tool do you start with, and when do you switch?
-  - ✅ **Right:** Start with Claude Code to build the whole feature. Then switch to Cursor if you need to tweak the styling or fix a small bug.
+- **(e) Multiple tools:** You're adding a new feature. Which tool do you start with, and when do you switch?
+  - ✅ **Right:** Start with Claude Code to build the whole feature (using your architecture sketch). Then switch to Cursor if you need to tweak styling or fix a small bug.
   - ❌ **Wrong:** Use only Cursor for everything, or only Claude Code.
 
-- **(e) Code you don't understand:** Claude Code creates a file you don't understand. Do you:
+- **(f) Code you don't understand:** Claude Code creates a file you don't understand. Do you:
   - ✅ **Right:** Ask it to explain the file, and only accept after you understand it (Module 1).
   - ❌ **Wrong:** Accept it blindly because "the AI knows what it's doing."
 
@@ -377,7 +503,9 @@ These are the three questions on your quiz. Study these first!
 
 | Checkmark | What to check |
 |-----------|---------------|
-| ✅ | You wrote a high-level goal (not step-by-step) |
+| ✅ | You sketched your architecture (3+ files, explained what each does) |
+| ✅ | Your sketch matches the files Claude Code created |
+| ✅ | You wrote a high-level goal prompt (not step-by-step) |
 | ✅ | You reviewed the `/plan` output and refined it at least once |
 | ✅ | You reviewed the diff (changed files) before accepting |
 | ✅ | The feature works on your local app (`npm run dev`) |
@@ -385,7 +513,7 @@ These are the three questions on your quiz. Study these first!
 | ✅ | You identified one small task you'd use Cursor for instead, with a reason |
 | ✅ | Your CLAUDE.md file is created and has your stack info |
 
-*Pass mark: 80% and a working feature with CLAUDE.md submitted.*
+*Pass mark: 80% and a working feature with architecture sketch + CLAUDE.md submitted.*
 
 ---
 
