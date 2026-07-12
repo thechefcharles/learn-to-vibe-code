@@ -35,6 +35,10 @@ export default async function DashboardPage() {
   const completedModules = progress.filter((p) => p.status === "completed").length;
   const capstoneUnlocked = completedModules >= 15;
 
+  // Find first incomplete module or default to first module
+  const nextModule = progress.find((p) => p.status !== "completed");
+  const continueHref = nextModule ? `/course/${String(nextModule.module_id).padStart(2, "0")}` : "/course/00";
+
   return (
     <div className="min-h-screen flex flex-col bg-slate-950">
       <DashboardBackground />
@@ -44,7 +48,7 @@ export default async function DashboardPage() {
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         {/* Continue Learning CTA */}
         <section className="mb-8">
-          <Link href="/course" className="block">
+          <Link href={continueHref} className="block">
             <div className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 rounded-2xl p-8 sm:p-12 text-white font-bold text-2xl sm:text-3xl transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-4">
               <span className="text-4xl">▶</span> Continue Learning
             </div>
