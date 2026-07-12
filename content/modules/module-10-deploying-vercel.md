@@ -138,9 +138,45 @@ Completes Objective 2. Two things turn the deploy into a real product:
 
 **Custom domain** — in Vercel → Settings → Domains, add a domain you own and follow the DNS steps. Your app lives at `yourname.com`.
 
-**Production auth config (the step beginners miss)** — Supabase Auth needs your production URL or logins/redirects fail on the live site even though they worked locally. In the Supabase dashboard, set the **Site URL** and add your domain to the **redirect URLs**. A classic "works on [localhost](http://localhost), breaks in prod" trap.
+### Production auth config (the step beginners miss): Configure Supabase for Production Auth
 
-*[SCREENSHOT: the Supabase Auth URL configuration with the production Site URL and redirect URLs.]*
+When you deploy to Vercel, auth breaks if Supabase doesn't know your production URL.
+
+**Why?** Supabase sends a redirect link after you sign in. If that link goes to localhost:3000 instead of your Vercel URL, sign-in fails silently (or redirects to the wrong place).
+
+**Step-by-step walkthrough:**
+
+1. Go to your Supabase dashboard: https://supabase.com/dashboard/
+2. Select your project
+3. Navigate to **Authentication** → **URL Configuration** (left sidebar)
+4. You'll see two fields:
+   - **Site URL** — where your app is hosted
+   - **Redirect URLs** — where Supabase sends users after sign-in
+
+5. In **Site URL**, enter your Vercel deployment URL:
+   ```
+   https://your-app-name.vercel.app
+   ```
+   (If you don't know your Vercel URL, go to your Vercel dashboard and copy it.)
+
+6. In **Redirect URLs**, add two entries:
+   - `https://your-app-name.vercel.app/auth/callback`
+   - `https://your-app-name.vercel.app` (the root)
+
+   (These should match the redirect URLs in your `/app/auth/callback/route.ts` file. If you're not sure, check the file.)
+
+7. Click **Save**
+
+8. Test: Visit your live Vercel URL, click "Sign In", enter an email/password, and verify you're redirected to the dashboard.
+
+**If it doesn't work:**
+- Check the Supabase URL and API key in your Vercel env vars (they should match your Supabase project)
+- Check the Redirect URLs — they must exactly match your Vercel URL + `/auth/callback`
+- Check your `/app/auth/callback/route.ts` — it should have `getURL()` returning the correct origin
+
+**Screenshot example:**
+
+[SCREENSHOT: Supabase URL Configuration page, showing Site URL and Redirect URLs filled in]
 
 > **Beyond the basics (awareness — not required for the capstone):** as a project grows you'll meet a few more Vercel features. (1) **Per-environment env vars** — Vercel scopes variables to Production / Preview / Development separately, so preview deploys can point at a *separate* Supabase project instead of touching real data. (2) **Instant rollback** — the Deployments list can promote a previous build back to production in one click when a deploy breaks. (3) **Staging branch → its own domain** — map a long-lived branch (e.g. `staging`) to a fixed URL for a stable pre-prod environment. (4) **Preview protection** — password-protect or auth-gate preview URLs so they aren't public. You don't need these to pass — just know they exist for when an app outgrows one-env-one-database.
 > 
