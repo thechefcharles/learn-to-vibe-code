@@ -46,6 +46,20 @@ export default async function DashboardPage() {
 
       {/* Main Content */}
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+        {/* Version Indicator */}
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h2 className="text-sm font-semibold text-slate-400 mb-2">Enrolled in:</h2>
+            <div className={`inline-block px-4 py-2 rounded-lg font-semibold text-white ${
+              version === "kids"
+                ? "bg-gradient-to-r from-pink-500 to-purple-600"
+                : "bg-gradient-to-r from-indigo-500 to-blue-600"
+            }`}>
+              {version === "kids" ? "🚀 Beginner Course (Kids)" : "💻 Advanced Course (Professional)"}
+            </div>
+          </div>
+        </div>
+
         {/* Continue Learning CTA */}
         <section className="mb-8">
           <Link href={continueHref} className="block">

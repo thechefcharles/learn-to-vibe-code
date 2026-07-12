@@ -14,12 +14,14 @@ interface CourseLessonHeaderProps {
   moduleId: string;
   lessonTitle: string;
   user: User | null;
+  version?: "kids" | "adult";
 }
 
 export function CourseLessonHeader({
   moduleId,
   lessonTitle,
   user,
+  version = "adult",
 }: CourseLessonHeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const prefersReducedMotion = usePreferredMotion();
@@ -66,11 +68,18 @@ export function CourseLessonHeader({
               </div>
             </div>
 
-            {/* Center: Lesson Title (hidden on mobile) */}
-            <div className="hidden sm:flex items-center justify-center flex-1 min-w-0">
+            {/* Center: Lesson Title + Version Badge (hidden on mobile) */}
+            <div className="hidden sm:flex items-center justify-center flex-1 min-w-0 gap-3">
               <h1 className="text-sm sm:text-base font-semibold text-white truncate px-4">
                 {lessonTitle}
               </h1>
+              <div className={`text-xs font-semibold px-2 py-1 rounded whitespace-nowrap ${
+                version === "kids"
+                  ? "bg-pink-500/20 text-pink-300 border border-pink-500/50"
+                  : "bg-indigo-500/20 text-indigo-300 border border-indigo-500/50"
+              }`}>
+                {version === "kids" ? "👶 Beginner" : "💻 Advanced"}
+              </div>
             </div>
 
             {/* Right: Controls */}

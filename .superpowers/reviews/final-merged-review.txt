@@ -1,0 +1,65 @@
+a06a540 fix: wire interactive components to state (mobile menu, keyboard shortcuts, milestones)
+ff1b66b fix: resolve TypeScript error in lesson page
+38a5f2e test: add E2E tests for course page UI
+d47b57f chore: remove accreditation messaging from UI components
+2fc865d feat: add session timer hook
+55fd725 feat: add ShareLesson, MobileMenuBurger components and integrate into lesson page
+7520fae feat: add keyboard shortcuts panel
+b156926 feat: add milestone celebration modal with confetti
+ad858aa fix(task-2): align props with spec, add NextLessonPreview, improve accessibility
+9493259 feat: add CoursePageSidebar component and useLessonStats hook (Task 2)
+3bae228 fix: resolve z-index layering, add prefers-reduced-motion, add ARIA role
+9c616bf feat(course-lesson-header): implement sticky header with cosmic design
+---
+ .superpowers/reviews/task-1-review-v2.txt          | 1712 ++++++++++++++++++++
+ .superpowers/reviews/task-1-review.txt             | 1707 +++++++++++++++++++
+ .superpowers/reviews/task-2-review-v2.txt          |  400 +++++
+ .superpowers/reviews/task-2-review.txt             |  310 ++++
+ .superpowers/reviews/task-4-review.txt             |  240 +++
+ app/certificate/page.tsx                           |    6 +-
+ app/course/[moduleId]/page.tsx                     |  182 ++-
+ app/demo/page.tsx                                  |    8 +-
+ app/layout.tsx                                     |    2 +-
+ app/page.tsx                                       |    4 +-
+ components/LandingHero.tsx                         |    2 +-
+ components/LandingTrust.tsx                        |    2 +-
+ components/ProgressFlowWidget.tsx                  |    2 +-
+ components/StepLessonViewer.tsx                    |   15 +-
+ components/course/CourseLessonHeader.tsx           |  176 ++
+ components/course/CoursePageInteractive.tsx        |   73 +
+ components/course/CoursePageSidebar.tsx            |  204 +++
+ components/course/KeyboardShortcutsPanel.tsx       |  177 ++
+ components/course/MilestoneModal.tsx               |  229 +++
+ components/course/MobileMenuBurger.tsx             |  128 ++
+ components/course/NextLessonPreview.tsx            |   48 +
+ components/course/ShareLesson.tsx                  |   86 +
+ .../plans/2026-07-12-course-page-ui-overhaul.md    | 1308 +++++++++++++++
+ lib/hooks/useBookmarks.ts                          |   38 +
+ lib/hooks/useKeyboardShortcuts.ts                  |   48 +
+ lib/hooks/useLessonStats.ts                        |   77 +
+ lib/hooks/useSessionTimer.ts                       |   30 +
+ tests/course-lesson-header.spec.ts                 |   96 ++
+ tests/e2e/course-page-ui.spec.ts                   |  197 +++
+ 29 files changed, 7413 insertions(+), 94 deletions(-)
+---
+Production build test:
+├ ƒ /dashboard/badges
+├ ○ /dashboard/settings
+├ ○ /demo
+├ ƒ /demo/[moduleId]
+├ ○ /donation-success
+├ ƒ /instructor/capstone-reviews
+├ ○ /landing-adult
+├ ○ /landing-kids
+├ ○ /legal/privacy
+├ ○ /legal/refund
+├ ○ /legal/terms
+├ ○ /opengraph-image
+├ ○ /support
+├ ○ /test-credential
+└ ○ /test-donate
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
