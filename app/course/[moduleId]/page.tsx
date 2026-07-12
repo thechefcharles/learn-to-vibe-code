@@ -3,10 +3,8 @@ import { StepLessonViewer } from "@/components/StepLessonViewer";
 import { ModuleChecklist } from "@/components/ModuleChecklist";
 import { CourseLessonHeader } from "@/components/course/CourseLessonHeader";
 import { CoursePageSidebar } from "@/components/course/CoursePageSidebar";
-import { KeyboardShortcutsPanel } from "@/components/course/KeyboardShortcutsPanel";
-import { MilestoneModal } from "@/components/course/MilestoneModal";
+import { CoursePageInteractive } from "@/components/course/CoursePageInteractive";
 import { ShareLesson } from "@/components/course/ShareLesson";
-import { MobileMenuBurger } from "@/components/course/MobileMenuBurger";
 import { getModule } from "@/lib/content";
 import { getModuleMetadata } from "@/lib/module-metadata";
 import { getModuleSteps, hasModuleSteps } from "@/lib/module-steps";
@@ -96,10 +94,12 @@ export default async function LessonPage(props: LessonPageProps) {
     const steps = getModuleSteps(moduleId, userVersion);
     if (steps) {
       return (
-        <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
-          {!isKids && <CourseLessonHeader moduleId={String(moduleId)} lessonTitle={pageTitle} user={user} />}
-          <StepLessonViewer steps={steps} moduleId={moduleId} />
-        </div>
+        <CoursePageInteractive moduleNumber={moduleId} user={user}>
+          <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
+            {!isKids && <CourseLessonHeader moduleId={String(moduleId)} lessonTitle={pageTitle} user={user} />}
+            <StepLessonViewer steps={steps} moduleId={moduleId} />
+          </div>
+        </CoursePageInteractive>
       );
     }
   }
@@ -107,15 +107,13 @@ export default async function LessonPage(props: LessonPageProps) {
   const lessonUrl = `https://learn2vibecode.com/course/${moduleId}`;
 
   return (
-    <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
-      {/* Header */}
-      {!isKids && <CourseLessonHeader moduleId={String(moduleId)} lessonTitle={pageTitle} user={user} />}
+    <CoursePageInteractive moduleNumber={moduleId} user={user}>
+      <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
+        {/* Header */}
+        {!isKids && <CourseLessonHeader moduleId={String(moduleId)} lessonTitle={pageTitle} user={user} />}
 
-      {/* Mobile Menu Burger */}
-      {!isKids && <MobileMenuBurger isOpen={false} onClose={() => {}} user={user} />}
-
-      {/* Main Layout */}
-      <div className={`max-w-7xl mx-auto px-4 ${!isKids ? "pt-4 sm:pt-6 pb-12" : "py-12"}`}>
+        {/* Main Layout */}
+        <div className={`max-w-7xl mx-auto px-4 ${!isKids ? "pt-4 sm:pt-6 pb-12" : "py-12"}`}>
         <div className="flex gap-6">
           {/* Sidebar */}
           {!isKids && (
@@ -201,21 +199,7 @@ export default async function LessonPage(props: LessonPageProps) {
           </div>
         </div>
       </div>
-
-      {/* Keyboard Shortcuts Panel */}
-      {!isKids && (
-        <KeyboardShortcutsPanel isOpen={false} onClose={() => {}} />
-      )}
-
-      {/* Milestone Modal */}
-      {!isKids && (
-        <MilestoneModal
-          isOpen={false}
-          type="module_complete"
-          moduleNumber={moduleId}
-          onClose={() => {}}
-        />
-      )}
-    </div>
+      </div>
+    </CoursePageInteractive>
   );
 }

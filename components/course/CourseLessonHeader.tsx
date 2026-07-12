@@ -7,27 +7,28 @@ import { Logo } from '@/components/Logo';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 import { ProfileMenu } from '@/components/dashboard/ProfileMenu';
 import { usePreferredMotion } from '@/lib/hooks/usePreferredMotion';
+import { useCoursePageContext } from '@/components/course/CoursePageInteractive';
 import type { User } from '@supabase/supabase-js';
 
 interface CourseLessonHeaderProps {
   moduleId: string;
   lessonTitle: string;
   user: User | null;
-  onMobileMenuToggle?: () => void;
 }
 
 export function CourseLessonHeader({
   moduleId,
   lessonTitle,
   user,
-  onMobileMenuToggle,
 }: CourseLessonHeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const prefersReducedMotion = usePreferredMotion();
+  const { setMobileMenuOpen } = useCoursePageContext();
 
   const handleMobileMenuToggle = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-    onMobileMenuToggle?.();
+    const newState = !isMobileMenuOpen;
+    setIsMobileMenuOpen(newState);
+    setMobileMenuOpen(newState);
   };
 
   const numModuleId = parseInt(moduleId);
