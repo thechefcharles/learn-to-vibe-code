@@ -140,6 +140,17 @@ Now the AI always remembers your stack and patterns. No more repeating "I'm usin
 
 Before Claude Code makes big changes, use **Plan mode** to see what it *plans* to do before it does it.
 
+**Use your plan from Module 3.** When you ask Claude Code to build something, paste the context from your planning session:
+
+```
+Context: I finished planning my pet tracker. My plan says:
+- Core features: list pets, add pets, delete pets, mark favorites
+- Data: pet name, breed, age, favorite_food
+- Stack: Next.js, TypeScript, Tailwind
+
+Now I'm building the pet list feature based on my plan.
+```
+
 Type `/plan` and describe your goal:
 
 *"/plan Add a favorites system to the pet tracker. Users click a heart to favorite pets. Show favorite count on each card. Sort favorites first."*
@@ -558,6 +569,14 @@ These are the six questions on your quiz. Study these first!
 - (d) A comment
 
 *Why:* CLAUDE.md tells Claude Code your project's rules and conventions, just like `.cursorrules` does in Cursor. It's the AI's memory of your stack and patterns.
+
+**Q5-k7:** You finished planning your app in Module 3. Now in Module 5, what should you do?
+- (a) Ask Claude Code to build whatever sounds fun
+- (b) **Paste your plan into Claude Code and reference it in your prompt** ✓
+- (c) Build a generic pet app first, then change it later
+- (d) Skip the plan—Claude Code will figure it out
+
+*Why:* Your plan is Claude Code's roadmap. Use it! You already did the hard thinking in Module 3. Now Claude Code builds exactly what you planned.
 
 **Q5-k8a:** You're adding a favorites system but aren't sure if it should sort favorites first or show them in a separate list. What do you do?
 - (a) Ask Claude Code to guess

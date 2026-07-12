@@ -149,7 +149,34 @@ This is the power move: one big prompt = one big feature = done! ⚡
 
 ---
 
-## Lesson 4.4 — Testing Your Code (~30 min)
+## Lesson 4.4 — Small Prompts, Big Features (~45 min)
+
+**Use your pet tracker plan.** Open the plan you wrote in Module 3. You're about to build real features from YOUR plan—not just follow along with an example. This is where planning pays off.
+
+The key: ask Cursor to build one small piece at a time, then check that it works before asking for the next piece.
+
+### Example: Your First Cursor Prompt
+
+If your Module 3 plan was about showing all pets, your first prompt might look like:
+
+```
+Based on my pet tracker plan, I need to show all pets on the main page.
+
+My data has: pet name, breed, age, and favorite food.
+
+My page should show:
+- A list of all pets
+- Each pet's name, breed, and age
+- A button to add a new pet
+
+Please create types/pet.ts with the Pet type, then build app/page.tsx to show the list.
+```
+
+Use YOUR plan. Cursor will build exactly what you need.
+
+---
+
+## Lesson 4.5 — Testing Your Code (~30 min)
 
 After each change:
 
@@ -162,7 +189,7 @@ Error messages are your friend. They tell you exactly what's wrong.
 
 ---
 
-## Lesson 4.5 — Debugging With AI (~45 min)
+## Lesson 4.6 — Debugging With AI (~45 min)
 
 Bugs happen. Here's how to use Cursor to fix them:
 
@@ -174,7 +201,7 @@ Cursor reads your code + your error and suggests a fix.
 
 ---
 
-## Lesson 4.5b — Using @-Mentions for Context (~20 min)
+## Lesson 4.6b — Using @-Mentions for Context (~20 min)
 
 In Cursor chat, you can type `@` to pin specific files or folders. Example:
 
@@ -204,7 +231,7 @@ This tells Cursor "here's the exact file I'm talking about" without having to ex
 
 ---
 
-## Lesson 4.6 — Multi-File Changes with Composer (~30 min)
+## Lesson 4.7 — Multi-File Changes with Composer (~30 min)
 
 For bigger changes that touch multiple files, **Composer (Cmd+I) is your power move!**
 
@@ -240,7 +267,30 @@ Composer will:
 
 ---
 
-## Lesson 4.7 — Next Steps: Add a Database (~60 min)
+## Lesson 4.7 — Two Helpers: Cursor vs Claude Code (~20 min)
+
+You've used Cursor. Next module uses Claude Code. When should you use which?
+
+### Simple Rule
+
+**Cursor:** One small change (fix a typo, change colors, update one component)  
+**Claude Code:** Big feature (add 5 new pages, refactor everything, build something complex)
+
+**Real example:**
+- Fix a button color = Cursor (5 minutes)
+- Build the entire pet creation page = Claude Code (20 minutes)
+
+### The Answer
+
+Use both. A real project needs both. The skill is knowing which tool for which job.
+
+### Practice
+
+Pick one thing from Module 4 (like styling the pet list). Redo it with Claude Code. Did it feel faster or slower? Easier or harder? Now you know your preference.
+
+---
+
+## Lesson 4.8 — Next Steps: Add a Database (~60 min)
 
 Once your app works in memory (in React state), it's time to save pets permanently.
 

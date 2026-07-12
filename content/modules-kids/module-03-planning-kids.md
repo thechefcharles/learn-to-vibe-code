@@ -264,6 +264,10 @@ When Claude Code created your plan, it ordered the tasks logically. Here's why t
 
 **If the order looks wrong**, tell Claude Code! Example: "I want to build the login system first before the homework form." Claude Code will revise the order to match.
 
+## Next: Use Your Plan in Module 4
+
+You now have a plan for your pet tracker (or homework helper). In Module 4, you'll actually build it using Cursor. Open your plan and use it—this proves that planning works.
+
 ---
 
 ## Lesson 3.6 — Writing Your Plan as a Prompt (~45 min)
