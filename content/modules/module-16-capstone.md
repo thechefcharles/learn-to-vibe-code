@@ -194,7 +194,7 @@ Scored against the rubric below — 10 core criteria plus an optional automation
 | **Design & UX** | Looks broken or unstyled | Functional but generic / AI-looking | Clean, consistent, professional-looking UI that works on mobile | Polished, thoughtful visual design |
 | **Accessibility & performance** | Inaccessible; obvious performance problems | Gaps (missing labels, poor contrast, slow) | Keyboard/labels/contrast basics; reasonable Core Web Vitals | Strong a11y and performance, audited |
 | **Oral defense / decision justification** | Cannot explain own code or choices; hand-waves on decisions | Explains some code and decisions; weak on tradeoffs and alternatives considered | Clearly explains architecture decisions (references decisions.md), articulates alternatives considered, justifies key trade-offs (stack, data model, automation choices); demonstrates ownership of every piece | Could mentor others; articulate on ALL major decisions and their constraints; demonstrates deep understanding of why choices matter; can explain reasoning even for delegated tasks |
-| **Bonus: pipeline automation (optional)** | Not attempted | Basic MCP/CLI use shown | Automates part of the pipeline with guardrails | Full commit→PR→migrate→deploy→debug automation, safely gated |
+| **[Bonus] Automation Setup** | N/A | No MCP/automation attempted | Attempted MCP server or automation, partially working | Automated pipeline with MCP servers, working reliably (bonus points: +0.5 modifier) |
 
 *The "oral defense" and "AI workflow" criteria — especially backed by decisions.md and CLAUDE.md — are what make this a genuine competence check rather than a copy-paste exercise. You must justify decisions and demonstrate you understand code you produced with AI.*
 

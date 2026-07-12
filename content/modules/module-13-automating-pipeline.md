@@ -1,4 +1,4 @@
-# Module 13: Automating Your Dev Pipeline with Claude Code
+# Module 13: Automating Your Dev Pipeline with Claude Code (Optional, Post-Capstone)
 
 **Stage:** Production (Advanced) · **Level:** Advanced · **Duration:** ~7 contact hours (0.7 CEU)
 
@@ -12,6 +12,21 @@
 
 > **⚡ Version note:** the fastest-moving area in the course. Teach the *concepts and setup pattern*; point learners to current docs for exact syntax. Commands are representative as of 2026.
 > 
+
+## This Module Is Optional — Start Here
+
+This module is **optional**. It covers advanced automation with MCP servers, skills, subagents, and plugins.
+
+**Why optional?** The capstone (Module 16) doesn't require it. Many projects are polished and shipped without automation. Learning to ship first, automate later, is wise.
+
+**When to take this module:**
+- After you've shipped your capstone
+- If you're building frequently and want to reduce repetitive work
+- If you want to explore Claude Code's advanced features
+
+**For now:** Focus on shipping your capstone (Modules 1-12 + 14-16). Come back to Module 13 after graduation if you want to level up.
+
+---
 
 ## Learning objectives
 
