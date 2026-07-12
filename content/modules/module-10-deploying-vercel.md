@@ -26,83 +26,88 @@ Deployment puts your app on a server so anyone can reach it at a URL. **CI/CD** 
 
 ---
 
-## Lesson 10.2 — Deploy to Vercel from GitHub (~60 min)
+## Lesson 10.2 — Deploy to Vercel with Claude Code & Vercel MCP (~60 min)
 
-Begins Objective 1.
+Begins Objective 1. **Use Claude Code with Vercel MCP to orchestrate deployment and environment configuration:**
 
-**Step 1 — Sign up at [vercel.com](http://vercel.com)** with GitHub.
+### Automating Vercel deployment and configuration
 
-**Step 2 — Import your repo.** Vercel detects Next.js and configures the build — no config files (why Next.js + Vercel is the default).
+**Step 1 — Sign up for Vercel** (manual one-time):
+Go to [vercel.com](https://vercel.com) and click "Sign up" with GitHub. Authorize Vercel to access your GitHub repos.
 
-On the import page, you'll see:
-- Your GitHub username and repo list
-- Your repo name (`invoice-tracker`)
-- Vercel detects: **Next.js** ✓
-- Build command: `npm run build` (auto-filled)
-- Install command: `npm ci` (auto-filled)
-- Output directory: `.next` (auto-filled)
+**Step 2 — Generate a Vercel token** (manual, for Claude Code access):
+1. Go to Vercel account settings
+2. Click **Tokens**
+3. Create a new token, copy it
+4. Store it safely (you'll use it in Claude Code)
 
-Click **Import** and watch the magic happen.
+**Step 3 — Prompt Claude Code to deploy and configure with Vercel MCP:**
 
----
+```bash
+claude
+```
 
-**[SCREENSHOT PLACEHOLDER: Vercel Import Project]**
+Add Vercel MCP to Claude Code:
 
-Vercel dashboard showing: import flow detecting Next.js repo, configuration preview, deploy button. Proof: Vercel auto-detected framework.
+```
+Connect me to Vercel so you can deploy and configure my app.
 
----
+Use the Vercel MCP:
+1. Add the Vercel server to .mcp.json with my token (I'll provide it)
+2. Once connected, import my GitHub repo (invoice-tracker) to Vercel
+3. Add environment variables for Supabase:
+   - NEXT_PUBLIC_SUPABASE_URL: [from your Module 7 Supabase project]
+   - NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: [from Supabase]
+4. Trigger the first deployment
+5. Show me the live URL when done
 
-**Step 3 — Deploy.** In a minute or two you get a live URL like `invoice-tracker-abc123.vercel.app`. The build succeeds but the app won't fully work yet — no database keys in production. Deliberate teaching moment: **your local `.env.local` did not go to Vercel** (gitignored in Module 9), so production has no secrets until you add them.
+My Vercel token: [paste your token here]
+My Supabase credentials: [paste your keys here]
+```
 
-You'll see:
-- Deployment status: **Ready** ✓
-- Live URL: `https://invoice-tracker-abc123.vercel.app`
-- But click it—the `/clients` page shows an empty table (RLS + missing env vars)
+**Step 4 — Claude Code will orchestrate:**
+- Connect to Vercel via MCP
+- Import your GitHub repo (Next.js auto-detected)
+- Add environment variables to Vercel
+- Trigger the deployment
+- Return the live URL (e.g., `invoice-tracker-abc123.vercel.app`)
 
-This is the "works locally, breaks in prod" moment that builds confidence.
-
----
-
-## Lesson 10.3 — Environment variables in production (~45 min)
-
-Begins Objective 2 and explains the "worked locally, broke deployed" mystery. Your Supabase keys live in `.env.local`, which is *not* in Git and *not* on Vercel. Add them in **Vercel → Project → Settings → Environment Variables** (same keys from Module 7):
-
-**Concrete steps:**
-
-1. Go to your Vercel project
-2. Click **Settings** (top right)
-3. Click **Environment Variables** (left sidebar)
-4. Add two variables:
-   ```
-   Name: NEXT_PUBLIC_SUPABASE_URL
-   Value: https://YOUR-PROJECT.supabase.co
-   ```
-   ```
-   Name: NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-   Value: sb_publishable_xxx
-   ```
-5. Click "Save"
-
-**Then redeploy:**
-1. Go to **Deployments** (left sidebar)
-2. Click the three dots on the latest deployment
-3. Click **Redeploy**
-4. Wait ~1 minute for the new build
-
-Now your app can talk to Supabase in production!
-
-**Principle:** secrets live in the platform, never in the repo. Same value, two homes — `.env.local` for local, Vercel's settings for production.
-
-> **Build-verified note:** `NEXT_PUBLIC_*` variables are **inlined at build time**, so they must exist in Vercel *before* the deploy that uses them — add them first, then trigger a fresh deploy, or the built app breaks in production with no error locally.
-> 
+**Step 5 — Test the live app:**
+1. Click the URL Claude Code provides
+2. Visit `/clients` page
+3. If you see your data, the app is working! ✅
+4. If empty, env vars might still be syncing (~1 min delay)
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Vercel Env Vars Settings]**
+**[SCREENSHOT PLACEHOLDER: Vercel Dashboard with Deployment Ready]**
 
-Settings page showing: Environment Variables section with key-value pairs (NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY). Proof: secrets are configured for production.
+Vercel showing: deployment status "Ready ✓", live URL displayed, GitHub repo connected. Proof: app is live and reachable.
 
 ---
+
+**Why Claude Code + Vercel MCP for deployment?**
+
+- **Automation:** deployment boilerplate (repo import, env var setup, redeploy) is orchestrated in one go
+- **Vercel MCP access:** Claude Code can configure Vercel programmatically, not just via UI clicks
+- **Speed:** what takes 5-10 manual steps on the Vercel dashboard is coordinated by Claude Code
+- **Fewer mistakes:** env vars are set before the first real deploy, so "works locally, breaks in prod" is avoided
+
+**Important:** You still own the secrets (Supabase keys). Claude Code securely stores them in Vercel's env vars; they don't touch your git history or local machine in unsafe ways.
+
+---
+
+## Lesson 10.3 — Preview deploys work automatically (~20 min)
+
+A happy side effect: because Vercel is linked to your GitHub repo (from Lesson 10.2), **every PR automatically gets a preview URL** — you don't need to do anything. This is the CI/CD payoff:
+
+1. You push a branch and open a PR (Module 9 workflow)
+2. GitHub notifies Vercel
+3. Vercel builds and deploys the branch to a preview URL (automatically)
+4. You see the preview link on the PR
+5. Test it live, then merge
+
+**No extra configuration needed.** Vercel's GitHub integration (set up by Claude Code in Lesson 10.2) handles the rest.
 
 ---
 
