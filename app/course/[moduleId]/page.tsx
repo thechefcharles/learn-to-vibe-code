@@ -1,6 +1,7 @@
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { StepLessonViewer } from "@/components/StepLessonViewer";
 import { ModuleChecklist } from "@/components/ModuleChecklist";
+import { CourseLessonHeader } from "@/components/course/CourseLessonHeader";
 import { getModule } from "@/lib/content";
 import { getModuleMetadata } from "@/lib/module-metadata";
 import { getModuleSteps, hasModuleSteps } from "@/lib/module-steps";
@@ -89,31 +90,22 @@ export default async function LessonPage(props: LessonPageProps) {
   if (hasModuleSteps(moduleId)) {
     const steps = getModuleSteps(moduleId, userVersion);
     if (steps) {
-      return <StepLessonViewer steps={steps} moduleId={moduleId} />;
+      return (
+        <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
+          {!isKids && <CourseLessonHeader moduleId={String(moduleId)} lessonTitle={pageTitle} user={user} />}
+          <StepLessonViewer steps={steps} moduleId={moduleId} />
+        </div>
+      );
     }
   }
 
   return (
     <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
-      {/* Header */}
-      <div className={`sticky top-0 z-10 ${isKids ? "bg-gradient-to-r from-purple-100 to-pink-100 border-b border-purple-300" : "bg-slate-800/50 border-b border-slate-700"}`}>
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link
-            href="/course"
-            className={`text-sm font-medium transition ${isKids ? "text-purple-600 hover:text-purple-800" : "text-blue-400 hover:text-blue-300"}`}
-          >
-            ← Back to Course
-          </Link>
-          <div className="text-center">
-            <p className={`text-xs ${isKids ? "text-purple-600" : "text-slate-400"}`}>Module {String(moduleId).padStart(2, "0")}</p>
-            <h1 className={`text-2xl font-bold ${isKids ? "text-purple-700" : "text-white"}`}>{pageTitle}</h1>
-          </div>
-          <div className="w-24 text-right" />
-        </div>
-      </div>
+      {/* New Header Component */}
+      {!isKids && <CourseLessonHeader moduleId={String(moduleId)} lessonTitle={pageTitle} user={user} />}
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 py-12">
+      <div className={`max-w-4xl mx-auto px-4 ${!isKids ? "pt-4 sm:pt-6 pb-12" : "py-12"}`}>
         <article className="prose prose-invert max-w-none mb-12">
           <MarkdownRenderer content={module.content} />
         </article>

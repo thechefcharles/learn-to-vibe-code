@@ -262,9 +262,9 @@ export function StepLessonViewer({ steps, moduleId }: StepLessonViewerProps) {
               : "bg-white/5 border-white/10"
           }`}
           style={{
-            borderLeft: "3px solid",
-            borderLeftImage: "linear-gradient(to bottom, #06b6d4, #a78bfa) 1"
-          }}
+            borderLeft: "3px solid #a78bfa",
+            boxShadow: "inset 3px 0 0 0 rgba(6, 182, 212, 0.5)"
+          } as React.CSSProperties}
           data-step-container
         >
           {/* Lesson Title */}
