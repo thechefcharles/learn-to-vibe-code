@@ -30,9 +30,9 @@ Reframe planning for the AI era: it's not overhead, it's **the context you'll fe
 
 ---
 
-## Lesson 3.2 — From raw idea to a spec, with AI (~60 min)
+## Lesson 3.2 — From raw idea to a spec, with Claude Code (~60 min)
 
-This delivers Objective 1. A spec is a short written description of what the software should do — you don't need a formal template, you need clarity. Use AI as a thinking partner.
+This delivers Objective 1. A spec is a short written description of what the software should do — you don't need a formal template, you need clarity. **Use Claude Code as your planning orchestrator.**
 
 **A lightweight spec answers:**
 
@@ -42,28 +42,64 @@ This delivers Objective 1. A spec is a short written description of what the sof
 - **Out of scope** — what you're deliberately *not* building yet (as important as what you are).
 - **Success** — how you'll know it works.
 
-**Using AI to build the spec:** describe your rough idea and ask the model to interview you — e.g. "I want an app that helps freelancers track invoices. Ask me the questions you'd need to write a clear MVP spec." Answer, then ask it to draft the spec. This turns a vague idea into a concrete document fast, and surfaces gaps you'd have missed.
+### Using Claude Code to build the spec
 
-> **Instructor demo:** Take a one-sentence app idea from the class and have the AI interview-then-draft a spec live. Show how the questions expose hidden assumptions.
+Instead of manually writing or passively chatting, **prompt Claude Code to orchestrate the full planning workflow:**
+
+```bash
+claude
+```
+
+Then describe your idea:
+
+```
+I want to build an app that helps freelancers track invoices. 
+Please orchestrate my planning:
+
+1. Interview me with 5–7 clarifying questions to understand my MVP
+2. Based on my answers, draft a one-page spec (problem, users, core features, out-of-scope, success)
+3. Propose a data model (table names, key fields, relationships)
+4. Suggest 5–7 key screens
+5. Recommend a build order with dependencies explained
+6. Create a decisions.md file documenting why you chose this architecture
+
+After each step, show me the output and ask if I want to revise or move on.
+```
+
+**Claude Code will:**
+- Ask you clarifying questions and wait for your answers
+- Draft the spec based on your responses
+- Generate a technical plan
+- Create the data model and screen list
+- Propose a build order
+- **Automatically log decisions** in a `decisions.md` file as you make them
+- Save all of it to your project folder
+
+### Why Claude Code for planning, not manual writing?
+
+- **Speed:** interview → spec → technical plan happens in one session, not three
+- **Completeness:** Claude Code catches questions you'd miss
+- **Documentation:** decisions get logged automatically as you make them (see "Recording decisions as you plan" below)
+- **Reusability:** the output becomes your build-stage prompts — you paste the spec into Cursor/Claude Code for each coding task
+
+> **Instructor demo:** Run a live Claude Code planning session for a one-sentence idea. Show how the interview surfaces hidden assumptions, and how the orchestrated workflow produces a complete plan in 15 minutes.
 > 
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: AI Interview + Drafted Spec]**
+**[SCREENSHOT PLACEHOLDER: Claude Code Planning Session]**
 
 **What this screenshot should show:**
-- Left panel: Claude/ChatGPT asked to interview the user
-  - AI prompt: "I want an app that helps freelancers track invoices. Ask me the questions you'd need to write a clear MVP spec."
-  - Visible questions: "Who is your primary user? How many invoices per month? Do clients have different rates? What's your timeline?"
-  - User's answers visible below each question
-- Right panel: AI's drafted MVP spec response
-  - Shows 5 sections: Problem, Users, Core Features, Out of Scope, Success Criteria
-  - Real example content (not placeholder)
-- Shows: how interviewing surfaces hidden assumptions and turns vague ideas into clarity
+- Terminal window with Claude Code running
+- Claude Code asking clarifying questions ("Who is your primary user? How many invoices per month?")
+- User's text answers visible
+- Claude Code's responses: drafted spec, data model, screen list, build order
+- Final output: a `spec.md` file and `decisions.md` file created in the project folder
+- Shows: how Claude Code orchestrates the entire planning workflow end-to-end
 
 ---
 
-**Watch-out (Module 1):** the AI will confidently suggest features and scope. Treat its output as a draft to edit, not gospel — *you* own the scope decisions.
+**Watch-out (Module 1):** Claude Code will confidently suggest features and scope. Treat its output as a draft to edit, not gospel — *you* own the scope decisions. The orchestration saves time; the thinking is still yours.
 
 ---
 
@@ -298,30 +334,49 @@ votes
 
 ---
 
-### Activity instructions for learners:
+### Activity instructions for learners (using Claude Code orchestration):
 
 1. **Pick one of the three projects above** (or propose your own simple idea)
 
-2. **Use AI as an interview partner:**
-   - Paste the one-sentence idea into Claude Code or ChatGPT
-   - Ask: "I want to build [idea]. What questions would you ask me to write a clear spec?"
-   - Answer the AI's questions honestly
-   - Ask: "Now draft an MVP spec based on our conversation"
+2. **Open Claude Code and orchestrate the planning:**
+   ```bash
+   claude
+   ```
+   
+   Then paste this prompt (filling in your idea):
+   
+   ```
+   I want to build: [YOUR ONE-SENTENCE IDEA]
+   
+   Please orchestrate my complete planning workflow:
+   
+   1. Interview me with 5–7 questions to understand my MVP and users
+   2. Draft a one-page spec (problem, users, core features, out-of-scope, success)
+   3. Propose a data model with tables, key fields, and relationships
+   4. Suggest 5–7 key screens and their purposes
+   5. Recommend a build order (10–15 tasks) with dependencies explained
+   6. Log each decision in a decisions.md file as we talk (e.g., "Chose X over Y because...")
+   
+   After each section, show me the output and ask if I want to refine before moving on.
+   ```
 
-3. **Create a technical plan:**
-   - Ask the AI: "Based on this spec, propose a data model (tables and fields) and a list of screens"
-   - Critique the output: does it match your vision? Is anything missing or over-scoped?
-   - Ask for refinements if needed
+3. **Review and critique:**
+   - Read Claude Code's interview questions — they often surface assumptions you missed
+   - Answer honestly (Claude Code refines its output based on your feedback)
+   - Review the spec: does it capture your vision? If not, tell Claude Code and it refines
+   - Review the data model: is it simple enough? Missing fields? Tell Claude Code
+   - Review the build order: does it make sense? Any dependencies you'd order differently?
 
-4. **Sequence the work:**
-   - Ask the AI: "In what order should I build these features? For each, what must already exist?"
-   - Review the order: does each item have its dependencies met before it?
+4. **Let Claude Code save the outputs:**
+   - Claude Code creates `spec.md`, `data-model.md`, `screens.md`, `build-order.md`, and `decisions.md`
+   - These are now in your project folder for Modules 4–13
 
 5. **Submit:**
    - Your final spec (1 page, 5 sections: problem, users, core features, out-of-scope, success)
    - Your data model (table names, key fields, relationships)
-   - Your screen list (5-7 screens)
+   - Your screen list (5–7 screens)
    - Your build order (10–15 tasks with dependencies noted for at least 3 tasks)
+   - Your decisions.md (showing your key architectural choices and reasoning)
 
 ---
 
@@ -403,6 +458,74 @@ For each scenario, decide what's wrong with the plan and explain how to fix it:
 Planning is tool-agnostic — any capable assistant (Claude Code, Cursor's chat, ChatGPT, Claude) works as a planning partner. The default is **Claude Code**, so you can keep the spec and plan as files alongside the code you'll build next. Alternatives (a chat window, a Notion doc, a text file) are fine — the deliverable is the *thinking*, not the tool that holds it.
 
 **Tip:** keep the spec *and a feature checklist* in **Notion** as your project's source of truth — and in Module 13 you'll connect Notion to Claude Code (via MCP) so the AI can read the checklist and tick items off as it ships them.
+
+---
+
+## Recording decisions as you plan (Claude Code automation)
+
+As you build your spec, technical plan, and build order, you're making **important choices.** Why did you choose Supabase over Firebase? Why store data this way instead of that way? Why build features in this order?
+
+### Claude Code logs decisions automatically
+
+**During the planning session with Claude Code (Lesson 3.2),** prompt it to capture decisions as you make them:
+
+```
+As we plan, whenever I mention a choice or reason, add it to a decisions.md file 
+(in the project root) with a timestamp, the decision, and the reasoning. 
+Example format:
+
+### 2026-02-10 — Chose Supabase over Firebase
+Supabase gives us SQL (more flexible for queries) + RLS (security). Firebase locks 
+us into NoSQL. For per-user data, SQL wins.
+
+Do this throughout our planning, so I don't have to manually write decisions.md later.
+```
+
+**Claude Code will:** automatically create and update `decisions.md` as you talk, so by the time planning is done, your decision trail is complete.
+
+### What a good decisions.md looks like
+
+Here's a complete example:
+
+```markdown
+# Project Decisions — Invoice Tracker
+
+### 2026-02-10 — Chose Supabase over Firebase
+Supabase gives us SQL (more flexible for complex queries) + RLS (row-level security, built in). 
+Firebase has great mobile SDKs but locks us into NoSQL. For a data-heavy invoice tracker 
+with per-user isolation, SQL + RLS wins.
+
+### 2026-02-10 — Store invoices by status, not status + date
+Simplifies filtering. We can re-sort on the client side. If we need date-based stats 
+later, we'll add a computed column.
+
+### 2026-02-10 — Build auth first, then clients, then invoices
+Auth is the foundation—without it, data can't belong to anyone. Clients are simpler 
+than invoices (no dependencies), so build that skill first. Invoices depend on both auth and clients.
+```
+
+### Why it matters
+
+**In the moment:** it's easy to forget *why* you chose something. Logging decisions keeps them fresh.
+
+**Later:** a month from now, you'll ask yourself "why did we pick this?" Decisions.md saves you from re-deciding and prevents scope creep ("we considered this in planning and decided against it").
+
+**For your capstone (Module 16):** a well-governed project has a clear decision trail. This becomes part of the rubric — your capstone grader will want to see thoughtful choices, not just code.
+
+**For teamwork:** if you onboard a teammate, they can read decisions.md and understand the architecture in minutes instead of asking you questions.
+
+### Your part: review and refine
+
+Claude Code creates the decisions.md automatically, but **you review and edit it.** If a decision was misunderstood or you want to add reasoning, edit it directly. Keep it honest — if you change your mind later, add a follow-up entry.
+
+Example revision:
+```markdown
+### 2026-02-15 — Revisited: Store status + due date, not just status
+After sketching screens, filtering by both status AND due date is common. 
+Storing both makes queries simpler. Revised the data model to add a due_date column.
+```
+
+**Deliverable:** Submit your `decisions.md` along with your spec and plan at the end of Module 3. You'll keep it updated through Modules 4–13 as you build, and it'll be part of your capstone submission.
 
 ---
 
