@@ -1,8 +1,22 @@
-# Module 13: Automating Your Dev Pipeline 🚀
+# Module 13: Automation (Optional, After Capstone)
 
 **Stage:** Advanced · **Level:** Advanced · **Duration:** ~5 hours · **XP:** 500
 
 **What you need:** Modules 0-12
+
+## This Module Is Optional
+
+This module is **optional**. It's about automating your workflow with Claude Code.
+
+**Why optional?** Your capstone doesn't need it. Ship first, automate later, is the right order.
+
+**When to take it:** After your capstone, if you're building a lot and want to move faster.
+
+**For now:** Focus on shipping your capstone. Come back to this module later if you want to level up.
+
+---
+
+## If You're Taking This Module
 
 > **Why this matters:** Stop doing repetitive tasks by hand. Automate: run tests, check code, deploy — all when you push to GitHub. Less work, fewer mistakes, faster shipping.
 
