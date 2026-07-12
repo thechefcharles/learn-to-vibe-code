@@ -228,7 +228,153 @@ This delivers Objective 2. Two habits:
 
 ---
 
-## Lesson 5.6 — Cursor vs. Claude Code: which for which task (~45 min)
+## Lesson 5.6 — Claude as strategic co-pilot: maintaining project context (~60 min)
+
+Claude Code excels at multi-file coordination and rapid implementation—it reads your repo and builds features across dozens of files. But here's the catch: as it writes hundreds of lines of code, it can lose sight of the *big picture*. You end up asking it "should I build X next?" and the agent has no memory of your overall spec, architectural decisions, or project priorities.
+
+The solution: **Use Claude (web or desktop, with Notion context) as a strategic co-pilot while Claude Code handles the implementation.**)
+
+### The context problem
+
+Claude Code is great at *how* (implementation), but loses *what* and *why* (strategy). Example:
+
+- You: "Claude Code, add filtering to the invoices page."
+- Claude Code: "Got it. Should I add status/date/amount dropdowns, or checkboxes, or a search bar? Should filtering persist in localStorage? Should I reset when navigating away?"
+- You: ...you don't remember. You're in the code, not the spec.
+
+Result: Claude Code guesses wrong, or you spend 10 minutes re-explaining the feature spec mid-implementation.
+
+### The solution: handoff pattern
+
+**Claude** (strategic) ← → **Claude Code** (implementation)
+
+1. **Claude stays on task:** Reads architecture overviews, specs, decisions, next priorities from Notion
+2. **Claude Code stays focused:** Reads your repo (CLAUDE.md, code, tests) and implements what Claude directs
+3. **Handoff cycle:** Claude Code → Claude (for strategic direction) → Claude Code (for implementation)
+
+### How to set it up
+
+**1. Structure Notion with architecture & strategy**
+
+Create a Notion workspace (or pages) with:
+
+```
+Architecture Overview
+├── Project Goals & Roadmap
+├── Module Build Order (which features in which order)
+├── Current Decisions (design, tech, data model, auth)
+├── Next Priorities (unblocked, in-progress, blockers)
+├── Frequently Asked Questions (common design questions)
+└── Glossary (domain terminology, type definitions)
+```
+
+Example:
+
+```
+# Module 5 Build Order (Architecture)
+1. Clients feature (Module 4) ✓ Done
+2. Invoices feature (depends on clients)
+   - List page with table
+   - Create form
+   - Tie invoices to existing clients (via clientId)
+   - Filter by status + date (future)
+3. Dashboard (depends on invoices + clients)
+4. Supabase wiring (Module 7)
+```
+
+**2. CLAUDE.md for Claude Code**
+
+Keep your CLAUDE.md focused on *implementation* guardrails (tech stack, patterns, constraints):
+
+```markdown
+# CLAUDE.md
+
+Next.js (App Router) + TypeScript + Tailwind v4.
+Use server components by default. Follow patterns in app/clients.
+Types in /types. Components in /app. Server actions in /lib/actions.
+Mock data for now (Supabase in Module 7).
+```
+
+**3. Make Claude aware of your Notion**
+
+Instead of pasting your whole Notion every time, give Claude a link + key questions:
+
+```
+I have a Notion workspace at [link] with:
+- Architecture Overview (project goals, build order, current decisions)
+- Next Priorities (what's unblocked to build next)
+
+When I ask strategic questions, refer to this workspace. Example questions:
+- "What's the next priority in the build order?"
+- "Does the spec say to filter invoices by status?"
+- "Should this feature be in the dashboard or a separate page?"
+```
+
+**4. Keep Notion and CLAUDE.md in sync**
+
+- Notion: strategic context (spec, decisions, roadmap, blockers)
+- CLAUDE.md: implementation guardrails (stack, patterns, conventions)
+- Both read-only for learners; you maintain both
+
+### Example workflow
+
+Let's say you want to add invoice filtering by status.
+
+**Step 1 — Ask Claude (strategic)**
+
+> "I want to add invoice filtering to the invoices page. Based on my Notion architecture (see link), where does this feature fit in the build order, and should I add it now?"
+
+Claude reads your Notion and answers:
+
+> "Per your Module 5 build order, invoices come before dashboard. Filtering is listed as a future enhancement. I'd recommend completing the basic invoices feature first (create + list), then circle back to filtering in iteration 2."
+
+**Step 2 — Paste Claude's answer to Claude Code (implementation)**
+
+> "Add filtering to the invoices page. Based on our spec, sort by status (draft, sent, paid) using Tailwind badge colors. Add dropdown filter above the table. Don't persist to localStorage yet (we'll add that in the dashboard phase)."
+
+Claude Code: "Got it. Should I add this to the existing page.tsx or create a separate filter component?"
+
+**Step 3 — Ask Claude if you're unsure**
+
+> "Claude, per the Notion patterns, should I use a separate filter component or inline it on the page?"
+
+Claude: "Your existing app/clients has inline filters, so keep invoices consistent—inline the dropdown on page.tsx for now."
+
+**Step 4 — Paste back to Claude Code**
+
+> "Based on the existing patterns (app/clients has inline filters), put the filter dropdown inline on the invoices page."
+
+Claude Code implements it with full context.
+
+### When to use this pattern
+
+- **Long builds (>30 min):** Claude Code loses high-level context. Claude refocuses you on the spec.
+- **Architectural decisions:** Let Claude (with full spec) decide structure; Claude Code implements it.
+- **Scope creep:** Claude catches when a feature isn't in the spec yet.
+- **Team consensus:** If you're pairing, Claude + Notion is shared context (Claude Code is just the typist).
+- **Context reset:** Between sessions, re-sync with Claude ("catch me up on the build order and current blockers") instead of re-reading docs.
+
+### Knowledge check
+
+**Q5-6a:** When Claude Code loses track of the big picture during a long build, which tool should you use to refocus?
+- (a) Cursor (it's faster)
+- (b) **Claude (it reads your full spec in Notion)** ✓
+- (c) Restart Claude Code with a fresh prompt
+- (d) Give up and plan more upfront
+
+*Why:* Claude (with Notion context) knows your full spec and build order; Claude Code only knows the repo. Claude is the strategic co-pilot.
+
+**Q5-6b:** What should your Notion contain that CLAUDE.md shouldn't?
+- (a) Tech stack (Next.js, Tailwind, etc.)
+- (b) Code patterns (follow app/clients)
+- (c) **Architecture overview, roadmap, and design decisions** ✓
+- (d) TypeScript type definitions
+
+*Why:* Notion is for strategic context (what to build, in what order, why). CLAUDE.md is for implementation guardrails (how to build, tech stack, patterns).
+
+---
+
+## Lesson 5.7 — Cursor vs. Claude Code: which for which task (~45 min)
 
 This delivers Objective 3. Not competitors — complementary; skilled builders use both.
 
@@ -236,8 +382,9 @@ This delivers Objective 3. Not competitors — complementary; skilled builders u
 | --- | --- | --- |
 | **Cursor** (in-editor) | Focused, local, watch each edit | Tweak a component, fix one function, style a page |
 | **Claude Code** (agentic) | Large, multi-file, or repetitive | Add a whole feature, rename a concept everywhere, big refactor |
+| **Claude** (strategic co-pilot) | Big-picture decisions, spec questions, roadmap | "Should I build X now?", "What's the architecture?", "Does this match the spec?" |
 
-**Rule of thumb:** small/local → in-editor; large/cross-cutting → agentic. Many run both (the 2026 solo stack is Cursor + Claude Code). **Alternatives:** Codex CLI, Copilot agent mode, open-source Cline/Continue — the skill (goal → plan → review) transfers; Claude Code is the default for its repo-wide performance and terminal-native fit.
+**Rule of thumb:** small/local → Cursor; large/cross-cutting → Claude Code; strategic questions → Claude. Many run all three (the 2026 solo stack is Cursor + Claude Code + Claude with Notion). **Alternatives:** Codex CLI, Copilot agent mode, open-source Cline/Continue — the skill (goal → plan → review) transfers; Claude Code is the default for its repo-wide performance and terminal-native fit.
 
 ---
 
@@ -295,7 +442,7 @@ This delivers Objective 3. Not competitors — complementary; skilled builders u
 
 ## Quiz questions (preview)
 
-These are the three questions you'll see on the quiz. Study these to prepare:
+These are the questions you'll see on the quiz. Study these to prepare:
 
 **Q5-1:** The key mindset shift from Cursor to Claude Code is thinking in:
 - (a) **edits → goals** ✓
@@ -321,6 +468,22 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 *Why:* Plan mode (`/plan`) lets you review the agent's proposed approach and approve before it modifies files. This prevents the agent from confidently doing the wrong thing across many files.
 
+**Q5-6a:** When Claude Code loses track of the big picture during a long build, which tool should you use to refocus?
+- (a) Cursor (it's faster)
+- (b) **Claude (it reads your full spec in Notion)** ✓
+- (c) Restart Claude Code with a fresh prompt
+- (d) Give up and plan more upfront
+
+*Why:* Claude (with Notion context) knows your full spec and build order; Claude Code only knows the repo. Claude is the strategic co-pilot.
+
+**Q5-6b:** What should your Notion contain that CLAUDE.md shouldn't?
+- (a) Tech stack (Next.js, Tailwind, etc.)
+- (b) Code patterns (follow app/clients)
+- (c) **Architecture overview, roadmap, and design decisions** ✓
+- (d) TypeScript type definitions
+
+*Why:* Notion is for strategic context (what to build, in what order, why). CLAUDE.md is for implementation guardrails (how to build, tech stack, patterns).
+
 ---
 
 ## Knowledge check (mapped to objectives)
@@ -335,12 +498,18 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 - *Practical check:* Show a plan the agent proposed for a feature, your refinement (if any), and one thing you caught reviewing the diff.
   - **SAMPLE:** "Agent proposed renaming `client_id` to `clientId` everywhere. I refined it to only rename in new code (types/invoice.ts) to avoid breaking old clients table. Reviewing the diff, I caught that it missed updating the validation schema — I asked it to add that before accepting."
 
-**Objective 3 — Choose workflow (Lesson 5.6 knowledge):**
-- *Practical check:* For four tasks, label Cursor or Claude Code and justify:
-  - (a) Rename `Invoice` to `Payment` everywhere (Cursor? Claude Code?) → **Claude Code** (cross-cutting, affects many files)
-  - (b) Adjust one button's color (Cursor? Claude Code?) → **Cursor** (local, focused change)
-  - (c) Add a whole notification system feature (Cursor? Claude Code?) → **Claude Code** (large, multi-file)
-  - (d) Fix a typo in one component (Cursor? Claude Code?) → **Cursor** (micro-task)
+**Objective 3 — Use Claude as strategic co-pilot (Quiz Q5-6a, Q5-6b):**
+- Q5-6a: Test understanding of when to use Claude vs. Claude Code
+- Q5-6b: Test understanding of what goes in Notion vs. CLAUDE.md
+- *Practical check:* Set up a simple Notion with architecture overview + build order. Capture one example where you asked Claude a strategic question (e.g., "What's next in the build order?") and how that informed your Claude Code prompt.
+  - **SAMPLE:** "Notion had 'Invoices feature includes: list, create, (filtering is future)'. I asked Claude: 'Should I add filtering now or after dashboard?' Claude said: 'Per your roadmap, do basic invoices first, filtering later.' I then directed Claude Code to build list + create only, without filters."
+
+**Objective 4 — Choose workflow (Lesson 5.7 knowledge):**
+- *Practical check:* For four tasks, label Cursor, Claude Code, or Claude and justify:
+  - (a) Rename `Invoice` to `Payment` everywhere (which tool?) → **Claude Code** (cross-cutting, affects many files)
+  - (b) Adjust one button's color (which tool?) → **Cursor** (local, focused change)
+  - (c) Add a whole notification system feature (which tool?) → **Claude Code** (large, multi-file)
+  - (d) "Should I add notifications before or after the dashboard?" (which tool?) → **Claude** (strategic, references spec + roadmap)
 
 ---
 
@@ -363,6 +532,10 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 - **(d) Error handling:** The agent creates a form but doesn't validate that amount > 0. You catch this in the review. Do you:
   - ✅ **Correct:** Reject the diff, ask Claude Code: "Add validation: amount must be positive, dueDate must be in the future." Then review the next diff.
   - ❌ **Avoid:** Accepting and adding validation later (you want validation in place before shipping).
+
+- **(e) Strategic uncertainty:** You're not sure if the invoices feature should support recurring billing. Do you:
+  - ✅ **Correct:** Ask Claude (with Notion context): "Does the spec mention recurring billing? If not, is it a future feature?" Claude reads your Notion and clarifies. Then direct Claude Code accordingly.
+  - ❌ **Avoid:** Guessing and having Claude Code build the wrong thing. Or asking Claude Code directly (it only knows the repo, not your spec).
 
 ---
 

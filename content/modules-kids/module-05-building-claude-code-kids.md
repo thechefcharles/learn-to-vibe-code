@@ -249,7 +249,125 @@ Claude Code fixes it.
 
 ---
 
-## Lesson 5.8 — Debugging at Scale (~30 min)
+## Lesson 5.8 — Two Helpers: Claude + Claude Code Working Together (~45 min)
+
+Imagine you have two helpers:
+
+1. **Claude Code** — reads your code and builds stuff. Super fast at typing. But only knows your code, not your project plan.
+2. **Claude** — reads your project plan (Notion) and knows what to build next. But doesn't type code.
+
+**The problem:** You're building a pet tracker. You ask Claude Code: "Add a favorites system!" 
+
+Claude Code: "OK! Should I save favorites to the database or just in memory? Should the heart be red or pink? Should favorites show first or in a separate list?"
+
+You're stuck. You're in the code, not thinking about the big picture.
+
+**The solution:** You have two helpers. Use them both!
+
+### Your role: The director
+
+You're not the coder—you're the **director**. You:
+
+1. **Tell Claude** the big-picture question
+2. **Claude reads your plan** and answers
+3. **You tell Claude Code** what to build (now you know!)
+4. **Claude Code builds it**
+
+### How to set it up
+
+**Step 1 — Put your project plan in Notion**
+
+Create simple Notion pages:
+
+```
+Pet Tracker Plan
+├── Features to Build (in order)
+│   1. Add pets (done ✓)
+│   2. Delete pets (next)
+│   3. Favorites system (after delete)
+│   4. Photo gallery (future)
+├── Design Rules
+│   - Heart icon for favorites, red when favorited
+│   - Favorites sort to top
+├── Questions & Answers
+   - Q: Should users name their pets? A: Yes, required
+```
+
+You own this Notion. Claude reads it when you need advice.
+
+**Step 2 — Make Claude aware of your plan**
+
+Tell Claude:
+
+> "I have a Notion at [link] with my pet tracker plan: features in order, design rules, Q&A. When I ask which feature to build next, read this Notion and tell me. Example: 'Claude, what should I build next?' and you'll check the Notion and say 'Delete pets comes before favorites.'"
+
+**Step 3 — Keep Claude Code focused on code**
+
+Claude Code reads your CLAUDE.md (from Lesson 5.3). It says:
+
+```markdown
+# CLAUDE.md
+Pet tracker app built with Next.js and TypeScript.
+Use server components. Follow patterns in app/pets.
+```
+
+Claude Code is the typist. Give it clear directions.
+
+### Example: Adding a favorites feature
+
+**You:** "Claude, I want to add a favorites feature to my pet tracker. What do I need to know from the plan?"
+
+**Claude:** (reads your Notion)
+> "Per your plan, favorites come after delete. Here's what the plan says: red heart icon, favorites sort first, save to database."
+
+**You:** (now you know!) Now you direct Claude Code:
+> "Add a favorites system to the pet tracker. Red heart icon. When clicked, marks a pet as favorite. Sort favorites to the top of the list. Persist to Supabase."
+
+**Claude Code:** "Got it. Anything else?" Builds it.
+
+**Step 4 — When Claude Code is confused**
+
+Claude Code: "I've built the heart button. But should I add a 'Favorites only' filter too?"
+
+**You:** (not sure!) Paste to Claude:
+> "Claude, should I add a 'Favorites only' filter as part of this feature, or is that future work?"
+
+**Claude:** (checks Notion)
+> "Not in this phase. Stick to click-to-favorite and sorting. Filter is a future feature."
+
+**You:** Paste back to Claude Code:
+> "No filter for now. Just the heart and sorting. Let's ship this first."
+
+### When to use this pattern
+
+- **You're not sure what to build next** → Ask Claude (it reads your plan)
+- **Claude Code asks design questions** → Ask Claude (it has your big picture)
+- **You're making quick edits** → Claude Code alone (just code, no strategy needed)
+- **You're building a big feature** → All three: plan (Notion) → strategy (Claude) → code (Claude Code)
+
+### Knowledge check
+
+**Q5-k8a:** You're adding a favorites system but aren't sure if it should sort favorites first or show them in a separate list. What do you do?
+
+- (a) Ask Claude Code to guess
+- (b) **Ask Claude (it reads your plan/Notion)** ✓
+- (c) Make it up
+- (d) Don't add sorting at all
+
+*Why:* Claude Code only knows code. Claude knows your spec and plan. Claude answers design questions.
+
+**Q5-k8b:** Claude has two jobs: reading code and reading your plan. Which is which?
+
+- (a) Claude Code: reads your plan; Claude: reads code
+- (b) **Claude Code: reads code; Claude: reads your plan** ✓
+- (c) Both read both
+- (d) Neither reads either
+
+*Why:* Claude Code is a code builder. Claude is a plan reader. Different jobs, same team.
+
+---
+
+## Lesson 5.9 — Debugging at Scale (~30 min)
 
 With a whole project changing, things can break. When they do:
 
@@ -261,7 +379,7 @@ With a whole project changing, things can break. When they do:
 
 ---
 
-## Lesson 5.9 — Cursor vs Claude Code: Which Tool for Which Task? (~45 min)
+## Lesson 5.10 — Cursor vs Claude Code: Which Tool for Which Task? (~45 min)
 
 Don't think of Cursor and Claude Code as competitors — use both for different jobs:
 
@@ -407,7 +525,7 @@ Claude Code fixes it.
 
 ## Quiz Questions (Preview)
 
-These are the four questions on your quiz. Study these first!
+These are the six questions on your quiz. Study these first!
 
 **Q5-k1:** Before asking Claude Code to build a feature, what should you do?
 - (a) Just describe it and let Claude Code figure it out
@@ -441,6 +559,22 @@ These are the four questions on your quiz. Study these first!
 
 *Why:* CLAUDE.md tells Claude Code your project's rules and conventions, just like `.cursorrules` does in Cursor. It's the AI's memory of your stack and patterns.
 
+**Q5-k8a:** You're adding a favorites system but aren't sure if it should sort favorites first or show them in a separate list. What do you do?
+- (a) Ask Claude Code to guess
+- (b) **Ask Claude (it reads your plan/Notion)** ✓
+- (c) Make it up
+- (d) Don't add sorting at all
+
+*Why:* Claude Code only knows code. Claude knows your spec and plan. Claude answers design questions.
+
+**Q5-k8b:** Claude has two jobs: reading code and reading your plan. Which is which?
+- (a) Claude Code: reads your plan; Claude: reads code
+- (b) **Claude Code: reads code; Claude: reads your plan** ✓
+- (c) Both read both
+- (d) Neither reads either
+
+*Why:* Claude Code is a code builder. Claude is a plan reader. Different jobs, same team.
+
 ---
 
 ## Knowledge Check (Mapped to Your Objectives)
@@ -462,12 +596,21 @@ These are the four questions on your quiz. Study these first!
   - ✅ (b) A Cursor rules file
 - **Written check:** Show a plan Claude Code proposed, any refinement you made, and why
 
-**Objective 4 — Choose the right tool (Lesson 5.9 knowledge):**
-- **Practical check:** For four tasks, pick Cursor or Claude Code and explain:
-  - (a) Rename a type everywhere (Cursor? Claude Code?)
-  - (b) Adjust one button's color (Cursor? Claude Code?)
-  - (c) Add a whole new feature (Cursor? Claude Code?)
-  - (d) Fix a typo in one file (Cursor? Claude Code?)
+**Objective 4 — Use Claude as strategic co-pilot (Lesson 5.8 knowledge; Quiz Q5-k8a, Q5-k8b):**
+- Q5-k8a: "You're adding a feature but aren't sure about the design. What do you do?"
+  - ✅ (b) Ask Claude (it reads your plan/Notion)
+- Q5-k8b: "Claude vs Claude Code — which reads code, which reads your plan?"
+  - ✅ (b) Claude Code: reads code; Claude: reads your plan
+- **Written check:** Set up a simple Notion with your pet tracker plan (features to build, design rules). Show one example where you asked Claude a design question and used the answer to direct Claude Code.
+  - **Example:** "Notion said favorites come after delete. I asked Claude: 'When should I build favorites?' Claude said 'After delete.' I then told Claude Code: 'Add delete first, no favorites yet.'"
+
+**Objective 5 — Choose the right tool (Lesson 5.10 knowledge):**
+- **Practical check:** For five tasks, pick Cursor, Claude Code, or Claude and explain:
+  - (a) Rename a type everywhere (which tool?)
+  - (b) Adjust one button's color (which tool?)
+  - (c) Add a whole new feature (which tool?)
+  - (d) Fix a typo in one file (which tool?)
+  - (e) "Should I add notifications before or after photo gallery?" (which tool?)
 
 **Architecture-focused judgment checks:**
 
@@ -497,6 +640,10 @@ These are the four questions on your quiz. Study these first!
   - ✅ **Right:** Ask it to explain the file, and only accept after you understand it (Module 1).
   - ❌ **Wrong:** Accept it blindly because "the AI knows what it's doing."
 
+- **(g) Strategic question mid-build:** Claude Code asks: "Should the delete button be red or gray?" Do you:
+  - ✅ **Right:** Ask Claude (with your Notion open): "What color should delete buttons be in my design?" Claude checks your plan and answers. Then tell Claude Code the answer.
+  - ❌ **Wrong:** Ask Claude Code to guess, or make it up on the spot.
+
 ---
 
 **Rubric checklist (before you submit):**
@@ -512,8 +659,11 @@ These are the four questions on your quiz. Study these first!
 | ✅ | New code follows the patterns from existing files (same style, naming, structure) |
 | ✅ | You identified one small task you'd use Cursor for instead, with a reason |
 | ✅ | Your CLAUDE.md file is created and has your stack info |
+| ✅ | You created a simple Notion with your project plan (features, design rules) |
+| ✅ | You asked Claude a strategic question using that Notion and got an answer |
+| ✅ | You showed how Claude's answer informed your Claude Code prompt |
 
-*Pass mark: 80% and a working feature with architecture sketch + CLAUDE.md submitted.*
+*Pass mark: 80% and a working feature with architecture sketch + CLAUDE.md + Notion coordination example submitted.*
 
 ---
 
