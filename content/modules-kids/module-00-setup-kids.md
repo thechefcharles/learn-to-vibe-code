@@ -274,6 +274,91 @@ These three documents are like a game manual — they help you stay organized an
 
 ---
 
+## Lesson 0.7 — Where Does Your Project's Brain Live? (Repo vs. Notion) 🧠
+
+You learned that some documentation (CLAUDE.md, decisions.md) lives in your project repository. But here's a secret: **not all documentation belongs in the same place!**
+
+Real teams split their documentation into two homes, each with a special job. Let's learn why.
+
+### Two homes for documentation
+
+**The Repository = Your Project's Rulebook 📖**
+
+Think of your repo like a game's official rulebook. It's written down, stamped, and never changes unless everyone agrees.
+
+**What goes here:**
+- CLAUDE.md (your rules)
+- decisions.md (why you chose Supabase, Vercel, etc.)
+- Code, tests, and database changes
+- Configuration files
+
+**Why:** These things directly affect how your code works. If you change them, your app might break! So they're locked down, versioned, and reviewed before anyone changes them.
+
+---
+
+**Notion = Your Team's Encyclopedia 📚**
+
+Think of Notion like Wikipedia. It's updated all the time, it's helpful for learning, but it's not official rules. It evolves as you learn new things.
+
+**What goes here:**
+- "How to set up your computer for coding" (evolves as you find easier ways)
+- "Why we built this feature" (design research, user feedback)
+- "What do I do if the database crashes?" (quick-reference runbooks)
+- Architecture diagrams (visual, easier to sketch in Notion than markdown)
+- FAQs (questions people ask a lot)
+
+**Why:** These are super helpful but don't affect whether your code runs. They can change anytime without breaking anything. Notion is perfect for this — fast updates, no need to review changes.
+
+---
+
+### The Simple Rule 🎯
+
+**Ask yourself:** *"If I change this, will my app break or stop working?"*
+
+- **YES** → Repo (it's important, lock it down)
+- **NO** → Notion (it's helpful, keep it flexible)
+
+---
+
+### Real examples
+
+**CLAUDE.md** — "Never save passwords in the code" → Repo (your code *will* break if someone ignores this!)
+
+**Onboarding guide** — "Here's how to install Node.js" → Notion (helpful, but your app doesn't care where it lives)
+
+**decisions.md** — "We chose Supabase because it has login built-in" → Repo (explains important choices, versioned)
+
+**Architecture diagram** — "Here's how all our pieces connect" → Notion (super helpful for learning, but your app doesn't care)
+
+**Database migration** — "Add a `users` table" → Repo (changes your database, must be versioned)
+
+**FAQ** — "Why does signup take 10 seconds?" → Notion (answers questions, pure info)
+
+---
+
+### Why this matters as you grow
+
+**Right now (solo):** You barely need either! Just keep a note of important stuff.
+
+**With a small team (2–3 friends):** Your repo gets the rules and code. Notion holds the helpful guides. Keeps things clean.
+
+**With a bigger team (5+ people):** This split is *gold*. Without it, your repo fills up with 100 helpful pages (nightmare to navigate), or Notion fills up with outdated info (nobody knows what's true). With clear boundaries, everyone knows where to look.
+
+---
+
+### Your job in Module 0
+
+Nothing new! Just remember: **Rules and code go in the repo. Helpful info goes in Notion.**
+
+When you build your capstone project (Module 16), you might create:
+- `CLAUDE.md` in your repo (your rules)
+- `decisions.md` in your repo (why you chose stuff)
+- Maybe a Notion page for architecture diagrams or onboarding (if you're working with friends!)
+
+This split is just like organizing your room: tools and books in one place, daily stuff in another. Makes everything easier to find! 🎮
+
+---
+
 ## Activity: The Setup Scavenger Hunt 🔍
 
 Check off each one (you already did most of them):

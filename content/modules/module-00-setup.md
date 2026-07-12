@@ -367,6 +367,196 @@ These three documents scale from a solo project to a team of 10 without any over
 
 ---
 
+## Lesson 0.7 — Where does documentation live? Repository vs. Notion (~25 min)
+
+You just learned that CLAUDE.md, decisions.md, and .mcp.json belong in your project repo. But not *all* documentation belongs in the repo. Real teams also use Notion (or similar) for knowledge that evolves independently from code. This lesson clarifies which documentation goes where — and why it matters for teams.
+
+### The principle: Source of truth, by category
+
+**Repository (versioned, auditable, immutable history):**
+- Lives in git
+- Changes are committed, reviewed, and traced
+- Affects how the code is built, run, or maintained
+- Examples: CLAUDE.md, decisions.md, .mcp.json, migrations, tests, config files
+
+**Notion (evolving knowledge base, team reference):**
+- Lives outside git
+- Changes are made in real-time; history is optional
+- Helpful but doesn't directly affect code/builds
+- Examples: onboarding guides, architecture diagrams, team processes, FAQs, design research, incident runbooks
+
+**The decision rule:** *If changing this file affects code, builds, or deployments, it goes in the repo. Otherwise, it goes in Notion.*
+
+---
+
+### Repository: What belongs in your git history
+
+**CLAUDE.md** — Your project's constitution (already covered in Lesson 0.6)
+- Non-negotiable rules (no secrets in git, tests before merge, etc.)
+- Affects how every contributor works
+- Must be versioned with the code
+
+**decisions.md** — Important architectural/technical choices (already covered in Lesson 0.6)
+- Why you chose Supabase over Firebase, Vercel over Netlify, etc.
+- Helps future contributors understand constraints
+- Stays in git; read-only after a decision is made
+
+**.mcp.json** — Configuration for Claude Code automation (already covered in Lesson 0.6)
+- Tells Claude Code which systems to connect to
+- All teammates need the same config to stay in sync
+- Goes in repo
+
+**README.md** — The project's front door
+- Quick overview, install steps, how to run locally
+- Affects how new contributors get started
+- Changes should be reviewed (committed)
+
+**Database migrations** — Versioned schema changes
+- Each schema change is a migration file with a timestamp
+- Must be version-controlled and auditable for compliance
+- "Never hand-edit the database; write a migration instead"
+
+**Tests** — Automated verification
+- Unit tests, integration tests, E2E tests
+- Change when code behavior changes
+- Must be committed so all teammates run the same tests
+
+**Configuration files** — .gitignore, .env.example (not .env!), TypeScript config, Tailwind config
+- .gitignore tells git what NOT to track (secrets, node_modules)
+- .env.example shows *what* secrets exist (but not their values)
+- Actual secrets in .env (gitignored) are local-only
+
+**Code** — Obviously. Functions, components, styles.
+
+**Why:** All these affect code behavior, builds, or team consistency. They must be auditable and version-controlled.
+
+---
+
+### Notion: What belongs in your knowledge base
+
+**Onboarding guides** — "How to set up your local dev environment", "First PR checklist"
+- Evolves as you learn new tricks
+- Not versioned; can be updated anytime
+- Helpful but not tied to code
+
+**Architecture diagrams** — "System design overview", "Data flow between Supabase and Vercel"
+- Useful for new team members
+- Can change without affecting code
+- Better in Notion (visual, easy to update) than git
+
+**Team processes** — "How we do code review", "When to escalate a bug", "Friday demo prep"
+- Operational, not technical
+- Changes frequently; no need to version
+- Belongs in Notion
+
+**FAQs** — "Why does the signup take 10 seconds?", "How do I reset my local database?"
+- Answers help people troubleshoot
+- Not tied to code; purely informational
+
+**Design research** — Figma links, user feedback, design decisions
+- Living documents that change as you learn
+- Not code; no need to version
+
+**Incident runbooks** — "The database is down: steps to restore", "The API is returning 500s: debug checklist"
+- Operational documentation
+- May evolve as you learn
+- Belongs in Notion for quick access (not git)
+
+**Why:** All these are helpful but don't affect how the code is built or deployed. They evolve independently and don't need git's audit trail.
+
+---
+
+### The decision tree
+
+```
+Does this file affect code, builds, or deployments?
+
+    ↓ YES
+    → Repository (git)
+    
+    ↓ NO
+    → Notion (knowledge base)
+```
+
+**Examples:**
+
+- **CLAUDE.md** — affects how code is written → Repo
+- **Onboarding guide** — helps people understand tools → Notion
+- **decisions.md** — explains architectural choices, affects future decisions → Repo
+- **Architecture diagram** — explains the system, nice-to-have → Notion
+- **Database migration** — changes the schema, must be auditable → Repo
+- **FAQ** — answers questions, helpful but not critical → Notion
+- **Test suite** — defines code correctness, must be run → Repo
+- **Design research** — informs but doesn't change code → Notion
+
+---
+
+### Concrete examples from the course platform
+
+**This course platform is built with the repo/Notion split:**
+
+**In the repository** (`/learn-to-vibe-code/`):
+- `CLAUDE.md` — platform rules and architecture
+- `app/`, `lib/`, `public/` — Next.js code
+- `tests/`, `playwright.config.ts` — tests
+- `.env.example` — template for secrets (actual `.env` is gitignored)
+- Database migrations (managed by Supabase)
+
+**In Notion** (separate workspace):
+- Module lesson content (drafted and edited before import)
+- Architecture diagrams (visual, easier to sketch than write in markdown)
+- Team onboarding guides
+- Incident runbooks (e.g., "Supabase backup is down")
+- Design research (user feedback, A/B test results)
+
+**In the source content repo** (`/Accredited Vibe Coding Course/`):
+- Lesson markdown files
+- Quiz questions and answer keys (server-side only)
+- Capstone rubric
+- Screenshots
+
+**The sync:**
+Content is **authored** in Notion/shared workspace, then **imported** into the platform repo and **versioned**. This way:
+- Instructors can edit lessons live in Notion (fast feedback loop)
+- Changes are reviewed before they go to production (git pull request)
+- History is preserved (git commits)
+
+---
+
+### As your team grows
+
+**Solo (you alone):**
+- Everything starts in your head. Keep essentials in the repo (CLAUDE.md, decisions.md), reference docs in a scratch note.
+
+**Small team (2–5 people):**
+- Repo holds rules and code. Notion holds onboarding, architecture diagrams, FAQs. Keeps the repo clean, keeps Notion actionable.
+
+**Larger team (5+ people):**
+- Repo + Notion pattern is critical. Without clear boundaries:
+  - Repo bloats with documentation that belongs in Notion (slow to navigate)
+  - Notion becomes outdated (no versioning, no code review)
+  - Confusion about which docs are authoritative
+
+**This platform (8+ team members):**
+- Repo: code, tests, configuration, CLAUDE.md, decisions.md, migrations
+- Notion: onboarding, design research, team runbooks, lesson drafts (before import)
+- Source workspace: lesson content (drafts), capstone rubric, screenshots
+
+---
+
+### Your job in Module 0
+
+Nothing new. Just remember: **If it changes how the code is built or maintained, it goes in the repo. Otherwise, Notion.**
+
+When you build your capstone in Module 16, you'll create:
+- `CLAUDE.md` in your repo ✓ (rules)
+- `decisions.md` in your repo ✓ (architectural choices)
+- (Optional) A Notion page for onboarding or architecture diagrams for your team
+
+Starting in Module 3, you'll add `decisions.md` to your capstone repo as a practical deliverable. That's your first hands-on experience with the repo/Notion boundary.
+
+---
+
 ## Readiness checklist
 
 Tick every box before starting Module 1. If any are unchecked, go back to the lesson that covers it.
