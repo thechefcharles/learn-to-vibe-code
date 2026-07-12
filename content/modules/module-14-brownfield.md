@@ -29,111 +29,184 @@ Greenfield lets you choose everything; brownfield means living with others' choi
 
 ---
 
-## Lesson 14.2 — Orienting in an unknown repo (~60 min)
+## Lesson 14.2 — Map the codebase with Claude Code (~60 min)
 
-This delivers Objective 1. A repeatable way to map an unfamiliar codebase, using AI as a guide (Module 8's reading skill at repo scale):
+This delivers Objective 1. **Use Claude Code to quickly map an unfamiliar codebase, then you verify the map against the actual files.**
 
-- **Start at the edges:** README, `package.json`/dependencies, folder structure, entry points. What kind of app is this?
-- **Ask the agent to map it:** "Summarize this repo's architecture, main modules, and how a request flows through it." Then verify against the actual files (the AI can be wrong).
-- **Find the seams:** where's the data layer, routing, auth, tests? Trace one real feature end to end.
-- **Note the conventions:** naming, folder patterns, state management — you'll match them, not fight them.
-- **Read decisions.md or DECISION_LOG.md if it exists:** repos often document *why* key choices were made.
+### Claude Code as your orientation guide
 
-  > **For kids:**
-  > If the repo has `decisions.md` (or `DECISION_LOG.md`), read it first. It explains why the code is the way it is — "why did they pick Supabase instead of Firebase?" or "why are there server components instead of client?" Understanding the "why" helps you respect the design instead of fighting it.
+**Step 1 — Start at the repo edges** (manual, quick scan):
+- Read README (what does the app do?)
+- Check `package.json` (what dependencies? What tech stack?)
+- Look at folder structure (how is code organized?)
+- Skim one entry point (e.g., `app/page.tsx` or `main.ts`)
 
-  > **For adults:**
-  > Review `decisions.md` or `DECISION_LOG.md` immediately if present. It's your map to architectural reasoning: which trade-offs were made, why certain patterns were chosen, and what constraints shaped the system. This prevents well-intentioned refactors that contradict earlier decisions. Particularly useful in teams: architectural decisions are institutional knowledge, easy to forget, and expensive to re-litigate.
+**Step 2 — Prompt Claude Code to map the full architecture:**
 
----
-
-**[SCREENSHOT PLACEHOLDER: Repo Architecture Summary]**
-
-Left: File tree of brownfield-practice-repo (app/, lib/, components/, pages/). Right: Claude Code output: "This is a Next.js Reading List app. Main layers: auth (Supabase), data (Postgres), UI (React + Tailwind)..." Proof: AI can map unfamiliar repos.
-
----
-
----
-
-## Lesson 14.3 — Reproduce before you fix (debugging someone else's code) (~50 min)
-
-This strengthens Objectives 2 & 3 and applies Module 8's debugging loop to code you didn't write — where it's harder, because you don't know the *intended* behavior. The rule: **never fix what you can't reproduce.**
-
-1. **Establish a baseline** — run the app and the existing tests. Know what "working" looks like before you touch anything.
-2. **Reproduce the reported behavior** — trigger the exact bug from the ticket; confirm you see it.
-3. **Trace it with the reading skill (Module 8)** — follow the data to the line that breaks; confirm the *root cause*, not the symptom.
-4. **Only then change** — and re-run to confirm the reproduction is gone and the baseline still passes.
-
-**Concrete example (practice repo, BUG-101):** the search box crashes with "Cannot read properties of undefined (reading 'toLowerCase')."
-
-**Step 1 — Establish baseline:**
 ```bash
-npm test  # All tests pass ✓
-npm run dev  # App loads ✓
+cd your-unfamiliar-repo
+claude
 ```
 
-**Step 2 — Reproduce the bug:**
-1. Open the app
-2. Type a letter in the search box
-3. Crash: "Cannot read properties of undefined (reading 'toLowerCase')"
+Send:
 
-**Step 3 — Trace with Module 8 reading skill:**
-```typescript
-// app/search/page.tsx (where the crash happens)
-const filtered = books.filter(b => b.author.toLowerCase().includes(query));
-// ↑ CRASH HERE: b.author is undefined for some books
+```
+Map this codebase for me. I'm joining as a new engineer.
 
-// Check the data: lib/books.ts
-const books = [
-  { id: 1, title: "Book A", author: "Alice" },  // Has author
-  { id: 2, title: "Book B" },                    // ❌ Missing author!
-  { id: 3, title: "Book C", author: "Charlie" }
-];
+Please:
+1. Summarize the app in 2-3 sentences (what does it do?)
+2. List the main layers/modules (data, auth, UI, etc.)
+3. Trace one feature end-to-end (e.g., "how does a search query flow through the code?")
+4. Identify conventions (naming, folder structure, patterns)
+5. Flag any decisions.md or DECISION_LOG.md if they exist
+
+Then show me the file paths for key entry points.
 ```
 
-**Step 4 — Identify the root cause:**
-- One book has no `author` field
-- `.toLowerCase()` on undefined crashes
-- The `any` type cast hid the type error (no TypeScript safety)
+**Step 3 — Claude Code will:**
+- Read the codebase (via file listing and grep)
+- Generate a summary like:
 
-**Root-cause fix (not: "delete that book" or "remove author search"):**
+```
+This is a Next.js Reading List app.
+Main layers:
+- UI: app/, components/ (React + TypeScript)
+- Data: lib/books.ts (in-memory array, no DB)
+- Auth: optional (Supabase setup exists but unused)
+
+Feature trace (search):
+1. User types in app/search/page.tsx
+2. filter() runs against books array
+3. Results display below
+
+Conventions:
+- camelCase for functions and variables
+- PascalCase for components
+- No complex state management (just React hooks)
+- Tailwind for styling
+```
+
+**Step 4 — Verify Claude Code's map** (you read the files):
+- Does the summary match what you see in the code?
+- Does the feature trace make sense?
+- Are there contradictions? (AI can be wrong)
+
+If Claude Code missed something or was incorrect, ask it to clarify: "I found X in the code, but you said Y — what am I missing?"
+
+**Step 5 — Find decisions.md** (if it exists):
+```bash
+find . -name "decisions.md" -o -name "DECISION_LOG.md"
+```
+
+If found, read it. It explains *why* the code is the way it is — which trade-offs were made and what constraints shaped the system.
+
+---
+
+**[SCREENSHOT PLACEHOLDER: Claude Code Architecture Summary]**
+
+Terminal showing Claude Code mapping the brownfield-practice-repo: "This is a Next.js Reading List app. Main layers: auth (Supabase), data (books.ts), UI (React + Tailwind)..." Proof: Claude Code can quickly orient you in an unfamiliar codebase.
+
+---
+
+## Lesson 14.3-14.4 — Trace & fix with Claude Code assistance (~125 min)
+
+This delivers Objectives 2 & 3. **Use Claude Code to assist with debugging and tracing, but you drive the investigation and verification.**
+
+### Reproducing and tracing the bug
+
+**Step 1 — Establish baseline** (you do this):
+```bash
+npm install  # Install dependencies
+npm test     # Run tests → should all pass
+npm run dev  # Start the app locally
+```
+
+Verify everything works as expected. This is your baseline.
+
+**Step 2 — Reproduce the bug** (you do this):
+From the ticket, trigger the exact bug. For example:
+- If BUG-101 is "search crashes on special characters," type a special character in the search box
+- Confirm you see the exact error
+
+**Step 3 — Prompt Claude Code to help trace** (Claude Code assists, you verify):
+
+```bash
+claude
+```
+
+Send:
+
+```
+I'm debugging BUG-101: [paste the bug report and error message]
+
+I can reproduce it when [describe exact steps].
+
+Please help me:
+1. Search the codebase for the error ("Cannot read properties of undefined")
+2. Find the line where the crash happens
+3. Explain the data flow leading to that line
+4. Propose what's missing or wrong with the data
+
+Then I'll trace it myself to confirm your findings.
+```
+
+**Step 4 — Claude Code will:**
+- Search for the error message in the code
+- Find the problematic line (e.g., `b.author.toLowerCase()`)
+- Show you the data model (where does `b.author` come from?)
+- Propose the root cause
+
+**Step 5 — Verify with the reading skill** (you do this):
+Read the files Claude Code points to. Confirm:
+- ✅ The error is where Claude Code said
+- ✅ The data model is what Claude Code described
+- ✅ You understand the root cause (not just the symptom)
+
+**Step 6 — Fix safely:**
+Make the smallest change:
 ```typescript
-// ✅ SAFE: guard the optional field + type it
+// ✅ SAFE: guard the optional field
 const filtered = books.filter(b =>
-  (b.author?.toLowerCase() ?? "").includes(query)  // Safe optional chaining
+  (b.author?.toLowerCase() ?? "").includes(query)
 );
-
-// Better: fix the type definition
-interface Book {
-  id: number;
-  title: string;
-  author?: string;  // Explicit optional
-}
 ```
 
-**Step 5 — Verify the fix:**
+**Step 7 — Verify the fix** (you do this):
 ```bash
-npm test  # Still pass ✓
-# Type the search input again → no crash ✓
-# All books (even no-author) appear in results ✓
+npm test     # All tests still pass? ✓
+npm run dev  # Reproduce the bug → gone? ✓
 ```
 
+### Making a scoped change
 
+**The brownfield golden rule:** change the minimum, match the surroundings, prove it works.
+
+**Step 1 — Reproduce and assess** (from above).
+
+**Step 2 — Make the smallest fix** (you control the scope):
+- Don't refactor 10 things while fixing one
+- Match the repo's existing patterns
+- Add a test for your fix
+
+**Step 3 — Claude Code temptation** (watch out):
+Claude Code might say: "While I'm here, I'll also modernize this function / refactor that component / reformat 40 files."
+
+**Reject it.** Say: "Let's focus on the ticket scope. The refactor is a separate PR."
+
+**Step 4 — Verify**:
+```bash
+npm test     # Tests pass, nothing broke
+git diff     # Review your changes — is the diff tight and focused?
+```
+
+**Step 5 — Open a small PR** (Module 9):
+The diff should be tight and easy to review. Reviewers should instantly understand what changed and why.
 
 ---
 
-## Lesson 14.4 — Making a scoped change safely (~75 min)
+**[SCREENSHOT PLACEHOLDER: Before/After Bug Trace]**
 
-This delivers Objective 2. The brownfield golden rule: **change the minimum, match the surroundings, and prove you didn't break anything.**
-
-1. Reproduce current behavior first (Lesson 14.3) and run existing tests.
-2. Make the smallest change that achieves the goal; follow the repo's existing patterns (feed them to the AI via context).
-3. Keep tests green; add a test for your change.
-4. Review the diff narrowly — did anything unrelated change? (AI agents love to "helpfully" refactor; don't let them.)
-5. Open a small, focused PR (Module 9) that's easy to review.
-
-> **Instructor note:** Demo an agent that tries to reformat 40 files while making a one-line fix. Teaching learners to *reject* scope creep is half this lesson.
-> 
+Left: Claude Code's trace of the bug (showing the undefined error line, the data model, root cause). Right: The fixed code with a test. Proof: methodical debugging and scoped fixes.
 
 ---
 
