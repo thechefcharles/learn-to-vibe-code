@@ -197,27 +197,64 @@ export default UserProfile;
 
 ---
 
-## Knowledge check (mapped to objectives)
+## Quiz: Judgment About AI
 
-**Objective 1 — Explain how LLMs work & fail (Quiz Q1-Q2):**
-- Q1: "Fundamentally, an LLM generates code by..." ✅ Testing token prediction
-- Q2: "Hallucination" means..." ✅ Testing failure mode understanding
-- *Short written check (if not fully covered by quiz):* In 2–3 sentences explain to a non-technical friend how an AI writes code; name three failure modes with a one-line example each.
+**Learning Objective Alignment:** Each question tests one objective. Pass = all 3 correct.
 
-**Objective 2 — Capabilities/limits across the lifecycle (Quiz Q4):**
-- Q4: "Which task requires the most careful verification?" ✅ Testing trust matrix understanding
-- *Short written check (if not fully covered by quiz):* List three stages from the trust matrix (planning, writing code, debugging, learning, security/production) and whether each needs light or heavy verification.
+### Q1-1: How LLMs Work (Objective 1 — Understand how LLMs generate output)
 
-**Objective 3 — Trust vs. verify (Quiz Q3 + Activity):**
-- Q3: "Vibe coding done well" means..." ✅ Philosophy understanding
-- Activity: "Catch the hallucination" ✅ Hands-on judgment calls
-- *Scenario-based check:* For each scenario, decide *TRUST* or *VERIFY* and justify in one sentence:
-  - (a) Asking AI to write a quick file-rename script for local use
-  - (b) Asking AI to write code handling user login and password storage
-  - (c) Asking AI to generate a function using a brand-new library released last month
-  - (d) Asking AI to generate boilerplate for a standard login form (common task)
+You ask Claude: "List 5 dog breeds." Claude returns: Labrador, Golden Retriever, Beagle, Dachshund, Poodle.
 
-*Pass mark: 80%. Gates progress to Module 2.*
+How did Claude generate this list?
+
+a) It looked up a database of dog breeds and selected 5 random ones
+b) It predicted the most likely next words based on patterns in training data, one word at a time
+c) It retrieved the answer from the internet
+d) It used a pre-written list of dog breeds
+
+**Correct answer:** b) — Claude predicts next words sequentially. It's not looking up facts; it's guessing what words usually follow "dog breeds" based on statistical patterns in training data. This is why Claude can *sound* confident but be wrong.
+
+---
+
+### Q1-2: When to Trust vs. Verify (Objective 2 — Judge when to trust AI output vs. verify it)
+
+You ask Claude to write a SQL query to count users created in the last 7 days. Claude returns:
+
+```sql
+SELECT COUNT(*) FROM users WHERE created_at > NOW() - INTERVAL '7 days';
+```
+
+Should you:
+
+a) Trust it and ship it—Claude knows SQL
+b) Test the query on your database to verify it works on your actual data
+c) Assume it's wrong because Claude sometimes makes mistakes
+d) Rewrite it from scratch to be safe
+
+**Correct answer:** b) — SQL is concrete (either works or doesn't). Test it. Verification is fast and proves it's correct. Don't blindly trust; don't blindly distrust. Test.
+
+---
+
+### Q1-3: LLM Limits & Trade-offs (Objective 3 — Recognize LLM limitations and when they matter)
+
+You're building an app that imports CSV files and parses them. The CSV format varies by client (different columns, different orders). You ask Claude to build a parser that handles any CSV.
+
+Claude writes a parser that handles the common cases but fails on edge cases (empty rows, quoted commas, Unicode).
+
+What's the problem?
+
+a) Claude is bad at programming
+b) Claude did its best, but parsing arbitrary CSVs is a hard problem with lots of edge cases. No single "smart" parser handles all formats.
+c) You should use a different AI model
+d) CSV parsing is too easy—Claude shouldn't have failed
+
+**Correct answer:** b) — Claude can generate *usable* code, but perfect code for ambiguous problems (like "parse any CSV") is unrealistic. The edge cases are real. Your job is to recognize that, test the parser, find the edge cases, and fix them. Claude's not magic; it's a tool with limits.
+
+---
+
+**Verification note:** Before shipping, learners should be able to explain: (1) how Claude generates output (tokens, patterns, not facts), (2) when to verify vs. trust (concrete outputs: verify; creative outputs: evaluate for quality), (3) what Claude can't do (handle arbitrary edge cases perfectly, access the internet in real-time, learn during a conversation).
+
+**What counts as passing:** All 3 questions correct. If a learner gets 2/3, they haven't internalized judgment yet—they should revisit the module before moving on.
 
 ---
 
