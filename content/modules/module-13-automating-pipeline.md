@@ -70,6 +70,75 @@ Terminal showing: `claude mcp list` with three connected servers: supabase (sche
 
 ---
 
+### 13.2a — Worked example: MCP configuration for the invoice-tracker (~45 min)
+
+**Scenario:** You've built the invoice-tracker (Modules 4–12) on Supabase + Next.js + Vercel. Now you want Claude Code to:
+- Query the Supabase schema and data to understand structure
+- Open PRs and check PR status on GitHub
+- Monitor deployments and view build logs on Vercel
+
+**Step 1: Connect Supabase** (schema access, scoped token):
+```bash
+# Generate a scoped Supabase token (read-only for schema/queries)
+supabase login --token
+# (Paste your personal access token)
+
+# Add Supabase MCP
+claude mcp add supabase -- npx -y @supabase/mcp-server-supabase@latest \
+  --project-ref=abc12345def67890 \
+  --db-url="postgresql://postgres:YOUR_PASSWORD@db.abc12345.supabase.co/postgres"
+```
+
+**Step 2: Connect GitHub** (PRs, issues, repo actions):
+```bash
+# Authenticate with GitHub
+gh auth login
+# (Follow the flow: web browser, create a personal access token if prompted)
+
+# Add GitHub MCP
+claude mcp add --transport http github https://api.githubcopilot.com/mcp/
+# Alternative: use the gh CLI directly (no OAuth needed)
+```
+
+**Step 3: Connect Vercel** (deploys, build status, environment):
+```bash
+# Get a Vercel token from https://vercel.com/account/tokens
+export VERCEL_TOKEN="your-token-here"
+
+# Add Vercel MCP
+claude mcp add --transport http vercel https://mcp.vercel.com
+```
+
+**Verify all three are connected:**
+```bash
+claude mcp list
+# Output:
+# ✓ supabase (via npx)
+# ✓ github (http)
+# ✓ vercel (http)
+```
+
+**Now Claude Code can:**
+- **Supabase:** `List tables and schema`, `Query invoices to verify data`, `Check for RLS policies`
+- **GitHub:** `List recent PRs`, `Open a PR with a title and description`, `Comment on a PR`
+- **Vercel:** `Check deployment status`, `View build logs`, `Set environment variables`
+
+**Example commands Claude Code can now run directly:**
+```
+"Show me the current Supabase schema for invoices table"
+→ MCP queries Supabase API, returns schema + indexes
+
+"Open a PR to add the paid_at timestamp feature"
+→ MCP calls GitHub API, creates PR with your code
+
+"Is the last deploy on Vercel successful? What was the LCP score?"
+→ MCP queries Vercel API, returns deployment status + Lighthouse metrics
+```
+
+This setup is the foundation of the automated pipeline (Lesson 13.6). Claude Code can now inspect, create, and monitor the entire system without you copy-pasting between dashboards.
+
+---
+
 **MCP vs. CLI — both matter:** MCP for interactive read/act (inspect a schema, check a deploy, comment on a PR); the matching **CLIs** (`gh`, `supabase`, `vercel`) for versioned, scripted operations, which Claude Code runs via its shell. Rule: **MCP for current-state, CLI for migrations/history.** Teach both; they're complementary.
 
 > **Build-verified fallback (important):** MCP OAuth can fail for a given provider — in the reference build the Supabase MCP returned "Unrecognized client_id" and we fell back to the CLI. Teach the **CLI + personal-access-token** path (`supabase login --token`, `gh auth login`, a Vercel token) as the reliable default; treat MCP OAuth as the convenience when it works.
