@@ -269,6 +269,24 @@ Return the updated code only.
 
 ---
 
+### WEAK PROMPT 6: "My form looks bad"
+
+**Rewritten (using pictures):**
+```
+Here's a screenshot of my login form [paste image]. 
+The text is tiny, buttons are far apart, and the error message is invisible.
+I need:
+1) Make text bigger and easier to read
+2) Move buttons closer together
+3) Change error messages to red so they stand out
+Use Tailwind CSS and shadcn/ui components.
+Return the updated component code.
+```
+
+**What got better?** Instead of describing "looks bad," you showed the AI exactly what's wrong using a picture. The AI sees the real problem and fixes it, not a guess. This is 100x faster than trying to describe it in words!
+
+---
+
 ## Activity Instructions 🎯
 
 **For each of the five weak prompts above:**
