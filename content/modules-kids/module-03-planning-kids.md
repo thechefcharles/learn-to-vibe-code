@@ -30,11 +30,11 @@ The rule: **Decide what you're building and in what order BEFORE you ask the AI 
 
 ---
 
-## Lesson 3.2 — Build a Spec (What You're Making) (~60 min)
+## Lesson 3.2 — Build Your Plan with Claude Code (~60 min)
 
-A spec is just a written description of what your app should do. You don't need fancy templates, just clarity.
+A spec is just a written description of what your app should do. Instead of manually writing it yourself, you'll **use Claude Code to interview you and build the entire plan automatically**. This saves time and makes sure you don't miss anything. 🚀
 
-**Your spec answers these questions:**
+**Your spec will answer these questions:**
 
 1. **What problem does it solve?** (Who's stuck and why?)
 2. **Who uses it?** (What are they trying to do?)
@@ -42,86 +42,86 @@ A spec is just a written description of what your app should do. You don't need 
 4. **What's NOT in the MVP?** (What cool stuff are you saving for later?)
 5. **How do you know it works?** (What does success look like?)
 
-**The hack:** Use AI to help you write the spec! Describe your rough idea and ask: "Ask me questions to understand what I'm building, then draft a spec." Answer the questions, and boom — instant spec. 🎯
+### Let Claude Code Orchestrate Your Planning
 
-**Example:** 
+Instead of asking questions one by one, you'll give Claude Code your idea and ask it to run the full planning workflow!
 
-*Your idea:* "I want an app where kids can track their homework and get reminders."
+**Step 1:** Open Claude Code:
 
-*AI asks:* 
-- What homework? (Just due dates or full descriptions?)
-- Who sends reminders? (Email? App notification?)
-- Can your parents see it?
-- What about past homework? (Archive or delete?)
+```bash
+claude
+```
 
-*After you answer, AI writes:*
+**Step 2:** Paste this prompt (replace "homework tracker" with your idea):
+
+```
+I want to build an app that helps students track their homework and get reminders.
+
+Please help me plan it completely:
+
+1. Ask me 5-7 clarifying questions to understand my app better
+2. Based on my answers, write a one-page spec (problem, users, core features, out-of-scope, success)
+3. Suggest a data model (table names and fields)
+4. List 5-7 key screens users will see
+5. Recommend a build order with dependencies
+6. Save everything to my project folder
+
+After each step, show me the output and ask if I want to change anything!
+```
+
+**Step 3:** Claude Code will:
+- Interview you with smart questions (like "Do you need reminders?" and "Can parents see it?")
+- Wait for your answers
+- Draft your complete spec based on what you said
+- Propose a data model, screen list, and build order
+- **Save spec.md and decisions.md files** automatically 📁
+
+**Step 4:** Review Claude Code's output. If something looks wrong, tell it! Say things like: "Actually, I don't need reminders, can you remove that?" and Claude Code will adjust. ✏️
+
+**Watch out:** Claude Code will confidently suggest features. It's smart, but *you* make the final call on what's in your MVP. The AI is helping you think, not making decisions for you. You're the boss! 😎
 
 ---
 
-**Homework Tracker Spec**
-
-**Problem:** Kids forget homework and miss deadlines.
-
-**Users:** Middle/high school students who want to remember assignments and stay on top of deadlines.
-
-**MVP:**
-- Add a homework assignment (subject, due date, description)
-- View all homework
-- Mark homework done
-- Get a reminder the day before due date
-
-**Not in MVP:**
-- Parent/teacher access
-- Grade tracking
-- Collaboration
-
-**Success:** User doesn't miss a single assignment deadline.
-
----
-
-**Watch out:** The AI will suggest features. It sounds smart. But *you* decide what's in the MVP, not the AI. You're the boss.
-
----
-
-**[SCREENSHOT PLACEHOLDER: AI Interview + Drafted Spec]**
+**[SCREENSHOT PLACEHOLDER: Claude Code Planning Session]**
 
 **What this screenshot should show:**
-- Left panel: Claude/ChatGPT asked to interview the user
-  - Prompt: "I want an app to track video games I want to play. Ask me questions to understand what to build."
-  - AI questions visible: "How many games per list? Do you rate games? Can friends see your list?"
-  - User answers visible below
-- Right panel: AI's drafted MVP spec
-  - Shows sections: Problem, Users, Core Features, Out of Scope, Success Criteria
-  - Real example spec with details
-- **Shows:** how interviewing reveals hidden assumptions and turns vague ideas into clarity 💡
+- Terminal window with Claude Code running
+- Claude Code asking questions: "How many assignments per class? Do you need reminders? Can teachers see your progress?"
+- Your answers visible below each question
+- Claude Code's drafted spec, data model, screen list, and build order
+- Files saved to project folder: `spec.md` and `decisions.md`
+- **Shows:** how Claude Code orchestrates the entire planning workflow in one session 💡
 
 ---
 
-## Lesson 3.3 — Turn Your Spec Into a Technical Plan (~60 min)
+## Lesson 3.3 — Your Technical Plan (Already Made!) (~30 min)
 
-Now you know *what* you're building. Time to figure out *how*.
+Good news: **Claude Code already created your technical plan** when you ran the planning workflow in Lesson 3.2! 🎉
 
-For every feature, write:
+Your technical plan includes:
 
-1. **Data** — what you're storing
-   - Homework: subject, description, dueDate, done (yes/no), createdDate
+1. **Data Model** — what you're storing
+   - Example for homework tracker: `users`, `homework` (with fields: subject, description, due_date, done, created_at)
    
 2. **Screens** — what the user sees
-   - Home page: List of all homework
-   - Add screen: Form to create homework
-   - Detail screen: View one homework assignment
+   - Example: Home page (list all homework), Add screen (form), Detail screen (view one assignment)
    
-3. **Tasks** — the code you need to write
-   - Database setup
-   - Create form component
-   - Show homework list component
-   - Wire up save/delete buttons
+3. **Build Order** — tasks in the right sequence
+   - Example: Database setup → Create form → Show list → Wire up save/delete
+
+**Your job:** Review what Claude Code suggested. Does it match your vision? If something doesn't look right, ask Claude Code to adjust it. 
+
+**Example:** "Actually, I don't need a detail screen. Can you simplify the plan to just a list and a form?"
+
+Claude Code will revise the entire plan to match what you want. Easy! ✨
 
 ---
 
-## Lesson 3.4 — Order Your Tasks (Dependencies) (~45 min)
+## Lesson 3.4 — Understand Your Build Order (~30 min)
 
-You can't build everything at once. Some tasks depend on others.
+You can't build everything at once. Some tasks depend on others. **Claude Code already figured this out for you!** 🎯
+
+When Claude Code created your plan, it ordered the tasks logically. Here's why the order matters:
 
 **Example order for homework tracker:**
 
@@ -130,31 +130,14 @@ You can't build everything at once. Some tasks depend on others.
 3. ✅ Build the list view (can't see homework without this)
 4. ✅ Wire up the save button
 5. ✅ Wire up done/delete buttons
-6. ✅ Add reminders
 
-Do them in order. Each one feeds into the next.
+**Each task depends on the ones before it.** You can't wire up the save button before you have a form and database! Claude Code's build order makes sure you never get stuck. 
 
-**Question:** Why not build step 4 before step 3? (Answer: because you need the list to see if saving worked!)
+**Review your build order:** Look at the task list Claude Code created. Ask yourself:
+- Does step 2 depend on step 1? (Why or why not?)
+- What would break if you did step 4 before step 3?
 
----
-
-**[SCREENSHOT PLACEHOLDER: Technical Plan (Data Model + Screens)]**
-
-**What this screenshot should show:**
-- Top section: AI's proposed data model for homework tracker
-  - Table 1: `users` (id, name, email)
-  - Table 2: `homework` (id, user_id, subject, description, due_date, done)
-  - Table 3: `reminders` (id, homework_id, sent_date)
-  - Clear relationships shown (user_id foreign keys)
-- Middle section: Proposed screens
-  - Screen 1: Dashboard (list all homework, sorted by due date)
-  - Screen 2: Add homework form (subject, due date, description)
-  - Screen 3: Homework detail (view, mark done, delete)
-  - Screen 4: Settings (reminder preferences)
-- Bottom section: Milestones
-  - v0: Auth + homework CRUD
-  - v1: Reminders working
-- **Shows:** how to translate spec into concrete tables, screens, and milestones 📋
+**If the order looks wrong**, tell Claude Code! Example: "I want to build the login system first before the homework form." Claude Code will revise the order to match.
 
 ---
 
@@ -325,21 +308,28 @@ options: id, poll_id, text, vote_count
 
 **Step 1: Pick one of the three projects** (or propose your own small idea)
 
-**Step 2: Use AI as an interview partner:**
-- Paste your one-sentence idea into Claude Code or ChatGPT
-- Ask: "I want to build [idea]. What questions would you ask me to clarify what I'm building?"
-- Answer the AI's questions honestly
-- Ask: "Now draft a complete spec based on our conversation"
+**Step 2: Run Claude Code's planning orchestration:**
+- Open Claude Code: `claude`
+- Paste the prompt from Lesson 3.2 (replace "homework tracker" with your idea)
+- Answer Claude Code's interview questions
+- Review the spec, data model, screen list, and build order it creates
 
-**Step 3: Create a technical plan:**
-- Ask the AI: "Based on this spec, propose: (1) a data model (tables and fields), (2) a list of screens, (3) a build order with dependencies"
-- Review the output: does it match your vision? Fix anything that's off.
+**Step 3: Refine the plan (if needed):**
+- If something doesn't look right, tell Claude Code!
+- Examples: "Remove the reminders feature" or "Add a settings screen" or "Change the data model"
+- Claude Code will revise the whole plan to match
 
-**Step 4: Submit:**
-- Your final spec (answer the 5 questions: problem, users, MVP, out-of-scope, success)
-- Your data model (table names, fields, relationships)
-- Your screen list (5-7 screens)
-- Your build order (6-8 tasks with dependencies explained)
+**Step 4: Save your plan:**
+- Claude Code will save `spec.md` and `decisions.md` to your project folder
+- These files are your planning artifacts — keep them! You'll use them when you start building in Module 4
+
+**Step 5: Submit:**
+- Your complete planning output:
+  - Spec file (spec.md)
+  - Decisions file (decisions.md)
+  - Data model
+  - Screen list
+  - Build order
 
 ---
 
