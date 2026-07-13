@@ -266,12 +266,12 @@ export function StepLessonViewer({
           transition={{ duration: 0.3 }}
           className={`rounded-2xl border backdrop-blur-md p-6 sm:p-8 relative ${
             isKids
-              ? "bg-white/20 border-white/30"
-              : "bg-white/15 border-white/20"
+              ? "bg-white/35 border-white/40"
+              : "bg-white/30 border-white/30"
           }`}
           style={{
             borderLeft: "3px solid #a78bfa",
-            boxShadow: "inset 3px 0 0 0 rgba(6, 182, 212, 0.5)"
+            boxShadow: "inset 3px 0 0 0 rgba(6, 182, 212, 0.5), inset 0 0 40px rgba(0, 0, 0, 0.3)"
           } as React.CSSProperties}
           data-step-container
         >
