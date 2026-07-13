@@ -44,7 +44,7 @@ export function ProfileMenu({ userName }: ProfileMenuProps) {
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="absolute right-0 mt-2 w-48 bg-white/10 backdrop-blur-md border border-white/20 rounded-lg shadow-lg z-50"
+          className="absolute right-0 mt-2 w-48 bg-slate-900/80 backdrop-blur-md border border-white/30 rounded-lg shadow-lg z-50"
         >
           <div className="p-4 border-b border-white/10">
             <p className="text-white font-semibold text-sm truncate">{userName}</p>
