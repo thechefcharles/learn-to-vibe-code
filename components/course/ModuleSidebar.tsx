@@ -230,8 +230,8 @@ export function ModuleSidebar({
                 className={`w-full text-left px-3 py-2 rounded-lg transition-all relative border-l-3 ${
                   isCurrent
                     ? isKids
-                      ? 'bg-purple-300/40 text-purple-900 shadow-lg border-l-purple-500 font-semibold'
-                      : 'bg-purple-500/30 text-white shadow-lg border-l-purple-400 font-semibold'
+                      ? 'bg-purple-400/50 text-purple-900 shadow-lg border-l-purple-600 font-bold ring-2 ring-purple-400'
+                      : 'bg-cyan-500/40 text-white shadow-lg border-l-cyan-400 font-bold ring-2 ring-cyan-400'
                     : isCompleted
                     ? isKids
                       ? 'bg-green-400/30 text-white shadow-lg hover:bg-green-400/40 border-l-green-500'
@@ -248,7 +248,7 @@ export function ModuleSidebar({
                       className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
                         isCurrent
                           ? isKids
-                            ? 'bg-purple-500 text-white'
+                            ? 'bg-purple-600 text-white'
                             : 'bg-cyan-400 text-slate-900'
                           : isCompleted
                           ? isKids
@@ -263,9 +263,24 @@ export function ModuleSidebar({
                     </div>
                     <span className="text-sm font-medium truncate">{step.title}</span>
                   </div>
-                  {isCompleted && (
-                    <span className="text-lg flex-shrink-0 ml-2">✓</span>
-                  )}
+                  <div className="flex items-center gap-1 flex-shrink-0">
+                    {isCurrent && (
+                      <motion.span
+                        animate={{ scale: [1, 1.2, 1] }}
+                        transition={{ duration: 2, repeat: Infinity }}
+                        className={`text-xs font-bold px-2 py-0.5 rounded ${
+                          isKids
+                            ? 'bg-purple-600 text-white'
+                            : 'bg-cyan-500/70 text-white'
+                        }`}
+                      >
+                        Now
+                      </motion.span>
+                    )}
+                    {isCompleted && !isCurrent && (
+                      <span className="text-lg flex-shrink-0">✓</span>
+                    )}
+                  </div>
                 </div>
               </motion.button>
 
