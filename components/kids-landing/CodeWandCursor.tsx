@@ -269,12 +269,6 @@ export const CodeWandCursor: React.FC<CodeWandCursorProps> = ({ bgImage }) => {
             >
               Start Learning Now
             </Link>
-            <Link
-              href="/demo"
-              className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-cyan-500 text-cyan-400 font-bold rounded-lg hover:bg-cyan-500/10 transition-colors duration-300 text-base sm:text-lg active:scale-95"
-            >
-              Explore Free Lessons
-            </Link>
           </motion.div>
 
           {/* Trust badges */}

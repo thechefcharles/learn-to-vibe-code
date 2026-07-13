@@ -119,19 +119,6 @@ export function LandingHero() {
           >
             {copy.cta1}
           </Link>
-          <Link
-            href="/demo"
-            className={`font-bold rounded-lg transition-all duration-300 border-2 ${
-              version === "kids" ? "py-5 px-12 text-xl" : "py-4 px-10 text-lg"
-            }`}
-            style={{
-              backgroundColor: "var(--color-card-bg)",
-              borderColor: "var(--color-accent)",
-              color: "var(--color-accent)",
-            }}
-          >
-            {copy.cta2}
-          </Link>
         </motion.div>
 
         {/* Trust badges */}

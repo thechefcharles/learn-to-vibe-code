@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Dashboard - Version Comparison", () => {
-  test("Kids version dashboard", async ({ page }) => {
+  test("Kids version landing", async ({ page }) => {
     // Navigate to home and switch to kids version
     await page.goto("/");
 
@@ -10,8 +10,8 @@ test.describe("Dashboard - Version Comparison", () => {
       localStorage.setItem("version", "kids");
     });
 
-    // Navigate to demo/public course first to see kids content
-    await page.goto("/demo");
+    // Reload to apply version
+    await page.reload();
     await page.waitForTimeout(500); // Wait for version to apply
 
     // Take screenshot of kids landing
@@ -22,7 +22,7 @@ test.describe("Dashboard - Version Comparison", () => {
     await expect(heading).toContainText(/Have Fun|Code/);
   });
 
-  test("Adult version dashboard", async ({ page }) => {
+  test("Adult version landing", async ({ page }) => {
     // Navigate to home with default (adult) version
     await page.goto("/");
 
@@ -31,8 +31,8 @@ test.describe("Dashboard - Version Comparison", () => {
       localStorage.setItem("version", "adult");
     });
 
-    // Navigate to demo
-    await page.goto("/demo");
+    // Reload to apply version
+    await page.reload();
     await page.waitForTimeout(500); // Wait for version to apply
 
     // Take screenshot of adult landing

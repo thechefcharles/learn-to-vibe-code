@@ -33,7 +33,6 @@ export function LandingCTA() {
         <p className={`mb-8 text-white/90 ${isKids ? "text-2xl" : "text-xl"}`}>{copy.subheading}</p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link href="/auth/sign-up" className={`bg-white text-violet-600 hover:bg-violet-50 font-bold rounded-lg transition-all ${isKids ? "py-5 px-12 text-xl" : "py-4 px-10"}`}>{copy.cta1}</Link>
-          <Link href="/demo" className={`bg-transparent border-2 border-white text-white hover:bg-white/10 font-bold rounded-lg transition-all ${isKids ? "py-5 px-12 text-xl" : "py-4 px-10"}`}>{copy.cta2}</Link>
         </div>
         <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 0.3 }} className={`text-white/70 ${isKids ? "mt-12 text-base" : "mt-8 text-sm"}`}>{copy.social}</motion.p>
       </motion.div>

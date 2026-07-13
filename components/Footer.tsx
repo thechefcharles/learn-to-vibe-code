@@ -31,11 +31,6 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/demo" className="text-violet-light hover:text-lime transition">
-                  Preview
-                </Link>
-              </li>
-              <li>
                 <Link href="/course" className="text-violet-light hover:text-lime transition">
                   Modules
                 </Link>
