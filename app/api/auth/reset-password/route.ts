@@ -3,11 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const { token, password } = await request.json();
+    const { password } = await request.json();
 
-    if (!token || !password) {
+    if (!password) {
       return NextResponse.json(
-        { error: "Token and password are required" },
+        { error: "Password is required" },
         { status: 400 }
       );
     }
@@ -21,20 +21,17 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createClient();
 
-    // Verify the reset token using OTP verification
-    const { data, error: verifyError } = await supabase.auth.verifyOtp({
-      token_hash: token,
-      type: "recovery",
-    });
+    // Check if user has a valid session (set by Supabase from the recovery link)
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
 
-    if (verifyError || !data.user) {
+    if (userError || !user) {
       return NextResponse.json(
-        { error: "Invalid or expired reset link" },
-        { status: 400 }
+        { error: "Session expired. Please request a new password reset link." },
+        { status: 401 }
       );
     }
 
-    // Update password for the verified user
+    // Update password for the authenticated user
     const { error: updateError } = await supabase.auth.updateUser({
       password: password,
     });

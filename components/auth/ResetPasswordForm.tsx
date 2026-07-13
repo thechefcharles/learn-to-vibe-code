@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { VideoBackground } from "@/components/kids-landing/VideoBackground";
@@ -9,19 +8,22 @@ import { MouseTrail } from "@/components/kids-landing/MouseTrail";
 import { motion } from "framer-motion";
 
 export function ResetPasswordForm() {
-  const searchParams = useSearchParams();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const token = searchParams.get("token");
+  const [hasValidSession, setHasValidSession] = useState(false);
 
   useEffect(() => {
-    if (!token) {
-      setError("Invalid reset link. Please request a new one.");
+    // Check if Supabase set a valid session in the hash
+    const hash = window.location.hash;
+    if (hash.includes("access_token") && hash.includes("type=recovery")) {
+      setHasValidSession(true);
+    } else if (hash.includes("error")) {
+      setError("Your reset link has expired. Please request a new one.");
     }
-  }, [token]);
+  }, []);
 
   async function handleResetPassword(e: React.FormEvent) {
     e.preventDefault();
@@ -43,7 +45,7 @@ export function ResetPasswordForm() {
       const response = await fetch("/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token, password }),
+        body: JSON.stringify({ password }),
       });
 
       const data = await response.json();
@@ -54,6 +56,10 @@ export function ResetPasswordForm() {
         setSuccess(true);
         setPassword("");
         setConfirmPassword("");
+        // Redirect to sign-in after 2 seconds
+        setTimeout(() => {
+          window.location.href = "/auth/sign-in";
+        }, 2000);
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -126,7 +132,7 @@ export function ResetPasswordForm() {
           )}
 
           {/* Form */}
-          {!success && token && (
+          {!success && hasValidSession && (
             <form onSubmit={handleResetPassword} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wide text-gray-300 mb-2">
