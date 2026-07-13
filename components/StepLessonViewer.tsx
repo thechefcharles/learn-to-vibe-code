@@ -220,83 +220,6 @@ export function StepLessonViewer({
       <VideoBackground />
       <MouseTrail />
 
-      {/* Header — large module name */}
-      <div
-        className={`sticky top-0 z-40 backdrop-blur-xl border-b ${
-          isKids
-            ? "bg-gradient-to-b from-cyan-100/20 via-purple-100/10 to-transparent border-purple-200/30"
-            : "bg-gradient-to-b from-cyan-500/10 via-purple-500/5 to-transparent border-white/10 shadow-[0_8px_32px_-8px_rgba(168,85,247,0.3)]"
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between relative">
-          <div
-            className="text-3xl sm:text-5xl font-black tracking-tighter flex-1 text-center"
-            style={{
-              backgroundImage: isKids
-                ? "linear-gradient(to right, #8b5cf6, #ec4899)"
-                : "linear-gradient(to right, #06b6d4, #a78bfa, #ec4899)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              color: "transparent",
-            }}
-          >
-            {steps.moduleName}
-          </div>
-          {/* Time indicator in top right of header */}
-          <motion.div
-            className="ml-6 mr-2 flex-shrink-0"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div
-              className="flex items-center gap-2 p-2 rounded-lg bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 backdrop-blur-sm transition-all duration-200 hover:border-cyan-500/40 hover:shadow-lg hover:shadow-cyan-500/20"
-              title={`${remaining} minutes remaining out of ${total} total`}
-              role="img"
-              aria-label={`${remaining} of ${total} minutes remaining in this module`}
-            >
-              <svg width="32" height="32" viewBox="0 0 36 36" className="-rotate-90 flex-shrink-0">
-                <defs>
-                  <linearGradient id={timeGradientId} x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#06b6d4" />
-                    <stop offset="50%" stopColor="#8b5cf6" />
-                    <stop offset="100%" stopColor="#ec4899" />
-                  </linearGradient>
-                </defs>
-                <circle
-                  cx="18"
-                  cy="18"
-                  r={timeRingRadius}
-                  fill="none"
-                  stroke={isKids ? "rgba(126,34,206,0.2)" : "rgba(6,182,212,0.15)"}
-                  strokeWidth="3"
-                />
-                <circle
-                  cx="18"
-                  cy="18"
-                  r={timeRingRadius}
-                  fill="none"
-                  stroke={`url(#${timeGradientId})`}
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeDasharray={timeRingCircumference}
-                  strokeDashoffset={timeRingOffset}
-                  style={{ transition: "stroke-dashoffset 0.3s ease" }}
-                />
-              </svg>
-              <div className="text-left leading-tight">
-                <span className={`block text-xs font-bold bg-gradient-to-r ${isKids ? 'from-purple-400 to-purple-300 bg-clip-text text-transparent' : 'from-cyan-400 to-purple-400 bg-clip-text text-transparent'}`}>
-                  {remaining}
-                </span>
-                <span className={`block text-[9px] uppercase tracking-widest font-semibold ${isKids ? 'text-purple-400/70' : 'text-cyan-400/70'}`}>
-                  min left
-                </span>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-
       {/* Main Content - Two Column Layout */}
       <div className="max-w-7xl mx-auto px-4 py-2 sm:py-3 flex gap-4 sm:gap-8 relative z-10 flex-1">
         {/* Sidebar - Always visible */}
@@ -346,6 +269,74 @@ export function StepLessonViewer({
           } as React.CSSProperties}
           data-step-container
         >
+          {/* Module Name & Time - integrated into content box */}
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <div
+              className="text-2xl sm:text-3xl font-black tracking-tighter"
+              style={{
+                backgroundImage: isKids
+                  ? "linear-gradient(to right, #8b5cf6, #ec4899)"
+                  : "linear-gradient(to right, #06b6d4, #a78bfa, #ec4899)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              {steps.moduleName}
+            </div>
+            {/* Time indicator */}
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div
+                className="flex items-center gap-2 p-2 rounded-lg bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 backdrop-blur-sm transition-all duration-200 hover:border-cyan-500/40 hover:shadow-lg hover:shadow-cyan-500/20"
+                title={`${remaining} minutes remaining out of ${total} total`}
+                role="img"
+                aria-label={`${remaining} of ${total} minutes remaining in this module`}
+              >
+                <svg width="28" height="28" viewBox="0 0 36 36" className="-rotate-90 flex-shrink-0">
+                  <defs>
+                    <linearGradient id={timeGradientId} x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#06b6d4" />
+                      <stop offset="50%" stopColor="#8b5cf6" />
+                      <stop offset="100%" stopColor="#ec4899" />
+                    </linearGradient>
+                  </defs>
+                  <circle
+                    cx="18"
+                    cy="18"
+                    r={timeRingRadius}
+                    fill="none"
+                    stroke={isKids ? "rgba(126,34,206,0.2)" : "rgba(6,182,212,0.15)"}
+                    strokeWidth="3"
+                  />
+                  <circle
+                    cx="18"
+                    cy="18"
+                    r={timeRingRadius}
+                    fill="none"
+                    stroke={`url(#${timeGradientId})`}
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeDasharray={timeRingCircumference}
+                    strokeDashoffset={timeRingOffset}
+                    style={{ transition: "stroke-dashoffset 0.3s ease" }}
+                  />
+                </svg>
+                <div className="text-left leading-tight">
+                  <span className={`block text-xs font-bold bg-gradient-to-r ${isKids ? 'from-purple-400 to-purple-300 bg-clip-text text-transparent' : 'from-cyan-400 to-purple-400 bg-clip-text text-transparent'}`}>
+                    {remaining}
+                  </span>
+                  <span className={`block text-[9px] uppercase tracking-widest font-semibold ${isKids ? 'text-purple-400/70' : 'text-cyan-400/70'}`}>
+                    min left
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
           {/* Lesson Title */}
           <h2 className="text-2xl sm:text-3xl font-bold mb-8 text-white font-semibold">
             Lesson {currentStepIndex + 1}: {currentStep.title}

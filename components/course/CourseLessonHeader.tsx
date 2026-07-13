@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Logo } from '@/components/Logo';
-import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 import { ProfileMenu } from '@/components/dashboard/ProfileMenu';
 import { usePreferredMotion } from '@/lib/hooks/usePreferredMotion';
 import { useCoursePageContext } from '@/components/course/CoursePageInteractive';
@@ -84,11 +83,6 @@ export function CourseLessonHeader({
 
             {/* Right: Controls */}
             <div className="flex items-center justify-end gap-2 sm:gap-4 flex-shrink-0">
-              {/* Theme Switcher (hidden, but present for layout) */}
-              <div className="hidden lg:block">
-                <ThemeSwitcher />
-              </div>
-
               {/* Profile Menu (if logged in) */}
               {user && (
                 <div className="hidden sm:block">
