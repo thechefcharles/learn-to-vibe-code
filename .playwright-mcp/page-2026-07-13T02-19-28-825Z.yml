@@ -1,0 +1,61 @@
+- generic:
+  - generic [active]:
+    - generic [ref=f17e3]:
+      - generic [ref=f17e4]:
+        - navigation [ref=f17e6]:
+          - button [disabled] [ref=f17e7]:
+            - img "previous" [ref=f17e8]
+          - generic [ref=f17e10]:
+            - generic [ref=f17e11]: 1/
+            - text: "1"
+          - button [disabled] [ref=f17e12]:
+            - img "next" [ref=f17e13]
+        - generic [ref=f17e16]:
+          - generic "Latest available version is detected (16.2.10)." [ref=f17e19]: Next.js 16.2.10
+          - generic [ref=f17e20]: Turbopack
+      - dialog "Build Error" [ref=f17e22]:
+        - generic [ref=f17e25]:
+          - generic [ref=f17e26]:
+            - generic [ref=f17e27]:
+              - generic [ref=f17e28]: Build Error
+              - generic [ref=f17e30]:
+                - button "Copy Error Info" [ref=f17e31] [cursor=pointer]
+                - button "No related documentation found" [disabled] [ref=f17e34]
+                - button "Attach Node.js inspector" [ref=f17e37] [cursor=pointer]
+            - generic [ref=f17e46]: "the name `user` is defined multiple times"
+          - generic [ref=f17e49]:
+            - generic [ref=f17e51]:
+              - generic [ref=f17e56]: ./components/StepLessonViewer.tsx (67:11)
+              - button "Open in editor" [ref=f17e57] [cursor=pointer]
+            - generic [ref=f17e62]:
+              - generic [ref=f17e63]: "the name `user` is defined multiple times"
+              - generic [ref=f17e64]: 65 |
+              - text: const
+              - generic [ref=f17e65]: "{ remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);"
+              - generic [ref=f17e66]: 66 |
+              - text: const
+              - generic [ref=f17e67]: streak = useUserStreak();
+              - text: ">"
+              - generic [ref=f17e68]: 67 |
+              - text: const
+              - generic [ref=f17e69]: "{ user } = useUser();"
+              - generic [ref=f17e70]: "|"
+              - text: ^^^^
+              - generic [ref=f17e71]: 68 |
+              - text: const
+              - generic [ref=f17e72]: timeGradientId = useId();
+              - generic [ref=f17e73]: 69 |
+              - text: const
+              - generic [ref=f17e74]: "{ shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();"
+              - generic [ref=f17e75]: 70 |
+              - generic [ref=f17e76]: "Ecmascript file had an error Import trace: Server Component: ./components/StepLessonViewer.tsx ./app/course/[moduleId]/page.tsx"
+        - generic [ref=f17e77]: "1"
+        - generic [ref=f17e78]: "2"
+    - generic [ref=f17e83] [cursor=pointer]:
+      - button "Open Next.js Dev Tools" [ref=f17e84]
+      - button "Open issues overlay" [ref=f17e89]:
+        - generic [ref=f17e90]:
+          - generic [ref=f17e91]: "0"
+          - generic [ref=f17e92]: "1"
+        - generic [ref=f17e93]: Issue
+  - alert [ref=f17e94]

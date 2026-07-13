@@ -64,7 +64,6 @@ export function StepLessonViewer({
   const isKids = version === "kids";
   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
   const streak = useUserStreak();
-  const { user } = useUser();
   const timeGradientId = useId();
   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
 

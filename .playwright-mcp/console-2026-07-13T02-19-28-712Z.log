@@ -1,0 +1,3701 @@
+[      49ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3008/course/0:0
+[      57ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_react-dom_0kla17-._.js:15305
+[      65ms] Error: ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx
+
+
+    at <unknown> (Error: ./components/StepLessonViewer.tsx:67:11)
+    at Object.getCompilationErrors (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/dev/next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/dev/next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/base-server.js:1753:26)
+[      62ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[      63ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[      77ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     146ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     196ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     241ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     289ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     337ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     385ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     434ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     481ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     530ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     578ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     626ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     675ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     723ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     780ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     828ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     877ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     926ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[     976ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1027ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1079ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1131ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1181ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1233ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1285ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1337ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1388ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1437ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1487ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1535ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1585ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1634ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1685ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1737ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1792ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1845ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1899ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1941ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    1991ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2031ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2075ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2125ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2173ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2221ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2270ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2311ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2353ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2396ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2439ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2487ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2537ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2585ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2626ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2675ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2725ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2767ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2816ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2863ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2912ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    2960ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3010ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3057ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3105ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3154ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3205ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3255ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3304ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3354ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3406ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3455ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3504ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3556ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3607ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3660ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3711ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3761ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3810ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3854ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3904ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    3952ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4001ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4051ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4099ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4147ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4196ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4246ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4296ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4347ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4400ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4452ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4502ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4551ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4604ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4660ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4708ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4757ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4805ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4853ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4901ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4950ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    4998ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5046ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5084ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5132ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5184ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5233ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5295ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5344ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5394ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5443ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5491ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5539ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5583ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5632ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5678ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5721ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5767ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5811ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5864ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5907ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5947ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    5996ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6037ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6078ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6120ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6160ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6204ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6257ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6308ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6359ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6410ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6460ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6509ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6559ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6612ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6661ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6711ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6751ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6797ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6839ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6887ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6936ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    6987ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7038ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7089ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7140ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7188ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7233ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7279ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7332ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7382ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7421ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7471ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7521ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7571ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7622ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7664ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7714ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7755ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7794ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7843ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7893ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7944ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    7997ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8049ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8101ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8153ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8201ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8250ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8300ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8348ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8398ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8449ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8498ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8546ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8591ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8641ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8691ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8741ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8793ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8845ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8894ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8943ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    8992ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9041ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9089ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9138ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9191ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9240ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9293ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9344ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9395ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9447ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9497ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9545ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9594ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9643ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9692ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9742ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9792ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9844ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9895ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[    9948ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10000ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10051ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10103ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10156ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10198ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10251ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10295ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10336ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10383ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10435ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10483ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10524ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10564ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10612ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10662ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10712ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10763ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10812ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10861ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10900ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10938ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   10986ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11036ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11088ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11140ms] [ERROR] ./components/StepLessonViewer.tsx:67:11
+the name `user` is defined multiple times
+  65 |   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
+  66 |   const streak = useUserStreak();
+> 67 |   const { user } = useUser();
+     |           ^^^^
+  68 |   const timeGradientId = useId();
+  69 |   const { shortcutsOpen, setShortcutsOpen } = useKeyboardShortcuts();
+  70 |
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[   11219ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[   11488ms] [LOG] [Fast Refresh] done in 123ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[   11651ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[   11732ms] [LOG] [Fast Refresh] done in 182ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[   12108ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   12115ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   12184ms] [LOG] %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   12184ms] [LOG] %c[Vercel Web Analytics]%c [view] http://localhost:3008/course/0 color: rgb(120, 120, 120) color: inherit {o: http://localhost:3008/course/0, sv: 0.1.3, sdkn: @vercel/analytics/react, sdkv: 2.0.1, ts: 1783909180896} /_vercel/insights/view @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   12345ms] [WARNING] Image with src "/learn_to_vibe_code_logo_cosmic_mark_transparent.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
