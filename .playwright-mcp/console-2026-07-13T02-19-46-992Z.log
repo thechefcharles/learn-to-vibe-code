@@ -224,3 +224,5 @@ Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ 
 [ 5074586ms] [LOG] [Fast Refresh] done in 114ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
 [ 5122790ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
 [ 5122820ms] [LOG] [Fast Refresh] done in 69ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 5152353ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 5152461ms] [LOG] [Fast Refresh] done in 169ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
