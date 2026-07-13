@@ -247,8 +247,8 @@ export function StepLessonViewer({
 
       {/* Main Content - Two Column Layout */}
       <div className="max-w-7xl mx-auto px-4 py-2 sm:py-3 flex gap-4 sm:gap-8 relative z-10 flex-1">
-        {/* Sidebar - Disabled in preview mode */}
-        <div className={`hidden lg:block w-64 flex-shrink-0 ${isPreviewMode ? 'pointer-events-none opacity-60' : ''}`}>
+        {/* Sidebar - Always clickable to browse lessons */}
+        <div className="hidden lg:block w-64 flex-shrink-0">
             <ModuleSidebar
               steps={steps}
               currentStepIndex={currentStepIndex}
