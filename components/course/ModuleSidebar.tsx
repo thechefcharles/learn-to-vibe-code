@@ -103,7 +103,7 @@ export function ModuleSidebar({
     <div
       className={`sticky top-20 w-64 max-h-[calc(100vh-80px)] overflow-y-auto rounded-xl p-4 border ${
         isKids
-          ? 'bg-gradient-to-b from-purple-50 to-pink-50 border-purple-200'
+          ? 'bg-slate-900/40 border-slate-700/50'
           : 'bg-slate-900/30 border-slate-700/50'
       }`}
     >
@@ -122,7 +122,7 @@ export function ModuleSidebar({
           onClick={() => setShowModuleDropdown(!showModuleDropdown)}
           className={`w-full flex items-center justify-between px-3 py-2 rounded-lg border transition-colors ${
             isKids
-              ? 'bg-purple-100 border-purple-300 text-purple-900 hover:bg-purple-200'
+              ? 'bg-slate-800/40 border-slate-700/50 text-slate-300 hover:bg-slate-800/60'
               : 'bg-slate-800/40 border-slate-700/50 text-slate-300 hover:bg-slate-800/60'
           }`}
         >
@@ -143,7 +143,7 @@ export function ModuleSidebar({
             animate={{ opacity: 1, y: 0 }}
             className={`absolute top-full left-0 right-0 mt-1 rounded-lg border z-50 max-h-48 overflow-y-auto ${
               isKids
-                ? 'bg-purple-50 border-purple-200'
+                ? 'bg-slate-800/80 border-slate-700/50'
                 : 'bg-slate-800/80 border-slate-700/50'
             }`}
           >
@@ -247,15 +247,9 @@ export function ModuleSidebar({
                 onClick={() => handleJumpToStep(index)}
                 className={`w-full text-left px-3 py-2 rounded-lg transition-all relative border-l-3 ${
                   isViewing
-                    ? isKids
-                      ? 'bg-purple-400/50 text-purple-900 shadow-lg border-l-purple-600 font-bold ring-2 ring-purple-400'
-                      : 'bg-cyan-500/25 text-slate-200 shadow-lg border-l-cyan-400/50 font-bold ring-2 ring-cyan-400/30'
+                    ? 'bg-cyan-500/25 text-slate-200 shadow-lg border-l-cyan-400/50 font-bold ring-2 ring-cyan-400/30'
                     : isCompleted
-                    ? isKids
-                      ? 'bg-green-400/30 text-white shadow-lg hover:bg-green-400/40 border-l-green-500'
-                      : 'bg-green-600/20 text-slate-300 shadow-lg hover:bg-green-600/30 border-l-green-500/50'
-                    : isKids
-                    ? 'bg-white/30 text-purple-900 hover:bg-white/50 border-l-transparent'
+                    ? 'bg-green-600/20 text-slate-300 shadow-lg hover:bg-green-600/30 border-l-green-500/50'
                     : 'bg-slate-700/15 text-slate-400 hover:bg-slate-700/30 border-l-slate-600/30'
                 }`}
                 whileHover={{ x: 4 }}
@@ -265,15 +259,9 @@ export function ModuleSidebar({
                     <div
                       className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
                         isViewing
-                          ? isKids
-                            ? 'bg-purple-600 text-white'
-                            : 'bg-cyan-400 text-slate-900'
+                          ? 'bg-cyan-400 text-slate-900'
                           : isCompleted
-                          ? isKids
-                            ? 'bg-green-600 text-white'
-                            : 'bg-green-700 text-white'
-                          : isKids
-                          ? 'bg-purple-300 text-purple-700'
+                          ? 'bg-green-700 text-white'
                           : 'bg-slate-600 text-slate-400'
                       }`}
                     >
@@ -286,11 +274,7 @@ export function ModuleSidebar({
                       <motion.span
                         animate={{ scale: [1, 1.2, 1] }}
                         transition={{ duration: 2, repeat: Infinity }}
-                        className={`text-xs font-bold px-2 py-0.5 rounded ${
-                          isKids
-                            ? 'bg-purple-600 text-white'
-                            : 'bg-cyan-500/70 text-white'
-                        }`}
+                        className="text-xs font-bold px-2 py-0.5 rounded bg-cyan-500/70 text-white"
                       >
                         Now
                       </motion.span>
