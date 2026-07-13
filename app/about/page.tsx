@@ -9,18 +9,9 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950">
-      {/* Background Image */}
-      <div
-        className="fixed inset-0 -z-10"
-        style={{
-          backgroundImage: 'url(/about-chicago-bg.png)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-          backgroundRepeat: 'no-repeat',
-        }}
-      />
+    <div className="min-h-screen flex flex-col" style={{ backgroundImage: 'url(/about-chicago-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed', backgroundRepeat: 'no-repeat' }}>
+      {/* Dark Overlay */}
+      <div className="fixed inset-0 -z-10 bg-black/10" />
       <Header hideThemeToggle={true} />
 
       <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
