@@ -127,7 +127,7 @@ export function ModuleSidebar({
           }`}
         >
           <span className="text-sm font-semibold">
-            Module {String(selectedModuleId).padStart(2, '0')}
+            Module {selectedModuleId + 1}
           </span>
           <ChevronDown
             className={`w-4 h-4 transition-transform ${
@@ -175,7 +175,7 @@ export function ModuleSidebar({
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 flex-1 min-w-0">
-                      <span className="font-medium">Module {String(modId).padStart(2, '0')}</span>
+                      <span className="font-medium">Module {modId + 1}</span>
                       {!isUnlocked && <span className="text-xs">🔒</span>}
                       {isCompleted && <span className="text-xs">✓</span>}
                     </div>

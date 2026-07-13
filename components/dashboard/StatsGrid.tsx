@@ -48,7 +48,7 @@ export function StatsGrid({
       value: capstoneUnlocked ? '🔓' : '🔒',
       icon: '🎯',
       color: capstoneUnlocked ? 'from-green-500 to-emerald-600' : 'from-gray-500 to-slate-600',
-      subtext: capstoneUnlocked ? 'Unlocked! Ready to submit.' : 'Complete Module 15 to unlock',
+      subtext: capstoneUnlocked ? 'Unlocked! Ready to submit.' : 'Complete Module 16 to unlock',
     },
   ];
 

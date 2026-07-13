@@ -27,13 +27,13 @@ export default async function CapstonePage() {
               {isKids ? "🎮 Build Your Project!" : "🎓 Capstone Project"}
             </h1>
             <p className={`mb-6 ${isKids ? "text-purple-600" : "text-slate-400"}`}>
-              {isKids ? "Complete all 16 modules first, then show us what you can build! 🚀" : "You must complete Module 15 before submitting your project."}
+              {isKids ? "Complete all 16 modules first, then show us what you can build! 🚀" : "You must complete Module 16 before submitting your project."}
             </p>
             <Link
               href="/course/15"
               className={`font-medium py-2 px-6 rounded-lg inline-block transition ${isKids ? "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white" : "bg-blue-600 hover:bg-blue-700 text-white"}`}
             >
-              {isKids ? "Go to Module 15 🎯" : "Complete Module 15 →"}
+              {isKids ? "Go to Module 16 🎯" : "Complete Module 16 →"}
             </Link>
           </div>
         </div>

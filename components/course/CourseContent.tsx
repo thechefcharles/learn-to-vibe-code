@@ -91,7 +91,7 @@ export async function CourseContent() {
                             : "bg-blue-600/20 text-blue-400"
                         }`}
                       >
-                        {isCompleted ? "✓" : String(module.id).padStart(2, "0")}
+                        {isCompleted ? "✓" : module.id + 1}
                       </div>
                       <h3 className={`text-lg font-bold ${isKids ? "text-purple-900" : "text-white"}`}>
                         {module.title}
@@ -107,8 +107,8 @@ export async function CourseContent() {
                           ? "🔓 Ready to Level Up!"
                           : "🔓 Unlocked"
                         : isKids
-                        ? `🔒 Complete Module ${module.id - 1} first!`
-                        : `🔒 Complete Module ${module.id - 1} to unlock`}
+                        ? `🔒 Complete Module ${module.id} first!`
+                        : `🔒 Complete Module ${module.id} to unlock`}
                     </p>
                   </div>
                   <div className={`text-4xl ${isKids && !isUnlocked ? "opacity-30" : ""}`}>
