@@ -7,18 +7,20 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
-      <div className="max-w-3xl mx-auto">
-        <Link href="/" className="text-blue-400 hover:text-blue-300 mb-8 inline-block">
+    <div className="min-h-screen py-12 px-4" style={{ backgroundImage: 'url(/legal-privacy-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed', backgroundRepeat: 'no-repeat' }}>
+      {/* Dark Overlay */}
+      <div className="fixed inset-0 -z-10 bg-black/30" />
+      <div className="max-w-3xl mx-auto relative z-10">
+        <Link href="/" className="text-cyan-400 hover:text-cyan-300 mb-8 inline-block font-semibold">
           ← Back to Home
         </Link>
 
-        <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 text-slate-100">
-          <h1 className="text-4xl font-bold text-white mb-8">Privacy Policy</h1>
+        <div className="bg-slate-900/60 backdrop-blur-md rounded-lg p-8 border border-white/20 text-gray-200">
+          <h1 className="text-4xl font-bold text-white mb-8 uppercase tracking-wide">Privacy Policy</h1>
 
           <div className="space-y-6 text-sm leading-relaxed">
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">1. Introduction</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">1. Introduction</h2>
               <p>
                 Learn to Vibe Code ("we," "us," "our," or "Company") is committed to protecting your privacy. This Privacy Policy
                 explains how we collect, use, disclose, and safeguard your information when you visit our website and use our
@@ -27,7 +29,7 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">2. Information We Collect</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">2.Information We Collect</h2>
               <p>
                 We may collect information about you in a variety of ways. The information we may collect on the Site includes:
               </p>
