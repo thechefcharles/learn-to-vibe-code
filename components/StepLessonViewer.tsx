@@ -85,7 +85,7 @@ export function StepLessonViewer({
     : steps.steps[currentStepIndex];
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === steps.steps.length - 1;
-  const isPreviewMode = displayingPreviewLesson || currentStepIndex > naturallyReachedStep;
+  const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedStep;
 
   // Load saved progress from localStorage
   useEffect(() => {
