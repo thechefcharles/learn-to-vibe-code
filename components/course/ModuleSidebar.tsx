@@ -133,7 +133,7 @@ export function ModuleSidebar({
               const meta = getModuleMetadata(modId);
               const isCurrentModule = modId === moduleId;
               const isActualCurrentModule = modId === actualCurrentModule;
-              const isUnlocked = isCurrentModule || (unlockedModules?.has(modId) ?? true);
+              const isUnlocked = isCurrentModule || (unlockedModules?.has(modId) ?? false);
               const isCompleted = completedModules?.has(modId) ?? false;
               const isSelected = modId === moduleId;
 
