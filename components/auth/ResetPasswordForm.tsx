@@ -16,13 +16,43 @@ export function ResetPasswordForm() {
   const [hasValidSession, setHasValidSession] = useState(false);
 
   useEffect(() => {
-    // Check if Supabase set a valid session in the hash
-    const hash = window.location.hash;
-    if (hash.includes("access_token") && hash.includes("type=recovery")) {
-      setHasValidSession(true);
-    } else if (hash.includes("error")) {
-      setError("Your reset link has expired. Please request a new one.");
-    }
+    const checkSession = async () => {
+      // Check if Supabase set a valid session in the hash
+      const hash = window.location.hash;
+      if (hash.includes("access_token") && hash.includes("type=recovery")) {
+        setHasValidSession(true);
+        return;
+      }
+
+      // Check if there's an OAuth code (Supabase sends this sometimes)
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      if (code) {
+        // Exchange code for session by calling the auth callback
+        try {
+          const response = await fetch("/api/auth/callback", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code }),
+          });
+          if (response.ok) {
+            setHasValidSession(true);
+          } else {
+            setError("Your reset link has expired. Please request a new one.");
+          }
+        } catch (err) {
+          setError("Failed to process reset link. Please try again.");
+        }
+        return;
+      }
+
+      // Check error in hash or params
+      if (hash.includes("error") || params.get("error")) {
+        setError("Your reset link has expired. Please request a new one.");
+      }
+    };
+
+    checkSession();
   }, []);
 
   async function handleResetPassword(e: React.FormEvent) {
