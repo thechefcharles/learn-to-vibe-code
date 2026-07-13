@@ -131,7 +131,7 @@ export default async function LessonPage(props: LessonPageProps) {
               completedModules={completedModules}
               lessonsByModule={lessonsByModule}
             >
-              <StepLessonViewer steps={steps} moduleId={moduleId} />
+              <StepLessonViewer steps={steps} moduleId={moduleId} user={user} />
             </LessonViewToggle>
           </div>
         </CoursePageInteractive>

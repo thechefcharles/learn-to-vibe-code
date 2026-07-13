@@ -5,6 +5,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChevronDown } from 'lucide-react';
+import { Logo } from '@/components/Logo';
+import { ProfileMenu } from '@/components/dashboard/ProfileMenu';
 import { getModuleMetadata } from '@/lib/module-metadata';
 import { logEvent } from '@/lib/actions/analytics';
 import type { ModuleStepSequence } from '@/lib/module-steps';
@@ -23,6 +25,7 @@ interface ModuleSidebarProps {
   unlockedModules?: Set<number>;
   completedModules?: Set<number>;
   onPreviewLessonClick?: (moduleId: number, lessonIndex: number) => void;
+  user?: any;
 }
 
 export function ModuleSidebar({
@@ -39,6 +42,7 @@ export function ModuleSidebar({
   unlockedModules,
   completedModules,
   onPreviewLessonClick,
+  user,
 }: ModuleSidebarProps) {
   const router = useRouter();
   const [showModuleDropdown, setShowModuleDropdown] = useState(false);
@@ -103,6 +107,15 @@ export function ModuleSidebar({
           : 'bg-slate-800/50 border-slate-700'
       }`}
     >
+      {/* Logo */}
+      <Link
+        href="/dashboard"
+        className="flex items-center justify-center mb-4 hover:opacity-80 transition"
+        title="Back to Dashboard"
+      >
+        <Logo variant="cosmic-mark" size="sm" />
+      </Link>
+
       {/* Module Selector Dropdown */}
       <div className="mb-4 relative">
         <button

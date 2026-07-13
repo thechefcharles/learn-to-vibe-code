@@ -3,6 +3,7 @@
 import { useState, useEffect, useId } from "react";
 import { motion } from "framer-motion";
 import { MarkdownRenderer } from "./MarkdownRenderer";
+import { ProfileMenu } from "@/components/dashboard/ProfileMenu";
 import { useVersion } from "@/lib/VersionContext";
 import { useKeyboardNavigation } from "@/lib/hooks/useKeyboardNavigation";
 import { useKeyboardShortcuts } from "@/lib/hooks/useKeyboardShortcuts";
@@ -34,6 +35,7 @@ interface StepLessonViewerProps {
   moduleId: number;
   unlockedModules?: Set<number>;
   completedModules?: Set<number>;
+  user?: any;
 }
 
 export function StepLessonViewer({
@@ -41,6 +43,7 @@ export function StepLessonViewer({
   moduleId,
   unlockedModules,
   completedModules,
+  user,
 }: StepLessonViewerProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [naturallyReachedStep, setNaturallyReachedStep] = useState(0); // Only updated via Next button
@@ -235,6 +238,7 @@ export function StepLessonViewer({
               unlockedModules={unlockedModules}
               completedModules={completedModules}
               onPreviewLessonClick={handlePreviewLessonClick}
+              user={user}
             />
         </div>
 
@@ -285,11 +289,13 @@ export function StepLessonViewer({
             >
               {steps.moduleName}
             </div>
-            {/* Time indicator */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-            >
+            {/* Right side: Time + Profile */}
+            <div className="flex items-center gap-3">
+              {/* Time indicator */}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
               <div
                 className="flex items-center gap-2 p-2 rounded-lg bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-cyan-500/20 backdrop-blur-sm transition-all duration-200 hover:border-cyan-500/40 hover:shadow-lg hover:shadow-cyan-500/20"
                 title={`${remaining} minutes remaining out of ${total} total`}
@@ -334,7 +340,14 @@ export function StepLessonViewer({
                   </span>
                 </div>
               </div>
-            </motion.div>
+              </motion.div>
+              {/* Profile Menu */}
+              {user && (
+                <div className="hidden sm:block">
+                  <ProfileMenu userName={user.email?.split('@')[0] || 'User'} />
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Lesson Title */}
