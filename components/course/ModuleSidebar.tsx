@@ -142,7 +142,11 @@ export function ModuleSidebar({
                   key={modId}
                   onClick={() => handleModuleSelect(modId)}
                   className={`w-full text-left px-3 py-2 text-sm transition-colors border-b cursor-pointer ${
-                    isSelected
+                    isActualCurrentModule
+                      ? isKids
+                        ? 'bg-purple-50 text-purple-900 hover:bg-purple-100'
+                        : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                      : isSelected
                       ? isKids
                         ? 'bg-purple-200 text-purple-900'
                         : 'bg-slate-700 text-white'
