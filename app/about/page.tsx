@@ -99,23 +99,34 @@ export default function AboutPage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-bold text-white uppercase tracking-wide mb-4">
+              <h2 className="text-2xl font-bold text-white uppercase tracking-wide mb-6">
                 About Charlie
               </h2>
-              <p className="mb-4">
-                Charlie Foreman is a full-stack developer, educator, and builder passionate about making technology accessible
-                and practical. With years of experience shipping products on the web, Charlie built this course to fill a gap:
-                there's no bridge between "I'm a beginner" and "I can ship production-grade code."
-              </p>
-              <p className="mb-4">
-                The platform itself is the proof of concept. Built with Next.js, TypeScript, Tailwind, Supabase, and Vercel—
-                the exact stack you'll learn in the course. It's designed to be accessible, performant, and beautiful. Because
-                if we're teaching you to build great things, the course should exemplify that standard.
-              </p>
-              <p>
-                This course is Charlie's attempt to democratize access to quality coding education. Not gatekeeping. Not
-                fake-difficulty. Not outdated. Just solid, modern, practical development training.
-              </p>
+              <div className="flex flex-col md:flex-row gap-8 mb-8">
+                <div className="md:w-1/3 flex-shrink-0">
+                  <img
+                    src="/charlie-photo.jpg"
+                    alt="Charlie Foreman"
+                    className="w-full rounded-xl border-2 border-cyan-500/50 shadow-lg shadow-cyan-500/30"
+                  />
+                </div>
+                <div className="md:w-2/3">
+                  <p className="mb-4">
+                    Charlie Foreman is a full-stack developer, educator, and builder passionate about making technology accessible
+                    and practical. With years of experience shipping products on the web, Charlie built this course to fill a gap:
+                    there's no bridge between "I'm a beginner" and "I can ship production-grade code."
+                  </p>
+                  <p className="mb-4">
+                    The platform itself is the proof of concept. Built with Next.js, TypeScript, Tailwind, Supabase, and Vercel—
+                    the exact stack you'll learn in the course. It's designed to be accessible, performant, and beautiful. Because
+                    if we're teaching you to build great things, the course should exemplify that standard.
+                  </p>
+                  <p>
+                    This course is Charlie's attempt to democratize access to quality coding education. Not gatekeeping. Not
+                    fake-difficulty. Not outdated. Just solid, modern, practical development training.
+                  </p>
+                </div>
+              </div>
             </section>
 
             <section>
