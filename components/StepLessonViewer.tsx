@@ -239,8 +239,8 @@ export function StepLessonViewer({
 
       {/* Main Content - Two Column Layout */}
       <div className="max-w-7xl mx-auto px-4 py-2 sm:py-3 flex gap-4 sm:gap-8 relative z-10 flex-1">
-        {/* Sidebar - Always visible */}
-        <div className="hidden lg:block w-64 flex-shrink-0">
+        {/* Sidebar - Disabled in preview mode */}
+        <div className={`hidden lg:block w-64 flex-shrink-0 ${isPreviewMode ? 'pointer-events-none opacity-60' : ''}`}>
             <ModuleSidebar
               steps={steps}
               currentStepIndex={currentStepIndex}
@@ -358,9 +358,9 @@ export function StepLessonViewer({
                 </div>
               </div>
               </motion.div>
-              {/* Profile Menu */}
+              {/* Profile Menu - Always clickable even in preview mode */}
               {user && (
-                <div className="hidden sm:block">
+                <div className={`hidden sm:block ${isPreviewMode ? 'pointer-events-auto' : ''}`}>
                   <ProfileMenu userName={user.email?.split('@')[0] || 'User'} />
                 </div>
               )}
