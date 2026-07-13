@@ -304,6 +304,7 @@ export function StepLessonViewer({
             <ModuleSidebar
               steps={steps}
               currentStepIndex={currentStepIndex}
+              naturallyReachedStep={naturallyReachedStep}
               completedSteps={completedSteps}
               onJumpToStep={handleJumpToStep}
               isKids={isKids}

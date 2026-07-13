@@ -12,6 +12,7 @@ import type { ModuleStepSequence } from '@/lib/module-steps';
 interface ModuleSidebarProps {
   steps: ModuleStepSequence;
   currentStepIndex: number;
+  naturallyReachedStep?: number;
   completedSteps: Set<number>;
   onJumpToStep: (index: number) => void;
   isKids: boolean;
@@ -27,6 +28,7 @@ interface ModuleSidebarProps {
 export function ModuleSidebar({
   steps,
   currentStepIndex,
+  naturallyReachedStep,
   completedSteps,
   onJumpToStep,
   isKids,
@@ -221,14 +223,17 @@ export function ModuleSidebar({
         <div className="space-y-2">
           {steps.steps.map((step, index) => {
             const isCompleted = completedSteps.has(index);
-            const isCurrent = currentStepIndex === index;
+            // Show "Now" only on the lesson they're actually working on (naturally progressed to)
+            const isCurrentlyWorking = index === (naturallyReachedStep ?? currentStepIndex);
+            // Highlight the lesson being viewed (could be preview)
+            const isViewing = currentStepIndex === index;
 
             return (
               <div key={index}>
               <motion.button
                 onClick={() => handleJumpToStep(index)}
                 className={`w-full text-left px-3 py-2 rounded-lg transition-all relative border-l-3 ${
-                  isCurrent
+                  isViewing
                     ? isKids
                       ? 'bg-purple-400/50 text-purple-900 shadow-lg border-l-purple-600 font-bold ring-2 ring-purple-400'
                       : 'bg-cyan-500/40 text-white shadow-lg border-l-cyan-400 font-bold ring-2 ring-cyan-400'
@@ -264,7 +269,7 @@ export function ModuleSidebar({
                     <span className="text-sm font-medium truncate">{step.title}</span>
                   </div>
                   <div className="flex items-center gap-1 flex-shrink-0">
-                    {isCurrent && (
+                    {isCurrentlyWorking && (
                       <motion.span
                         animate={{ scale: [1, 1.2, 1] }}
                         transition={{ duration: 2, repeat: Infinity }}
@@ -277,7 +282,7 @@ export function ModuleSidebar({
                         Now
                       </motion.span>
                     )}
-                    {isCompleted && !isCurrent && (
+                    {isCompleted && !isCurrentlyWorking && (
                       <span className="text-lg flex-shrink-0">✓</span>
                     )}
                   </div>
@@ -285,7 +290,7 @@ export function ModuleSidebar({
               </motion.button>
 
               {/* Section sub-list when this is the current lesson and it has sections */}
-              {isCurrent && step.sections && step.sections.length > 0 && (
+              {isViewing && step.sections && step.sections.length > 0 && (
                 <motion.div
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: 'auto' }}
