@@ -24,7 +24,6 @@ interface ModuleSidebarProps {
   moduleId: number;
   unlockedModules?: Set<number>;
   completedModules?: Set<number>;
-  onPreviewLessonClick?: (moduleId: number, lessonIndex: number) => void;
   user?: any;
   actualCurrentModule?: number;
 }
@@ -48,14 +47,6 @@ export function ModuleSidebar({
 }: ModuleSidebarProps) {
   const router = useRouter();
   const [showModuleDropdown, setShowModuleDropdown] = useState(false);
-  const [selectedModuleId, setSelectedModuleId] = useState(moduleId);
-  const [selectedModuleSteps, setSelectedModuleSteps] = useState<ModuleStepSequence | null>(null);
-
-  const isViewingOtherModule = selectedModuleId !== moduleId;
-
-  const handlePreviewLessonClick = (lessonIndex: number) => {
-    onPreviewLessonClick?.(selectedModuleId, lessonIndex);
-  };
 
   const handleJumpToStep = (index: number) => {
     // Log the jump
@@ -75,28 +66,16 @@ export function ModuleSidebar({
 
   const handleModuleSelect = (newModuleId: number) => {
     setShowModuleDropdown(false);
-    setSelectedModuleId(newModuleId);
 
-    // If selecting the current module, clear preview
+    // If clicking current module, do nothing
     if (newModuleId === moduleId) {
-      setSelectedModuleSteps(null);
       return;
     }
 
-    // Load steps for the selected module
-    if (newModuleId !== moduleId) {
-      loadModuleSteps(newModuleId);
-    }
-  };
-
-  const loadModuleSteps = async (newModuleId: number) => {
-    try {
-      const { getModuleSteps } = await import('@/lib/module-steps');
-      const loadedSteps = getModuleSteps(newModuleId, isKids ? 'kids' : 'adult');
-      setSelectedModuleSteps(loadedSteps);
-    } catch (error) {
-      console.error('Failed to load module steps:', error);
-    }
+    // Navigate to the selected module (includes preview mode for incomplete modules)
+    const isUnlocked = unlockedModules?.has(newModuleId) ?? false;
+    const href = `/course/${String(newModuleId).padStart(2, '0')}${!isUnlocked ? '?preview=true' : ''}`;
+    router.push(href);
   };
 
   const progress = (((naturallyReachedStep ?? 0) + 1) / steps.steps.length) * 100;
@@ -129,7 +108,7 @@ export function ModuleSidebar({
           }`}
         >
           <span className="text-sm font-semibold">
-            Module {selectedModuleId + 1}
+            Module {moduleId + 1}
           </span>
           <ChevronDown
             className={`w-4 h-4 transition-transform ${
@@ -155,7 +134,7 @@ export function ModuleSidebar({
               const isCurrentModule = modId === moduleId;
               const isUnlocked = isCurrentModule || (unlockedModules?.has(modId) ?? true);
               const isCompleted = completedModules?.has(modId) ?? false;
-              const isSelected = modId === selectedModuleId;
+              const isSelected = modId === moduleId;
 
               return (
                 <button
@@ -199,43 +178,40 @@ export function ModuleSidebar({
         Lessons
       </h3>
 
-      {/* Progress Bar - Only show for current module */}
-      {!isViewingOtherModule && (
+      {/* Progress Bar */}
+      <div
+        className={`mb-6 p-3 rounded-lg ${
+          isKids ? 'bg-purple-100' : 'bg-slate-700'
+        }`}
+      >
+        <div className="flex justify-between items-center mb-2">
+          <span className={`text-xs font-semibold ${isKids ? 'text-purple-900' : 'text-white'}`}>
+            {Math.round((((naturallyReachedStep ?? 0) + 1) / steps.steps.length) * 100)}%
+          </span>
+          <span className={`text-xs ${isKids ? 'text-purple-700' : 'text-slate-400'}`}>
+            {(naturallyReachedStep ?? 0) + 1}/{steps.steps.length}
+          </span>
+        </div>
         <div
-          className={`mb-6 p-3 rounded-lg ${
-            isKids ? 'bg-purple-100' : 'bg-slate-700'
+          className={`h-2 rounded-full overflow-hidden ${
+            isKids ? 'bg-purple-200' : 'bg-slate-600'
           }`}
         >
-          <div className="flex justify-between items-center mb-2">
-            <span className={`text-xs font-semibold ${isKids ? 'text-purple-900' : 'text-white'}`}>
-              {Math.round((((naturallyReachedStep ?? 0) + 1) / steps.steps.length) * 100)}%
-            </span>
-            <span className={`text-xs ${isKids ? 'text-purple-700' : 'text-slate-400'}`}>
-              {(naturallyReachedStep ?? 0) + 1}/{steps.steps.length}
-            </span>
-          </div>
-          <div
-            className={`h-2 rounded-full overflow-hidden ${
-              isKids ? 'bg-purple-200' : 'bg-slate-600'
+          <motion.div
+            className={`h-full ${
+              isKids
+                ? 'bg-gradient-to-r from-purple-500 to-pink-500'
+                : 'bg-gradient-to-r from-cyan-500 to-purple-600'
             }`}
-          >
-            <motion.div
-              className={`h-full ${
-                isKids
-                  ? 'bg-gradient-to-r from-purple-500 to-pink-500'
-                  : 'bg-gradient-to-r from-cyan-500 to-purple-600'
-              }`}
-              initial={{ width: 0 }}
-              animate={{ width: `${(((naturallyReachedStep ?? 0) + 1) / steps.steps.length) * 100}%` }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
+            initial={{ width: 0 }}
+            animate={{ width: `${(((naturallyReachedStep ?? 0) + 1) / steps.steps.length) * 100}%` }}
+            transition={{ duration: 0.3 }}
+          />
         </div>
-      )}
+      </div>
 
-      {/* Steps List - Current Module or Selected Other Module */}
-      {!isViewingOtherModule && (
-        <div className="space-y-2">
+      {/* Steps List */}
+      <div className="space-y-2">
           {steps.steps.map((step, index) => {
             const isCompleted = completedSteps.has(index);
             // Show "Now" only on the lesson in the user's actual current module
@@ -333,89 +309,9 @@ export function ModuleSidebar({
           );
         })}
         </div>
-      )}
 
-      {/* Lessons List - Other Modules (preview mode) */}
-      {isViewingOtherModule && (
-        <div className="space-y-2">
-          {/* Preview badge for other modules */}
-          <motion.div
-            initial={{ opacity: 0, y: -5 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={`p-2 rounded-lg text-xs text-center font-medium mb-2 ${
-              isKids
-                ? 'bg-amber-100 text-amber-900 border border-amber-300'
-                : 'bg-amber-500/20 text-amber-200 border border-amber-500/50'
-            }`}
-          >
-            👀 Preview Mode
-          </motion.div>
-
-          {/* Lock indicator if module is locked */}
-          {unlockedModules && !unlockedModules.has(selectedModuleId) && (
-            <motion.div
-              initial={{ opacity: 0, y: -5 }}
-              animate={{ opacity: 1, y: 0 }}
-              className={`p-2 rounded-lg text-xs text-center font-medium mb-2 ${
-                isKids
-                  ? 'bg-red-100 text-red-700 border border-red-300'
-                  : 'bg-red-500/20 text-red-300 border border-red-500/50'
-              }`}
-            >
-              🔒 Locked — Complete previous module to unlock
-            </motion.div>
-          )}
-
-          {selectedModuleSteps ? (
-            // Show lessons from selected module in preview mode - clickable but grayed out
-            <motion.div className="space-y-1 opacity-60" initial={{ opacity: 0 }} animate={{ opacity: 0.6 }} transition={{ duration: 0.2 }}>
-              {selectedModuleSteps.steps.map((step, index) => (
-                <button
-                  key={index}
-                  onClick={() => handlePreviewLessonClick(index)}
-                  className={`w-full p-2 rounded text-sm transition-colors text-left ${
-                    isKids
-                      ? 'bg-purple-100/50 hover:bg-purple-100 text-purple-900'
-                      : 'bg-slate-700/30 hover:bg-slate-700/50 text-slate-300 hover:text-slate-200'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="flex-shrink-0 font-bold text-xs">{index + 1}</span>
-                    <span className="truncate text-xs">{step.title}</span>
-                  </div>
-                </button>
-              ))}
-            </motion.div>
-          ) : (
-            // Loading spinner
-            <motion.div
-              className="flex flex-col items-center justify-center py-6 gap-3"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.2 }}
-            >
-              <div className="flex gap-1">
-                {[0, 1, 2].map((i) => (
-                  <motion.div
-                    key={i}
-                    className={`w-2 h-2 rounded-full ${
-                      isKids ? 'bg-purple-500' : 'bg-indigo-500'
-                    }`}
-                    animate={{ scale: [1, 1.2, 1] }}
-                    transition={{ duration: 0.6, delay: i * 0.1, repeat: Infinity }}
-                  />
-                ))}
-              </div>
-              <p className={`text-xs ${isKids ? 'text-purple-700' : 'text-slate-400'}`}>
-                Loading module...
-              </p>
-            </motion.div>
-          )}
-        </div>
-      )}
-
-      {/* Milestone Badge - Only for current module */}
-      {!isViewingOtherModule && (() => {
+      {/* Milestone Badge */}
+      {(() => {
         const progress = (((naturallyReachedStep ?? 0) + 1) / steps.steps.length) * 100;
         return progress > 0 ? (
           <motion.div

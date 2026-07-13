@@ -327,3 +327,150 @@ Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ 
 [ 6586445ms] [LOG] %c[Vercel Web Analytics]%c [view] http://localhost:3008/course/0 color: rgb(120, 120, 120) color: inherit {o: http://localhost:3008/course/0, sv: 0.1.3, sdkn: @vercel/analytics/react, sdkv: 2.0.1, ts: 1783915773437} /_vercel/insights/view @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
 [ 6589532ms] [WARNING] The resource http://localhost:3008/_next/static/media/051742360c26797e-s.p.1bkzbscqrt8rl.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3008/course/0:0
 [ 6589532ms] [WARNING] The resource http://localhost:3008/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3008/course/0:0
+[ 7129837ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7129991ms] [LOG] [Fast Refresh] done in 236ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7130093ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7130237ms] [LOG] [Fast Refresh] done in 245ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7130393ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7130441ms] [LOG] [Fast Refresh] done in 149ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7130722ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7130798ms] [LOG] [Fast Refresh] done in 178ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7130840ms] ReferenceError: selectedModuleId is not defined
+    at ModuleSidebar (http://localhost:3008/_next/static/chunks/_0y-nxol._.js?id=%255Bproject%255D%252Fcomponents%252Fcourse%252FModuleSidebar.tsx+%255Bapp-client%255D+%2528ecmascript%2529:90:37)
+    at Object.react_stack_bottom_frame (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:15037:24)
+    at renderWithHooks (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:4620:24)
+    at updateFunctionComponent (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6081:21)
+    at beginWork (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6691:24)
+    at runWithFiberInDEV (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at performUnitOfWork (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9555:97)
+    at workLoopSync (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9449:40)
+    at renderRootSync (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9433:13)
+    at performWorkOnRoot (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9061:186)
+    at performSyncWorkOnRoot (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10263:9)
+    at flushSyncWorkAcrossRoots_impl (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10179:316)
+    at processRootScheduleInMicrotask (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10200:106)
+    at http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10274:158
+[ 7131207ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7131318ms] [LOG] [Fast Refresh] done in 213ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7131496ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3008/course/0:0
+[ 7131585ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7131611ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7131811ms] ReferenceError: selectedModuleId is not defined
+    at ModuleSidebar (http://localhost:3008/_next/static/chunks/_0y-nxol._.js:1128:37)
+    at Object.react_stack_bottom_frame (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:15037:24)
+    at renderWithHooks (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:4620:24)
+    at updateFunctionComponent (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6081:21)
+    at beginWork (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6691:24)
+    at runWithFiberInDEV (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at performUnitOfWork (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9555:97)
+    at workLoopSync (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9449:40)
+    at renderRootSync (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9433:13)
+    at performWorkOnRoot (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64)
+[ 7135109ms] [WARNING] The resource http://localhost:3008/_next/static/media/051742360c26797e-s.p.1bkzbscqrt8rl.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3008/course/0:0
+[ 7135109ms] [WARNING] The resource http://localhost:3008/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3008/course/0:0
+[ 7140754ms] [ERROR] ./components/course/ModuleSidebar.tsx:313:8
+Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  311 |         })}
+  312 |         </div>
+> 313 |       )}
+      |        ^
+  314 |
+  315 |       {/* Lessons List - Other Modules (preview mode) */}
+  316 |       {isViewingOtherModule && (
+
+Parsing ecmascript source code failed
+
+Import traces:
+  Client Component Browser:
+    ./components/course/ModuleSidebar.tsx [Client Component Browser]
+    ./components/StepLessonViewer.tsx [Client Component Browser]
+    ./components/StepLessonViewer.tsx [Server Component]
+    ./app/course/[moduleId]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/course/ModuleSidebar.tsx [Client Component SSR]
+    ./components/StepLessonViewer.tsx [Client Component SSR]
+    ./components/StepLessonViewer.tsx [Server Component]
+    ./app/course/[moduleId]/page.tsx [Server Component] @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[ 7140762ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7143763ms] [WARNING] The resource http://localhost:3008/_next/static/media/051742360c26797e-s.p.1bkzbscqrt8rl.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3008/course/0:0
+[ 7143763ms] [WARNING] The resource http://localhost:3008/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3008/course/0:0
+[ 7164965ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7164974ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7165032ms] [LOG] [Fast Refresh] done in 65ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7165182ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3008/course/0:0
+[ 7165206ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7165216ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7165311ms] ReferenceError: selectedModuleId is not defined
+    at ModuleSidebar (http://localhost:3008/_next/static/chunks/_0y-nxol._.js:1128:37)
+    at Object.react_stack_bottom_frame (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:15037:24)
+    at renderWithHooks (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:4620:24)
+    at updateFunctionComponent (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6081:21)
+    at beginWork (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6691:24)
+    at runWithFiberInDEV (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at performUnitOfWork (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9555:97)
+    at workLoopSync (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9449:40)
+    at renderRootSync (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9433:13)
+    at performWorkOnRoot (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64)
+[ 7168317ms] [WARNING] The resource http://localhost:3008/_next/static/media/051742360c26797e-s.p.1bkzbscqrt8rl.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3008/course/0:0
+[ 7168317ms] [WARNING] The resource http://localhost:3008/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3008/course/0:0
+[ 7176368ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7176371ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7176416ms] [LOG] [Fast Refresh] done in 62ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7176514ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3008/course/0:0
+[ 7176537ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7176545ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7176641ms] ReferenceError: selectedModuleId is not defined
+    at ModuleSidebar (http://localhost:3008/_next/static/chunks/_0y-nxol._.js:1128:37)
+    at Object.react_stack_bottom_frame (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:15037:24)
+    at renderWithHooks (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:4620:24)
+    at updateFunctionComponent (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6081:21)
+    at beginWork (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6691:24)
+    at runWithFiberInDEV (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at performUnitOfWork (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9555:97)
+    at workLoopSync (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9449:40)
+    at renderRootSync (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9433:13)
+    at performWorkOnRoot (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64)
+[ 7179893ms] [WARNING] The resource http://localhost:3008/_next/static/media/051742360c26797e-s.p.1bkzbscqrt8rl.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3008/course/0:0
+[ 7179893ms] [WARNING] The resource http://localhost:3008/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2 was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3008/course/0:0
+[ 7186412ms] [ERROR] WebSocket connection to 'ws://localhost:3008/_next/webpack-hmr?id=exvjcvYHqrkASoio1l-QN' failed:  @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[ 7187418ms] [ERROR] WebSocket connection to 'ws://localhost:3008/_next/webpack-hmr?id=exvjcvYHqrkASoio1l-QN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[ 7188419ms] [ERROR] WebSocket connection to 'ws://localhost:3008/_next/webpack-hmr?id=exvjcvYHqrkASoio1l-QN' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_client_0r5nbpw._.js:13422
+[ 7189945ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7191371ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3008/course/0:0
+[ 7191396ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7191406ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7191461ms] ReferenceError: selectedModuleId is not defined
+    at ModuleSidebar (http://localhost:3008/_next/static/chunks/_0y-nxol._.js:1128:37)
+    at Object.react_stack_bottom_frame (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:15037:24)
+    at renderWithHooks (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:4620:24)
+    at updateFunctionComponent (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6081:21)
+    at beginWork (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6691:24)
+    at runWithFiberInDEV (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at performUnitOfWork (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9555:97)
+    at workLoopSync (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9449:40)
+    at renderRootSync (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9433:13)
+    at performWorkOnRoot (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (http://localhost:3008/_next/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64)
+[ 7193955ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7194044ms] [LOG] [Fast Refresh] done in 190ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7202534ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7202537ms] [WARNING] [Fast Refresh] performing full reload because your application had an unrecoverable error @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7202591ms] [LOG] [Fast Refresh] done in 81ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7202752ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7202796ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7202889ms] [WARNING] Image with src "/learn_to_vibe_code_logo_cosmic_wordmark_transparent.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7202889ms] [LOG] %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7202890ms] [LOG] %c[Vercel Web Analytics]%c [view] http://localhost:3008/course/0 color: rgb(120, 120, 120) color: inherit {o: http://localhost:3008/course/0, sv: 0.1.3, sdkn: @vercel/analytics/react, sdkv: 2.0.1, ts: 1783916389881} /_vercel/insights/view @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7211042ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7211056ms] [LOG] [Fast Refresh] done in 115ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7215555ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 7215577ms] [LOG] [Fast Refresh] done in 66ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
