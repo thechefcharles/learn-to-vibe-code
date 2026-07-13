@@ -247,6 +247,7 @@ export function StepLessonViewer({
               completedModules={completedModules}
               onPreviewLessonClick={handlePreviewLessonClick}
               user={user}
+              isPreviewMode={isPreviewMode}
             />
         </div>
 
