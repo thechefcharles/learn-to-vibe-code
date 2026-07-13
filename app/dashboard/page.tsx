@@ -40,7 +40,7 @@ export default async function DashboardPage() {
   const continueHref = nextModule ? `/course/${String(nextModule.module_id).padStart(2, "0")}` : "/course/00";
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950">
+    <div className="min-h-screen flex flex-col">
       <DashboardBackground />
       <DashboardHeader userName={user.user_metadata?.name || user.email || "Learner"} />
 
