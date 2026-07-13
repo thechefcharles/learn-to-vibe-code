@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/client";
 import { Logo } from "@/components/Logo";
 import { VideoBackground } from "@/components/kids-landing/VideoBackground";
 import { MouseTrail } from "@/components/kids-landing/MouseTrail";
@@ -34,22 +35,24 @@ export function ResetPasswordForm() {
       console.log("✓ Recovery code found in URL:", recoveryCode);
       setCode(recoveryCode);
 
-      // Try to exchange the code for a session immediately
-      // This happens on page load, validating the recovery link works
-      console.log("📍 Validating recovery code with Supabase...");
+      // Verify the recovery code CLIENT-SIDE using Supabase client
+      console.log("📍 Verifying recovery code with Supabase client...");
       try {
-        // Create a client-side Supabase client to validate the code
-        const response = await fetch("/api/auth/validate-recovery-code", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ code: recoveryCode }),
+        const supabase = createClient();
+
+        const { data, error } = await supabase.auth.verifyOtp({
+          token_hash: recoveryCode,
+          type: "recovery",
         });
 
-        if (response.ok) {
-          console.log("✓ Recovery code is valid");
+        if (error) {
+          console.error("❌ Verification failed:", error.message);
+          setError("Your reset link has expired or is invalid. Please request a new one.");
+        } else if (data?.user) {
+          console.log("✓ Recovery code verified, user authenticated");
           setHasValidSession(true);
         } else {
-          console.log("✗ Recovery code validation failed");
+          console.log("✗ No user from verification");
           setError("Your reset link has expired or is invalid. Please request a new one.");
         }
       } catch (err) {

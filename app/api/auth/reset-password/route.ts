@@ -5,17 +5,13 @@ export async function POST(request: NextRequest) {
   try {
     const { password } = await request.json();
 
-    if (!password) {
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
-    }
-
-    if (password.length < 8) {
+    if (!password || password.length < 8) {
       return NextResponse.json({ error: "Invalid request" }, { status: 400 });
     }
 
     const supabase = await createClient();
 
-    // Get the authenticated user (session was established by validate-recovery-code)
+    // Get the authenticated user (authenticated by verifyOtp client-side)
     console.log("📍 Getting authenticated user...");
     const {
       data: { user },
@@ -24,7 +20,7 @@ export async function POST(request: NextRequest) {
 
     if (userError || !user) {
       console.error("❌ No authenticated user");
-      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+      return NextResponse.json({ error: "Invalid request" }, { status: 401 });
     }
 
     // Update password for the authenticated user
