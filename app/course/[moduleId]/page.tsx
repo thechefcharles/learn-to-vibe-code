@@ -98,6 +98,16 @@ export default async function LessonPage(props: LessonPageProps) {
     }
   });
 
+  // Find the user's actual current module (first incomplete one)
+  let actualCurrentModule = 0;
+  for (let i = 0; i < 16; i++) {
+    const progress = allProgress.find((p: any) => p.module_id === i);
+    if (!progress || progress.status !== "completed") {
+      actualCurrentModule = i;
+      break;
+    }
+  }
+
   // Build lessons structure for tree view
   const lessonsByModule: Record<number, { id: number; title: string; sections?: any[] }[]> = {};
   for (let i = 0; i < 16; i++) {
@@ -131,7 +141,7 @@ export default async function LessonPage(props: LessonPageProps) {
               completedModules={completedModules}
               lessonsByModule={lessonsByModule}
             >
-              <StepLessonViewer steps={steps} moduleId={moduleId} user={user} />
+              <StepLessonViewer steps={steps} moduleId={moduleId} user={user} actualCurrentModule={actualCurrentModule} />
             </LessonViewToggle>
           </div>
         </CoursePageInteractive>

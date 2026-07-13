@@ -26,7 +26,7 @@ interface ModuleSidebarProps {
   completedModules?: Set<number>;
   onPreviewLessonClick?: (moduleId: number, lessonIndex: number) => void;
   user?: any;
-  isPreviewMode?: boolean;
+  actualCurrentModule?: number;
 }
 
 export function ModuleSidebar({
@@ -44,7 +44,7 @@ export function ModuleSidebar({
   completedModules,
   onPreviewLessonClick,
   user,
-  isPreviewMode,
+  actualCurrentModule,
 }: ModuleSidebarProps) {
   const router = useRouter();
   const [showModuleDropdown, setShowModuleDropdown] = useState(false);
@@ -238,9 +238,9 @@ export function ModuleSidebar({
         <div className="space-y-2">
           {steps.steps.map((step, index) => {
             const isCompleted = completedSteps.has(index);
-            // Show "Now" only on the lesson they're actually working on (naturally progressed to)
-            // Don't show it when in preview mode (viewing a different module)
-            const isCurrentlyWorking = !isPreviewMode && index === (naturallyReachedStep ?? currentStepIndex);
+            // Show "Now" only on the lesson in the user's actual current module
+            // Only show if this is the actualCurrentModule AND the user has naturally progressed to this step
+            const isCurrentlyWorking = moduleId === actualCurrentModule && index === (naturallyReachedStep ?? currentStepIndex);
             // Highlight the lesson being viewed (could be preview)
             const isViewing = currentStepIndex === index;
 
