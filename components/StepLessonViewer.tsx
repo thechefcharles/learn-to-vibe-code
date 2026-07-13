@@ -104,16 +104,24 @@ export function StepLessonViewer({
     const saved = localStorage.getItem(`module-${moduleId}-progress`);
     if (saved) {
       const parsed = JSON.parse(saved);
-      setCurrentStepIndex(parsed.currentStep || 0);
       setCompletedSteps(new Set(parsed.completedSteps || []));
+
       // Load naturallyReachedStep - default to max completed step if not saved
+      let reachedStep = 0;
       if (parsed.naturallyReachedStep !== undefined) {
-        setNaturallyReachedStep(parsed.naturallyReachedStep);
+        reachedStep = parsed.naturallyReachedStep;
+        setNaturallyReachedStep(reachedStep);
       } else if (parsed.completedSteps && parsed.completedSteps.length > 0) {
-        setNaturallyReachedStep(Math.max(...parsed.completedSteps));
+        reachedStep = Math.max(...parsed.completedSteps);
+        setNaturallyReachedStep(reachedStep);
       }
+
+      // If this is the user's actual current module, always start at their reached step (the "Now" lesson)
+      // If it's a preview module, allow them to view the last step they were on
+      const startStep = !isModulePreview ? reachedStep : (parsed.currentStep || 0);
+      setCurrentStepIndex(startStep);
     }
-  }, [moduleId]);
+  }, [moduleId, isModulePreview]);
 
   // Save progress to localStorage
   useEffect(() => {
