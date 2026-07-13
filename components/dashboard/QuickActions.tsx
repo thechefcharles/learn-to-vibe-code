@@ -49,13 +49,13 @@ export function QuickActions({ capstoneUnlocked, completedModules }: QuickAction
         initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
         animate={!prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
         transition={!prefersReducedMotion ? { duration: 0.5 } : undefined}
-        className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4"
+        className="bg-slate-900/90 backdrop-blur-md border border-cyan-500/20 rounded-xl p-4"
       >
         <div className="flex items-center justify-between mb-3">
           <h4 className="font-semibold text-white text-sm">Progress</h4>
           <p className="text-xs text-cyan-400 font-bold">{completedModules}/{totalModules}</p>
         </div>
-        <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden border border-white/20">
+        <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden border border-cyan-500/20">
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: `${progressPercentage}%` }}
@@ -75,7 +75,7 @@ export function QuickActions({ capstoneUnlocked, completedModules }: QuickAction
           transition={!prefersReducedMotion ? { duration: 0.5, delay: (idx + 1) * 0.1 } : undefined}
         >
           <Link href={action.href} className="block">
-            <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-xl p-4 hover:border-white/40 transition-all hover:bg-white/15 group cursor-pointer">
+            <div className="bg-slate-900/90 backdrop-blur-md border border-cyan-500/20 rounded-xl p-4 hover:border-cyan-500/40 transition-all hover:bg-slate-800/90 group cursor-pointer">
               <div className="flex items-center gap-3">
                 <div
                   className={`text-2xl w-10 h-10 rounded-lg bg-gradient-to-br ${action.color} flex items-center justify-center`}

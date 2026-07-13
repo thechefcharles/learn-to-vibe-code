@@ -29,7 +29,7 @@ export function BadgesShowcase({ badges, allBadges }: BadgesShowcaseProps) {
       initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
       animate={!prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
       transition={!prefersReducedMotion ? { duration: 0.5 } : undefined}
-      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8 w-full"
+      className="bg-slate-900/90 backdrop-blur-md border border-cyan-500/20 rounded-2xl p-6 sm:p-8 w-full"
     >
       <h3 className="text-lg sm:text-xl font-bold text-white mb-6 uppercase tracking-wide">
         Badges & Achievements
@@ -47,7 +47,7 @@ export function BadgesShowcase({ badges, allBadges }: BadgesShowcaseProps) {
                 className={`flex-shrink-0 w-24 h-32 sm:w-28 sm:h-36 rounded-xl border-2 flex flex-col items-center justify-center gap-2 p-2 text-center transition-all ${
                   isEarned
                     ? 'bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border-yellow-400 shadow-lg shadow-yellow-500/20'
-                    : 'bg-white/5 border-white/20 opacity-50'
+                    : 'bg-slate-800/50 border-slate-700 opacity-50'
                 }`}
               >
                 <div className="text-3xl sm:text-4xl">{badge.icon}</div>

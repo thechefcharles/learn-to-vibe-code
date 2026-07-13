@@ -50,7 +50,7 @@ export function CourseProgress({ progress, totalModules }: CourseProgressProps) 
       initial={!prefersReducedMotion ? { opacity: 0, y: 20 } : undefined}
       animate={!prefersReducedMotion ? { opacity: 1, y: 0 } : undefined}
       transition={!prefersReducedMotion ? { duration: 0.5 } : undefined}
-      className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8 w-full"
+      className="bg-slate-900/90 backdrop-blur-md border border-cyan-500/20 rounded-2xl p-6 sm:p-8 w-full"
     >
       <h3 className="text-lg sm:text-xl font-bold text-white mb-6 uppercase tracking-wide">
         Your Learning Path
