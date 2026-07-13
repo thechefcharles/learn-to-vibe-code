@@ -44,11 +44,6 @@ export function LessonViewToggle({
     localStorage.setItem('lesson-view', newView);
   };
 
-  if (version === 'kids') {
-    // Kids version: no toggle, just show lesson
-    return <>{children}</>;
-  }
-
   return (
     <>
       {/* Header with toggle button */}

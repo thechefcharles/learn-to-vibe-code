@@ -122,21 +122,17 @@ export default async function LessonPage(props: LessonPageProps) {
       return (
         <CoursePageInteractive moduleNumber={moduleId} user={user}>
           <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
-            {!isKids ? (
-              <LessonViewToggle
-                moduleId={moduleId}
-                lessonTitle={pageTitle}
-                user={user}
-                version={userVersion}
-                unlockedModules={unlockedModules}
-                completedModules={completedModules}
-                lessonsByModule={lessonsByModule}
-              >
-                <StepLessonViewer steps={steps} moduleId={moduleId} />
-              </LessonViewToggle>
-            ) : (
+            <LessonViewToggle
+              moduleId={moduleId}
+              lessonTitle={pageTitle}
+              user={user}
+              version={userVersion}
+              unlockedModules={unlockedModules}
+              completedModules={completedModules}
+              lessonsByModule={lessonsByModule}
+            >
               <StepLessonViewer steps={steps} moduleId={moduleId} />
-            )}
+            </LessonViewToggle>
           </div>
         </CoursePageInteractive>
       );
