@@ -54,6 +54,9 @@ export function StepLessonViewer({
     selectedIndex: null,
     showExplanation: false,
   });
+  const [previewModuleId, setPreviewModuleId] = useState<number | null>(null);
+  const [previewLessonIndex, setPreviewLessonIndex] = useState<number | null>(null);
+  const [previewModuleSteps, setPreviewModuleSteps] = useState<ModuleStepSequence | null>(null);
   const { version } = useVersion();
   const isKids = version === "kids";
   const { remaining, total } = useModuleTimeRemaining(steps, currentStepIndex);
@@ -73,10 +76,14 @@ export function StepLessonViewer({
   const isMilestone = progress === 25 || progress === 50 || progress === 75 || progress === 100;
   const milestoneText = progress === 25 ? "25% Complete! 🚀" : progress === 50 ? "Halfway There! 💪" : progress === 75 ? "Almost Done! 🔥" : "Module Complete! 🎉";
 
-  const currentStep = steps.steps[currentStepIndex];
+  // Use preview step if one is selected, otherwise use current module's step
+  const displayingPreviewLesson = previewModuleId !== null && previewLessonIndex !== null && previewModuleSteps;
+  const currentStep = displayingPreviewLesson && previewModuleSteps
+    ? previewModuleSteps.steps[previewLessonIndex]
+    : steps.steps[currentStepIndex];
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === steps.steps.length - 1;
-  const isPreviewMode = currentStepIndex > naturallyReachedStep;
+  const isPreviewMode = displayingPreviewLesson || currentStepIndex > naturallyReachedStep;
 
   // Load saved progress from localStorage
   useEffect(() => {
@@ -150,6 +157,24 @@ export function StepLessonViewer({
 
   const handleJumpToStep = (index: number) => {
     setCurrentStepIndex(index);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handlePreviewLessonClick = async (previewModuleId: number, lessonIndex: number) => {
+    setPreviewModuleId(previewModuleId);
+    setPreviewLessonIndex(lessonIndex);
+
+    // Load the preview module's steps if not already loaded
+    if (!previewModuleSteps || previewModuleSteps.moduleId !== previewModuleId) {
+      try {
+        const { getModuleSteps } = await import('@/lib/module-steps');
+        const loadedSteps = getModuleSteps(previewModuleId, isKids ? 'kids' : 'adult');
+        setPreviewModuleSteps(loadedSteps);
+      } catch (error) {
+        console.error('Failed to load preview module steps:', error);
+      }
+    }
+
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -282,6 +307,7 @@ export function StepLessonViewer({
               moduleId={moduleId}
               unlockedModules={unlockedModules}
               completedModules={completedModules}
+              onPreviewLessonClick={handlePreviewLessonClick}
             />
         </div>
 

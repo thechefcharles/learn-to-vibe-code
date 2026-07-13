@@ -21,6 +21,7 @@ interface ModuleSidebarProps {
   moduleId: number;
   unlockedModules?: Set<number>;
   completedModules?: Set<number>;
+  onPreviewLessonClick?: (moduleId: number, lessonIndex: number) => void;
 }
 
 export function ModuleSidebar({
@@ -35,6 +36,7 @@ export function ModuleSidebar({
   moduleId,
   unlockedModules,
   completedModules,
+  onPreviewLessonClick,
 }: ModuleSidebarProps) {
   const router = useRouter();
   const [showModuleDropdown, setShowModuleDropdown] = useState(false);
@@ -43,8 +45,8 @@ export function ModuleSidebar({
 
   const isViewingOtherModule = selectedModuleId !== moduleId;
 
-  const handlePreviewLessonClick = (previewModuleId: number) => {
-    router.push(`/course/${String(previewModuleId).padStart(2, '0')}`);
+  const handlePreviewLessonClick = (lessonIndex: number) => {
+    onPreviewLessonClick?.(selectedModuleId, lessonIndex);
   };
 
   const handleJumpToStep = (index: number) => {
@@ -349,7 +351,7 @@ export function ModuleSidebar({
               {selectedModuleSteps.steps.map((step, index) => (
                 <button
                   key={index}
-                  onClick={() => handlePreviewLessonClick(selectedModuleId)}
+                  onClick={() => handlePreviewLessonClick(index)}
                   className={`w-full p-2 rounded text-sm transition-colors text-left ${
                     isKids
                       ? 'bg-purple-100/50 hover:bg-purple-100 text-purple-900'
