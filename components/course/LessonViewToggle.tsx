@@ -46,18 +46,6 @@ export function LessonViewToggle({
 
   return (
     <>
-      {/* Header */}
-      <div className="sticky top-0 z-40 border-b border-white/10 bg-gradient-to-b from-slate-900/95 to-slate-900/80 backdrop-blur-lg overflow-visible">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
-          <CourseLessonHeader
-            moduleId={String(moduleId)}
-            lessonTitle={lessonTitle}
-            user={user}
-            version={version}
-          />
-        </div>
-      </div>
-
       {/* Content: Lesson View */}
       {typeof children === 'object' && children && 'props' in children
         ? // If children is a React element, clone it with additional props
