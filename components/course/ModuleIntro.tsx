@@ -14,6 +14,13 @@ export function ModuleIntro({ steps, moduleId, isKids, onStart }: ModuleIntroPro
   const totalSteps = steps.steps.length;
   const estimatedTime = `${totalSteps * 5} min`; // Assume 5 min per step
 
+  // Adjust module name to use 1-based numbering for display
+  const displayModuleName = steps.moduleName.replace(/Module (\d+):/, (match, num) => {
+    const displayNum = parseInt(num) + 1;
+    return `Module ${displayNum}:`;
+  });
+  const displayModuleNumber = moduleId + 1;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -33,7 +40,7 @@ export function ModuleIntro({ steps, moduleId, isKids, onStart }: ModuleIntroPro
               : 'bg-cyan-500/30 text-cyan-400'
           }`}
         >
-          {String(moduleId).padStart(2, '0')}
+          {displayModuleNumber}
         </div>
         <div>
           <h1
@@ -41,7 +48,7 @@ export function ModuleIntro({ steps, moduleId, isKids, onStart }: ModuleIntroPro
               isKids ? 'text-purple-900' : 'text-white'
             }`}
           >
-            {steps.moduleName}
+            {displayModuleName}
           </h1>
         </div>
       </div>

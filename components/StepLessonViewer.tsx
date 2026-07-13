@@ -73,6 +73,12 @@ export function StepLessonViewer({
   const timeRingPercent = total > 0 ? Math.max(0, Math.min(1, remaining / total)) : 0;
   const timeRingOffset = timeRingCircumference * (1 - timeRingPercent);
 
+  // Adjust module name to use 1-based numbering for display (Module 1-16 instead of Module 0-15)
+  const displayModuleName = steps.moduleName.replace(/Module (\d+):/, (match, num) => {
+    const displayNum = parseInt(num) + 1;
+    return `Module ${displayNum}:`;
+  });
+
   // Calculate milestone progress (based on actual completion, not preview viewing)
   const progress = (((naturallyReachedStep ?? 0) + 1) / steps.steps.length) * 100;
   const isMilestone = progress === 25 || progress === 50 || progress === 75 || progress === 100;
@@ -291,7 +297,7 @@ export function StepLessonViewer({
                 transform: "translateZ(0)",
               }}
             >
-              {steps.moduleName}
+              {displayModuleName}
             </div>
             {/* Right side: Time + Profile */}
             <div className="flex items-center gap-3">
