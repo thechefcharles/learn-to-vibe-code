@@ -1,0 +1,151 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - generic [ref=f1e4]:
+      - banner [ref=f1e5]:
+        - generic [ref=f1e7]:
+          - generic [ref=f1e8]:
+            - link [ref=f1e9] [cursor=pointer]:
+              - /url: /dashboard
+              - img "Vibe Code cosmic mark" [ref=f1e11]
+            - generic [ref=f1e12]:
+              - generic [ref=f1e13]: →
+              - link "Learning" [ref=f1e14] [cursor=pointer]:
+                - /url: /dashboard
+              - generic [ref=f1e15]: →
+              - generic [ref=f1e16]: Module 00
+          - generic [ref=f1e17]:
+            - 'heading "Module 0: Setup & Accounts" [level=1] [ref=f1e18]'
+            - generic [ref=f1e19]: 💻 Advanced
+          - generic [ref=f1e21]:
+            - button "Violet" [ref=f1e22] [cursor=pointer]
+            - button "Sage" [ref=f1e23] [cursor=pointer]
+            - button "Sunset" [ref=f1e24] [cursor=pointer]
+      - generic [ref=f1e25]:
+        - button "Lesson" [ref=f1e26]
+        - button "Modules" [ref=f1e30]
+    - generic [ref=f1e34]:
+      - generic [ref=f1e37]:
+        - generic [ref=f1e38]: "Module 0: Setup & Accounts"
+        - img "106 of 120 minutes remaining in this module" [ref=f1e40]:
+          - generic [ref=f1e44]:
+            - generic [ref=f1e45]: "106"
+            - generic [ref=f1e46]: min left
+      - generic [ref=f1e47]:
+        - generic [ref=f1e49]:
+          - button "Module 00" [ref=f1e51]
+          - heading "Lessons" [level=3] [ref=f1e55]
+          - generic [ref=f1e57]:
+            - generic [ref=f1e58]: 8%
+            - generic [ref=f1e59]: 1/12
+          - generic [ref=f1e62]:
+            - button "1 Walkthrough Overview Now" [ref=f1e64]:
+              - generic [ref=f1e65]:
+                - generic [ref=f1e66]:
+                  - generic [ref=f1e67]: "1"
+                  - generic [ref=f1e68]: Walkthrough Overview
+                - generic [ref=f1e69]: Now
+            - button "2 The Stack Map" [ref=f1e72]:
+              - generic [ref=f1e74]:
+                - generic [ref=f1e75]: "2"
+                - generic [ref=f1e76]: The Stack Map
+            - button "3 What is a Terminal?" [ref=f1e78]:
+              - generic [ref=f1e80]:
+                - generic [ref=f1e81]: "3"
+                - generic [ref=f1e82]: What is a Terminal?
+            - button "4 Install Node.js" [ref=f1e84]:
+              - generic [ref=f1e86]:
+                - generic [ref=f1e87]: "4"
+                - generic [ref=f1e88]: Install Node.js
+            - button "5 Install Cursor" [ref=f1e90]:
+              - generic [ref=f1e92]:
+                - generic [ref=f1e93]: "5"
+                - generic [ref=f1e94]: Install Cursor
+            - button "6 Install Claude Code" [ref=f1e96]:
+              - generic [ref=f1e98]:
+                - generic [ref=f1e99]: "6"
+                - generic [ref=f1e100]: Install Claude Code
+            - button "7 Sign Up for GitHub" [ref=f1e102]:
+              - generic [ref=f1e104]:
+                - generic [ref=f1e105]: "7"
+                - generic [ref=f1e106]: Sign Up for GitHub
+            - button "8 Sign Up for Supabase" [ref=f1e108]:
+              - generic [ref=f1e110]:
+                - generic [ref=f1e111]: "8"
+                - generic [ref=f1e112]: Sign Up for Supabase
+            - button "9 Sign Up for Vercel" [ref=f1e114]:
+              - generic [ref=f1e116]:
+                - generic [ref=f1e117]: "9"
+                - generic [ref=f1e118]: Sign Up for Vercel
+            - button "10 Free Tiers & Costs" [ref=f1e120]:
+              - generic [ref=f1e122]:
+                - generic [ref=f1e123]: "10"
+                - generic [ref=f1e124]: Free Tiers & Costs
+            - button "11 Final Verification" [ref=f1e126]:
+              - generic [ref=f1e128]:
+                - generic [ref=f1e129]: "11"
+                - generic [ref=f1e130]: Final Verification
+            - 'button "12 Checkpoint: Module Complete" [ref=f1e132]':
+              - generic [ref=f1e134]:
+                - generic [ref=f1e135]: "12"
+                - generic [ref=f1e136]: "Checkpoint: Module Complete"
+          - generic [ref=f1e137]: 🚀 Getting started
+        - generic [ref=f1e139]:
+          - 'heading "Lesson 1: Walkthrough Overview" [level=2] [ref=f1e140]'
+          - generic [ref=f1e141]:
+            - generic [ref=f1e142]:
+              - generic [ref=f1e143]: ⏱️
+              - generic [ref=f1e144]:
+                - paragraph [ref=f1e145]: Estimated Time
+                - paragraph [ref=f1e146]: 5 minutes
+            - generic [ref=f1e147]:
+              - generic [ref=f1e148]: 📊
+              - generic [ref=f1e149]:
+                - paragraph [ref=f1e150]: Difficulty
+                - paragraph [ref=f1e151]: easy
+            - generic [ref=f1e152]:
+              - generic [ref=f1e153]: ⭐
+              - generic [ref=f1e154]:
+                - paragraph [ref=f1e155]: XP Reward
+                - paragraph [ref=f1e156]: +50 XP
+          - generic [ref=f1e158]:
+            - paragraph [ref=f1e159]:
+              - text: This module sets up your development environment
+              - strong [ref=f1e160]: once, up front
+              - text: . Setup friction is where beginners quietly give up.
+            - paragraph [ref=f1e161]: "By the end, you'll have:"
+            - generic [ref=f1e162]:
+              - paragraph [ref=f1e163]: ✓ BY THE END
+              - list [ref=f1e164]:
+                - listitem [ref=f1e165]:
+                  - generic [ref=f1e166]: ✓
+                  - generic [ref=f1e167]: Node.js installed (JavaScript runtime)
+                - listitem [ref=f1e168]:
+                  - generic [ref=f1e169]: ✓
+                  - generic [ref=f1e170]: Cursor installed (AI code editor)
+                - listitem [ref=f1e171]:
+                  - generic [ref=f1e172]: ✓
+                  - generic [ref=f1e173]: Claude Code installed (terminal AI agent)
+                - listitem [ref=f1e174]:
+                  - generic [ref=f1e175]: ✓
+                  - generic [ref=f1e176]: Accounts on GitHub, Supabase, Vercel
+                - listitem [ref=f1e177]:
+                  - generic [ref=f1e178]: ✓
+                  - generic [ref=f1e179]: All tools verified working
+            - paragraph [ref=f1e180]:
+              - strong [ref=f1e181]: "Estimated time:"
+              - text: 2 hours
+            - paragraph [ref=f1e182]:
+              - strong [ref=f1e183]: "Prerequisites:"
+              - text: A computer, internet connection, and nothing else.
+            - paragraph [ref=f1e184]: Let's get started.
+          - generic [ref=f1e186]:
+            - paragraph [ref=f1e187]: ✨ KEY INSIGHT
+            - paragraph [ref=f1e188]: This module prevents setup failures later — we verify everything works before moving forward.
+          - generic [ref=f1e189]:
+            - button "← Previous" [disabled] [ref=f1e190]
+            - generic [ref=f1e191]:
+              - generic [ref=f1e192]: 1 of 12
+              - generic [ref=f1e194]: K/J to navigate
+            - button "Next →" [ref=f1e195]
+  - button "Open Next.js Dev Tools" [ref=f1e201] [cursor=pointer]
+  - alert [ref=f1e205]

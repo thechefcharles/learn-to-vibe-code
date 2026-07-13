@@ -93,7 +93,7 @@ export function ModuleSidebar({
     }
   };
 
-  const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
+  const progress = (((naturallyReachedStep ?? 0) + 1) / steps.steps.length) * 100;
 
   return (
     <div
@@ -416,7 +416,7 @@ export function ModuleSidebar({
 
       {/* Milestone Badge - Only for current module */}
       {!isViewingOtherModule && (() => {
-        const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
+        const progress = (((naturallyReachedStep ?? 0) + 1) / steps.steps.length) * 100;
         return progress > 0 ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}

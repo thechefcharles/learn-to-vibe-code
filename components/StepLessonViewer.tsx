@@ -71,8 +71,8 @@ export function StepLessonViewer({
   const timeRingPercent = total > 0 ? Math.max(0, Math.min(1, remaining / total)) : 0;
   const timeRingOffset = timeRingCircumference * (1 - timeRingPercent);
 
-  // Calculate milestone progress
-  const progress = ((currentStepIndex + 1) / steps.steps.length) * 100;
+  // Calculate milestone progress (based on actual completion, not preview viewing)
+  const progress = (((naturallyReachedStep ?? 0) + 1) / steps.steps.length) * 100;
   const isMilestone = progress === 25 || progress === 50 || progress === 75 || progress === 100;
   const milestoneText = progress === 25 ? "25% Complete! 🚀" : progress === 50 ? "Halfway There! 💪" : progress === 75 ? "Almost Done! 🔥" : "Module Complete! 🎉";
 

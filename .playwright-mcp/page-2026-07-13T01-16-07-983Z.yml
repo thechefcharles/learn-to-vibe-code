@@ -1,0 +1,79 @@
+- generic [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - generic [ref=f1e4]:
+      - banner [ref=f1e5]:
+        - generic [ref=f1e7]:
+          - generic [ref=f1e8]:
+            - link [ref=f1e9] [cursor=pointer]:
+              - /url: /dashboard
+              - img "Vibe Code cosmic mark" [ref=f1e11]
+            - generic [ref=f1e12]:
+              - generic [ref=f1e13]: →
+              - link "Learning" [ref=f1e14] [cursor=pointer]:
+                - /url: /dashboard
+              - generic [ref=f1e15]: →
+              - generic [ref=f1e16]: Module 00
+          - generic [ref=f1e17]:
+            - 'heading "Module 0: Setup & Accounts" [level=1] [ref=f1e18]'
+            - generic [ref=f1e19]: 💻 Advanced
+          - generic [ref=f1e21]:
+            - button "Violet" [ref=f1e22] [cursor=pointer]
+            - button "Sage" [ref=f1e23] [cursor=pointer]
+            - button "Sunset" [ref=f1e24] [cursor=pointer]
+      - generic [ref=f1e25]:
+        - button "Lesson" [ref=f1e26]
+        - button "Modules" [active] [ref=f1e30]
+    - generic [ref=f1e207]:
+      - heading "Course Structure" [level=2] [ref=f1e208]
+      - generic [ref=f1e210]:
+        - generic [ref=f1e211]:
+          - button "Module 00" [ref=f1e212]
+          - generic [ref=f1e222]: Setup & Accounts
+          - generic [ref=f1e223]: Complete previous module to unlock
+        - generic [ref=f1e224]:
+          - button "Module 01" [ref=f1e225]
+          - generic [ref=f1e235]: AI Fundamentals
+        - generic [ref=f1e236]:
+          - button "Module 02" [ref=f1e237]
+          - generic [ref=f1e247]: Prompt Engineering
+        - generic [ref=f1e248]:
+          - button "Module 03" [ref=f1e249]
+          - generic [ref=f1e259]: Planning with AI
+        - generic [ref=f1e260]:
+          - button "Module 04" [ref=f1e261]
+          - generic [ref=f1e271]: Building in Cursor
+        - generic [ref=f1e272]:
+          - button "Module 05" [ref=f1e273]
+          - generic [ref=f1e283]: Building in Claude Code
+        - generic [ref=f1e284]:
+          - button "Module 06" [ref=f1e285]
+          - generic [ref=f1e295]: Design & UX
+        - generic [ref=f1e296]:
+          - button "Module 07" [ref=f1e297]
+          - generic [ref=f1e307]: "Supabase: Data & Auth"
+        - generic [ref=f1e308]:
+          - button "Module 08" [ref=f1e309]
+          - generic [ref=f1e319]: Reading & Debugging
+        - generic [ref=f1e320]:
+          - button "Module 09" [ref=f1e321]
+          - generic [ref=f1e331]: Git & GitHub
+        - generic [ref=f1e332]:
+          - button "Module 10" [ref=f1e333]
+          - generic [ref=f1e343]: Deploying with Vercel
+        - generic [ref=f1e344]:
+          - button "Module 11" [ref=f1e345]
+          - generic [ref=f1e355]: Agent Workflows
+        - generic [ref=f1e356]:
+          - button "Module 12" [ref=f1e357]
+          - generic [ref=f1e367]: Production-Ready
+        - generic [ref=f1e368]:
+          - button "Module 13" [ref=f1e369]
+          - generic [ref=f1e379]: Automating Pipelines
+        - generic [ref=f1e380]:
+          - button "Module 14" [ref=f1e381]
+          - generic [ref=f1e391]: Brownfield
+        - generic [ref=f1e392]:
+          - button "Module 15" [ref=f1e393]
+          - generic [ref=f1e403]: Tooling Landscape
+  - button "Open Next.js Dev Tools" [ref=f1e201] [cursor=pointer]
+  - alert [ref=f1e205]

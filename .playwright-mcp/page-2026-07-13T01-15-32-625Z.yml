@@ -1,0 +1,26 @@
+- generic [ref=e1]:
+  - generic [ref=e4]:
+    - link [ref=e6] [cursor=pointer]:
+      - /url: /
+      - img "Learn To Vibe Code" [ref=e7]
+    - generic [ref=e8]:
+      - heading "Welcome Back" [level=1] [ref=e9]
+      - paragraph [ref=e10]: Sign in to your account
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - generic [ref=e13]: Email
+          - textbox "Email" [active] [ref=e14]:
+            - /placeholder: your@email.com
+            - text: charlieforeman77@gmail.com
+        - generic [ref=e15]:
+          - generic [ref=e16]: Password
+          - textbox "Password" [ref=e17]:
+            - /placeholder: ••••••••
+            - text: Portalquest123$$
+        - button "Sign In" [ref=e18]
+      - paragraph [ref=e19]:
+        - text: Don't have an account?
+        - link "Sign up" [ref=e20] [cursor=pointer]:
+          - /url: /auth/sign-up
+  - button "Open Next.js Dev Tools" [ref=e26] [cursor=pointer]
+  - alert [ref=e30]
