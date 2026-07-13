@@ -14,7 +14,7 @@ export default function AboutPage() {
       <div className="fixed inset-0 -z-10 bg-black/10" />
       <Header hideThemeToggle={true} />
 
-      <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+      <main className="flex-1 w-full lg:w-1/2 px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         {/* Back Link */}
         <Link href="/" className="text-cyan-400 hover:text-cyan-300 text-sm font-semibold mb-8 inline-block">
           ← Back to Home
