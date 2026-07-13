@@ -16,29 +16,48 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createClient();
 
-    // Exchange authorization code for session
-    console.log("📍 Exchanging code for session...");
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-
-    console.log("Exchange result:", {
-      hasData: !!data,
-      hasSession: !!data?.session,
-      error: error ? error.message : "none",
+    // Try to verify OTP first (for recovery flows)
+    console.log("📍 Verifying code as OTP (recovery flow)...");
+    const { data: otpData, error: otpError } = await supabase.auth.verifyOtp({
+      token_hash: code,
+      type: "recovery",
     });
 
-    if (error || !data.session) {
-      console.error("❌ Exchange failed:", error?.message);
+    if (!otpError && otpData?.user) {
+      console.log("✓ OTP verification successful, session established");
+      return NextResponse.json({
+        success: true,
+        message: "Session established",
+      });
+    }
+
+    console.log("⚠️ OTP verification failed, trying code exchange...");
+
+    // Fallback to code exchange for OAuth flows
+    try {
+      const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+
+      if (error || !data?.session) {
+        console.error("❌ Code exchange failed:", error?.message);
+        return NextResponse.json(
+          { error: error?.message || "Failed to exchange code for session" },
+          { status: 400 }
+        );
+      }
+
+      console.log("✓ Session established via code exchange");
+      return NextResponse.json({
+        success: true,
+        message: "Session established",
+      });
+    } catch (exchangeErr) {
+      console.error("❌ Code exchange error:", exchangeErr);
+      // If both methods fail, return the OTP error since that's what the recovery flow expects
       return NextResponse.json(
-        { error: error?.message || "Failed to exchange code for session" },
+        { error: otpError?.message || "Failed to verify recovery code" },
         { status: 400 }
       );
     }
-
-    console.log("✓ Session established successfully");
-    return NextResponse.json({
-      success: true,
-      message: "Session established",
-    });
   } catch (err) {
     console.error("❌ Auth callback error:", err);
     return NextResponse.json(
