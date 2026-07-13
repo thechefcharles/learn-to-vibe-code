@@ -251,7 +251,7 @@ export function ModuleSidebar({
                   <div className="flex items-center gap-2 flex-1 min-w-0">
                     <div
                       className={`w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 ${
-                        isCurrent
+                        isViewing
                           ? isKids
                             ? 'bg-purple-600 text-white'
                             : 'bg-cyan-400 text-slate-900'
