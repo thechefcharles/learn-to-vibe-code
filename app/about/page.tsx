@@ -25,10 +25,10 @@ export default function AboutPage() {
           {/* Header */}
           <div className="mb-12">
             <h1 className="text-4xl sm:text-5xl font-bold text-white uppercase tracking-wide mb-4">
-              Charlie Foreman
+              Learn to Vibe Code
             </h1>
             <p className="text-xl text-cyan-400 font-semibold">
-              Creator of the Accredited Vibe Coding Course
+              Built by Charlie Foreman
             </p>
           </div>
 
@@ -101,17 +101,17 @@ export default function AboutPage() {
                 </div>
                 <div className="md:w-2/3">
                   <p className="mb-4">
-                    Charlie Foreman is a full-stack developer, educator, and builder passionate about making technology accessible
-                    and practical. With years of experience shipping products on the web, Charlie built this course to fill a gap:
+                    Hi, I'm Charlie Foreman. I'm a full-stack developer, educator, and builder passionate about making technology accessible
+                    and practical. With years of experience shipping products on the web, I built this course to fill a gap:
                     there's no bridge between "I'm a beginner" and "I can ship production-grade code."
                   </p>
                   <p className="mb-4">
                     The platform itself is the proof of concept. Built with Next.js, TypeScript, Tailwind, Supabase, and Vercel—
                     the exact stack you'll learn in the course. It's designed to be accessible, performant, and beautiful. Because
-                    if we're teaching you to build great things, the course should exemplify that standard.
+                    if I'm teaching you to build great things, the course should exemplify that standard.
                   </p>
                   <p>
-                    This course is Charlie's attempt to democratize access to quality coding education. Not gatekeeping. Not
+                    This course is my attempt to democratize access to quality coding education. Not gatekeeping. Not
                     fake-difficulty. Not outdated. Just solid, modern, practical development training.
                   </p>
                 </div>
