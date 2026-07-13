@@ -9,13 +9,13 @@ export function Footer() {
   const isKids = version === "kids";
 
   return (
-    <footer className={`text-paper mt-12 pt-12 pb-8 ${isKids ? "bg-gradient-to-r from-purple-600 to-pink-600" : "bg-indigo"}`}>
+    <footer className="text-paper mt-12 pt-12 pb-8 bg-slate-900/95 backdrop-blur-sm border-t border-cyan-500/20">
       <div className="max-w-6xl mx-auto px-4">
         {/* Main footer content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
           <div>
-            <Logo variant="reverse" size="sm" className="mb-4" />
+            <Logo variant="cosmic" size="sm" className="mb-4" />
             <p className="text-sm text-white/80">
               {isKids ? "Learn, build, ship. Level up today! 🚀" : "Hard to start. Impossible to stop."}
             </p>
@@ -26,17 +26,17 @@ export function Footer() {
             <h3 className="font-display font-bold text-paper mb-4">Course</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/?view=landing" className="text-violet-light hover:text-lime transition">
+                <Link href="/?view=landing" className="text-cyan-300 hover:text-cyan-200 transition">
                   Course Info
                 </Link>
               </li>
               <li>
-                <Link href="/course" className="text-violet-light hover:text-lime transition">
+                <Link href="/course" className="text-cyan-300 hover:text-cyan-200 transition">
                   Modules
                 </Link>
               </li>
               <li>
-                <Link href="/capstone" className="text-violet-light hover:text-lime transition">
+                <Link href="/capstone" className="text-cyan-300 hover:text-cyan-200 transition">
                   Capstone
                 </Link>
               </li>
@@ -48,22 +48,22 @@ export function Footer() {
             <h3 className="font-display font-bold text-paper mb-4">Support</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/about" className="text-violet-light hover:text-lime transition">
+                <Link href="/about" className="text-cyan-300 hover:text-cyan-200 transition">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/support" className="text-violet-light hover:text-lime transition">
+                <Link href="/support" className="text-cyan-300 hover:text-cyan-200 transition">
                   Donate
                 </Link>
               </li>
               <li>
-                <Link href="/legal/terms" className="text-violet-light hover:text-lime transition">
+                <Link href="/legal/terms" className="text-cyan-300 hover:text-cyan-200 transition">
                   Terms
                 </Link>
               </li>
               <li>
-                <Link href="/legal/privacy" className="text-violet-light hover:text-lime transition">
+                <Link href="/legal/privacy" className="text-cyan-300 hover:text-cyan-200 transition">
                   Privacy
                 </Link>
               </li>
@@ -75,12 +75,12 @@ export function Footer() {
             <h3 className="font-display font-bold text-paper mb-4">Legal</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/legal/refund" className="text-violet-light hover:text-lime transition">
+                <Link href="/legal/refund" className="text-cyan-300 hover:text-cyan-200 transition">
                   Refund Policy
                 </Link>
               </li>
               <li>
-                <a href="mailto:support@learntovibe.code" className="text-violet-light hover:text-lime transition">
+                <a href="mailto:support@learntovibe.code" className="text-cyan-300 hover:text-cyan-200 transition">
                   Contact
                 </a>
               </li>
@@ -89,10 +89,10 @@ export function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-violet/30 pt-8">
-          <p className="text-xs text-violet-light text-center">
+        <div className="border-t border-cyan-500/20 pt-8">
+          <p className="text-xs text-cyan-300/70 text-center">
             © {new Date().getFullYear()} Learn To Vibe Code. All rights reserved. | Made with{" "}
-            <span className="text-lime">💚</span> for learners.
+            <span className="text-cyan-400">💙</span> for learners.
           </p>
         </div>
       </div>
