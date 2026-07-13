@@ -4,24 +4,12 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { updateUserProfile, deleteUserAccount } from '@/lib/actions/profile';
 import { SettingsForm } from '@/components/dashboard/SettingsForm';
-import { ThemeSelector } from '@/components/dashboard/ThemeSelector';
 import { Header } from '@/components/kids-landing/Header';
 import { Footer } from '@/components/Footer';
-import { DashboardBackground } from '@/components/dashboard/DashboardBackground';
-import { useTheme } from '@/lib/ThemeContext';
 import Link from 'next/link';
-
-const THEMES = [
-  { name: 'Violet', key: 'violet', color: 'from-violet-500 to-purple-600' },
-  { name: 'Sage', key: 'sage', color: 'from-green-500 to-teal-600' },
-  { name: 'Sunset', key: 'sunset', color: 'from-orange-500 to-red-600' },
-  { name: 'Dark', key: 'dark', color: 'from-slate-600 to-slate-800' },
-  { name: 'Ocean', key: 'ocean', color: 'from-cyan-500 to-blue-600' },
-];
 
 export default function SettingsPage() {
   const router = useRouter();
-  const { currentTheme, setTheme } = useTheme();
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -65,12 +53,12 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950">
-      <DashboardBackground />
+    <div className="min-h-screen flex flex-col bg-slate-950 bg-cover bg-center" style={{ backgroundImage: 'url(/settings-bg.png)' }}>
+      <div className="absolute inset-0 bg-black/40" />
       <Header />
 
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
-        <div className="mb-8">
+      <main className="flex-1 w-full flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-8 relative z-10">
+        <div className="mb-8 text-center">
           <Link href="/dashboard" className="text-cyan-400 hover:text-cyan-300 text-sm font-semibold mb-4 inline-block">
             ← Back to Dashboard
           </Link>
@@ -80,17 +68,11 @@ export default function SettingsPage() {
           <p className="text-gray-400 mt-2">Manage your profile and preferences</p>
         </div>
 
-        <div className="space-y-8 max-w-2xl">
+        <div className="space-y-8 max-w-2xl w-full">
           <SettingsForm
             userName={user.user_metadata?.name || ''}
             userEmail={user.email || ''}
             onSave={handleSave}
-          />
-
-          <ThemeSelector
-            currentTheme={currentTheme}
-            onThemeChange={(theme) => setTheme(theme as any)}
-            themes={THEMES}
           />
 
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 sm:p-8 w-full">
