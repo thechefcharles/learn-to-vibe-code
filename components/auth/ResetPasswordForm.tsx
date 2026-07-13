@@ -17,9 +17,15 @@ export function ResetPasswordForm() {
 
   useEffect(() => {
     const checkSession = async () => {
+      console.log("🔍 [ResetPasswordForm] Checking session...");
+      console.log("URL:", window.location.href);
+      console.log("Hash:", window.location.hash);
+      console.log("Search:", window.location.search);
+
       // Check if Supabase set a valid session in the hash
       const hash = window.location.hash;
       if (hash.includes("access_token") && hash.includes("type=recovery")) {
+        console.log("✓ Found access_token in hash");
         setHasValidSession(true);
         return;
       }
@@ -27,7 +33,10 @@ export function ResetPasswordForm() {
       // Check if there's an OAuth code (Supabase sends this sometimes)
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
+      console.log("Code param:", code);
+
       if (code) {
+        console.log("📍 Exchanging code for session...");
         // Exchange code for session by calling the auth callback
         try {
           const response = await fetch("/api/auth/callback", {
@@ -35,12 +44,18 @@ export function ResetPasswordForm() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ code }),
           });
+          console.log("Callback response status:", response.status);
           if (response.ok) {
+            console.log("✓ Session established from code");
             setHasValidSession(true);
           } else {
+            console.log("✗ Callback returned error");
+            const data = await response.json();
+            console.log("Error:", data.error);
             setError("Your reset link has expired. Please request a new one.");
           }
         } catch (err) {
+          console.error("Callback error:", err);
           setError("Failed to process reset link. Please try again.");
         }
         return;
@@ -48,8 +63,11 @@ export function ResetPasswordForm() {
 
       // Check error in hash or params
       if (hash.includes("error") || params.get("error")) {
+        console.log("⚠️ Error found in URL");
         setError("Your reset link has expired. Please request a new one.");
       }
+
+      console.log("No session found in URL");
     };
 
     checkSession();
@@ -83,11 +101,14 @@ export function ResetPasswordForm() {
       if (!response.ok) {
         setError(data.error || "Failed to reset password");
       } else {
+        console.log("✓ Password reset successful!");
         setSuccess(true);
         setPassword("");
         setConfirmPassword("");
         // Redirect to sign-in after 2 seconds
+        console.log("📍 Redirecting to /auth/sign-in in 2 seconds...");
         setTimeout(() => {
+          console.log("🔗 Executing redirect to /auth/sign-in");
           window.location.href = "/auth/sign-in";
         }, 2000);
       }
