@@ -1,0 +1,198 @@
+- generic [ref=f4e1]:
+  - generic [ref=f4e2]:
+    - generic [ref=f4e4]:
+      - banner [ref=f4e5]:
+        - generic [ref=f4e7]:
+          - generic [ref=f4e8]:
+            - link [ref=f4e9] [cursor=pointer]:
+              - /url: /dashboard
+              - img "Vibe Code cosmic mark" [ref=f4e11]
+            - generic [ref=f4e12]:
+              - generic [ref=f4e13]: →
+              - link "Learning" [ref=f4e14] [cursor=pointer]:
+                - /url: /dashboard
+              - generic [ref=f4e15]: →
+              - generic [ref=f4e16]: Module 00
+          - generic [ref=f4e17]:
+            - 'heading "Module 0: Setup & Accounts" [level=1] [ref=f4e18]'
+            - generic [ref=f4e19]: 💻 Advanced
+          - generic [ref=f4e21]:
+            - button "Violet" [ref=f4e22] [cursor=pointer]
+            - button "Sage" [ref=f4e23] [cursor=pointer]
+            - button "Sunset" [ref=f4e24] [cursor=pointer]
+      - generic [ref=f4e25]:
+        - button "Lesson" [ref=f4e26]
+        - button "Modules" [ref=f4e30]
+    - generic [ref=f4e34]:
+      - generic [ref=f4e37]:
+        - generic [ref=f4e38]: "Module 0: Setup & Accounts"
+        - img "76 of 120 minutes remaining in this module" [ref=f4e206]:
+          - generic [ref=f4e44]:
+            - generic [ref=f4e45]: "76"
+            - generic [ref=f4e46]: min left
+      - generic [ref=f4e47]:
+        - generic [ref=f4e49]:
+          - button "Module 00" [ref=f4e51]
+          - heading "Lessons" [level=3] [ref=f4e55]
+          - generic [ref=f4e57]:
+            - generic [ref=f4e58]: 33%
+            - generic [ref=f4e59]: 4/12
+          - generic [ref=f4e62]:
+            - button "1 Walkthrough Overview Now" [ref=f4e64]:
+              - generic [ref=f4e65]:
+                - generic [ref=f4e66]:
+                  - generic [ref=f4e67]: "1"
+                  - generic [ref=f4e68]: Walkthrough Overview
+                - generic [ref=f4e69]: Now
+            - button "2 The Stack Map" [ref=f4e72]:
+              - generic [ref=f4e74]:
+                - generic [ref=f4e75]: "2"
+                - generic [ref=f4e76]: The Stack Map
+            - button "3 What is a Terminal?" [ref=f4e78]:
+              - generic [ref=f4e80]:
+                - generic [ref=f4e81]: "3"
+                - generic [ref=f4e82]: What is a Terminal?
+            - button "4 Install Node.js" [active] [ref=f4e84]:
+              - generic [ref=f4e86]:
+                - generic [ref=f4e87]: "4"
+                - generic [ref=f4e88]: Install Node.js
+            - button "5 Install Cursor" [ref=f4e90]:
+              - generic [ref=f4e92]:
+                - generic [ref=f4e93]: "5"
+                - generic [ref=f4e94]: Install Cursor
+            - button "6 Install Claude Code" [ref=f4e96]:
+              - generic [ref=f4e98]:
+                - generic [ref=f4e99]: "6"
+                - generic [ref=f4e100]: Install Claude Code
+            - button "7 Sign Up for GitHub" [ref=f4e102]:
+              - generic [ref=f4e104]:
+                - generic [ref=f4e105]: "7"
+                - generic [ref=f4e106]: Sign Up for GitHub
+            - button "8 Sign Up for Supabase" [ref=f4e108]:
+              - generic [ref=f4e110]:
+                - generic [ref=f4e111]: "8"
+                - generic [ref=f4e112]: Sign Up for Supabase
+            - button "9 Sign Up for Vercel" [ref=f4e114]:
+              - generic [ref=f4e116]:
+                - generic [ref=f4e117]: "9"
+                - generic [ref=f4e118]: Sign Up for Vercel
+            - button "10 Free Tiers & Costs" [ref=f4e120]:
+              - generic [ref=f4e122]:
+                - generic [ref=f4e123]: "10"
+                - generic [ref=f4e124]: Free Tiers & Costs
+            - button "11 Final Verification" [ref=f4e126]:
+              - generic [ref=f4e128]:
+                - generic [ref=f4e129]: "11"
+                - generic [ref=f4e130]: Final Verification
+            - 'button "12 Checkpoint: Module Complete" [ref=f4e132]':
+              - generic [ref=f4e134]:
+                - generic [ref=f4e135]: "12"
+                - generic [ref=f4e136]: "Checkpoint: Module Complete"
+          - generic [ref=f4e137]: 🚀 Getting started
+        - generic:
+          - generic:
+            - generic: 👀
+            - generic: Preview Mode — Complete earlier lessons to unlock
+          - generic:
+            - 'heading "Lesson 4: Install Node.js" [level=2]'
+            - generic:
+              - generic:
+                - generic: ⏱️
+                - generic:
+                  - paragraph: Estimated Time
+                  - paragraph: 10 minutes
+              - generic:
+                - generic: 📊
+                - generic:
+                  - paragraph: Difficulty
+                  - paragraph: easy
+              - generic:
+                - generic: ⭐
+                - generic:
+                  - paragraph: XP Reward
+                  - paragraph: +100 XP
+            - generic:
+              - generic:
+                - paragraph: Node.js is the runtime that runs JavaScript on your computer (not just in a browser).
+                - heading "Steps" [level=3]
+                - paragraph:
+                  - strong: "Step 1:"
+                  - text: Go to
+                  - link "https://nodejs.org":
+                    - /url: https://nodejs.org
+                - paragraph:
+                  - strong: "Step 2:"
+                  - text: Download the
+                  - strong: LTS version
+                  - text: (Long-Term Support). Click the big green button.
+                - paragraph:
+                  - strong: "Step 3:"
+                  - text: Run the installer and follow the prompts. Accept defaults.
+                - paragraph:
+                  - strong: "Step 4:"
+                  - text: "Open a terminal and verify it installed:"
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - code: node --version npm --version
+                - button "Copy"
+            - generic:
+              - generic:
+                - paragraph: ✨ KEY INSIGHT
+                - paragraph: You should see two version numbers (e.g., v22.12.0 and 10.5.0). If "command not found", close the terminal completely and reopen it.
+            - generic:
+              - button "💡 Hints (3) +":
+                - generic: 💡 Hints (3)
+                - generic: +
+            - generic:
+              - paragraph: 📚 Related Resources
+              - generic:
+                - link "📖Node.js Official Documentation":
+                  - /url: https://nodejs.org/en/docs/
+                - link "🎥Node.js Installation Guide (Video)":
+                  - /url: https://www.youtube.com/watch?v=DYR0qP5H2Ac
+            - generic:
+              - paragraph: 🎯 Your Challenge
+              - paragraph: Verify Node.js is installed on your computer
+              - generic:
+                - paragraph: "Action:"
+                - paragraph: Open a terminal and run the commands above
+              - paragraph: "✓ Success: You see two version numbers (e.g., v22.12.0 and 10.5.0)"
+            - generic:
+              - paragraph: 🎯 Quick Check
+              - paragraph: What does Node.js do?
+              - generic:
+                - button "Runs JavaScript on your computer" [disabled]
+                - button "Manages your database" [disabled]
+                - button "Deploys your app to the internet" [disabled]
+                - button "Edits your code" [disabled]
+            - generic:
+              - paragraph: Related Resources
+              - generic:
+                - link "📚 Node.js Official Documentation Documentation ↗":
+                  - /url: https://nodejs.org/en/docs/
+                  - generic: 📚
+                  - generic:
+                    - paragraph: Node.js Official Documentation
+                    - paragraph: Documentation
+                  - generic: ↗
+                - link "🎥 Node.js Installation Guide (Video) Video ↗":
+                  - /url: https://www.youtube.com/watch?v=DYR0qP5H2Ac
+                  - generic: 🎥
+                  - generic:
+                    - paragraph: Node.js Installation Guide (Video)
+                    - paragraph: Video
+                  - generic: ↗
+              - generic:
+                - paragraph: Next Topic
+                - paragraph: Install Cursor
+            - generic:
+              - button "← Previous"
+              - generic:
+                - generic: 4 of 12
+                - generic: K/J to navigate
+              - button "Preview Mode" [disabled]
+  - button "Open Next.js Dev Tools" [ref=f4e201] [cursor=pointer]
+  - alert [ref=f4e205]

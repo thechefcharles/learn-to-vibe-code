@@ -193,10 +193,10 @@ export function ModuleSidebar({
         >
           <div className="flex justify-between items-center mb-2">
             <span className={`text-xs font-semibold ${isKids ? 'text-purple-900' : 'text-white'}`}>
-              {Math.round(((currentStepIndex + 1) / steps.steps.length) * 100)}%
+              {Math.round((((naturallyReachedStep ?? 0) + 1) / steps.steps.length) * 100)}%
             </span>
             <span className={`text-xs ${isKids ? 'text-purple-700' : 'text-slate-400'}`}>
-              {currentStepIndex + 1}/{steps.steps.length}
+              {(naturallyReachedStep ?? 0) + 1}/{steps.steps.length}
             </span>
           </div>
           <div
@@ -211,7 +211,7 @@ export function ModuleSidebar({
                   : 'bg-gradient-to-r from-cyan-500 to-purple-600'
               }`}
               initial={{ width: 0 }}
-              animate={{ width: `${((currentStepIndex + 1) / steps.steps.length) * 100}%` }}
+              animate={{ width: `${(((naturallyReachedStep ?? 0) + 1) / steps.steps.length) * 100}%` }}
               transition={{ duration: 0.3 }}
             />
           </div>

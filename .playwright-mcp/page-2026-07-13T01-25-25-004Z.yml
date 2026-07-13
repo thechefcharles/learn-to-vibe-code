@@ -1,0 +1,182 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]:
+    - generic [ref=f3e4]:
+      - banner [ref=f3e5]:
+        - generic [ref=f3e7]:
+          - generic [ref=f3e8]:
+            - link [ref=f3e9] [cursor=pointer]:
+              - /url: /dashboard
+              - img "Vibe Code cosmic mark" [ref=f3e11]
+            - generic [ref=f3e12]:
+              - generic [ref=f3e13]: →
+              - link "Learning" [ref=f3e14] [cursor=pointer]:
+                - /url: /dashboard
+              - generic [ref=f3e15]: →
+              - generic [ref=f3e16]: Module 00
+          - generic [ref=f3e17]:
+            - 'heading "Module 0: Setup & Accounts" [level=1] [ref=f3e18]'
+            - generic [ref=f3e19]: 💻 Advanced
+          - generic [ref=f3e21]:
+            - button "Violet" [ref=f3e22] [cursor=pointer]
+            - button "Sage" [ref=f3e23] [cursor=pointer]
+            - button "Sunset" [ref=f3e24] [cursor=pointer]
+      - generic [ref=f3e25]:
+        - button "Lesson" [ref=f3e26]
+        - button "Modules" [ref=f3e30]
+    - generic [ref=f3e34]:
+      - generic [ref=f3e36]:
+        - generic [ref=f3e37]: "Module 0: Setup & Accounts"
+        - img "20 of 120 minutes remaining in this module" [ref=f3e204]:
+          - generic [ref=f3e43]:
+            - generic [ref=f3e44]: "20"
+            - generic [ref=f3e45]: min left
+      - generic [ref=f3e46]:
+        - generic [ref=f3e48]:
+          - button "Module 00" [ref=f3e50]
+          - heading "Lessons" [level=3] [ref=f3e54]
+          - generic [ref=f3e56]:
+            - generic [ref=f3e57]: 83%
+            - generic [ref=f3e58]: 10/12
+          - generic [ref=f3e60]:
+            - button "1 Walkthrough Overview Now" [ref=f3e62]:
+              - generic [ref=f3e63]:
+                - generic [ref=f3e64]:
+                  - generic [ref=f3e65]: "1"
+                  - generic [ref=f3e66]: Walkthrough Overview
+                - generic [ref=f3e67]: Now
+            - button "2 The Stack Map" [ref=f3e70]:
+              - generic [ref=f3e72]:
+                - generic [ref=f3e73]: "2"
+                - generic [ref=f3e74]: The Stack Map
+            - button "3 What is a Terminal?" [ref=f3e76]:
+              - generic [ref=f3e78]:
+                - generic [ref=f3e79]: "3"
+                - generic [ref=f3e80]: What is a Terminal?
+            - button "4 Install Node.js" [ref=f3e82]:
+              - generic [ref=f3e84]:
+                - generic [ref=f3e85]: "4"
+                - generic [ref=f3e86]: Install Node.js
+            - button "5 Install Cursor" [ref=f3e88]:
+              - generic [ref=f3e90]:
+                - generic [ref=f3e91]: "5"
+                - generic [ref=f3e92]: Install Cursor
+            - button "6 Install Claude Code" [ref=f3e94]:
+              - generic [ref=f3e96]:
+                - generic [ref=f3e97]: "6"
+                - generic [ref=f3e98]: Install Claude Code
+            - button "7 Sign Up for GitHub" [ref=f3e100]:
+              - generic [ref=f3e102]:
+                - generic [ref=f3e103]: "7"
+                - generic [ref=f3e104]: Sign Up for GitHub
+            - button "8 Sign Up for Supabase" [ref=f3e106]:
+              - generic [ref=f3e108]:
+                - generic [ref=f3e109]: "8"
+                - generic [ref=f3e110]: Sign Up for Supabase
+            - button "9 Sign Up for Vercel" [ref=f3e112]:
+              - generic [ref=f3e114]:
+                - generic [ref=f3e115]: "9"
+                - generic [ref=f3e116]: Sign Up for Vercel
+            - generic [ref=f3e117]:
+              - button "10 Free Tiers & Costs" [ref=f3e118]:
+                - generic [ref=f3e120]:
+                  - generic [ref=f3e121]: "10"
+                  - generic [ref=f3e122]: Free Tiers & Costs
+              - generic [ref=f3e206]:
+                - button "○ What's Free" [ref=f3e207]:
+                  - generic [ref=f3e208]:
+                    - generic [ref=f3e209]: ○
+                    - generic [ref=f3e210]: What's Free
+                - button "○ You Can Complete This Course Free" [ref=f3e211]:
+                  - generic [ref=f3e212]:
+                    - generic [ref=f3e213]: ○
+                    - generic [ref=f3e214]: You Can Complete This Course Free
+                - button "○ Avoid Surprise Bills" [ref=f3e215]:
+                  - generic [ref=f3e216]:
+                    - generic [ref=f3e217]: ○
+                    - generic [ref=f3e218]: Avoid Surprise Bills
+            - button "11 Final Verification" [ref=f3e124]:
+              - generic [ref=f3e126]:
+                - generic [ref=f3e127]: "11"
+                - generic [ref=f3e128]: Final Verification
+            - 'button "12 Checkpoint: Module Complete" [ref=f3e130]':
+              - generic [ref=f3e132]:
+                - generic [ref=f3e133]: "12"
+                - generic [ref=f3e134]: "Checkpoint: Module Complete"
+          - generic [ref=f3e135]: 🚀 Getting started
+        - generic:
+          - generic:
+            - generic: 👀
+            - generic: Preview Mode — Complete earlier lessons to unlock
+          - generic:
+            - 'heading "Lesson 10: Free Tiers & Costs" [level=2]'
+            - generic:
+              - generic:
+                - generic: ⏱️
+                - generic:
+                  - paragraph: Estimated Time
+                  - paragraph: 10 minutes
+              - generic:
+                - generic: 📊
+                - generic:
+                  - paragraph: Difficulty
+                  - paragraph: easy
+              - generic:
+                - generic: ⭐
+                - generic:
+                  - paragraph: XP Reward
+                  - paragraph: +50 XP
+            - generic:
+              - generic:
+                - generic:
+                  - heading "What's Free" [level=2]
+                - generic:
+                  - generic:
+                    - paragraph: Set expectations now so you're not surprised by a bill later.
+                    - generic:
+                      - table:
+                        - rowgroup:
+                          - row "Tool Free Tier Cost If You Upgrade":
+                            - columnheader "Tool"
+                            - columnheader "Free Tier"
+                            - columnheader "Cost If You Upgrade"
+                        - rowgroup:
+                          - row "Node.js Always free N/A":
+                            - cell "Node.js"
+                            - cell "Always free"
+                            - cell "N/A"
+                          - row "GitHub Unlimited repos N/A (always free)":
+                            - cell "GitHub"
+                            - cell "Unlimited repos"
+                            - cell "N/A (always free)"
+                          - row "Supabase 500MB database $50+/month":
+                            - cell "Supabase"
+                            - cell "500MB database"
+                            - cell "$50+/month"
+                          - row "Vercel Unlimited deployments Only bandwidth":
+                            - cell "Vercel"
+                            - cell "Unlimited deployments"
+                            - cell "Only bandwidth"
+                          - row "Cursor 2 slow requests/day $20/month":
+                            - cell "Cursor"
+                            - cell "2 slow requests/day"
+                            - cell "$20/month"
+                          - row "Claude Code Free trial Pay by token":
+                            - cell "Claude Code"
+                            - cell "Free trial"
+                            - cell "Pay by token"
+                - generic:
+                  - generic:
+                    - paragraph: ✨ KEY INSIGHT
+                    - paragraph: Every tool has a free tier that covers this course.
+                - generic: 1 of 3 sections viewed
+                - generic:
+                  - button "← Back" [disabled]
+                  - button "Next →"
+            - generic:
+              - button "← Previous"
+              - generic:
+                - generic: 10 of 12
+                - generic: K/J to navigate
+              - button "Preview Mode" [disabled]
+  - button "Open Next.js Dev Tools" [ref=f3e199] [cursor=pointer]
+  - alert [ref=f3e219]
