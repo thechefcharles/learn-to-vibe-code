@@ -8,34 +8,31 @@ import { MouseTrail } from "@/components/kids-landing/MouseTrail";
 import { motion } from "framer-motion";
 
 export function ResetPasswordForm() {
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [hasValidSession, setHasValidSession] = useState(false);
+  const [code, setCode] = useState<string | null>(null);
 
   useEffect(() => {
     const checkSession = async () => {
       console.log("🔍 [ResetPasswordForm] Checking session...");
       console.log("URL:", window.location.href);
 
-      // If there's a code or error param, they clicked the reset link from email
-      // We'll let them reset their password just by having access to the email
+      // Extract the recovery code from the URL
       const params = new URLSearchParams(window.location.search);
-      const code = params.get("code");
-      const error = params.get("error");
+      const recoveryCode = params.get("code");
 
-      if (code || error) {
-        // They clicked a valid reset link from their email
-        // Having clicked it proves they own the email, so let them reset
-        console.log("✓ User has access to their email (clicked reset link)");
+      if (recoveryCode) {
+        console.log("✓ Recovery code found in URL");
+        setCode(recoveryCode);
         setHasValidSession(true);
         return;
       }
 
-      console.log("No reset link detected");
+      console.log("No recovery code detected");
     };
 
     checkSession();
@@ -45,8 +42,8 @@ export function ResetPasswordForm() {
     e.preventDefault();
     setError("");
 
-    if (!email) {
-      setError("Email is required");
+    if (!code) {
+      setError("Invalid reset link");
       return;
     }
 
@@ -66,7 +63,7 @@ export function ResetPasswordForm() {
       const response = await fetch("/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ code, password }),
       });
 
       const data = await response.json();
@@ -76,7 +73,6 @@ export function ResetPasswordForm() {
       } else {
         console.log("✓ Password reset successful!");
         setSuccess(true);
-        setEmail("");
         setPassword("");
         setConfirmPassword("");
         // Redirect to sign-in after 2 seconds
@@ -159,21 +155,6 @@ export function ResetPasswordForm() {
           {/* Form */}
           {!success && hasValidSession && (
             <form onSubmit={handleResetPassword} className="space-y-4">
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wide text-gray-300 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none transition-all focus:bg-white/10 focus:border-cyan-400/70"
-                  placeholder="your@email.com"
-                  required
-                />
-              </div>
-
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wide text-gray-300 mb-2">
                   New Password

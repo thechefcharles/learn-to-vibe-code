@@ -3,68 +3,65 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json();
+    const { code, password } = await request.json();
 
-    if (!email || !password) {
+    if (!code || !password) {
       return NextResponse.json(
-        { error: "Email and password are required" },
+        { error: "Invalid request" },
         { status: 400 }
       );
     }
 
     if (password.length < 8) {
       return NextResponse.json(
-        { error: "Password must be at least 8 characters" },
+        { error: "Invalid request" },
         { status: 400 }
       );
     }
 
-    // Use admin API to update password for the user
     const supabase = await createClient();
 
-    // First, get the user by email to verify they exist
-    const { data: { users }, error: getUserError } = await supabase.auth.admin.listUsers();
+    // CRITICAL: Verify the recovery code/OTP first
+    // This proves the user has access to their email
+    console.log("📍 Verifying recovery code...");
+    const { data, error: verifyError } = await supabase.auth.verifyOtp({
+      token_hash: code,
+      type: "recovery",
+    });
 
-    if (getUserError || !users) {
+    if (verifyError || !data?.user) {
+      console.error("❌ Code verification failed:", verifyError?.message);
+      // Return generic error so we don't reveal email validity
       return NextResponse.json(
-        { error: "Failed to process password reset" },
+        { error: "Invalid request" },
         { status: 400 }
       );
     }
 
-    const user = users.find((u) => u.email?.toLowerCase() === email.toLowerCase());
-
-    if (!user) {
-      // Don't reveal if email exists (security best practice)
-      // But for password reset, we can be more helpful
-      return NextResponse.json(
-        { error: "Email not found in our system" },
-        { status: 400 }
-      );
-    }
-
-    // Update the user's password using admin API
-    const { error: updateError } = await supabase.auth.admin.updateUserById(user.id, {
+    // Now that we've verified the recovery code, update the password
+    // for the authenticated user
+    console.log("📍 Updating password for verified user...");
+    const { error: updateError } = await supabase.auth.updateUser({
       password: password,
     });
 
     if (updateError) {
-      console.error("Password update error:", updateError);
+      console.error("❌ Password update error:", updateError);
       return NextResponse.json(
-        { error: "Failed to update password" },
+        { error: "Invalid request" },
         { status: 400 }
       );
     }
 
-    console.log("✓ Password reset successful for:", email);
+    console.log("✓ Password reset successful");
     return NextResponse.json({
       success: true,
       message: "Password reset successfully",
     });
   } catch (err) {
-    console.error("Reset password error:", err);
+    console.error("❌ Reset password error:", err);
     return NextResponse.json(
-      { error: err instanceof Error ? err.message : "An error occurred" },
+      { error: "Invalid request" },
       { status: 500 }
     );
   }
