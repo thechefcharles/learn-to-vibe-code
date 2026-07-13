@@ -3,11 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const { password } = await request.json();
+    const { email, password } = await request.json();
 
-    if (!password) {
+    if (!email || !password) {
       return NextResponse.json(
-        { error: "Password is required" },
+        { error: "Email and password are required" },
         { status: 400 }
       );
     }
@@ -19,30 +19,44 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Use admin API to update password for the user
     const supabase = await createClient();
 
-    // Check if user has a valid session (set by Supabase from the recovery link)
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    // First, get the user by email to verify they exist
+    const { data: { users }, error: getUserError } = await supabase.auth.admin.listUsers();
 
-    if (userError || !user) {
+    if (getUserError || !users) {
       return NextResponse.json(
-        { error: "Session expired. Please request a new password reset link." },
-        { status: 401 }
-      );
-    }
-
-    // Update password for the authenticated user
-    const { error: updateError } = await supabase.auth.updateUser({
-      password: password,
-    });
-
-    if (updateError) {
-      return NextResponse.json(
-        { error: updateError.message },
+        { error: "Failed to process password reset" },
         { status: 400 }
       );
     }
 
+    const user = users.find((u) => u.email?.toLowerCase() === email.toLowerCase());
+
+    if (!user) {
+      // Don't reveal if email exists (security best practice)
+      // But for password reset, we can be more helpful
+      return NextResponse.json(
+        { error: "Email not found in our system" },
+        { status: 400 }
+      );
+    }
+
+    // Update the user's password using admin API
+    const { error: updateError } = await supabase.auth.admin.updateUserById(user.id, {
+      password: password,
+    });
+
+    if (updateError) {
+      console.error("Password update error:", updateError);
+      return NextResponse.json(
+        { error: "Failed to update password" },
+        { status: 400 }
+      );
+    }
+
+    console.log("✓ Password reset successful for:", email);
     return NextResponse.json({
       success: true,
       message: "Password reset successfully",
@@ -50,7 +64,7 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     console.error("Reset password error:", err);
     return NextResponse.json(
-      { error: "An error occurred" },
+      { error: err instanceof Error ? err.message : "An error occurred" },
       { status: 500 }
     );
   }

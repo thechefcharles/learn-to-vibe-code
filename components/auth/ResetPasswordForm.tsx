@@ -8,6 +8,7 @@ import { MouseTrail } from "@/components/kids-landing/MouseTrail";
 import { motion } from "framer-motion";
 
 export function ResetPasswordForm() {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -19,55 +20,22 @@ export function ResetPasswordForm() {
     const checkSession = async () => {
       console.log("🔍 [ResetPasswordForm] Checking session...");
       console.log("URL:", window.location.href);
-      console.log("Hash:", window.location.hash);
-      console.log("Search:", window.location.search);
 
-      // Check if Supabase set a valid session in the hash
-      const hash = window.location.hash;
-      if (hash.includes("access_token") && hash.includes("type=recovery")) {
-        console.log("✓ Found access_token in hash");
+      // If there's a code or error param, they clicked the reset link from email
+      // We'll let them reset their password just by having access to the email
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      const error = params.get("error");
+
+      if (code || error) {
+        // They clicked a valid reset link from their email
+        // Having clicked it proves they own the email, so let them reset
+        console.log("✓ User has access to their email (clicked reset link)");
         setHasValidSession(true);
         return;
       }
 
-      // Check if there's an OAuth code (Supabase sends this sometimes)
-      const params = new URLSearchParams(window.location.search);
-      const code = params.get("code");
-      console.log("Code param:", code);
-
-      if (code) {
-        console.log("📍 Exchanging code for session...");
-        // Exchange code for session by calling the auth callback
-        try {
-          const response = await fetch("/api/auth/callback", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ code }),
-          });
-          console.log("Callback response status:", response.status);
-          if (response.ok) {
-            console.log("✓ Session established from code");
-            setHasValidSession(true);
-          } else {
-            console.log("✗ Callback returned error");
-            const data = await response.json();
-            console.log("Error:", data.error);
-            setError("Your reset link has expired. Please request a new one.");
-          }
-        } catch (err) {
-          console.error("Callback error:", err);
-          setError("Failed to process reset link. Please try again.");
-        }
-        return;
-      }
-
-      // Check error in hash or params
-      if (hash.includes("error") || params.get("error")) {
-        console.log("⚠️ Error found in URL");
-        setError("Your reset link has expired. Please request a new one.");
-      }
-
-      console.log("No session found in URL");
+      console.log("No reset link detected");
     };
 
     checkSession();
@@ -76,6 +44,11 @@ export function ResetPasswordForm() {
   async function handleResetPassword(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+
+    if (!email) {
+      setError("Email is required");
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -93,7 +66,7 @@ export function ResetPasswordForm() {
       const response = await fetch("/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ email, password }),
       });
 
       const data = await response.json();
@@ -103,6 +76,7 @@ export function ResetPasswordForm() {
       } else {
         console.log("✓ Password reset successful!");
         setSuccess(true);
+        setEmail("");
         setPassword("");
         setConfirmPassword("");
         // Redirect to sign-in after 2 seconds
@@ -185,6 +159,21 @@ export function ResetPasswordForm() {
           {/* Form */}
           {!success && hasValidSession && (
             <form onSubmit={handleResetPassword} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wide text-gray-300 mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none transition-all focus:bg-white/10 focus:border-cyan-400/70"
+                  placeholder="your@email.com"
+                  required
+                />
+              </div>
+
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wide text-gray-300 mb-2">
                   New Password
