@@ -222,6 +222,14 @@ export function StepLessonViewer({
         backgroundAttachment: 'fixed',
       }}
     >
+      {/* Blurred background overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backdropFilter: 'blur(8px)',
+          backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        }}
+      />
       <VideoBackground />
       <MouseTrail />
 
@@ -251,7 +259,7 @@ export function StepLessonViewer({
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-4 p-3 rounded-lg bg-amber-500/20 border border-amber-500/50 flex items-center gap-2 text-amber-200"
+            className="mb-4 p-3 rounded-lg bg-amber-500/40 border border-amber-500/70 flex items-center gap-2 text-amber-200"
           >
             <span className="text-lg">👀</span>
             <span className="text-sm font-medium">Preview Mode — Complete earlier lessons to unlock</span>
@@ -266,8 +274,8 @@ export function StepLessonViewer({
           transition={{ duration: 0.3 }}
           className={`rounded-2xl border backdrop-blur-md p-6 sm:p-8 relative ${
             isKids
-              ? "bg-white/10 border-white/20"
-              : "bg-white/5 border-white/10"
+              ? "bg-white/20 border-white/30"
+              : "bg-white/15 border-white/20"
           }`}
           style={{
             borderLeft: "3px solid #a78bfa",
@@ -365,8 +373,8 @@ export function StepLessonViewer({
               transition={{ type: "spring", stiffness: 300 }}
               className={`mb-6 p-4 rounded-lg text-center font-bold text-lg ${
                 isKids
-                  ? "bg-yellow-100 text-yellow-700 border-2 border-yellow-400"
-                  : "bg-yellow-500/20 text-yellow-300 border border-yellow-500"
+                  ? "bg-yellow-200 text-yellow-700 border-2 border-yellow-400"
+                  : "bg-yellow-500/40 text-yellow-200 border border-yellow-500"
               }`}
             >
               {milestoneText}
@@ -380,8 +388,8 @@ export function StepLessonViewer({
             transition={{ duration: 0.3 }}
             className={`rounded-lg p-3 mb-8 border flex flex-col sm:flex-row gap-4 sm:gap-6 ${
               isKids
-                ? "bg-blue-50 border-blue-200"
-                : "bg-blue-500/10 border-blue-500/30"
+                ? "bg-blue-100 border-blue-300"
+                : "bg-blue-500/25 border-blue-500/50"
             }`}
           >
             <div className="flex items-center gap-2">
@@ -486,8 +494,8 @@ export function StepLessonViewer({
                 <div
                   className={`rounded-lg p-4 mb-8 border ${
                     isKids
-                      ? "bg-blue-50 border-blue-300"
-                      : "bg-blue-500/10 border-blue-500/30"
+                      ? "bg-blue-100 border-blue-300"
+                      : "bg-blue-500/25 border-blue-500/50"
                   }`}
                 >
                   <button
@@ -631,8 +639,8 @@ export function StepLessonViewer({
                   animate={{ opacity: 1, y: 0 }}
                   className={`rounded-lg p-6 mb-8 border-2 ${
                     isKids
-                      ? "bg-purple-50 border-purple-300"
-                      : "bg-purple-500/10 border-purple-500/30"
+                      ? "bg-purple-100 border-purple-400"
+                      : "bg-purple-500/25 border-purple-500/50"
                   }`}
                 >
                   <p
