@@ -23,6 +23,7 @@ export const dynamic = "force-dynamic";
 
 interface LessonPageProps {
   params: Promise<{ moduleId: string }>;
+  searchParams: Promise<{ preview?: string }>;
 }
 
 export async function generateMetadata(props: LessonPageProps) {
@@ -37,7 +38,9 @@ export async function generateMetadata(props: LessonPageProps) {
 
 export default async function LessonPage(props: LessonPageProps) {
   const params = await props.params;
+  const { searchParams } = props;
   const moduleId = parseInt(params.moduleId);
+  const isPreviewMode = (await searchParams).preview === 'true';
 
   if (isNaN(moduleId) || moduleId < 0 || moduleId > 15) {
     notFound();
@@ -45,7 +48,7 @@ export default async function LessonPage(props: LessonPageProps) {
 
   // Check if module is unlocked
   const unlocked = await isModuleUnlocked(moduleId);
-  if (!unlocked) {
+  if (!unlocked && !isPreviewMode) {
     redirect("/course");
   }
 
@@ -141,7 +144,7 @@ export default async function LessonPage(props: LessonPageProps) {
               completedModules={completedModules}
               lessonsByModule={lessonsByModule}
             >
-              <StepLessonViewer steps={steps} moduleId={moduleId} user={user} actualCurrentModule={actualCurrentModule} />
+              <StepLessonViewer steps={steps} moduleId={moduleId} user={user} actualCurrentModule={actualCurrentModule} isModulePreview={isPreviewMode} />
             </LessonViewToggle>
           </div>
         </CoursePageInteractive>
@@ -159,7 +162,7 @@ export default async function LessonPage(props: LessonPageProps) {
 
         {/* Main Layout */}
         <div className={`max-w-7xl mx-auto px-4 ${!isKids ? "pt-4 sm:pt-6 pb-12" : "py-12"}`}>
-        <div className={`${!unlockedModules.has(moduleId) ? "opacity-60 pointer-events-none select-none" : ""}`}>
+        <div className={`${!unlockedModules.has(moduleId) && !isPreviewMode ? "opacity-60 pointer-events-none select-none" : ""}`}>
             {/* Preview Badge for Locked Content */}
             {!unlockedModules.has(moduleId) && !isKids && (
               <div className="mb-6 p-4 bg-amber-500/20 border border-amber-500/50 rounded-lg flex items-center gap-3">

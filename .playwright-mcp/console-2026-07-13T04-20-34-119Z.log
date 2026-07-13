@@ -1,0 +1,356 @@
+[     255ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     266ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     288ms] [LOG] %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     289ms] [LOG] %c[Vercel Web Analytics]%c [view] http://localhost:3008/course color: rgb(120, 120, 120) color: inherit {o: http://localhost:3008/course, sv: 0.1.3, sdkn: @vercel/analytics/react, sdkv: 2.0.1, ts: 1783916434407} /_vercel/insights/view @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     395ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     461ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     471ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     472ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3008/auth/sign-in:0
+[     551ms] [LOG] %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     551ms] [LOG] %c[Vercel Web Analytics]%c [view] http://localhost:3008/auth/sign-in color: rgb(120, 120, 120) color: inherit {o: http://localhost:3008/auth/sign-in, sv: 0.1.3, sdkn: @vercel/analytics/react, sdkv: 2.0.1, ts: 1783916434670} /_vercel/insights/view @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     883ms] [WARNING] Image with src "/learn_to_vibe_code_logo_cosmic_wordmark_transparent.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  250338ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  250344ms] [LOG] [Fast Refresh] done in 108ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  258047ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  258100ms] [LOG] [Fast Refresh] done in 142ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  262228ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  262275ms] [LOG] [Fast Refresh] done in 49ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  276440ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  276509ms] [LOG] [Fast Refresh] done in 55ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  281656ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  281708ms] [LOG] [Fast Refresh] done in 41ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  291944ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  292100ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[  292214ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3008/auth/sign-in?_rsc=BQpKDgmy3w7R3N4n:0
+[  292284ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3008/auth/sign-in:0
+[  292496ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_react-dom_0kla17-._.js:15305
+[  292537ms] Error: ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx
+
+
+    at <unknown> (Error: ./components/StepLessonViewer.tsx:98:9)
+    at Object.getCompilationErrors (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/dev/next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/dev/next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/base-server.js:1753:26)
+[  292546ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  292566ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  292598ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  292700ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  292767ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  293085ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  293119ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  296077ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  296114ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  299294ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  299332ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  303714ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  303768ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3008/auth/sign-in:0
+[  303850ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_react-dom_0kla17-._.js:15305
+[  303858ms] Error: ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx
+
+
+    at <unknown> (Error: ./components/StepLessonViewer.tsx:98:9)
+    at Object.getCompilationErrors (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/dev/hot-reloader-turbopack.js:1186:59)
+    at DevBundlerService.getCompilationError (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/lib/dev-bundler-service.js:44:55)
+    at DevServer.getCompilationError (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/dev/next-dev-server.js:720:42)
+    at DevServer.findPageComponents (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/dev/next-dev-server.js:690:43)
+    at async DevServer.renderErrorToResponseImpl (file:///Users/admin/Charlie Foreman/My Projects/learn-to-vibe-code/node_modules/next/dist/server/base-server.js:1753:26)
+[  303883ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  303914ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  303933ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  304020ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  304048ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  304083ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  304126ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  304189ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  304672ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  304710ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  309794ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  309860ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  310518ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  310553ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  314034ms] [ERROR] ./components/StepLessonViewer.tsx:98:9
+the name `isPreviewMode` is defined multiple times
+   96 |   const isFirstStep = currentStepIndex === 0;
+   97 |   const isLastStep = currentStepIndex === steps.steps.length - 1;
+>  98 |   const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedS...
+      |         ^^^^^^^^^^^^^
+   99 |
+  100 |   // Load saved progress from localStorage
+  101 |   useEffect(() => {
+
+Ecmascript file had an error
+
+Import trace:
+  Server Component:
+    ./components/StepLessonViewer.tsx
+    ./app/course/[moduleId]/page.tsx @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1945
+[  314070ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  319576ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  319676ms] [LOG] [Fast Refresh] done in 57ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1gdrd03._.js:1226
+[  320025ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ http://localhost:3008/auth/sign-in:0
+[  320037ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  320046ms] [LOG] [HMR] connected @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  320071ms] [LOG] %c[Vercel Web Analytics]%c Debug mode is enabled by default in development. No requests will be sent to the server. color: rgb(120, 120, 120) color: inherit @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  320071ms] [LOG] %c[Vercel Web Analytics]%c [view] http://localhost:3008/auth/sign-in color: rgb(120, 120, 120) color: inherit {o: http://localhost:3008/auth/sign-in, sv: 0.1.3, sdkn: @vercel/analytics/react, sdkv: 2.0.1, ts: 1783916754190} /_vercel/insights/view @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  320407ms] [WARNING] Image with src "/learn_to_vibe_code_logo_cosmic_wordmark_transparent.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  323500ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[  323580ms] [LOG] [Fast Refresh] done in 52ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
