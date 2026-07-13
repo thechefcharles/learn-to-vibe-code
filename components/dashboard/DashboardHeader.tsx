@@ -16,10 +16,8 @@ export function DashboardHeader({ userName }: DashboardHeaderProps) {
 
         {/* Center: Logo */}
         <div className="flex justify-center flex-1">
-          <div className="bg-slate-900/20 rounded-lg backdrop-blur-md border border-cyan-500/30 flex items-center justify-center min-h-16" style={{ width: 'fit-content', padding: '0.5rem' }}>
-            <div style={{ transform: 'scale(1.1)' }} className="sm:scale-150 origin-center">
-              <Logo variant="cosmic" size="sm" />
-            </div>
+          <div style={{ transform: 'scale(1.1)' }} className="sm:scale-150 origin-center">
+            <Logo variant="cosmic" size="sm" />
           </div>
         </div>
 
