@@ -58,7 +58,7 @@ export function CourseProgress({ progress, totalModules }: CourseProgressProps) 
         {Array.from({ length: totalModules }).map((_, idx) => {
           const moduleId = idx;
           const status = getModuleStatus(moduleId);
-          const displayNumber = String(moduleId).padStart(2, '0');
+          const displayNumber = moduleId + 1; // Show 1-16 instead of 0-15
 
           return (
             <Link
