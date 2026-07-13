@@ -49,7 +49,7 @@ export default async function DashboardPage() {
         {/* Version Indicator */}
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h2 className="text-sm font-semibold text-cyan-300 mb-2">Enrolled in:</h2>
+            <h2 className="text-sm font-semibold text-white mb-2">Enrolled in:</h2>
             <div className="inline-block px-4 py-2 rounded-lg font-semibold text-white bg-slate-900/90 border border-cyan-500/30">
               {version === "kids" ? "🚀 Beginner Course (Kids)" : "💻 Advanced Course (Professional)"}
             </div>

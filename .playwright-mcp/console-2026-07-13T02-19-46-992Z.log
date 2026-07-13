@@ -196,3 +196,9 @@ Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ 
 [ 4891270ms] [LOG] [Fast Refresh] done in 50ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
 [ 4891441ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
 [ 4891485ms] [LOG] [Fast Refresh] done in 145ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 4926114ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 4926143ms] [LOG] [Fast Refresh] done in 51ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 4927789ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 4927888ms] [LOG] [Fast Refresh] done in 49ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 4927989ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[ 4928013ms] [LOG] [Fast Refresh] done in 124ms @ http://localhost:3008/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
