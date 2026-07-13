@@ -16,8 +16,10 @@ export function DashboardHeader({ userName }: DashboardHeaderProps) {
 
         {/* Center: Logo */}
         <div className="flex justify-center flex-1">
-          <div className="scale-110 sm:scale-150 drop-shadow-lg" style={{ filter: 'drop-shadow(0 0 12px rgba(0, 217, 255, 0.4))' }}>
-            <Logo variant="cosmic" size="sm" />
+          <div className="bg-slate-900/80 rounded-lg p-3 sm:p-4 backdrop-blur-md border border-cyan-500/30">
+            <div className="scale-110 sm:scale-150">
+              <Logo variant="cosmic" size="sm" />
+            </div>
           </div>
         </div>
 
