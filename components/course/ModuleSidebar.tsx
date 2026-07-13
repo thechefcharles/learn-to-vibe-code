@@ -158,9 +158,9 @@ export function ModuleSidebar({
                   <div className="flex items-center justify-between gap-2 min-w-0">
                     <div className="flex items-center gap-1 flex-1 min-w-0">
                       <span className="font-medium">Module {modId + 1}</span>
-                      {!isUnlocked && <span className="text-xs flex-shrink-0">🔒</span>}
+                      {!isUnlocked && !isCurrentModule && <span className="text-xs flex-shrink-0">🔒</span>}
                       {isCompleted && !isActualCurrentModule && <span className="text-xs flex-shrink-0">✓</span>}
-                      <span className={`text-xs truncate ${!isUnlocked ? 'text-slate-400' : 'text-slate-500'}`}>
+                      <span className={`text-xs truncate ${!isUnlocked && !isCurrentModule ? 'text-slate-400' : 'text-slate-500'}`}>
                         {meta.title}
                       </span>
                     </div>
