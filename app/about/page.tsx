@@ -21,9 +21,7 @@ export default function AboutPage() {
           backgroundRepeat: 'no-repeat',
         }}
       />
-      <div className="fixed inset-0 -z-10 bg-black/25" />
-
-      <Header />
+      <Header hideThemeToggle={true} />
 
       <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         {/* Back Link */}
@@ -32,7 +30,7 @@ export default function AboutPage() {
         </Link>
 
         {/* Content Container */}
-        <div className="bg-slate-900/90 backdrop-blur-md border border-white/20 rounded-2xl p-8 sm:p-12">
+        <div className="bg-slate-900/50 backdrop-blur-md border border-white/20 rounded-2xl p-8 sm:p-12">
           {/* Header */}
           <div className="mb-12">
             <h1 className="text-4xl sm:text-5xl font-bold text-white uppercase tracking-wide mb-4">
