@@ -132,6 +132,7 @@ export function ModuleSidebar({
               const modId = idx;
               const meta = getModuleMetadata(modId);
               const isCurrentModule = modId === moduleId;
+              const isActualCurrentModule = modId === actualCurrentModule;
               const isUnlocked = isCurrentModule || (unlockedModules?.has(modId) ?? true);
               const isCompleted = completedModules?.has(modId) ?? false;
               const isSelected = modId === moduleId;
@@ -157,8 +158,13 @@ export function ModuleSidebar({
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 flex-1 min-w-0">
                       <span className="font-medium">Module {modId + 1}</span>
+                      {isActualCurrentModule && (
+                        <span className="text-xs font-bold px-1.5 py-0.5 rounded bg-cyan-500/70 text-white whitespace-nowrap">
+                          Now
+                        </span>
+                      )}
                       {!isUnlocked && <span className="text-xs">🔒</span>}
-                      {isCompleted && <span className="text-xs">✓</span>}
+                      {isCompleted && !isActualCurrentModule && <span className="text-xs">✓</span>}
                     </div>
                     <span className="text-xs text-slate-500 truncate">{meta.title}</span>
                   </div>
