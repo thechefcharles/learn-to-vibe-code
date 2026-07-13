@@ -7,18 +7,20 @@ export const metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
-      <div className="max-w-3xl mx-auto">
-        <Link href="/" className="text-blue-400 hover:text-blue-300 mb-8 inline-block">
+    <div className="min-h-screen py-12 px-4" style={{ backgroundImage: 'url(/legal-terms-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed', backgroundRepeat: 'no-repeat' }}>
+      {/* Dark Overlay */}
+      <div className="fixed inset-0 -z-10 bg-black/30" />
+      <div className="max-w-3xl mx-auto relative z-10">
+        <Link href="/" className="text-cyan-400 hover:text-cyan-300 mb-8 inline-block font-semibold">
           ← Back to Home
         </Link>
 
-        <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 text-slate-100">
-          <h1 className="text-4xl font-bold text-white mb-8">Terms of Service</h1>
+        <div className="bg-slate-900/60 backdrop-blur-md rounded-lg p-8 border border-white/20 text-gray-200">
+          <h1 className="text-4xl font-bold text-white mb-8 uppercase tracking-wide">Terms of Service</h1>
 
           <div className="space-y-6 text-sm leading-relaxed">
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">1. Acceptance of Terms</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">1. Acceptance of Terms</h2>
               <p>
                 By accessing and using the Learn to Vibe Code platform ("Service"), you accept and agree to be bound by the
                 terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.
@@ -26,7 +28,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">2. Use License</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">2.Use License</h2>
               <p>
                 Permission is granted to temporarily download one copy of the materials (information or software) on Learn to
                 Vibe Code for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of
