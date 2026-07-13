@@ -21,7 +21,7 @@ export default function AboutPage() {
           backgroundRepeat: 'no-repeat',
         }}
       />
-      <div className="fixed inset-0 -z-10 bg-black/50" />
+      <div className="fixed inset-0 -z-10 bg-black/25" />
 
       <Header />
 
