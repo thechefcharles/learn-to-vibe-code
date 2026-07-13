@@ -60,32 +60,11 @@ export default async function DashboardPage() {
         <section className="mb-8">
           <Link href={continueHref} className="block group">
             <div
-              className="relative bg-gradient-to-r from-cyan-500 via-purple-500 to-cyan-600 rounded-2xl p-8 sm:p-12 text-white font-bold text-2xl sm:text-3xl transition-all flex items-center justify-center gap-4 overflow-hidden"
-              style={{
-                boxShadow: '0 0 30px rgba(0, 217, 255, 0.4), 0 0 60px rgba(168, 85, 247, 0.2)',
-              }}
+              className="relative bg-gradient-to-r from-cyan-500/40 via-purple-500/40 to-cyan-600/40 backdrop-blur-sm rounded-2xl p-8 sm:p-12 text-white font-bold text-2xl sm:text-3xl transition-all flex items-center justify-center gap-4 overflow-hidden border border-cyan-400/30 hover:border-cyan-400/60"
             >
-              {/* Animated background gradient */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-500" style={{ animation: 'shimmer 2s infinite' }} />
-
-              {/* Border glow effect */}
-              <div className="absolute inset-0 rounded-2xl border-2 border-cyan-400 opacity-0 group-hover:opacity-50 transition-opacity duration-300" />
-
               {/* Content */}
-              <span className="relative text-4xl group-hover:animate-bounce">▶</span>
+              <span className="relative text-4xl animate-bounce">▶</span>
               <span className="relative">Continue Learning</span>
-
-              {/* Hover glow intensifier */}
-              <style>{`
-                @keyframes shimmer {
-                  0% { transform: translateX(-100%); }
-                  100% { transform: translateX(100%); }
-                }
-                .group:hover {
-                  --tw-shadow: 0 0 40px rgba(0, 217, 255, 0.6), 0 0 80px rgba(168, 85, 247, 0.3);
-                  box-shadow: var(--tw-shadow);
-                }
-              `}</style>
             </div>
           </Link>
         </section>
