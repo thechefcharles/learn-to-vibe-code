@@ -121,7 +121,7 @@ export function StepLessonViewer({
       const startStep = !isModulePreview ? reachedStep : (parsed.currentStep || 0);
       setCurrentStepIndex(startStep);
     }
-  }, [moduleId, isModulePreview]);
+  }, [moduleId]);
 
   // Save progress to localStorage
   useEffect(() => {
