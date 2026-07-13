@@ -4,6 +4,7 @@ import { createContext, useContext, useState, ReactNode } from 'react'
 import { MobileMenuBurger } from './MobileMenuBurger'
 import { KeyboardShortcutsPanel } from './KeyboardShortcutsPanel'
 import { MilestoneModal } from './MilestoneModal'
+import { SpaceRocketCursor } from '@/components/SpaceRocketCursor'
 import { useKeyboardShortcuts } from '@/lib/hooks/useKeyboardShortcuts'
 import type { User } from '@supabase/supabase-js'
 
@@ -66,6 +67,8 @@ export function CoursePageInteractive({
         xpEarned={250}
         onClose={() => setMilestoneOpen(false)}
       />
+
+      <SpaceRocketCursor />
 
       {children}
     </CoursePageContext.Provider>
