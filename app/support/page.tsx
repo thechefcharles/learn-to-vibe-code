@@ -1,190 +1,150 @@
-"use client";
+import { Header } from '@/components/kids-landing/Header';
+import { Footer } from '@/components/Footer';
+import Link from 'next/link';
 
-import Link from "next/link";
-import { useState } from "react";
+export const metadata = {
+  title: 'Support Learn to Vibe Code',
+  description: 'Help support the Accredited Vibe Coding Course and make quality education accessible to everyone.',
+};
 
 export default function SupportPage() {
-  const [copied, setCopied] = useState(false);
-
-  const handleDonate = async (amount: number) => {
-    try {
-      const response = await fetch("/api/donate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount }),
-      });
-
-      const data = await response.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else if (data.error) {
-        alert(`Error: ${data.error}`);
-      }
-    } catch (error) {
-      console.error("Donation error:", error);
-      alert("Donation failed. Please try again.");
-    }
-  };
-
-  const copyEmail = () => {
-    navigator.clipboard.writeText("support@learntovibe.code");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
-      {/* Navigation */}
-      <nav className="sticky top-0 z-10 bg-slate-800/50 border-b border-slate-700 backdrop-blur">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/" className="text-xl font-bold text-white hover:text-blue-400 transition">
-            Learn to Vibe Code
-          </Link>
-          <div className="space-x-6">
-            <Link href="/course" className="text-slate-300 hover:text-white transition">
-              Course
-            </Link>
-            <Link href="/about" className="text-slate-300 hover:text-white transition">
-              About
-            </Link>
-          </div>
-        </div>
-      </nav>
+    <div className="min-h-screen flex flex-col" style={{ backgroundImage: 'url(/support-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed', backgroundRepeat: 'no-repeat' }}>
+      {/* Dark Overlay */}
+      <div className="fixed inset-0 -z-10 bg-black/20" />
+      <Header hideThemeToggle={true} />
 
-      {/* Hero */}
-      <div className="bg-gradient-to-br from-slate-800 to-slate-900 border-b border-slate-700">
-        <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-          <h1 className="text-5xl font-bold text-white mb-4">💚 Support Us</h1>
-          <p className="text-xl text-slate-300">
-            The course is completely free. Help us keep it that way.
-          </p>
-        </div>
-      </div>
+      <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        {/* Back Link */}
+        <Link href="/" className="text-cyan-400 hover:text-cyan-300 text-sm font-semibold mb-8 inline-block">
+          ← Back to Home
+        </Link>
 
-      {/* Content */}
-      <div className="max-w-4xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {/* Free Tier */}
-          <div className="bg-slate-800 rounded-lg p-8 border border-slate-700">
-            <h2 className="text-2xl font-bold text-white mb-4">✅ Free Forever</h2>
-            <p className="text-slate-300 mb-6">
-              The entire course is completely free. All 16 modules, quizzes, projects, capstone grading, and certificates — no paywalls, no gates, no hidden costs.
-            </p>
-            <div className="space-y-2 text-slate-400 text-sm">
-              <p>✓ 16 modules (93 contact hours)</p>
-              <p>✓ 48 quizzes with instant feedback</p>
-              <p>✓ 15 hands-on projects</p>
-              <p>✓ Live capstone project</p>
-              <p>✓ Verifiable certificate</p>
-              <p>✓ Professional credential</p>
-            </div>
-            <Link
-              href="/course"
-              className="mt-6 block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg text-center transition"
-            >
-              Start Learning →
-            </Link>
-          </div>
-
-          {/* Support Tier */}
-          <div className="bg-gradient-to-br from-purple-900 to-purple-800 rounded-lg p-8 border border-purple-600">
-            <h2 className="text-2xl font-bold text-white mb-4">💜 Support Development</h2>
-            <p className="text-slate-200 mb-6">
-              Donations help us maintain the course, improve content, and keep it free for everyone. Every contribution counts.
-            </p>
-            <div className="space-y-3">
-              <button
-                onClick={() => handleDonate(5)}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition"
-              >
-                ☕ Buy me a coffee ($5)
-              </button>
-              <button
-                onClick={() => handleDonate(10)}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition"
-              >
-                🍵 Buy me tea ($10)
-              </button>
-              <button
-                onClick={() => handleDonate(25)}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition"
-              >
-                🍽️ Buy me lunch ($25)
-              </button>
-              <button
-                onClick={() => handleDonate(50)}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition"
-              >
-                🍷 Buy me dinner ($50)
-              </button>
-            </div>
-            <p className="text-xs text-slate-400 mt-4 text-center">
-              Secure payment via Stripe. No recurring charges.
+        {/* Content Container */}
+        <div className="bg-slate-900/60 backdrop-blur-md border border-white/20 rounded-2xl p-8 sm:p-12">
+          {/* Header */}
+          <div className="mb-12">
+            <h1 className="text-4xl sm:text-5xl font-bold text-white uppercase tracking-wide mb-4">
+              Support Our Mission
+            </h1>
+            <p className="text-xl text-cyan-400 font-semibold">
+              Help make quality coding education accessible to everyone
             </p>
           </div>
-        </div>
 
-        {/* FAQ */}
-        <div className="bg-slate-800 rounded-lg p-8 border border-slate-700 mb-8">
-          <h2 className="text-2xl font-bold text-white mb-6">Questions?</h2>
-          <div className="space-y-6">
-            <div>
-              <h3 className="text-lg font-bold text-white mb-2">Is the course really free?</h3>
-              <p className="text-slate-300">
-                Yes, completely free. No paywalls, no signup fees, no hidden costs. The entire course, all modules, quizzes, projects, capstone grading, and certificates are available to everyone at no cost.
+          {/* Content */}
+          <div className="space-y-8 text-gray-200">
+            <section>
+              <h2 className="text-2xl font-bold text-white uppercase tracking-wide mb-4">
+                Why We Need Your Support
+              </h2>
+              <p className="mb-4">
+                The Accredited Vibe Coding Course is built to be freely accessible to learners everywhere. By keeping the platform free, 
+                we're removing barriers for students who want to learn but can't afford expensive bootcamps or courses.
               </p>
-            </div>
+              <p>
+                Your support helps us maintain the platform, improve the content, and keep the course free for everyone. Even a small 
+                contribution makes a real difference.
+              </p>
+            </section>
 
-            <div>
-              <h3 className="text-lg font-bold text-white mb-2">Do I have to donate?</h3>
-              <p className="text-slate-300">
-                No. Donations are completely optional and appreciated, but not required. You can complete the entire course and earn your certificate without ever donating.
-              </p>
-            </div>
+            <section>
+              <h2 className="text-2xl font-bold text-white uppercase tracking-wide mb-6">
+                Ways to Support
+              </h2>
+              <div className="space-y-4">
+                <div className="bg-white/5 border border-cyan-500/30 rounded-lg p-6">
+                  <h3 className="text-lg font-bold text-cyan-400 mb-2">💳 One-Time Donation</h3>
+                  <p className="text-sm mb-4">
+                    Make a one-time contribution to support the platform and help us keep the course free.
+                  </p>
+                  <button className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold rounded-lg hover:from-cyan-600 hover:to-purple-700 transition-all">
+                    Donate via PayPal
+                  </button>
+                </div>
 
-            <div>
-              <h3 className="text-lg font-bold text-white mb-2">Where does my donation go?</h3>
-              <p className="text-slate-300">
-                Donations support course maintenance, content improvements, instructor grading, and keeping the platform running so it stays free for future learners.
-              </p>
-            </div>
+                <div className="bg-white/5 border border-purple-500/30 rounded-lg p-6">
+                  <h3 className="text-lg font-bold text-purple-400 mb-2">☕ Buy Me a Coffee</h3>
+                  <p className="text-sm mb-4">
+                    Support through Buy Me a Coffee - even $5 helps keep the servers running.
+                  </p>
+                  <button className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all">
+                    Buy Me a Coffee
+                  </button>
+                </div>
 
-            <div>
-              <h3 className="text-lg font-bold text-white mb-2">Is my payment secure?</h3>
-              <p className="text-slate-300">
-                Yes. All payments are processed securely through Stripe. We never store your payment information.
-              </p>
-            </div>
+                <div className="bg-white/5 border border-pink-500/30 rounded-lg p-6">
+                  <h3 className="text-lg font-bold text-pink-400 mb-2">🌟 Share the Course</h3>
+                  <p className="text-sm mb-4">
+                    The best support is spreading the word. Share Learn to Vibe Code with friends, colleagues, and students.
+                  </p>
+                  <button className="px-4 py-2 bg-gradient-to-r from-pink-500 to-orange-600 text-white font-bold rounded-lg hover:from-pink-600 hover:to-orange-700 transition-all">
+                    Share on Social Media
+                  </button>
+                </div>
+              </div>
+            </section>
 
-            <div>
-              <h3 className="text-lg font-bold text-white mb-2">Other ways to support?</h3>
-              <p className="text-slate-300 mb-2">
-                Spread the word! Share the course with friends, mention it on social media, or send feedback:
+            <section>
+              <h2 className="text-2xl font-bold text-white uppercase tracking-wide mb-4">
+                What Your Support Goes Toward
+              </h2>
+              <ul className="space-y-3 ml-4">
+                <li className="flex gap-3">
+                  <span className="text-cyan-400 text-xl">→</span>
+                  <div>
+                    <strong className="text-white">Platform Hosting:</strong> Keeping the course live and accessible 24/7
+                  </div>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-cyan-400 text-xl">→</span>
+                  <div>
+                    <strong className="text-white">Content Creation:</strong> Developing new modules and improving existing ones
+                  </div>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-cyan-400 text-xl">→</span>
+                  <div>
+                    <strong className="text-white">Student Support:</strong> Helping learners succeed with feedback and guidance
+                  </div>
+                </li>
+                <li className="flex gap-3">
+                  <span className="text-cyan-400 text-xl">→</span>
+                  <div>
+                    <strong className="text-white">Accreditation:</strong> Maintaining the course's professional accreditation status
+                  </div>
+                </li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-bold text-white uppercase tracking-wide mb-4">
+                Get Started Learning
+              </h2>
+              <p className="mb-6">
+                The course is completely free. Start learning today without any pressure to donate.
               </p>
-              <button
-                onClick={copyEmail}
-                className="inline-block bg-slate-700 hover:bg-slate-600 text-white font-medium py-2 px-4 rounded-lg transition text-sm"
+              <Link
+                href="/auth/sign-up"
+                className="inline-block px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold rounded-lg hover:from-cyan-600 hover:to-purple-700 transition-all"
               >
-                {copied ? "✅ Copied!" : "📧 Copy Email"}
-              </button>
-            </div>
+                Enroll Now
+              </Link>
+            </section>
+
+            <section className="pt-8 border-t border-white/10">
+              <p className="text-sm text-gray-400">
+                Have questions about supporting the course? Reach out at{' '}
+                <a href="mailto:support@learntovibe.code" className="text-cyan-400 hover:text-cyan-300 underline">
+                  support@learntovibe.code
+                </a>
+              </p>
+            </section>
           </div>
         </div>
+      </main>
 
-        {/* CTA */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg p-8 text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">Ready to Learn?</h2>
-          <p className="text-blue-100 mb-6">
-            The course is free. Your certificate is real. Your skills are employer-ready.
-          </p>
-          <Link
-            href="/course"
-            className="inline-block bg-white text-blue-600 font-bold py-3 px-8 rounded-lg hover:bg-slate-100 transition"
-          >
-            Start the Course →
-          </Link>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 }
