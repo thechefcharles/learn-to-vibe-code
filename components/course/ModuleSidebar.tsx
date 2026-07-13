@@ -141,8 +141,7 @@ export function ModuleSidebar({
                 <button
                   key={modId}
                   onClick={() => handleModuleSelect(modId)}
-                  disabled={!isUnlocked}
-                  className={`w-full text-left px-3 py-2 text-sm transition-colors border-b ${
+                  className={`w-full text-left px-3 py-2 text-sm transition-colors border-b cursor-pointer ${
                     isSelected
                       ? isKids
                         ? 'bg-purple-200 text-purple-900'
@@ -152,9 +151,9 @@ export function ModuleSidebar({
                         ? 'bg-purple-50 text-purple-900 hover:bg-purple-100'
                         : 'bg-slate-800 text-slate-300 hover:bg-slate-700'
                       : isKids
-                      ? 'bg-purple-50/50 text-purple-600 opacity-60'
-                      : 'bg-slate-800/50 text-slate-500 opacity-60'
-                  } ${!isUnlocked ? 'cursor-not-allowed' : 'cursor-pointer'} last:border-b-0`}
+                      ? 'bg-purple-50/50 text-purple-600 opacity-60 hover:bg-purple-100/50'
+                      : 'bg-slate-800/50 text-slate-500 opacity-60 hover:bg-slate-700/50'
+                  } last:border-b-0`}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 flex-1 min-w-0">
