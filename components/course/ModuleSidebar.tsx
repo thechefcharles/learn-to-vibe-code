@@ -328,18 +328,22 @@ export function ModuleSidebar({
             👀 Preview Mode
           </motion.div>
 
-          {unlockedModules && !unlockedModules.has(selectedModuleId) ? (
-            <div
-              className={`p-4 rounded-lg text-center text-sm ${
+          {/* Lock indicator if module is locked */}
+          {unlockedModules && !unlockedModules.has(selectedModuleId) && (
+            <motion.div
+              initial={{ opacity: 0, y: -5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`p-2 rounded-lg text-xs text-center font-medium mb-2 ${
                 isKids
-                  ? 'bg-purple-100 text-purple-900'
-                  : 'bg-slate-700/50 text-slate-400'
+                  ? 'bg-red-100 text-red-700 border border-red-300'
+                  : 'bg-red-500/20 text-red-300 border border-red-500/50'
               }`}
             >
-              <p>🔒 Module locked</p>
-              <p className="text-xs mt-1">Complete the previous module to unlock</p>
-            </div>
-          ) : selectedModuleSteps ? (
+              🔒 Locked — Complete previous module to unlock
+            </motion.div>
+          )}
+
+          {selectedModuleSteps ? (
             // Show lessons from selected module in preview mode - clickable but grayed out
             <motion.div className="space-y-1 opacity-60" initial={{ opacity: 0 }} animate={{ opacity: 0.6 }} transition={{ duration: 0.2 }}>
               {selectedModuleSteps.steps.map((step, index) => (
