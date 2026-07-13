@@ -16,8 +16,8 @@ export function DashboardHeader({ userName }: DashboardHeaderProps) {
 
         {/* Center: Logo */}
         <div className="flex justify-center flex-1">
-          <div className="bg-slate-900/20 rounded-lg p-3 sm:p-4 backdrop-blur-md border border-cyan-500/30 flex items-center justify-center">
-            <div className="scale-110 sm:scale-150">
+          <div className="bg-slate-900/20 rounded-lg p-2 sm:p-3 backdrop-blur-md border border-cyan-500/30 inline-flex items-center justify-center">
+            <div className="scale-110 sm:scale-150 flex">
               <Logo variant="cosmic" size="sm" />
             </div>
           </div>
