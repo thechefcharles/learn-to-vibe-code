@@ -52,6 +52,13 @@ export function ProfileMenu({ userName }: ProfileMenuProps) {
 
           <div className="py-2">
             <Link
+              href="/dashboard"
+              onClick={() => setIsOpen(false)}
+              className="block px-4 py-2 text-white hover:bg-white/10 transition-colors text-sm font-semibold text-cyan-400 border-b border-white/10"
+            >
+              📊 Dashboard
+            </Link>
+            <Link
               href="/dashboard/settings"
               onClick={() => setIsOpen(false)}
               className="block px-4 py-2 text-white hover:bg-white/10 transition-colors text-sm"

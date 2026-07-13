@@ -113,7 +113,7 @@ export function ModuleSidebar({
         className="flex items-center justify-center mb-4 hover:opacity-80 transition"
         title="Back to Dashboard"
       >
-        <Logo variant="cosmic-mark" size="sm" />
+        <Logo variant="cosmic" size="sm" />
       </Link>
 
       {/* Module Selector Dropdown */}
