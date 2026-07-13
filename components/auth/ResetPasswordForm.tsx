@@ -1,37 +1,59 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { VideoBackground } from "@/components/kids-landing/VideoBackground";
 import { MouseTrail } from "@/components/kids-landing/MouseTrail";
 import { motion } from "framer-motion";
 
-export default function ForgotPassword() {
-  const [email, setEmail] = useState("");
+export function ResetPasswordForm() {
+  const searchParams = useSearchParams();
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const token = searchParams.get("token");
 
-  async function handleForgotPassword(e: React.FormEvent) {
+  useEffect(() => {
+    if (!token) {
+      setError("Invalid reset link. Please request a new one.");
+    }
+  }, [token]);
+
+  async function handleResetPassword(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const response = await fetch("/api/auth/forgot-password", {
+      const response = await fetch("/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ token, password }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || "Failed to send reset email");
+        setError(data.error || "Failed to reset password");
       } else {
         setSuccess(true);
-        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -71,9 +93,9 @@ export default function ForgotPassword() {
               WebkitTextFillColor: "transparent",
             }}
           >
-            Reset Password
+            Set New Password
           </h1>
-          <p className="text-gray-300 mb-6">Enter your email to receive a password reset link</p>
+          <p className="text-gray-300 mb-6">Enter your new password below</p>
 
           {/* Success Message */}
           {success && (
@@ -82,7 +104,13 @@ export default function ForgotPassword() {
               animate={{ opacity: 1, height: "auto" }}
               className="bg-green-500/20 border border-green-500/50 rounded-lg p-4 mb-6"
             >
-              <p className="text-green-300 text-sm font-medium">✓ Check your email for a reset link</p>
+              <p className="text-green-300 text-sm font-medium mb-3">✓ Password reset successfully!</p>
+              <Link
+                href="/auth/sign-in"
+                className="text-cyan-300 hover:text-purple-300 font-semibold transition inline-block"
+              >
+                Sign in with your new password →
+              </Link>
             </motion.div>
           )}
 
@@ -98,19 +126,34 @@ export default function ForgotPassword() {
           )}
 
           {/* Form */}
-          {!success ? (
-            <form onSubmit={handleForgotPassword} className="space-y-4">
+          {!success && token && (
+            <form onSubmit={handleResetPassword} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wide text-gray-300 mb-2">
-                  Email
+                  New Password
                 </label>
                 <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none transition-all focus:bg-white/10 focus:border-cyan-400/70"
-                  placeholder="your@email.com"
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wide text-gray-300 mb-2">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  id="confirm-password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none transition-all focus:bg-white/10 focus:border-cyan-400/70"
+                  placeholder="••••••••"
                   required
                 />
               </div>
@@ -126,17 +169,19 @@ export default function ForgotPassword() {
                   background: "linear-gradient(90deg, #06b6d4 0%, #a78bfa 50%, #ec4899 100%)",
                 }}
               >
-                {loading ? "Sending..." : "Send Reset Link"}
+                {loading ? "Resetting..." : "Reset Password"}
               </motion.button>
             </form>
-          ) : null}
+          )}
 
           {/* Back to Sign In */}
-          <p className="text-gray-300 text-sm mt-6 text-center">
-            <Link href="/auth/sign-in" className="text-cyan-300 hover:text-purple-300 font-semibold transition">
-              Back to sign in
-            </Link>
-          </p>
+          {!success && (
+            <p className="text-gray-300 text-sm mt-6 text-center">
+              <Link href="/auth/sign-in" className="text-cyan-300 hover:text-purple-300 font-semibold transition">
+                Back to sign in
+              </Link>
+            </p>
+          )}
         </motion.div>
       </div>
     </div>

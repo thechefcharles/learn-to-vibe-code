@@ -185,24 +185,6 @@ export function StepLessonViewer({
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handlePreviewLessonClick = async (previewModuleId: number, lessonIndex: number) => {
-    setPreviewModuleId(previewModuleId);
-    setPreviewLessonIndex(lessonIndex);
-
-    // Load the preview module's steps if not already loaded
-    if (!previewModuleSteps || previewModuleSteps.moduleId !== previewModuleId) {
-      try {
-        const { getModuleSteps } = await import('@/lib/module-steps');
-        const loadedSteps = getModuleSteps(previewModuleId, isKids ? 'kids' : 'adult');
-        setPreviewModuleSteps(loadedSteps);
-      } catch (error) {
-        console.error('Failed to load preview module steps:', error);
-      }
-    }
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   // Keyboard navigation: K for previous, J for next
   useKeyboardNavigation({
     onNext: handleNext,
@@ -259,7 +241,6 @@ export function StepLessonViewer({
               moduleId={moduleId}
               unlockedModules={unlockedModules}
               completedModules={completedModules}
-              onPreviewLessonClick={handlePreviewLessonClick}
               user={user}
               actualCurrentModule={actualCurrentModule}
             />

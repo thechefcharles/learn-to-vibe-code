@@ -59,10 +59,10 @@ export default function SignIn() {
           <h1
             className="text-3xl font-bold uppercase tracking-wider mb-2"
             style={{
-              background: 'linear-gradient(90deg, #06b6d4 0%, #a78bfa 50%, #ec4899 100%)',
-              backgroundClip: 'text',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
+              background: "linear-gradient(90deg, #06b6d4 0%, #a78bfa 50%, #ec4899 100%)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
             }}
           >
             Welcome Back
@@ -73,7 +73,7 @@ export default function SignIn() {
           {error && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
+              animate={{ opacity: 1, height: "auto" }}
               className="bg-red-500/20 border border-red-500/50 rounded-lg p-4 mb-6"
             >
               <p className="text-red-300 text-sm font-medium">{error}</p>
@@ -90,7 +90,7 @@ export default function SignIn() {
                 <label className="block text-xs font-semibold uppercase tracking-wide text-gray-300 mb-2">
                   {field.label}
                 </label>
-                <motion.input
+                <input
                   type={field.type}
                   id={field.id}
                   value={field.value}
@@ -100,14 +100,10 @@ export default function SignIn() {
                   className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none transition-all focus:bg-white/10 focus:border-cyan-400/70"
                   placeholder={field.placeholder}
                   required
-                  animate={{
-                    borderColor: focusedField === field.id ? '#06b6d4' : undefined,
-                    boxShadow: focusedField === field.id ? '0 0 20px rgba(6, 182, 212, 0.3)' : undefined,
-                  }}
                   aria-label={field.label}
                 />
               </div>
-            ])}
+            ))}
 
             {/* Forgot Password Link */}
             <div className="text-right">
@@ -124,7 +120,7 @@ export default function SignIn() {
               whileTap={{ scale: 0.98 }}
               className="w-full mt-6 py-3 rounded-lg font-bold text-white uppercase tracking-wider transition-all disabled:opacity-60"
               style={{
-                background: 'linear-gradient(90deg, #06b6d4 0%, #a78bfa 50%, #ec4899 100%)',
+                background: "linear-gradient(90deg, #06b6d4 0%, #a78bfa 50%, #ec4899 100%)",
               }}
             >
               {loading ? "Signing in..." : "Sign In"}

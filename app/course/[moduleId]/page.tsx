@@ -133,12 +133,13 @@ export default async function LessonPage(props: LessonPageProps) {
 
   const isKids = userVersion === "kids";
 
+  // Module is in preview if it's not the user's actual current module OR if it's locked
+  const isModulePreview = moduleId !== actualCurrentModule || !unlocked;
+
   // Check if this module uses the new step-based format
   if (hasModuleSteps(moduleId)) {
     const steps = getModuleSteps(moduleId, userVersion);
     if (steps) {
-      // Module is in preview if it's not the user's actual current module OR if it's locked
-      const isModulePreview = moduleId !== actualCurrentModule || !unlocked;
 
       return (
         <CoursePageInteractive moduleNumber={moduleId} user={user}>
@@ -170,7 +171,7 @@ export default async function LessonPage(props: LessonPageProps) {
 
         {/* Main Layout */}
         <div className={`max-w-7xl mx-auto px-4 ${!isKids ? "pt-4 sm:pt-6 pb-12" : "py-12"}`}>
-        <div className={`${!unlockedModules.has(moduleId) && !isPreviewMode ? "opacity-60 pointer-events-none select-none" : ""}`}>
+        <div className={`${!unlockedModules.has(moduleId) && !isModulePreview ? "opacity-60 pointer-events-none select-none" : ""}`}>
             {/* Preview Badge for Locked Content */}
             {!unlockedModules.has(moduleId) && !isKids && (
               <div className="mb-6 p-4 bg-amber-500/20 border border-amber-500/50 rounded-lg flex items-center gap-3">

@@ -41,7 +41,6 @@ export function ModuleSidebar({
   moduleId,
   unlockedModules,
   completedModules,
-  onPreviewLessonClick,
   user,
   actualCurrentModule,
 }: ModuleSidebarProps) {

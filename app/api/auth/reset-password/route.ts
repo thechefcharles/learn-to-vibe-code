@@ -21,39 +21,29 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createClient();
 
-    // Verify the token and update password
-    const { error } = await supabase.auth.updateUser({
-      password: password,
-    }, {
-      externalId: token,
+    // Verify the reset token using OTP verification
+    const { data, error: verifyError } = await supabase.auth.verifyOtp({
+      token_hash: token,
+      type: "recovery",
     });
 
-    if (error) {
-      // If the token-based approach doesn't work, try using setSession
-      // The reset email should have included a token in the URL that Supabase can handle
-      const { data, error: sessionError } = await supabase.auth.verifyOtp({
-        token_hash: token,
-        type: "recovery",
-      });
+    if (verifyError || !data.user) {
+      return NextResponse.json(
+        { error: "Invalid or expired reset link" },
+        { status: 400 }
+      );
+    }
 
-      if (sessionError || !data.user) {
-        return NextResponse.json(
-          { error: "Invalid or expired reset link" },
-          { status: 400 }
-        );
-      }
+    // Update password for the verified user
+    const { error: updateError } = await supabase.auth.updateUser({
+      password: password,
+    });
 
-      // Update password for the verified user
-      const { error: updateError } = await supabase.auth.updateUser({
-        password: password,
-      });
-
-      if (updateError) {
-        return NextResponse.json(
-          { error: updateError.message },
-          { status: 400 }
-        );
-      }
+    if (updateError) {
+      return NextResponse.json(
+        { error: updateError.message },
+        { status: 400 }
+      );
     }
 
     return NextResponse.json({
