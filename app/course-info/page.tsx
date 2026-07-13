@@ -1,6 +1,5 @@
 import { Header } from '@/components/kids-landing/Header';
 import { Footer } from '@/components/Footer';
-import { DashboardBackground } from '@/components/dashboard/DashboardBackground';
 import Link from 'next/link';
 
 export const metadata = {
@@ -10,9 +9,10 @@ export const metadata = {
 
 export default function CourseInfoPage() {
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950">
-      <DashboardBackground />
-      <Header />
+    <div className="min-h-screen flex flex-col" style={{ backgroundImage: 'url(/course-info-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed', backgroundRepeat: 'no-repeat' }}>
+      {/* Dark Overlay */}
+      <div className="fixed inset-0 -z-10 bg-black/20" />
+      <Header hideThemeToggle={true} />
 
       <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
         {/* Back Link */}
