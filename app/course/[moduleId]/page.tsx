@@ -38,22 +38,27 @@ export async function generateMetadata(props: LessonPageProps) {
 
 export default async function LessonPage(props: LessonPageProps) {
   const params = await props.params;
-  const { searchParams } = props;
   const moduleId = parseInt(params.moduleId);
-  const isPreviewMode = (await searchParams).preview === 'true';
 
   if (isNaN(moduleId) || moduleId < 0 || moduleId > 15) {
     notFound();
   }
 
+  // Check if user is authenticated (preview requires auth)
+  const user = await getUser();
+
   // Check if module is unlocked
   const unlocked = await isModuleUnlocked(moduleId);
-  if (!unlocked && !isPreviewMode) {
-    redirect("/course");
+  if (!unlocked) {
+    // Allow preview only if user is authenticated
+    // Unauthenticated users cannot access locked modules
+    if (!user) {
+      redirect("/auth/sign-in");
+    }
+    // Authenticated users can preview (view-only, no progress)
   }
 
   // Get user's enrolled version
-  const user = await getUser();
   let userVersion: "kids" | "adult" = "adult";
   if (user) {
     const supabase = await createClient();
@@ -144,7 +149,7 @@ export default async function LessonPage(props: LessonPageProps) {
               completedModules={completedModules}
               lessonsByModule={lessonsByModule}
             >
-              <StepLessonViewer steps={steps} moduleId={moduleId} user={user} actualCurrentModule={actualCurrentModule} isModulePreview={isPreviewMode} />
+              <StepLessonViewer steps={steps} moduleId={moduleId} user={user} actualCurrentModule={actualCurrentModule} />
             </LessonViewToggle>
           </div>
         </CoursePageInteractive>

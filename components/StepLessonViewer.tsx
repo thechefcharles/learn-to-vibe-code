@@ -37,7 +37,6 @@ interface StepLessonViewerProps {
   completedModules?: Set<number>;
   user?: any;
   actualCurrentModule?: number;
-  isModulePreview?: boolean;
 }
 
 export function StepLessonViewer({
@@ -47,7 +46,6 @@ export function StepLessonViewer({
   completedModules,
   user,
   actualCurrentModule,
-  isModulePreview,
 }: StepLessonViewerProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [naturallyReachedStep, setNaturallyReachedStep] = useState(0); // Only updated via Next button
