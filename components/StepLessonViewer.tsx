@@ -157,6 +157,9 @@ export function StepLessonViewer({
 
   const handleJumpToStep = (index: number) => {
     setCurrentStepIndex(index);
+    // Clear preview mode when jumping to a lesson in the current module
+    setPreviewModuleId(null);
+    setPreviewLessonIndex(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
