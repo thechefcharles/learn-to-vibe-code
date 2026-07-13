@@ -6,18 +6,18 @@ export function DashboardBackground() {
       <div
         className="fixed inset-0 -z-10"
         style={{
-          backgroundImage: 'url(/dashboard-ocean-bg.png)',
+          backgroundImage: 'url(/dashboard-cockpit-bg.png)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',
           backgroundRepeat: 'no-repeat',
-          filter: 'blur(3px)',
+          filter: 'blur(1px)',
         }}
       />
       <div
         className="fixed inset-0 -z-10"
         style={{
-          backgroundColor: 'rgba(0, 0, 0, 0.25)',
+          backgroundColor: 'rgba(0, 0, 0, 0.35)',
         }}
       />
     </>
