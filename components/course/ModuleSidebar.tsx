@@ -180,14 +180,24 @@ export function ModuleSidebar({
         )}
       </div>
 
-      {/* Lessons Title */}
-      <h3
-        className={`text-sm font-bold uppercase tracking-wider mb-4 ${
-          isKids ? 'text-purple-300' : 'text-slate-300'
-        }`}
-      >
-        Lessons
-      </h3>
+      {/* Lessons Title with Resume Button */}
+      <div className="flex items-center justify-between mb-4">
+        <h3
+          className={`text-sm font-bold uppercase tracking-wider ${
+            isKids ? 'text-purple-300' : 'text-slate-300'
+          }`}
+        >
+          Lessons
+        </h3>
+        {actualCurrentModule !== undefined && actualCurrentModule !== moduleId && (
+          <Link
+            href={`/course/${String(actualCurrentModule).padStart(2, '0')}`}
+            className="text-xs font-bold px-2.5 py-1 rounded bg-cyan-500/70 hover:bg-cyan-500/90 text-white whitespace-nowrap transition-all"
+          >
+            Resume
+          </Link>
+        )}
+      </div>
 
       {/* Progress Bar */}
       <div
