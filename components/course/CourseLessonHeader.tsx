@@ -32,56 +32,24 @@ export function CourseLessonHeader({
     setMobileMenuOpen(newState);
   };
 
-  const numModuleId = parseInt(moduleId);
-  const moduleName = `Module ${String(numModuleId).padStart(2, '0')}`;
-
   return (
     <>
       {/* Main Header */}
       <header className="sticky top-0 z-40 border-b border-white/10 bg-gradient-to-b from-slate-900/95 to-slate-900/80 backdrop-blur-lg overflow-visible">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-3">
           <div className="flex items-center justify-between gap-4">
-            {/* Left: Logo + Breadcrumb (hidden on mobile) */}
-            <div className="flex items-center gap-3 min-w-0 flex-shrink-0">
-              <Link
-                href="/dashboard"
-                className="flex items-center gap-2 hover:opacity-80 transition"
-                title="Back to Dashboard"
-              >
-                <div className="scale-75 sm:scale-100">
-                  <Logo variant="cosmic-mark" size="sm" />
-                </div>
-              </Link>
-
-              {/* Desktop Breadcrumb */}
-              <div className="hidden md:flex items-center gap-2 text-xs text-slate-400">
-                <span>→</span>
-                <Link
-                  href="/dashboard"
-                  className="hover:text-slate-300 transition"
-                >
-                  Learning
-                </Link>
-                <span>→</span>
-                <span className="text-slate-500">{moduleName}</span>
+            {/* Left: Logo */}
+            <Link
+              href="/dashboard"
+              className="flex items-center gap-2 hover:opacity-80 transition"
+              title="Back to Dashboard"
+            >
+              <div className="scale-75 sm:scale-100">
+                <Logo variant="cosmic-mark" size="sm" />
               </div>
-            </div>
+            </Link>
 
-            {/* Center: Lesson Title + Version Badge (hidden on mobile) */}
-            <div className="hidden sm:flex items-center justify-center flex-1 min-w-0 gap-3">
-              <h1 className="text-sm sm:text-base font-semibold text-white truncate px-4">
-                {lessonTitle}
-              </h1>
-              <div className={`text-xs font-semibold px-2 py-1 rounded whitespace-nowrap ${
-                version === "kids"
-                  ? "bg-pink-500/20 text-pink-300 border border-pink-500/50"
-                  : "bg-indigo-500/20 text-indigo-300 border border-indigo-500/50"
-              }`}>
-                {version === "kids" ? "👶 Beginner" : "💻 Advanced"}
-              </div>
-            </div>
-
-            {/* Right: Controls */}
+            {/* Right: Profile Menu */}
             <div className="flex items-center justify-end gap-2 sm:gap-4 flex-shrink-0">
               {/* Profile Menu (if logged in) */}
               {user && (
@@ -118,27 +86,6 @@ export function CourseLessonHeader({
         </div>
       </header>
 
-      {/* Mobile Breadcrumb & Info */}
-      <div className="md:hidden sticky top-16 z-30 bg-gradient-to-b from-slate-900/90 to-slate-900/60 backdrop-blur-md border-b border-white/5 px-3 py-2">
-        <div className="flex flex-col gap-2">
-          {/* Mobile Breadcrumb */}
-          <div className="flex items-center gap-2 text-xs text-slate-400">
-            <Link
-              href="/dashboard"
-              className="hover:text-slate-300 transition"
-            >
-              Learning
-            </Link>
-            <span>→</span>
-            <span className="text-slate-500">{moduleName}</span>
-          </div>
-
-          {/* Mobile Lesson Title */}
-          <h2 className="text-sm font-semibold text-white line-clamp-2">
-            {lessonTitle}
-          </h2>
-        </div>
-      </div>
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
@@ -151,12 +98,6 @@ export function CourseLessonHeader({
           className="md:hidden fixed top-0 left-0 right-0 z-50 pt-32 bg-slate-900/95 backdrop-blur-lg border-b border-white/10 pointer-events-auto"
         >
           <div className="max-w-7xl mx-auto px-3 py-4 flex flex-col gap-3">
-            {/* Theme Switcher in Mobile Menu */}
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-400">Theme:</span>
-              <ThemeSwitcher />
-            </div>
-
             {/* Profile Menu in Mobile Menu */}
             {user ? (
               <div className="flex items-center gap-2 pt-2 border-t border-white/10">
