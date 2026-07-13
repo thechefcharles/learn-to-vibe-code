@@ -135,7 +135,8 @@ export function ModuleSidebar({
             {Array.from({ length: 16 }).map((_, idx) => {
               const modId = idx;
               const meta = getModuleMetadata(modId);
-              const isUnlocked = unlockedModules?.has(modId) ?? true;
+              const isCurrentModule = modId === moduleId;
+              const isUnlocked = isCurrentModule || (unlockedModules?.has(modId) ?? true);
               const isCompleted = completedModules?.has(modId) ?? false;
               const isSelected = modId === selectedModuleId;
 
