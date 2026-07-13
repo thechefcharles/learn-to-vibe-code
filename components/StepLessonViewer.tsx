@@ -287,6 +287,8 @@ export function StepLessonViewer({
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
                 color: "transparent",
+                textShadow: "3px 3px 0px rgba(0,0,0,0.3), 6px 6px 0px rgba(0,0,0,0.2), 9px 9px 0px rgba(0,0,0,0.1), 12px 12px 20px rgba(0,0,0,0.4)",
+                transform: "translateZ(0)",
               }}
             >
               {steps.moduleName}
