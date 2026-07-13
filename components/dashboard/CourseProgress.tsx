@@ -34,15 +34,13 @@ export function CourseProgress({ progress, totalModules }: CourseProgressProps) 
     }
   };
 
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return '✓';
-      case 'in_progress':
-        return '▶';
-      default:
-        return '○';
+  const getHref = (moduleId: number, status: string) => {
+    const baseHref = `/course/${String(moduleId).padStart(2, '0')}`;
+    // Add preview mode for incomplete modules
+    if (status !== 'completed') {
+      return `${baseHref}?preview=true`;
     }
+    return baseHref;
   };
 
   return (
@@ -60,11 +58,12 @@ export function CourseProgress({ progress, totalModules }: CourseProgressProps) 
         {Array.from({ length: totalModules }).map((_, idx) => {
           const moduleId = idx;
           const status = getModuleStatus(moduleId);
+          const displayNumber = String(moduleId).padStart(2, '0');
 
           return (
             <Link
               key={moduleId}
-              href={`/course/${moduleId}`}
+              href={getHref(moduleId, status)}
             >
               <motion.div
                 whileHover={!prefersReducedMotion ? { scale: 1.1 } : undefined}
@@ -73,7 +72,7 @@ export function CourseProgress({ progress, totalModules }: CourseProgressProps) 
                   status,
                 )} flex items-center justify-center cursor-pointer transition-all hover:border-white/60 font-bold text-xs sm:text-sm text-white shadow-lg`}
               >
-                {getStatusIcon(status)}
+                {displayNumber}
               </motion.div>
             </Link>
           );
