@@ -155,18 +155,20 @@ export function ModuleSidebar({
                       : 'bg-slate-800/50 text-slate-500 opacity-60 hover:bg-slate-700/50'
                   } last:border-b-0`}
                 >
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex items-center gap-2 flex-1 min-w-0">
+                  <div className="flex items-center justify-between gap-2 min-w-0">
+                    <div className="flex items-center gap-1 flex-1 min-w-0">
                       <span className="font-medium">Module {modId + 1}</span>
-                      {isActualCurrentModule && (
-                        <span className="text-xs font-bold px-1.5 py-0.5 rounded bg-cyan-500/70 text-white whitespace-nowrap">
-                          Now
-                        </span>
-                      )}
-                      {!isUnlocked && <span className="text-xs">🔒</span>}
-                      {isCompleted && !isActualCurrentModule && <span className="text-xs">✓</span>}
+                      {!isUnlocked && <span className="text-xs flex-shrink-0">🔒</span>}
+                      {isCompleted && !isActualCurrentModule && <span className="text-xs flex-shrink-0">✓</span>}
+                      <span className={`text-xs truncate ${!isUnlocked ? 'text-slate-400' : 'text-slate-500'}`}>
+                        {meta.title}
+                      </span>
                     </div>
-                    <span className="text-xs text-slate-500 truncate">{meta.title}</span>
+                    {isActualCurrentModule && (
+                      <span className="text-xs font-bold px-1.5 py-0.5 rounded bg-cyan-500/70 text-white whitespace-nowrap flex-shrink-0">
+                        Now
+                      </span>
+                    )}
                   </div>
                 </button>
               );
