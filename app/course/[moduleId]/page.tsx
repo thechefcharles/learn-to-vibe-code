@@ -137,6 +137,9 @@ export default async function LessonPage(props: LessonPageProps) {
   if (hasModuleSteps(moduleId)) {
     const steps = getModuleSteps(moduleId, userVersion);
     if (steps) {
+      // Module is in preview if it's not the user's actual current module OR if it's locked
+      const isModulePreview = moduleId !== actualCurrentModule || !unlocked;
+
       return (
         <CoursePageInteractive moduleNumber={moduleId} user={user}>
           <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
@@ -149,7 +152,7 @@ export default async function LessonPage(props: LessonPageProps) {
               completedModules={completedModules}
               lessonsByModule={lessonsByModule}
             >
-              <StepLessonViewer steps={steps} moduleId={moduleId} user={user} actualCurrentModule={actualCurrentModule} />
+              <StepLessonViewer steps={steps} moduleId={moduleId} user={user} actualCurrentModule={actualCurrentModule} isModulePreview={isModulePreview} />
             </LessonViewToggle>
           </div>
         </CoursePageInteractive>

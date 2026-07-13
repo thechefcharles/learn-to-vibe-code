@@ -37,6 +37,7 @@ interface StepLessonViewerProps {
   completedModules?: Set<number>;
   user?: any;
   actualCurrentModule?: number;
+  isModulePreview?: boolean;
 }
 
 export function StepLessonViewer({
@@ -46,6 +47,7 @@ export function StepLessonViewer({
   completedModules,
   user,
   actualCurrentModule,
+  isModulePreview = false,
 }: StepLessonViewerProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [naturallyReachedStep, setNaturallyReachedStep] = useState(0); // Only updated via Next button
@@ -93,7 +95,9 @@ export function StepLessonViewer({
     : steps.steps[currentStepIndex];
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === steps.steps.length - 1;
-  const isPreviewMode = !!displayingPreviewLesson || currentStepIndex > naturallyReachedStep;
+  // Preview mode = viewing content not earned yet
+  // True when: module is in preview (different module or locked), OR viewing beyond natural progress
+  const isPreviewMode = isModulePreview || !!displayingPreviewLesson || currentStepIndex > naturallyReachedStep;
 
   // Load saved progress from localStorage
   useEffect(() => {
