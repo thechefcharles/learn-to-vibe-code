@@ -216,7 +216,10 @@ export function StepLessonViewer({
     <div
       className="relative w-full min-h-screen text-white overflow-x-hidden flex flex-col"
       style={{
-        backgroundColor: '#0f172a',
+        backgroundImage: 'url(/cosmic-nebula-bg.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
       }}
     >
       <VideoBackground />
