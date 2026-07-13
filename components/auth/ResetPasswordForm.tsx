@@ -15,49 +15,32 @@ export function ResetPasswordForm() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [hasValidSession, setHasValidSession] = useState(false);
-  const [code, setCode] = useState<string | null>(null);
 
   useEffect(() => {
     const checkSession = async () => {
-      console.log("🔍 [ResetPasswordForm] Checking for recovery code...");
-      console.log("URL:", window.location.href);
+      console.log("🔍 [ResetPasswordForm] Checking for authenticated session...");
 
-      // Extract the recovery code from the URL
-      const params = new URLSearchParams(window.location.search);
-      const recoveryCode = params.get("code");
-
-      if (!recoveryCode) {
-        console.log("No recovery code detected");
-        setError("Invalid reset link. Please request a new one.");
-        return;
-      }
-
-      console.log("✓ Recovery code found in URL:", recoveryCode);
-      setCode(recoveryCode);
-
-      // Verify the recovery code CLIENT-SIDE using Supabase client
-      console.log("📍 Verifying recovery code with Supabase client...");
+      // Supabase already verified the recovery token when redirecting here
+      // We just need to check if there's an authenticated session
       try {
         const supabase = createClient();
 
-        const { data, error } = await supabase.auth.verifyOtp({
-          token_hash: recoveryCode,
-          type: "recovery",
-        });
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
 
-        if (error) {
-          console.error("❌ Verification failed:", error.message);
+        if (error || !user) {
+          console.log("❌ No authenticated session");
           setError("Your reset link has expired or is invalid. Please request a new one.");
-        } else if (data?.user) {
-          console.log("✓ Recovery code verified, user authenticated");
-          setHasValidSession(true);
-        } else {
-          console.log("✗ No user from verification");
-          setError("Your reset link has expired or is invalid. Please request a new one.");
+          return;
         }
+
+        console.log("✓ User authenticated via recovery link:", user.email);
+        setHasValidSession(true);
       } catch (err) {
-        console.error("Code validation error:", err);
-        setError("Failed to validate reset link. Please try again.");
+        console.error("Session check error:", err);
+        setError("Failed to validate your session. Please try again.");
       }
     };
 
@@ -67,11 +50,6 @@ export function ResetPasswordForm() {
   async function handleResetPassword(e: React.FormEvent) {
     e.preventDefault();
     setError("");
-
-    if (!code) {
-      setError("Invalid reset link");
-      return;
-    }
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -89,7 +67,7 @@ export function ResetPasswordForm() {
       const response = await fetch("/api/auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code, password }),
+        body: JSON.stringify({ password }),
       });
 
       const data = await response.json();
