@@ -18,21 +18,44 @@ export function ResetPasswordForm() {
 
   useEffect(() => {
     const checkSession = async () => {
-      console.log("🔍 [ResetPasswordForm] Checking session...");
+      console.log("🔍 [ResetPasswordForm] Checking for recovery code...");
       console.log("URL:", window.location.href);
 
       // Extract the recovery code from the URL
       const params = new URLSearchParams(window.location.search);
       const recoveryCode = params.get("code");
 
-      if (recoveryCode) {
-        console.log("✓ Recovery code found in URL");
-        setCode(recoveryCode);
-        setHasValidSession(true);
+      if (!recoveryCode) {
+        console.log("No recovery code detected");
+        setError("Invalid reset link. Please request a new one.");
         return;
       }
 
-      console.log("No recovery code detected");
+      console.log("✓ Recovery code found in URL:", recoveryCode);
+      setCode(recoveryCode);
+
+      // Try to exchange the code for a session immediately
+      // This happens on page load, validating the recovery link works
+      console.log("📍 Validating recovery code with Supabase...");
+      try {
+        // Create a client-side Supabase client to validate the code
+        const response = await fetch("/api/auth/validate-recovery-code", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code: recoveryCode }),
+        });
+
+        if (response.ok) {
+          console.log("✓ Recovery code is valid");
+          setHasValidSession(true);
+        } else {
+          console.log("✗ Recovery code validation failed");
+          setError("Your reset link has expired or is invalid. Please request a new one.");
+        }
+      } catch (err) {
+        console.error("Code validation error:", err);
+        setError("Failed to validate reset link. Please try again.");
+      }
     };
 
     checkSession();
