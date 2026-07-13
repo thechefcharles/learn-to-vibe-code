@@ -222,14 +222,6 @@ export function StepLessonViewer({
         backgroundAttachment: 'fixed',
       }}
     >
-      {/* Blurred background overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backdropFilter: 'blur(8px)',
-          backgroundColor: 'rgba(0, 0, 0, 0.1)',
-        }}
-      />
       <VideoBackground />
       <MouseTrail />
 
