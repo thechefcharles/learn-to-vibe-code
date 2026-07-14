@@ -1,34 +1,14 @@
 # Module 0: Setup & Accounts
 
-## Who This Course Is For
-
-This course teaches full-stack development with AI assistance. It's designed for ages 14+. Here's how we adapt:
-
-### If You're Under 18 ("Kids" Content)
-
-The "kids" version of lessons uses simpler language and metaphors. Examples focus on personal projects (pet tracker, homework helper). Concepts are identical to the adult version; the presentation is clearer for younger learners.
-
-You can read either version (kids is clearer; adult is more business-focused). Pick what resonates.
-
-**Your goal:** Ship a capstone project that proves you can build, ship, and explain production code.
-
-### If You're an Adult or Career-Changer ("Adult" Content)
-
-The "adult" version includes business context (SaaS, product, team workflows). Examples assume some work experience. Concepts apply directly to real job scenarios.
-
-**Your goal:** Same: ship a capstone that proves you can handle real projects.
-
-### Bottom Line
-
-Age or background doesn't matter. What matters: curiosity, willingness to learn, and commitment to shipping something.
-
----
-
-**Stage:** Onboarding · **Level:** Beginner / All · **Duration:** ~2.5 contact hours (0.25 CEU)
+**Stage:** Onboarding · **Level:** Beginner / All · **Duration:** ~2 contact hours (0.2 CEU)
 
 **Prerequisites:** None — this comes before Module 1. A computer and an internet connection are all that's assumed.
 
 > Setup friction is where beginners quietly give up. This module installs and *verifies* every account and tool once, up front, so no later lesson stalls on "it won't install." It also gives learners the map of the whole stack before they touch any of it.
+> 
+
+> **📸 Screenshots:** Items marked *[SCREENSHOT: …]* are placeholders — capture them live when recording (install screens, dashboards, the hello-world app running).
+> 
 
 ## Learning objectives
 
@@ -37,6 +17,7 @@ By the end of this module, the learner can:
 1. **Set up** all required accounts and tools for the course. *(Apply)*
 2. **Explain** what each tool in the stack is for and how the pieces connect. *(Understand)*
 3. **Verify** the full toolchain works with a hello-world check. *(Apply)*
+4. **Arrange** their workspace for multi-screen workflow efficiency. *(Apply)*
 
 ---
 
@@ -46,132 +27,49 @@ Give learners the whole map first, so every tool has a place to land. Each maps 
 
 | Tool | What it's for | First used in… |
 | --- | --- | --- |
-| Node.js | Runtime that executes JavaScript code on your computer | Module 4 |
-| Cursor | AI code editor — you write code, AI autocompletes/suggests as you type (real-time, in-editor) | Module 4 |
-| Claude Code | AI terminal agent — you ask it complex tasks, it runs commands and writes multi-file projects (command-line, agentic) | Module 5 |
-| Supabase | Backend database + authentication + storage (your app's brain) | Module 7 |
-| GitHub | Version control + code hosting (saves your work, enables teamwork) | Module 9 |
-| Vercel | One-click deployment (shares your app on the internet with a public URL) | Module 10 |
-
-**In-editor flow vs. agentic flow — what's the difference?**
-- **Cursor (in-editor):** You open a file, start typing, and AI suggests completions line-by-line. You're driving; AI is the copilot.
-- **Claude Code (agentic):** You describe what you want ("build me a login form"), and AI writes entire functions/files for you. AI is driving; you review.
+| Node.js | Runs your app locally | Module 4 |
+| Cursor | AI code editor (in-editor flow) | Module 4 |
+| Claude Code | Terminal AI agent (agentic flow) | Module 5 |
+| Supabase | Database + auth + security | Module 7 |
+| GitHub | Version control + code hosting | Module 9 |
+| Vercel | Deploys your app to a public URL | Module 10 |
 
 **The one-sentence flow:** you *write* code in Cursor/Claude Code, make it *look good* (Module 6), *power* it with Supabase, *store* it on GitHub, and *ship* it on Vercel — with Node running it locally along the way.
 
 ---
 
-## Lesson 0.2 — Set up your environment with Claude Code (~30 min)
+## Lesson 0.2 — Install the editors and runtime (~30 min)
 
-### What is a terminal?
-
-Before you start: a **terminal** is a text-based interface to your computer. Instead of clicking buttons, you type commands. Don't worry — Claude Code will orchestrate most of the work for you.
-
-- **Mac:** Open Spotlight (Cmd+Space), type "Terminal", press Enter.
-- **Windows:** Press Win+R, type "powershell", press Enter.
-
----
-
-### The automation-first approach
-
-Instead of manually navigating websites and running installers, you'll **prompt Claude Code to set up your development environment**. Claude Code knows the latest versions, compatible configurations, and verification steps — and it can walk you through them step by step.
-
-**Your job:** describe what you want to set up, review Claude Code's recommendations, and follow the steps it provides. You're still in control (you approve each step), but Claude Code does the research and orchestration.
-
-### Setting up Node.js, Cursor, and Claude Code
-
-**Step 1:** Open a terminal (Mac: Cmd+Space → "Terminal"; Windows: Win+R → "powershell").
-
-**Step 2:** Prompt Claude Code to guide your setup:
+- **Node.js** — install the LTS version from [nodejs.org](http://nodejs.org). Verify in a terminal:
 
 ```bash
-claude
+node --version
+npm --version
 ```
 
-Then in Claude Code, write:
+- **Cursor** — download from [cursor.com](http://cursor.com), install, and sign in. (It's a VS Code fork, so it'll feel familiar if you've used VS Code.)
+- **Claude Code** — install and sign in per the current instructions, then confirm it launches:
 
-```
-Help me set up my development environment for Next.js. I need:
-1. Node.js LTS (latest stable version)
-2. Cursor installed and signed in
-3. Claude Code installed and verified
-
-Tell me the exact steps for my OS [Mac/Windows], the version numbers to expect, 
-and the commands to verify everything works. I'll follow your guidance.
+```bash
+claude --version
 ```
 
-**Step 3:** Claude Code will provide:
-- The exact Node.js version to install (e.g., v22 LTS)
-- Download links tailored to your OS
-- Setup instructions for Cursor
-- Verification commands (e.g., `node --version`, `npm --version`)
-- Confirmation that you're logged in
+*[SCREENSHOT: a terminal showing successful node, npm, and claude version checks.]*
 
-**Step 4:** Follow Claude Code's step-by-step guidance. After each step, run the verification commands it suggests. If something doesn't work, tell Claude Code — it can troubleshoot based on the error.
-
----
-
-**[SCREENSHOT PLACEHOLDER: Claude Code Terminal Session]**
-
-**What this screenshot should show:**
-- Terminal window with Claude Code running
-- A conversation where you ask Claude Code to help set up the environment
-- Claude Code's response showing install steps, version numbers, and verification commands
-- Terminal showing successful version checks (e.g., `node v22.0.0`, `npm v10.5.0`)
-
----
-
-### Quick manual reference (if you prefer self-service)
-
-If you'd rather not use Claude Code for this step, here's the manual path (though we recommend the automation above):
-
-**Node.js:** Go to [https://nodejs.org](https://nodejs.org), download LTS, run the installer.
-**Cursor:** Go to [https://cursor.com](https://cursor.com), download for your OS, install and sign in.
-**Claude Code:** Go to [https://claude.com/download](https://claude.com/download), install, run `claude login`.
-
-But honestly? Prompting Claude Code is faster and more reliable — it knows the current versions and catches common mistakes automatically.
+> **Instructor note:** Do these live and slowly — version/PATH issues are the most common blocker.
+> 
 
 ---
 
 ## Lesson 0.3 — Create your accounts (~30 min)
 
-Sign up for all three **using the same email address** for consistency. This makes it easier to keep track of your accounts.
+Sign up for all three now so nothing blocks you later. Use the same email for consistency.
 
-### GitHub ([github.com](https://github.com))
+- **GitHub** — [github.com](http://github.com) (you'll create your first repo in Module 9).
+- **Supabase** — [supabase.com](http://supabase.com) (you'll create a project in Module 7).
+- **Vercel** — [vercel.com](http://vercel.com), and connect it to your GitHub account (this link enables auto-deploy in Module 10).
 
-GitHub is where you'll save your code. It's like Google Drive for developers — it tracks changes and lets you collaborate.
-
-**Step 1:** Go to [https://github.com/signup](https://github.com/signup)
-
-**Step 2:** Enter your email, create a password, and choose a username. (Your username will be visible — keep it professional.)
-
-**Step 3:** Verify your email — GitHub will send you a confirmation link. Click it.
-
-**Step 4:** You're done. You'll create your first repo (project folder) in Module 9, so don't worry about that now.
-
-### Supabase ([supabase.com](https://supabase.com))
-
-Supabase is your database — where your app stores data (user logins, posts, etc.).
-
-**Step 1:** Go to [https://supabase.com](https://supabase.com) and click "Sign up".
-
-**Step 2:** You can sign up with GitHub (easier) or email. If using GitHub, click "Continue with GitHub" and authorize.
-
-**Step 3:** Verify your email.
-
-**Step 4:** You're done. You'll create a Supabase project in Module 7.
-
-### Vercel ([vercel.com](https://vercel.com))
-
-Vercel is where you'll deploy your app — it makes it live on the internet.
-
-**Step 1:** Go to [https://vercel.com/signup](https://vercel.com/signup)
-
-**Step 2:** Sign up with GitHub (recommended). Click "Continue with GitHub" and authorize.
-
-**Step 3:** **Important:** After sign-up, go to your account settings and connect your GitHub account. Vercel needs permission to access your GitHub repos. (If you signed up with GitHub, this is already done — verify in Settings.)
-
-**Step 4:** You're done.
+*[SCREENSHOT: the Vercel sign-up connecting to a GitHub account.]*
 
 ---
 
@@ -179,214 +77,226 @@ Vercel is where you'll deploy your app — it makes it live on the internet.
 
 Set expectations honestly so nobody is surprised by a bill:
 
-**Free tiers that cover this course:**
-- Node.js — always free
-- GitHub — free tier is generous; unlimited public/private repos
-- Supabase — free tier includes 500MB database + 5GB storage (plenty for this course)
-- Vercel — free tier includes unlimited deployments; only pay for extras (bandwidth beyond free quota)
+- **Node.js, GitHub, Supabase, Vercel** — all have free tiers that comfortably cover this course.
+- **Cursor & Claude Code** — free/trial tiers, with paid plans (commonly around $20/month each) for heavier use. Learners can complete the course on modest usage.
 
-**AI editors (freemium):**
-- **Cursor** — free tier: 2 slow requests/day; paid: $20/month for unlimited fast requests
-- **Claude Code** — free trial; after, pay by token usage (typically $5-50/month for moderate use)
+> Pricing changes often — point learners to each tool's current pricing page rather than memorizing numbers.
+> 
 
-You can **complete the entire course on free tiers**. AI editor usage depends on how much you experiment; most learners stay under $10-20/month if they're not running heavy builds constantly.
-
-**To avoid unexpected bills:**
-1. Use the free tiers first — don't upgrade unless you hit limits
-2. Check your usage dashboard on each tool's account settings weekly (takes 2 minutes)
-3. Set spending alerts if available (Vercel and others offer this)
+**Managing spend (so the bill doesn't surprise you):** AI coding tools bill by usage/credits, and heavy agentic runs (big multi-file builds, long sessions) burn faster than in-editor autocomplete. Habits: start on free/trial tiers; prefer scoped, specific prompts over "rebuild everything"; use `/compact` and fresh sessions to avoid paying for bloated context; and check your usage dashboard weekly at first to learn your own burn rate.
 
 ---
 
-## Lesson 0.5 — Verify your complete toolchain (~25 min)
+## Lesson 0.5 — Verify everything works (~25 min)
 
-Use Claude Code to orchestrate and verify every part of your setup before Module 1. This is faster than manual verification and catches issues automatically.
-
-### The automated verification flow
-
-**Step 1:** Open a terminal and prompt Claude Code:
+Prove the whole toolchain runs *before* Module 1. Create a throwaway hello-world Next.js app:
 
 ```bash
-claude
+npx create-next-app@latest hello-check
+cd hello-check
+npm run dev
 ```
 
-Then ask:
+Open [http://localhost:3000](http://localhost:3000) — if the starter page loads, Node + npm + your editor work. Then confirm you can sign in to Cursor, launch Claude Code in that folder, and that you're logged in to GitHub, Supabase, and Vercel. Delete the `hello-check` folder afterward.
 
-```
-I've installed Node.js, Cursor, and Claude Code. 
-Create a verification checklist and walk me through it:
-1. Check Node.js and npm versions
-2. Verify I can create and run a Next.js app
-3. Test that Cursor can open the project
-4. Confirm Claude Code is working
-5. Verify I'm logged into GitHub, Supabase, and Vercel
+*[SCREENSHOT: the Next.js starter page running at [localhost:3000](http://localhost:3000).]*
 
-Run the commands for me and interpret the results. 
-Tell me if anything is missing or broken.
-```
-
-**Step 2:** Claude Code will:
-- Provide the exact verification commands for your OS
-- Run them and check the output
-- Flag any version mismatches or missing tools
-- Guide you through fixes if needed
-- Confirm when everything is ready
-
----
-
-**[SCREENSHOT PLACEHOLDER: Claude Code Verification Session]**
-
-**What this screenshot should show:**
-- Terminal window with Claude Code running a verification session
-- Claude Code running commands like `node --version`, `npm --version`
-- Output showing successful version checks
-- Claude Code's summary: "All checks passed, you're ready for Module 1"
-
----
-
-### What happens in the verification
-
-Claude Code will orchestrate:
-1. **Version checks** — confirming Node.js LTS, npm, Cursor, and Claude Code versions
-2. **A test project** — creating a temporary Next.js app to ensure the full pipeline works
-3. **Tool integration** — verifying Cursor can open the project and Claude Code can read the files
-4. **Account checks** — confirming you're logged into GitHub, Supabase, and Vercel (it won't have direct access, but it can walk you through confirming each)
-
-After the checks pass, Claude Code will clean up the temporary project for you.
-
-### If Claude Code finds a problem
-
-Claude Code will tell you exactly:
-- What failed (e.g., "npm not in PATH")
-- Why it happened (e.g., "Terminal needs to be restarted after Node install")
-- How to fix it (e.g., "Close this terminal completely, open a new one, and try again")
-
-This is actually better than manual troubleshooting — Claude Code will verify the fix worked before you move on.
-
-### Quick manual reference (if Claude Code isn't working)
-
-If Claude Code itself isn't installed yet, you can verify manually:
-
-1. **Terminal:** open one (Mac: Cmd+Space → "Terminal"; Windows: Win+R → "powershell")
-2. **Run these commands:**
-   ```bash
-   node --version    # Should print v18.0.0 or higher
-   npm --version     # Should print 10.0.0 or higher
-   claude --version  # Should print a version number
-   ```
-3. **Create and test the app:**
-   ```bash
-   npx create-next-app@latest hello-check
-   cd hello-check
-   npm run dev
-   ```
-4. **Open in browser:** Go to http://localhost:3000 — you should see the Next.js starter page
-5. **Open in Cursor:** File → Open Folder → select `hello-check` folder
-6. **Check your logins:** Visit github.com, supabase.com, and vercel.com to verify you're signed in
-7. **Clean up:** Stop the app (Ctrl+C) and delete the `hello-check` folder
-
-### Troubleshooting the verification
-
-- **`claude` command not found** — Close the terminal and reopen it; PATH updates need a restart.
-- **Node version is too old** — Reinstall Node from nodejs.org (LTS version, v18+).
-- **Port 3000 already in use** — Another app is using it. Run `npm run dev -- -p 3001` instead.
-- **Next.js app creation fails** — Make sure you're in an empty folder. If you see ".DS_Store" errors (Mac), delete it with `rm .DS_Store` and try again.
-- **`localhost:3000` shows "Cannot connect"** — Wait 10 seconds for the app to start, then refresh your browser. Check the terminal for error messages.
-
----
-
-## Lesson 0.6 — Quick Intro: CLAUDE.md & Decisions (10 min)
-
-You'll document your project later. Know these two files:
-
-- **CLAUDE.md:** Project rules (testing expectations, deployment gates, AI workflow guardrails)
-- **decisions.md:** Why you chose what (this stack, this architecture, these tradeoffs)
-
-You'll create both in your capstone (Module 16). For now, just know they exist.
-
-## Lesson 0.7 — Repository vs. Notion (5 min)
-
-Repository = versioned artifacts (code, config, decisions, tests)  
-Notion = high-level context (architecture, design, roadmap, team processes)
-
-You'll use both in your project. Details in Module 16.
+> **Version note (pin + concept):** the course's reference build uses **Next.js 16 + Tailwind v4** (Tailwind v4 has **no `tailwind.config.js`** — config lives in CSS via `@import "tailwindcss"` + `@theme`). These tools move fast: pin your project's versions, learn the concept, and check current docs.
+> 
 
 ---
 
 ## Readiness checklist
 
-Tick every box before starting Module 1. If any are unchecked, go back to the lesson that covers it.
+Tick every box before starting Module 1:
 
 | Item | Done when… |
 | --- | --- |
-| Node.js | Terminal shows version: `node --version` prints `v18.0.0` or higher |
-| npm | Terminal shows version: `npm --version` prints `10.0.0` or higher |
-| Cursor | Installed and you can sign in |
-| Claude Code | Terminal shows version: `claude --version` works |
-| GitHub | Account created at github.com, you can log in |
-| Supabase | Account created at supabase.com, you can log in |
-| Vercel | Account created at vercel.com, GitHub connected |
-| Hello-world | Ran `create-next-app`, saw the starter page at localhost:3000 |
-
----
-
-## How to submit your work for Module 0
-
-Module 0 is a **checklist submission** (not a quiz). Here's how to complete it:
-
-**For the readiness checklist:**
-1. Go through the checklist above
-2. For each item, take a screenshot showing it's done:
-   - Node.js: Screenshot of terminal showing version
-   - Cursor: Screenshot of Cursor open and signed in
-   - Claude Code: Screenshot of terminal showing `claude --version` output
-   - GitHub/Supabase/Vercel: Screenshot showing you're logged in
-   - Hello-world: Screenshot of http://localhost:3000 in your browser showing the Next.js page
-
-3. **Go back to this module page on the platform** and click "Submit Deliverable"
-4. Upload your screenshots or paste a link to a folder with all of them
-5. Write a brief note: "All tools installed and verified"
-
-**For the knowledge check:**
-1. Answer in a text file or document:
-   - "In one sentence each, what do Cursor, GitHub, Supabase, and Vercel do?"
-   - "Show a screenshot of your hello-world app running at localhost:3000"
-
-2. Upload the file when you submit
-
-**This module is pass/complete:** You don't get a grade. You pass when all checklist items are ticked and you submit screenshots. It gates entry to Module 1.
+| Node.js | `node --version` prints a version |
+| Cursor | Installed and signed in |
+| Claude Code | Launches from the terminal |
+| GitHub | Account created, logged in |
+| Supabase | Account created, logged in |
+| Vercel | Account created, connected to GitHub |
+| Hello-world | A create-next-app ran at [localhost:3000](http://localhost:3000) |
 
 ---
 
 ## Troubleshooting (common blockers)
 
-- **`command not found` after install** — Close the terminal completely and reopen it. PATH updates on restart. If it still fails, reinstall the tool.
-- **`create-next-app` fails** — Usually an old Node version. Run `node --version` and verify you have v18+. If not, install the current LTS.
-- **`create-next-app` refuses to run in a non-empty folder** — Hidden files (like `.DS_Store` on Mac) block it. Start in an empty folder or let it create a subfolder.
-- **Port 3000 is in use** — Stop the other process, or run `npm run dev -- -p 3001` to use port 3001.
-- **Can't sign in to a tool** — Double-check you're using the correct email. If sign-in pages show "email not found", create a new account. Check that pop-ups aren't blocked in your browser (GitHub OAuth needs them).
-- **`npm install` is slow** — Normal on first run; can take 1-2 minutes. If it hangs for >5 minutes, press Ctrl+C and try again.
+- **`command not found` after install** — close and reopen the terminal (PATH updates on restart); reinstall if it persists.
+- **`create-next-app` fails** — usually an old Node version; install the current LTS.
+- **`create-next-app` refuses to run in a non-empty folder** — even one stray file (or a hidden `.DS_Store`) blocks it. Start in an empty folder, or let it create a fresh subfolder.
+- **Port 3000 in use** — stop the other process or let Next.js use the next port it offers.
+- **Can't sign in to a tool** — check you're using the same email and that pop-ups/OAuth aren't blocked.
+
+---
+
+## Knowledge check (mapped to objectives)
+
+**Objective 1 — Set up tools/accounts:** submit your completed readiness checklist (screenshots of each).
+
+**Objective 2 — Explain the stack:** in one sentence each, say what Cursor, GitHub, Supabase, and Vercel do.
+
+**Objective 3 — Verify the toolchain:** show a screenshot of a create-next-app running at [localhost:3000](http://localhost:3000).
+
+*This module is pass/complete (checklist done) rather than quiz-graded — it gates entry to Module 1.*
 
 ---
 
 ## Tools & alternatives (this module)
 
-These are the course defaults. Alternatives (VS Code + Copilot, other editors, etc.) are discussed in later modules and consolidated in Module 15 (Landscape). 
-
-**For beginners:** Stick with the defaults (Cursor + Claude Code) to avoid confusion with different screenshots and workflows. You can switch tools in later modules once you understand the concepts.
+These are the course defaults; alternatives are discussed in their modules and consolidated in Module 15 (Landscape). A learner already on an alternative editor (VS Code + Copilot) can follow along, but the step-by-step screenshots assume the defaults — recommend beginners use them to avoid divergence.
 
 ---
 
 ## Key takeaways
 
-- **Set up and verify everything once, up front** — don't let install friction derail Module 1.
-- **Know the stack map:** write code (Cursor/Claude Code) → design it (Module 6) → power it (Supabase) → store it (GitHub) → ship it (Vercel).
-- **Free tiers cover this course** — no credit card needed to start.
-- **You're ready for Module 1 when every box on the readiness checklist is ticked.**
-- **Stuck?** Go to the troubleshooting section above. If it's not listed, ask for help in the support chat.
+- Set up and verify everything once, up front — don't let install friction derail a later lesson.
+- Know the stack map: write (Cursor/Claude Code) → design (Module 6) → power (Supabase) → store (GitHub) → ship (Vercel).
+- Free tiers cover the course; AI tools are metered, so heavy use costs more.
+- You're ready for Module 1 when every box on the readiness checklist is ticked.
+
+[Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)
+---
+
+## Lesson 0.6 — Multi-screen workflow & window management (~20 min)
+
+The course requires juggling multiple apps simultaneously: the course (lesson + quiz), terminal (Claude Code), editor (Cursor), and often a browser (Supabase console, GitHub, documentation). Small screens or poor window arrangement will slow you down. This lesson shows how to arrange your workspace efficiently on both Mac and Windows.
+
+### The typical layout
+
+Arrange your screen into 2-4 zones:
+
+| Left | Right | Background |
+| --- | --- | --- |
+| **Course page** (lesson + quiz) | **Terminal** (Claude Code running) | Browser (docs / GitHub / Supabase) |
+| OR **Editor** (Cursor for code review) | **Dev preview** (localhost:3000) | Course page (reference) |
+
+The goal: see your work and the instruction/reference side-by-side without tab-switching.
+
+### macOS: Window management tricks
+
+**Split View (built-in, easiest)**
+
+1. Open two apps (e.g., course + terminal).
+2. Swipe up with **4 fingers** to open Mission Control.
+3. Click-and-drag one app to the top-left corner — it snaps to fill left half.
+4. Click another app to fill the right half.
+5. Both apps run full-height, split 50/50.
+
+Shortcut: Hold the green maximize button in the top-left of any window → macOS shows split-view options.
+
+**Multiple Desktops / Spaces (advanced)**
+
+1. Swipe up with **4 fingers** to open Mission Control.
+2. Move your cursor to the top edge and move right — you'll see space thumbnails.
+3. Click the "+" to create a new desktop.
+4. Swipe left/right with **4 fingers** to switch between desktops.
+5. Put "persistent" apps (Cursor, terminal) on Desktop 1, and the course on Desktop 2. Swipe to focus.
+
+**Example flow:**
+- **Desktop 1:** Cursor (left half) + Terminal (right half) — your build environment.
+- **Desktop 2:** Course (full screen) — distraction-free reading.
+- **Desktop 3:** Browser tabs (Supabase, GitHub, docs) — reference layer.
+
+Swipe 4 fingers horizontally to jump between them in seconds.
 
 ---
 
-## Next: Module 1
+### Windows: Window management tricks
 
-Once you've ticked the readiness checklist and submitted your screenshots, you're ready for **Module 1: AI Fundamentals** — where we'll explore how AI coding actually works, and you'll write your first prompt.
+**Snap Assist (built-in, easiest)**
+
+1. Open two apps.
+2. Drag one window to the **left edge** of the screen — it snaps to fill the left half.
+3. Click another app (or window) to fill the right half.
+4. Both run full-height, split 50/50.
+
+Shortcut: Click-drag the window title bar to the left edge, or use **Win + Left Arrow** to snap the active window to the left half.
+
+**Virtual Desktops (advanced)**
+
+1. Press **Win + Tab** to open Task View.
+2. Click "+ New Desktop" (bottom-right).
+3. Create 2-3 desktops.
+4. Drag windows into each desktop (or open apps directly in a specific desktop).
+5. Press **Win + Ctrl + Left/Right** to switch desktops.
+
+**Example flow:**
+- **Desktop 1:** Cursor (left half) + Terminal (right half) — your build environment.
+- **Desktop 2:** Course (full screen) + browser pinned to taskbar — distraction-free learning.
+- **Desktop 3:** GitHub / Supabase console — reference.
+
+Switch with **Win + Ctrl + Left/Right**.
+
+---
+
+### Linux (GNOME, Wayland, etc.)
+
+**GNOME Workspaces**
+
+1. Super key (Windows key) to open Activities.
+2. Move cursor to the top-right corner — workspace thumbnails appear.
+3. Click "+ Workspace" to create a new one.
+4. Click a workspace to switch.
+5. Use **Super + Page Down / Page Up** to navigate workspaces.
+
+**Tiling Window Manager Alternative**
+
+If you're using a tiling WM (i3, sway, etc.), you likely manage windows via keyboard — no special setup needed. Configure your usual splits and workspaces.
+
+---
+
+### Recommended screen setup by device
+
+**Laptop (single screen)**
+
+Split into 2 halves:
+- **Left:** Cursor (or course text)
+- **Right:** Terminal or browser
+
+OR use virtual desktops to separate concerns:
+- Desktop 1: Editor + Terminal
+- Desktop 2: Course + Browser
+
+**Dual monitor**
+
+- **Main screen (primary):** Cursor + Terminal (split vertically)
+- **Secondary screen:** Course full-screen + browser tabs in background
+
+OR:
+- **Main screen:** Course full-screen
+- **Secondary screen:** Editor + Terminal (split)
+
+**Ultra-wide (≥3440px)**
+
+Arrange 3 windows side-by-side:
+- **Left third:** Cursor code
+- **Middle third:** Terminal + dev preview stacked
+- **Right third:** Course + browser tabs
+
+---
+
+### Pro tips
+
+- **Pin your course/docs:** Use browser pinning or split-view to keep reference always visible.
+- **Fullscreen terminal:** When debugging, expand the terminal to fullscreen temporarily (then return to split).
+- **Zoom in if needed:** Course text, terminal, and code can all be zoomed (browser zoom, Cursor font size, terminal size) — don't strain.
+- **Accessibility:** If you have visual or motor challenges, use your OS's accessibility features (zoom, text enlargement, voice control) — they work across all these tools.
+
+---
+
+## Updated Readiness checklist
+
+| Item | Done when… |
+| --- | --- |
+| Node.js | `node --version` prints a version |
+| Cursor | Installed and signed in |
+| Claude Code | Launches from the terminal |
+| GitHub | Account created, logged in |
+| Supabase | Account created, logged in |
+| Vercel | Account created, connected to GitHub |
+| Hello-world | A create-next-app ran at [localhost:3000](http://localhost:3000) |
+| **Window setup** | **You can split two windows side-by-side on your OS** |
+
