@@ -17,12 +17,14 @@ export async function GET(
       );
     }
 
-    // Return HTML for browser to render and print to PDF
-    // Client-side will handle print-to-PDF conversion
+    // Return HTML with security headers
+    // Use attachment disposition to force download, preventing inline rendering XSS
     return new NextResponse(certData.html, {
       headers: {
         "Content-Type": "text/html; charset=utf-8",
-        "Content-Disposition": `inline; filename="certificate-${cert_id}.html"`,
+        "Content-Disposition": `attachment; filename="certificate-${cert_id}.html"`,
+        "X-Content-Type-Options": "nosniff",
+        "Content-Security-Policy": "sandbox; default-src 'none'; style-src 'unsafe-inline'",
       },
     });
   } catch (error) {
