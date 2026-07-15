@@ -1,13 +1,19 @@
+'use client';
+
 import { Header } from '@/components/kids-landing/Header';
 import { Footer } from '@/components/Footer';
+import { DonationButton } from '@/components/DonationButton';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
-export const metadata = {
-  title: 'Support Learn to Vibe Code',
-  description: 'Help support the Accredited Vibe Coding Course and make quality education accessible to everyone.',
-};
+// Force dynamic rendering since we use useSearchParams
+export const dynamic = 'force-dynamic';
 
-export default function SupportPage() {
+function SupportPageContent() {
+  const searchParams = useSearchParams();
+  const showSuccess = searchParams.get('success') === 'true';
+
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundImage: 'url(/support-bg.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed', backgroundRepeat: 'no-repeat' }}>
       {/* Dark Overlay */}
@@ -32,6 +38,15 @@ export default function SupportPage() {
             </p>
           </div>
 
+          {/* Success Message */}
+          {showSuccess && (
+            <div className="mb-8 p-4 bg-green-500/20 border border-green-500/50 rounded-lg">
+              <p className="text-green-400 font-semibold">
+                Thank you for your donation! Your support means the world to us.
+              </p>
+            </div>
+          )}
+
           {/* Content */}
           <div className="space-y-8 text-gray-200">
             <section>
@@ -39,11 +54,11 @@ export default function SupportPage() {
                 Why We Need Your Support
               </h2>
               <p className="mb-4">
-                The Accredited Vibe Coding Course is built to be freely accessible to learners everywhere. By keeping the platform free, 
+                The Accredited Vibe Coding Course is built to be freely accessible to learners everywhere. By keeping the platform free,
                 we're removing barriers for students who want to learn but can't afford expensive bootcamps or courses.
               </p>
               <p>
-                Your support helps us maintain the platform, improve the content, and keep the course free for everyone. Even a small 
+                Your support helps us maintain the platform, improve the content, and keep the course free for everyone. Even a small
                 contribution makes a real difference.
               </p>
             </section>
@@ -54,33 +69,63 @@ export default function SupportPage() {
               </h2>
               <div className="space-y-4">
                 <div className="bg-white/5 border border-cyan-500/30 rounded-lg p-6">
-                  <h3 className="text-lg font-bold text-cyan-400 mb-2">💳 One-Time Donation</h3>
+                  <h3 className="text-lg font-bold text-cyan-400 mb-2">☕ Buy Me a Coffee</h3>
                   <p className="text-sm mb-4">
-                    Make a one-time contribution to support the platform and help us keep the course free.
+                    Support through a one-time coffee donation - just $5 helps keep the servers running.
                   </p>
-                  <button className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold rounded-lg hover:from-cyan-600 hover:to-purple-700 transition-all">
-                    Donate via PayPal
-                  </button>
+                  <DonationButton
+                    type="coffee"
+                    label="Buy Me a Coffee ($5)"
+                    className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-bold rounded-lg hover:from-cyan-600 hover:to-purple-700 transition-all"
+                  />
                 </div>
 
                 <div className="bg-white/5 border border-purple-500/30 rounded-lg p-6">
-                  <h3 className="text-lg font-bold text-purple-400 mb-2">☕ Buy Me a Coffee</h3>
+                  <h3 className="text-lg font-bold text-purple-400 mb-2">🍵 Buy Me Tea</h3>
                   <p className="text-sm mb-4">
-                    Support through Buy Me a Coffee - even $5 helps keep the servers running.
+                    Contribute $10 to help us improve course content and learner experience.
                   </p>
-                  <button className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all">
-                    Buy Me a Coffee
-                  </button>
+                  <DonationButton
+                    type="tea"
+                    label="Buy Me Tea ($10)"
+                    className="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all"
+                  />
                 </div>
 
                 <div className="bg-white/5 border border-pink-500/30 rounded-lg p-6">
-                  <h3 className="text-lg font-bold text-pink-400 mb-2">🌟 Share the Course</h3>
+                  <h3 className="text-lg font-bold text-pink-400 mb-2">🍔 Buy Me Lunch</h3>
                   <p className="text-sm mb-4">
-                    The best support is spreading the word. Share Learn to Vibe Code with friends, colleagues, and students.
+                    A $25 donation supports platform development and new module creation.
                   </p>
-                  <button className="px-4 py-2 bg-gradient-to-r from-pink-500 to-orange-600 text-white font-bold rounded-lg hover:from-pink-600 hover:to-orange-700 transition-all">
-                    Share on Social Media
-                  </button>
+                  <DonationButton
+                    type="lunch"
+                    label="Buy Me Lunch ($25)"
+                    className="px-4 py-2 bg-gradient-to-r from-pink-500 to-orange-600 text-white font-bold rounded-lg hover:from-pink-600 hover:to-orange-700 transition-all"
+                  />
+                </div>
+
+                <div className="bg-white/5 border border-orange-500/30 rounded-lg p-6">
+                  <h3 className="text-lg font-bold text-orange-400 mb-2">🍽️ Buy Me Dinner</h3>
+                  <p className="text-sm mb-4">
+                    A generous $50 donation helps us maintain accreditation and support learners.
+                  </p>
+                  <DonationButton
+                    type="dinner"
+                    label="Buy Me Dinner ($50)"
+                    className="px-4 py-2 bg-gradient-to-r from-orange-500 to-red-600 text-white font-bold rounded-lg hover:from-orange-600 hover:to-red-700 transition-all"
+                  />
+                </div>
+
+                <div className="bg-white/5 border border-indigo-500/30 rounded-lg p-6">
+                  <h3 className="text-lg font-bold text-indigo-400 mb-2">💝 Custom Donation</h3>
+                  <p className="text-sm mb-4">
+                    Choose any amount you'd like to contribute to support our mission.
+                  </p>
+                  <DonationButton
+                    amount={25}
+                    label="Make a Custom Donation"
+                    className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-blue-600 text-white font-bold rounded-lg hover:from-indigo-600 hover:to-blue-700 transition-all"
+                  />
                 </div>
               </div>
             </section>
@@ -146,5 +191,13 @@ export default function SupportPage() {
 
       <Footer />
     </div>
+  );
+}
+
+export default function SupportPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen"><p className="text-white">Loading...</p></div>}>
+      <SupportPageContent />
+    </Suspense>
   );
 }
