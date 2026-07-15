@@ -1,20 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
-
-// Donation preset amounts (in cents)
-const DONATION_AMOUNTS: Record<string, number> = {
-  coffee: 500, // $5
-  tea: 1000, // $10
-  lunch: 2500, // $25
-  dinner: 5000, // $50
-};
+import { getUser } from "@/lib/auth";
+import { createClient } from "@/lib/supabase/server";
+import { createDonationSession, DONATION_AMOUNTS } from "@/lib/stripe";
 
 export async function POST(req: NextRequest) {
   try {
+    // Authenticate user
+    const user = await getUser();
+    if (!user) {
+      return NextResponse.json(
+        { error: "Not authenticated" },
+        { status: 401 }
+      );
+    }
+
     const body = await req.json();
-    const { amount, type } = body;
+    const { amount, type, userId } = body;
+
+    // Validate that userId matches authenticated user
+    if (userId && userId !== user.id) {
+      return NextResponse.json(
+        { error: "User ID mismatch" },
+        { status: 403 }
+      );
+    }
 
     // Validate amount
     let amountCents = 0;
@@ -29,33 +38,38 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Create Checkout session
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: [
-        {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: "Support Learn to Vibe Code",
-              description:
-                "Your donation helps keep the course free and accessible.",
-            },
-            unit_amount: amountCents,
-          },
-          quantity: 1,
-        },
-      ],
-      mode: "payment",
-      success_url: `${process.env.NEXT_PUBLIC_SITE_URL}/support?success=true`,
-      cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/support?cancelled=true`,
-    });
+    // Validate amount is between $1 and $10,000 (100 to 1,000,000 cents)
+    const MIN_AMOUNT_CENTS = 100; // $1.00
+    const MAX_AMOUNT_CENTS = 1000000; // $10,000.00
 
-    return NextResponse.json({ sessionId: session.id, url: session.url });
+    if (amountCents < MIN_AMOUNT_CENTS || amountCents > MAX_AMOUNT_CENTS) {
+      return NextResponse.json(
+        {
+          error: `Donation amount must be between $1.00 and $10,000.00`,
+        },
+        { status: 400 }
+      );
+    }
+
+    // Get site URL from environment or request headers
+    const siteUrl =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      `${req.nextUrl.protocol}//${req.nextUrl.host}`;
+
+    // Create donation session
+    const { sessionId, url } = await createDonationSession(
+      user.id,
+      amountCents,
+      siteUrl
+    );
+
+    return NextResponse.json({ sessionId, url });
   } catch (error) {
-    console.error("Stripe error:", error);
+    console.error("Donation error:", error);
+    const message =
+      error instanceof Error ? error.message : "Failed to create checkout session";
     return NextResponse.json(
-      { error: "Failed to create checkout session" },
+      { error: message },
       { status: 500 }
     );
   }
