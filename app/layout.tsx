@@ -5,6 +5,10 @@ import "./globals.css";
 import "./globals-theme.css";
 import { ThemeProvider } from "@/lib/ThemeContext";
 import { VersionProvider } from "@/lib/VersionContext";
+import { validateEnv } from "@/lib/env-validation";
+
+// Validate environment variables at startup
+validateEnv();
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
