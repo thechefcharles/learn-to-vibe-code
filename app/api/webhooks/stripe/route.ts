@@ -78,15 +78,16 @@ export async function POST(req: NextRequest) {
 
         if (session.payment_intent) {
           try {
-            const paymentIntent = await stripe.paymentIntents.retrieve(
-              typeof session.payment_intent === "string"
-                ? session.payment_intent
-                : session.payment_intent.id
-            );
+            const paymentIntentId = typeof session.payment_intent === "string"
+              ? session.payment_intent
+              : session.payment_intent.id;
 
-            // Get charge ID from payment intent
-            if (paymentIntent.charges.data.length > 0) {
-              chargeId = paymentIntent.charges.data[0].id;
+            const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+
+            // Get charge ID from payment intent charges list
+            const intentData = paymentIntent as any;
+            if (intentData.charges && intentData.charges.data && intentData.charges.data.length > 0) {
+              chargeId = intentData.charges.data[0].id;
             }
           } catch (error) {
             const errorMessage =
