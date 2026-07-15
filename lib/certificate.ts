@@ -62,14 +62,16 @@ export function generateCertificateHTML(data: CertificateData): string {
       margin-bottom: 40px;
     }
     .header h1 {
-      font-size: 2.5em;
-      color: #1f2937;
-      margin-bottom: 8px;
-      letter-spacing: 2px;
-    }
-    .header p {
-      font-size: 1.1em;
-      color: #6b7280;
+function escapeHtml(text: string): string {
+  const htmlEscapeMap: Record<string, string> = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  };
+  return text.replace(/[&<>"']/g, (char) => htmlEscapeMap[char]);
+}
       font-style: italic;
     }
     .body {

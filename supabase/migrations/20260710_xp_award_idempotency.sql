@@ -9,7 +9,7 @@
 -- Step XP claims: one row per (user, module, step) that has had its XP
 -- awarded. The unique constraint is what makes `awardXP` idempotent.
 create table if not exists step_xp_claims (
-  id uuid primary key default uuid_generate_v4(),
+  id uuid primary key default gen_random_uuid(),
   user_id uuid not null references profiles(id) on delete cascade,
   module_id integer not null,
   step_id integer not null,
