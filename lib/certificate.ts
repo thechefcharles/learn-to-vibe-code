@@ -255,3 +255,78 @@ export async function getCertificateHTML(userId: string): Promise<string | null>
     return null;
   }
 }
+
+/**
+ * Convert certificate HTML to PDF buffer (MVP: returns HTML as-is for browser print-to-PDF)
+ */
+export function generateCertificatePDF(html: string): Buffer {
+  // For MVP, we return the HTML as a buffer since learners will use browser print-to-PDF
+  // In future phases, integrate html2pdf.js or similar for server-side PDF generation
+  return Buffer.from(html, "utf-8");
+}
+
+/**
+ * Retrieve certificate by cert_id (public access, no auth required)
+ * Used for shareable certificate links
+ */
+export async function getCertificateById(
+  certId: string
+): Promise<{
+  html: string;
+  user: { id: string; name: string };
+  certificate: { cert_id: string; issued_at: string };
+} | null> {
+  try {
+    // Validate cert_id format
+    if (!certId.startsWith("LVCC-")) {
+      return null;
+    }
+
+    // Query certificate by cert_id
+    const { data: cert, error: certError } = await supabase
+      .from("certificates")
+      .select("user_id, cert_id, issued_at")
+      .eq("cert_id", certId)
+      .single();
+
+    if (certError || !cert) {
+      console.error("Certificate not found:", certError);
+      return null;
+    }
+
+    // Query user profile
+    const { data: user, error: userError } = await supabase
+      .from("profiles")
+      .select("id, name")
+      .eq("id", cert.user_id)
+      .single();
+
+    if (userError || !user) {
+      console.error("User profile not found:", userError);
+      return null;
+    }
+
+    // Generate certificate HTML
+    const html = generateCertificateHTML({
+      userId: user.id,
+      userName: user.name,
+      completionDate: cert.issued_at,
+      certId: cert.cert_id,
+      moduleCount: 16,
+      contactHours: 93,
+      ceuCount: "9.3",
+    });
+
+    return {
+      html,
+      user,
+      certificate: {
+        cert_id: cert.cert_id,
+        issued_at: cert.issued_at,
+      },
+    };
+  } catch (error) {
+    console.error("Get certificate by ID error:", error);
+    return null;
+  }
+}
