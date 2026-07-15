@@ -82,12 +82,17 @@ export async function POST(req: NextRequest) {
               ? session.payment_intent
               : session.payment_intent.id;
 
-            const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+            const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId, {
+              expand: ['charges.data'],
+            });
 
             // Get charge ID from payment intent charges list
-            const intentData = paymentIntent as any;
-            if (intentData.charges && intentData.charges.data && intentData.charges.data.length > 0) {
-              chargeId = intentData.charges.data[0].id;
+            // Cast to access expanded charges property safely
+            const expandedIntent = paymentIntent as Stripe.PaymentIntent & {
+              charges?: { data?: Array<Stripe.Charge> };
+            };
+            if (expandedIntent.charges?.data?.[0]) {
+              chargeId = expandedIntent.charges.data[0].id;
             }
           } catch (error) {
             const errorMessage =
