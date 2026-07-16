@@ -21,6 +21,9 @@ export function Header() {
           <Link href="/course" className={`transition text-sm font-medium ${isKids ? "text-purple-700 hover:text-purple-900" : "text-ink hover:text-violet"}`}>
             Course
           </Link>
+          <Link href="/showcase" className={`transition text-sm font-medium ${isKids ? "text-purple-700 hover:text-purple-900" : "text-ink hover:text-violet"}`}>
+            Showcase
+          </Link>
           <Link href="/dashboard" className={`transition text-sm font-medium ${isKids ? "text-purple-700 hover:text-purple-900" : "text-ink hover:text-violet"}`}>
             Dashboard
           </Link>

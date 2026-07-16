@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useUnlockCeremony, UnlockCeremony } from './UnlockCeremony';
-import { useUser } from '@/lib/useAuth';
+import { useAuth } from '@/lib/useAuth';
 
 interface ModuleCompletionFlowProps {
   moduleId: string;
@@ -27,13 +27,13 @@ export function ModuleCompletionFlow({
   onComplete,
   children,
 }: ModuleCompletionFlowProps) {
-  const { user } = useUser();
+  const { user, loading } = useAuth();
   const { ceremony, trigger } = useUnlockCeremony();
   const [hasTriggered, setHasTriggered] = useState(false);
 
   // Listen for module completion (from progress tracking)
   useEffect(() => {
-    if (!user || hasTriggered) return;
+    if (!user || hasTriggered || loading) return;
 
     // Check if module was just completed
     const checkCompletion = async () => {
@@ -72,7 +72,7 @@ export function ModuleCompletionFlow({
     // Check every 2 seconds for completion
     const interval = setInterval(checkCompletion, 2000);
     return () => clearInterval(interval);
-  }, [user, moduleId, moduleName, hasTriggered, trigger, onComplete]);
+  }, [user, loading, moduleId, moduleName, hasTriggered, trigger, onComplete]);
 
   return (
     <>

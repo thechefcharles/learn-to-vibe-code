@@ -6,6 +6,15 @@ import { Footer } from '@/components/Footer';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
+function isValidHttpUrl(url: string): boolean {
+  try {
+    const parsed = new URL(url);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 interface ShowcaseProject {
   id: string;
   studentName: string;
@@ -142,22 +151,26 @@ export default function ShowcasePage() {
 
                   {/* Links */}
                   <div className="flex gap-3 pt-4 border-t border-white/10">
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/40 border border-cyan-500/50 text-cyan-400 rounded-lg text-center font-semibold transition-all text-sm"
-                    >
-                      🔗 Live Site
-                    </a>
-                    <a
-                      href={project.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 text-gray-300 rounded-lg text-center font-semibold transition-all text-sm"
-                    >
-                      📦 Repo
-                    </a>
+                    {isValidHttpUrl(project.liveUrl) && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 px-4 py-2 bg-cyan-500/20 hover:bg-cyan-500/40 border border-cyan-500/50 text-cyan-400 rounded-lg text-center font-semibold transition-all text-sm"
+                      >
+                        🔗 Live Site
+                      </a>
+                    )}
+                    {isValidHttpUrl(project.repoUrl) && (
+                      <a
+                        href={project.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 text-gray-300 rounded-lg text-center font-semibold transition-all text-sm"
+                      >
+                        📦 Repo
+                      </a>
+                    )}
                   </div>
 
                   {/* Upvote */}

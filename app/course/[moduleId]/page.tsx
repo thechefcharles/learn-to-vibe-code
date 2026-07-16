@@ -5,6 +5,7 @@ import { CourseLessonHeader } from "@/components/course/CourseLessonHeader";
 import { LessonViewToggle } from "@/components/course/LessonViewToggle";
 import { CoursePageInteractive } from "@/components/course/CoursePageInteractive";
 import { ShareLesson } from "@/components/course/ShareLesson";
+import { ModuleCompletionFlow } from "@/components/gamification/ModuleCompletionFlow";
 import { getModule } from "@/lib/content";
 import { getModuleMetadata } from "@/lib/module-metadata";
 import { getModuleSteps, hasModuleSteps } from "@/lib/module-steps";
@@ -140,32 +141,37 @@ export default async function LessonPage(props: LessonPageProps) {
   if (hasModuleSteps(moduleId)) {
     const steps = getModuleSteps(moduleId, userVersion);
     if (steps) {
+      const nextModuleId = nextModule !== null ? String(nextModule) : undefined;
 
       return (
-        <CoursePageInteractive moduleNumber={moduleId} user={user}>
-          <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
-            <LessonViewToggle
-              moduleId={moduleId}
-              lessonTitle={pageTitle}
-              user={user}
-              version={userVersion}
-              unlockedModules={unlockedModules}
-              completedModules={completedModules}
-              lessonsByModule={lessonsByModule}
-            >
-              <StepLessonViewer steps={steps} moduleId={moduleId} user={user} actualCurrentModule={actualCurrentModule} isModulePreview={isModulePreview} />
-            </LessonViewToggle>
-          </div>
-        </CoursePageInteractive>
+        <ModuleCompletionFlow moduleId={String(moduleId)} moduleName={pageTitle} nextModuleId={nextModuleId}>
+          <CoursePageInteractive moduleNumber={moduleId} user={user}>
+            <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
+              <LessonViewToggle
+                moduleId={moduleId}
+                lessonTitle={pageTitle}
+                user={user}
+                version={userVersion}
+                unlockedModules={unlockedModules}
+                completedModules={completedModules}
+                lessonsByModule={lessonsByModule}
+              >
+                <StepLessonViewer steps={steps} moduleId={moduleId} user={user} actualCurrentModule={actualCurrentModule} isModulePreview={isModulePreview} />
+              </LessonViewToggle>
+            </div>
+          </CoursePageInteractive>
+        </ModuleCompletionFlow>
       );
     }
   }
 
   const lessonUrl = `https://learn2vibecode.com/course/${moduleId}`;
+  const nextModuleId = nextModule !== null ? String(nextModule) : undefined;
 
   return (
-    <CoursePageInteractive moduleNumber={moduleId} user={user}>
-      <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
+    <ModuleCompletionFlow moduleId={String(moduleId)} moduleName={pageTitle} nextModuleId={nextModuleId}>
+      <CoursePageInteractive moduleNumber={moduleId} user={user}>
+        <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
         {/* Header */}
         {!isKids && <CourseLessonHeader moduleId={String(moduleId)} lessonTitle={pageTitle} user={user} />}
 
@@ -250,9 +256,10 @@ export default async function LessonPage(props: LessonPageProps) {
                 </p>
               </div>
             )}
+            </div>
           </div>
         </div>
-      </div>
-    </CoursePageInteractive>
+      </CoursePageInteractive>
+    </ModuleCompletionFlow>
   );
 }
