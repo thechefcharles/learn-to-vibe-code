@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
+import { createClient as createServiceClient } from "@supabase/supabase-js";
 import type { Version } from "@/lib/VersionContext";
 
 export async function getSession() {
@@ -85,14 +86,19 @@ export async function signUp(
 
   console.log("[signUp] Enrollment created with version:", version);
 
-  // Initialize XP and streaks
-  await supabase.from("xp").insert({
+  // Initialize XP and streaks using service-role client (bypasses RLS)
+  const serviceClient = createServiceClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  );
+
+  await serviceClient.from("xp").insert({
     user_id: data.user.id,
     points: 0,
     level: 1,
   });
 
-  await supabase.from("streaks").insert({
+  await serviceClient.from("streaks").insert({
     user_id: data.user.id,
     current: 0,
     longest: 0,

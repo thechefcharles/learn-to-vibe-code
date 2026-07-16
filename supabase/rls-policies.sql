@@ -13,6 +13,11 @@ alter table certificates enable row level security;
 alter table step_xp_claims enable row level security;
 
 -- PROFILES TABLE POLICIES
+-- Users can insert their own row on signup
+create policy "Users can insert own profile on signup"
+  on profiles for insert
+  with check (auth.uid() = id);
+
 -- Learners can view their own profile
 create policy "Users can view their own profile"
   on profiles for select
@@ -35,6 +40,11 @@ create policy "Users can update their own profile"
   with check (auth.uid() = id);
 
 -- ENROLLMENTS TABLE POLICIES
+-- Users can insert their own enrollment on signup
+create policy "Users can insert own enrollment on signup"
+  on enrollments for insert
+  with check (auth.uid() = user_id);
+
 -- Learners can view their own enrollment
 create policy "Users can view their own enrollment"
   on enrollments for select
