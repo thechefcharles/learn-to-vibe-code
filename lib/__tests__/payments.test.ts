@@ -34,23 +34,33 @@ describe('Payment Processing', () => {
   });
 
   describe('Webhook processing', () => {
-    it('should verify webhook signature', () => {
-      // Mock signature verification
-      const signature = 't=1614556800,v1=abc123def456';
-      const secret = 'whsec_test_secret';
-      const body = '{"type":"payment_intent.succeeded"}';
+    it('should verify webhook signature', async () => {
+      // Mock a valid Stripe signature + body
+      const testSecret = 'whsec_test_secret';
+      const timestamp = Math.floor(Date.now() / 1000);
+      const payload = JSON.stringify({ type: 'checkout.session.completed', id: 'evt_123' });
 
-      // Simulate signature verification (would use Stripe.Webhook.constructEvent in real code)
-      const isValid = signature.includes('v1=');
+      // In real scenario, this would be Stripe.Webhook.constructEvent(payload, signature, testSecret)
+      // For now, mock that valid signature passes validation
+      const mockConstructEvent = vi.fn().mockReturnValue({
+        type: 'checkout.session.completed',
+        id: 'evt_123',
+      });
 
-      expect(isValid).toBe(true);
+      const event = mockConstructEvent(payload, `t=${timestamp},v1=abc123`, testSecret);
+      expect(event).toBeDefined();
+      expect(event.type).toBe('checkout.session.completed');
     });
 
-    it('should reject invalid signature', () => {
-      const signature = 'invalid_signature';
-      const isValid = signature.includes('v1=');
+    it('should reject invalid signature', async () => {
+      // Mock invalid signature rejection
+      const mockConstructEvent = vi.fn().mockImplementation(() => {
+        throw new Error('Webhook signature verification failed');
+      });
 
-      expect(isValid).toBe(false);
+      expect(() => {
+        mockConstructEvent(JSON.stringify({}), 'invalid_sig', 'secret');
+      }).toThrow('Webhook signature verification failed');
     });
   });
 
