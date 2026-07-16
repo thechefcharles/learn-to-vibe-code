@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { signIn as supabaseSignIn, signUp as supabaseSignUp, signOut as supabaseSignOut } from "@/lib/auth";
+import { checkRateLimit } from "@/lib/rate-limit";
 import type { Version } from "@/lib/VersionContext";
 
 export async function signInAction(
@@ -9,6 +10,15 @@ export async function signInAction(
   password: string
 ): Promise<{ error?: string }> {
   try {
+    // Rate limiting: 5 requests per 15 minutes per email address
+    const { success } = await checkRateLimit(`signin:${email}`);
+
+    if (!success) {
+      return {
+        error: "Too many login attempts. Please try again in 15 minutes.",
+      };
+    }
+
     await supabaseSignIn(email, password);
     return {};
   } catch (error) {
@@ -25,6 +35,15 @@ export async function signUpAction(
   version: Version = "adult"
 ): Promise<{ error?: string }> {
   try {
+    // Rate limiting: 5 requests per 15 minutes per email address
+    const { success } = await checkRateLimit(`signup:${email}`);
+
+    if (!success) {
+      return {
+        error: "Too many signup attempts. Please try again in 15 minutes.",
+      };
+    }
+
     await supabaseSignUp(email, password, name, version);
     return {};
   } catch (error) {

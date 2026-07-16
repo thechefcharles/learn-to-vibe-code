@@ -1,8 +1,25 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit, getIpFromHeaders } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting: 5 requests per 15 minutes per IP
+    const ip = getIpFromHeaders(request.headers);
+    const { success, remaining } = await checkRateLimit(`recovery-code:${ip}`);
+
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many recovery code attempts. Please try again later." },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": "900", // 15 minutes
+          },
+        }
+      );
+    }
+
     const { code } = await request.json();
 
     if (!code) {
@@ -32,6 +49,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: "Code verified",
+      remaining,
     });
   } catch (err) {
     console.error("❌ Validation error:", err);

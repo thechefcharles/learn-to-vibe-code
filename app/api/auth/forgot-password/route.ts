@@ -1,8 +1,25 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
+import { checkRateLimit, getIpFromHeaders } from "@/lib/rate-limit";
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limiting: 5 requests per 15 minutes per IP
+    const ip = getIpFromHeaders(request.headers);
+    const { success, remaining } = await checkRateLimit(`forgot-password:${ip}`);
+
+    if (!success) {
+      return NextResponse.json(
+        { error: "Too many password reset requests. Please try again later." },
+        {
+          status: 429,
+          headers: {
+            "Retry-After": "900", // 15 minutes
+          },
+        }
+      );
+    }
+
     const { email } = await request.json();
 
     if (!email) {
@@ -29,6 +46,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       message: "Password reset email sent",
+      remaining,
     });
   } catch (err) {
     console.error("Forgot password error:", err);
