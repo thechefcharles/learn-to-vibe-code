@@ -1220,3 +1220,21 @@ export function getModuleQuizByVersion(
   }
   return quizzes[moduleId] || null;
 }
+
+// Scoring utilities
+export function calculateQuizScore(answers: boolean[]): number {
+  if (answers.length === 0) return 0;
+  const correct = answers.filter(a => a).length;
+  return Math.round((correct / answers.length) * 100);
+}
+
+export function isQuizPassed(score: number): boolean {
+  return score >= 80;
+}
+
+export function canRetake(lastAttemptDate: Date): boolean {
+  const now = new Date();
+  const diffMs = now.getTime() - lastAttemptDate.getTime();
+  const diff24hMs = 24 * 60 * 60 * 1000;
+  return diffMs >= diff24hMs;
+}
