@@ -1,0 +1,42 @@
+{
+  "name": "Accredited Vibe Coding Course — Automated Pipeline (Module 13)",
+  "description": "Full CI/CD automation: code → test → commit → PR → deploy, with guardrails",
+  "permissions": {
+    "auto_allow": [
+      "Bash(npm test|npm run)",
+      "Bash(git status|git log|git diff)",
+      "Read(.*)",
+      "Bash(vercel logs|gh pr list)",
+      "Bash(echo|ls|find)"
+    ],
+    "ask_first": [
+      "Bash(git commit|git push|git merge)",
+      "Bash(gh pr create|gh pr merge)"
+    ],
+    "deny": [
+      "Bash(rm -rf|git reset --hard|git clean -fd)",
+      "Bash(supabase.*delete|supabase.*reset)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash(git commit)",
+        "description": "Pre-commit hook: run tests and scan for secrets",
+        "command": "npm run test && ./scripts/scan-for-secrets.sh || (echo 'Pre-commit hook failed: tests failed or secrets detected'; exit 1)"
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash(git push.*main)",
+        "description": "Post-push hook: verify Vercel deploy started",
+        "command": "echo 'Pushed to main — Vercel auto-deploy starting...'; sleep 5; vercel logs --verbose --follow --limit 20 2>/dev/null || echo 'Vercel logs not available; check https://vercel.com/'"
+      }
+    ]
+  },
+  "context": {
+    "instructions": "./.claude/CLAUDE.md — project instructions, always loaded",
+    "skills": "./.claude/skills/ — workflows (ship-feature, etc)",
+    "agents": "./.claude/agents/ — subagents (reviewer, etc)"
+  }
+}
