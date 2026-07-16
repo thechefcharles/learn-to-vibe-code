@@ -19,6 +19,7 @@ ALTER TABLE donations ENABLE ROW LEVEL SECURITY;
 DROP POLICY IF EXISTS "Users can read own donations" ON donations;
 DROP POLICY IF EXISTS "Users can insert own donations" ON donations;
 DROP POLICY IF EXISTS "Instructors can read all donations" ON donations;
+DROP POLICY IF EXISTS "Service role can update donations" ON donations;
 
 CREATE POLICY "Users can read own donations"
   ON donations FOR SELECT
@@ -36,6 +37,10 @@ CREATE POLICY "Instructors can read all donations"
       WHERE profiles.id = auth.uid() AND profiles.role = 'instructor'
     )
   );
+
+CREATE POLICY "Service role can update donations"
+  ON donations FOR UPDATE
+  USING (true);
 
 GRANT SELECT, INSERT ON donations TO authenticated;
 GRANT SELECT ON donations TO anon;
