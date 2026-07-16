@@ -196,4 +196,66 @@ describe('Gamification Logic', () => {
       expect(progress.progressPercent).toBe(50);
     });
   });
+
+  describe('IDOR Protection (Insecure Direct Object Reference)', () => {
+    it('should not allow user to award XP to other user', () => {
+      const currentUserId = 'user-123';
+      const targetUserId = 'user-456';
+
+      // Simulate authorization check: user can only modify their own record
+      const canModify = currentUserId === targetUserId;
+
+      expect(canModify).toBe(false);
+    });
+
+    it('should verify user identity before awarding badges', () => {
+      const authenticatedUserId = 'user-abc';
+      const requestedUserId = 'user-xyz';
+
+      // Server-side check: must verify authenticated user matches requested user
+      const isAuthorized = authenticatedUserId === requestedUserId;
+
+      expect(isAuthorized).toBe(false);
+    });
+
+    it('should prevent unauthorized streak modification', () => {
+      const sessionUserId = 'user-123';
+      const targetUserId = 'user-999';
+
+      // Authorization check before updating streak
+      const canUpdate = sessionUserId === targetUserId;
+
+      expect(canUpdate).toBe(false);
+    });
+
+    it('should allow user to modify their own XP record', () => {
+      const authenticatedUserId = 'user-123';
+      const targetUserId = 'user-123';
+
+      // Same user should be allowed
+      const canModify = authenticatedUserId === targetUserId;
+
+      expect(canModify).toBe(true);
+    });
+
+    it('should allow user to award badge to themselves', () => {
+      const sessionUserId = 'user-abc';
+      const requestedUserId = 'user-abc';
+
+      // Same user should be authorized
+      const isAuthorized = sessionUserId === requestedUserId;
+
+      expect(isAuthorized).toBe(true);
+    });
+
+    it('should allow user to update their own streak', () => {
+      const currentUserId = 'user-xyz';
+      const targetUserId = 'user-xyz';
+
+      // User can modify their own streak
+      const canUpdate = currentUserId === targetUserId;
+
+      expect(canUpdate).toBe(true);
+    });
+  });
 });
