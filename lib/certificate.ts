@@ -62,16 +62,6 @@ export function generateCertificateHTML(data: CertificateData): string {
       margin-bottom: 40px;
     }
     .header h1 {
-function escapeHtml(text: string): string {
-  const htmlEscapeMap: Record<string, string> = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;",
-  };
-  return text.replace(/[&<>"']/g, (char) => htmlEscapeMap[char]);
-}
       font-style: italic;
     }
     .body {
@@ -177,9 +167,14 @@ function escapeHtml(text: string): string {
  * Escape HTML special characters for safe rendering
  */
 function escapeHtml(text: string): string {
-  const div = document.createElement("div");
-  div.textContent = text;
-  return div.innerHTML;
+  const htmlEscapeMap: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;',
+  };
+  return text.replace(/[&<>"']/g, (char) => htmlEscapeMap[char] || char);
 }
 
 /**
