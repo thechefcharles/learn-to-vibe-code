@@ -1221,6 +1221,26 @@ export function getModuleQuizByVersion(
   return quizzes[moduleId] || null;
 }
 
+// Client-safe quiz loader (strips correctAnswer field)
+export function getModuleQuizForClient(
+  moduleId: number,
+  version: Version = "adult"
+): ModuleQuiz | null {
+  const quiz = getModuleQuizByVersion(moduleId, version);
+  if (!quiz) return null;
+
+  // Remove correctAnswer from each question before sending to client
+  return {
+    moduleId: quiz.moduleId,
+    questions: quiz.questions.map((q) => ({
+      id: q.id,
+      text: q.text,
+      options: q.options,
+      explanation: q.explanation,
+    })),
+  } as ModuleQuiz;
+}
+
 // Scoring utilities
 export function calculateQuizScore(answers: boolean[]): number {
   if (answers.length === 0) return 0;

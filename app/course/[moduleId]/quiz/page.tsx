@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { submitQuiz, getQuizAttempts } from "@/lib/actions/quiz";
-import { getModuleQuizByVersion } from "@/lib/quizzes";
+import { getModuleQuizForClient } from "@/lib/quizzes";
 import { getModuleMetadata } from "@/lib/module-metadata";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -32,8 +32,8 @@ export default function QuizPage() {
     // Get version from localStorage (set during signup/toggle)
     const version = (localStorage.getItem("version") as Version) || "adult";
 
-    // Load version-aware quiz
-    const q = getModuleQuizByVersion(moduleId, version);
+    // Load client-safe quiz (answer keys stripped)
+    const q = getModuleQuizForClient(moduleId, version);
     setQuiz(q);
 
     // Load previous attempts
