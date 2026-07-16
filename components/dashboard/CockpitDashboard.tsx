@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { getModuleMetadata } from '@/lib/module-metadata';
+import { Badge } from '@/components/gamification/BadgeDesign';
 
 interface CockpitDashboardProps {
   userName: string;
@@ -16,6 +17,16 @@ interface CockpitDashboardProps {
   continueHref: string;
   currentModuleId: number;
   badgeMetadata: any[];
+}
+
+const LEVEL_NAMES = ['Foundations', 'Building', 'Production', 'Landscape'];
+const XP_PER_LEVEL = 1000;
+
+function getLevelInfo(level: number) {
+  const levelName = LEVEL_NAMES[Math.min(level - 1, LEVEL_NAMES.length - 1)];
+  const currentLevelXP = (level - 1) * XP_PER_LEVEL;
+  const nextLevelXP = level * XP_PER_LEVEL;
+  return { levelName, currentLevelXP, nextLevelXP };
 }
 
 export function CockpitDashboard({
@@ -33,6 +44,10 @@ export function CockpitDashboard({
 }: CockpitDashboardProps) {
   const totalModules = 16;
   const progressPercent = (completedModules / totalModules) * 100;
+  const { levelName, currentLevelXP, nextLevelXP } = getLevelInfo(xp.level);
+  const xpInLevel = xp.points - currentLevelXP;
+  const xpToNextLevel = nextLevelXP - currentLevelXP;
+  const levelProgressPercent = (xpInLevel / xpToNextLevel) * 100;
 
   return (
     <div className="space-y-6">
@@ -79,21 +94,46 @@ export function CockpitDashboard({
           </div>
         </div>
 
-        {/* XP Readout */}
+        {/* XP Readout with Level Progress */}
         <div className="relative bg-slate-900/60 backdrop-blur border border-purple-500/40 rounded-lg p-4 scan-lines overflow-hidden">
           <div className="relative z-10">
-            <p className="text-xs text-purple-400 font-mono tracking-widest mb-1">XP ACCUMULATED</p>
-            <p className="text-xl font-bold text-white">{xp.points.toLocaleString()}</p>
-            <p className="text-xs text-slate-400 mt-1">Level {xp.level}</p>
+            <p className="text-xs text-purple-400 font-mono tracking-widest mb-2">XP TIER: {levelName.toUpperCase()}</p>
+            <p className="text-xl font-bold text-white">{xp.points.toLocaleString()} XP</p>
+
+            {/* Level progress bar */}
+            <div className="mt-3 space-y-1">
+              <div className="flex justify-between items-center">
+                <p className="text-xs text-slate-400">Level {xp.level}</p>
+                <p className="text-xs text-slate-400">{Math.round(levelProgressPercent)}%</p>
+              </div>
+              <div className="h-1.5 bg-slate-800 border border-purple-500/20 rounded overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-purple-500 to-violet-500 transition-all duration-300"
+                  style={{ width: `${levelProgressPercent}%` }}
+                />
+              </div>
+              <p className="text-xs text-slate-500">
+                {xpInLevel.toLocaleString()} / {xpToNextLevel.toLocaleString()}
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Streak Counter */}
+        {/* Streak Counter with Animation */}
         <div className="relative bg-slate-900/60 backdrop-blur border border-orange-500/40 rounded-lg p-4 scan-lines overflow-hidden">
           <div className="relative z-10">
-            <p className="text-xs text-orange-400 font-mono tracking-widest mb-1">STREAK</p>
-            <p className="text-2xl font-bold text-orange-300">{streak?.current || 0}</p>
-            <p className="text-xs text-slate-400 mt-1">days active</p>
+            <p className="text-xs text-orange-400 font-mono tracking-widest mb-1">STREAK ACTIVE</p>
+            <motion.div
+              animate={streak?.current > 0 ? { scale: [1, 1.05, 1] } : {}}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="flex items-baseline gap-2"
+            >
+              <p className="text-2xl font-bold text-orange-300">{streak?.current || 0}</p>
+              <p className="text-xl">🔥</p>
+            </motion.div>
+            <p className="text-xs text-slate-400 mt-2">
+              Longest: {streak?.longest || 0}
+            </p>
           </div>
         </div>
 
@@ -214,28 +254,52 @@ export function CockpitDashboard({
         <div className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-pink-500/60" />
 
         <div className="relative z-10">
-          <p className="text-xs text-pink-400 font-mono tracking-widest mb-4">[ ACHIEVEMENTS ]</p>
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-xs text-pink-400 font-mono tracking-widest">[ ACHIEVEMENTS ]</p>
+            <p className="text-xs text-pink-400 font-mono">{badges.length} / {badgeMetadata.length} EARNED</p>
+          </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {badgeMetadata.map((badge) => {
               const earned = badges.some((b) => b.badge_key === badge.key);
+              const badgeTypeMap: Record<string, any> = {
+                first_quiz_passed: { type: 'quiz-first-try', tier: earned ? 'gold' : 'silver' },
+                rls_locked_down: { type: 'security-master', tier: earned ? 'platinum' : 'silver' },
+                went_live: { type: 'deployment', tier: earned ? 'gold' : 'silver' },
+                automation_engineer: { type: 'automation', tier: earned ? 'platinum' : 'silver' },
+                capstone_submitted: { type: 'capstone', tier: earned ? 'platinum' : 'silver' },
+              };
+              const badgeConfig = badgeTypeMap[badge.key] || { type: 'lesson', tier: 'silver' };
+
               return (
-                <div
+                <motion.div
                   key={badge.key}
-                  className={`relative p-3 rounded-lg border transition-all ${
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  whileHover={earned ? { scale: 1.1 } : {}}
+                  className={`flex flex-col items-center p-4 rounded-lg border transition-all ${
                     earned
                       ? 'border-pink-500/60 bg-pink-500/10 shadow-lg shadow-pink-500/30'
                       : 'border-slate-600/40 bg-slate-900/40 opacity-50'
                   }`}
                 >
-                  <div className="text-3xl mb-2 text-center">{badge.icon}</div>
+                  <div className="w-12 h-12 mb-2">
+                    <Badge type={badgeConfig.type} tier={badgeConfig.tier} size="sm" />
+                  </div>
                   <p className="text-xs font-bold text-white text-center line-clamp-2">
                     {badge.name}
                   </p>
+                  <p className="text-xs text-slate-400 text-center line-clamp-2 mt-1">
+                    {badge.description}
+                  </p>
                   {earned && (
-                    <div className="absolute top-1 right-1 w-2 h-2 bg-green-500 rounded-full" />
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute top-1 right-1 w-3 h-3 bg-green-500 rounded-full shadow-lg shadow-green-500/70"
+                    />
                   )}
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -247,7 +311,7 @@ export function CockpitDashboard({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-4"
+        className="grid grid-cols-1 md:grid-cols-4 gap-4"
       >
         <Link
           href="/course"
@@ -256,6 +320,16 @@ export function CockpitDashboard({
           <div className="relative z-10">
             <p className="text-xs text-cyan-400 font-mono tracking-widest mb-2">VIEW MODULES</p>
             <p className="text-white font-semibold">Course Map</p>
+          </div>
+        </Link>
+
+        <Link
+          href="/showcase"
+          className="relative group bg-slate-900/60 backdrop-blur border border-pink-500/40 rounded-lg p-4 scan-lines overflow-hidden hover:border-pink-400/60 transition-all"
+        >
+          <div className="relative z-10">
+            <p className="text-xs text-pink-400 font-mono tracking-widest mb-2">COMMUNITY</p>
+            <p className="text-white font-semibold">Capstone Gallery</p>
           </div>
         </Link>
 
@@ -272,10 +346,10 @@ export function CockpitDashboard({
         {capstoneUnlocked && (
           <Link
             href="/capstone"
-            className="relative group bg-slate-900/60 backdrop-blur border border-pink-500/40 rounded-lg p-4 scan-lines overflow-hidden hover:border-pink-400/60 transition-all"
+            className="relative group bg-slate-900/60 backdrop-blur border border-orange-500/40 rounded-lg p-4 scan-lines overflow-hidden hover:border-orange-400/60 transition-all"
           >
             <div className="relative z-10">
-              <p className="text-xs text-pink-400 font-mono tracking-widest mb-2">FINAL MISSION</p>
+              <p className="text-xs text-orange-400 font-mono tracking-widest mb-2">FINAL MISSION</p>
               <p className="text-white font-semibold">Capstone Project</p>
             </div>
           </Link>
