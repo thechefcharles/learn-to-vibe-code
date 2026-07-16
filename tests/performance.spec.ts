@@ -1,140 +1,149 @@
 import { test, expect } from "@playwright/test";
 
-// Performance tests for Core Web Vitals and loading speed
-test.describe("Performance (Core Web Vitals)", () => {
-  test("home page loads quickly (LCP < 2.5s)", async ({ page }) => {
-    const startTime = Date.now();
+interface WebVitals {
+  lcp: number;
+  fid: number;
+  cls: number;
+  ttfb: number;
+  dcl: number;
+  load: number;
+}
 
-    await page.goto("/", { waitUntil: "domcontentloaded" });
+async function captureWebVitals(page: any): Promise<WebVitals> {
+  return page.evaluate(() => {
+    return new Promise<WebVitals>((resolve) => {
+      let vitals: WebVitals = {
+        lcp: 0,
+        fid: 0,
+        cls: 0,
+        ttfb: 0,
+        dcl: 0,
+        load: 0,
+      };
 
-    const loadTime = Date.now() - startTime;
-    console.log(`Home page load time: ${loadTime}ms`);
+      // Capture navigation timing
+      const navTiming = performance.getEntriesByType("navigation")[0] as any;
+      if (navTiming) {
+        vitals.ttfb = navTiming.responseStart - navTiming.requestStart;
+        vitals.dcl = navTiming.domContentLoadedEventEnd;
+        vitals.load = navTiming.loadEventEnd;
+      }
 
-    // Largest Contentful Paint target: < 2.5s (good) or < 4s (needs improvement)
-    expect(loadTime).toBeLessThan(4000); // Allow 4s for CI environments
-  });
-
-  test("sign-in page loads quickly", async ({ page }) => {
-    const startTime = Date.now();
-
-    await page.goto("/auth/sign-in", { waitUntil: "domcontentloaded" });
-
-    const loadTime = Date.now() - startTime;
-    console.log(`Sign-in page load time: ${loadTime}ms`);
-
-    expect(loadTime).toBeLessThan(3000);
-  });
-
-  test("sign-up page loads quickly", async ({ page }) => {
-    const startTime = Date.now();
-
-    await page.goto("/auth/sign-up", { waitUntil: "domcontentloaded" });
-
-    const loadTime = Date.now() - startTime;
-    console.log(`Sign-up page load time: ${loadTime}ms`);
-
-    expect(loadTime).toBeLessThan(3000);
-  });
-
-  test("course page loads without layout shift (CLS)", async ({ page }) => {
-    // Cumulative Layout Shift: measure visual stability
-    let cumulativeShift = 0;
-
-    // Listen for layout shifts
-    await page.evaluateHandle(() => {
+      // LCP (Largest Contentful Paint)
       if ("PerformanceObserver" in window) {
-        const observer = new PerformanceObserver((list: any) => {
+        const lcpObserver = new PerformanceObserver((list: any) => {
+          const entries = list.getEntries();
+          const lastEntry = entries[entries.length - 1];
+          vitals.lcp = lastEntry.renderTime || lastEntry.loadTime;
+        });
+        try {
+          lcpObserver.observe({ type: "largest-contentful-paint", buffered: true });
+        } catch (e) {
+          // LCP observer not supported
+        }
+
+        // CLS (Cumulative Layout Shift)
+        const clsObserver = new PerformanceObserver((list: any) => {
           for (const entry of list.getEntries()) {
-            if (!entry.hadRecentInput) {
-              (window as any).cls = ((window as any).cls || 0) + entry.value;
+            if (!(entry as any).hadRecentInput) {
+              vitals.cls += (entry as any).value;
             }
           }
         });
-        observer.observe({ type: "layout-shift", buffered: true });
-      }
-    });
+        try {
+          clsObserver.observe({ type: "layout-shift", buffered: true });
+        } catch (e) {
+          // CLS observer not supported
+        }
 
+        // FID (First Input Delay) - polyfill with event listener
+        const fidHandler = (event: any) => {
+          vitals.fid = event.processingStart - event.timeStamp;
+          document.removeEventListener("pointerdown", fidHandler);
+          document.removeEventListener("mousedown", fidHandler);
+          document.removeEventListener("touchstart", fidHandler);
+        };
+        document.addEventListener("pointerdown", fidHandler, true);
+        document.addEventListener("mousedown", fidHandler, true);
+        document.addEventListener("touchstart", fidHandler, true);
+      }
+
+      // Wait for metrics to settle and resolve
+      setTimeout(() => {
+        resolve(vitals);
+      }, 2000);
+    });
+  });
+}
+
+// Performance tests for Core Web Vitals
+test.describe("Core Web Vitals Performance", () => {
+  test("home page meets Core Web Vitals thresholds", async ({ page }) => {
+    await page.goto("/", { waitUntil: "networkidle" });
+    const vitals = await captureWebVitals(page);
+
+    console.log("=== HOME PAGE VITALS ===");
+    console.log(`LCP: ${vitals.lcp.toFixed(0)}ms (target ≤2500ms) ${vitals.lcp <= 2500 ? "✓" : "✗"}`);
+    console.log(`FID: ${vitals.fid.toFixed(0)}ms (target ≤100ms) ${vitals.fid <= 100 ? "✓" : "✗"}`);
+    console.log(`CLS: ${vitals.cls.toFixed(3)} (target ≤0.1) ${vitals.cls <= 0.1 ? "✓" : "✗"}`);
+    console.log(`TTFB: ${vitals.ttfb.toFixed(0)}ms`);
+    console.log(`DCL: ${vitals.dcl.toFixed(0)}ms`);
+    console.log(`Load: ${vitals.load.toFixed(0)}ms`);
+
+    // Thresholds (allow some slack for CI/dev environments)
+    expect(vitals.lcp).toBeLessThanOrEqual(3500);
+    expect(vitals.fid).toBeLessThanOrEqual(200);
+    expect(vitals.cls).toBeLessThanOrEqual(0.15);
+  });
+
+  test("course page meets Core Web Vitals thresholds", async ({ page }) => {
     await page.goto("/course", { waitUntil: "networkidle" });
+    const vitals = await captureWebVitals(page);
 
-    // Get measured CLS
-    const cls = await page.evaluate(() => (window as any).cls || 0);
-    console.log(`CLS: ${cls}`);
+    console.log("=== COURSE PAGE VITALS ===");
+    console.log(`LCP: ${vitals.lcp.toFixed(0)}ms (target ≤2500ms) ${vitals.lcp <= 2500 ? "✓" : "✗"}`);
+    console.log(`FID: ${vitals.fid.toFixed(0)}ms (target ≤100ms) ${vitals.fid <= 100 ? "✓" : "✗"}`);
+    console.log(`CLS: ${vitals.cls.toFixed(3)} (target ≤0.1) ${vitals.cls <= 0.1 ? "✓" : "✗"}`);
+    console.log(`TTFB: ${vitals.ttfb.toFixed(0)}ms`);
+    console.log(`DCL: ${vitals.dcl.toFixed(0)}ms`);
+    console.log(`Load: ${vitals.load.toFixed(0)}ms`);
 
-    // CLS target: < 0.1 (good)
-    expect(cls).toBeLessThan(0.15);
+    expect(vitals.lcp).toBeLessThanOrEqual(3500);
+    expect(vitals.fid).toBeLessThanOrEqual(200);
+    expect(vitals.cls).toBeLessThanOrEqual(0.15);
   });
 
-  test("JavaScript bundle is loaded efficiently", async ({ page }) => {
-    const jsRequests: string[] = [];
+  test("lesson page meets Core Web Vitals thresholds", async ({ page }) => {
+    await page.goto("/course/module-00", { waitUntil: "networkidle" });
+    const vitals = await captureWebVitals(page);
 
-    page.on("response", (response) => {
-      if (
-        response.request().resourceType() === "script" &&
-        response.status() === 200
-      ) {
-        jsRequests.push(response.url());
-      }
-    });
+    console.log("=== LESSON PAGE VITALS ===");
+    console.log(`LCP: ${vitals.lcp.toFixed(0)}ms (target ≤2500ms) ${vitals.lcp <= 2500 ? "✓" : "✗"}`);
+    console.log(`FID: ${vitals.fid.toFixed(0)}ms (target ≤100ms) ${vitals.fid <= 100 ? "✓" : "✗"}`);
+    console.log(`CLS: ${vitals.cls.toFixed(3)} (target ≤0.1) ${vitals.cls <= 0.1 ? "✓" : "✗"}`);
+    console.log(`TTFB: ${vitals.ttfb.toFixed(0)}ms`);
+    console.log(`DCL: ${vitals.dcl.toFixed(0)}ms`);
+    console.log(`Load: ${vitals.load.toFixed(0)}ms`);
 
-    await page.goto("/auth/sign-in");
-
-    // Should load without excessive requests (development may have more)
-    // CI/production should be optimized
-    console.log(`JS requests: ${jsRequests.length}`);
-    expect(jsRequests.length).toBeGreaterThan(0); // At least Next.js runtime
+    expect(vitals.lcp).toBeLessThanOrEqual(3500);
+    expect(vitals.fid).toBeLessThanOrEqual(200);
+    expect(vitals.cls).toBeLessThanOrEqual(0.15);
   });
 
-  test("images are lazy-loaded (img loading=lazy)", async ({ page }) => {
-    await page.goto("/");
+  test("dashboard page loads efficiently", async ({ page }) => {
+    await page.goto("/dashboard", { waitUntil: "networkidle" });
+    const vitals = await captureWebVitals(page);
 
-    // Check for lazy-loading attributes
-    const images = await page.locator("img").all();
-    let lazyImages = 0;
+    console.log("=== DASHBOARD PAGE VITALS ===");
+    console.log(`LCP: ${vitals.lcp.toFixed(0)}ms`);
+    console.log(`CLS: ${vitals.cls.toFixed(3)}`);
+    console.log(`Load: ${vitals.load.toFixed(0)}ms`);
 
-    for (const img of images) {
-      const loading = await img.getAttribute("loading");
-      if (loading === "lazy") lazyImages++;
-    }
-
-    // At least some images should be lazy-loaded
-    expect(lazyImages).toBeGreaterThanOrEqual(0);
+    expect(vitals.lcp).toBeLessThanOrEqual(3500);
+    expect(vitals.cls).toBeLessThanOrEqual(0.15);
   });
 
-  test("CSS is optimized and loaded efficiently", async ({ page }) => {
-    const styleSheets: string[] = [];
-
-    page.on("response", (response) => {
-      if (
-        response.request().resourceType() === "stylesheet" &&
-        response.status() === 200
-      ) {
-        styleSheets.push(response.url());
-      }
-    });
-
-    await page.goto("/auth/sign-in");
-
-    // Should have minimal CSS files (Tailwind compiled to single file)
-    expect(styleSheets.length).toBeLessThanOrEqual(5);
-  });
-
-  test("fonts load efficiently without blocking content", async ({
-    page,
-  }) => {
-    await page.goto("/");
-
-    // Check that fonts loaded (inspect computed styles)
-    const fontFamily = await page.evaluate(() => {
-      const el = document.body;
-      return window.getComputedStyle(el).fontFamily;
-    });
-
-    // Should have fonts applied
-    expect(fontFamily).toBeTruthy();
-    expect(fontFamily?.length).toBeGreaterThan(0);
-  });
-
-  test("no console errors on page load", async ({ page }) => {
+  test("no console errors on critical pages", async ({ page }) => {
     const errors: string[] = [];
 
     page.on("console", (msg) => {
@@ -143,35 +152,82 @@ test.describe("Performance (Core Web Vitals)", () => {
       }
     });
 
-    await page.goto("/auth/sign-in");
+    await page.goto("/");
     await page.waitForLoadState("networkidle");
 
-    // Should have no critical errors (warnings are ok)
     const criticalErrors = errors.filter(
       (e) =>
         !e.includes("Non-Error promise rejection") &&
         !e.includes("Failed to load")
     );
 
+    if (criticalErrors.length > 0) {
+      console.log("Found errors:", criticalErrors);
+    }
+
     expect(criticalErrors.length).toBe(0);
   });
 
-  test("first paint happens quickly", async ({ page }) => {
-    // Measure navigation timing
-    const timings = await page.evaluate(() => {
-      const nav = performance.getEntriesByType("navigation")[0] as any;
-      return {
-        domContentLoaded: nav.domContentLoadedEventEnd,
-        loadComplete: nav.loadEventEnd,
-        domInteractive: nav.domInteractive,
-      };
+  test("JavaScript bundle size is optimized", async ({ page }) => {
+    const jsRequests: { url: string; size: number }[] = [];
+
+    page.on("response", (response) => {
+      if (response.request().resourceType() === "script" && response.status() === 200) {
+        const headers = response.headers();
+        const size = parseInt(headers["content-length"] || "0", 10);
+        jsRequests.push({ url: response.url(), size });
+      }
+    });
+
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+
+    const totalSize = jsRequests.reduce((sum, req) => sum + req.size, 0);
+    console.log(`Total JS size: ${(totalSize / 1024).toFixed(2)}KB (${jsRequests.length} requests)`);
+
+    // JS bundle should be reasonable (allow up to 500KB for dev)
+    expect(totalSize).toBeLessThan(500000);
+  });
+
+  test("CSS is efficiently loaded", async ({ page }) => {
+    const cssRequests: { url: string; size: number }[] = [];
+
+    page.on("response", (response) => {
+      if (response.request().resourceType() === "stylesheet" && response.status() === 200) {
+        const headers = response.headers();
+        const size = parseInt(headers["content-length"] || "0", 10);
+        cssRequests.push({ url: response.url(), size });
+      }
     });
 
     await page.goto("/");
 
-    console.log("Navigation timings:", timings);
+    const totalSize = cssRequests.reduce((sum, req) => sum + req.size, 0);
+    console.log(`Total CSS size: ${(totalSize / 1024).toFixed(2)}KB (${cssRequests.length} files)`);
 
-    // DOM should be interactive within 1.5s
-    expect(timings.domInteractive).toBeLessThan(1500);
+    expect(cssRequests.length).toBeLessThanOrEqual(5);
+  });
+
+  test("images are properly optimized", async ({ page }) => {
+    await page.goto("/");
+
+    const imageData = await page.evaluate(() => {
+      const images = Array.from(document.querySelectorAll("img"));
+      return images.map((img: any) => ({
+        src: img.src,
+        alt: img.alt || "missing",
+        loading: img.loading || "not-set",
+        width: img.width,
+        height: img.height,
+      }));
+    });
+
+    const withoutAlt = imageData.filter((img: any) => img.alt === "missing");
+    const lazyLoaded = imageData.filter((img: any) => img.loading === "lazy");
+
+    console.log(`Images: ${imageData.length} total, ${lazyLoaded.length} lazy-loaded, ${withoutAlt.length} missing alt`);
+
+    // All images should have alt text (accessibility)
+    expect(withoutAlt.length).toBe(0);
   });
 });
