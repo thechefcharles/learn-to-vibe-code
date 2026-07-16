@@ -16,7 +16,7 @@ const supabase = createClient(
 export async function updateUserProfile(
   name: string,
   email: string
-): Promise<{ success?: boolean; error?: string }> {
+): Promise<{ success?: boolean; error?: string; message?: string }> {
   try {
     const user = await getUser();
     if (!user) {
@@ -44,7 +44,7 @@ export async function updateUserProfile(
         user.id,
         {
           email: email,
-          email_confirm: true,
+          email_confirm: false,
         }
       );
 
@@ -55,7 +55,12 @@ export async function updateUserProfile(
     }
 
     console.log("[updateUserProfile] Profile updated for user:", user.id);
-    return { success: true };
+    return {
+      success: true,
+      message: email !== user.email
+        ? "Confirmation email sent. Please check your new email address to complete the change."
+        : undefined,
+    };
   } catch (error) {
     const message = error instanceof Error ? error.message : "Failed to update profile";
     console.error("[updateUserProfile] Unexpected error:", message);
