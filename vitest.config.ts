@@ -12,9 +12,11 @@ export default defineConfig({
       reporter: ['text', 'json', 'html'],
       include: ['lib/**/*.ts', 'app/api/**/*.ts'],
       exclude: ['lib/**/*.test.ts', 'node_modules'],
-      lines: 70,
-      functions: 70,
-      branches: 60,
+      thresholds: {
+        lines: 70,
+        functions: 70,
+        branches: 60,
+      },
     },
   },
   resolve: {

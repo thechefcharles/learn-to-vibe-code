@@ -7,27 +7,38 @@
  */
 
 interface RequestRecord {
-  timestamps: number[];
+  windowBuckets: Record<string, number[]>;
 }
 
-// In-memory store: identifier -> array of request timestamps
+// In-memory store: identifier -> window bucket records
 const rateLimitStore = new Map<string, RequestRecord>();
 
 // Cleanup interval: remove old entries every 30 seconds
 const CLEANUP_INTERVAL = 30 * 1000;
-const WINDOW_MS = 15 * 60 * 1000; // 15 minutes in milliseconds
-const MAX_REQUESTS = 5;
+
+// Warn if Redis is not configured for production
+if (!process.env.UPSTASH_REDIS_REST_URL) {
+  console.warn(
+    'UPSTASH_REDIS_REST_URL not configured. In-memory rate limiting will NOT work correctly on Vercel (serverless instances do not share memory). Configure Upstash Redis before production deployment.'
+  );
+}
 
 // Start cleanup timer
 setInterval(() => {
   const now = Date.now();
   for (const [key, record] of rateLimitStore.entries()) {
-    // Remove timestamps older than the window
-    record.timestamps = record.timestamps.filter(
-      (timestamp) => now - timestamp < WINDOW_MS
-    );
-    // Remove empty records
-    if (record.timestamps.length === 0) {
+    // Remove old records
+    for (const [windowKey, timestamps] of Object.entries(record.windowBuckets)) {
+      const windowMs = parseInt(windowKey);
+      record.windowBuckets[windowKey] = timestamps.filter(
+        (timestamp) => now - timestamp < windowMs
+      );
+      if (record.windowBuckets[windowKey].length === 0) {
+        delete record.windowBuckets[windowKey];
+      }
+    }
+
+    if (Object.keys(record.windowBuckets).length === 0) {
       rateLimitStore.delete(key);
     }
   }
@@ -41,31 +52,42 @@ export interface RateLimitResult {
 
 /**
  * Check rate limit for an identifier (IP address, email, etc.)
- * Uses sliding window algorithm: 5 requests per 15 minutes
+ * Uses sliding window algorithm
  *
  * @param identifier - Unique identifier (IP, email, etc.)
+ * @param maxRequests - Maximum requests allowed (default: 5)
+ * @param windowSeconds - Time window in seconds (default: 900 = 15 minutes)
  * @returns Result with success status, remaining requests, and reset time
  */
-export async function checkRateLimit(identifier: string): Promise<RateLimitResult> {
+export async function checkRateLimit(
+  identifier: string,
+  maxRequests: number = 5,
+  windowSeconds: number = 900
+): Promise<RateLimitResult> {
   try {
     const now = Date.now();
+    const windowMs = windowSeconds * 1000;
+    const windowKey = windowMs.toString();
 
     // Get or create record for this identifier
     let record = rateLimitStore.get(identifier);
     if (!record) {
-      record = { timestamps: [] };
+      record = { windowBuckets: {} };
       rateLimitStore.set(identifier, record);
     }
 
+    // Get timestamps for this window, or initialize empty array
+    let timestamps = record.windowBuckets[windowKey] || [];
+
     // Remove timestamps outside the sliding window
-    record.timestamps = record.timestamps.filter(
-      (timestamp) => now - timestamp < WINDOW_MS
+    const validTimestamps = timestamps.filter(
+      (timestamp) => now - timestamp < windowMs
     );
 
-    // Check if limit exceeded (allow MAX_REQUESTS requests)
-    if (record.timestamps.length >= MAX_REQUESTS) {
-      const oldestTimestamp = Math.min(...record.timestamps);
-      const reset = oldestTimestamp + WINDOW_MS;
+    // Check if limit exceeded
+    if (validTimestamps.length >= maxRequests) {
+      const oldestTimestamp = Math.min(...validTimestamps);
+      const reset = oldestTimestamp + windowMs;
       return {
         success: false,
         remaining: 0,
@@ -74,16 +96,18 @@ export async function checkRateLimit(identifier: string): Promise<RateLimitResul
     }
 
     // Add current request timestamp
-    record.timestamps.push(now);
+    validTimestamps.push(now);
+    record.windowBuckets[windowKey] = validTimestamps;
+    rateLimitStore.set(identifier, record);
 
-    // Calculate when the limit will be reset (when oldest request expires)
-    const reset = record.timestamps.length > 0
-      ? Math.min(...record.timestamps) + WINDOW_MS
-      : now + WINDOW_MS;
+    // Calculate when the limit will be reset
+    const reset = validTimestamps.length > 0
+      ? Math.min(...validTimestamps) + windowMs
+      : now + windowMs;
 
     return {
       success: true,
-      remaining: MAX_REQUESTS - record.timestamps.length,
+      remaining: maxRequests - validTimestamps.length,
       reset,
     };
   } catch (error) {
@@ -107,8 +131,10 @@ export async function checkRateLimit(identifier: string): Promise<RateLimitResul
 export function getIpFromHeaders(headers: Headers): string {
   const forwardedFor = headers.get("x-forwarded-for");
   if (forwardedFor) {
-    // x-forwarded-for can contain multiple IPs; take the first one
-    return forwardedFor.split(",")[0].trim();
+    // x-forwarded-for can contain multiple IPs
+    // Vercel appends the real IP as the LAST entry, so take the last one
+    const ips = forwardedFor.split(",").map((ip) => ip.trim());
+    return ips[ips.length - 1];
   }
   return headers.get("x-real-ip") || "unknown";
 }
