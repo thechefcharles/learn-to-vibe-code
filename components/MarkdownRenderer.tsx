@@ -329,22 +329,25 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
             key={`screenshot-${i}`}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="rounded-lg overflow-hidden mb-8 border border-slate-600"
+            className="mb-6 p-4 rounded-lg border border-slate-600 bg-slate-800/50 hover:bg-slate-800/70 transition-colors"
           >
             {imagePath ? (
-              <img
-                src={imagePath}
-                alt={description}
-                className="w-full h-auto"
-              />
+              <a
+                href={imagePath}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 text-cyan-400 hover:text-cyan-300 underline"
+              >
+                <span className="text-xl">📸</span>
+                <span className="text-sm font-medium">{description}</span>
+                <span className="text-xs text-slate-400 ml-auto">↗ Open in new tab</span>
+              </a>
             ) : (
-              <div className="bg-amber-500/10 border-2 border-amber-500/30 p-6">
-                <div className="flex items-start gap-4">
-                  <div className="text-4xl flex-shrink-0">📸</div>
-                  <div className="flex-1">
-                    <p className="font-bold text-amber-400 mb-2 uppercase text-xs tracking-wider">Screenshot</p>
-                    <p className="text-slate-300 text-sm leading-relaxed">{description}</p>
-                  </div>
+              <div className="flex items-start gap-4">
+                <div className="text-4xl flex-shrink-0">📸</div>
+                <div className="flex-1">
+                  <p className="font-bold text-amber-400 mb-2 uppercase text-xs tracking-wider">Screenshot</p>
+                  <p className="text-slate-300 text-sm leading-relaxed">{description}</p>
                 </div>
               </div>
             )}
