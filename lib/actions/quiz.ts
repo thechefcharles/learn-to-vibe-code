@@ -12,30 +12,52 @@ export async function submitQuiz(
   responses: Record<string, number>
 ) {
   try {
+    console.log("=== submitQuiz START ===");
+    console.log("moduleId:", moduleId);
+    console.log("response count:", Object.keys(responses).length);
+
     const user = await getUser();
+    console.log("user:", user?.id);
     if (!user) throw new Error("Not authenticated");
 
     const supabase = await createClient();
+    console.log("supabase client created");
 
     // Get user's enrolled version (use maybeSingle to handle no enrollment)
+    console.log("Fetching enrollment for user:", user.id);
     const { data: enrollment, error: enrollmentError } = await supabase
       .from("enrollments")
       .select("enrolled_version")
       .eq("user_id", user.id)
       .maybeSingle();
 
+    console.log("enrollment query result:", { enrollment, error: enrollmentError?.message });
     if (enrollmentError) throw new Error(`Failed to fetch enrollment: ${enrollmentError.message}`);
 
     const version = (enrollment?.enrolled_version as Version) || "adult";
+    console.log("resolved version:", version);
 
     // Get quiz and score it server-side (NEVER trust client scoring)
+    console.log("Getting quiz for moduleId:", moduleId, "version:", version);
     const quiz = getModuleQuizByVersion(moduleId, version);
+    console.log("quiz found:", !!quiz, "questions:", quiz?.questions.length);
     if (!quiz) throw new Error("Quiz not found");
 
     const result = scoreQuiz(responses, quiz);
+    console.log("quiz scored:", result);
 
     // Store attempt (version is tracked server-side during scoring, not stored in DB)
+    console.log("Getting next attempt number for user:", user.id, "module:", moduleId);
     const attemptNo = await getNextAttemptNumber(user.id, moduleId);
+    console.log("next attempt number:", attemptNo);
+
+    console.log("Inserting quiz attempt with:", {
+      user_id: user.id,
+      module_id: moduleId,
+      score: result.score,
+      passed: result.passed,
+      attempt_no: attemptNo,
+    });
     const { error: insertError } = await supabase.from("quiz_attempts").insert({
       user_id: user.id,
       module_id: moduleId,
@@ -44,6 +66,7 @@ export async function submitQuiz(
       attempt_no: attemptNo,
     });
 
+    console.log("insert result:", { error: insertError?.message });
     if (insertError) throw new Error(`Failed to insert quiz attempt: ${insertError.message}`);
 
     // Award XP and badges for passing
@@ -76,11 +99,19 @@ export async function submitQuiz(
     }
 
     revalidatePath(`/course/${moduleId}/quiz`);
+    console.log("=== submitQuiz SUCCESS ===");
     return result;
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
-    console.error("submitQuiz error:", message);
-    throw error;
+    const stack = error instanceof Error ? error.stack : "";
+    console.error("=== submitQuiz ERROR ===");
+    console.error("message:", message);
+    console.error("stack:", stack);
+    console.error("full error:", error);
+
+    // Create a detailed error message for the client
+    const detailedError = new Error(`Quiz submission failed: ${message}`);
+    throw detailedError;
   }
 }
 

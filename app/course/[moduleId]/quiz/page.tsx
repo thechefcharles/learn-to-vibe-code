@@ -56,8 +56,9 @@ export default function QuizPage() {
       setResult(res);
       setSubmitted(true);
     } catch (error) {
-      alert("Failed to submit quiz");
-      console.error(error);
+      const errorMessage = error instanceof Error ? error.message : "Unknown error occurred";
+      console.error("Quiz submission error:", error);
+      alert(`Failed to submit quiz: ${errorMessage}`);
     } finally {
       setLoading(false);
     }
