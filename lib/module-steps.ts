@@ -52,11 +52,11 @@ export interface ModuleStepSequence {
   steps: ModuleStep[];
 }
 
-// Module 0: Setup & Accounts - Step-based structure
+// Module 1: Setup & Accounts - Step-based structure (renumbered from 0-15 to 1-16)
 export const module0Steps: Record<Version, ModuleStepSequence> = {
   adult: {
-    moduleId: 0,
-    moduleName: "Module 0: Setup & Accounts",
+    moduleId: 1,
+    moduleName: "Module 1: Setup & Accounts",
     totalDuration: 120,
     steps: [
       {
@@ -392,7 +392,7 @@ Open a terminal and run:`,
         xpReward: 150,
         content: `## You Did It! 🎉
 
-You've completed Module 0. You now have:
+You've completed Module 1. You now have:
 
 ✅ Node.js installed (runtime)
 ✅ Cursor installed (editor)
@@ -412,8 +412,8 @@ Ready to continue?`,
     ],
   },
   kids: {
-    moduleId: 0,
-    moduleName: "Module 0: Setup & Accounts",
+    moduleId: 1,
+    moduleName: "Module 1: Setup & Accounts",
     totalDuration: 120,
     steps: [
       {
@@ -10940,5 +10940,5 @@ export function getModuleSteps(
 
 // Check if a module has steps (new format) or uses markdown (old format)
 export function hasModuleSteps(moduleId: number): boolean {
-  return moduleId >= 0 && moduleId <= 15;
+  return moduleId >= 1 && moduleId <= 16;
 }

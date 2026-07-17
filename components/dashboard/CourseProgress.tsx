@@ -56,9 +56,9 @@ export function CourseProgress({ progress, totalModules }: CourseProgressProps) 
 
       <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 sm:gap-3">
         {Array.from({ length: totalModules }).map((_, idx) => {
-          const moduleId = idx;
+          const moduleId = idx + 1; // Modules are 1-16, not 0-15
           const status = getModuleStatus(moduleId);
-          const displayNumber = moduleId + 1; // Show 1-16 instead of 0-15
+          const displayNumber = moduleId; // Display 1-16
 
           return (
             <Link
