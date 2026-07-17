@@ -827,17 +827,13 @@ export function StepLessonViewer({
                     console.log(`🎯 Next Module button clicked. Marking module ${moduleId} complete...`);
                     const nextModuleId = moduleId + 1;
 
-                    if (user) {
-                      try {
-                        const { markModuleComplete } = await import("@/lib/actions/course");
-                        console.log(`📤 Calling markModuleComplete(${moduleId})...`);
-                        const result = await markModuleComplete(moduleId);
-                        console.log(`✓ Module ${moduleId} marked complete, result:`, result);
-                      } catch (error) {
-                        console.error("⚠️  Failed to mark module complete:", error);
-                      }
-                    } else {
-                      console.log(`⚠️  No user found, skipping markModuleComplete()`);
+                    try {
+                      const { markModuleComplete } = await import("@/lib/actions/course");
+                      console.log(`📤 Calling markModuleComplete(${moduleId})...`);
+                      const result = await markModuleComplete(moduleId);
+                      console.log(`✓ Module ${moduleId} marked complete, result:`, result);
+                    } catch (error) {
+                      console.error("⚠️  Failed to mark module complete:", error);
                     }
 
                     console.log(`🔗 Navigating to /course/${nextModuleId}`);
