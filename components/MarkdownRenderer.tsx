@@ -1,10 +1,73 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-// Mapping of screenshot descriptions to manifest keys
+// Mapping of screenshot descriptions (from lessons) to manifest keys
 const SCREENSHOT_MAP: Record<string, string> = {
+  // Module 0
+  "Next.js Starter Page": "m00-nextjs-starter",
+  // Module 1
+  "Prompt Context Effect": "m01-same-prompt-twice",
+  "Hallucination Example": "m01-hallucination",
+  // Module 2
+  "Weak vs. Strong Prompt Outputs": "m02-weak-vs-strong",
+  "Refinement Loop Exchange": "m02-refinement",
+  "Multimodal Prompt (Mockup → Generated UI)": "m02-mockup-source",
+  // Module 3
   "AI Interview + Drafted Spec": "m03-ai-interview",
   "Technical Plan (Data Model + Screens)": "m03-technical-plan",
+  // Module 4
+  "/Clients Page with Table": "m04-clients-table",
+  "Create Client Form": "m04-create-form",
+  "@-Mention Menu": "m04-cursor-at-mention",
+  "@-Mention Menu in Cursor Chat": "m04-cursor-at-mention",
+  "Cmd+K Inline Edit": "m04-cursor-cmdk",
+  "Cmd+K Inline Edit Diff": "m04-cursor-cmdk",
+  "Composer Multi-File Diff": "m04-cursor-composer",
+  "Composer Unified Diff (Multi-File)": "m04-cursor-composer",
+  // Module 5
+  "Invoices List Page": "m05-invoices-table",
+  "Create Invoice Form": "m05-invoice-form",
+  "Claude Code Welcome": "m05-claude-welcome",
+  "CLAUDE.md File": "m05-claude-md",
+  "Plan Mode Output": "m05-claude-plan-mode",
+  "Multi-File Diff": "m05-claude-multifile",
+  "Permission Prompt": "m05-claude-permission",
+  // Module 6
+  "Plain UI (\"Before\")": "m06-before-clients",
+  "Restyled UI (\"After\")": "m06-clients-styled",
+  "Responsive Mobile View": "m06-clients-mobile",
+  "Claude Design Prototype": "m06-claude-design-prototype",
+  "shadcn/ui Components": "m06-shadcn-components",
+  // Module 7
+  "App Sign-Out State": "m07-signed-out",
+  "App Signed-In State": "m07-signed-in",
+  "Supabase API Settings": "m07-supabase-api-keys",
+  "Supabase Auth users list after a test signup.": "m07-supabase-auth-users",
+  "Tables in Supabase Editor": "m07-supabase-table-editor",
+  "an RLS policy on the clients table.": "m07-supabase-rls-policy",
+  // Module 8
+  "Error Overlay": "m08-error-overlay",
+  // Module 9
+  "GitHub Repo Page": "m09-github-repo",
+  "a GitHub pull request showing the diff and merge button.": "m09-pr-diff",
+  // Module 10
+  "GitHub PR with Preview Link": "m10-vercel-preview-link",
+  "Vercel Import Project": "m10-vercel-import",
+  "Vercel Env Vars Settings": "m10-vercel-env",
+  "Vercel Deployments History": "m10-vercel-deployments",
+  "the Supabase Auth URL configuration with the production Site URL and redirect URLs.": "m10-supabase-prod-auth",
+  // Module 11
+  "Approval Queue UI": "m11-approval-queue",
+  "Workflow Diagram": "m11-workflow-diagram",
+  // Module 12
+  "Empty & Error States": "m12-empty",
+  "Lighthouse Report": "m12-lighthouse",
+  "Test Run Output": "m12-tests",
+  // Module 13
+  "Claude Code opening a PR and reporting a successful deploy from the terminal.": "m13-automated-pr-deploy",
+  "\`/plugin install\` adding a plugin.": "m13-plugin-install",
+  // Module 14
+  "Repo Architecture Summary": "m14-architecture-summary",
 };
 
 // Load manifest at build time
@@ -189,13 +252,66 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
         const mappedKey = SCREENSHOT_MAP[description];
 
         if (mappedKey) {
-          // Use hardcoded mapping
+          // Map manifest keys to actual file paths
           const paths: Record<string, string> = {
+            "m00-nextjs-starter": "/figures/m00/m00-01-nextjs-starter.png",
+            "m00-cursor-welcome": "/figures/m00/m00-cursor-welcome.png",
+            "m00-terminal-versions": "/figures/m00/m00-terminal-versions.png",
+            "m01-same-prompt-twice": "/figures/m01/m01-same-prompt-twice.png",
+            "m01-hallucination": "/figures/m01/m01-hallucination.png",
+            "m02-weak-vs-strong": "/figures/m02/m02-weak-vs-strong-1-weak.png",
+            "m02-refinement": "/figures/m02/m02-refinement.png",
+            "m02-mockup-source": "/figures/m02/m02-mockup-source.png",
             "m03-ai-interview": "/figures/m03/m03-ai-interview.png",
             "m03-technical-plan": "/figures/m03/m03-technical-plan.png",
+            "m04-clients-table": "/figures/m04/m04-01-clients-table.png",
+            "m04-create-form": "/figures/m04/m04-02-create-form.png",
+            "m04-cursor-at-mention": "/figures/m04/m04-cursor-at-mention.png",
+            "m04-cursor-cmdk": "/figures/m04/m04-cursor-cmdk-diff.png",
+            "m04-cursor-composer": "/figures/m04/m04-cursor-composer-diff.png",
+            "m05-invoices-table": "/figures/m05/m05-01-invoices-table.png",
+            "m05-invoice-form": "/figures/m05/m05-02-invoice-form.png",
+            "m05-claude-welcome": "/figures/m05/m05-claude-welcome.png",
+            "m05-claude-md": "/figures/m05/m05-claude-md.png",
+            "m05-claude-plan-mode": "/figures/m05/m05-claude-plan-mode.png",
+            "m05-claude-multifile": "/figures/m05/m05-claude-multifile-diff.png",
+            "m05-claude-permission": "/figures/m05/m05-claude-permission.png",
+            "m06-before-clients": "/figures/module-06-before-plain-ui-clients.svg",
+            "m06-before-invoices": "/figures/module-06-before-plain-ui-invoices.svg",
+            "m06-clients-styled": "/figures/m06/m06-01-clients-styled.png",
+            "m06-clients-mobile": "/figures/m06/m06-02-clients-mobile.png",
+            "m06-invoices-mobile": "/figures/m06/m06-03-invoices-mobile.png",
+            "m06-claude-design-home": "/figures/m06/m06-claude-design-home.png",
+            "m06-claude-design-prototype": "/figures/m06/m06-claude-design-prototype.png",
             "m06-shadcn-components": "/figures/m06-shadcn-components.svg",
+            "m07-signed-out": "/figures/m07/m07-01-signed-out.png",
+            "m07-signed-in": "/figures/m07/m07-02-signed-in-clients.png",
+            "m07-supabase-api-keys": "/figures/m07/m07-supabase-api-keys.png",
+            "m07-supabase-auth-users": "/figures/m07/m07-supabase-auth-users.png",
+            "m07-supabase-table-editor": "/figures/m07/m07-supabase-table-editor.png",
+            "m07-supabase-rls-policy": "/figures/m07/m07-supabase-rls-policy.png",
+            "m08-error-overlay": "/figures/m08/m08-01-error-overlay.png",
+            "m08-debugging-chat": "/figures/m08/m08-debugging-chat.png",
+            "m09-github-repo": "/figures/m09/m09-01-github-repo.png",
+            "m09-pr-diff": "/figures/m09/m09-02-pr-diff.png",
+            "m10-vercel-import": "/figures/m10/m10-vercel-import.png",
+            "m10-vercel-env": "/figures/m10/m10-vercel-env.png",
+            "m10-vercel-deployments": "/figures/m10/m10-vercel-deployments.png",
+            "m10-vercel-preview-link": "/figures/m10/m10-vercel-preview-link.png",
+            "m10-supabase-prod-auth": "/figures/m10/m10-supabase-prod-auth-urls.png",
+            "m11-approval-queue": "/figures/m11/m11-01-approval-queue.png",
             "m11-workflow-diagram": "/figures/m11-workflow-diagram.svg",
+            "m12-loading": "/figures/m12/m12-01-loading.png",
+            "m12-empty": "/figures/m12/m12-02-empty.png",
+            "m12-error": "/figures/m12/m12-03-error.png",
+            "m12-lighthouse": "/figures/m12/m12-lighthouse.png",
             "m12-tests": "/figures/m12/m12-tests.png",
+            "m13-automated-pr-deploy": "/figures/m13/m13-01-automated-pr-deploy.png",
+            "m13-mcp-list": "/figures/m13/m13-mcp-list.png",
+            "m13-plugin-install": "/figures/m13/m13-plugin-install.png",
+            "m13-skill-install": "/figures/m13/m13-skill-install.png",
+            "m13-notion-checklist": "/figures/m13/m13-notion-checklist.png",
+            "m14-architecture-summary": "/figures/m14/m14-architecture-summary.png",
           };
           imagePath = paths[mappedKey] || null;
         }
