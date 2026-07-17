@@ -123,6 +123,26 @@ export async function getChecklistItems(moduleId: number) {
   return data || [];
 }
 
+async function isModule1ChecklistComplete(): Promise<boolean> {
+  const user = await getUser();
+  if (!user) return false;
+
+  const supabase = await createClient();
+  const { data: items } = await supabase
+    .from("checklist_items")
+    .select("item_key, checked")
+    .eq("user_id", user.id)
+    .eq("module_id", 1);
+
+  if (!items) return false;
+
+  // Module 1 requires all checklist items to be checked
+  const requiredKeys = ["watched", "exercise", "quiz", "deliverable"];
+  return requiredKeys.every((key) =>
+    items.find((i: any) => i.item_key === key && i.checked)
+  );
+}
+
 export async function isModuleUnlocked(moduleId: number): Promise<boolean> {
   // Module 1 is always unlocked (first module)
   if (moduleId === 1) return true;
@@ -132,7 +152,12 @@ export async function isModuleUnlocked(moduleId: number): Promise<boolean> {
 
   const prevModuleId = moduleId - 1;
 
-  // Check unlock gates for previous module:
+  // Module 2 unlocks when Module 1 checklist is complete (no quiz/deliverable for Module 1)
+  if (prevModuleId === 1) {
+    return await isModule1ChecklistComplete();
+  }
+
+  // For Modules 3+, check unlock gates for previous module:
   // 1. Quiz passed
   // 2. Deliverable submitted
   const quizPassed = await hasPassedQuiz(prevModuleId);
