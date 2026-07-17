@@ -2,8 +2,26 @@
 
 **Purpose:** When adding, removing, or modifying course modules/lessons, use this checklist to ensure all affected components are updated.
 
-**Last Updated:** 2026-07-13  
+**Last Updated:** 2026-07-17  
 **Current State:** 16 modules (0-15), 93 hours, 9.3 CEUs, 3 questions/module
+**Latest Addition:** 4 new lessons (2.5, 5.7b, 6.4b, 12.5) covering video transcription, advanced voice workflows, competitor design extraction, and Playwright automation
+
+---
+
+## Recent Curriculum Additions (2026-07-17)
+
+**Four new lessons added to address vibe coding workflow gaps.** These are lesson-level additions (not new modules), so module count remains 16.
+
+| Module | Lesson | Topic | Status | Optional Next Steps |
+|--------|--------|-------|--------|-------------------|
+| 2 | 2.5 | Video → Transcripts → Code | ✅ Added | Add 2 quiz questions; add hands-on project template |
+| 5 | 5.7b | Advanced Voice Workflows | ✅ Added | Add SuperWhisper tutorial video link; add performance benchmarks (voice vs. typing speed) |
+| 6 | 6.4b | Competitor Reference & Design Extraction | ✅ Added | Add UI kit links (Stripe, Linear, Figma); create template for design analysis |
+| 12 | 12.5 | Playwright Automation & AI Testing | ✅ Added | Add Playwright tutorial; create test templates for common patterns |
+
+**No module-level changes:** Quiz count, CEU calculation, module metadata remain unchanged. Existing quizzes still cover Objectives 1–4 per module.
+
+**Verification:** All four lessons follow module structure (learning objectives, hands-on activity, knowledge checks mapped to objectives). No module-level breaking changes.
 
 ---
 
