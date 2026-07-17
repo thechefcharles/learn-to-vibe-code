@@ -770,26 +770,41 @@ export function StepLessonViewer({
               <span className="text-slate-600 text-xs mt-1 sm:hidden">Swipe to navigate</span>
             </div>
 
-            <motion.button
-              onClick={isLastStep ? () => (window.location.href = `/course`) : handleNext}
-              disabled={isPreviewMode || (currentStep.sections ? lessonCompletedTrigger !== currentStepIndex : false)}
-              whileHover={!isPreviewMode && !(currentStep.sections && lessonCompletedTrigger !== currentStepIndex) ? { scale: 1.02, y: -2 } : {}}
-              className={`w-full sm:w-auto px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white ${
-                isPreviewMode || (currentStep.sections && lessonCompletedTrigger !== currentStepIndex)
-                  ? "opacity-30 cursor-not-allowed"
+            {/* Navigation Buttons - Right Side */}
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+              {/* Next Module Button (bottom right when last step) */}
+              {isLastStep && (unlockedModules?.has(moduleId + 1)) && (
+                <motion.a
+                  href={`/course/${String(moduleId + 1).padStart(2, '0')}`}
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  className="w-full px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/50 text-center"
+                >
+                  Next Module →
+                </motion.a>
+              )}
+
+              {/* Standard Next/Back to Course Button */}
+              <motion.button
+                onClick={isLastStep ? () => (window.location.href = `/course`) : handleNext}
+                disabled={isPreviewMode || (currentStep.sections ? lessonCompletedTrigger !== currentStepIndex : false)}
+                whileHover={!isPreviewMode && !(currentStep.sections && lessonCompletedTrigger !== currentStepIndex) ? { scale: 1.02, y: -2 } : {}}
+                className={`w-full sm:w-auto px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white ${
+                  isPreviewMode || (currentStep.sections && lessonCompletedTrigger !== currentStepIndex)
+                    ? "opacity-30 cursor-not-allowed"
+                    : isLastStep
+                      ? "bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 shadow-lg hover:shadow-emerald-500/50"
+                      : "bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/50"
+                }`}
+              >
+                {isPreviewMode
+                  ? "Preview Mode"
+                  : currentStep.sections && lessonCompletedTrigger !== currentStepIndex
+                  ? "Complete all sections to continue"
                   : isLastStep
-                    ? "bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 shadow-lg hover:shadow-emerald-500/50"
-                    : "bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/50"
-              }`}
-            >
-              {isPreviewMode
-                ? "Preview Mode"
-                : currentStep.sections && lessonCompletedTrigger !== currentStepIndex
-                ? "Complete all sections to continue"
-                : isLastStep
-                  ? "Back to Course"
-                  : "Next →"}
-            </motion.button>
+                    ? "Back to Course"
+                    : "Next →"}
+              </motion.button>
+            </div>
           </div>
         </motion.div>
         </div>
