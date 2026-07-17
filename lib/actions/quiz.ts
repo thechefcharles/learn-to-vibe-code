@@ -31,14 +31,13 @@ export async function submitQuiz(
 
   const result = scoreQuiz(responses, quiz);
 
-  // Store attempt with version tracking
+  // Store attempt (version is tracked server-side during scoring, not stored in DB)
   const { error } = await supabase.from("quiz_attempts").insert({
     user_id: user.id,
     module_id: moduleId,
     score: result.score,
     passed: result.passed,
     attempt_no: await getNextAttemptNumber(user.id, moduleId),
-    target_audience: version,
   });
 
   if (error) throw error;
