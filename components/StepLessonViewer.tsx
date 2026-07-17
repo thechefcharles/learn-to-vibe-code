@@ -816,37 +816,39 @@ export function StepLessonViewer({
                 </motion.a>
               )}
 
-              {/* Standard Next/Back to Course Button */}
-              <motion.button
-                onClick={(e) => {
-                  const isDisabled = isPreviewMode || (currentStep.sections ? lessonCompletedTrigger !== currentStepIndex : false);
-                  console.log(`🖱️ Next button clicked! isLastStep=${isLastStep}, disabled=${isDisabled}, lessonCompletedTrigger=${lessonCompletedTrigger}, currentStepIndex=${currentStepIndex}, hasSection=${currentStep.sections ? 'yes' : 'no'}`);
-                  if (isLastStep) {
-                    console.log(`🔗 Navigating to course page`);
-                    window.location.href = `/course`;
-                  } else {
-                    console.log(`⏭️ Calling handleNext()`);
-                    handleNext();
-                  }
-                }}
-                disabled={isPreviewMode || (currentStep.sections ? lessonCompletedTrigger !== currentStepIndex : false)}
-                whileHover={!isPreviewMode && !(currentStep.sections && lessonCompletedTrigger !== currentStepIndex) ? { scale: 1.02, y: -2 } : {}}
-                className={`w-full sm:w-auto px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white ${
-                  isPreviewMode || (currentStep.sections && lessonCompletedTrigger !== currentStepIndex)
-                    ? "opacity-30 cursor-not-allowed"
+              {/* Standard Next/Back to Course Button
+                  NOTE: Hidden when sections exist (SectionLessonViewer handles navigation).
+                  Only shows for non-sectioned steps or the final step.
+              */}
+              {!currentStep.sections && (
+                <motion.button
+                  onClick={(e) => {
+                    console.log(`🖱️ Next button clicked! isLastStep=${isLastStep}`);
+                    if (isLastStep) {
+                      console.log(`🔗 Navigating to course page`);
+                      window.location.href = `/course`;
+                    } else {
+                      console.log(`⏭️ Calling handleNext()`);
+                      handleNext();
+                    }
+                  }}
+                  disabled={isPreviewMode}
+                  whileHover={!isPreviewMode ? { scale: 1.02, y: -2 } : {}}
+                  className={`w-full sm:w-auto px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white ${
+                    isPreviewMode
+                      ? "opacity-30 cursor-not-allowed"
+                      : isLastStep
+                        ? "bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 shadow-lg hover:shadow-emerald-500/50"
+                        : "bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/50"
+                  }`}
+                >
+                  {isPreviewMode
+                    ? "Preview Mode"
                     : isLastStep
-                      ? "bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 shadow-lg hover:shadow-emerald-500/50"
-                      : "bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/50"
-                }`}
-              >
-                {isPreviewMode
-                  ? "Preview Mode"
-                  : currentStep.sections && lessonCompletedTrigger !== currentStepIndex
-                  ? "Complete all sections to continue"
-                  : isLastStep
-                    ? "Back to Course"
-                    : "Next →"}
-              </motion.button>
+                      ? "Back to Course"
+                      : "Next →"}
+                </motion.button>
+              )}
             </div>
           </div>
         </motion.div>
