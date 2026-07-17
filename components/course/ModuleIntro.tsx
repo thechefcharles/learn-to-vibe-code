@@ -14,12 +14,9 @@ export function ModuleIntro({ steps, moduleId, isKids, onStart }: ModuleIntroPro
   const totalSteps = steps.steps.length;
   const estimatedTime = `${totalSteps * 5} min`; // Assume 5 min per step
 
-  // Adjust module name to use 1-based numbering for display
-  const displayModuleName = steps.moduleName.replace(/Module (\d+):/, (match, num) => {
-    const displayNum = parseInt(num) + 1;
-    return `Module ${displayNum}:`;
-  });
-  const displayModuleNumber = moduleId + 1;
+  // Module names and numbers are already correct (1-16) from module-steps.ts and routing
+  const displayModuleName = steps.moduleName;
+  const displayModuleNumber = moduleId;
 
   return (
     <motion.div
