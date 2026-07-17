@@ -124,8 +124,8 @@ export async function getChecklistItems(moduleId: number) {
 }
 
 export async function isModuleUnlocked(moduleId: number): Promise<boolean> {
-  // Module 0 is always unlocked
-  if (moduleId === 0) return true;
+  // Module 1 is always unlocked (first module)
+  if (moduleId === 1) return true;
 
   const user = await getUser();
   if (!user) return false;

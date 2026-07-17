@@ -7,14 +7,14 @@ import { describe, it, expect } from 'vitest';
 
 describe('Module Unlock Gates', () => {
   describe('Unlock Logic', () => {
-    it('should unlock Module 0 unconditionally', () => {
-      // Module 0 is always unlocked - no dependencies
-      expect(isModuleUnlockedLogic(0)).toBe(true);
+    it('should unlock Module 1 unconditionally', () => {
+      // Module 1 is always unlocked - no dependencies (first module)
+      expect(isModuleUnlockedLogic(1)).toBe(true);
     });
 
     it('should require prev module quiz passed to unlock Module N', () => {
-      // To unlock Module 1, must pass Module 0 quiz
-      const result = isModuleUnlockedLogic(1, {
+      // To unlock Module 2, must pass Module 1 quiz
+      const result = isModuleUnlockedLogic(2, {
         quizPassed: true,
         deliverableSubmitted: true,
       });
@@ -22,8 +22,8 @@ describe('Module Unlock Gates', () => {
     });
 
     it('should require prev module deliverable submitted to unlock Module N', () => {
-      // To unlock Module 1, must submit Module 0 deliverable
-      const result = isModuleUnlockedLogic(1, {
+      // To unlock Module 2, must submit Module 1 deliverable
+      const result = isModuleUnlockedLogic(2, {
         quizPassed: true,
         deliverableSubmitted: true,
       });
@@ -31,7 +31,7 @@ describe('Module Unlock Gates', () => {
     });
 
     it('should fail unlock if prev module quiz not passed', () => {
-      const result = isModuleUnlockedLogic(1, {
+      const result = isModuleUnlockedLogic(2, {
         quizPassed: false,
         deliverableSubmitted: true,
       });
@@ -39,14 +39,14 @@ describe('Module Unlock Gates', () => {
     });
 
     it('should fail unlock if prev module deliverable not submitted', () => {
-      const result = isModuleUnlockedLogic(1, {
+      const result = isModuleUnlockedLogic(2, {
         quizPassed: true,
         deliverableSubmitted: false,
       });
       expect(result).toBe(false);
     });
 
-    it('should require both conditions to unlock any module > 0', () => {
+    it('should require both conditions to unlock any module > 1', () => {
       // Both must be true
       expect(
         isModuleUnlockedLogic(5, { quizPassed: true, deliverableSubmitted: true })
@@ -70,24 +70,24 @@ describe('Module Unlock Gates', () => {
   });
 
   describe('Capstone Unlock', () => {
-    it('should require Module 15 completion to unlock capstone', () => {
-      // Capstone available only after Module 15 completion
-      const result = isCapstoneUnlockedLogic(15, {
+    it('should require Module 16 completion to unlock capstone', () => {
+      // Capstone available only after Module 16 completion (last regular module)
+      const result = isCapstoneUnlockedLogic(16, {
         allModulesCompleted: true,
       });
       expect(result).toBe(true);
     });
 
-    it('should not allow capstone attempt before Module 15', () => {
-      const result = isCapstoneUnlockedLogic(14, {
+    it('should not allow capstone attempt before Module 16', () => {
+      const result = isCapstoneUnlockedLogic(15, {
         allModulesCompleted: false,
       });
       expect(result).toBe(false);
     });
 
     it('should allow capstone only if all 16 modules completed', () => {
-      // Need to pass all 16 modules
-      const result = isCapstoneUnlockedLogic(15, {
+      // Need to pass all 16 modules (1-16)
+      const result = isCapstoneUnlockedLogic(16, {
         allModulesCompleted: true,
       });
       expect(result).toBe(true);
@@ -113,10 +113,10 @@ describe('Module Unlock Gates', () => {
 
   describe('Module Dependency Chain', () => {
     it('should allow linear progression through all modules', () => {
-      // User should be able to unlock modules 0-15 in sequence
+      // User should be able to unlock modules 1-16 in sequence
       let prevModuleState = { quizPassed: true, deliverableSubmitted: true };
 
-      for (let i = 1; i < 16; i++) {
+      for (let i = 2; i <= 16; i++) {
         const canUnlock = isModuleUnlockedLogic(i, prevModuleState);
         expect(canUnlock).toBe(true);
       }
@@ -144,8 +144,8 @@ function isModuleUnlockedLogic(
   moduleId: number,
   prevModuleState?: { quizPassed: boolean; deliverableSubmitted: boolean }
 ): boolean {
-  // Module 0 is always unlocked
-  if (moduleId === 0) return true;
+  // Module 1 is always unlocked (first module)
+  if (moduleId === 1) return true;
 
   if (!prevModuleState) return false;
 
@@ -159,8 +159,8 @@ function isCapstoneUnlockedLogic(
   highestModuleCompleted: number,
   state?: { allModulesCompleted: boolean }
 ): boolean {
-  // Capstone available only after Module 15
-  return highestModuleCompleted >= 15 && (state?.allModulesCompleted ?? false);
+  // Capstone available only after Module 16 (last regular module)
+  return highestModuleCompleted >= 16 && (state?.allModulesCompleted ?? false);
 }
 
 function isQuizPassedLogic(percentage: number): boolean {

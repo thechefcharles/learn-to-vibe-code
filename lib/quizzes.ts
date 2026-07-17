@@ -16,8 +16,8 @@ export interface ModuleQuiz {
 // Quiz data for all 16 modules (multiple choice questions only)
 // NOTE: Module 0 is checklist-only (no quiz) — gate is completion verification, not quiz score
 export const quizzes: Record<number, ModuleQuiz> = {
-  1: {
-    moduleId: 1,
+  2: {
+    moduleId: 2,
     questions: [
       {
         id: "1-1",
@@ -73,8 +73,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  2: {
-    moduleId: 2,
+  3: {
+    moduleId: 3,
     questions: [
       {
         id: "2-1",
@@ -164,8 +164,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  3: {
-    moduleId: 3,
+  4: {
+    moduleId: 4,
     questions: [
       {
         id: "3-1",
@@ -221,8 +221,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  4: {
-    moduleId: 4,
+  5: {
+    moduleId: 5,
     questions: [
       {
         id: "4-1",
@@ -273,8 +273,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  5: {
-    moduleId: 5,
+  6: {
+    moduleId: 6,
     questions: [
       {
         id: "5-1",
@@ -333,8 +333,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  6: {
-    moduleId: 6,
+  7: {
+    moduleId: 7,
     questions: [
       {
         id: "6-1",
@@ -411,8 +411,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  7: {
-    moduleId: 7,
+  8: {
+    moduleId: 8,
     questions: [
       {
         id: "7-1",
@@ -445,8 +445,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  8: {
-    moduleId: 8,
+  9: {
+    moduleId: 9,
     questions: [
       {
         id: "8-1",
@@ -502,8 +502,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  9: {
-    moduleId: 9,
+  10: {
+    moduleId: 10,
     questions: [
       {
         id: "9-1",
@@ -546,8 +546,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  10: {
-    moduleId: 10,
+  11: {
+    moduleId: 11,
     questions: [
       {
         id: "10-1",
@@ -590,8 +590,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  11: {
-    moduleId: 11,
+  12: {
+    moduleId: 12,
     questions: [
       {
         id: "11-1",
@@ -647,8 +647,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  12: {
-    moduleId: 12,
+  13: {
+    moduleId: 13,
     questions: [
       {
         id: "12-1",
@@ -725,8 +725,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  13: {
-    moduleId: 13,
+  14: {
+    moduleId: 14,
     questions: [
       {
         id: "13-1",
@@ -777,8 +777,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  14: {
-    moduleId: 14,
+  15: {
+    moduleId: 15,
     questions: [
       {
         id: "14-1",
@@ -821,8 +821,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  15: {
-    moduleId: 15,
+  16: {
+    moduleId: 16,
     questions: [
       {
         id: "15-1",
@@ -869,8 +869,8 @@ export const quizzes: Record<number, ModuleQuiz> = {
 
 // Kids version quizzes (simplified language, same learning objectives)
 export const kidsQuizzes: Record<number, ModuleQuiz> = {
-  0: {
-    moduleId: 0,
+  1: {
+    moduleId: 1,
     questions: [
       {
         id: "k0-1",
@@ -895,8 +895,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  1: {
-    moduleId: 1,
+  2: {
+    moduleId: 2,
     questions: [
       {
         id: "k1-1",
@@ -921,8 +921,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  2: {
-    moduleId: 2,
+  3: {
+    moduleId: 3,
     questions: [
       {
         id: "k2-1",
@@ -961,8 +961,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  3: {
-    moduleId: 3,
+  4: {
+    moduleId: 4,
     questions: [
       {
         id: "k3-1",
@@ -987,8 +987,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  4: {
-    moduleId: 4,
+  5: {
+    moduleId: 5,
     questions: [
       {
         id: "k4-1",
@@ -1013,8 +1013,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  5: {
-    moduleId: 5,
+  6: {
+    moduleId: 6,
     questions: [
       {
         id: "k5-1",
@@ -1053,8 +1053,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  6: {
-    moduleId: 6,
+  7: {
+    moduleId: 7,
     questions: [
       {
         id: "k6-1",
@@ -1093,8 +1093,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  7: {
-    moduleId: 7,
+  8: {
+    moduleId: 8,
     questions: [
       {
         id: "k7-1",
@@ -1119,8 +1119,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  8: {
-    moduleId: 8,
+  9: {
+    moduleId: 9,
     questions: [
       {
         id: "k8-1",
@@ -1145,8 +1145,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  9: {
-    moduleId: 9,
+  10: {
+    moduleId: 10,
     questions: [
       {
         id: "k9-1",
@@ -1171,8 +1171,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  10: {
-    moduleId: 10,
+  11: {
+    moduleId: 11,
     questions: [
       {
         id: "k10-1",
@@ -1197,8 +1197,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  11: {
-    moduleId: 11,
+  12: {
+    moduleId: 12,
     questions: [
       {
         id: "k11-1",
@@ -1223,8 +1223,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  12: {
-    moduleId: 12,
+  13: {
+    moduleId: 13,
     questions: [
       {
         id: "k12-1",
@@ -1263,8 +1263,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  13: {
-    moduleId: 13,
+  14: {
+    moduleId: 14,
     questions: [
       {
         id: "k13-1",
@@ -1289,8 +1289,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  14: {
-    moduleId: 14,
+  15: {
+    moduleId: 15,
     questions: [
       {
         id: "k14-1",
@@ -1315,8 +1315,8 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
       },
     ],
   },
-  15: {
-    moduleId: 15,
+  16: {
+    moduleId: 16,
     questions: [
       {
         id: "k15-1",

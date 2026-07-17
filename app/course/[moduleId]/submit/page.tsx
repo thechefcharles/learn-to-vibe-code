@@ -19,9 +19,9 @@ export default function SubmitPage() {
   const router = useRouter();
   const moduleId = parseInt(params.moduleId as string);
 
-  // Redirect if module is invalid (< 1 or > 15)
+  // Redirect if module is invalid (< 1 or > 16)
   useEffect(() => {
-    if (isNaN(moduleId) || moduleId < 1 || moduleId > 15) {
+    if (isNaN(moduleId) || moduleId < 1 || moduleId > 16) {
       router.push("/course");
     }
   }, [moduleId, router]);

@@ -42,7 +42,7 @@ export default async function LessonPage(props: LessonPageProps) {
   const searchParams = await props.searchParams;
   const moduleId = parseInt(params.moduleId);
 
-  if (isNaN(moduleId) || moduleId < 1 || moduleId > 15) {
+  if (isNaN(moduleId) || moduleId < 1 || moduleId > 16) {
     notFound();
   }
 
@@ -80,8 +80,8 @@ export default async function LessonPage(props: LessonPageProps) {
   }
 
   const meta = getModuleMetadata(moduleId);
-  const prevModule = moduleId > 0 ? moduleId - 1 : null;
-  const nextModule = moduleId < 15 ? moduleId + 1 : null;
+  const prevModule = moduleId > 1 ? moduleId - 1 : null;
+  const nextModule = moduleId < 16 ? moduleId + 1 : null;
 
   // Extract title from module content
   const titleMatch = module.content.match(/^#\s+(.+?)(?:\n|$)/);

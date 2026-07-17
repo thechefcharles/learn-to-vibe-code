@@ -809,7 +809,7 @@ export function StepLessonViewer({
               )}
 
               {/* Next Module Button (bottom right when last step) */}
-              {isLastStep && moduleId < 15 && (
+              {isLastStep && moduleId < 16 && (
                 <motion.a
                   href={`/course/${String(moduleId + 1).padStart(2, '0')}`}
                   whileHover={{ scale: 1.02, y: -2 }}
