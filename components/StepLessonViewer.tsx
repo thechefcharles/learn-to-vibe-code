@@ -808,24 +808,38 @@ export function StepLessonViewer({
             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               {/* Quiz CTA (when at last step, but not for Module 1 which is checklist-only) */}
               {isLastStep && moduleId > 1 && (
-                <motion.a
-                  href={`/course/${String(moduleId).padStart(2, '0')}/quiz`}
+                <motion.button
+                  onClick={() => {
+                    window.location.href = `/course/${moduleId}/quiz`;
+                  }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className="w-full px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-lg hover:shadow-orange-500/50 text-center"
                 >
                   📝 Take the Quiz
-                </motion.a>
+                </motion.button>
               )}
 
               {/* Next Module Button (bottom right when last step) */}
               {isLastStep && moduleId < 16 && (
-                <motion.a
-                  href={`/course/${String(moduleId + 1).padStart(2, '0')}`}
+                <motion.button
+                  onClick={async () => {
+                    console.log(`🎯 Next Module button clicked. Marking module ${moduleId} complete...`);
+                    if (user) {
+                      try {
+                        const { markModuleComplete } = await import("@/lib/actions/course");
+                        await markModuleComplete(moduleId);
+                        console.log(`✓ Module ${moduleId} marked complete, navigating to Module ${moduleId + 1}`);
+                      } catch (error) {
+                        console.error("Failed to mark module complete:", error);
+                      }
+                    }
+                    window.location.href = `/course/${moduleId + 1}`;
+                  }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className="w-full px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/50 text-center"
                 >
                   Next Module →
-                </motion.a>
+                </motion.button>
               )}
 
               {/* Standard Next/Back to Course Button
