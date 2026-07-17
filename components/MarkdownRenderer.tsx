@@ -33,8 +33,11 @@ const SCREENSHOT_MAP: Record<string, string> = {
   "Multi-File Diff": "m05-claude-multifile",
   "Permission Prompt": "m05-claude-permission",
   // Module 6
-  "Plain UI (\"Before\")": "m06-before-clients",
-  "Restyled UI (\"After\")": "m06-clients-styled",
+  'Plain UI ("Before")': "m06-before-clients",
+  'Restyled UI ("After")': "m06-clients-styled",
+  // Alias for module 6 before/after
+  "Plain UI": "m06-before-clients",
+  "Restyled UI": "m06-clients-styled",
   "Responsive Mobile View": "m06-clients-mobile",
   "Claude Design Prototype": "m06-claude-design-prototype",
   "shadcn/ui Components": "m06-shadcn-components",
@@ -45,8 +48,11 @@ const SCREENSHOT_MAP: Record<string, string> = {
   "Supabase Auth users list after a test signup.": "m07-supabase-auth-users",
   "Tables in Supabase Editor": "m07-supabase-table-editor",
   "an RLS policy on the clients table.": "m07-supabase-rls-policy",
+  "the Supabase Auth users list after a test signup.": "m07-supabase-auth-users",
   // Module 8
+  "Next.js Error Overlay": "m08-error-overlay",
   "Error Overlay": "m08-error-overlay",
+  "Debugging Chat": "m08-debugging-chat",
   // Module 9
   "GitHub Repo Page": "m09-github-repo",
   "a GitHub pull request showing the diff and merge button.": "m09-pr-diff",
@@ -66,6 +72,8 @@ const SCREENSHOT_MAP: Record<string, string> = {
   // Module 13
   "Claude Code opening a PR and reporting a successful deploy from the terminal.": "m13-automated-pr-deploy",
   "\`/plugin install\` adding a plugin.": "m13-plugin-install",
+  "MCP List Output": "m13-mcp-list",
+  "Skill Install": "m13-skill-install",
   // Module 14
   "Repo Architecture Summary": "m14-architecture-summary",
 };
