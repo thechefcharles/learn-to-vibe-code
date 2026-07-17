@@ -3,7 +3,7 @@
 import { SVGProps } from 'react';
 
 type BadgeTier = 'silver' | 'gold' | 'platinum';
-type BadgeType = 'lesson' | 'quiz-perfect' | 'quiz-first-try' | 'deliverable' | 'capstone' | 'deployment' | 'production-master' | 'security-master';
+type BadgeType = 'lesson' | 'quiz-perfect' | 'quiz-first-try' | 'deliverable' | 'capstone' | 'deployment' | 'production-master' | 'security-master' | 'automation';
 
 interface BadgeProps {
   type: BadgeType;
@@ -32,6 +32,7 @@ const BADGE_ICONS: Record<BadgeType, string> = {
   'deployment': '🚀',
   'production-master': '👑',
   'security-master': '🔐',
+  'automation': '⚙️',
 };
 
 const BADGE_LABELS: Record<BadgeType, Record<BadgeTier, string>> = {
@@ -43,6 +44,7 @@ const BADGE_LABELS: Record<BadgeType, Record<BadgeTier, string>> = {
   'deployment': { silver: 'First Deploy', gold: '5 Deploys', platinum: 'Deployment Hero' },
   'production-master': { silver: 'Built', gold: 'Production', platinum: 'Master' },
   'security-master': { silver: 'Secure', gold: 'Locked Down', platinum: 'Master' },
+  'automation': { silver: 'Built', gold: 'Automated', platinum: 'Master' },
 };
 
 export function Badge({ type, tier, size = 'md' }: BadgeProps) {
