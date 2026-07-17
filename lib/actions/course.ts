@@ -136,8 +136,9 @@ async function isModule1ChecklistComplete(): Promise<boolean> {
 
   if (!items) return false;
 
-  // Module 1 requires all checklist items to be checked
-  const requiredKeys = ["watched", "exercise", "quiz", "deliverable"];
+  // Module 1 is setup-only: only requires "watched" and "exercise"
+  // (no quiz or deliverable for Module 1)
+  const requiredKeys = ["watched", "exercise"];
   return requiredKeys.every((key) =>
     items.find((i: any) => i.item_key === key && i.checked)
   );
