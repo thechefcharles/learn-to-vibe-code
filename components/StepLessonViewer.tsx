@@ -775,7 +775,7 @@ export function StepLessonViewer({
               {/* Next Module Button (bottom right when last step) */}
               {isLastStep && moduleId < 15 && (
                 <motion.a
-                  href={`/course/${String(moduleId + 1).padStart(2, '0')}`}
+                  href={`/course/${String(moduleId + 1).padStart(2, '0')}?from=lesson`}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className="w-full px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/50 text-center"
                 >
