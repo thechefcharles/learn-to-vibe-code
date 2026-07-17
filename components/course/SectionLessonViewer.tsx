@@ -334,6 +334,7 @@ export function SectionLessonViewer({
 
         {isLastSection ? (
           <motion.button
+            onClick={onLessonComplete}
             whileHover={allSectionsViewed ? { scale: 1.02, y: -2 } : {}}
             disabled={!allSectionsViewed}
             className={`ml-auto px-6 py-2.5 rounded-lg font-bold transition-all duration-200 uppercase text-sm tracking-wider ${

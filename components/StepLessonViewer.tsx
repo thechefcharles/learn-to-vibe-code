@@ -817,10 +817,10 @@ export function StepLessonViewer({
               )}
 
               {/* Standard Next/Back to Course Button
-                  NOTE: Hidden when sections exist (SectionLessonViewer handles navigation).
-                  Only shows for non-sectioned steps or the final step.
+                  NOTE: Hidden while sections are being viewed (SectionLessonViewer handles navigation).
+                  Shows after all sections complete, or for non-sectioned steps.
               */}
-              {!currentStep.sections && (
+              {(!currentStep.sections || (currentStep.sections && lessonCompletedTrigger === currentStepIndex)) && (
                 <motion.button
                   onClick={(e) => {
                     console.log(`🖱️ Next button clicked! isLastStep=${isLastStep}`);
