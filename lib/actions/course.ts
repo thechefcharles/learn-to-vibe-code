@@ -43,27 +43,26 @@ export async function markModuleComplete(moduleId: number) {
 
   const supabase = await createClient();
 
-  // Verify checklist items are completed
-  // Module 1 (setup-only) only requires watched + exercise
-  // Other modules require watched + exercise + quiz + deliverable
-  const { data: items } = await supabase
-    .from("checklist_items")
-    .select("item_key, checked")
-    .eq("user_id", user.id)
-    .eq("module_id", moduleId);
+  // Module 1 (setup-only): Just mark complete when all lessons done
+  // No need to verify checklist items - completing all lessons IS proof of completion
+  // Other modules: Verify quiz passed + deliverable submitted
+  if (moduleId !== 1) {
+    const { data: items } = await supabase
+      .from("checklist_items")
+      .select("item_key, checked")
+      .eq("user_id", user.id)
+      .eq("module_id", moduleId);
 
-  const requiredKeys = moduleId === 1
-    ? ["watched", "exercise"]  // Module 1: only these two
-    : ["watched", "exercise", "quiz", "deliverable"];  // Other modules: all four
-
-  const allChecked = requiredKeys.every((key) =>
-    items?.find((i: any) => i.item_key === key && i.checked)
-  );
-
-  if (!allChecked) {
-    throw new Error(
-      `Cannot mark complete: required checklist items not all checked (${requiredKeys.join(", ")})`
+    const requiredKeys = ["watched", "exercise", "quiz", "deliverable"];
+    const allChecked = requiredKeys.every((key) =>
+      items?.find((i: any) => i.item_key === key && i.checked)
     );
+
+    if (!allChecked) {
+      throw new Error(
+        `Cannot mark complete: required checklist items not all checked (${requiredKeys.join(", ")})`
+      );
+    }
   }
 
   // Mark module complete
