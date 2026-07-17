@@ -819,7 +819,8 @@ export function StepLessonViewer({
               {/* Standard Next/Back to Course Button */}
               <motion.button
                 onClick={(e) => {
-                  console.log(`🖱️ Next button clicked! isLastStep=${isLastStep}, disabled=${isPreviewMode || (currentStep.sections ? lessonCompletedTrigger !== currentStepIndex : false)}`);
+                  const isDisabled = isPreviewMode || (currentStep.sections ? lessonCompletedTrigger !== currentStepIndex : false);
+                  console.log(`🖱️ Next button clicked! isLastStep=${isLastStep}, disabled=${isDisabled}, lessonCompletedTrigger=${lessonCompletedTrigger}, currentStepIndex=${currentStepIndex}, hasSection=${currentStep.sections ? 'yes' : 'no'}`);
                   if (isLastStep) {
                     console.log(`🔗 Navigating to course page`);
                     window.location.href = `/course`;

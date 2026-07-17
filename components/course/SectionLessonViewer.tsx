@@ -120,9 +120,12 @@ export function SectionLessonViewer({
 
   // Fire completion reward when all sections viewed
   useEffect(() => {
-    console.log(`📖 [SECTIONLESSONVIEWER EFFECT 3] Checking completion: viewed=${viewedSections.size}, total=${sections.length}, progress=${progress ? 'exists' : 'null'}, rewardClaimed=${progress?.rewardClaimed}`);
-    if (viewedSections.size === sections.length && progress && !progress.rewardClaimed) {
-      console.log(`🎉 [SECTIONLESSONVIEWER] ALL SECTIONS VIEWED! Firing onLessonComplete callback`);
+    const allSectionsViewed = viewedSections.size === sections.length;
+    const shouldTrigger = allSectionsViewed && progress && !progress.rewardClaimed;
+    console.log(`📖 [SECTIONLESSONVIEWER EFFECT 3] Checking completion: viewed=${viewedSections.size}, total=${sections.length}, allViewed=${allSectionsViewed}, progress=${progress ? 'exists' : 'null'}, rewardClaimed=${progress?.rewardClaimed}, shouldTrigger=${shouldTrigger}`);
+
+    if (shouldTrigger) {
+      console.log(`🎉 [SECTIONLESSONVIEWER] ALL SECTIONS VIEWED! Firing onLessonComplete callback`, { onLessonComplete: !!onLessonComplete, stepId: step.id });
       setProgress(prev => prev ? { ...prev, completed: true, rewardClaimed: true } : null);
       localStorage.setItem(lessonStorageKey, JSON.stringify({
         ...progress,
@@ -132,7 +135,7 @@ export function SectionLessonViewer({
       setShowReward(true);
       onLessonComplete?.();
     }
-  }, [viewedSections.size, sections.length, progress, onLessonComplete, lessonStorageKey]);
+  }, [viewedSections.size, sections.length, progress, onLessonComplete, lessonStorageKey, step.id]);
 
   const currentSection = sections[sectionIndex];
   const isFirstSection = sectionIndex === 0;
