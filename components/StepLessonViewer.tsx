@@ -88,6 +88,11 @@ export function StepLessonViewer({
   const isMilestone = progress === 25 || progress === 50 || progress === 75 || progress === 100;
   const milestoneText = progress === 25 ? "25% Complete! 🚀" : progress === 50 ? "Halfway There! 💪" : progress === 75 ? "Almost Done! 🔥" : "Module Complete! 🎉";
 
+  // Debug logging for step 10
+  if (typeof window !== 'undefined' && currentStepIndex === 9) {
+    console.log(`📊 [STEP 10 RENDER] currentStep=${currentStepIndex+1}, hasSection=${currentStep.sections ? 'yes' : 'no'}, lessonCompletedTrigger=${lessonCompletedTrigger}, isLastStep=${isLastStep}`);
+  }
+
   // Use preview step if one is selected, otherwise use current module's step
   const displayingPreviewLesson = previewModuleId !== null && previewLessonIndex !== null && previewModuleSteps;
   const currentStep = displayingPreviewLesson && previewModuleSteps
@@ -136,12 +141,16 @@ export function StepLessonViewer({
   }, [currentStepIndex, completedSteps, moduleId, naturallyReachedStep]);
 
   const handleNext = () => {
+    console.log(`🔵 handleNext() called. isLastStep=${isLastStep}, currentStepIndex=${currentStepIndex}, hasSection=${currentStep.sections ? 'yes' : 'no'}`);
+
     if (!isLastStep) {
+      console.log(`✓ Not last step, proceeding with navigation`);
       celebrateCompletion();
       const newCompleted = new Set(completedSteps);
       newCompleted.add(currentStepIndex);
       setCompletedSteps(newCompleted);
       const nextStepIndex = currentStepIndex + 1;
+      console.log(`📍 Setting currentStepIndex from ${currentStepIndex} to ${nextStepIndex}`);
       setCurrentStepIndex(nextStepIndex);
       setNaturallyReachedStep(Math.max(naturallyReachedStep, nextStepIndex));
       setQuizState({
@@ -163,10 +172,13 @@ export function StepLessonViewer({
       });
 
       // Reset lesson completion trigger when moving to next lesson
+      console.log(`🔄 Resetting lessonCompletedTrigger`);
       setLessonCompletedTrigger(null);
 
       // Scroll to top
       window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      console.log(`⚠️ Already at last step, skipping navigation`);
     }
   };
 
@@ -772,6 +784,7 @@ export function StepLessonViewer({
 
             {/* Navigation Buttons - Right Side */}
             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+              {currentStepIndex === 9 && console.log(`🎯 Rendering navigation for step 10 (idx=9): isLastStep=${isLastStep}, moduleId=${moduleId}`)}
               {/* Next Module Button (bottom right when last step) */}
               {isLastStep && moduleId < 15 && (
                 <motion.a
@@ -785,7 +798,16 @@ export function StepLessonViewer({
 
               {/* Standard Next/Back to Course Button */}
               <motion.button
-                onClick={isLastStep ? () => (window.location.href = `/course`) : handleNext}
+                onClick={(e) => {
+                  console.log(`🖱️ Next button clicked! isLastStep=${isLastStep}, disabled=${isPreviewMode || (currentStep.sections ? lessonCompletedTrigger !== currentStepIndex : false)}`);
+                  if (isLastStep) {
+                    console.log(`🔗 Navigating to course page`);
+                    window.location.href = `/course`;
+                  } else {
+                    console.log(`⏭️ Calling handleNext()`);
+                    handleNext();
+                  }
+                }}
                 disabled={isPreviewMode || (currentStep.sections ? lessonCompletedTrigger !== currentStepIndex : false)}
                 whileHover={!isPreviewMode && !(currentStep.sections && lessonCompletedTrigger !== currentStepIndex) ? { scale: 1.02, y: -2 } : {}}
                 className={`w-full sm:w-auto px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white ${
