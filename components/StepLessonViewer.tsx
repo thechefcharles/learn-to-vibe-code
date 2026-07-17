@@ -797,6 +797,17 @@ export function StepLessonViewer({
 
             {/* Navigation Buttons - Right Side */}
             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+              {/* Quiz CTA (when at last step) */}
+              {isLastStep && (
+                <motion.a
+                  href={`/course/${String(moduleId).padStart(2, '0')}/quiz`}
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  className="w-full px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 shadow-lg hover:shadow-orange-500/50 text-center"
+                >
+                  📝 Take the Quiz
+                </motion.a>
+              )}
+
               {/* Next Module Button (bottom right when last step) */}
               {isLastStep && moduleId < 15 && (
                 <motion.a
