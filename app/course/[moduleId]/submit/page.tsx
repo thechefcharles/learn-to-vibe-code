@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { submitDeliverable, getDeliverable } from "@/lib/actions/deliverable";
 import { getModuleMetadata } from "@/lib/module-metadata";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
 interface Deliverable {
@@ -16,7 +16,16 @@ interface Deliverable {
 
 export default function SubmitPage() {
   const params = useParams();
+  const router = useRouter();
   const moduleId = parseInt(params.moduleId as string);
+
+  // Redirect if module is invalid (< 1 or > 15)
+  useEffect(() => {
+    if (isNaN(moduleId) || moduleId < 1 || moduleId > 15) {
+      router.push("/course");
+    }
+  }, [moduleId, router]);
+
   const meta = getModuleMetadata(moduleId);
 
   const [repoUrl, setRepoUrl] = useState("");

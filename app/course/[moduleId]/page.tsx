@@ -42,7 +42,7 @@ export default async function LessonPage(props: LessonPageProps) {
   const searchParams = await props.searchParams;
   const moduleId = parseInt(params.moduleId);
 
-  if (isNaN(moduleId) || moduleId < 0 || moduleId > 15) {
+  if (isNaN(moduleId) || moduleId < 1 || moduleId > 15) {
     notFound();
   }
 

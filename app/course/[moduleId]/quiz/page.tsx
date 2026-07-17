@@ -5,7 +5,7 @@ import { submitQuiz, getQuizAttempts } from "@/lib/actions/quiz";
 import { getModuleQuizForClient } from "@/lib/quizzes";
 import { getModuleMetadata } from "@/lib/module-metadata";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useVersion } from "@/lib/VersionContext";
 import type { Version } from "@/lib/VersionContext";
 
@@ -17,9 +17,17 @@ interface QuizResult {
 
 export default function QuizPage() {
   const params = useParams();
+  const router = useRouter();
   const moduleId = parseInt(params.moduleId as string);
   const { version } = useVersion();
   const isKids = version === "kids";
+
+  // Redirect if module is invalid (< 1 or > 15)
+  useEffect(() => {
+    if (isNaN(moduleId) || moduleId < 1 || moduleId > 15) {
+      router.push("/course");
+    }
+  }, [moduleId, router]);
 
   const [quiz, setQuiz] = useState<any>(null);
   const [responses, setResponses] = useState<Record<string, number>>({});
