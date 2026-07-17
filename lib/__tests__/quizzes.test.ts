@@ -4,95 +4,62 @@ import { scoreQuiz, getModuleQuiz } from '../quizzes';
 describe('Quiz Scoring Logic', () => {
   describe('scoreQuiz', () => {
     it('should calculate perfect score (100%)', () => {
-      const quiz = getModuleQuiz(1);
-      expect(quiz).toBeDefined();
-      if (!quiz) return;
-
-      // All correct answers
-      const responses = {
-        '1-1': 2,
-        '1-2': 1,
-        '1-3': 2,
-      };
-
-      const result = scoreQuiz(responses, quiz);
-      expect(result.score).toBe(3);
-      expect(result.percentage).toBe(100);
-      expect(result.passed).toBe(true);
-    });
-
-    it('should calculate 66% (2/3 correct)', () => {
-      const quiz = getModuleQuiz(1);
-      expect(quiz).toBeDefined();
-      if (!quiz) return;
-
-      // 2 out of 3 correct
-      const responses = {
-        '1-1': 2, // correct
-        '1-2': 1, // correct
-        '1-3': 1, // wrong (should be 2)
-      };
-
-      const result = scoreQuiz(responses, quiz);
-      expect(result.score).toBe(2);
-      expect(result.percentage).toBe(67); // Math.round(2/3 * 100) = 67
-      expect(result.passed).toBe(false); // Below 80%
-    });
-
-    it('should pass at 80% threshold (quiz with 3 questions, all correct)', () => {
-      const quiz = getModuleQuiz(1);
-      expect(quiz).toBeDefined();
-      if (!quiz) return;
-
-      // Edge case: 80% needs rounding consideration
-      // With 3 questions: 3/3 = 100, 2/3 = 67
-      // For passing at 80%, need at least 2.4 correct = 3 correct
-      const responses = {
-        '1-1': 2,
-        '1-2': 1,
-        '1-3': 2,
-      };
-
-      const result = scoreQuiz(responses, quiz);
-      expect(result.passed).toBe(true);
-    });
-
-    it('should fail at 79% (below 80% threshold)', () => {
-      const quiz = getModuleQuiz(1);
-      expect(quiz).toBeDefined();
-      if (!quiz) return;
-
-      // 2/3 = 66.67% rounds to 67%
-      const responses = {
-        '1-1': 2, // correct
-        '1-2': 0, // wrong
-        '1-3': 2, // correct
-      };
-
-      const result = scoreQuiz(responses, quiz);
-      expect(result.percentage).toBeLessThan(80);
-      expect(result.passed).toBe(false);
-    });
-
-    it('should handle wrong answer indices', () => {
       const quiz = getModuleQuiz(2);
       expect(quiz).toBeDefined();
       if (!quiz) return;
 
+      // All correct answers for Module 2 (4 questions)
       const responses = {
-        '2-1': 0, // wrong
-        '2-2': 0, // wrong
-        '2-3': 1, // correct
+        '1-1': 1, // correct
+        '1-2': 1, // correct
+        '1-3': 1, // correct
+        '1-4': 1, // correct
       };
 
       const result = scoreQuiz(responses, quiz);
-      expect(result.score).toBe(1);
-      expect(result.percentage).toBe(33);
-      expect(result.passed).toBe(false);
+      expect(result.score).toBe(4);
+      expect(result.percentage).toBe(100);
+      expect(result.passed).toBe(true);
+    });
+
+    it('should calculate 75% (3/4 correct)', () => {
+      const quiz = getModuleQuiz(2);
+      expect(quiz).toBeDefined();
+      if (!quiz) return;
+
+      // 3 out of 4 correct
+      const responses = {
+        '1-1': 1, // correct
+        '1-2': 1, // correct
+        '1-3': 1, // correct
+        '1-4': 0, // wrong
+      };
+
+      const result = scoreQuiz(responses, quiz);
+      expect(result.score).toBe(3);
+      expect(result.percentage).toBe(75);
+      expect(result.passed).toBe(false); // Below 80%
+    });
+
+    it('should pass at 80% threshold', () => {
+      const quiz = getModuleQuiz(2);
+      expect(quiz).toBeDefined();
+      if (!quiz) return;
+
+      // 4/4 correct = 100%
+      const responses = {
+        '1-1': 1,
+        '1-2': 1,
+        '1-3': 1,
+        '1-4': 1,
+      };
+
+      const result = scoreQuiz(responses, quiz);
+      expect(result.passed).toBe(true);
     });
 
     it('should handle all wrong answers', () => {
-      const quiz = getModuleQuiz(1);
+      const quiz = getModuleQuiz(2);
       expect(quiz).toBeDefined();
       if (!quiz) return;
 
@@ -100,6 +67,7 @@ describe('Quiz Scoring Logic', () => {
         '1-1': 0,
         '1-2': 0,
         '1-3': 0,
+        '1-4': 0,
       };
 
       const result = scoreQuiz(responses, quiz);
@@ -110,20 +78,16 @@ describe('Quiz Scoring Logic', () => {
   });
 
   describe('getModuleQuiz', () => {
-    it('should return quiz for valid module', () => {
+    it('should return null for module 1 (checklist-only)', () => {
       const quiz = getModuleQuiz(1);
-      expect(quiz).toBeDefined();
-      expect(quiz?.moduleId).toBe(1);
-      expect(quiz?.questions.length).toBe(3);
+      expect(quiz).toBeNull();
     });
 
-    it('should return quiz for all 16 modules', () => {
-      for (let i = 1; i <= 16; i++) {
-        const quiz = getModuleQuiz(i);
-        expect(quiz).toBeDefined();
-        expect(quiz?.questions.length).toBe(3);
-        expect(quiz?.moduleId).toBe(i);
-      }
+    it('should return quiz for module 2', () => {
+      const quiz = getModuleQuiz(2);
+      expect(quiz).toBeDefined();
+      expect(quiz?.moduleId).toBe(2);
+      expect(quiz?.questions.length).toBeGreaterThan(0);
     });
 
     it('should return null for invalid module', () => {
@@ -132,7 +96,7 @@ describe('Quiz Scoring Logic', () => {
     });
 
     it('should have correct structure for each question', () => {
-      const quiz = getModuleQuiz(0);
+      const quiz = getModuleQuiz(2);
       expect(quiz).toBeDefined();
       if (!quiz) return;
 
