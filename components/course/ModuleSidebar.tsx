@@ -107,7 +107,7 @@ export function ModuleSidebar({
           }`}
         >
           <span className="text-sm font-semibold">
-            Module {moduleId + 1}
+            Module {moduleId}
           </span>
           <ChevronDown
             className={`w-4 h-4 transition-transform ${
@@ -160,7 +160,7 @@ export function ModuleSidebar({
                 >
                   <div className="flex items-center justify-between gap-2 min-w-0">
                     <div className="flex items-center gap-1 flex-1 min-w-0">
-                      <span className="font-medium">Module {modId + 1}</span>
+                      <span className="font-medium">Module {modId}</span>
                       {!isUnlocked && !isActualCurrentModule && <span className="text-xs flex-shrink-0">🔒</span>}
                       {isCompleted && !isActualCurrentModule && <span className="text-xs flex-shrink-0">✓</span>}
                       <span className={`text-xs truncate ${!isUnlocked && !isActualCurrentModule ? 'text-slate-400' : 'text-slate-500'}`}>
