@@ -157,9 +157,17 @@ export async function isModuleUnlocked(moduleId: number): Promise<boolean> {
 
   const prevModuleId = moduleId - 1;
 
-  // Module 2 unlocks when Module 1 checklist is complete (no quiz/deliverable for Module 1)
+  // Module 2 unlocks when Module 1 is marked complete in module_progress
   if (prevModuleId === 1) {
-    return await isModule1ChecklistComplete();
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from("module_progress")
+      .select("status")
+      .eq("user_id", user.id)
+      .eq("module_id", 1)
+      .single();
+
+    return data?.status === "completed";
   }
 
   // For Modules 3+, check unlock gates for previous module:
