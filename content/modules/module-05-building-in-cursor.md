@@ -1,10 +1,10 @@
-# Module 4: Building Apps in Cursor (In-Editor Flow)
+# Module 5: Building Apps in Cursor (In-Editor Flow)
 
 **Stage:** Building · **Level:** Intermediate · **Duration:** ~6 contact hours (0.6 CEU)
 
-**Prerequisites:** Modules 1–3. Learners arrive with a spec and an ordered build plan (Module 3) and know how to write and decompose prompts (Module 2).
+**Prerequisites:** Modules 1–3. Learners arrive with a spec and an ordered build plan (Module 4) and know how to write and decompose prompts (Module 3).
 
-> The first hands-on build module and the workhorse of the course. Learners install real tools and ship a real feature. The running example is the **invoice tracker** planned in Module 3; here we build the first slice — managing clients — as UI only, on mock data. The app gets styled in Module 6 and wired to a real database in Module 7, so this module stays focused on the editor workflow.
+> The first hands-on build module and the workhorse of the course. Learners install real tools and ship a real feature. The running example is the **invoice tracker** planned in Module 4; here we build the first slice — managing clients — as UI only, on mock data. The app gets styled in Module 7 and wired to a real database in Module 8, so this module stays focused on the editor workflow.
 > 
 
 > **📸 Screenshots:** Items marked *[SCREENSHOT: …]* — capture from a live Cursor session (Cursor's own desktop UI is manual; the rendered app pages are auto-capturable from the reference app).
@@ -87,7 +87,7 @@ npm run dev
 
 ## Lesson 4.3 — Giving Cursor context (~45 min)
 
-Module 1's "context is everything," made concrete:
+Module 2's "context is everything," made concrete:
 
 - **@-mentions** — type `@` to pin context: `@filename`, `@folder`, `@Docs`, `@Web`. Puts exactly what you want into the model's window.
 - **`.cursorrules`** — a project-root file of persistent instructions (stack, conventions) injected into every interaction. Example:
@@ -116,14 +116,14 @@ Keep components small and typed.
 
 ---
 
-> **Cross-tool note ([AGENTS.md](http://AGENTS.md)):** `.cursorrules` is Cursor's file; there's also an emerging vendor-neutral convention, **`AGENTS.md`**, that many AI tools read (create-next-app now scaffolds one). Same idea, different filename per tool. You'll meet Claude Code's counterpart, `CLAUDE.md`, in Module 5.
+> **Cross-tool note ([AGENTS.md](http://AGENTS.md)):** `.cursorrules` is Cursor's file; there's also an emerging vendor-neutral convention, **`AGENTS.md`**, that many AI tools read (create-next-app now scaffolds one). Same idea, different filename per tool. You'll meet Claude Code's counterpart, `CLAUDE.md`, in Module 6.
 > 
 
 ---
 
 ## Lesson 4.4 — Incremental Prompts for Cohesive Edits (~45 min)
 
-**Use your Module 3 spec.** Open the spec.md and screens.md you created in Module 3. You're about to build real features from your own plan—not a generic example. This proves that planning works.
+**Use your Module 4 spec.** Open the spec.md and screens.md you created in Module 4. You're about to build real features from your own plan—not a generic example. This proves that planning works.
 
 The key: break a feature into small, focused prompts. Instead of "build the clients feature all at once," you'll ask Cursor to:
 1. Create the types
@@ -135,7 +135,7 @@ This is incremental building: each prompt is focused, and you review the diff be
 
 ### Example: Your First Cursor Prompt (Based on Your Plan)
 
-If your Module 3 plan has a "clients" feature, your first Cursor prompt might look like:
+If your Module 4 plan has a "clients" feature, your first Cursor prompt might look like:
 
 ```
 Based on my spec (your project brief), I need to build a clients management page.
@@ -155,7 +155,7 @@ Use your *own* spec, data model, and screen descriptions. Cursor will build to y
 
 ### How to execute: Step-by-step with Cursor
 
-**Step 1 — Reference your plan.** In Cursor, open your `spec.md` and `build-order.md` from Module 3. You'll paste these as context.
+**Step 1 — Reference your plan.** In Cursor, open your `spec.md` and `build-order.md` from Module 4. You'll paste these as context.
 
 **Step 2 — Open Composer** (Cmd+I) and write a comprehensive feature prompt:
 
@@ -203,7 +203,7 @@ npm run dev
 ```
 
 **Step 6 — Fix what's off.** If something doesn't work:
-- Read the error (Module 8 skill)
+- Read the error (Module 9 skill)
 - Use Cmd+K on the specific block to fix (e.g., "This import path is wrong, fix it")
 - Re-test
 
@@ -278,7 +278,7 @@ This delivers Objective 3.
 
 ## Lesson 4.7 — Pause and Reflect: Cursor vs. Claude Code (~30 min)
 
-You've spent ~3 hours in Cursor (Modules 4). You're about to enter Claude Code (Module 5). Before you do, reflect: which tool for which task?
+You've spent ~3 hours in Cursor (Modules 4). You're about to enter Claude Code (Module 6). Before you do, reflect: which tool for which task?
 
 ### Decision Tree
 
@@ -308,9 +308,9 @@ Use both. Most projects need both:
 
 The skill is knowing when to switch. Don't spend 30 minutes in Cursor when Claude Code could do it in 5. Don't spend 30 minutes in Claude Code when a quick Cursor fix is simpler.
 
-### Practice: Redo Module 4 in Claude Code
+### Practice: Redo Module 5 in Claude Code
 
-Pick one of the Module 4 tasks (e.g., "style the clients page") and redo it in Claude Code. Compare:
+Pick one of the Module 5 tasks (e.g., "style the clients page") and redo it in Claude Code. Compare:
 - How long did each take?
 - Which felt more natural to you?
 - Did you prefer seeing the changes in-editor (Cursor) or reviewing diffs (Claude Code)?
@@ -454,7 +454,7 @@ For each, decide which Cursor mode fits best and explain in one sentence why:
 
 ## Tools & alternatives (this module)
 
-Default: **Cursor** on a **Next.js** app. Editor alternatives compared in Lesson 4.6. The framework layer (Next.js vs. Remix, Astro, SvelteKit) is covered in Module 15 (Landscape); Next.js is used here for its zero-config path to Vercel later (Module 10).
+Default: **Cursor** on a **Next.js** app. Editor alternatives compared in Lesson 4.6. The framework layer (Next.js vs. Remix, Astro, SvelteKit) is covered in Module 26 (Landscape); Next.js is used here for its zero-config path to Vercel later (Module 21).
 
 ---
 

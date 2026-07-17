@@ -1,10 +1,10 @@
-# Module 11: AI Agent Workflows
+# Module 22: AI Agent Workflows
 
 **Stage:** Production · **Level:** Advanced · **Duration:** ~7 contact hours (0.7 CEU)
 
 **Prerequisites:** Modules 5, 7 & 10. Learners can build agentically (5), have a real database (7), and a deployed app (10). Now they build agentic behavior *into* a product.
 
-> Important distinction up front: Module 5 was **using an agent to build your app**. This module is **building an agent workflow as a feature** — software that uses an LLM plus tools to automate a real, multi-step task on its own. This is where "AI app developer" becomes "AI automation engineer." The running example: an assistant that drafts reminder emails for overdue invoices, with a human approving before anything sends.
+> Important distinction up front: Module 6 was **using an agent to build your app**. This module is **building an agent workflow as a feature** — software that uses an LLM plus tools to automate a real, multi-step task on its own. This is where "AI app developer" becomes "AI automation engineer." The running example: an assistant that drafts reminder emails for overdue invoices, with a human approving before anything sends.
 > 
 
 > **📸 Screenshots:** Items marked *[SCREENSHOT: …]* — the approval-queue UI is auto-capturable; a live workflow run is manual.
@@ -58,7 +58,7 @@ Begins Objective 2. Three patterns learners choose between:
 
 ## Lesson 11.4 — Break a workflow into parts (~40 min)
 
-Completes Objective 2. Before building, decompose (the Module 3 habit, for agents). For each workflow define **responsibilities** (what the agent decides vs. what your code decides), **tools** (specific actions with clear I/O), and **hand-offs** (agent → tool → agent, and crucially agent → **human** for approval).
+Completes Objective 2. Before building, decompose (the Module 4 habit, for agents). For each workflow define **responsibilities** (what the agent decides vs. what your code decides), **tools** (specific actions with clear I/O), and **hand-offs** (agent → tool → agent, and crucially agent → **human** for approval).
 
 **Worked breakdown — the overdue-invoice reminder assistant:**
 
@@ -90,7 +90,7 @@ Why: you can **stub** it for tests (no live AI calls, deterministic), and **swap
 
 **Step 3 — Run the agent loop:** give the model the goal and tools; it calls `getOverdueInvoices`, then `draftReminderEmail` for each.
 
-**Step 4 — Insert the human checkpoint:** render drafts with Approve/Edit/Reject before anything sends. **Never let the agent send email autonomously** — Module 1's trust principle at production stakes.
+**Step 4 — Insert the human checkpoint:** render drafts with Approve/Edit/Reject before anything sends. **Never let the agent send email autonomously** — Module 2's trust principle at production stakes.
 
 **Step 5 — Send approved drafts** via `sendEmail` (mock or real). Verify end to end.
 
@@ -107,7 +107,7 @@ Delivers Objective 4 — what separates a demo from a product. Anticipate each f
 - **Tool misuse** — wrong tool, or the right tool at the wrong time (e.g. sending before approval).
 - **Cascading errors** — one bad step feeds the next; failures compound in multi-agent setups.
 
-**Guardrails:** human-in-the-loop for anything consequential (send/spend/delete) — the single most important safeguard; **limits** on steps/loops so a stuck agent stops; **validation** of tool inputs/outputs in your code; **least privilege** (a reminder agent can't delete invoices); **logging** so you can debug and audit (previews Module 12).
+**Guardrails:** human-in-the-loop for anything consequential (send/spend/delete) — the single most important safeguard; **limits** on steps/loops so a stuck agent stops; **validation** of tool inputs/outputs in your code; **least privilege** (a reminder agent can't delete invoices); **logging** so you can debug and audit (previews Module 23).
 
 > **Instructor note:** ask "what's the worst thing this agent could do if it went wrong?" for the learner's own workflow. That question drives every guardrail.
 > 

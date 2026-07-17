@@ -1,10 +1,10 @@
-# Module 10: Deploying Applications (Vercel + GitHub)
+# Module 21: Deploying Applications (Vercel + GitHub)
 
 **Stage:** Production · **Level:** Advanced · **Duration:** ~5 contact hours (0.5 CEU)
 
-**Prerequisites:** Modules 7 & 9. Learners have the invoice-tracker on GitHub (Module 9) with Supabase auth + RLS (Module 7). Now it goes live on the internet.
+**Prerequisites:** Modules 7 & 9. Learners have the invoice-tracker on GitHub (Module 20) with Supabase auth + RLS (Module 8). Now it goes live on the internet.
 
-> Where "my app on [localhost](http://localhost)" becomes "my app anyone can use at a URL." It's the first Production-stage module, so the trust dial from Module 1 turns down: mistakes here are public, and secrets and config matter. The reward is a real, shareable, deployed product — exactly what a portfolio and the capstone need.
+> Where "my app on [localhost](http://localhost)" becomes "my app anyone can use at a URL." It's the first Production-stage module, so the trust dial from Module 2 turns down: mistakes here are public, and secrets and config matter. The reward is a real, shareable, deployed product — exactly what a portfolio and the capstone need.
 > 
 
 > **📸 Screenshots:** the Vercel dashboard shots (import, env vars, deployments, preview link) are auto-capturable via a logged-in browser.
@@ -22,7 +22,7 @@ By the end of this module, the learner can:
 
 ## Lesson 10.1 — What deployment (and CI/CD) means (~30 min)
 
-Deployment puts your app on a server so anyone can reach it at a URL. **CI/CD** means this happens automatically: push to GitHub → it's built and deployed for you. That's the payoff of Module 9's GitHub setup: **push to `main` → Vercel builds and deploys.** Your repo is the source of truth; Vercel keeps the live site in sync.
+Deployment puts your app on a server so anyone can reach it at a URL. **CI/CD** means this happens automatically: push to GitHub → it's built and deployed for you. That's the payoff of Module 20's GitHub setup: **push to `main` → Vercel builds and deploys.** Your repo is the source of truth; Vercel keeps the live site in sync.
 
 ---
 
@@ -56,7 +56,7 @@ Use the Vercel MCP:
 1. Add the Vercel server to .mcp.json with my token (I'll provide it)
 2. Once connected, import my GitHub repo (invoice-tracker) to Vercel
 3. Add environment variables for Supabase:
-   - NEXT_PUBLIC_SUPABASE_URL: [from your Module 7 Supabase project]
+   - NEXT_PUBLIC_SUPABASE_URL: [from your Module 8 Supabase project]
    - NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: [from Supabase]
 4. Trigger the first deployment
 5. Show me the live URL when done
@@ -101,7 +101,7 @@ Vercel showing: deployment status "Ready ✓", live URL displayed, GitHub repo c
 
 A happy side effect: because Vercel is linked to your GitHub repo (from Lesson 10.2), **every PR automatically gets a preview URL** — you don't need to do anything. This is the CI/CD payoff:
 
-1. You push a branch and open a PR (Module 9 workflow)
+1. You push a branch and open a PR (Module 20 workflow)
 2. GitHub notifies Vercel
 3. Vercel builds and deploys the branch to a preview URL (automatically)
 4. You see the preview link on the PR
@@ -113,9 +113,9 @@ A happy side effect: because Vercel is linked to your GitHub repo (from Lesson 1
 
 ## Lesson 10.4 — Preview deploys & the CI/CD workflow (~45 min)
 
-Completes the CI/CD half of Objectives 1–2 and pays off Module 9's branch/PR habit. Vercel deploys *every branch and PR* to its own **preview URL** — a live copy you can test and share before it reaches production. The full loop:
+Completes the CI/CD half of Objectives 1–2 and pays off Module 20's branch/PR habit. Vercel deploys *every branch and PR* to its own **preview URL** — a live copy you can test and share before it reaches production. The full loop:
 
-1. Branch and make a change (Module 9).
+1. Branch and make a change (Module 20).
 2. Open a PR → Vercel posts a **preview URL** on the PR.
 3. Test the preview; merge when good.
 4. Merge to `main` → Vercel deploys to **production** automatically.
@@ -128,7 +128,7 @@ GitHub PR page showing: Vercel bot comment with "Preview Ready" and link to live
 
 ---
 
-You never test experiments in production, and every change is verifiable in a real environment first — the Module 1 verification principle at deployment scale.
+You never test experiments in production, and every change is verifiable in a real environment first — the Module 2 verification principle at deployment scale.
 
 ---
 
@@ -223,7 +223,7 @@ This delivers Objective 3.
 
 ### Step 4: Add environment variables (5 min)
 1. In Vercel, go to **Settings → Environment Variables**
-2. Add your Supabase credentials (from Module 7):
+2. Add your Supabase credentials (from Module 8):
    ```
    NEXT_PUBLIC_SUPABASE_URL = https://YOUR-PROJECT.supabase.co
    NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY = sb_pub_xxx

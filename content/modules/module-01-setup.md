@@ -1,8 +1,8 @@
-# Module 0: Setup & Accounts
+# Module 1: Setup & Accounts
 
 **Stage:** Onboarding · **Level:** Beginner / All · **Duration:** ~2 contact hours (0.2 CEU)
 
-**Prerequisites:** None — this comes before Module 1. A computer and an internet connection are all that's assumed.
+**Prerequisites:** None — this comes before Module 2. A computer and an internet connection are all that's assumed.
 
 > Setup friction is where beginners quietly give up. This module installs and *verifies* every account and tool once, up front, so no later lesson stalls on "it won't install." It also gives learners the map of the whole stack before they touch any of it.
 > 
@@ -28,14 +28,14 @@ Give learners the whole map first, so every tool has a place to land. Each maps 
 
 | Tool | What it's for | First used in… |
 | --- | --- | --- |
-| Node.js | Runs your app locally | Module 4 |
-| Cursor | AI code editor (in-editor flow) | Module 4 |
-| Claude Code | Terminal AI agent (agentic flow) | Module 5 |
-| Supabase | Database + auth + security | Module 7 |
-| GitHub | Version control + code hosting | Module 9 |
-| Vercel | Deploys your app to a public URL | Module 10 |
+| Node.js | Runs your app locally | Module 5 |
+| Cursor | AI code editor (in-editor flow) | Module 5 |
+| Claude Code | Terminal AI agent (agentic flow) | Module 6 |
+| Supabase | Database + auth + security | Module 8 |
+| GitHub | Version control + code hosting | Module 20 |
+| Vercel | Deploys your app to a public URL | Module 21 |
 
-**The one-sentence flow:** you *write* code in Cursor/Claude Code, make it *look good* (Module 6), *power* it with Supabase, *store* it on GitHub, and *ship* it on Vercel — with Node running it locally along the way.
+**The one-sentence flow:** you *write* code in Cursor/Claude Code, make it *look good* (Module 7), *power* it with Supabase, *store* it on GitHub, and *ship* it on Vercel — with Node running it locally along the way.
 
 ---
 
@@ -66,9 +66,9 @@ claude --version
 
 Sign up for all three now so nothing blocks you later. Use the same email for consistency.
 
-- **GitHub** — [github.com](http://github.com) (you'll create your first repo in Module 9).
-- **Supabase** — [supabase.com](http://supabase.com) (you'll create a project in Module 7).
-- **Vercel** — [vercel.com](http://vercel.com), and connect it to your GitHub account (this link enables auto-deploy in Module 10).
+- **GitHub** — [github.com](http://github.com) (you'll create your first repo in Module 20).
+- **Supabase** — [supabase.com](http://supabase.com) (you'll create a project in Module 8).
+- **Vercel** — [vercel.com](http://vercel.com), and connect it to your GitHub account (this link enables auto-deploy in Module 21).
 
 *[SCREENSHOT: the Vercel sign-up connecting to a GitHub account.]*
 
@@ -90,7 +90,7 @@ Set expectations honestly so nobody is surprised by a bill:
 
 ## Lesson 0.5 — Verify everything works (~25 min)
 
-Prove the whole toolchain runs *before* Module 1. Create a throwaway hello-world Next.js app:
+Prove the whole toolchain runs *before* Module 2. Create a throwaway hello-world Next.js app:
 
 ```bash
 npx create-next-app@latest hello-check
@@ -109,7 +109,7 @@ Open [http://localhost:3000](http://localhost:3000) — if the starter page load
 
 ## Readiness checklist
 
-Tick every box before starting Module 1:
+Tick every box before starting Module 2:
 
 | Item | Done when… |
 | --- | --- |
@@ -142,22 +142,22 @@ Tick every box before starting Module 1:
 
 **Objective 3 — Verify the toolchain:** show a screenshot of a create-next-app running at [localhost:3000](http://localhost:3000).
 
-*This module is pass/complete (checklist done) rather than quiz-graded — it gates entry to Module 1.*
+*This module is pass/complete (checklist done) rather than quiz-graded — it gates entry to Module 2.*
 
 ---
 
 ## Tools & alternatives (this module)
 
-These are the course defaults; alternatives are discussed in their modules and consolidated in Module 15 (Landscape). A learner already on an alternative editor (VS Code + Copilot) can follow along, but the step-by-step screenshots assume the defaults — recommend beginners use them to avoid divergence.
+These are the course defaults; alternatives are discussed in their modules and consolidated in Module 26 (Landscape). A learner already on an alternative editor (VS Code + Copilot) can follow along, but the step-by-step screenshots assume the defaults — recommend beginners use them to avoid divergence.
 
 ---
 
 ## Key takeaways
 
 - Set up and verify everything once, up front — don't let install friction derail a later lesson.
-- Know the stack map: write (Cursor/Claude Code) → design (Module 6) → power (Supabase) → store (GitHub) → ship (Vercel).
+- Know the stack map: write (Cursor/Claude Code) → design (Module 7) → power (Supabase) → store (GitHub) → ship (Vercel).
 - Free tiers cover the course; AI tools are metered, so heavy use costs more.
-- You're ready for Module 1 when every box on the readiness checklist is ticked.
+- You're ready for Module 2 when every box on the readiness checklist is ticked.
 
 [Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)
 ---

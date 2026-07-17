@@ -1,4 +1,4 @@
-# Module 15: The Tooling Landscape & How to Choose
+# Module 26: The Tooling Landscape & How to Choose
 
 **Stage:** Landscape · **Level:** All levels · **Duration:** ~3 contact hours (0.3 CEU)
 
@@ -9,7 +9,7 @@
 
 ---
 
-## Module 15: The Tooling Landscape (Reinforcement, Not Doubt)
+## Module 26: The Tooling Landscape (Reinforcement, Not Doubt)
 
 You've spent 93 hours learning one stack: **Next.js, Supabase, Tailwind, TypeScript, Vercel**.
 
@@ -47,7 +47,7 @@ By the end of this module, the learner can:
 
 ## Lesson 15.1 — Why tools change and skills don't (~20 min)
 
-Return to the course's founding idea (Module 1): tools are *vehicles*; the durable skills are prompting, planning, building, designing, debugging, securing, shipping, and working in real codebases. The AI tooling landscape in 2026 changes monthly — tools merge, rebrand, get acquired, shift pricing. Tie your competence to skills, not tools, and you can adopt whatever's best at any moment. So this module isn't "memorize the options" — it's "learn to evaluate options."
+Return to the course's founding idea (Module 2): tools are *vehicles*; the durable skills are prompting, planning, building, designing, debugging, securing, shipping, and working in real codebases. The AI tooling landscape in 2026 changes monthly — tools merge, rebrand, get acquired, shift pricing. Tie your competence to skills, not tools, and you can adopt whatever's best at any moment. So this module isn't "memorize the options" — it's "learn to evaluate options."
 
 ---
 

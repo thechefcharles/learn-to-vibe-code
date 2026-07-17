@@ -1,4 +1,4 @@
-# Module 12: Building Production-Ready Software
+# Module 23: Building Production-Ready Software
 
 **Stage:** Production · **Level:** Advanced · **Duration:** ~6 contact hours (0.6 CEU)
 
@@ -18,7 +18,7 @@ This module is **essentials only**: 6 hours instead of 8. We focus on what you *
 
 **Not covered:** advanced patterns like golden fixtures or tool contracts. These are powerful but optional — learn them after you ship your capstone.
 
-**Goal:** By the end of Module 12, you'll have a production-ready checklist. Complete it, and you're ready to ship.
+**Goal:** By the end of Module 23, you'll have a production-ready checklist. Complete it, and you're ready to ship.
 
 --- 
 
@@ -37,7 +37,7 @@ By the end of this module, the learner can:
 
 Production-ready means the app holds up when real people use it in unexpected ways. Five pillars: **tested**, **resilient** (handles errors/empty/loading), **secure**, **accessible & performant**, and **maintainable**.
 
-Reframe for AI builders: AI helps you *reach* production-ready faster (it writes tests, adds error handling, spots issues), but *you* set the bar and verify — the Module 1 principle at its highest stakes.
+Reframe for AI builders: AI helps you *reach* production-ready faster (it writes tests, adds error handling, spots issues), but *you* set the bar and verify — the Module 2 principle at its highest stakes.
 
 ### Configuration Discipline (~30 min)
 
@@ -376,7 +376,7 @@ The maintainability half of Objective 1. Code is read far more than written — 
 - **Small, focused pieces** — components/functions that do one thing.
 - **Consistent structure** — follow the project's patterns (encode them in `.cursorrules`/[CLAUDE.md](http://CLAUDE.md)).
 - **Light docs** — a README (what it is, how to run it); comments only where the *why* isn't obvious.
-- **Don't ship what you don't understand** — the course throughline (Module 8's reading skill).
+- **Don't ship what you don't understand** — the course throughline (Module 9's reading skill).
 
 A maintainable codebase is also AI-friendly: clean code gives the model better context. Quality compounds.
 

@@ -1,10 +1,10 @@
-# Module 2: Prompt Engineering for Developers
+# Module 3: Prompt Engineering for Developers
 
 **Stage:** Foundations · **Level:** Beginner · **Duration:** ~6 contact hours (0.6 CEU)
 
-**Prerequisites:** Module 1 (learners must understand that models predict *likely* text and that context shapes output).
+**Prerequisites:** Module 2 (learners must understand that models predict *likely* text and that context shapes output).
 
-> Module 1 taught *why* context matters. This module teaches the skill of supplying it. Prompt engineering is the highest-leverage beginner skill in the course — prompt well and you get correct code on the first pass; prompt poorly and you fight the tool all day. Everything from Module 4 on assumes this.
+> Module 2 taught *why* context matters. This module teaches the skill of supplying it. Prompt engineering is the highest-leverage beginner skill in the course — prompt well and you get correct code on the first pass; prompt poorly and you fight the tool all day. Everything from Module 5 on assumes this.
 > 
 
 > **📸 Screenshots:** Items marked *[SCREENSHOT: …]* are placeholders — capture from a live AI session (manual).
@@ -25,7 +25,7 @@ By the end of this module, the learner can:
 
 In traditional coding you type the exact instructions the computer follows. In AI-assisted coding you *describe* what you want and the model produces the instructions. The prompt is now your main tool, and its quality determines the quality of the code you get back.
 
-Tie back to Module 1: because the model outputs the *most likely* completion given your prompt plus context, a vague prompt yields a vague, generic, often-wrong answer, while a precise prompt narrows the model toward exactly what you need. Prompting isn't "chatting" — it's specifying a task precisely enough that the *likely* answer is also the *correct* one.
+Tie back to Module 2: because the model outputs the *most likely* completion given your prompt plus context, a vague prompt yields a vague, generic, often-wrong answer, while a precise prompt narrows the model toward exactly what you need. Prompting isn't "chatting" — it's specifying a task precisely enough that the *likely* answer is also the *correct* one.
 
 **Beginner reframe:** treat the AI like a brilliant but literal new teammate who has never seen your project. It knows general programming, but nothing about *your* app, stack, or intent unless you tell it.
 
@@ -71,7 +71,7 @@ The strong prompt isn't longer for its own sake — every clause removes a wrong
 
 This delivers Objective 2. Beginners ask the AI to "build the whole app" in one prompt and get an unmaintainable, half-broken result. The fix is decomposition: break a big goal into small, ordered, individually-promptable steps.
 
-**Why smaller is better:** each step is easier to specify, easier to verify (test before moving on), and easier to fix. It's the same skill as planning software (Module 3), applied at the prompt level.
+**Why smaller is better:** each step is easier to specify, easier to verify (test before moving on), and easier to fix. It's the same skill as planning software (Module 4), applied at the prompt level.
 
 **Worked example — "build a to-do app" becomes:**
 
@@ -120,8 +120,8 @@ Also teach *when to stop and re-scope*: if three rounds haven't converged, the p
 
 Connect prompting to the tools you'll use, concept-first:
 
-- **In-editor (Cursor, Module 4):** prompts operate on open files; the tool pulls in surrounding code as context. You'll lean on this for focused, in-place changes.
-- **Agentic (Claude Code, Module 5):** prompts describe a larger goal and the agent plans and edits across the whole repo. Higher-level, plan-style prompts.
+- **In-editor (Cursor, Module 5):** prompts operate on open files; the tool pulls in surrounding code as context. You'll lean on this for focused, in-place changes.
+- **Agentic (Claude Code, Module 6):** prompts describe a larger goal and the agent plans and edits across the whole repo. Higher-level, plan-style prompts.
 
 Same five ingredients for both — the difference is scope, not technique.
 
@@ -140,7 +140,7 @@ This delivers Objective 4 and unlocks a faster path than describing everything i
 
 **How (as of 2026 — check current docs):** in **Claude Code**, paste a screenshot with Ctrl+V (Mac), drag-and-drop in the desktop app, or give a file path; in **Cursor**, drag the image into the agent/chat.
 
-**Why it's powerful:** the model reads visual structure directly, so it's far faster and more accurate than translating a design into text. Then iterate: "compare your result to the mockup and fix the differences." You'll use this hard in Module 6 (match a design) and Module 8 (debug from a screenshot).
+**Why it's powerful:** the model reads visual structure directly, so it's far faster and more accurate than translating a design into text. Then iterate: "compare your result to the mockup and fix the differences." You'll use this hard in Module 7 (match a design) and Module 9 (debug from a screenshot).
 
 > **Aside — voice / dictation:** you can also *speak* your prompts. Built-in dictation (macOS) or a tool like Whisper turns talk into text — handy for long, exploratory prompts where typing is the bottleneck. Same prompt-engineering rules apply; you're just inputting faster.
 > 
@@ -421,7 +421,7 @@ For each scenario, decide which approach is best and explain why in one sentence
 - (c) The AI's code uses an outdated library version. Do you: say "that's wrong, fix it" or write specific feedback naming the library and version? Why?
 - (d) The AI's output is close but has one small bug. Do you: re-scope the whole task or give targeted feedback on the bug? Why?
 
-*Pass mark: 80%. Gates progress to Module 3.*
+*Pass mark: 80%. Gates progress to Module 4.*
 
 ---
 

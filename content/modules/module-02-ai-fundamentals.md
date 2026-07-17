@@ -1,4 +1,4 @@
-# Module 1: AI Fundamentals & How Models Actually Work
+# Module 2: AI Fundamentals & How Models Actually Work
 
 **Stage:** Foundations · **Level:** Beginner · **Duration:** ~4 contact hours (0.4 CEU)
 
@@ -58,7 +58,7 @@ Walk through what happens when you ask for something:
 
 Two consequences fall out of this mechanism:
 
-- **Context is everything.** The model only knows its training + what's in the context window right now. If you don't tell it your app uses Next.js and Supabase, it guesses — often wrongly. Good context is why prompt engineering (Module 2) is a real skill.
+- **Context is everything.** The model only knows its training + what's in the context window right now. If you don't tell it your app uses Next.js and Supabase, it guesses — often wrongly. Good context is why prompt engineering (Module 3) is a real skill.
 - **It's probabilistic, not deterministic.** Ask twice, get two different answers. Neither is "the" answer; both are plausible completions. A feature (creativity) and a risk (inconsistency).
 
 > **Instructor demo:** Run the same request twice and show the two outputs; then add one line of context ("we're using TypeScript") and show how the answer changes. Makes "context is everything" concrete in three minutes.
@@ -260,7 +260,7 @@ d) CSV parsing is too easy—Claude shouldn't have failed
 
 ## Tools & alternatives (this module)
 
-Tool-agnostic on purpose — the concepts apply to **any** AI coding assistant (Cursor, Claude Code, GitHub Copilot, and others). Learners install nothing yet; the default stack goes hands-on in Module 4. The same model can power different tools, so what you learn here about *how models behave* transfers everywhere.
+Tool-agnostic on purpose — the concepts apply to **any** AI coding assistant (Cursor, Claude Code, GitHub Copilot, and others). Learners install nothing yet; the default stack goes hands-on in Module 5. The same model can power different tools, so what you learn here about *how models behave* transfers everywhere.
 
 ---
 

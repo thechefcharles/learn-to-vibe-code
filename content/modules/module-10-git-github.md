@@ -1,10 +1,10 @@
-# Module 9: Git & Version Control (GitHub)
+# Module 20: Git & Version Control (GitHub)
 
 **Stage:** Building · **Level:** Intermediate · **Duration:** ~4 contact hours (0.4 CEU)
 
-**Prerequisites:** Modules 4–7. Learners have a working invoice-tracker and will now put it under version control and onto GitHub — the prerequisite for deploying in Module 10.
+**Prerequisites:** Modules 4–7. Learners have a working invoice-tracker and will now put it under version control and onto GitHub — the prerequisite for deploying in Module 21.
 
-> Beginners treat their code as a pile of files they're afraid to change. Version control removes that fear: you can experiment freely because you can always go back. It's also how you collaborate and how your app reaches Vercel (Module 10). Lighter on new app code, heavier on a workflow habit that pays off forever.
+> Beginners treat their code as a pile of files they're afraid to change. Version control removes that fear: you can experiment freely because you can always go back. It's also how you collaborate and how your app reaches Vercel (Module 21). Lighter on new app code, heavier on a workflow habit that pays off forever.
 > 
 
 > **📸 Screenshots:** the GitHub repo and PR-diff shots are auto-capturable (public pages); the in-editor merge conflict is manual.
@@ -238,7 +238,7 @@ Where `<type>` is one of:
 6. Merge when approved
 ```
 
-This becomes part of your project governance (like CLAUDE.md from Module 0) and makes onboarding teammates (or future-you) much smoother.
+This becomes part of your project governance (like CLAUDE.md from Module 1) and makes onboarding teammates (or future-you) much smoother.
 
 ---
 
@@ -295,7 +295,7 @@ Now the merge is complete! ✅
 
 ## Lesson 9.4b (Optional) — Collaborating on a Shared Branch (~30 min)
 
-Module 9.4 covered merge conflicts in a solo scenario (you edit the same file twice, create a conflict). This lesson is a step up: **what if two teammates edit the same file?**
+Module 20.4 covered merge conflicts in a solo scenario (you edit the same file twice, create a conflict). This lesson is a step up: **what if two teammates edit the same file?**
 
 ### Scenario: Two Developers, One Branch
 
@@ -391,7 +391,7 @@ d) Just pick one at random
 - **Commit messages & PR descriptions** — AI writes good ones from your diff.
 - **Explaining history** — ask AI what a commit or diff changed.
 - **Conflict help** — AI can propose resolutions (Lesson 9.4).
-- **The one hard rule:** never let any tool commit secrets. Double-check `.gitignore` and scan diffs for keys before pushing. If a secret is ever committed, rotate it — assume it's compromised. (Reinforced in Module 10 and Module 12's security pass.)
+- **The one hard rule:** never let any tool commit secrets. Double-check `.gitignore` and scan diffs for keys before pushing. If a secret is ever committed, rotate it — assume it's compromised. (Reinforced in Module 21 and Module 23's security pass.)
 
 ---
 

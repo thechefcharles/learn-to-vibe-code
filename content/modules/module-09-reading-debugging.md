@@ -1,10 +1,10 @@
-# Module 8: Reading & Debugging AI-Generated Code
+# Module 9: Reading & Debugging AI-Generated Code
 
 **Stage:** Building · **Level:** Intermediate · **Duration:** ~6 contact hours (0.6 CEU)
 
 **Prerequisites:** Modules 4–7. Learners have a real app (Next.js + Supabase, auth + RLS) and will now learn to read it and fix it when it breaks — which, with AI-generated code, it regularly will.
 
-> Reading and debugging are the skills that separate people who *use* AI from people who can *ship* with it. AI generates code faster than you can read it and that code breaks; beginners freeze. This module builds the habit of understanding code you didn't write and a repeatable way to fix it. It uses bugs from the app the learner already built — including the RLS "empty list" trap from Module 7.
+> Reading and debugging are the skills that separate people who *use* AI from people who can *ship* with it. AI generates code faster than you can read it and that code breaks; beginners freeze. This module builds the habit of understanding code you didn't write and a repeatable way to fix it. It uses bugs from the app the learner already built — including the RLS "empty list" trap from Module 8.
 > 
 
 > **📸 Screenshots:** the Next.js error overlay is auto-capturable (trigger a throwing route); the debugging-chat shot is manual.
@@ -46,7 +46,7 @@ This delivers Objective 1 — the skill the whole course's "don't ship what you 
 1. **Get the one-sentence purpose first.** What does this file/function do overall? Read the *names* before the logic.
 2. **Follow the data.** Where does input come from, how is it transformed, what's returned? Trace one realistic path, not every branch.
 3. **Have the AI explain it — then verify.** Ask "explain this line by line, and why." Useful, but the AI can be wrong about its own output; check against the code.
-4. **Read the risky parts closely.** Anything touching auth, data, money, or external calls gets line-level attention (the Module 1 trust dial).
+4. **Read the risky parts closely.** Anything touching auth, data, money, or external calls gets line-level attention (the Module 2 trust dial).
 5. **Confirm intent.** Does it do what you asked, or something plausible-but-different?
 
 **Concrete example — reading unfamiliar code:**
@@ -84,7 +84,7 @@ export async function updateInvoiceStatus(invoiceId: string, status: string) {
 
 ## Lesson 8.2 — The debugging mindset (~30 min)
 
-Reframe bugs: they're the normal state of building software. Expert code breaks; AI code breaks *more*, because the model produces likely-looking code that may not fit your situation (Module 1). The goal isn't to avoid bugs — it's a calm, repeatable way to find and fix them.
+Reframe bugs: they're the normal state of building software. Expert code breaks; AI code breaks *more*, because the model produces likely-looking code that may not fit your situation (Module 2). The goal isn't to avoid bugs — it's a calm, repeatable way to find and fix them.
 
 **The debugging loop (the spine of the rest of this module):** Read → Reproduce → Isolate → Fix → Verify.
 
@@ -114,14 +114,14 @@ Browser error overlay: red error message, file name and line number highlighted,
 
 Continues Objective 2. A bug you can't reproduce, you can't fix. Pin the exact trigger: *what did you click, with what input, and what happened vs. expected?* Then **isolate**: every user or one? On load or on submit? Logged in or out? A quick tool: add a `console.log` (or ask AI to) to check what a value actually is.
 
-> **Worked example — the RLS "empty list" bug (from Module 7):** the clients page shows nothing, but there are rows in the Table Editor. No error. Reproduce: empty when logged out (or RLS is on and the query runs without a session). Isolate: log the query result — an empty array, not an error. Root cause: RLS is default-deny and the request carried no authenticated user. A bug with *no error message but a clear root cause* — it rewards understanding over pasting code at the AI.
+> **Worked example — the RLS "empty list" bug (from Module 8):** the clients page shows nothing, but there are rows in the Table Editor. No error. Reproduce: empty when logged out (or RLS is on and the query runs without a session). Isolate: log the query result — an empty array, not an error. Root cause: RLS is default-deny and the request carried no authenticated user. A bug with *no error message but a clear root cause* — it rewards understanding over pasting code at the AI.
 > 
 
 ---
 
 ## Lesson 8.5 — Debugging with AI: give it what it needs (~60 min)
 
-This delivers Objective 3. AI is excellent at debugging — *if* you give it context (Module 1). The anatomy of a good debugging prompt:
+This delivers Objective 3. AI is excellent at debugging — *if* you give it context (Module 2). The anatomy of a good debugging prompt:
 
 1. **The error message** — paste the actual text/stack trace.
 2. **The relevant code** — the file/function (in Cursor `@`-mention it; Claude Code reads the repo).
@@ -130,7 +130,7 @@ This delivers Objective 3. AI is excellent at debugging — *if* you give it con
 
 **Weak:** "my page is broken, help." **Strong:** "My `/clients` page renders an empty table. Expected: my saved clients. The query is `supabase.from('clients').select()`. No error. RLS is enabled. Here's the component: [@app/clients/page.tsx]. What could cause zero rows?" The strong prompt often gets the exact root cause in one shot.
 
-**Multimodal tip (Module 2):** you can also *paste a screenshot* of the broken screen or the error overlay — the AI reads the visual directly, which is often faster than describing what's wrong.
+**Multimodal tip (Module 3):** you can also *paste a screenshot* of the broken screen or the error overlay — the AI reads the visual directly, which is often faster than describing what's wrong.
 
 ---
 
@@ -182,7 +182,7 @@ A field guide so learners recognize patterns and diagnose quickly:
 - **Fix:** Read the error, check the actual data shape, fix the property name
 - **Example:** `client.name` but the API returns `client.firstName` → error immediately catches it
 
-**5. Hallucinated APIs (Module 1)**
+**5. Hallucinated APIs (Module 2)**
 - **Symptom:** "supabase.auth.getUserAsync is not a function" or similar
 - **Root cause:** The AI made up a function that doesn't exist in the SDK
 - **Fix:** Check the real docs; the correct function is usually similar but slightly different (e.g., `getUser()` not `getUserAsync()`)
@@ -333,7 +333,7 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 - (c) delete the whole file
 - (d) hide it
 
-*Why:* This is the capstone defense principle (Module 1). You own and maintain the code. Never ship what you don't understand. If you can't explain it, it's not ready.
+*Why:* This is the capstone defense principle (Module 2). You own and maintain the code. Never ship what you don't understand. If you can't explain it, it's not ready.
 
 **Q8-3:** An AI "fix" that disables RLS to solve an empty list is:
 - (a) a good fix
@@ -349,7 +349,7 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 - (c) skip it if it's too long to read
 - (d) apply it to production first to test
 
-*Why:* You own what ships (Module 1). Loop: read → understand → verify it solves the actual bug → then apply. Never blind-accept AI code.
+*Why:* You own what ships (Module 2). Loop: read → understand → verify it solves the actual bug → then apply. Never blind-accept AI code.
 
 ---
 

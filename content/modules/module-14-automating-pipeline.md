@@ -1,4 +1,4 @@
-# Module 13: Automating Your Dev Pipeline with Claude Code (Optional, Post-Capstone)
+# Module 24: Automating Your Dev Pipeline with Claude Code (Optional, Post-Capstone)
 
 **Stage:** Production (Advanced) · **Level:** Advanced · **Duration:** ~7 contact hours (0.7 CEU)
 
@@ -17,14 +17,14 @@
 
 This module is **optional**. It covers advanced automation with MCP servers, skills, subagents, and plugins.
 
-**Why optional?** The capstone (Module 16) doesn't require it. Many projects are polished and shipped without automation. Learning to ship first, automate later, is wise.
+**Why optional?** The capstone (Module 26) doesn't require it. Many projects are polished and shipped without automation. Learning to ship first, automate later, is wise.
 
 **When to take this module:**
 - After you've shipped your capstone
 - If you're building frequently and want to reduce repetitive work
 - If you want to explore Claude Code's advanced features
 
-**For now:** Focus on shipping your capstone (Modules 1-12 + 14-16). Come back to Module 13 after graduation if you want to level up.
+**For now:** Focus on shipping your capstone (Modules 1-12 + 14-16). Come back to Module 24 after graduation if you want to level up.
 
 ---
 
@@ -75,7 +75,7 @@ claude mcp add --transport http --scope user notion https://mcp.notion.com/mcp
 
 Confirm with `claude mcp list`.
 
-**Notion as your project's source of truth:** after connecting Notion (run `/mcp` for the OAuth flow, then share the pages you want Claude to access), Claude Code can **read a feature checklist, tick items off as it ships them, and write specs/decisions back** — so your plan (Module 3) and your automation live in one place. Great for a solo builder keeping a living TODO the agent actually maintains.
+**Notion as your project's source of truth:** after connecting Notion (run `/mcp` for the OAuth flow, then share the pages you want Claude to access), Claude Code can **read a feature checklist, tick items off as it ships them, and write specs/decisions back** — so your plan (Module 4) and your automation live in one place. Great for a solo builder keeping a living TODO the agent actually maintains.
 
 ---
 
@@ -165,7 +165,7 @@ This setup is the foundation of the automated pipeline (Lesson 13.6). Claude Cod
 > **Build-verified fallback (important):** MCP OAuth can fail for a given provider — in the reference build the Supabase MCP returned "Unrecognized client_id" and we fell back to the CLI. Teach the **CLI + personal-access-token** path (`supabase login --token`, `gh auth login`, a Vercel token) as the reliable default; treat MCP OAuth as the convenience when it works.
 > 
 
-> **Security first (Module 12):** give MCP servers scoped, least-privilege tokens, start read-only, and never paste tokens into the repo — use environment variables.
+> **Security first (Module 23):** give MCP servers scoped, least-privilege tokens, start read-only, and never paste tokens into the repo — use environment variables.
 > 
 
 ---
@@ -293,12 +293,12 @@ Delivers Objective 3 — the payoff. Have Claude Code take a feature from idea t
 
 **Worked example — "Add a `paid_at` timestamp to invoices and ship it":**
 
-1. **Plan** (Module 5 plan mode) — Claude proposes migration, code change, tests, PR, deploy.
+1. **Plan** (Module 6 plan mode) — Claude proposes migration, code change, tests, PR, deploy.
 2. **Migrate** — Claude generates a Supabase migration via the CLI (versioned); you **approve** applying it. Inspect via the Supabase MCP.
 3. **Code + test** — updates the app; a **hook** runs the tests (13.7).
 4. **Commit + PR** — conventional commit, PR via GitHub MCP / `gh`; the `reviewer` subagent checks the diff.
-5. **Deploy** — merge triggers the Vercel deploy (Module 10); Claude monitors build status via the Vercel MCP.
-6. **Debug** — if it fails, Claude reads Vercel/Supabase logs via MCP and loops — the Module 8 debugging loop, automated.
+5. **Deploy** — merge triggers the Vercel deploy (Module 21); Claude monitors build status via the Vercel MCP.
+6. **Debug** — if it fails, Claude reads Vercel/Supabase logs via MCP and loops — the Module 9 debugging loop, automated.
 
 *[SCREENSHOT: Claude Code opening a PR and reporting a successful deploy from the terminal.]*
 
@@ -310,7 +310,7 @@ One instruction, a full pipeline — but you stayed in control at the migration 
 
 Secures Objective 3. Automation without guardrails is how you drop a production table at 2 a.m.
 
-**Permissions** (`/permissions`) — allow/ask/deny list. Auto-allow safe, reversible actions (run tests, read logs); **always require approval** for destructive ones (prod migration, merge to main, delete data, spend money). The Module 11 human-in-the-loop principle, configured.
+**Permissions** (`/permissions`) — allow/ask/deny list. Auto-allow safe, reversible actions (run tests, read logs); **always require approval** for destructive ones (prod migration, merge to main, delete data, spend money). The Module 22 human-in-the-loop principle, configured.
 
 **Concrete permissions config:**
 

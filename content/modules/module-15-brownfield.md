@@ -1,10 +1,10 @@
-# Module 14: Working in Existing Codebases (Brownfield)
+# Module 25: Working in Existing Codebases (Brownfield)
 
 **Stage:** Production (Advanced) · **Level:** Advanced · **Duration:** ~6 contact hours (0.6 CEU)
 
-**Prerequisites:** Modules 4–13, and especially Module 8 (reading code). Learners can build, secure, deploy, and automate a greenfield app. This module confronts the reality of most real jobs: you don't start from an empty folder — you join someone else's messy, unfamiliar codebase.
+**Prerequisites:** Modules 4–13, and especially Module 9 (reading code). Learners can build, secure, deploy, and automate a greenfield app. This module confronts the reality of most real jobs: you don't start from an empty folder — you join someone else's messy, unfamiliar codebase.
 
-> Everything so far has been greenfield (build from scratch). Real work is the opposite: inherit a large repo you didn't write, understand it fast, and change it *without breaking things*. This is the single biggest step from "can build a demo" toward "employable engineer," and it leans hard on the reading-code skill from Module 8.
+> Everything so far has been greenfield (build from scratch). Real work is the opposite: inherit a large repo you didn't write, understand it fast, and change it *without breaking things*. This is the single biggest step from "can build a demo" toward "employable engineer," and it leans hard on the reading-code skill from Module 9.
 > 
 
 > **📦 Practice repo:** this module uses a purpose-built, deliberately-messy repo — **`brownfield-practice-repo/`** (a small Next.js + TypeScript "Reading List" with a seeded bug and a feature ticket). See its `README.md` and `TICKET.md`. Because brownfield needs an *unfamiliar* codebase, learners practice here, not on the invoice-tracker.
@@ -199,7 +199,7 @@ npm test     # Tests pass, nothing broke
 git diff     # Review your changes — is the diff tight and focused?
 ```
 
-**Step 5 — Open a small PR** (Module 9):
+**Step 5 — Open a small PR** (Module 20):
 The diff should be tight and easy to review. Reviewers should instantly understand what changed and why.
 
 ---
@@ -212,7 +212,7 @@ Left: Claude Code's trace of the bug (showing the undefined error line, the data
 
 ## Lesson 14.5 — Assessing risk before you change (~45 min)
 
-This delivers Objective 3. Before editing, ask: what depends on this code? Search for usages; understand the "blast radius." High-risk zones (auth, data models, shared utilities, payment) demand extra care, tests, and review. Low-risk, leaf-level changes are safe to move faster. This is the Module 1 trust dial applied to *someone else's* code, where a wrong assumption costs more.
+This delivers Objective 3. Before editing, ask: what depends on this code? Search for usages; understand the "blast radius." High-risk zones (auth, data models, shared utilities, payment) demand extra care, tests, and review. Low-risk, leaf-level changes are safe to move faster. This is the Module 2 trust dial applied to *someone else's* code, where a wrong assumption costs more.
 
 ---
 
@@ -288,7 +288,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
   - ❌ **Avoid:** Accepting helpful rewrites. Scope creep introduces bugs.
 
 - **(d) You're not sure what the code does. You change it anyway.** Guessing.
-  - ✅ **Better:** Read it (Module 8). Ask AI to explain it. Trace through with print statements. Understand before you change.
+  - ✅ **Better:** Read it (Module 9). Ask AI to explain it. Trace through with print statements. Understand before you change.
   - ❌ **Avoid:** "It probably doesn't matter." Guessing in brownfield is expensive.
 
 - **(e) Your change works locally but breaks in CI.** Missed a dependency.

@@ -1,8 +1,8 @@
-# Module 7: Data, Auth & Backend (Supabase)
+# Module 8: Data, Auth & Backend (Supabase)
 
 **Stage:** Building · **Level:** Intermediate · **Duration:** ~5.5 contact hours (0.55 CEU)
 
-**Prerequisites:** Modules 4–6. Learners have an invoice-tracker with clients + invoices UI, now styled (Module 6), running on **mock data**. This module replaces that mock data with a real database, plus accounts and per-user security.
+**Prerequisites:** Modules 4–6. Learners have an invoice-tracker with clients + invoices UI, now styled (Module 7), running on **mock data**. This module replaces that mock data with a real database, plus accounts and per-user security.
 
 > This is where the app becomes real. Until now data vanished on refresh; now it persists, users log in, and each user sees only their own data. It's also the first taste of the durable skill that outlasts any tool: modeling data and enforcing who-can-see-what. Code-heavy by design.
 > 
@@ -171,7 +171,7 @@ Dashboard showing: Project URL, Publishable API Key, Secret Key. Proof: credenti
 
 ---
 
-**Step 2 — Store them in `.env.local`** (never hard-code keys — previews Module 10's env handling):
+**Step 2 — Store them in `.env.local`** (never hard-code keys — previews Module 21's env handling):
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://YOUR-PROJECT.supabase.co
@@ -223,18 +223,18 @@ export const createClient = async () => {
 
 The **key difference:** browser clients are used in `"use client"` components and handle auth state; server clients run on the server and attach the user session to queries, so RLS can filter rows.
 
-> **Tip:** a perfect agentic task (Module 5) — ask Claude Code to "set up Supabase browser and server clients using @supabase/ssr, with async cookies handling for Next.js 15+" and review the diff. The boilerplate is complex; let the agent handle it, but verify the structure.
+> **Tip:** a perfect agentic task (Module 6) — ask Claude Code to "set up Supabase browser and server clients using @supabase/ssr, with async cookies handling for Next.js 15+" and review the diff. The boilerplate is complex; let the agent handle it, but verify the structure.
 > 
 
 ---
 
 ## Lesson 7.3 — Model your data with Claude Code (~45 min)
 
-Continue Objective 2 (modeling data). Turn your Module 3 data model into real Postgres tables. **Use Claude Code to generate the SQL migrations from your spec:**
+Continue Objective 2 (modeling data). Turn your Module 4 data model into real Postgres tables. **Use Claude Code to generate the SQL migrations from your spec:**
 
 ### Automating data model generation
 
-**Step 1 — Gather your Module 3 data model.** Open your `spec.md` or `data-model.md` file from planning.
+**Step 1 — Gather your Module 4 data model.** Open your `spec.md` or `data-model.md` file from planning.
 
 **Step 2 — Prompt Claude Code to generate Postgres schema:**
 
@@ -572,7 +572,7 @@ Address Objective 4 (comparison and justification).
 | Postgres + Prisma | Your own DB + typed ORM | Full control, comfortable managing the DB |
 | Neon / PlanetScale | Managed serverless SQL | You need the DB only and add auth separately |
 
-**Why Supabase is the default:** database, auth, and authorization in one beginner-friendly tool, on real Postgres, with a native Vercel path (Module 10). **Trade-offs:** Firebase is simpler for realtime/mobile but locks you into NoSQL/Google; Postgres + Prisma gives control at the cost of wiring auth/security yourself.
+**Why Supabase is the default:** database, auth, and authorization in one beginner-friendly tool, on real Postgres, with a native Vercel path (Module 21). **Trade-offs:** Firebase is simpler for realtime/mobile but locks you into NoSQL/Google; Postgres + Prisma gives control at the cost of wiring auth/security yourself.
 
 ---
 
@@ -603,7 +603,7 @@ Create two files in `lib/supabase/`:
 - `client.ts` (browser client, from the snippet above)
 - `server.ts` (server client, from the snippet above)
 
-Tip: This is perfect for Claude Code (Module 5). Prompt: "Set up Supabase browser and server clients using @supabase/ssr with async cookies for Next.js 15+"
+Tip: This is perfect for Claude Code (Module 6). Prompt: "Set up Supabase browser and server clients using @supabase/ssr with async cookies for Next.js 15+"
 
 ### Step 4: Create database tables (5 min)
 1. In Supabase dashboard, go to **SQL Editor**
@@ -788,7 +788,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 ## Tools & alternatives (this module)
 
-Default: **Supabase** on **Next.js**, using `@supabase/ssr`. Alternatives in Lesson 7.6. Great module to build partly with Claude Code (Module 5) — the client/server boilerplate is agent-friendly, while *you* own the data model and RLS policies.
+Default: **Supabase** on **Next.js**, using `@supabase/ssr`. Alternatives in Lesson 7.6. Great module to build partly with Claude Code (Module 6) — the client/server boilerplate is agent-friendly, while *you* own the data model and RLS policies.
 
 ---
 

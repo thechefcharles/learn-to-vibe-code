@@ -1,13 +1,13 @@
-# Module 6: Design & UX (Make It Not Look AI-Generated)
+# Module 7: Design & UX (Make It Not Look AI-Generated)
 
 **Stage:** Building · **Level:** Intermediate · **Duration:** ~6 contact hours (0.6 CEU)
 
-**Prerequisites:** Modules 4–5. Learners have the invoice-tracker's clients + invoices UI built (mock data) — functional but plain. This module makes it look professional before the backend goes in (Module 7).
+**Prerequisites:** Modules 4–5. Learners have the invoice-tracker's clients + invoices UI built (mock data) — functional but plain. This module makes it look professional before the backend goes in (Module 8).
 
 > AI produces *functional* UIs that all look the same: default fonts, cramped spacing, no hierarchy, awkward on mobile — instantly recognizable as "AI-generated." Making software look intentional is the single biggest differentiator between a hobby project and something people trust. This is a real, learnable skill, and it's where many AI builders stop short.
 > 
 
-> **📸 Screenshots:** the styled app-UI and the **mobile (375px)** shots are auto-capturable with Playwright from the reference app — and the mobile shots are the real new Module 6 figures. Note: the reference app is styled from the start, so it has no genuine plain "before"; a true styled-vs-plain before/after needs a plain-UI variant captured separately (or done live while recording).
+> **📸 Screenshots:** the styled app-UI and the **mobile (375px)** shots are auto-capturable with Playwright from the reference app — and the mobile shots are the real new Module 7 figures. Note: the reference app is styled from the start, so it has no genuine plain "before"; a true styled-vs-plain before/after needs a plain-UI variant captured separately (or done live while recording).
 > 
 
 ## Learning objectives
@@ -26,7 +26,7 @@ By the end of this module, the learner can:
 
 ## Lesson 6.1 — Why AI UIs look generic (~30 min)
 
-Show the tells: default system fonts, everything the same size and weight, no breathing room, inconsistent spacing, harsh default colors, no focal point, and layouts that break on a phone. The model outputs the *most common* markup (Module 1), and common = generic. The fix isn't more AI — it's giving the AI *design direction* and knowing good from bad when you see it.
+Show the tells: default system fonts, everything the same size and weight, no breathing room, inconsistent spacing, harsh default colors, no focal point, and layouts that break on a phone. The model outputs the *most common* markup (Module 2), and common = generic. The fix isn't more AI — it's giving the AI *design direction* and knowing good from bad when you see it.
 
 > **Aside — developing taste:** the fastest way to get a designer's eye is to study products you admire (Linear, Stripe, Notion) and notice their restraint: generous spacing, few font sizes, a tiny color palette. Copy the *principles*, not the pixels.
 > 
@@ -140,7 +140,7 @@ npx shadcn@latest init
 npx shadcn@latest add button input table card
 ```
 
-Why a library beats hand-styling for beginners: consistency for free, accessibility built in (previews Module 12), a professional baseline you can theme, and it drops real code into your repo — so it pairs with Cursor/Claude Code editing. (Theming/dark mode is a natural next step shadcn supports.)
+Why a library beats hand-styling for beginners: consistency for free, accessibility built in (previews Module 23), a professional baseline you can theme, and it drops real code into your repo — so it pairs with Cursor/Claude Code editing. (Theming/dark mode is a natural next step shadcn supports.)
 
 ---
 
@@ -227,7 +227,7 @@ I'll review each file and iterate if needed.
 - **Responsive-first:** it handles mobile breakpoints as part of the design direction, not an afterthought
 - **Iteration-friendly:** you refine once, and it propagates across all pages
 
-**Tip (multimodal, Module 2):** if you have a reference design you like (Linear, Stripe, your competitor), describe or paste a screenshot. Tell Claude Code: "Make it feel like [company]'s UI" — a picture guides styling far better than words.
+**Tip (multimodal, Module 3):** if you have a reference design you like (Linear, Stripe, your competitor), describe or paste a screenshot. Tell Claude Code: "Make it feel like [company]'s UI" — a picture guides styling far better than words.
 
 ---
 
@@ -399,7 +399,7 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 - (c) Tailwind is ugly
 - (d) they're always broken
 
-*Why:* AI models trained on web data default to common patterns (Module 1's principle). The fix isn't better AI—it's **you** providing specific design direction (hierarchy, spacing, typography, color).
+*Why:* AI models trained on web data default to common patterns (Module 2's principle). The fix isn't better AI—it's **you** providing specific design direction (hierarchy, spacing, typography, color).
 
 **Q6-2:** Which is NOT one of the four design levers?
 - (a) hierarchy
@@ -423,7 +423,7 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 - (c) **you see the visual intent *before* writing code, avoiding re-layout later** ✓
 - (d) it replaces the need for CSS
 
-*Why:* Design-first prototyping locks down layout and visual hierarchy before code, saving you from building the wrong layout and having to rework it all later. It's a planning tool (Module 3's principle, applied to design).
+*Why:* Design-first prototyping locks down layout and visual hierarchy before code, saving you from building the wrong layout and having to rework it all later. It's a planning tool (Module 4's principle, applied to design).
 
 ---
 
@@ -573,7 +573,7 @@ Iterate until your version captures the essence of the reference without copying
 
 ### Advanced: Combining competitor analysis with product strategy
 
-This technique pairs with Module 3 (planning). When planning a feature, research how competitors solved the same problem, extract the pattern, and build on it. This is faster than inventing from scratch and guarantees your users will recognize the pattern (good UX convention).
+This technique pairs with Module 4 (planning). When planning a feature, research how competitors solved the same problem, extract the pattern, and build on it. This is faster than inventing from scratch and guarantees your users will recognize the pattern (good UX convention).
 
 **Example workflow:**
 

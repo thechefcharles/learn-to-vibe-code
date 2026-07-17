@@ -1,4 +1,4 @@
-# Module 3: Planning Software with AI
+# Module 4: Planning Software with AI
 
 **Stage:** Foundations · **Level:** Beginner · **Duration:** ~4 contact hours (0.4 CEU)
 
@@ -130,7 +130,7 @@ For each, give me 2–3 examples of what I'd write there.
   └─ Considered: Linear vs GitHub Issues (chose GitHub for API maturity)
 ```
 
-**Create this structure in Notion.** Link: this is the *opposite* of Module 0.7 (repo vs. Notion). Notion keeps architectural thinking and research; your repo keeps versioned code.
+**Create this structure in Notion.** Link: this is the *opposite* of Module 1.7 (repo vs. Notion). Notion keeps architectural thinking and research; your repo keeps versioned code.
 
 **Key insight:** If it belongs to *all phases* of the project and is rarely code, put it in Notion. If it's versioned, tested, or deployed, put it in the repo.
 
@@ -306,7 +306,7 @@ You now have four interconnected artifacts:
 
 The faster the tool, the more a bad plan costs. AI can generate a screen in seconds — but if you haven't decided what data it needs, how it connects to the next screen, or what "done" means, you'll generate ten screens that don't fit together and spend far longer untangling them than planning would have taken.
 
-Reframe planning for the AI era: it's not overhead, it's **the context you'll feed the model.** A clear spec and task list *is* the high-quality context from Module 2, written once and reused across every build prompt. Skipping planning doesn't save time — it moves the thinking into the middle of the build, where it's more expensive.
+Reframe planning for the AI era: it's not overhead, it's **the context you'll feed the model.** A clear spec and task list *is* the high-quality context from Module 3, written once and reused across every build prompt. Skipping planning doesn't save time — it moves the thinking into the middle of the build, where it's more expensive.
 
 **The core idea:** decide *what* you're building and *in what order* before you ask AI to build any of it.
 
@@ -381,7 +381,7 @@ After each step, show me the output and ask if I want to revise or move on.
 
 ---
 
-**Watch-out (Module 1):** Claude Code will confidently suggest features and scope. Treat its output as a draft to edit, not gospel — *you* own the scope decisions. The orchestration saves time; the thinking is still yours.
+**Watch-out (Module 2):** Claude Code will confidently suggest features and scope. Treat its output as a draft to edit, not gospel — *you* own the scope decisions. The orchestration saves time; the thinking is still yours.
 
 ---
 
@@ -389,11 +389,11 @@ After each step, show me the output and ask if I want to revise or move on.
 
 This delivers Objective 3. A spec says *what*; a technical plan says *how*. Translate each feature into three things:
 
-- **Data model** — what the app stores. For the invoice tracker: `clients` (name, email), `invoices` (client, amount, due date, status). This previews Module 7 (Supabase/Postgres).
+- **Data model** — what the app stores. For the invoice tracker: `clients` (name, email), `invoices` (client, amount, due date, status). This previews Module 8 (Supabase/Postgres).
 - **Screens / views** — what the user sees: a client list, an invoice list, a "new invoice" form, a dashboard. Each maps to features in the spec.
 - **Milestones** — checkpoints where you have something that works: "v0: add and list clients," "v1: create invoices," "v2: mark paid and see totals."
 
-Prompt the AI for a first draft of each ("Given this spec, propose a simple data model and the screens needed"), then critique it (Module 2 skill) against your intent.
+Prompt the AI for a first draft of each ("Given this spec, propose a simple data model and the screens needed"), then critique it (Module 3 skill) against your intent.
 
 ---
 
@@ -436,7 +436,7 @@ This delivers Objective 4. Not all tasks are equal — some must come before oth
 5. Mark invoice paid / status changes.
 6. Dashboard with totals — depends on invoices existing.
 
-Ask, for each task, "what must already exist for this to work?" That question *is* dependency analysis. The result feeds directly into the decomposed prompting from Module 2 — each step becomes a focused prompt in the Building stage (Modules 4–13).
+Ask, for each task, "what must already exist for this to work?" That question *is* dependency analysis. The result feeds directly into the decomposed prompting from Module 3 — each step becomes a focused prompt in the Building stage (Modules 4–13).
 
 ---
 
@@ -743,7 +743,7 @@ For each scenario, decide what's wrong with the plan and explain how to fix it:
 
 Planning is tool-agnostic — any capable assistant (Claude Code, Cursor's chat, ChatGPT, Claude) works as a planning partner. The default is **Claude Code**, so you can keep the spec and plan as files alongside the code you'll build next. Alternatives (a chat window, a Notion doc, a text file) are fine — the deliverable is the *thinking*, not the tool that holds it.
 
-**Tip:** keep the spec *and a feature checklist* in **Notion** as your project's source of truth — and in Module 13 you'll connect Notion to Claude Code (via MCP) so the AI can read the checklist and tick items off as it ships them.
+**Tip:** keep the spec *and a feature checklist* in **Notion** as your project's source of truth — and in Module 24 you'll connect Notion to Claude Code (via MCP) so the AI can read the checklist and tick items off as it ships them.
 
 ---
 
@@ -796,7 +796,7 @@ than invoices (no dependencies), so build that skill first. Invoices depend on b
 
 **Later:** a month from now, you'll ask yourself "why did we pick this?" Decisions.md saves you from re-deciding and prevents scope creep ("we considered this in planning and decided against it").
 
-**For your capstone (Module 16):** a well-governed project has a clear decision trail. This becomes part of the rubric — your capstone grader will want to see thoughtful choices, not just code.
+**For your capstone (Module 26):** a well-governed project has a clear decision trail. This becomes part of the rubric — your capstone grader will want to see thoughtful choices, not just code.
 
 **For teamwork:** if you onboard a teammate, they can read decisions.md and understand the architecture in minutes instead of asking you questions.
 
@@ -811,7 +811,7 @@ After sketching screens, filtering by both status AND due date is common.
 Storing both makes queries simpler. Revised the data model to add a due_date column.
 ```
 
-**Deliverable:** Submit your `decisions.md` along with your spec and plan at the end of Module 3. You'll keep it updated through Modules 4–13 as you build, and it'll be part of your capstone submission.
+**Deliverable:** Submit your `decisions.md` along with your spec and plan at the end of Module 4. You'll keep it updated through Modules 4–13 as you build, and it'll be part of your capstone submission.
 
 ---
 
@@ -825,8 +825,8 @@ Storing both makes queries simpler. Revised the data model to add a due_date col
 
 ---
 
-## Next: Use Your Plan in Module 4
+## Next: Use Your Plan in Module 5
 
-You now have a spec, data model, screens, and build order. In Module 4, you'll use these directly. When Module 4 asks you to build features, you'll open your spec and reference it—this is the proof that planning works.
+You now have a spec, data model, screens, and build order. In Module 5, you'll use these directly. When Module 5 asks you to build features, you'll open your spec and reference it—this is the proof that planning works.
 
 [Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)

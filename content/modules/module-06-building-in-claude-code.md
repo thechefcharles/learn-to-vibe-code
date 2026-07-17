@@ -1,10 +1,10 @@
-# Module 5: Building Apps in Claude Code (Agentic)
+# Module 6: Building Apps in Claude Code (Agentic)
 
 **Stage:** Building · **Level:** Intermediate · **Duration:** ~6 contact hours (0.6 CEU)
 
-**Prerequisites:** Module 4. Learners have a running Next.js invoice-tracker with the clients feature (mock data) and know the in-editor (Cursor) workflow.
+**Prerequisites:** Module 5. Learners have a running Next.js invoice-tracker with the clients feature (mock data) and know the in-editor (Cursor) workflow.
 
-> Module 4 taught in-editor flow — you drive, the AI assists edit-by-edit. This module teaches the *agentic* flow — you describe a goal and an agent plans and executes across the whole repo from the terminal. Same skills (context, prompting, verification), bigger unit of work. The example advances: learners add the **invoices** feature (which depends on clients, per the Module 3 build order), still on mock data. The app gets styled in Module 6 and wired to Supabase in Module 7.
+> Module 5 taught in-editor flow — you drive, the AI assists edit-by-edit. This module teaches the *agentic* flow — you describe a goal and an agent plans and executes across the whole repo from the terminal. Same skills (context, prompting, verification), bigger unit of work. The example advances: learners add the **invoices** feature (which depends on clients, per the Module 4 build order), still on mock data. The app gets styled in Module 7 and wired to Supabase in Module 8.
 > 
 
 > **📸 Screenshots:** Items marked *[SCREENSHOT: …]* — the Claude Code terminal is a manual capture.
@@ -26,7 +26,7 @@ By the end of this module, the learner can:
 
 ## Lesson 5.1 — Setup & the agentic mindset (~45 min)
 
-**Step 1 — Install Claude Code** and sign in; open your terminal in the `invoice-tracker` folder from Module 4.
+**Step 1 — Install Claude Code** and sign in; open your terminal in the `invoice-tracker` folder from Module 5.
 
 **Step 2 — Start it** by running `claude`. You now have an agent that can read your whole repo, propose changes, run commands, and edit files — from the terminal.
 
@@ -43,19 +43,19 @@ claude
 
 ## Lesson 5.2 — [CLAUDE.md](http://CLAUDE.md): persistent project context (~30 min)
 
-The agentic equivalent of Cursor's `.cursorrules` (Module 4) — and the same Module 1 principle: context = quality. `CLAUDE.md` is a file the agent reads at the start of every session. Generate a starter with `/init`, then edit it:
+The agentic equivalent of Cursor's `.cursorrules` (Module 5) — and the same Module 2 principle: context = quality. `CLAUDE.md` is a file the agent reads at the start of every session. Generate a starter with `/init`, then edit it:
 
 ```
 # CLAUDE.md
 This is a Next.js (App Router) + TypeScript + Tailwind app: an invoice tracker.
-Data is mock/in-memory for now (Supabase comes in Module 7).
+Data is mock/in-memory for now (Supabase comes in Module 8).
 Use server components by default; keep components small and typed.
 Follow the existing patterns in app/clients for new features.
 ```
 
 Pointing the agent at existing code (`app/clients`) makes new features match what you built. Maintain [CLAUDE.md](http://CLAUDE.md) as the project grows — it's the memory that keeps the agent consistent.
 
-> **Cross-tool note ([AGENTS.md](http://AGENTS.md)):** `CLAUDE.md` is Claude Code's file; `.cursorrules` (Module 4) is Cursor's. There's also a vendor-neutral standard, **`AGENTS.md`**, that many tools read (create-next-app scaffolds both). Keep them consistent, or treat `AGENTS.md` as the shared source.
+> **Cross-tool note ([AGENTS.md](http://AGENTS.md)):** `CLAUDE.md` is Claude Code's file; `.cursorrules` (Module 5) is Cursor's. There's also a vendor-neutral standard, **`AGENTS.md`**, that many tools read (create-next-app scaffolds both). Keep them consistent, or treat `AGENTS.md` as the shared source.
 > 
 
 *[SCREENSHOT: a [CLAUDE.md](http://CLAUDE.md) file showing project conventions.]*
@@ -66,7 +66,7 @@ Pointing the agent at existing code (`app/clients`) makes new features match wha
 
 The single most important agentic habit for beginners. Before a big change, use plan mode (`/plan`) so the agent proposes an approach *before* editing anything. You review, correct, then let it execute — preventing the classic failure where the agent confidently does the wrong thing across ten files.
 
-**Flow:** describe the goal → agent returns a plan (files it will create/change, in order) → you check it against your intent and the Module 3 build order → approve or refine (Module 2's critique-and-refine, applied to a plan) → agent executes.
+**Flow:** describe the goal → agent returns a plan (files it will create/change, in order) → you check it against your intent and the Module 4 build order → approve or refine (Module 3's critique-and-refine, applied to a plan) → agent executes.
 
 *[SCREENSHOT: Claude Code in plan mode listing proposed steps before making changes.]*
 
@@ -89,7 +89,7 @@ This delivers Objective 1. Build the **invoices** feature agentically — it spa
 
 *[SCREENSHOT: the terminal showing the multi-file diff for the invoices feature.]*
 
-The payoff vs. Module 4: you described one feature and the agent handled the whole set of files.
+The payoff vs. Module 5: you described one feature and the agent handled the whole set of files.
 
 ---
 
@@ -98,9 +98,9 @@ The payoff vs. Module 4: you described one feature and the agent handled the who
 This delivers Objective 2. Two habits:
 
 - **Direct with a written plan.** Clear goal and constraints → better plan. Reuse [CLAUDE.md](http://CLAUDE.md) so you don't repeat context.
-- **Review every diff before accepting.** The agent shows what it changed — read it. You own every line, even the ones an agent wrote (Module 1). Never blind-accept a multi-file change.
+- **Review every diff before accepting.** The agent shows what it changed — read it. You own every line, even the ones an agent wrote (Module 2). Never blind-accept a multi-file change.
 
-**Permissions:** Claude Code asks before sensitive actions (running commands, editing files); control the rules with `/permissions`. For beginners, keep approvals on. Useful: `/context` (see the window) and `/compact` (summarize a long session so the agent doesn't lose earlier detail — the Module 1 "lost detail" risk).
+**Permissions:** Claude Code asks before sensitive actions (running commands, editing files); control the rules with `/permissions`. For beginners, keep approvals on. Useful: `/context` (see the window) and `/compact` (summarize a long session so the agent doesn't lose earlier detail — the Module 2 "lost detail" risk).
 
 *[SCREENSHOT: a Claude Code permission prompt.]*
 
@@ -139,7 +139,7 @@ This delivers Objective 3. Not competitors — complementary; skilled builders u
 
 ## Tools & alternatives (this module)
 
-Default: **Claude Code** on the **Next.js** app. Alternatives compared in Lesson 5.6 (Codex CLI, Copilot agent mode, Cline/Continue). These pair with, not replace, the in-editor tool from Module 4 — real workflows use both.
+Default: **Claude Code** on the **Next.js** app. Alternatives compared in Lesson 5.6 (Codex CLI, Copilot agent mode, Cline/Continue). These pair with, not replace, the in-editor tool from Module 5 — real workflows use both.
 
 ---
 
