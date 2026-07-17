@@ -290,17 +290,49 @@ See `/Accredited Vibe Coding Course/platform/MASTER-BUILD-PROMPT.md` for the ful
 
 ---
 
+## Accreditation & Compliance
+
+**Accreditation bodies:**
+- **CPD** (interim, fast track): pending
+- **IACET** (full accreditation): ~12 months post-launch, requires ≥1 year in business + ≥3 months running
+
+**What accreditors audit:**
+1. Measurable learning objectives (per module, aligned to Bloom's) ✓
+2. Defined contact hours & CEUs (93 hours, 9.3 CEUs) ✓
+3. Assessments tied to objectives (quizzes + capstone rubric) ✓
+4. Learner records (enrollment, attempts, scores, completion) ✓
+5. Documented governance & policies (Completion & Credentialing Process, Learner Records Template) ✓
+
+**Platform must export (CSV/PDF):**
+- Learner ID, name, email, enrollment date
+- Module completion checklist, quiz scores (% + pass), deliverable status
+- Capstone result (pass/fail), rubric scores, grader, date
+- Contact hours, CEUs awarded, certificate ID + issue date
+
+**Compliance checklist:**
+- Quiz answer keys server-side only ✓
+- Capstone rubric scoring server-side only ✓
+- RLS enforces learner data isolation ✓
+- Email verification required for enrollment ✓
+- Rate limiting prevents brute-force attacks ✓
+- All learner data encrypted at rest and in transit ✓
+
+---
+
 ## Next Steps
 
-1. **Answer open questions** (brand, pricing, credential, donation providers)
-2. **Phase 9:** Wire Stripe checkout, certificate generation, legal pages
-3. **Phase 10:** E2E tests, a11y/performance audits, records export
-4. **Phase 11:** Landing page (About + Donate), go live
+1. **Launch Phase:** Go live with platform and start recruiting learners
+2. **Accreditation:** Apply for CPD credential (interim, 3-month fast track)
+3. **Scale:** Monitor learner onboarding, gather feedback, iterate on UX
+4. **IACET:** After 1 year in business + 3 months running, apply for full IACET accreditation
+5. **Future phases:** Cohort-based learning, instructor training, corporate licensing
 
 ---
 
 ## Contact & Attribution
 
-**Course:** Accredited Vibe Coding Course (source workspace)
-**Platform built:** with Claude Code + Cursor, deployed to Vercel, powered by Supabase
+**Course:** Accredited Vibe Coding Course  
+**Platform:** Learn to Vibe Code  
+**Built with:** Claude Code + Cursor + Next.js + Supabase + Vercel  
+**Author:** Charlie Foreman (charlieforeman77@gmail.com)
 
