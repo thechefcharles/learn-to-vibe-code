@@ -773,7 +773,7 @@ export function StepLessonViewer({
             {/* Navigation Buttons - Right Side */}
             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               {/* Next Module Button (bottom right when last step) */}
-              {isLastStep && (unlockedModules?.has(moduleId + 1)) && (
+              {isLastStep && moduleId < 15 && (
                 <motion.a
                   href={`/course/${String(moduleId + 1).padStart(2, '0')}`}
                   whileHover={{ scale: 1.02, y: -2 }}
