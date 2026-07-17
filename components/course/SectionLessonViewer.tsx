@@ -23,6 +23,8 @@ export function SectionLessonViewer({
   isKids,
   onLessonComplete,
 }: SectionLessonViewerProps) {
+  console.log(`🎬 [SECTIONLESSONVIEWER MOUNT] step.id=${step.id}, title="${step.title}", sections=${step.sections?.length || 0}`);
+
   const sections = step.sections || [];
   const [sectionIndex, setSectionIndex] = useState(0);
   const [viewedSections, setViewedSections] = useState<Set<number>>(new Set());
@@ -34,6 +36,7 @@ export function SectionLessonViewer({
 
   // Load progress from localStorage on mount
   useEffect(() => {
+    console.log(`📖 [SECTIONLESSONVIEWER EFFECT 1] Loading progress from localStorage for key="${lessonStorageKey}"`);
     const stored = localStorage.getItem(lessonStorageKey);
     if (stored) {
       try {
@@ -92,6 +95,7 @@ export function SectionLessonViewer({
 
   // Mark current section as viewed when it mounts
   useEffect(() => {
+    console.log(`📖 [SECTIONLESSONVIEWER EFFECT 2] Marking section ${sectionIndex} as viewed`);
     setViewedSections(prev => {
       if (prev.has(sectionIndex)) return prev;
       const next = new Set(prev).add(sectionIndex);
@@ -116,7 +120,9 @@ export function SectionLessonViewer({
 
   // Fire completion reward when all sections viewed
   useEffect(() => {
+    console.log(`📖 [SECTIONLESSONVIEWER EFFECT 3] Checking completion: viewed=${viewedSections.size}, total=${sections.length}, progress=${progress ? 'exists' : 'null'}, rewardClaimed=${progress?.rewardClaimed}`);
     if (viewedSections.size === sections.length && progress && !progress.rewardClaimed) {
+      console.log(`🎉 [SECTIONLESSONVIEWER] ALL SECTIONS VIEWED! Firing onLessonComplete callback`);
       setProgress(prev => prev ? { ...prev, completed: true, rewardClaimed: true } : null);
       localStorage.setItem(lessonStorageKey, JSON.stringify({
         ...progress,

@@ -88,9 +88,9 @@ export function StepLessonViewer({
   const isMilestone = progress === 25 || progress === 50 || progress === 75 || progress === 100;
   const milestoneText = progress === 25 ? "25% Complete! 🚀" : progress === 50 ? "Halfway There! 💪" : progress === 75 ? "Almost Done! 🔥" : "Module Complete! 🎉";
 
-  // Debug logging for step 10
-  if (typeof window !== 'undefined' && currentStepIndex === 9) {
-    console.log(`📊 [STEP 10 RENDER] currentStep=${currentStepIndex+1}, hasSection=${currentStep.sections ? 'yes' : 'no'}, lessonCompletedTrigger=${lessonCompletedTrigger}, isLastStep=${isLastStep}`);
+  // Log component renders for debugging
+  if (typeof window !== 'undefined') {
+    console.log(`🔄 [RENDER] StepLessonViewer re-rendered at step ${currentStepIndex + 1}`);
   }
 
   // Use preview step if one is selected, otherwise use current module's step
@@ -100,6 +100,16 @@ export function StepLessonViewer({
     : steps.steps[currentStepIndex];
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === steps.steps.length - 1;
+
+  // Debug logging for step 10 (after currentStep is defined)
+  if (typeof window !== 'undefined' && currentStepIndex === 9) {
+    console.log(`📊 [STEP 10 RENDER] currentStep=${currentStepIndex+1}, hasSection=${currentStep.sections ? 'yes' : 'no'}, lessonCompletedTrigger=${lessonCompletedTrigger}, isLastStep=${isLastStep}`);
+    console.log(`📊 [STEP 10] Current step object:`, {
+      title: currentStep.title,
+      hasSections: !!currentStep.sections,
+      sectionCount: currentStep.sections?.length || 0,
+    });
+  }
   // Preview mode = viewing content not earned yet
   // True when: module is in preview (different module or locked), OR viewing beyond natural progress
   const isPreviewMode = isModulePreview || !!displayingPreviewLesson || currentStepIndex > naturallyReachedStep;
@@ -438,7 +448,9 @@ export function StepLessonViewer({
           </motion.div>
 
           {currentStep.sections ? (
-            <div className="mb-6">
+            <>
+              {typeof window !== 'undefined' && console.log(`🎯 [CONDITIONAL RENDER] Rendering SectionLessonViewer for step ${currentStepIndex + 1}`)}
+              <div className="mb-6">
               {/* NOTE: Section navigation is owned entirely by SectionLessonViewer via localStorage.
                   Future enhancement: refactor to use React Context if we need to expose section state
                   at the StepLessonViewer level for sidebar section jumps or breadcrumb updates.
@@ -472,6 +484,7 @@ export function StepLessonViewer({
                 }}
               />
             </div>
+            </>
           ) : (
             // Legacy single-content rendering
             <>
@@ -784,7 +797,6 @@ export function StepLessonViewer({
 
             {/* Navigation Buttons - Right Side */}
             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-              {currentStepIndex === 9 && console.log(`🎯 Rendering navigation for step 10 (idx=9): isLastStep=${isLastStep}, moduleId=${moduleId}`)}
               {/* Next Module Button (bottom right when last step) */}
               {isLastStep && moduleId < 15 && (
                 <motion.a
