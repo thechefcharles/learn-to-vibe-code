@@ -456,7 +456,7 @@ export function StepLessonViewer({
                 step={currentStep}
                 moduleId={moduleId}
                 isKids={isKids}
-                onLessonComplete={() => {
+                onLessonComplete={async () => {
                   setLessonCompletedTrigger(currentStepIndex);
                   // Mark lesson as complete in module progress
                   const moduleProgress = JSON.parse(
@@ -477,6 +477,18 @@ export function StepLessonViewer({
                   // client-supplied user ids or XP amounts.
                   if (user) {
                     awardXP(moduleId, currentStep.id).catch(console.error);
+                  }
+
+                  // If this is the last lesson, mark the module as complete to unlock the next module
+                  const isLastLesson = currentStepIndex === steps.steps.length - 1;
+                  if (isLastLesson && user) {
+                    try {
+                      const { markModuleComplete } = await import("@/lib/actions/course");
+                      await markModuleComplete(moduleId);
+                      console.log(`✓ Module ${moduleId} marked complete, Module ${moduleId + 1} now unlocked`);
+                    } catch (error) {
+                      console.error("Failed to mark module complete:", error);
+                    }
                   }
                 }}
               />
