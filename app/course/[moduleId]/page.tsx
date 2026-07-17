@@ -181,11 +181,27 @@ export default async function LessonPage(props: LessonPageProps) {
         <div className={`${!unlockedModules.has(moduleId) && !isModulePreview ? "opacity-60 pointer-events-none select-none" : ""}`}>
             {/* Preview Badge for Locked Content */}
             {!unlockedModules.has(moduleId) && !isKids && (
-              <div className="mb-6 p-4 bg-amber-500/20 border border-amber-500/50 rounded-lg flex items-center gap-3">
-                <span className="text-2xl">🔒</span>
-                <div>
-                  <p className="font-semibold text-amber-200">Preview Mode</p>
-                  <p className="text-sm text-amber-100">This module is locked. Complete the previous module to unlock.</p>
+              <div className="mb-6 p-6 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/50 rounded-lg">
+                <div className="flex items-start gap-4">
+                  <span className="text-3xl flex-shrink-0">🔒</span>
+                  <div className="flex-1">
+                    <p className="font-bold text-amber-200 mb-2">Module Locked — Complete Previous Module</p>
+                    <p className="text-sm text-amber-100 mb-4">To unlock this module, you need to:</p>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <Link
+                        href={`/course/${String(moduleId - 1).padStart(2, '0')}/quiz`}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+                      >
+                        📝 Complete Quiz
+                      </Link>
+                      <Link
+                        href={`/course/${String(moduleId - 1).padStart(2, '0')}/submit`}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-lg transition-colors"
+                      >
+                        ✅ Submit Deliverable
+                      </Link>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
