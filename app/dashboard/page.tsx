@@ -32,8 +32,10 @@ export default async function DashboardPage() {
   const completedModules = progress.filter((p) => p.status === "completed").length;
   const capstoneUnlocked = completedModules >= 15;
   const nextModule = progress.find((p) => p.status !== "completed");
-  const continueHref = nextModule ? `/course/${String(nextModule.module_id).padStart(2, "0")}` : "/course/00";
-  const currentModuleId = nextModule?.module_id || 0;
+  const continueHref = nextModule
+    ? `/course/${String(nextModule.module_id).padStart(2, "0")}`
+    : capstoneUnlocked ? "/capstone" : "/course/01";
+  const currentModuleId = nextModule?.module_id || (capstoneUnlocked ? 16 : 1);
 
   return (
     <div className="min-h-screen flex flex-col">
