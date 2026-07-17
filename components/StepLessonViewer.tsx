@@ -822,18 +822,28 @@ export function StepLessonViewer({
               {/* Next Module Button (bottom right when last step) */}
               {isLastStep && moduleId < 16 && (
                 <motion.button
-                  onClick={async () => {
+                  onClick={async (e) => {
+                    e.preventDefault();
                     console.log(`🎯 Next Module button clicked. Marking module ${moduleId} complete...`);
+                    const nextModuleId = moduleId + 1;
+
                     if (user) {
                       try {
                         const { markModuleComplete } = await import("@/lib/actions/course");
-                        await markModuleComplete(moduleId);
-                        console.log(`✓ Module ${moduleId} marked complete, navigating to Module ${moduleId + 1}`);
+                        console.log(`📤 Calling markModuleComplete(${moduleId})...`);
+                        const result = await markModuleComplete(moduleId);
+                        console.log(`✓ Module ${moduleId} marked complete, result:`, result);
                       } catch (error) {
-                        console.error("Failed to mark module complete:", error);
+                        console.error("⚠️  Failed to mark module complete:", error);
                       }
+                    } else {
+                      console.log(`⚠️  No user found, skipping markModuleComplete()`);
                     }
-                    window.location.href = `/course/${moduleId + 1}`;
+
+                    console.log(`🔗 Navigating to /course/${nextModuleId}`);
+                    setTimeout(() => {
+                      window.location.href = `/course/${nextModuleId}`;
+                    }, 100);
                   }}
                   whileHover={{ scale: 1.02, y: -2 }}
                   className="w-full px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-200 text-white bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 hover:from-cyan-600 hover:via-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/50 text-center"
