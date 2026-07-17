@@ -22,8 +22,8 @@ export function TimeWidget() {
         lastTimeRef.current = now;
 
         timeRef.current += (deltaMs / 1000) * speed * 5;
-        if (timeRef.current >= 93) {
-          timeRef.current = timeRef.current - 93;
+        if (timeRef.current >= 100) {
+          timeRef.current = timeRef.current - 100;
         }
 
         setHours(Math.floor(timeRef.current));
@@ -38,7 +38,7 @@ export function TimeWidget() {
     return () => cancelAnimationFrame(animationId);
   }, [isPaused, isHovering, speed]);
 
-  const percentage = (hours / 93) * 100;
+  const percentage = (hours / 100) * 100;
   const circumference = 2 * Math.PI * 85;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
 
@@ -114,7 +114,7 @@ export function TimeWidget() {
             }}
           />
 
-          {/* Background "93" */}
+          {/* Background "100" */}
           <text
             x="100"
             y="110"
@@ -124,12 +124,12 @@ export function TimeWidget() {
             fill="rgba(107, 114, 128, 0.1)"
             fontFamily="monospace"
           >
-            93
+            100
           </text>
 
           {/* Hour markers */}
           {[0, 15, 30, 45, 60, 75, 90].map((h) => {
-            const angle = (h / 93) * 360 - 90;
+            const angle = (h / 100) * 360 - 90;
             const rad = (angle * Math.PI) / 180;
             const x1 = 100 + 85 * Math.cos(rad);
             const y1 = 100 + 85 * Math.sin(rad);
@@ -162,7 +162,7 @@ export function TimeWidget() {
               fontSize: isHovering ? '56px' : '32px',
             }}
           >
-            {isHovering ? '93' : hours}
+            {isHovering ? '100' : hours}
           </motion.div>
 
           {/* "hours" label appears below 93 on hover */}

@@ -181,7 +181,7 @@ export default async function PublicCertificatePage({ params }: PageProps) {
             </div>
             <div>
               <p className="text-slate-300 font-semibold mb-1">Contact Hours & CEUs</p>
-              <p>93 Hours · 9.3 CEUs</p>
+              <p>100 Hours · 10.0 CEUs</p>
             </div>
           </div>
         </div>
@@ -192,7 +192,7 @@ export default async function PublicCertificatePage({ params }: PageProps) {
           <div className="space-y-2 text-slate-400 text-sm">
             <p>✅ <strong>Verifiable:</strong> This certificate ID is registered in our database and can be verified.</p>
             <p>✅ <strong>Professional:</strong> Suitable for LinkedIn, resumes, and professional portfolios.</p>
-            <p>✅ <strong>Comprehensive:</strong> 93 hours of quality content and rigorous assessment.</p>
+            <p>✅ <strong>Comprehensive:</strong> 100 hours of quality content and rigorous assessment.</p>
             <p>✅ <strong>Accredited:</strong> Completion tracked for CPD and future IACET accreditation.</p>
             <p>✅ <strong>Shareable:</strong> Use the share button to show your achievement to employers and colleagues.</p>
           </div>

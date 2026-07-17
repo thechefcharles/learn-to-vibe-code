@@ -4,7 +4,7 @@ import { KidsLandingPage } from "@/components/kids-landing/KidsLandingPage";
 
 export const metadata: Metadata = {
   title: "Learn to Vibe Code — AI Development Course",
-  description: "16 modules, 93 hours of content. Learn full-stack development with AI. Free, with a capstone project.",
+  description: "16 modules, 100 hours of content. Learn full-stack development with AI. Free, with a capstone project.",
 };
 
 export default async function Home() {

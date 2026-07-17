@@ -105,7 +105,7 @@ export default async function CertificatePage() {
           <div className="space-y-2 text-slate-400 text-sm">
             <p>✅ <strong>Verifiable:</strong> Your certificate ID is registered in our database.</p>
             <p>✅ <strong>Professional:</strong> Suitable for LinkedIn, resumes, and professional portfolios.</p>
-            <p>✅ <strong>Comprehensive:</strong> 93 hours of quality content and assessment.</p>
+            <p>✅ <strong>Comprehensive:</strong> 100 hours of quality content and assessment.</p>
             <p>✅ <strong>Permanent:</strong> Your certificate is saved and accessible anytime.</p>
           </div>
         </div>

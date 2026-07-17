@@ -750,7 +750,7 @@ export const module1Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 1,
     moduleName: "Module 1: AI Fundamentals & How Models Actually Work",
-    totalDuration: 255,
+    totalDuration: 420,
     steps: [
       {
         id: 0,
@@ -986,7 +986,7 @@ Tool-agnostic on purpose — the concepts apply to **any** AI coding assistant (
   kids: {
     moduleId: 1,
     moduleName: "Module 1: AI Fundamentals & How Models Actually Work",
-    totalDuration: 255,
+    totalDuration: 420,
     steps: [
       {
         id: 0,
@@ -1274,7 +1274,7 @@ export const module2Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 2,
     moduleName: "Module 2: Prompt Engineering for Developers",
-    totalDuration: 285,
+    totalDuration: 480,
     steps: [
       {
         id: 1,
@@ -1581,7 +1581,7 @@ Tool-agnostic — the five ingredients, decomposition, and the refine loop work 
   kids: {
     moduleId: 2,
     moduleName: "Module 2: Prompt Engineering for Developers",
-    totalDuration: 285,
+    totalDuration: 480,
     steps: [
       {
         id: 1,
@@ -1908,7 +1908,7 @@ export const module3Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 3,
     moduleName: "Module 3: Planning Software with AI",
-    totalDuration: 210,
+    totalDuration: 390,
     steps: [
       {
         id: 1,
@@ -2307,7 +2307,7 @@ Planning is tool-agnostic — any capable assistant (Claude Code, Cursor's chat,
   kids: {
     moduleId: 3,
     moduleName: "Module 3: Planning Software with AI",
-    totalDuration: 210,
+    totalDuration: 390,
     steps: [
       {
         id: 1,
@@ -2689,7 +2689,7 @@ export const module4Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 4,
     moduleName: "Module 4: Building Apps in Cursor (In-Editor Flow)",
-    totalDuration: 330,
+    totalDuration: 420,
     steps: [
       {
         id: 1,
@@ -3007,7 +3007,7 @@ Default: **Cursor** on a **Next.js** app. Editor alternatives compared in Lesson
   kids: {
     moduleId: 4,
     moduleName: "Module 4: Building Apps in Cursor (In-Editor Flow)",
-    totalDuration: 330,
+    totalDuration: 420,
     steps: [
       {
         id: 1,
@@ -3331,7 +3331,7 @@ export const module5Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 5,
     moduleName: "Module 5: Building Apps in Claude Code (Agentic)",
-    totalDuration: 300,
+    totalDuration: 390,
     steps: [
       {
         id: 1,
@@ -3706,7 +3706,7 @@ Default: **Claude Code** on the **Next.js** app. Alternatives compared in Lesson
   kids: {
     moduleId: 5,
     moduleName: "Module 5: Building Apps in Claude Code (Agentic)",
-    totalDuration: 300,
+    totalDuration: 390,
     steps: [
       {
         id: 1,
@@ -4142,7 +4142,7 @@ export const module6Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 6,
     moduleName: "Module 6: Design & UX (Make It Not Look AI-Generated)",
-    totalDuration: 340,
+    totalDuration: 445,
     steps: [
       {
         id: 1,
@@ -4528,7 +4528,7 @@ Default: **shadcn/ui** on **Tailwind**. **Alternatives:** Tailwind UI (paid), Da
   kids: {
     moduleId: 6,
     moduleName: "Module 6: Design & UX (Make It Not Look AI-Generated)",
-    totalDuration: 340,
+    totalDuration: 445,
     steps: [
       {
         id: 1,
@@ -4849,7 +4849,7 @@ export const module7Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 7,
     moduleName: "Module 7: Data, Auth & Backend (Supabase)",
-    totalDuration: 300,
+    totalDuration: 390,
     steps: [
       {
         id: 1,
@@ -5350,7 +5350,7 @@ Default: **Supabase** on **Next.js**, using \`@supabase/ssr\`. Alternatives in L
   kids: {
     moduleId: 7,
     moduleName: "Module 7: Data, Auth & Backend (Supabase)",
-    totalDuration: 300,
+    totalDuration: 390,
     steps: [
       {
         id: 1,
@@ -5686,7 +5686,7 @@ export const module8Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 8,
     moduleName: "Module 8: Reading & Debugging AI-Generated Code",
-    totalDuration: 315,
+    totalDuration: 405,
     steps: [
       {
         id: 1,
@@ -6099,7 +6099,7 @@ Reading and debugging are tool-agnostic — the loops (read; reproduce → isola
   kids: {
     moduleId: 8,
     moduleName: "Module 8: Reading & Debugging AI-Generated Code",
-    totalDuration: 315,
+    totalDuration: 405,
     steps: [
       {
         id: 1,
@@ -6462,7 +6462,7 @@ export const module9Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 9,
     moduleName: "Module 9: Git & Version Control (GitHub)",
-    totalDuration: 200,
+    totalDuration: 410,
     steps: [
       {
         id: 1,
@@ -6841,7 +6841,7 @@ Default: **GitHub** (industry-standard host, best Vercel integration). **Alterna
   kids: {
     moduleId: 9,
     moduleName: "Module 9: Git & Version Control (GitHub)",
-    totalDuration: 200,
+    totalDuration: 410,
     steps: [
       {
         id: 1,
@@ -7112,7 +7112,7 @@ export const module10Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 10,
     moduleName: "Module 10: Deploying Applications (Vercel + GitHub)",
-    totalDuration: 255,
+    totalDuration: 420,
     steps: [
       {
         id: 1,
@@ -7431,7 +7431,7 @@ Default: **Vercel** from **GitHub**, with **Supabase** as the production backend
   kids: {
     moduleId: 10,
     moduleName: "Module 10: Deploying Applications (Vercel + GitHub)",
-    totalDuration: 255,
+    totalDuration: 420,
     steps: [
       {
         id: 1,
@@ -7675,7 +7675,7 @@ export const module11Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 11,
     moduleName: "Module 11: AI Agent Workflows",
-    totalDuration: 300,
+    totalDuration: 390,
     steps: [
       {
         id: 1,
@@ -8146,7 +8146,7 @@ The patterns are framework-agnostic. Build a simple agent loop directly against 
   kids: {
     moduleId: 11,
     moduleName: "Module 11: AI Agent Workflows",
-    totalDuration: 300,
+    totalDuration: 390,
     steps: [
       {
         id: 1,
@@ -8447,7 +8447,7 @@ export const module12Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 12,
     moduleName: "Module 12: Building Production-Ready Software",
-    totalDuration: 360,
+    totalDuration: 480,
     steps: [
       {
         id: 1,
@@ -9006,7 +9006,7 @@ Defaults: **Vitest/Jest** (unit/integration), **Playwright** (E2E), **Lighthouse
   kids: {
     moduleId: 12,
     moduleName: "Module 12: Building Production-Ready Software",
-    totalDuration: 360,
+    totalDuration: 480,
     steps: [
       {
         id: 1,
@@ -9359,7 +9359,7 @@ export const module13Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 13,
     moduleName: "Module 13: Automating Your Dev Pipeline with Claude Code",
-    totalDuration: 370,
+    totalDuration: 490,
     steps: [
       {
         id: 1,
@@ -9809,7 +9809,7 @@ Portable pattern: **MCP** is the emerging open standard for tool/data access, **
   kids: {
     moduleId: 13,
     moduleName: "Module 13: Automating Your Dev Pipeline with Claude Code",
-    totalDuration: 370,
+    totalDuration: 490,
     steps: [
       {
         id: 1,
@@ -10073,7 +10073,7 @@ export const module14Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 14,
     moduleName: "Module 14: Working in Existing Codebases (Brownfield)",
-    totalDuration: 305,
+    totalDuration: 410,
     steps: [
       {
         id: 1,
@@ -10323,7 +10323,7 @@ The skill is tool-agnostic. **Claude Code** shines here (repo-wide reading and s
   kids: {
     moduleId: 14,
     moduleName: "Module 14: Working in Existing Codebases (Brownfield)",
-    totalDuration: 305,
+    totalDuration: 410,
     steps: [
       {
         id: 1,
@@ -10492,7 +10492,7 @@ export const module15Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 15,
     moduleName: "Module 15: The Tooling Landscape & How to Choose",
-    totalDuration: 150,
+    totalDuration: 270,
     steps: [
       {
         id: 1,
@@ -10657,7 +10657,7 @@ This module *is* the tools-and-alternatives capstone — every layer at once. Th
   kids: {
     moduleId: 15,
     moduleName: "Module 15: The Tooling Landscape & How to Choose",
-    totalDuration: 150,
+    totalDuration: 270,
     steps: [
       {
         id: 1,

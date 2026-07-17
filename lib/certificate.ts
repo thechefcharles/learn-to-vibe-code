@@ -244,8 +244,8 @@ export async function getCertificateHTML(userId: string): Promise<string | null>
       completionDate: cert.issued_at,
       certId: cert.cert_id,
       moduleCount: 16,
-      contactHours: 93,
-      ceuCount: "9.3",
+      contactHours: 100,
+      ceuCount: "10.0",
     });
   } catch (error) {
     console.error("Get certificate HTML error:", error);
@@ -310,8 +310,8 @@ export async function getCertificateById(
       completionDate: cert.issued_at,
       certId: cert.cert_id,
       moduleCount: 16,
-      contactHours: 93,
-      ceuCount: "9.3",
+      contactHours: 100,
+      ceuCount: "10.0",
     });
 
     return {

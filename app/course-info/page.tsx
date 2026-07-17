@@ -26,7 +26,7 @@ export default function CourseInfoPage() {
             The Accredited Vibe Coding Course
           </h1>
           <p className="text-xl text-gray-300">
-            A comprehensive, AI-first development program. 16 modules. 93 hours of content. Choose your level.
+            A comprehensive, AI-first development program. 16 modules. 100 hours of content. Choose your level.
           </p>
         </div>
 
@@ -159,7 +159,7 @@ export default function CourseInfoPage() {
                 </p>
               </div>
               <div>
-                <p className="text-sm font-semibold text-cyan-400 mb-2">⏱️ 93 HOURS</p>
+                <p className="text-sm font-semibold text-cyan-400 mb-2">⏱️ 100 HOURS</p>
                 <p>
                   Comprehensive content at your own pace. Earn 9.3 CEUs upon completion.
                 </p>

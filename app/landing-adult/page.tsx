@@ -9,7 +9,7 @@ import { Footer } from "@/components/Footer";
 
 export const metadata = {
   title: "Learn to Vibe Code — Accredited AI Development Course",
-  description: "16 modules, 93 hours, 9.3 CEUs. Learn full-stack development with AI. Free, accredited, with a capstone project.",
+  description: "16 modules, 100 hours, 10.0 CEUs. Learn full-stack development with AI. Free, accredited, with a capstone project.",
 };
 
 export default function Home() {

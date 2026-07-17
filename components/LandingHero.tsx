@@ -26,7 +26,7 @@ export function LandingHero() {
     adult: {
       headline: "Learn to Vibe Code",
       subheading: "Hard to start. Impossible to stop.",
-      stats: "16 modules • 93 hours • 100% free",
+      stats: "16 modules • 100 hours • 100% free",
       cta1: "Start Learning Free",
       cta2: "Try 2 Free Modules",
       badges: [
