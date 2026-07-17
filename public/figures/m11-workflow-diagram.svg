@@ -1,0 +1,67 @@
+<svg viewBox="0 0 1200 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="400" fill="#0f172a"/>
+
+  <!-- Title -->
+  <text x="600" y="30" font-size="24" font-weight="bold" fill="#e2e8f0" text-anchor="middle">
+    AI Agent Workflow Loop
+  </text>
+
+  <!-- Tool Box 1 (Left) -->
+  <rect x="50" y="100" width="140" height="100" fill="#1e293b" stroke="#06b6d4" stroke-width="2" rx="8"/>
+  <text x="120" y="135" font-size="14" font-weight="bold" fill="#06b6d4" text-anchor="middle">Tool</text>
+  <text x="120" y="160" font-size="12" fill="#cbd5e1" text-anchor="middle">API Call</text>
+  <text x="120" y="180" font-size="12" fill="#cbd5e1" text-anchor="middle">Data Fetch</text>
+
+  <!-- Arrow 1: Tool → Agent -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#06b6d4"/>
+    </marker>
+  </defs>
+  <path d="M 190 150 L 280 150" stroke="#06b6d4" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="235" y="140" font-size="11" fill="#94a3b8">result</text>
+
+  <!-- Agent Box -->
+  <rect x="280" y="100" width="140" height="100" fill="#1e293b" stroke="#a855f7" stroke-width="2" rx="8"/>
+  <text x="350" y="135" font-size="14" font-weight="bold" fill="#a855f7" text-anchor="middle">Agent</text>
+  <text x="350" y="160" font-size="12" fill="#cbd5e1" text-anchor="middle">Reasoning</text>
+  <text x="350" y="180" font-size="12" fill="#cbd5e1" text-anchor="middle">Decision</text>
+
+  <!-- Arrow 2: Agent → Human -->
+  <path d="M 420 150 L 510 150" stroke="#a855f7" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="465" y="140" font-size="11" fill="#94a3b8">proposed action</text>
+
+  <!-- Human Approval Box -->
+  <rect x="510" y="100" width="140" height="100" fill="#1e293b" stroke="#f59e0b" stroke-width="2" rx="8"/>
+  <text x="580" y="135" font-size="14" font-weight="bold" fill="#f59e0b" text-anchor="middle">Human</text>
+  <text x="580" y="160" font-size="12" fill="#cbd5e1" text-anchor="middle">Review</text>
+  <text x="580" y="180" font-size="12" fill="#cbd5e1" text-anchor="middle">Approve</text>
+
+  <!-- Arrow 3a: Human Approve → Tool -->
+  <path d="M 650 120 Q 800 60 890 120" stroke="#10b981" stroke-width="3" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+  <text x="770" y="75" font-size="11" fill="#10b981">✓ approved</text>
+
+  <!-- Arrow 3b: Human Reject → Agent -->
+  <path d="M 580 200 Q 465 250 350 200" stroke="#ef4444" stroke-width="3" fill="none" marker-end="url(#arrowhead)" stroke-dasharray="5,5"/>
+  <text x="465" y="270" font-size="11" fill="#ef4444">✗ adjust & retry</text>
+
+  <!-- Tool Box 2 (Right) -->
+  <rect x="890" y="100" width="140" height="100" fill="#1e293b" stroke="#06b6d4" stroke-width="2" rx="8"/>
+  <text x="960" y="135" font-size="14" font-weight="bold" fill="#06b6d4" text-anchor="middle">Tool</text>
+  <text x="960" y="160" font-size="12" fill="#cbd5e1" text-anchor="middle">Execute</text>
+  <text x="960" y="180" font-size="12" fill="#cbd5e1" text-anchor="middle">Action</text>
+
+  <!-- Arrow 4: Tool → Agent (loop back) -->
+  <path d="M 960 100 Q 900 40 350 40 Q 350 60 350 100" stroke="#06b6d4" stroke-width="3" fill="none" marker-end="url(#arrowhead)"/>
+  <text x="655" y="30" font-size="11" fill="#94a3b8">new context</text>
+
+  <!-- Legend -->
+  <text x="50" y="340" font-size="12" fill="#94a3b8">
+    <tspan x="50">Key Points:</tspan>
+    <tspan x="50" dy="18">• Tools are external APIs/functions (execution layer)</tspan>
+    <tspan x="50" dy="18">• Agent orchestrates: decides which tools to use, interprets results</tspan>
+    <tspan x="50" dy="18">• Human approval prevents autonomous mistakes in critical workflows</tspan>
+    <tspan x="50" dy="18">• Loop continues until goal is achieved or human intervention stops it</tspan>
+  </text>
+</svg>
