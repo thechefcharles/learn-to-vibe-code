@@ -216,6 +216,14 @@
       "path": "/figures/m14/m14-architecture-summary.png",
       "alt": "AI-generated architecture summary with file tree"
     },
+    "m03-ai-interview": {
+      "path": "/figures/m03/m03-ai-interview.png",
+      "alt": "Claude Code running an AI interview session, showing AI-generated questions and planning output for a sample project"
+    },
+    "m03-technical-plan": {
+      "path": "/figures/m03/m03-technical-plan.png",
+      "alt": "Claude Code displaying a technical plan with data model diagram and screen wireframes from the planning phase"
+    },
     "m06-shadcn-components": {
       "path": "/figures/m06-shadcn-components.svg",
       "alt": "shadcn/ui component showcase: buttons, forms, cards, alerts, progress bars, badges, and typography used throughout the Learn to Vibe Code platform"
@@ -223,6 +231,10 @@
     "m11-workflow-diagram": {
       "path": "/figures/m11-workflow-diagram.svg",
       "alt": "AI agent workflow loop diagram showing Tool → Agent → Human Approval → Tool execution with decision paths for approval and rejection"
+    },
+    "m12-tests": {
+      "path": "/figures/m12/m12-tests.png",
+      "alt": "Terminal showing npm test output with test results summary and passing/failing test counts"
     }
   }
 }
