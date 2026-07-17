@@ -65,15 +65,21 @@ export async function markModuleComplete(moduleId: number) {
     }
   }
 
-  // Mark module complete
+  // Mark module complete (upsert to create if doesn't exist)
   const { error } = await supabase
     .from("module_progress")
-    .update({
-      status: "completed",
-      completed_at: new Date().toISOString(),
-    })
-    .eq("user_id", user.id)
-    .eq("module_id", moduleId);
+    .upsert(
+      {
+        user_id: user.id,
+        module_id: moduleId,
+        status: "completed",
+        completed_at: new Date().toISOString(),
+        unlocked: true,
+      },
+      {
+        onConflict: "user_id,module_id",
+      }
+    );
 
   if (error) throw error;
 
