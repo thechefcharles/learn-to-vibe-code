@@ -41,7 +41,6 @@ export default async function LessonPage(props: LessonPageProps) {
   const params = await props.params;
   const searchParams = await props.searchParams;
   const moduleId = parseInt(params.moduleId);
-  const fromLesson = searchParams.from === "lesson";
 
   if (isNaN(moduleId) || moduleId < 0 || moduleId > 15) {
     notFound();
@@ -137,8 +136,7 @@ export default async function LessonPage(props: LessonPageProps) {
   const isKids = userVersion === "kids";
 
   // Module is in preview if it's not the user's actual current module OR if it's locked
-  // EXCEPT: if coming from the previous module's completion (from=lesson), allow access to next module
-  const isModulePreview = fromLesson ? false : (moduleId !== actualCurrentModule || !unlocked);
+  const isModulePreview = moduleId !== actualCurrentModule || !unlocked;
 
   // Check if this module uses the new step-based format
   if (hasModuleSteps(moduleId)) {
