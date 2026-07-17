@@ -797,8 +797,8 @@ export function StepLessonViewer({
 
             {/* Navigation Buttons - Right Side */}
             <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-              {/* Quiz CTA (when at last step) */}
-              {isLastStep && (
+              {/* Quiz CTA (when at last step, but not for Module 0) */}
+              {isLastStep && moduleId > 0 && (
                 <motion.a
                   href={`/course/${String(moduleId).padStart(2, '0')}/quiz`}
                   whileHover={{ scale: 1.02, y: -2 }}

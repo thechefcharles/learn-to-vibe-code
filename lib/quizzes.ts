@@ -16,32 +16,6 @@ export interface ModuleQuiz {
 // Quiz data for all 16 modules (multiple choice questions only)
 // NOTE: Module 0 is checklist-only (no quiz) — gate is completion verification, not quiz score
 export const quizzes: Record<number, ModuleQuiz> = {
-  0: {
-    moduleId: 0,
-    questions: [
-      {
-        id: "0-1",
-        text: "What does Vercel do?",
-        options: ["Edits your code", "Stores your database", "Shows your app to the world (on the internet)", "Saves your code on GitHub"],
-        correctAnswer: 2,
-        explanation: "Vercel deploys and hosts your app so anyone can access it online.",
-      },
-      {
-        id: "0-2",
-        text: "Which tool runs your app locally while you're developing?",
-        options: ["GitHub", "Node.js", "Supabase", "Cursor"],
-        correctAnswer: 1,
-        explanation: "Node.js is the JavaScript runtime that executes your code on your computer.",
-      },
-      {
-        id: "0-3",
-        text: "What is the primary purpose of this module?",
-        options: ["Learn advanced TypeScript", "Set up your development environment", "Build a production app", "Deploy to AWS"],
-        correctAnswer: 1,
-        explanation: "Module 0 is about setting up all the tools you need before starting to code.",
-      },
-    ],
-  },
   1: {
     moduleId: 1,
     questions: [
