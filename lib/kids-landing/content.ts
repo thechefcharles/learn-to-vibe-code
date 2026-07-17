@@ -82,11 +82,10 @@ export interface KidsLandingContent {
 }
 
 export const MODULE_TIERS = {
-  foundations: { name: 'Foundations', modules: [0, 1, 2, 3] },
-  building: { name: 'Building', modules: [4, 5, 6, 7, 8, 9] },
-  production: { name: 'Production', modules: [10, 11, 12] },
-  landscape: { name: 'Landscape', modules: [13, 14, 15] },
-  capstone: { name: 'Capstone', modules: [16] }
+  foundations: { name: 'Foundations', modules: [1, 2, 3, 4] },
+  building: { name: 'Building', modules: [5, 6, 7, 8, 9, 10] },
+  production: { name: 'Production', modules: [11, 12, 13] },
+  landscape: { name: 'Landscape', modules: [14, 15, 16] },
 };
 
 export const KIDS_LANDING_CONTENT: KidsLandingContent = {
