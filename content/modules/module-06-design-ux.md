@@ -494,7 +494,110 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 
 ---
 
-## Tools & alternatives (this module)
+## Lesson 6.4b — Learning from competitors: Screenshot reference design extraction (~60 min)
+
+**The challenge:** "How do I get taste?" The fastest way is to study products you admire and learn *why* they work. This lesson teaches you to systematically extract design patterns from competitor or reference apps, then adapt them to your own.
+
+### The workflow: See → Understand → Build
+
+1. **See** — Screenshot a competitor or reference feature
+2. **Understand** — Identify the design principles at work (hierarchy, color, spacing, typography)
+3. **Build** — Ask Claude Code to adapt the pattern to your app
+
+### Step 1: Capture reference designs
+
+**What to screenshot:**
+- Competitor product features you want to match (e.g., Stripe's dashboard layout, Figma's toolbar, Linear's issue sidebar)
+- Reference apps in your market that have great UX (e.g., if you're building invoicing, screenshot FreshBooks, Wave, or Stripe Invoicing)
+- Design system examples (e.g., shadcn/ui demos, Ant Design components, MUI showcase)
+
+**How to capture:**
+- Use your OS screenshot tool (Cmd+Shift+4 on Mac, Win+Shift+S on Windows)
+- Or use browser DevTools to take element screenshots
+- Save to a folder for reference
+
+**Example:** Stripe's invoice page has a great design. Screenshot its layout, buttons, colors, and spacing. That's your reference.
+
+### Step 2: Analyze the design
+
+Before asking Claude to build it, you analyze what you see. Look for:
+
+**Hierarchy:** Which elements draw the eye first? (Usually title, then primary action button, then supporting info)
+
+**Spacing:** How much whitespace? Dense or relaxed? (Generous spacing = premium feel)
+
+**Typography:** How many font sizes? Colors? Weights? (Usually 3–4 sizes, not 10)
+
+**Color:** How many colors in the palette? Accent color? Neutral base? (Restrained = professional)
+
+**Layout:** Grid or custom? Rows/columns? Responsive or fixed-width?
+
+**Components:** What UI parts do you see? (Buttons, cards, badges, modals, etc.)
+
+### Step 3: Transcribe your observations into a prompt
+
+Once you've analyzed, turn it into a design prompt for Claude Code. **Don't describe it in prose — use the pattern from Lesson 6.4 (design direction).**
+
+**Example:**
+
+```
+Here's a screenshot of [competitor app] [screenshot attached].
+
+Design analysis:
+- Hierarchy: The "Create Invoice" button is large and prominent (40px, blue). The invoice list below is secondary (smaller text, muted gray).
+- Spacing: 32px gap between the header and the table, 16px padding inside cards.
+- Typography: Headings are large (28px), body text is 14px, labels are 12px and gray.
+- Color palette: Blue (#0066FF) for actions, gray (#6B7280) for secondary, white background, light gray (#F3F4F6) for rows.
+- Layout: Full-width on desktop, single-column on mobile.
+
+I want to build a similar invoice page for my app. Apply this design pattern to my dashboard. Use shadcn/ui components. Keep the responsive structure (full-width desktop, single-column mobile).
+
+Show me the design direction you'd apply.
+```
+
+Claude Code reads this, sees the screenshots, understands your intent, and generates a design that matches the pattern you identified.
+
+### Step 4: Iterate on the adapted design
+
+After Claude Code applies the pattern to your app, screenshot your result and compare:
+
+```
+Here's my adapted design [your screenshot].
+Compare it to the reference [competitor screenshot].
+
+The [feature name] doesn't stand out enough. Make the button 40px like the reference.
+Also, the spacing between the table rows should be larger — use 16px padding like the reference.
+```
+
+Iterate until your version captures the essence of the reference without copying it exactly.
+
+### Advanced: Combining competitor analysis with product strategy
+
+This technique pairs with Module 3 (planning). When planning a feature, research how competitors solved the same problem, extract the pattern, and build on it. This is faster than inventing from scratch and guarantees your users will recognize the pattern (good UX convention).
+
+**Example workflow:**
+
+1. **Feature:** "I need to add a payments page"
+2. **Competitors:** Screenshot Stripe's payment settings, Lemonsqueezy, Gumroad
+3. **Analysis:** All three show a list of payment methods with an "Add" button, past transactions below, and a status badge (Active/Inactive)
+4. **Build:** Describe this pattern to Claude Code with a screenshot of one reference
+5. **Result:** You ship a payments page faster and it *feels* familiar to users because they've seen this pattern before
+
+### Hands-on: Find a pattern, adapt it
+
+1. **Pick a feature** you're building (e.g., settings page, user profile, dashboard, list page)
+2. **Find a reference** (competitor, design system, or reference app that does it well)
+3. **Screenshot** the reference
+4. **Analyze** hierarchy, spacing, typography, color (write 1–2 sentences per principle)
+5. **Prompt Claude Code** with your analysis + screenshot
+6. **Iterate** until your version matches the quality of the reference
+7. **Document:** Save a side-by-side screenshot (reference on left, your result on right) with your analysis
+
+This technique, practiced regularly, trains your design eye and accelerates your development speed. You're not copying; you're learning patterns and adapting them thoughtfully.
+
+---
+
+
 
 Default: **shadcn/ui** on **Tailwind**. **Alternatives:** Tailwind UI (paid), DaisyUI, Radix UI (primitives), MUI / Chakra (full systems). The *principles* (hierarchy, spacing, typography, consistency, responsive) are universal and transfer to any library or framework.
 

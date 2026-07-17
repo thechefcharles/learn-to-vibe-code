@@ -277,3 +277,124 @@ This combines visual + voice input, reducing keyboard strain and making the work
 - SuperWhisper and Spokenly turn speech into text; combine with screenshots for accessible, efficient prompting.
 - These techniques scale agentic development from hobby projects to production teams.
 
+---
+
+## Lesson 5.7b — Advanced voice workflows: Rapid iteration through dictation (~60 min)
+
+This lesson deepens voice-driven development: using voice not just for accessibility, but as the **primary input modality** for faster iteration. Skilled developers use voice + screenshots + transcripts to prototype faster than typing alone.
+
+### The voice-first loop
+
+Instead of:
+```
+open editor → type prompt → wait for result → read result → type next prompt
+```
+
+The voice-first loop is:
+```
+speak goal → AI hears → shows result → speak refinement → watch it change
+```
+
+It's faster because:
+1. **Speaking is faster than typing** for most people (150 WPM speaking vs. 60 WPM typing)
+2. **Natural language flows better** when spoken — "add a button that does X" vs. typing `"add a button that..." [stop, retype]`
+3. **Talking reinforces thinking** — explaining your goal out loud often clarifies it before you hit enter
+4. **No context switch** — you stay in the flow of your app, not flipping between terminal and editor
+
+### Tool setup: SuperWhisper as your voice input
+
+SuperWhisper (macOS/Windows, ~$10) is the gold standard for voice-driven development:
+
+1. **Install** from www.superwhisper.com
+2. **Set a hotkey** (e.g., Option+Space)
+3. **Test:** press Option+Space, speak "add a login form", release. It types the text.
+4. **Use in Claude Code:** hotkey → speak → text pastes into your terminal → hit Enter
+
+Example voice-driven session:
+
+```
+You: (press Option+Space) "Add an invoices list page at /invoices with a table showing all invoices and a create button."
+SuperWhisper: [types] "Add an invoices list page at /invoices with a table showing all invoices and a create button."
+You: (hit Enter in claude terminal)
+Claude Code: "I'll create this feature. Here's the plan:
+  - Create app/invoices/page.tsx
+  - Add Invoice type to lib/types.ts
+  - Mock data in lib/invoices.ts
+  - Table component showing id, date, amount, status"
+You: (press Option+Space) "Looks good. Execute and add a filter by status."
+SuperWhisper: [types] "Looks good. Execute and add a filter by status."
+Claude Code: [executes, then proposes the filter]
+```
+
+**No typing.** Just talking.
+
+### Advanced: Combining voice + screenshots for faster feedback
+
+When describing what you want changed, a screenshot + voice description is 10x faster than text alone.
+
+**Workflow:**
+
+1. Run your app locally (npm run dev)
+2. Take a screenshot of the current UI (Cmd+Shift+4 on Mac)
+3. Speak your goal: "Make the form wider, move the submit button to the right, and add a cancel button."
+4. Prompt Claude Code with both: screenshot + transcript
+5. Claude Code sees the current state and your spoken goal, generates the change instantly
+
+**Voice prompt template for screenshot feedback:**
+
+```
+(press Option+Space)
+"Here's the current UI [screenshot]. I want to:
+1) Make the buttons at the bottom bigger
+2) Add more spacing between the form fields
+3) Change the submit button color to blue
+Do it."
+```
+
+SuperWhisper transcribes. Paste both screenshot and transcript into Claude Code. Done.
+
+### Multi-step voice planning
+
+For complex features, dictate your plan first, then execute:
+
+```
+(press Option+Space)
+"Here's what I need:
+1) A dashboard that shows user stats (posts, followers, total views)
+2) Each stat is a card in a grid
+3) Below that, a recent posts list with date and preview
+4) Add a sidebar navigation
+5) Use Supabase for data
+Show me a plan first."
+```
+
+Claude Code breaks it into steps; you review the plan (or just approve), and it executes the whole thing.
+
+### When voice-driven isn't ideal (and when to switch back)
+
+**Use voice when:**
+- Iterating rapidly (tweaking styling, adding features)
+- You have clear intent (you know what you want)
+- Accessibility (RSI, dyslexia, or learning preference)
+- Typing would break your focus (you're watching the app run)
+
+**Switch to typing when:**
+- Describing exact error messages or code patterns (voice gets the transcription wrong)
+- Copying code from documentation (paste, don't dictate)
+- Working with others (open chat, not a voice session)
+- In quiet environments where people around you might be distracted
+
+### Hands-on: One feature, entirely by voice
+
+Pick a simple feature (add a page, style a component, change a form). Don't use your keyboard for the prompt—only for hotkey shortcuts (if your tool uses them).
+
+1. Open Claude Code
+2. Set up SuperWhisper hotkey
+3. Speak your goal (feature goal + 5 ingredients)
+4. Speak refinements and approvals
+5. Speak `/compact` if the session gets long
+
+Write one sentence: "How much faster was this than typing the same prompts?"
+
+---
+

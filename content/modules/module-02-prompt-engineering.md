@@ -283,6 +283,114 @@ Here's a screenshot of my form [paste image]. The labels are stacked on top of t
 
 ---
 
+## Lesson 2.5 — Multimodal input: Video transcripts as knowledge imports (~45 min)
+
+So far, your prompts have used text and screenshots. But there's a third powerful input type: **transcribed knowledge from external video sources**. This lesson teaches you to take videos (YouTube tutorials, conference talks, your own screen recordings, demo videos from competitors), transcribe them with tools like Whisper or YouTube's captions, and feed that knowledge *directly into Claude* to accelerate learning or inform code design.
+
+Why this matters: Watching a 20-minute video to learn one concept takes 20 minutes. Extracting the transcript takes 2 minutes. Copying key points into a Claude prompt takes 1 minute. You've learned 20x faster, and Claude now has the exact context it needs to write code that matches what you learned.
+
+### 2.5.1 — Extracting transcripts from any video
+
+Three methods, ordered by speed:
+
+1. **YouTube auto-captions** (free, instant): Open any YouTube video → click "CC" button → click the three-dot menu on the player → select "Show transcript". Copy the full text (click "Show more" if needed). Paste directly into Claude.
+
+2. **Whisper transcription** (free, local or cloud): Use OpenAI's Whisper model to transcribe any audio file or video. If using Claude Code, you can run:
+   ```bash
+   ! npx whisper-cli https://youtube-url-here
+   ```
+   Whisper outputs a `.txt` file with the full transcript.
+
+3. **Browser captions + Claude**: Some videos (tutorials, podcasts) already have captions. Screenshot the caption section, or copy the text from the video player's transcript pane.
+
+### 2.5.2 — Feeding transcripts into prompts (the five ingredients revisited)
+
+Once you have a transcript, the prompt structure is the same as before, but richer:
+
+```
+I just watched a video on [topic], and here's the transcript (or key excerpt):
+
+[paste transcript excerpt or full transcript]
+
+Now I need to build [specific thing] in [tech stack].
+Based on the video, I want to:
+1) [specific requirement]
+2) [specific requirement]
+
+Here's what I don't understand from the video: [confusion].
+
+Please write [code/explanation] that implements what the video showed, and clarify the confusing part.
+Return [format].
+```
+
+**Example: Learning state management from a video tutorial:**
+
+```
+I watched "Redux for Beginners" and want to understand how to connect components to the store.
+
+Key excerpt from the video:
+"To connect a component, you use the connect() function from react-redux. Connect takes two arguments: mapStateToProps and mapDispatchToProps. mapStateToProps returns an object of props you want from the store..."
+
+I'm building a React + Redux app (TypeScript) and I need to:
+1) Create a counter component that reads the counter value from Redux store
+2) Create an increment button that dispatches a SET_COUNTER action
+
+The video showed a class component. I want a functional component using hooks instead.
+
+Please write the store setup, the action, the reducer, and the component using useSelector and useDispatch.
+Return only the code, with comments.
+```
+
+This prompt is *much* stronger because Claude now understands not just what you want, but what the conceptual model is (from the video). It can fill gaps (class → hooks) because it grasps the underlying pattern.
+
+### 2.5.3 — Competitive learning: Extracting features from competitor videos
+
+A powerful vibe-coding workflow: watch a competitor's product demo video, transcribe it, ask Claude to identify the features shown, and then build similar features yourself.
+
+**Example workflow:**
+
+1. Watch competitor's demo video (5–10 min)
+2. Transcribe it (2 min)
+3. Screenshot key UI moments (1 min each)
+4. Prompt Claude:
+   ```
+   I watched a demo of [competitor product].
+   
+   Video transcript (key section):
+   [paste relevant excerpt about the feature]
+   
+   I also captured these screenshots of the UI:
+   [paste 2–3 screenshots]
+   
+   I want to build a similar feature in my Next.js + Supabase app.
+   The feature should:
+   1) [what the video showed you]
+   2) [what the screenshot shows]
+   
+   Please design the data model, write the component, and explain the logic.
+   ```
+
+This combines three inputs (transcript, screenshots, your context) into a single powerful prompt. Claude can now infer not just what to build, but *why* it's valuable (context from the transcript) and *how it looks* (from the screenshots).
+
+### 2.5.4 — Hands-on: Transcript → Code practice
+
+Pick any tutorial video on a topic you're curious about (AI, design, database design, etc.):
+
+1. Transcribe it (Whisper or YouTube captions) — 2 minutes
+2. Identify 1–2 key concepts from the transcript
+3. Write a prompt using the five ingredients + transcript excerpt
+4. Ask Claude to explain the concept AND show an example in your tech stack (Next.js + TypeScript)
+5. Build it
+
+Document:
+- The original video title and link
+- The transcript excerpt you used
+- The prompt you wrote
+- The code Claude generated
+- One sentence: "How did the transcript accelerate your learning vs. re-watching the video?"
+
+---
+
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Write context-rich prompts (Quiz Q2-1, Q2-2):**

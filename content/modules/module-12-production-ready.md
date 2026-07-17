@@ -564,7 +564,192 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 ---
 
-## Tools & alternatives (this module)
+## Lesson 12.5 — Browser automation & AI testing: Playwright for iterative UI development (~75 min)
+
+The last skill: using **Playwright** (E2E test framework) not just for validation, but as a **feedback loop** for AI-driven development. Write a Playwright test that fails, ask Claude Code to fix the code to make it pass, then iterate. This "test-driven AI development" is faster and more reliable than manual testing.
+
+### The workflow: Write test → AI fixes code → Test passes
+
+Instead of:
+```
+you write code → you manually test in browser → you notice a bug → you fix code → repeat
+```
+
+Use:
+```
+you write Playwright test → test fails (red) → Claude Code fixes code → test passes (green) → repeat
+```
+
+**Why:** Tests describe your intent. Claude Code can read the failing test and know exactly what to fix. No guessing, no ambiguity.
+
+### Setup: Playwright in your project
+
+If you don't already have it, Claude Code can set it up:
+
+```bash
+claude
+"Add Playwright testing. Use @playwright/test, write tests in tests/ directory, add 'test' and 'test:ui' scripts to package.json. Then write a test for the login flow and show me the diff."
+```
+
+Claude Code installs Playwright, creates the test directory, and generates an example test.
+
+### Test-driven AI workflow: The invoice feature
+
+Let's build invoices test-first.
+
+**Step 1 — Write a failing test:**
+
+```typescript
+import { test, expect } from '@playwright/test';
+
+test('invoice list page displays all invoices', async ({ page }) => {
+  await page.goto('http://localhost:3008/invoices');
+  
+  // Expect the page title
+  const title = page.locator('h1');
+  await expect(title).toContainText('Invoices');
+  
+  // Expect at least one invoice row in the table
+  const rows = page.locator('table tbody tr');
+  await expect(rows).toHaveCount(3); // Should show 3 mock invoices
+  
+  // Expect the "Create Invoice" button
+  const createBtn = page.locator('button', { hasText: 'Create Invoice' });
+  await expect(createBtn).toBeVisible();
+});
+```
+
+**Run it:**
+
+```bash
+npx playwright test tests/invoices.spec.ts
+```
+
+**It fails** (red) because the `/invoices` page doesn't exist yet. Good.
+
+**Step 2 — Prompt Claude Code with the failing test:**
+
+```bash
+claude
+"Make this test pass. The test expects:
+1) A page at /invoices with an h1 title 'Invoices'
+2) A table with 3 invoice rows (mock data)
+3) A 'Create Invoice' button
+
+Use the patterns from app/clients. Show me the plan first, then implement it."
+```
+
+Claude Code reads the test, understands what's needed, and generates the feature. The test guides it.
+
+**Step 3 — Run the test again:**
+
+```bash
+npx playwright test tests/invoices.spec.ts
+```
+
+**It passes** (green). Feature done.
+
+### Iterating with tests: Add a filter
+
+You want to add a status filter. Write a test first:
+
+```typescript
+test('invoice list can filter by status', async ({ page }) => {
+  await page.goto('http://localhost:3008/invoices');
+  
+  // Find the status filter dropdown
+  const statusFilter = page.locator('select, [role="combobox"]', { hasText: 'Status' });
+  await statusFilter.selectOption('paid');
+  
+  // Expect only "Paid" invoices shown
+  const rows = page.locator('table tbody tr');
+  await expect(rows).toHaveCount(1); // Only 1 paid invoice
+  
+  // Verify the status badge says "Paid"
+  const badge = page.locator('[data-status="paid"]');
+  await expect(badge).toContainText('Paid');
+});
+```
+
+Run it. It fails. Prompt Claude Code:
+
+```bash
+claude
+"Make the invoice filter test pass. Add a status dropdown that filters the list. Use a Select component from shadcn/ui. Show a plan first."
+```
+
+Claude Code sees the test, implements the filter, test passes.
+
+### Why test-driven AI development wins
+
+1. **No ambiguity** — The test describes the exact expected behavior. Claude Code can't misinterpret.
+2. **Fast feedback** — Test passes or fails immediately. You know if it works.
+3. **Safety net** — When you refactor later, tests catch breakage. You can be confident in changes.
+4. **Documentation** — Tests show future-you (or teammates) how the feature is supposed to work.
+5. **No manual testing** — Browser testing is slow (manual clicking). Automated tests run in seconds.
+
+### Combining Playwright with visual feedback: Screenshots as test output
+
+Playwright can screenshot your app during tests. Use this to catch UI regressions:
+
+```typescript
+test('invoice list looks correct on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 }); // iPhone size
+  await page.goto('http://localhost:3008/invoices');
+  
+  // Take a screenshot
+  await page.screenshot({ path: 'tests/screenshots/invoices-mobile.png' });
+  
+  // Verify key elements are visible
+  const title = page.locator('h1');
+  await expect(title).toBeVisible();
+});
+```
+
+Run the test. It generates `invoices-mobile.png`. Check the screenshot:
+- Does it look good on mobile?
+- Is the table readable?
+- Are buttons touch-friendly (≥44px)?
+
+If you change the styling, re-run the test and check the new screenshot. This catches visual regressions automatically.
+
+### Advanced: Fuzz testing with Claude Code
+
+For complex features, fuzz the behavior with random inputs:
+
+```typescript
+test('invoice form rejects invalid amounts', async ({ page }) => {
+  await page.goto('http://localhost:3008/invoices/new');
+  
+  const invalidAmounts = ['abc', '-50', '0', '999999.99'];
+  
+  for (const amount of invalidAmounts) {
+    const input = page.locator('input[name="amount"]');
+    await input.fill(amount);
+    
+    const submitBtn = page.locator('button', { hasText: 'Create' });
+    await submitBtn.click();
+    
+    // Expect an error message
+    const error = page.locator('[role="alert"]');
+    await expect(error).toBeVisible();
+  }
+});
+```
+
+Prompt Claude Code to make this test pass. It'll implement validation that handles all the edge cases in one go.
+
+### Hands-on: Test-driven feature build
+
+1. **Write a failing Playwright test** for a feature you want to build (e.g., "create a post," "edit user profile," "export as CSV")
+2. **Prompt Claude Code** with the test: "Make this test pass. Here's the test [paste]. Implement the feature."
+3. **Review the diff** and run the test
+4. **Iterate:** Add a second test for an edge case (error state, validation), prompt Claude Code again
+5. **Document:** Submit the test file + test output (green checkmarks) + one sentence: "How did writing the test first change your development?"
+
+---
+
+
 
 Defaults: **Vitest/Jest** (unit/integration), **Playwright** (E2E), **Lighthouse/axe** (a11y + perf). Alternatives: Cypress for E2E; other assertion libraries. The concepts are universal. AI accelerates all of it — but this is the module where you verify its output most rigorously, because the stakes are real users.
 
