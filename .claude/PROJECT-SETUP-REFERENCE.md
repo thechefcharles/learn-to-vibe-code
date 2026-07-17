@@ -545,6 +545,213 @@ This agent specializes in: [what they're good at]
 
 ---
 
+## CI/CD Workflow & Automation
+
+**Purpose:** Define how code flows from your machine → GitHub → tests → deployment. This prevents manual errors and ensures consistent quality.
+
+### Branch Naming Convention
+
+Standardize branch names so GitHub Actions and team members can identify the work:
+
+```
+feat/description        → New feature
+fix/description         → Bug fix
+docs/description        → Documentation
+refactor/description    → Code cleanup (no behavior change)
+chore/description       → Maintenance (deps, config)
+test/description        → Test improvements
+perf/description        → Performance optimization
+```
+
+### Commit Message Format
+
+```
+type: short description
+
+Optional longer explanation of why this change matters.
+
+- Detail 1
+- Detail 2
+```
+
+Examples:
+```
+feat: add next module button to lesson viewer
+fix: prevent IDOR in upvote endpoint
+docs: document accreditation requirements
+```
+
+### Local Development Workflow
+
+1. **Create branch:**
+   ```bash
+   git checkout -b feat/your-feature
+   ```
+
+2. **Make changes + test locally:**
+   ```bash
+   npm run dev          # Start app
+   npm run test         # Run tests
+   npm run lint         # Check code style
+   npm run type-check   # Verify types
+   ```
+
+3. **Or use a skill to validate:**
+   ```bash
+   /test-and-verify    # Run full suite
+   /security-audit     # Check for vulnerabilities
+   ```
+
+4. **Commit when ready:**
+   ```bash
+   git add .
+   git commit -m "feat: add next module button"
+   ```
+
+5. **Push to remote:**
+   ```bash
+   git push -u origin feat/your-feature
+   ```
+
+6. **Create PR on GitHub**
+   - GitHub Actions automatically runs tests
+   - Merge only when tests pass ✓
+
+### Database Migrations (if applicable)
+
+**If your project uses PostgreSQL, MongoDB, Supabase, or similar:**
+
+1. **Create migration file:**
+   ```bash
+   supabase migration new add_user_preferences
+   ```
+
+2. **Write SQL:**
+   ```sql
+   CREATE TABLE user_preferences (
+     user_id UUID PRIMARY KEY,
+     theme TEXT DEFAULT 'light',
+     created_at TIMESTAMP DEFAULT NOW()
+   );
+   ```
+
+3. **Test locally:**
+   ```bash
+   supabase migration up
+   ```
+
+4. **Commit migration file:**
+   ```bash
+   git add supabase/migrations/
+   git commit -m "feat: add user preferences table"
+   ```
+
+5. **In production:** After merging to main, manually run:
+   ```bash
+   supabase migration up --linked
+   ```
+
+**Important:** Never commit `.env.production` or production secrets.
+
+### Deployment to Production
+
+**Automatic (Recommended):**
+```
+You push to main
+  ↓
+GitHub Actions runs tests
+  ↓
+Tests pass ✓
+  ↓
+Vercel automatically deploys to production
+```
+
+**Manual deployment (if needed):**
+```bash
+git push origin main
+# Then check Vercel dashboard or use:
+vercel --prod
+```
+
+**Preview deployments:**
+- Every PR gets an automatic preview URL on Vercel
+- Test the changes before merging to main
+
+**Rollback (if needed):**
+1. Revert the commit: `git revert HEAD`
+2. Push to main: `git push`
+3. Vercel automatically redeploys with the reverted code
+
+### Environment Variables
+
+**Local development (.env.local):**
+- Create `.env.local` (gitignored)
+- Never commit secrets to git
+- Example:
+  ```
+  NEXT_PUBLIC_API_URL=http://localhost:3000
+  DATABASE_URL=postgresql://localhost/mydb
+  STRIPE_SECRET_KEY=sk_test_...
+  ```
+
+**Production (Vercel dashboard or CLI):**
+```bash
+vercel env add STRIPE_SECRET_KEY
+# Or add via Vercel dashboard → Settings → Environment Variables
+```
+
+### Pre-commit Hooks (via settings.json)
+
+These run automatically before you can commit, catching issues early:
+
+```json
+"PreToolUse": [
+  {
+    "matcher": "Bash",
+    "hooks": [
+      {"type": "command", "command": "npm run lint"},
+      {"type": "command", "command": "npm run type-check"}
+    ]
+  }
+]
+```
+
+This prevents you from committing code with:
+- Linting errors
+- TypeScript errors
+- Hardcoded secrets
+
+### GitHub Actions Workflow
+
+Example workflow (`.github/workflows/test.yml`):
+
+```yaml
+name: Tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run type-check
+      - run: npm run test
+```
+
+This ensures:
+- Every push/PR is tested automatically
+- No broken code reaches main
+- Merging is safe
+
+---
+
+
+
 ## Best Practices
 
 ### Keep CLAUDE.md up-to-date

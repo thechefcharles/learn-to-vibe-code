@@ -262,10 +262,55 @@ See `/Accredited Vibe Coding Course/platform/MASTER-BUILD-PROMPT.md` for the ful
 
 ## Testing & Deployment
 
-- **Local:** `npm run dev` (port 3008)
-- **Playwright E2E:** `npx playwright test`
-- **Deployment:** Vercel (auto-deploy on git push to main)
-- **Env vars:** `.env.local` (gitignored), Vercel env for production
+### Local Development
+- **Start:** `npm run dev` (port 3008)
+- **Tests:** `npm run test` (unit + E2E)
+- **E2E:** `npx playwright test` (or `/test-and-verify` skill)
+- **Type check:** `npm run type-check`
+- **Lint:** `npm run lint`
+
+### CI/CD Workflow
+
+**Branch naming:**
+- Feature: `feat/description` (new feature)
+- Fix: `fix/description` (bug fix)
+- Docs: `docs/description` (documentation)
+- Refactor: `refactor/description` (code cleanup, no behavior change)
+
+**Commit workflow:**
+1. Create feature branch: `git checkout -b feat/new-feature`
+2. Make changes + test locally
+3. Commit with clear message: `git commit -m "feat: add next module button"`
+4. Use skills for validation:
+   - `/test-and-verify` — Run full test suite
+   - `/security-audit` — Check for vulnerabilities
+5. Push to branch: `git push -u origin feat/new-feature`
+6. Create PR (GitHub Actions runs tests automatically)
+7. Merge when tests pass and code is approved
+
+**Database migrations (Supabase):**
+1. If modifying schema, create migration file: `supabase migration new [name]`
+2. Write SQL in migrations file
+3. Test locally: `supabase migration up`
+4. Commit migration file to git
+5. On main branch: manually run `supabase migration up --linked` to update production
+
+**Deployment (Vercel):**
+- **Automatic:** Push to `main` branch → GitHub Actions tests → Vercel auto-deploys
+- **Preview:** Push to feature branch → Vercel creates preview URL automatically
+- **Rollback:** If production breaks, revert commit on main and push (Vercel redeploys)
+- **Manual check:** After deploy, verify with `/deploy-to-prod` skill or manual health check
+
+### Environment Variables
+- **Local:** `.env.local` (gitignored, never commit)
+- **Production:** Set in Vercel dashboard or `vercel env` CLI
+- **Never commit:** API keys, JWT secrets, database passwords, Stripe keys
+
+### GitHub Actions
+- **Trigger:** Runs on every push and PR to any branch
+- **Steps:** checkout → setup Node → npm ci → npm run test:unit → npm run test:e2e
+- **Status:** Required to pass before merging to main
+- **Logs:** View in GitHub Actions tab
 
 ---
 
