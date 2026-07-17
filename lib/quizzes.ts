@@ -136,6 +136,32 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "Decompose by dependencies: auth must exist before posts (users login first), posts table must exist before the form to create them. Dependencies define the sequence.",
       },
+      {
+        id: "2-6",
+        text: "When importing knowledge from a video transcript into a Claude prompt, what is the primary benefit?",
+        options: [
+          "it makes the prompt longer and more impressive",
+          "Claude can understand the conceptual model from the video, filling gaps and matching patterns better",
+          "you don't need to understand the video content yourself",
+          "it guarantees the output will be correct",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Video transcripts give Claude context about not just what to build, but the underlying conceptual model and intent—enabling better code generation and pattern matching.",
+      },
+      {
+        id: "2-7",
+        text: "Which workflow best combines competitor learning with your own development?",
+        options: [
+          "watch competitor demo → try to remember it → build from memory",
+          "watch demo → transcribe → screenshot UI → analyze design → prompt Claude → build similar feature",
+          "copy competitor code directly",
+          "ignore competitors and design everything from scratch",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Systematic competitor analysis (watch → transcribe → screenshot → analyze → build) accelerates learning and produces better features than guessing or direct copying.",
+      },
     ],
   },
   3: {
@@ -279,6 +305,32 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "Plan mode lets you review the approach and approve before the agent modifies files.",
       },
+      {
+        id: "5-4",
+        text: "Voice-driven development (e.g., SuperWhisper) is fastest when:",
+        options: [
+          "typing is just as fast for everyone",
+          "iterating rapidly with clear intent (150 WPM speaking vs. 60 WPM typing)",
+          "describing exact error messages or code patterns",
+          "working in open offices with others around",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Voice input is fastest for high-level prompting and rapid iteration. Use typing for precise details (errors, code patterns) and team collaboration.",
+      },
+      {
+        id: "5-5",
+        text: "When combining voice prompts with screenshots in Claude Code, what's the main benefit?",
+        options: [
+          "screenshots replace the need for voice",
+          "visual context + spoken goal = faster, unambiguous feedback without typing",
+          "you must use screenshots if you use voice",
+          "neither screenshots nor voice make a difference",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Screenshots show the current state; voice describes the goal. Together they eliminate ambiguity and reduce typing burden.",
+      },
     ],
   },
   6: {
@@ -330,6 +382,32 @@ export const quizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 2,
         explanation:
           "Design-first prototyping locks down layout and visual hierarchy before code, saving rework when you build.",
+      },
+      {
+        id: "6-5",
+        text: "When extracting design patterns from a competitor, which analysis comes first?",
+        options: [
+          "immediately start coding the feature",
+          "hierarchy, spacing, typography, color (using the four levers)",
+          "ask the competitor how they built it",
+          "change colors randomly",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Systematically analyze hierarchy, spacing, typography, and color from the reference. This analysis guides your Claude Code prompt.",
+      },
+      {
+        id: "6-6",
+        text: "Why is screenshot + design analysis better than prose description?",
+        options: [
+          "prose is always wrong",
+          "screenshots show exact visual intent; analysis explains the principles; Claude Code can match both",
+          "screenshots don't need analysis",
+          "prose and screenshots are the same",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Visual reference + principle analysis gives Claude Code the intent (why) and the target (what it should look like), enabling faster, higher-fidelity adaptation.",
       },
     ],
   },
@@ -619,6 +697,32 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "Long variable names don't improve security or quality; focus on testing, error handling, secrets management, and injection protection.",
       },
+      {
+        id: "12-5",
+        text: "In test-driven AI development, why write the test BEFORE the code?",
+        options: [
+          "tests are faster than code",
+          "the test documents intent; Claude Code reads it and knows exactly what to fix",
+          "you can skip the code",
+          "tests never fail",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "A failing test is unambiguous: it states the expected behavior. Claude Code can read it and implement code to make it pass.",
+      },
+      {
+        id: "12-6",
+        text: "When combining Playwright screenshots with test-driven AI development, you can:",
+        options: [
+          "only test user interactions, never visuals",
+          "catch UI regressions: take screenshots during tests, compare against baseline, detect visual changes",
+          "replace all unit tests with screenshot tests",
+          "screenshots aren't useful in tests",
+        ],
+        correctAnswer: 1,
+        explanation:
+          "Screenshot tests capture visual state. Comparing new screenshots to baseline images detects unintended visual changes—regression prevention.",
+      },
     ],
   },
   13: {
@@ -841,6 +945,20 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation: "Specific feedback gets specific fixes!",
       },
+      {
+        id: "k2-4",
+        text: "You watched a video about making games. You want to build something similar. What's the best way to use that knowledge?",
+        options: ["Try to remember it from memory", "Write down what you learned, then tell Claude (or Cursor) about it—let the AI help you build it faster", "Immediately start coding alone", "Never use other people's ideas"],
+        correctAnswer: 1,
+        explanation: "Learning from videos is fast—share what you learned with your AI assistant, and it helps you build even faster!",
+      },
+      {
+        id: "k2-5",
+        text: "You see a cool website design you like. How can you learn from it to build something similar?",
+        options: ["Ignore it and only copy exactly", "Take a screenshot of it, describe what you like, and ask Claude to help you build something inspired by it", "Never look at other websites", "Only use official design templates"],
+        correctAnswer: 1,
+        explanation: "Learn from designs you admire—then ask Claude to help you adapt the ideas to your own project!",
+      },
     ],
   },
   3: {
@@ -919,6 +1037,20 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation: "Plan mode lets you review before the AI makes changes!",
       },
+      {
+        id: "k5-4",
+        text: "Speaking into Claude Code (with a tool like SuperWhisper) is faster than typing because:",
+        options: ["Everyone talks faster than they type", "You can build features without interruption—just speak your goal", "Typing is never useful", "Voice replaces all coding"],
+        correctAnswer: 1,
+        explanation: "Voice-driven development keeps you in flow—no switching between keyboard and code!",
+      },
+      {
+        id: "k5-5",
+        text: "When you combine a screenshot of your app with a voice prompt to Claude Code, you're giving it:",
+        options: ["Too much information", "Two forms of context—visual (what it looks like now) + spoken goal (what you want). More context = better results", "Information it doesn't need", "Conflicting instructions"],
+        correctAnswer: 1,
+        explanation: "Screenshot + voice description = clear intent. Claude Code can see what you mean!",
+      },
     ],
   },
   6: {
@@ -944,6 +1076,20 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         options: ["It replaces Next.js", "You add classes to HTML instead of writing CSS from scratch", "It's only for designers", "It works on the backend"],
         correctAnswer: 1,
         explanation: "Tailwind lets you style with classes—no CSS file needed!",
+      },
+      {
+        id: "k6-4",
+        text: "You see a cool app design you like. How do you learn from it to improve your own design?",
+        options: ["Ignore it—only design alone", "Screenshot it, look at what makes it look cool (colors, spacing, etc.), then ask Claude to help you make your app look similar", "Copy it exactly", "Never look at other apps"],
+        correctAnswer: 1,
+        explanation: "Study designs you admire, understand the principles, and adapt them to your project!",
+      },
+      {
+        id: "k6-5",
+        text: "When analyzing a competitor's design, what's the most helpful thing to check first?",
+        options: ["The exact color code (hex number)", "Hierarchy, spacing, typography, and color—what makes it look professional and easy to use", "Whether they used Tailwind CSS", "How much it probably cost them"],
+        correctAnswer: 1,
+        explanation: "Focus on design principles (why it looks good), not implementation details (how it was built)!",
       },
     ],
   },
@@ -1100,6 +1246,20 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         options: ["Variable names", "Accessibility & performance", "Syntax", "Comments"],
         correctAnswer: 1,
         explanation: "AI forgets accessibility and performance—you have to ask!",
+      },
+      {
+        id: "k12-4",
+        text: "Test-driven development means:",
+        options: ["Only test after you ship", "Write the test first (so it fails), then write code to make it pass", "Tests are optional", "Testing is for professionals only"],
+        correctAnswer: 1,
+        explanation: "Test-first tells Claude exactly what to build. The test describes success!",
+      },
+      {
+        id: "k12-5",
+        text: "Using Playwright screenshots in tests helps catch:",
+        options: ["Compile errors only", "Visual regressions—when you accidentally broke the design", "Only spelling mistakes", "Nothing useful"],
+        correctAnswer: 1,
+        explanation: "Screenshot tests compare how the UI looks—they catch design breakage!",
       },
     ],
   },
