@@ -11,10 +11,10 @@ interface ModuleArcWidgetProps {
 
 export function ModuleArcWidget({ userName = '', onUserNameChange }: ModuleArcWidgetProps) {
   const [titleHover, setTitleHover] = useState(false);
-  const [selectedModule, setSelectedModule] = useState(0);
+  const [selectedModule, setSelectedModule] = useState(1);
 
   const handlePrevious = () => {
-    setSelectedModule(prev => Math.max(0, prev - 1));
+    setSelectedModule(prev => Math.max(1, prev - 1));
   };
 
   const handleNext = () => {
@@ -57,9 +57,9 @@ export function ModuleArcWidget({ userName = '', onUserNameChange }: ModuleArcWi
         {/* Previous Button */}
         <motion.button
           onClick={handlePrevious}
-          disabled={selectedModule === 0}
-          whileHover={{ scale: selectedModule === 0 ? 1 : 1.1 }}
-          whileTap={{ scale: selectedModule === 0 ? 1 : 0.95 }}
+          disabled={selectedModule === 1}
+          whileHover={{ scale: selectedModule === 1 ? 1 : 1.1 }}
+          whileTap={{ scale: selectedModule === 1 ? 1 : 0.95 }}
           className="w-10 h-10 rounded-full bg-white/15 hover:bg-white/25 disabled:opacity-50 disabled:cursor-not-allowed border border-white/30 text-white font-bold flex items-center justify-center transition-all"
         >
           ◀

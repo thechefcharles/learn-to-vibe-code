@@ -56,15 +56,16 @@ export function CursorTrackedModuleArc({ totalModules = 16, externalModule }: Cu
         const moduleLabel = containerRef.current.querySelector('[data-module-label]');
         const dashPath = containerRef.current.querySelector('[data-arc-fill]') as SVGPathElement;
 
-        if (moduleText) moduleText.textContent = String(newModule);
+        if (moduleText) moduleText.textContent = String(newModule + 1);
         if (moduleLabel) {
           const labels = [
+            '', // index 0 unused
             'Setup', 'HTML & CSS', 'JavaScript', 'AI Collaboration', 'React Basics',
             'Components & State', 'Design & UX', 'Databases', 'Full Stack',
             'APIs & Integration', 'Deployment', 'Security & Auth', 'Production Ready',
             'Testing', 'Frameworks', 'Future of Coding', 'Capstone',
           ];
-          moduleLabel.textContent = labels[newModule] || '';
+          moduleLabel.textContent = labels[newModule + 1] || '';
         }
         if (dashPath) {
           const dashLength = (newPercentage / 100) * 471;
@@ -117,15 +118,16 @@ export function CursorTrackedModuleArc({ totalModules = 16, externalModule }: Cu
     const moduleLabel = containerRef.current.querySelector('[data-module-label]');
     const dashPath = containerRef.current.querySelector('[data-arc-fill]') as SVGPathElement;
 
-    if (moduleText) moduleText.textContent = String(newModule);
+    if (moduleText) moduleText.textContent = String(newModule + 1);
     if (moduleLabel) {
       const labels = [
+        '', // index 0 unused
         'Setup', 'HTML & CSS', 'JavaScript', 'AI Collaboration', 'React Basics',
         'Components & State', 'Design & UX', 'Databases', 'Full Stack',
         'APIs & Integration', 'Deployment', 'Security & Auth', 'Production Ready',
         'Testing', 'Frameworks', 'Future of Coding', 'Capstone',
       ];
-      moduleLabel.textContent = labels[newModule] || '';
+      moduleLabel.textContent = labels[newModule + 1] || '';
     }
     if (dashPath) {
       const dashLength = (percentage / 100) * 471;
