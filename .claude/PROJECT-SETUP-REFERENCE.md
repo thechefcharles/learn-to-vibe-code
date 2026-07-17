@@ -750,6 +750,133 @@ This ensures:
 
 ---
 
+## UI Testing & Screenshots (Chrome DevTools & Playwright)
+
+**Purpose:** Verify your app's UI works correctly—navigate pages, click buttons, take screenshots, check layouts—all from Claude Code without manual browser testing.
+
+### Available Tools
+
+**Chrome DevTools MCP** (recommended for quick UI checks)
+- Navigate to URLs and take screenshots
+- Click buttons and interact with elements
+- Verify page content and layout
+- Fast feedback loop
+- Works reliably in most situations
+
+**Playwright** (for automated E2E test suites)
+- Write full end-to-end test scripts (Node.js)
+- Automate complex user flows (login → fill form → verify result)
+- Run headless in CI/CD pipelines
+- Better for comprehensive test coverage
+- More control over browser behavior
+
+### When to Use Each
+
+**Use Chrome DevTools when:**
+- You want a quick UI verification ("does the Next button show?")
+- You're debugging a layout issue
+- You need a screenshot for documentation
+- You're testing in Claude Code mid-development
+- You want immediate visual feedback
+
+**Use Playwright when:**
+- Writing automated E2E tests for CI/CD
+- Testing complex multi-step flows
+- Running tests in headless mode (no display needed)
+- Building a comprehensive test suite
+- Testing on mobile viewports
+
+### Quick Chrome DevTools Workflow
+
+**In Claude Code:**
+
+```
+1. Navigate to your page:
+   Ask Claude: "Navigate to http://localhost:3000/dashboard"
+
+2. Take a screenshot:
+   Ask Claude: "Take a screenshot of the current page"
+
+3. Click something:
+   Ask Claude: "Click the 'Submit' button"
+
+4. Verify content:
+   Ask Claude: "Check if the page contains 'Order Confirmed'"
+```
+
+Chrome DevTools handles the rest via MCP—no code needed.
+
+### Example: Testing a Module Completion Flow
+
+**Goal:** Verify that a learner can complete a lesson and see the "Next Module" button.
+
+**With Chrome DevTools:**
+
+```
+1. Navigate to http://localhost:3000/course/0
+2. Take full-page screenshot → see step 1 of 12
+3. "Scroll to the Next button and take a screenshot"
+4. "Click the Next button 10 times to get near the end"
+5. Take full-page screenshot → verify "Next Module" button appears
+6. "Click Next Module button"
+7. Verify we're on a new module
+```
+
+**With Playwright (Node.js script):**
+
+```javascript
+const { chromium } = require('playwright');
+
+(async () => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  
+  await page.goto('http://localhost:3000/course/0');
+  
+  // Navigate through steps
+  for (let i = 0; i < 11; i++) {
+    await page.click('button:has-text("Next")');
+    await page.waitForTimeout(500);
+  }
+  
+  // Verify we're at last step
+  const nextModuleBtn = await page.$('a:has-text("Next Module")');
+  if (nextModuleBtn) {
+    console.log('✓ Next Module button found!');
+    await nextModuleBtn.click();
+    console.log('✓ Navigation successful');
+  }
+  
+  await browser.close();
+})();
+```
+
+### Setup for Your Project
+
+**No configuration needed.** Chrome DevTools is available by default in Claude Code.
+
+To use Playwright in your project:
+
+```bash
+npm install --save-dev playwright
+
+# Create a test file
+echo "const { chromium } = require('playwright'); ..." > test-ui.js
+
+# Run it
+node test-ui.js
+```
+
+### Best Practices
+
+1. **Screenshot early, iterate fast** — Take screenshots during development to catch UI issues immediately
+2. **Test user flows, not implementation** — Focus on "can the user complete the task?" not "does this CSS class exist?"
+3. **Automate the critical path** — E2E tests for signup, payment, account recovery (things that break production)
+4. **Keep tests readable** — Use descriptive variable names and comments so future you knows why the test exists
+5. **Run E2E tests in CI** — Playwright in GitHub Actions catches regressions before merge
+
+---
+
 
 
 ## Best Practices
