@@ -109,8 +109,8 @@ export default async function LessonPage(props: LessonPageProps) {
   });
 
   // Find the user's actual current module (first incomplete one)
-  let actualCurrentModule = 0;
-  for (let i = 0; i < 16; i++) {
+  let actualCurrentModule = 1;
+  for (let i = 1; i <= 16; i++) {
     const progress = allProgress.find((p: any) => p.module_id === i);
     if (!progress || progress.status !== "completed") {
       actualCurrentModule = i;
@@ -120,7 +120,7 @@ export default async function LessonPage(props: LessonPageProps) {
 
   // Build lessons structure for tree view
   const lessonsByModule: Record<number, { id: number; title: string; sections?: any[] }[]> = {};
-  for (let i = 0; i < 16; i++) {
+  for (let i = 1; i <= 16; i++) {
     lessonsByModule[i] = [
       { id: 0, title: "Main Lesson" },
       // Additional lessons would be loaded here from module structure

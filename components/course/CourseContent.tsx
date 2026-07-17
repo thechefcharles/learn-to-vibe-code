@@ -17,7 +17,7 @@ export async function CourseContent() {
 
   // Fetch all unlock statuses in parallel (not sequentially)
   const unlockedStatusesPromises = Array.from({ length: 16 }, (_, i) =>
-    isModuleUnlocked(i).then(unlocked => ({ moduleId: i, unlocked }))
+    isModuleUnlocked(i + 1).then(unlocked => ({ moduleId: i + 1, unlocked }))
   );
   const unlockedStatuses = await Promise.all(unlockedStatusesPromises);
   const unlockedModules: Record<number, boolean> = {};
@@ -26,7 +26,7 @@ export async function CourseContent() {
   });
 
   const modules = [];
-  for (let i = 0; i <= 15; i++) {
+  for (let i = 1; i <= 16; i++) {
     const meta = getModuleMetadata(i);
     modules.push({ id: i, title: meta.title });
   }
@@ -91,7 +91,7 @@ export async function CourseContent() {
                             : "bg-blue-600/20 text-blue-400"
                         }`}
                       >
-                        {isCompleted ? "✓" : module.id + 1}
+                        {isCompleted ? "✓" : module.id}
                       </div>
                       <h3 className={`text-lg font-bold ${isKids ? "text-purple-900" : "text-white"}`}>
                         {module.title}

@@ -51,7 +51,7 @@ export function ModuleTreeView({
   return (
     <div className="flex flex-col gap-2">
       {Array.from({ length: 16 }).map((_, idx) => {
-        const moduleId = idx;
+        const moduleId = idx + 1;
         const metadata = getModuleMetadata(moduleId);
         const isUnlocked = isModuleUnlocked(moduleId);
         const isCompleted = isModuleCompleted(moduleId);

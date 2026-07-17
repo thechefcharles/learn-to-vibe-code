@@ -46,7 +46,7 @@ export async function getModule(moduleId: number, version: "kids" | "adult" = "a
 export async function getAllModules(version: "kids" | "adult" = "adult"): Promise<Module[]> {
   const modules: Module[] = [];
 
-  for (let i = 0; i <= 15; i++) {
+  for (let i = 1; i <= 16; i++) {
     const module = await getModule(i, version);
     if (module) {
       modules.push(module);

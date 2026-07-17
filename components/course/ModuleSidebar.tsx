@@ -128,7 +128,7 @@ export function ModuleSidebar({
             }`}
           >
             {Array.from({ length: 16 }).map((_, idx) => {
-              const modId = idx;
+              const modId = idx + 1;
               const meta = getModuleMetadata(modId);
               const isCurrentModule = modId === moduleId;
               const isActualCurrentModule = modId === actualCurrentModule;
