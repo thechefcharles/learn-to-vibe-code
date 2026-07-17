@@ -11,57 +11,77 @@ export async function submitQuiz(
   moduleId: number,
   responses: Record<string, number>
 ) {
-  const user = await getUser();
-  if (!user) throw new Error("Not authenticated");
+  try {
+    const user = await getUser();
+    if (!user) throw new Error("Not authenticated");
 
-  const supabase = await createClient();
+    const supabase = await createClient();
 
-  // Get user's enrolled version
-  const { data: enrollment } = await supabase
-    .from("enrollments")
-    .select("enrolled_version")
-    .eq("user_id", user.id)
-    .single();
+    // Get user's enrolled version
+    const { data: enrollment, error: enrollmentError } = await supabase
+      .from("enrollments")
+      .select("enrolled_version")
+      .eq("user_id", user.id)
+      .single();
 
-  const version = (enrollment?.enrolled_version as Version) || "adult";
+    if (enrollmentError) throw new Error(`Failed to fetch enrollment: ${enrollmentError.message}`);
 
-  // Get quiz and score it server-side (NEVER trust client scoring)
-  const quiz = getModuleQuizByVersion(moduleId, version);
-  if (!quiz) throw new Error("Quiz not found");
+    const version = (enrollment?.enrolled_version as Version) || "adult";
 
-  const result = scoreQuiz(responses, quiz);
+    // Get quiz and score it server-side (NEVER trust client scoring)
+    const quiz = getModuleQuizByVersion(moduleId, version);
+    if (!quiz) throw new Error("Quiz not found");
 
-  // Store attempt (version is tracked server-side during scoring, not stored in DB)
-  const { error } = await supabase.from("quiz_attempts").insert({
-    user_id: user.id,
-    module_id: moduleId,
-    score: result.score,
-    passed: result.passed,
-    attempt_no: await getNextAttemptNumber(user.id, moduleId),
-  });
+    const result = scoreQuiz(responses, quiz);
 
-  if (error) throw error;
+    // Store attempt (version is tracked server-side during scoring, not stored in DB)
+    const attemptNo = await getNextAttemptNumber(user.id, moduleId);
+    const { error: insertError } = await supabase.from("quiz_attempts").insert({
+      user_id: user.id,
+      module_id: moduleId,
+      score: result.score,
+      passed: result.passed,
+      attempt_no: attemptNo,
+    });
 
-  // Award XP and badges for passing
-  if (result.passed) {
-    // xpReward is derived server-side inside awardQuizXP from the attempt
-    // row just inserted above — never trust a client-supplied amount here.
-    await awardQuizXP(moduleId);
+    if (insertError) throw new Error(`Failed to insert quiz attempt: ${insertError.message}`);
 
-    // Award badge for first quiz passed
-    await awardBadge(user.id, "first_quiz_passed").catch(() => {});
+    // Award XP and badges for passing
+    if (result.passed) {
+      try {
+        // xpReward is derived server-side inside awardQuizXP from the attempt
+        // row just inserted above — never trust a client-supplied amount here.
+        await awardQuizXP(moduleId);
+      } catch (xpError) {
+        console.error("Failed to award quiz XP:", xpError);
+        // Continue even if XP fails - quiz is already submitted
+      }
 
-    // Award perfect score badge
-    if (result.score === 100) {
-      await awardBadge(user.id, "perfect_quiz").catch(() => {});
+      // Award badge for first quiz passed
+      await awardBadge(user.id, "first_quiz_passed").catch((err) => {
+        console.error("Failed to award first_quiz_passed badge:", err);
+      });
+
+      // Award perfect score badge
+      if (result.score === 100) {
+        await awardBadge(user.id, "perfect_quiz").catch((err) => {
+          console.error("Failed to award perfect_quiz badge:", err);
+        });
+      }
+
+      // Update streak
+      await updateStreak(user.id, true).catch((err) => {
+        console.error("Failed to update streak:", err);
+      });
     }
 
-    // Update streak
-    await updateStreak(user.id, true).catch(() => {});
+    revalidatePath(`/course/${moduleId}/quiz`);
+    return result;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("submitQuiz error:", message);
+    throw error;
   }
-
-  revalidatePath(`/course/${moduleId}/quiz`);
-  return result;
 }
 
 async function getNextAttemptNumber(userId: string, moduleId: number) {

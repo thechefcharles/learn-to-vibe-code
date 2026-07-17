@@ -188,15 +188,16 @@ export async function awardQuizXP(moduleId: number): Promise<UserXP | null> {
 
   const supabase = await createClient();
 
-  const { data: attempt } = await supabase
+  const { data: attempt, error: queryError } = await supabase
     .from("quiz_attempts")
     .select("id, score, passed, xp_awarded")
     .eq("user_id", user.id)
     .eq("module_id", moduleId)
     .order("attempt_no", { ascending: false })
     .limit(1)
-    .single();
+    .maybeSingle();
 
+  if (queryError) throw new Error(`Failed to fetch quiz attempt: ${queryError.message}`);
   if (!attempt || !attempt.passed) return null;
   if (attempt.xp_awarded) return getUserXP().catch(() => null);
 
