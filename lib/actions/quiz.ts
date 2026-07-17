@@ -17,12 +17,12 @@ export async function submitQuiz(
 
     const supabase = await createClient();
 
-    // Get user's enrolled version
+    // Get user's enrolled version (use maybeSingle to handle no enrollment)
     const { data: enrollment, error: enrollmentError } = await supabase
       .from("enrollments")
       .select("enrolled_version")
       .eq("user_id", user.id)
-      .single();
+      .maybeSingle();
 
     if (enrollmentError) throw new Error(`Failed to fetch enrollment: ${enrollmentError.message}`);
 
