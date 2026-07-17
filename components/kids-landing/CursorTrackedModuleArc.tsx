@@ -40,7 +40,8 @@ export function CursorTrackedModuleArc({ totalModules = 16, externalModule }: Cu
       const percentage = (angle / 180) * 100;
       const module = Math.round((percentage / 100) * totalModules);
 
-      const newModule = Math.min(module, totalModules);
+      // Map 0-16 to 1-16 for 1-based module numbering
+      const newModule = Math.min(Math.max(1, module), totalModules);
       const newPercentage = percentage;
 
       // Update DOM directly if changed
@@ -56,7 +57,7 @@ export function CursorTrackedModuleArc({ totalModules = 16, externalModule }: Cu
         const moduleLabel = containerRef.current.querySelector('[data-module-label]');
         const dashPath = containerRef.current.querySelector('[data-arc-fill]') as SVGPathElement;
 
-        if (moduleText) moduleText.textContent = String(newModule + 1);
+        if (moduleText) moduleText.textContent = String(newModule);
         if (moduleLabel) {
           const labels = [
             '', // index 0 unused
@@ -65,7 +66,7 @@ export function CursorTrackedModuleArc({ totalModules = 16, externalModule }: Cu
             'APIs & Integration', 'Deployment', 'Security & Auth', 'Production Ready',
             'Testing', 'Frameworks', 'Future of Coding', 'Capstone',
           ];
-          moduleLabel.textContent = labels[newModule + 1] || '';
+          moduleLabel.textContent = labels[newModule] || '';
         }
         if (dashPath) {
           const dashLength = (newPercentage / 100) * 471;
@@ -118,7 +119,7 @@ export function CursorTrackedModuleArc({ totalModules = 16, externalModule }: Cu
     const moduleLabel = containerRef.current.querySelector('[data-module-label]');
     const dashPath = containerRef.current.querySelector('[data-arc-fill]') as SVGPathElement;
 
-    if (moduleText) moduleText.textContent = String(newModule + 1);
+    if (moduleText) moduleText.textContent = String(newModule);
     if (moduleLabel) {
       const labels = [
         '', // index 0 unused
@@ -127,7 +128,7 @@ export function CursorTrackedModuleArc({ totalModules = 16, externalModule }: Cu
         'APIs & Integration', 'Deployment', 'Security & Auth', 'Production Ready',
         'Testing', 'Frameworks', 'Future of Coding', 'Capstone',
       ];
-      moduleLabel.textContent = labels[newModule + 1] || '';
+      moduleLabel.textContent = labels[newModule] || '';
     }
     if (dashPath) {
       const dashLength = (percentage / 100) * 471;
