@@ -1,6 +1,15 @@
 import React from "react";
 import { motion } from "framer-motion";
 
+// Mapping of screenshot descriptions to manifest keys
+const SCREENSHOT_MAP: Record<string, string> = {
+  "AI Interview + Drafted Spec": "m03-ai-interview",
+  "Technical Plan (Data Model + Screens)": "m03-technical-plan",
+};
+
+// Load manifest at build time
+const figuresManifest = typeof window !== 'undefined' ? null : {};
+
 interface MarkdownRendererProps {
   content: string;
 }
@@ -170,25 +179,51 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
       continue;
     }
 
-    // Screenshot placeholder
-    if (line.includes("[SCREENSHOT:")) {
-      const screenshotMatch = line.match(/\[SCREENSHOT:\s*([^\]]+)\]/);
+    // Screenshot (both formats: [SCREENSHOT: ...] and [SCREENSHOT PLACEHOLDER: ...])
+    if (line.includes("[SCREENSHOT")) {
+      const screenshotMatch = line.match(/\[SCREENSHOT(?:\s+PLACEHOLDER)?:\s*([^\]]+)\]/);
       if (screenshotMatch) {
         const description = screenshotMatch[1].trim();
+        // Map description to manifest key
+        let imagePath: string | null = null;
+        const mappedKey = SCREENSHOT_MAP[description];
+
+        if (mappedKey) {
+          // Use hardcoded mapping
+          const paths: Record<string, string> = {
+            "m03-ai-interview": "/figures/m03/m03-ai-interview.png",
+            "m03-technical-plan": "/figures/m03/m03-technical-plan.png",
+            "m06-shadcn-components": "/figures/m06-shadcn-components.svg",
+            "m11-workflow-diagram": "/figures/m11-workflow-diagram.svg",
+            "m12-tests": "/figures/m12/m12-tests.png",
+          };
+          imagePath = paths[mappedKey] || null;
+        }
+
         elements.push(
           <motion.div
             key={`screenshot-${i}`}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-amber-500/10 border-2 border-amber-500/30 rounded-lg p-6 mb-8"
+            className="rounded-lg overflow-hidden mb-8 border border-slate-600"
           >
-            <div className="flex items-start gap-4">
-              <div className="text-4xl flex-shrink-0">📸</div>
-              <div className="flex-1">
-                <p className="font-bold text-amber-400 mb-2 uppercase text-xs tracking-wider">Screenshot</p>
-                <p className="text-slate-300 text-sm leading-relaxed">{description}</p>
+            {imagePath ? (
+              <img
+                src={imagePath}
+                alt={description}
+                className="w-full h-auto"
+              />
+            ) : (
+              <div className="bg-amber-500/10 border-2 border-amber-500/30 p-6">
+                <div className="flex items-start gap-4">
+                  <div className="text-4xl flex-shrink-0">📸</div>
+                  <div className="flex-1">
+                    <p className="font-bold text-amber-400 mb-2 uppercase text-xs tracking-wider">Screenshot</p>
+                    <p className="text-slate-300 text-sm leading-relaxed">{description}</p>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </motion.div>
         );
       }

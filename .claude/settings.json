@@ -19,20 +19,22 @@
     ]
   },
   "hooks": {
-    "PreToolUse": [
-      {
-        "matcher": "Bash(git commit)",
-        "description": "Pre-commit hook: run tests and scan for secrets",
-        "command": "npm run test && ./scripts/scan-for-secrets.sh || (echo 'Pre-commit hook failed: tests failed or secrets detected'; exit 1)"
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Bash(git push.*main)",
-        "description": "Post-push hook: verify Vercel deploy started",
-        "command": "echo 'Pushed to main — Vercel auto-deploy starting...'; sleep 5; vercel logs --verbose --follow --limit 20 2>/dev/null || echo 'Vercel logs not available; check https://vercel.com/'"
-      }
-    ]
+    "PreToolUse": {
+      "matcher": "Bash",
+      "hooks": [
+        {
+          "command": "npm run test && ./scripts/scan-for-secrets.sh || (echo 'Pre-commit hook failed'; exit 1)"
+        }
+      ]
+    },
+    "PostToolUse": {
+      "matcher": "Bash",
+      "hooks": [
+        {
+          "command": "echo 'Tool executed successfully'"
+        }
+      ]
+    }
   },
   "context": {
     "instructions": "./.claude/CLAUDE.md — project instructions, always loaded",
