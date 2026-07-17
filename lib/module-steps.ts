@@ -749,7 +749,7 @@ Learn how LLMs and AI actually work before you start building.
 export const module1Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 2,
-    moduleName: "Module 1: AI Fundamentals & How Models Actually Work",
+    moduleName: "Module 2: AI Fundamentals & How Models Actually Work",
     totalDuration: 420,
     steps: [
       {
@@ -985,7 +985,7 @@ Tool-agnostic on purpose — the concepts apply to **any** AI coding assistant (
   },
   kids: {
     moduleId: 2,
-    moduleName: "Module 1: AI Fundamentals & How Models Actually Work",
+    moduleName: "Module 2: AI Fundamentals & How Models Actually Work",
     totalDuration: 420,
     steps: [
       {
@@ -1273,7 +1273,7 @@ You haven't installed anything yet. That happens in Module 4. The goal here: und
 export const module2Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 3,
-    moduleName: "Module 2: Prompt Engineering for Developers",
+    moduleName: "Module 3: Prompt Engineering for Developers",
     totalDuration: 480,
     steps: [
       {
@@ -1580,7 +1580,7 @@ Tool-agnostic — the five ingredients, decomposition, and the refine loop work 
   },
   kids: {
     moduleId: 3,
-    moduleName: "Module 2: Prompt Engineering for Developers",
+    moduleName: "Module 3: Prompt Engineering for Developers",
     totalDuration: 480,
     steps: [
       {
@@ -1907,7 +1907,7 @@ Some tools add nice extras (Cursor auto-includes file context, Claude Code reads
 export const module3Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 4,
-    moduleName: "Module 3: Planning Software with AI",
+    moduleName: "Module 4: Planning Software with AI",
     totalDuration: 390,
     steps: [
       {
@@ -2306,7 +2306,7 @@ Planning is tool-agnostic — any capable assistant (Claude Code, Cursor's chat,
   },
   kids: {
     moduleId: 4,
-    moduleName: "Module 3: Planning Software with AI",
+    moduleName: "Module 4: Planning Software with AI",
     totalDuration: 390,
     steps: [
       {
@@ -2688,7 +2688,7 @@ For each scenario, identify what's wrong and how to fix it:
 export const module4Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 5,
-    moduleName: "Module 4: Building Apps in Cursor (In-Editor Flow)",
+    moduleName: "Module 5: Building Apps in Cursor (In-Editor Flow)",
     totalDuration: 420,
     steps: [
       {
@@ -3006,7 +3006,7 @@ Default: **Cursor** on a **Next.js** app. Editor alternatives compared in Lesson
   },
   kids: {
     moduleId: 5,
-    moduleName: "Module 4: Building Apps in Cursor (In-Editor Flow)",
+    moduleName: "Module 5: Building Apps in Cursor (In-Editor Flow)",
     totalDuration: 420,
     steps: [
       {
@@ -3330,7 +3330,7 @@ The skills (prompting, testing, debugging) work in all of them. You're learning 
 export const module5Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 6,
-    moduleName: "Module 5: Building Apps in Claude Code (Agentic)",
+    moduleName: "Module 6: Building Apps in Claude Code (Agentic)",
     totalDuration: 390,
     steps: [
       {
@@ -3705,7 +3705,7 @@ Default: **Claude Code** on the **Next.js** app. Alternatives compared in Lesson
   },
   kids: {
     moduleId: 6,
-    moduleName: "Module 5: Building Apps in Claude Code (Agentic)",
+    moduleName: "Module 6: Building Apps in Claude Code (Agentic)",
     totalDuration: 390,
     steps: [
       {
@@ -4141,7 +4141,7 @@ The skill transfers: write a clear goal, let the agent propose a plan, review be
 export const module6Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 7,
-    moduleName: "Module 6: Design & UX (Make It Not Look AI-Generated)",
+    moduleName: "Module 7: Design & UX (Make It Not Look AI-Generated)",
     totalDuration: 445,
     steps: [
       {
@@ -4527,7 +4527,7 @@ Default: **shadcn/ui** on **Tailwind**. **Alternatives:** Tailwind UI (paid), Da
   },
   kids: {
     moduleId: 7,
-    moduleName: "Module 6: Design & UX (Make It Not Look AI-Generated)",
+    moduleName: "Module 7: Design & UX (Make It Not Look AI-Generated)",
     totalDuration: 445,
     steps: [
       {
@@ -4848,7 +4848,7 @@ Here are the three questions on your quiz. Study these first!
 export const module7Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 8,
-    moduleName: "Module 7: Data, Auth & Backend (Supabase)",
+    moduleName: "Module 8: Data, Auth & Backend (Supabase)",
     totalDuration: 390,
     steps: [
       {
@@ -5349,7 +5349,7 @@ Default: **Supabase** on **Next.js**, using \`@supabase/ssr\`. Alternatives in L
   },
   kids: {
     moduleId: 8,
-    moduleName: "Module 7: Data, Auth & Backend (Supabase)",
+    moduleName: "Module 8: Data, Auth & Backend (Supabase)",
     totalDuration: 390,
     steps: [
       {
@@ -5685,7 +5685,7 @@ Here are your three quiz questions. Study them now!
 export const module8Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 9,
-    moduleName: "Module 8: Reading & Debugging AI-Generated Code",
+    moduleName: "Module 9: Reading & Debugging AI-Generated Code",
     totalDuration: 405,
     steps: [
       {
@@ -6098,7 +6098,7 @@ Reading and debugging are tool-agnostic — the loops (read; reproduce → isola
   },
   kids: {
     moduleId: 9,
-    moduleName: "Module 8: Reading & Debugging AI-Generated Code",
+    moduleName: "Module 9: Reading & Debugging AI-Generated Code",
     totalDuration: 405,
     steps: [
       {
@@ -6461,7 +6461,7 @@ Here are your three quiz questions. Study these!
 export const module9Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 10,
-    moduleName: "Module 9: Git & Version Control (GitHub)",
+    moduleName: "Module 10: Git & Version Control (GitHub)",
     totalDuration: 410,
     steps: [
       {
@@ -6840,7 +6840,7 @@ Default: **GitHub** (industry-standard host, best Vercel integration). **Alterna
   },
   kids: {
     moduleId: 10,
-    moduleName: "Module 9: Git & Version Control (GitHub)",
+    moduleName: "Module 10: Git & Version Control (GitHub)",
     totalDuration: 410,
     steps: [
       {
@@ -7111,7 +7111,7 @@ Here are your three quiz questions. Study these!
 export const module10Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 11,
-    moduleName: "Module 10: Deploying Applications (Vercel + GitHub)",
+    moduleName: "Module 11: Deploying Applications (Vercel + GitHub)",
     totalDuration: 420,
     steps: [
       {
@@ -7430,7 +7430,7 @@ Default: **Vercel** from **GitHub**, with **Supabase** as the production backend
   },
   kids: {
     moduleId: 11,
-    moduleName: "Module 10: Deploying Applications (Vercel + GitHub)",
+    moduleName: "Module 11: Deploying Applications (Vercel + GitHub)",
     totalDuration: 420,
     steps: [
       {
@@ -7674,7 +7674,7 @@ Here are your three quiz questions. Study these!
 export const module11Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 12,
-    moduleName: "Module 11: AI Agent Workflows",
+    moduleName: "Module 12: AI Agent Workflows",
     totalDuration: 390,
     steps: [
       {
@@ -8145,7 +8145,7 @@ The patterns are framework-agnostic. Build a simple agent loop directly against 
   },
   kids: {
     moduleId: 12,
-    moduleName: "Module 11: AI Agent Workflows",
+    moduleName: "Module 12: AI Agent Workflows",
     totalDuration: 390,
     steps: [
       {
@@ -8446,7 +8446,7 @@ Here are your three quiz questions. Study these!
 export const module12Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 13,
-    moduleName: "Module 12: Building Production-Ready Software",
+    moduleName: "Module 13: Building Production-Ready Software",
     totalDuration: 480,
     steps: [
       {
@@ -9005,7 +9005,7 @@ Defaults: **Vitest/Jest** (unit/integration), **Playwright** (E2E), **Lighthouse
   },
   kids: {
     moduleId: 13,
-    moduleName: "Module 12: Building Production-Ready Software",
+    moduleName: "Module 13: Building Production-Ready Software",
     totalDuration: 480,
     steps: [
       {
@@ -9358,7 +9358,7 @@ Here are your three quiz questions. Study these!
 export const module13Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 14,
-    moduleName: "Module 13: Automating Your Dev Pipeline with Claude Code",
+    moduleName: "Module 14: Automating Your Dev Pipeline with Claude Code",
     totalDuration: 490,
     steps: [
       {
@@ -9808,7 +9808,7 @@ Portable pattern: **MCP** is the emerging open standard for tool/data access, **
   },
   kids: {
     moduleId: 14,
-    moduleName: "Module 13: Automating Your Dev Pipeline with Claude Code",
+    moduleName: "Module 14: Automating Your Dev Pipeline with Claude Code",
     totalDuration: 490,
     steps: [
       {
@@ -10072,7 +10072,7 @@ Here are your three quiz questions. Study these!
 export const module14Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 15,
-    moduleName: "Module 14: Working in Existing Codebases (Brownfield)",
+    moduleName: "Module 15: Working in Existing Codebases (Brownfield)",
     totalDuration: 410,
     steps: [
       {
@@ -10322,7 +10322,7 @@ The skill is tool-agnostic. **Claude Code** shines here (repo-wide reading and s
   },
   kids: {
     moduleId: 15,
-    moduleName: "Module 14: Working in Existing Codebases (Brownfield)",
+    moduleName: "Module 15: Working in Existing Codebases (Brownfield)",
     totalDuration: 410,
     steps: [
       {
@@ -10491,7 +10491,7 @@ Here are your three quiz questions. Study these!
 export const module15Steps: Record<Version, ModuleStepSequence> = {
   adult: {
     moduleId: 16,
-    moduleName: "Module 15: The Tooling Landscape & How to Choose",
+    moduleName: "Module 16: The Tooling Landscape & How to Choose",
     totalDuration: 270,
     steps: [
       {
@@ -10656,7 +10656,7 @@ This module *is* the tools-and-alternatives capstone — every layer at once. Th
   },
   kids: {
     moduleId: 16,
-    moduleName: "Module 15: The Tooling Landscape & How to Choose",
+    moduleName: "Module 16: The Tooling Landscape & How to Choose",
     totalDuration: 270,
     steps: [
       {
