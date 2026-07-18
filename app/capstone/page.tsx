@@ -44,7 +44,7 @@ export default async function CapstonePage() {
   const submission = await getCapstoneSubmission();
 
   return (
-    <div className={`min-h-screen py-12 px-4 ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
+    <main className={`min-h-screen py-12 px-4 ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="mb-12">
