@@ -247,3 +247,57 @@ export async function sendCapstoneResultEmail(
     return false;
   }
 }
+
+/**
+ * Send donation receipt email
+ */
+export async function sendDonationEmail(
+  email: string,
+  amount: number,
+  currency: string = "USD"
+) {
+  // Validate email format
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    throw new Error("Invalid email address");
+  }
+
+  // Validate amount (in cents, so $5 = 500)
+  if (amount < 100 || amount > 1000000) {
+    throw new Error("Invalid donation amount");
+  }
+
+  const amountUSD = (amount / 100).toFixed(2);
+
+  try {
+    const result = await resend.emails.send({
+      from: "Learn to Vibe Code <noreply@learntovibe.code>",
+      to: email,
+      subject: "Thank You for Your Donation!",
+      html: `
+        <h2>Thank You for Supporting Learn to Vibe Code</h2>
+        <p>We've received your donation of <strong>$${amountUSD} ${currency}</strong>.</p>
+        <p>Your support directly funds:</p>
+        <ul style="font-size: 14px; line-height: 1.8; color: #555;">
+          <li>Server infrastructure and course hosting</li>
+          <li>Content development and curriculum updates</li>
+          <li>Instructor grading and learner support</li>
+          <li>Accreditation pursuit (CPD interim, IACET full)</li>
+          <li>Continuous platform improvements</li>
+        </ul>
+        <p style="margin-top: 24px;">You can track your learning progress and access all course materials here:</p>
+        <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/dashboard" style="background: #7C3AED; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; display: inline-block;">Go to Dashboard</a></p>
+        <p style="margin-top: 20px; font-size: 12px; color: #999;">Questions? Reply to this email or visit our support page.</p>
+      `,
+    });
+
+    if (result.error) {
+      console.error("Donation email error:", result.error);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Failed to send donation email:", error);
+    return false;
+  }
+}

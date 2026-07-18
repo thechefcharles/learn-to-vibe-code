@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createClient } from "@supabase/supabase-js";
+import { sendDonationEmail } from "@/lib/actions/notifications";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
@@ -129,6 +130,19 @@ export async function POST(req: NextRequest) {
         console.log(
           `Webhook: Donation ${donation.id} marked as success with charge ${chargeId}`
         );
+
+        // Send donation receipt email
+        try {
+          await sendDonationEmail(donation.user_email, donation.amount_cents);
+          console.log(`Webhook: Donation receipt email sent to ${donation.user_email}`);
+        } catch (emailError) {
+          const errorMessage =
+            emailError instanceof Error ? emailError.message : "Unknown error";
+          console.error(
+            `Webhook: Failed to send donation email: ${errorMessage}`
+          );
+          // Don't fail the webhook - donation was successful even if email fails
+        }
       } catch (error) {
         const errorMessage =
           error instanceof Error ? error.message : "Unknown error";
