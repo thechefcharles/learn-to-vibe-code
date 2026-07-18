@@ -142,31 +142,7 @@ Failure mode 3: Agent gets stuck (calls getBreedInfo 10 times in a row)
 
 ### Practice Challenge
 
-Design an agent for a different task. Sketch:
-
-1. **Tools needed** (name, input, output, purpose)
-2. **System prompt** (how should the agent behave?)
-3. **Error handling** (what can go wrong? fallbacks?)
-
-Example: "Invoice analyzer agent"
-```
-Tools:
-  1. fetchInvoices (input: date range, output: list of invoices)
-  2. summarizeInvoice (input: invoice, output: summary + total)
-  3. logAnalysis (input: analysis text, output: success/error)
-
-System prompt:
-You are a financial analyst. Summarize invoices:
-1. Fetch invoices for the date range
-2. Summarize each one (total, key items)
-3. Log your analysis
-Don't guess; always fetch first.
-
-Error handling:
-- If fetchInvoices fails: return "No invoices found"
-- If summarizeInvoice errors: skip that invoice, continue
-- If timeout (>10 calls): return partial analysis + warning
-```
+Design an agent for a different task using the same tool/prompt/error structure. Example: Invoice Analyzer, Customer Support Bot, or Data Validator.
 
 ### Key Takeaway
 
@@ -341,29 +317,11 @@ Recall your pet tips agent (from Lesson 11.3). Before you use it, test:
 
 ### How to Test
 
-Write it out:
+- **Happy-path:** Agent gives correct tips after 2 queries → no infinite loop
+- **Error case:** Agent handles invalid breed gracefully → suggests valid types
+- **Loop limit:** Agent stops after 5 queries even if user keeps asking → respects safety
 
-```
-Test 1: Happy Path
-- Setup: Agent ready, breed lookup works
-- Action: Ask "How do I train a Labrador?"
-- Expect: Agent returns training tips
-- Result: ✅ PASS
-
-Test 2: Tool Fails
-- Setup: Agent ready, breed lookup times out
-- Action: Ask "How do I train a Labrador?"
-- Expect: Agent recovers with general tips (doesn't crash)
-- Result: ✅ PASS
-
-Test 3: Loop Limit
-- Setup: Agent configured with max 5 loops
-- Action: Ask a complex question that could loop forever
-- Expect: Agent stops after 5 loops
-- Result: ✅ PASS
-```
-
-Before you ship your agent, run these tests. If all pass, your agent is ready.
+If all pass, your agent is ready.
 
 ### Knowledge Check
 
@@ -544,36 +502,6 @@ Iterate until the agent is reliable across all cases.
 
 ---
 
-## Design Verification Checklist
-
-Before you submit your agent, verify:
-
-1. **Tools are specific** (not vague)
-   - ✓ Each tool has a clear input type and output type
-   - ✓ You can explain WHY the agent needs this tool
-   - ❌ Avoid: vague tools like "data" or "info"
-
-2. **System prompt is concrete** (not wishy-washy)
-   - ✓ Prompt tells the agent exactly what to do (steps 1, 2, 3)
-   - ✓ Prompt says how to use each tool
-   - ❌ Avoid: fluffy prompt like "be helpful and smart"
-
-3. **Error handling covers real failures**
-   - ✓ You identified 2-3 things that could go wrong
-   - ✓ Each failure has a fallback strategy
-   - ✓ Fallbacks are realistic (not "never fail")
-   - ❌ Avoid: imaginary failures or no fallbacks
-
-4. **Implementation matches design**
-   - ✓ Tools in code match your tool specs
-   - ✓ System prompt in code matches what you wrote
-   - ✓ Error handlers match your plans
-
-5. **Tested edge cases**
-   - ✓ Normal case works (golden retriever)
-   - ✓ Error case handled (unknown breed)
-   - ✓ Stress case handled (many requests)
-
 ### Scenario-based learning:
 
 *For each scenario, what went wrong with the design?*
@@ -589,14 +517,6 @@ Before you submit your agent, verify:
 - **(c) You designed 10 tools but the agent only needs 2.** Over-engineering.
   - ✅ **Better:** Minimal tools = simpler agent. Start with 2-3 tools. Add more only if needed.
   - ❌ **Avoid:** Tool bloat. More tools = more ways to break.
-
-- **(d) Your system prompt is 50 lines long.** The agent gets confused.
-  - ✅ **Better:** Short, clear prompt (5-10 sentences). One tool per paragraph.
-  - ❌ **Avoid:** Rambling prompts. AI works better with concise instructions.
-
-- **(e) You tested only the happy path.** Edge cases broke in production.
-  - ✅ **Better:** Design edge cases into error handling BEFORE implementation. Then test them.
-  - ❌ **Avoid:** "It works in my test!"—no, you didn't test the bad cases.
 
 ---
 
