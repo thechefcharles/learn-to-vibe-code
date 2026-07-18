@@ -61,7 +61,7 @@ export function CourseModuleList({
   };
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       {modules.map((module) => {
         const isUnlocked = unlockedModules[module.id];
         const moduleProgress = progress.find((p) => p.module_id === module.id);
@@ -81,7 +81,7 @@ export function CourseModuleList({
                 toggleModule(module.id);
               }}
               disabled={!isUnlocked}
-              className={`w-full text-left p-4 rounded-lg border-2 transition ${
+              className={`w-full text-left p-3 rounded-lg border-2 transition ${
                 !isUnlocked
                   ? "border-slate-600/40 bg-slate-900/50 opacity-50 cursor-not-allowed"
                   : isCompleted
@@ -103,10 +103,10 @@ export function CourseModuleList({
                     {isCompleted ? "✓" : module.id}
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-white drop-shadow-md">
+                    <h3 className="text-sm font-bold text-white drop-shadow-md">
                       {module.id}. {module.title}
                     </h3>
-                    <p className="text-xs text-slate-200 mt-1 drop-shadow-md">
+                    <p className="text-xs text-slate-200 mt-0.5 drop-shadow-md">
                       {isCompleted
                         ? "✓ Completed"
                         : isUnlocked
@@ -127,11 +127,11 @@ export function CourseModuleList({
 
             {/* Expandable lessons */}
             {isExpanded && isUnlocked && (
-              <div className="mt-1 pl-4 pr-3 py-3 rounded-lg bg-slate-900/60 border-2 border-slate-700/50 space-y-2 backdrop-blur-sm">
+              <div className="mt-1 pl-4 pr-3 py-2 rounded-lg bg-slate-900/60 border-2 border-slate-700/50 space-y-1 backdrop-blur-sm">
                 {lessons.map((lesson, idx) => (
                   <div
                     key={idx}
-                    className="text-sm text-slate-100 flex items-start gap-2 drop-shadow-md"
+                    className="text-xs text-slate-100 flex items-start gap-2 drop-shadow-md"
                   >
                     <span className="text-slate-400 flex-shrink-0">{idx + 1}.</span>
                     <span>{lesson}</span>
@@ -146,7 +146,7 @@ export function CourseModuleList({
       {/* Capstone */}
       <Link
         href="/capstone"
-        className="block p-4 rounded-lg border-2 border-purple-500/60 bg-purple-900/20 hover:bg-purple-900/30 transition cursor-pointer group"
+        className="block p-3 rounded-lg border-2 border-purple-500/60 bg-purple-900/20 hover:bg-purple-900/30 transition cursor-pointer group"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 flex-1">
@@ -154,7 +154,7 @@ export function CourseModuleList({
               🎯
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-sm font-bold text-white">
                 {isKids ? "The Grand Challenge!" : "Capstone"}
               </h3>
               <p className="text-xs text-slate-300 mt-1">
