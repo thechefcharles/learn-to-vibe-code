@@ -16,7 +16,7 @@ By the end of this module, you'll be able to:
 
 ---
 
-## Lesson 7.0 — What's a Database? (Tables, Keys, and Rules) (~45 min)
+## Lesson 8.0 — What's a Database? (Tables, Keys, and Rules) (~45 min)
 
 Before you set up Supabase, know what you're doing.
 
@@ -230,7 +230,7 @@ That's it. Same pattern in every module.
 
 ---
 
-## Lesson 7.2 — What's a Database? (~30 min)
+## Lesson 8.2 — What's a Database? (~30 min)
 
 A database is just a fancy spreadsheet in the cloud. It stores your data.
 
@@ -249,7 +249,7 @@ A database is just a fancy spreadsheet in the cloud. It stores your data.
 
 ---
 
-## Lesson 7.3 — Set Up Supabase & Create Your Database with Claude Code (~30 min)
+## Lesson 8.3 — Set Up Supabase & Create Your Database with Claude Code (~30 min)
 
 **Step 1: Create a Supabase project**
 
@@ -315,7 +315,7 @@ Boom! Your database tables are created. 🎉
 
 ---
 
-## Lesson 7.4 — Connect Your App to Supabase (Claude Code Handles It!) (~60 min)
+## Lesson 8.4 — Connect Your App to Supabase (Claude Code Handles It!) (~60 min)
 
 Your Next.js app needs to talk to Supabase. Let Claude Code set it up!
 
@@ -381,7 +381,7 @@ No more mock data! Your app now uses a real database. 🎉
 
 ---
 
-## Lesson 7.5 — Read, Write, Delete (~60 min)
+## Lesson 8.5 — Read, Write, Delete (~60 min)
 
 Three operations:
 
@@ -404,7 +404,7 @@ You don't write these yourself — Cursor/Claude Code does. You just understand 
 
 ---
 
-## Lesson 7.6 — Security & Auth (~60 min)
+## Lesson 8.6 — Security & Auth (~60 min)
 
 Supabase has security rules (RLS = Row-Level Security).
 
@@ -459,7 +459,7 @@ You use it like this:
 
 ---
 
-## Lesson 7.7 — Understanding `auth.uid()` and Security Flow (~30 min)
+## Lesson 8.7 — Understanding `auth.uid()` and Security Flow (~30 min)
 
 This is the glue between authentication and RLS. Let's demystify it.
 

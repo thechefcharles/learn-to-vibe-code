@@ -14,7 +14,7 @@
 
 By the end of this module, the learner can:
 
-1. **Understand** database fundamentals: tables, primary keys, foreign keys, and row-level security. *(Understand)* — Lesson 7.0
+1. **Understand** database fundamentals: tables, primary keys, foreign keys, and row-level security. *(Understand)* — Lesson 8.0
 2. **Model** data in Postgres and connect a Next.js app to Supabase. *(Apply)*
 3. **Implement** user authentication and row-level-security authorization. *(Create)*
 4. **Compare** Supabase with Firebase / Postgres + Prisma and justify the choice for a use case. *(Evaluate)*
@@ -27,7 +27,7 @@ By the end of this module, the learner can:
 
 ---
 
-## Lesson 7.0 — Database Tables, Keys, and Security (~30 min)
+## Lesson 8.0 — Database Tables, Keys, and Security (~30 min)
 
 Before you write SQL or see RLS policies, understand the pieces.
 
@@ -129,7 +129,7 @@ Translation:
 
 ### Knowledge Check
 
-1. **Q7-0a:** "Why do we use `user_id` in every table?"
+1. **Q8-0a:** "Why do we use `user_id` in every table?"
    - a) To make the table longer
    - b) To identify who owns each row (so RLS can enforce "you can only read your own rows")
    - c) Just because Supabase requires it
@@ -137,7 +137,7 @@ Translation:
 
    **Correct:** b) — `user_id` is the bridge between rows and users. RLS uses it to enforce security.
 
-2. **Q7-0b:** "What does an RLS policy do?"
+2. **Q8-0b:** "What does an RLS policy do?"
    - a) Encrypts data in the database
    - b) Prevents SQL errors
    - c) Enforces default-deny access control—blocks all access unless a policy says "yes"
@@ -147,7 +147,7 @@ Translation:
 
 ---
 
-## Lesson 7.1 — Why you need a backend (~30 min)
+## Lesson 8.1 — Why you need a backend (~30 min)
 
 Before diving into Supabase setup, understand what a backend solves.
 
@@ -157,7 +157,7 @@ Supabase bundles all three: a **Postgres database**, **Auth**, and **Row Level S
 
 ---
 
-## Lesson 7.2 — Create a project & connect Next.js (~45 min)
+## Lesson 8.2 — Create a project & connect Next.js (~45 min)
 
 This continues Objective 2.
 
@@ -228,7 +228,7 @@ The **key difference:** browser clients are used in `"use client"` components an
 
 ---
 
-## Lesson 7.3 — Model your data with Claude Code (~45 min)
+## Lesson 8.3 — Model your data with Claude Code (~45 min)
 
 Continue Objective 2 (modeling data). Turn your Module 4 data model into real Postgres tables. **Use Claude Code to generate the SQL migrations from your spec:**
 
@@ -309,7 +309,7 @@ Table Editor showing: clients and invoices tables with columns (id, user_id, nam
 
 ---
 
-## Lesson 7.4 — Replace mock data with real queries (~60 min)
+## Lesson 8.4 — Replace mock data with real queries (~60 min)
 
 Complete Objective 2 (modeling data). Swap the hard-coded arrays for live reads/writes.
 
@@ -395,7 +395,7 @@ export default function ClientForm() {
 
 ---
 
-## Lesson 7.5 — Authentication & RLS with Claude Code (~90 min)
+## Lesson 8.5 — Authentication & RLS with Claude Code (~90 min)
 
 Address Objective 3 (auth + authorization). Instead of writing boilerplate manually, **use Claude Code to orchestrate authentication setup and Row Level Security policies:**
 
@@ -488,7 +488,7 @@ Right: Two users logged in, each seeing only their own clients (proof RLS is wor
 
 ---
 
-## Lesson 7.6 — Configuration vs. secrets (~30 min)
+## Lesson 8.6 — Configuration vs. secrets (~30 min)
 
 Not all env vars are created equal. **Config** is anything you might change between environments — URLs, thresholds, feature flags, timeouts. **Secrets** are credentials you *never* share — API keys, passwords, signing keys. This distinction matters for security and deployment.
 
@@ -561,7 +561,7 @@ STRIPE_SECRET_KEY=sk_live_xxx  # ← never shared!
 
 ---
 
-## Lesson 7.7 — Supabase vs. the alternatives (~30 min)
+## Lesson 8.7 — Supabase vs. the alternatives (~30 min)
 
 Address Objective 4 (comparison and justification).
 
@@ -701,7 +701,7 @@ Tip: This is perfect for Claude Code (Module 6). Prompt: "Set up Supabase browse
 
 These are the three questions you'll see on the quiz. Study these to prepare:
 
-**Q7-1:** A backend provides all EXCEPT:
+**Q8-1:** A backend provides all EXCEPT:
 - (a) persistence
 - (b) accounts
 - (c) authorization
@@ -709,7 +709,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 *Why:* Backends solve three real problems: data persists, users log in, and access is controlled. Typing speed has nothing to do with it. (That's an IDE/editor job.)
 
-**Q7-2:** With RLS enabled and no policy, how many rows are returned?
+**Q8-2:** With RLS enabled and no policy, how many rows are returned?
 - (a) all
 - (b) **zero — it's default-deny** ✓
 - (c) only the newest
@@ -717,7 +717,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 *Why:* This is the critical security principle: RLS defaults to **deny everything unless you explicitly allow it**. No policy = nobody reads anything. Safe by default.
 
-**Q7-3:** In a policy, `auth.uid()` gives you:
+**Q8-3:** In a policy, `auth.uid()` gives you:
 - (a) a random id
 - (b) **the logged-in user's id from their session** ✓
 - (c) the table name
@@ -730,7 +730,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 ## Knowledge check (mapped to objectives)
 
 **Objective 1 — Database Fundamentals:** understand tables, primary keys, foreign keys, and RLS concepts.
-- *Practical evidence:* Explain the purpose of `user_id` in every table, and how RLS enforces default-deny access. Answer the Q7-0a and Q7-0b knowledge checks in Lesson 7.0.
+- *Practical evidence:* Explain the purpose of `user_id` in every table, and how RLS enforces default-deny access. Answer the Q8-0a and Q8-0b knowledge checks in Lesson 8.0.
 
 **Objective 2 — Model & connect:** show your schema and a working query reading real data into a page.
 - *Practical evidence:* Screenshot of Supabase Table Editor showing `clients` and `invoices` tables with columns; screenshot of your `/clients` page displaying real data (not mock).
@@ -788,7 +788,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 ## Tools & alternatives (this module)
 
-Default: **Supabase** on **Next.js**, using `@supabase/ssr`. Alternatives in Lesson 7.6. Great module to build partly with Claude Code (Module 6) — the client/server boilerplate is agent-friendly, while *you* own the data model and RLS policies.
+Default: **Supabase** on **Next.js**, using `@supabase/ssr`. Alternatives in Lesson 8.6. Great module to build partly with Claude Code (Module 6) — the client/server boilerplate is agent-friendly, while *you* own the data model and RLS policies.
 
 ---
 
