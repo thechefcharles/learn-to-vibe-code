@@ -707,6 +707,32 @@ Here are your three quiz questions. Study them now!
 
 ---
 
+## Deliverable Rubric Criteria
+
+Your submission will be graded on these objectives:
+
+### 1. Cloud Data Architecture
+- **Full:** App successfully loads and saves data to Supabase (not mock data)
+- **Partial:** App loads from Supabase but not saving, or vice versa
+- **No credit:** Still using hardcoded/mock data
+
+### 2. Security & User Isolation
+- **Full:** RLS policies are configured; users can only see their own data
+- **Partial:** RLS mentioned but not implemented correctly
+- **No credit:** No RLS; multiple users can see each other's data
+
+### 3. Environment Variables
+- **Full:** Credentials stored in `.env.local` (never hardcoded)
+- **Partial:** Credentials in env vars but some hardcoded values remain
+- **No credit:** API keys visible in code
+
+### 4. Compare Database Options ⭐
+- **Full:** In your project plan or submission notes, explain why you chose Supabase (or what database you chose) and what alternatives you considered. Include 2+ concrete reasons (e.g., "Supabase has RLS built-in; Firebase doesn't" or "Postgres is self-hosted so more expensive for small projects; Supabase is better for learning because it's free and includes auth")
+- **Partial:** Mentions database choice but reasoning is weak or incomplete
+- **No credit:** Doesn't address database choice or alternatives considered
+
+---
+
 **Rubric checklist (before you submit):**
 
 | Checkmark | What to check |
