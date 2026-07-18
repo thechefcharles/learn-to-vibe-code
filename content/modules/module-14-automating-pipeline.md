@@ -274,7 +274,7 @@ if (reviewResult.includes("HIGH:")) {
 
 ## Lesson 13.5 — Plugins: bundle and share (~30 min)
 
-Completes Objective 2. A **plugin** packages skills + MCP + subagents + commands + hooks into one installable unit.
+**In this lesson:** You'll learn how to bundle your tools into a reusable package. A **plugin** packages skills + MCP + subagents + commands + hooks into one installable unit that you (and others) can use repeatedly.
 
 ```bash
 /plugin marketplace add anthropics/claude-plugins-official

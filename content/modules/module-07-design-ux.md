@@ -266,7 +266,7 @@ Side-by-side: restyled `/clients` at desktop width (left) and ~375px mobile widt
 
 This delivers Objective 3. Give learners a checklist to audit any screen: Is there a clear focal point? Is spacing consistent? Too many font sizes/colors? Breathing room? Interactive state (hover/focus/disabled) styled? **Does it work on a phone (no horizontal scroll, columns stack)?** Then critique a deliberately generic screen and fix three specific issues.
 
-> **Instructor note:** Put a "before" (raw AI output) and "after" (10 minutes of the levers + a responsive pass) side by side, and resize both to phone width. The gap sells the whole module.
+**Exercise:** Take a raw AI-generated screen and spend 10 minutes applying the design levers (focal point, spacing, fonts, breathing room, interactive states) and making it phone-responsive. Compare the before (AI raw) and after (your polish) side by side at phone width. That gap between raw and polished is what you're building toward in production work.
 > 
 
 ---

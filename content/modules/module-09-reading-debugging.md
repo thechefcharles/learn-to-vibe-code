@@ -207,7 +207,7 @@ This delivers Objective 4 — the safety net. An AI fix can be wrong, incomplete
 
 Then **verify**: reproduce the original trigger and confirm it's gone; check the happy path still works.
 
-> **Instructor note:** Show an AI fix that removes RLS to "solve" the empty list. Ask why it's terrible. Teaches root-cause vs. symptom better than any lecture.
+**Real-world pattern:** When you see a symptom (empty list), AI might suggest removing RLS as a "fix" — don't do it! Analyze why: is RLS actually the problem, or are you querying the wrong way? Learning to dig past the symptom to the root cause is what separates debugging from band-aids.
 > 
 
 ---

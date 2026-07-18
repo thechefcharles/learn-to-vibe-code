@@ -52,7 +52,7 @@ npm run dev
 
 ---
 
-> **Instructor note:** Get everyone to a running [localhost](http://localhost) before moving on — setup failures here derail the module.
+**✓ Checkpoint:** Before you move on, make sure you have a running [localhost](http://localhost) server with no errors in the page or terminal. If you see errors here, they'll cascade through the rest of the module — take time to debug this checkpoint.
 > 
 
 ---

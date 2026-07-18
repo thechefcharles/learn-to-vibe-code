@@ -57,7 +57,7 @@ claude --version
 
 *[SCREENSHOT: a terminal showing successful node, npm, and claude version checks.]*
 
-> **Instructor note:** Do these live and slowly — version/PATH issues are the most common blocker.
+**⚠️ Troubleshooting tip:** If any version checks fail or show "command not found", it usually means a PATH issue. Take time to verify each command works before moving on — this is the #1 setup blocker.
 > 
 
 ---

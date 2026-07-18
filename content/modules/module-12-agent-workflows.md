@@ -58,7 +58,7 @@ Begins Objective 2. Three patterns learners choose between:
 
 ## Lesson 11.4 — Break a workflow into parts (~40 min)
 
-Completes Objective 2. Before building, decompose (the Module 4 habit, for agents). For each workflow define **responsibilities** (what the agent decides vs. what your code decides), **tools** (specific actions with clear I/O), and **hand-offs** (agent → tool → agent, and crucially agent → **human** for approval).
+**In this lesson:** Before you build an agent workflow, decompose it (using the Module 4 habit). For each workflow, define three critical things: **responsibilities** (what does the agent decide vs. your code), **tools** (specific actions with clear input/output), and **hand-offs** (how the agent hands off to tools, and crucially back to humans for approval — never let an agent act alone).
 
 **Worked breakdown — the overdue-invoice reminder assistant:**
 
@@ -109,7 +109,7 @@ Delivers Objective 4 — what separates a demo from a product. Anticipate each f
 
 **Guardrails:** human-in-the-loop for anything consequential (send/spend/delete) — the single most important safeguard; **limits** on steps/loops so a stuck agent stops; **validation** of tool inputs/outputs in your code; **least privilege** (a reminder agent can't delete invoices); **logging** so you can debug and audit (previews Module 23).
 
-> **Instructor note:** ask "what's the worst thing this agent could do if it went wrong?" for the learner's own workflow. That question drives every guardrail.
+**Critical thinking exercise:** For your own workflow, ask: **"What's the worst thing this agent could do if it went wrong?"** That question should drive every guardrail you build. If the answer is "delete all user data," you need human approval on every action. If it's "send a malformed email," logging and validation are critical.
 > 
 
 ---

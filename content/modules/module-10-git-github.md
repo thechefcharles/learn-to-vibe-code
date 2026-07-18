@@ -117,7 +117,7 @@ GitHub showing: repo name, file tree (app/, lib/, package.json, etc.), commit hi
 
 ## Lesson 9.3 — Branches and pull requests with Claude Code (~50 min)
 
-Completes Objective 2 — the professional workflow. Instead of editing `main` directly, **use Claude Code to orchestrate feature branches and pull requests:**
+**In this lesson:** You'll learn the professional workflow — instead of editing `main` directly, you'll use Claude Code to orchestrate feature branches and pull requests. This is how real teams ship code safely:
 
 ### Automating the branch workflow
 

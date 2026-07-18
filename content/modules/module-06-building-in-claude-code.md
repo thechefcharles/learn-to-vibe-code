@@ -85,7 +85,7 @@ The single most important agentic habit for beginners. Before a big change, use 
 
 *[SCREENSHOT: Claude Code in plan mode listing proposed steps before making changes.]*
 
-> **Instructor note:** Show a plan you *reject* and refine, not just a happy path. Steering the plan is the skill.
+**Key skill:** When the agent returns a plan, your job is to **critique and refine it** (using Module 3's skills), not just approve it. The plan won't always be perfect on first try — and learning to steer the plan is where the real skill lives. Don't accept the first plan; push back, ask for changes, refine it until it matches your intent.
 > 
 
 ---

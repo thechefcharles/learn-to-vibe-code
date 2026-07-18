@@ -134,7 +134,7 @@ You never test experiments in production, and every change is verifiable in a re
 
 ## Lesson 10.5 — Custom domain & production config (~45 min)
 
-Completes Objective 2. Two things turn the deploy into a real product:
+**In this lesson:** Two critical things separate a demo from a production app:
 
 **Custom domain** — in Vercel → Settings → Domains, add a domain you own and follow the DNS steps. Your app lives at `yourname.com`.
 
