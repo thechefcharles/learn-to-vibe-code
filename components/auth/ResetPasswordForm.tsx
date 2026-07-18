@@ -168,7 +168,7 @@ export function ResetPasswordForm() {
                   id="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none transition-all focus:bg-white/10 focus:border-cyan-400/70"
+                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 transition-all focus:bg-white/10 focus:border-cyan-400/70"
                   placeholder="••••••••"
                   required
                 />
@@ -183,7 +183,7 @@ export function ResetPasswordForm() {
                   id="confirm-password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none transition-all focus:bg-white/10 focus:border-cyan-400/70"
+                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 transition-all focus:bg-white/10 focus:border-cyan-400/70"
                   placeholder="••••••••"
                   required
                 />

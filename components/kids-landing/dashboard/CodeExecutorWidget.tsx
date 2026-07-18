@@ -104,7 +104,7 @@ export function CodeExecutorWidget() {
         <textarea
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          className="flex-1 w-full bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg p-3 text-cyan-300 font-mono text-base focus:border-cyan-300/80 focus:outline-none resize-none placeholder-gray-400"
+          className="flex-1 w-full bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg p-3 text-cyan-300 font-mono text-base focus:border-cyan-300/80 focus:ring-2 focus:ring-cyan-300/50 resize-none placeholder-gray-400"
           placeholder="Enter JavaScript code..."
           spellCheck="false"
         />

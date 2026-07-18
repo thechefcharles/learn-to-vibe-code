@@ -35,7 +35,7 @@ export default function SignIn() {
   }
 
   return (
-    <div className="relative w-full min-h-screen text-white overflow-x-hidden flex items-center justify-center py-12 px-4">
+    <main className="relative w-full min-h-screen text-white overflow-x-hidden flex items-center justify-center py-12 px-4">
       <VideoBackground />
       <div className="fixed inset-0 bg-black/40 z-0 pointer-events-none" />
       <MouseTrail />
@@ -97,7 +97,7 @@ export default function SignIn() {
                   onChange={(e) => field.onChange(e.target.value)}
                   onFocus={() => setFocusedField(field.id)}
                   onBlur={() => setFocusedField(null)}
-                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none transition-all focus:bg-white/10 focus:border-cyan-400/70"
+                  className="w-full px-4 py-3 bg-white/5 backdrop-blur-md border border-white/20 rounded-lg text-white placeholder-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 transition-all focus:bg-white/10 focus:border-cyan-400/70"
                   placeholder={field.placeholder}
                   required
                   aria-label={field.label}
@@ -136,6 +136,6 @@ export default function SignIn() {
           </p>
         </motion.div>
       </div>
-    </div>
+    </main>
   );
 }

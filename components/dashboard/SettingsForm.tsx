@@ -49,23 +49,25 @@ export function SettingsForm({ userName, userEmail, onSave }: SettingsFormProps)
 
       <div className="space-y-4 mb-6">
         <div>
-          <label className="block text-sm font-semibold text-gray-300 mb-2">Display Name</label>
+          <label htmlFor="display-name" className="block text-sm font-semibold text-gray-300 mb-2">Display Name</label>
           <input
+            id="display-name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 transition-all"
+            className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 focus:border-cyan-400 transition-all"
             placeholder="Your name"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold text-gray-300 mb-2">Email</label>
+          <label htmlFor="user-email" className="block text-sm font-semibold text-gray-300 mb-2">Email</label>
           <input
+            id="user-email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 transition-all"
+            className="w-full bg-white/5 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:ring-2 focus:ring-offset-2 focus:ring-cyan-400 focus:border-cyan-400 transition-all"
             placeholder="your@email.com"
           />
         </div>

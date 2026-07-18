@@ -26,7 +26,7 @@ export function ModuleGrid() {
         <div
           key={mod.id}
           tabIndex={0}
-          className="p-3 bg-slate-800/50 border border-slate-700 rounded-lg hover:border-cyan-500 hover:bg-slate-800 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          className="p-3 bg-slate-800/50 border border-slate-700 rounded-lg hover:border-cyan-500 hover:bg-slate-800 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500"
         >
           <div className="text-lg font-bold text-cyan-400">{mod.id}</div>
           <div className="text-xs text-gray-300 mt-1">{mod.name}</div>

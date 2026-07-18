@@ -153,7 +153,7 @@ export const RotatableProjectCard: React.FC<RotatableProjectCardProps> = ({
     <motion.div
       ref={cardRef}
       tabIndex={0}
-      className="group relative focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black rounded-xl transition-transform duration-200"
+      className="group relative focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black rounded-xl transition-transform duration-200"
       onMouseDown={handleMouseDown}
       onTouchStart={handleTouchStart}
       onMouseEnter={() => !prefersReducedMotion && setIsHovered(true)}
@@ -274,7 +274,7 @@ export const RotatableProjectCard: React.FC<RotatableProjectCardProps> = ({
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full px-6 py-4 bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-bold rounded-lg text-center transition-all duration-300 hover:from-cyan-400 hover:to-cyan-300 hover:shadow-lg hover:shadow-cyan-400/30 active:scale-95 focus:outline-none focus:ring-2 focus:ring-cyan-400 text-base"
+                className="block w-full px-6 py-4 bg-gradient-to-r from-cyan-500 to-cyan-400 text-black font-bold rounded-lg text-center transition-all duration-300 hover:from-cyan-400 hover:to-cyan-300 hover:shadow-lg hover:shadow-cyan-400/30 active:scale-95 focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black text-base"
               >
                 See Project →
               </Link>

@@ -27,28 +27,38 @@ export default function DemoQuizViewer({ quiz }: DemoQuizViewerProps) {
           </p>
 
           {/* Options */}
-          <div className="space-y-3 mb-6">
-            {question.options.map((option, oIndex) => (
-              <div
-                key={oIndex}
-                className={`p-3 rounded-lg border transition cursor-pointer ${
-                  oIndex === question.correctAnswer
-                    ? "bg-green-500/10 border-green-500/30"
-                    : "bg-slate-700 border-slate-600 hover:bg-slate-600"
-                }`}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="w-6 h-6 rounded border flex items-center justify-center text-sm font-medium mt-1">
-                    {String.fromCharCode(65 + oIndex)}
-                  </div>
+          <fieldset className="space-y-3 mb-6">
+            <legend className="sr-only">Answer options for question {qIndex + 1}</legend>
+            {question.options.map((option, oIndex) => {
+              const optionId = `q${qIndex}-opt${oIndex}`;
+              return (
+                <label
+                  key={oIndex}
+                  htmlFor={optionId}
+                  className={`flex items-start gap-3 p-3 rounded-lg border transition cursor-pointer ${
+                    oIndex === question.correctAnswer
+                      ? "bg-green-500/10 border-green-500/30"
+                      : "bg-slate-700 border-slate-600 hover:bg-slate-600"
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    id={optionId}
+                    name={`question-${qIndex}`}
+                    value={oIndex}
+                    checked={false}
+                    disabled
+                    className="w-6 h-6 mt-1 cursor-pointer"
+                    aria-label={option}
+                  />
                   <p className="text-slate-300 flex-1">{option}</p>
                   {oIndex === question.correctAnswer && (
                     <span className="text-green-400 font-bold">✓</span>
                   )}
-                </div>
-              </div>
-            ))}
-          </div>
+                </label>
+              );
+            })}
+          </fieldset>
 
           {/* Answer Toggle */}
           <button

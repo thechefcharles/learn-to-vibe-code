@@ -93,7 +93,7 @@ export function FloatingCTA() {
           bg-gradient-to-r from-cyan-500 to-purple-600
           border border-cyan-400 shadow-lg whitespace-nowrap
           ${!prefersReducedMotion ? 'hover:scale-105 active:scale-95 transition-transform duration-300 animate-pulse' : ''}
-          focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950
+          focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-slate-950
         `}
         style={{
           boxShadow: '0 0 20px rgba(6, 182, 212, 0.5), inset 0 0 20px rgba(168, 85, 247, 0.1)',

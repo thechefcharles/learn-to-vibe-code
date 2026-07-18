@@ -163,7 +163,7 @@ export function KeyboardShortcutsPanel({
                   bg-slate-700/40 text-slate-200 border border-slate-600/50
                   hover:bg-slate-700/60 hover:text-white
                   transition-all duration-200
-                  focus:outline-none focus:ring-2 focus:ring-slate-500/50
+                  focus:ring-2 focus:ring-offset-2 focus:ring-slate-500
                 "
               >
                 Close (Esc)

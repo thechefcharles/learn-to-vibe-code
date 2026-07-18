@@ -332,16 +332,23 @@ export function MarkdownRenderer({ content }: MarkdownRendererProps) {
             className="mb-6 p-4 rounded-lg border border-slate-600 bg-slate-800/50 hover:bg-slate-800/70 transition-colors"
           >
             {imagePath ? (
-              <a
-                href={imagePath}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-cyan-400 hover:text-cyan-300 underline"
-              >
-                <span className="text-xl">📸</span>
-                <span className="text-sm font-medium">{description}</span>
-                <span className="text-xs text-slate-400 ml-auto">↗ Open in new tab</span>
-              </a>
+              <figure className="flex flex-col">
+                <a
+                  href={imagePath}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block mb-2"
+                >
+                  <img
+                    src={imagePath}
+                    alt={description}
+                    className="w-full rounded-lg border border-slate-500"
+                  />
+                </a>
+                <figcaption className="text-sm text-slate-300 text-center">
+                  {description}
+                </figcaption>
+              </figure>
             ) : (
               <div className="flex items-start gap-4">
                 <div className="text-4xl flex-shrink-0">📸</div>

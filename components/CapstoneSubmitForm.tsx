@@ -64,13 +64,14 @@ export default function CapstoneSubmitForm() {
       )}
 
       <div>
-        <label className={`block text-sm font-bold mb-2 ${isKids ? "text-purple-700" : "text-white"}`}>Project Writeup (Optional)</label>
+        <label htmlFor="project-writeup" className={`block text-sm font-bold mb-2 ${isKids ? "text-purple-700" : "text-white"}`}>Project Writeup (Optional)</label>
         <textarea
+          id="project-writeup"
           value={writeup}
           onChange={(e) => setWriteup(e.target.value)}
           placeholder={isKids ? "What does your app do? What was the coolest part to build?" : "Describe your project, the problem it solves, and what AI features you implemented..."}
           rows={5}
-          className={`w-full px-4 py-2 rounded-lg focus:outline-none ${isKids ? "bg-purple-50 border border-purple-300 text-slate-700 placeholder-slate-500 focus:border-purple-600" : "bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:border-blue-500"}`}
+          className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-offset-2 ${isKids ? "bg-purple-50 border border-purple-300 text-slate-700 placeholder-slate-500 focus:border-purple-600 focus:ring-purple-500" : "bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:border-blue-500 focus:ring-blue-500"}`}
         />
         <p className={`text-xs mt-2 ${isKids ? "text-purple-600" : "text-slate-400"}`}>
           {isKids ? "Tell us what makes your project special!" : "Be specific about your AI integration and technical decisions"}
@@ -78,13 +79,14 @@ export default function CapstoneSubmitForm() {
       </div>
 
       <div>
-        <label className={`block text-sm font-bold mb-2 ${isKids ? "text-purple-700" : "text-white"}`}>GitHub Repository URL *</label>
+        <label htmlFor="repo-url" className={`block text-sm font-bold mb-2 ${isKids ? "text-purple-700" : "text-white"}`}>GitHub Repository URL *</label>
         <input
+          id="repo-url"
           type="url"
           value={repoUrl}
           onChange={(e) => setRepoUrl(e.target.value)}
           placeholder="https://github.com/username/project"
-          className={`w-full px-4 py-2 rounded-lg focus:outline-none ${isKids ? "bg-purple-50 border border-purple-300 text-slate-700 placeholder-slate-500 focus:border-purple-600" : "bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:border-blue-500"}`}
+          className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-offset-2 ${isKids ? "bg-purple-50 border border-purple-300 text-slate-700 placeholder-slate-500 focus:border-purple-600 focus:ring-purple-500" : "bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:border-blue-500 focus:ring-blue-500"}`}
           required
         />
         <p className={`text-xs mt-2 ${isKids ? "text-purple-600" : "text-slate-400"}`}>
@@ -93,13 +95,14 @@ export default function CapstoneSubmitForm() {
       </div>
 
       <div>
-        <label className={`block text-sm font-bold mb-2 ${isKids ? "text-purple-700" : "text-white"}`}>Live Project URL *</label>
+        <label htmlFor="live-url" className={`block text-sm font-bold mb-2 ${isKids ? "text-purple-700" : "text-white"}`}>Live Project URL *</label>
         <input
+          id="live-url"
           type="url"
           value={liveUrl}
           onChange={(e) => setLiveUrl(e.target.value)}
           placeholder="https://my-project.vercel.app"
-          className={`w-full px-4 py-2 rounded-lg focus:outline-none ${isKids ? "bg-purple-50 border border-purple-300 text-slate-700 placeholder-slate-500 focus:border-purple-600" : "bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:border-blue-500"}`}
+          className={`w-full px-4 py-2 rounded-lg focus:ring-2 focus:ring-offset-2 ${isKids ? "bg-purple-50 border border-purple-300 text-slate-700 placeholder-slate-500 focus:border-purple-600 focus:ring-purple-500" : "bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:border-blue-500 focus:ring-blue-500"}`}
           required
         />
         <p className={`text-xs mt-2 ${isKids ? "text-purple-600" : "text-slate-400"}`}>

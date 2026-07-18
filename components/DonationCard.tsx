@@ -64,7 +64,11 @@ export default function DonationCard() {
 
         {/* Custom Amount */}
         <div className="flex gap-3">
+          <label htmlFor="custom-amount" className="sr-only">
+            Custom donation amount
+          </label>
           <input
+            id="custom-amount"
             type="number"
             value={customAmount}
             onChange={(e) => {
@@ -72,8 +76,9 @@ export default function DonationCard() {
               if (e.target.value) setAmount("");
             }}
             placeholder="Custom amount ($)"
-            className="flex-1 px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-purple-500"
+            className="flex-1 px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 focus:border-purple-500"
             min="1"
+            aria-label="Custom donation amount in dollars"
           />
         </div>
 

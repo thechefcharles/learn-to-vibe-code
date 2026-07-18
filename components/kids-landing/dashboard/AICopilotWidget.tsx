@@ -118,7 +118,7 @@ export function AICopilotWidget() {
           onKeyPress={handleKeyPress}
           placeholder="What do you want to build?"
           disabled={isTyping}
-          className="flex-1 px-3 py-2 bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg text-base text-white placeholder-gray-400 focus:border-cyan-300/80 focus:outline-none transition-colors disabled:opacity-50"
+          className="flex-1 px-3 py-2 bg-white/5 backdrop-blur-sm border border-white/30 rounded-lg text-base text-white placeholder-gray-400 focus:border-cyan-300/80 focus:ring-2 focus:ring-cyan-300/50 transition-colors disabled:opacity-50"
           aria-label="AI suggestion input"
         />
         <button

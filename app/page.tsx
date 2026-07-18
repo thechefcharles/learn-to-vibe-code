@@ -10,5 +10,9 @@ export const metadata: Metadata = {
 export default async function Home() {
   const user = await getUser();
   // Always show landing page regardless of auth status
-  return <KidsLandingPage isSignedIn={!!user} />;
+  return (
+    <main>
+      <KidsLandingPage isSignedIn={!!user} />
+    </main>
+  );
 }

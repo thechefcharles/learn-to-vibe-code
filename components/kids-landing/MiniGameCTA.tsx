@@ -154,7 +154,7 @@ export const MiniGameCTA: React.FC = () => {
                 tabIndex={0}
                 aria-label={`Code block ${index + 1}: ${block.text}`}
                 aria-pressed={selectedIndex === index}
-                className={`p-4 rounded-lg font-mono text-base cursor-pointer transition-all focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black ${
+                className={`p-4 rounded-lg font-mono text-base cursor-pointer transition-all focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black ${
                   draggedIndex === index
                     ? 'bg-cyan-500/20 border-2 border-cyan-400 opacity-50'
                     : selectedIndex === index

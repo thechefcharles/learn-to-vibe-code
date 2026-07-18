@@ -109,7 +109,7 @@ export function FreeWidget() {
           <motion.button
             onClick={handleFlip}
             disabled={!selected}
-            className="cursor-pointer mb-6 focus:outline-none disabled:cursor-not-allowed"
+            className="cursor-pointer mb-6 focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black disabled:cursor-not-allowed"
             whileHover={selected ? { scale: 1.08 } : {}}
             whileTap={selected ? { scale: 0.92 } : {}}
           >
@@ -133,7 +133,7 @@ export function FreeWidget() {
       {/* Flipping Stage: Coin is spinning */}
       {(stage === 'flipping' || stage === 'landed') && (
         <motion.button
-          className="cursor-pointer mb-6 focus:outline-none"
+          className="cursor-pointer mb-6 focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-black"
           disabled
         >
           <motion.div

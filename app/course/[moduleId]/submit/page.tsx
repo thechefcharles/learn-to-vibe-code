@@ -69,7 +69,7 @@ export default function SubmitPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
+    <main className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 py-12 px-4">
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <Link
@@ -158,7 +158,7 @@ export default function SubmitPage() {
                 value={repoUrl}
                 onChange={(e) => setRepoUrl(e.target.value)}
                 placeholder="https://github.com/username/project"
-                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:border-blue-500"
                 required
               />
               <p className="text-xs text-slate-400 mt-2">
@@ -175,7 +175,7 @@ export default function SubmitPage() {
                 value={liveUrl}
                 onChange={(e) => setLiveUrl(e.target.value)}
                 placeholder="https://my-app.vercel.app"
-                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-blue-500"
+                className="w-full px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:border-blue-500"
                 required
               />
               <p className="text-xs text-slate-400 mt-2">
@@ -199,6 +199,6 @@ export default function SubmitPage() {
           </form>
         )}
       </div>
-    </div>
+    </main>
   );
 }

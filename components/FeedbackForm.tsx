@@ -155,7 +155,7 @@ export default function FeedbackForm({ onSuccess }: FeedbackFormProps) {
           onChange={(e) => setChallenge(e.target.value)}
           placeholder={isKids ? "e.g., 'Understanding database concepts' or 'The quiz questions were confusing'" : "e.g., 'Understanding RLS concepts' or 'Quiz questions were worded confusingly'"}
           rows={4}
-          className={`w-full px-4 py-3 rounded-lg focus:outline-none resize-none ${isKids ? "bg-purple-50 border border-purple-300 text-slate-700 placeholder-slate-500 focus:border-purple-600" : "bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:border-blue-500"}`}
+          className={`w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-offset-2 resize-none ${isKids ? "bg-purple-50 border border-purple-300 text-slate-700 placeholder-slate-500 focus:border-purple-600 focus:ring-purple-500" : "bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:border-blue-500 focus:ring-blue-500"}`}
         />
         <p className={`text-xs mt-2 ${isKids ? "text-purple-600" : "text-slate-400"}`}>
           {isKids ? "Be specific so we can help improve those parts" : "Your specific feedback helps us improve"}
@@ -172,7 +172,7 @@ export default function FeedbackForm({ onSuccess }: FeedbackFormProps) {
           onChange={(e) => setSuggestions(e.target.value)}
           placeholder={isKids ? "e.g., 'More examples' or 'Video walkthrough'" : "e.g., 'More worked examples' or 'Video walkthrough of the quiz'"}
           rows={4}
-          className={`w-full px-4 py-3 rounded-lg focus:outline-none resize-none ${isKids ? "bg-purple-50 border border-purple-300 text-slate-700 placeholder-slate-500 focus:border-purple-600" : "bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:border-blue-500"}`}
+          className={`w-full px-4 py-3 rounded-lg focus:ring-2 focus:ring-offset-2 resize-none ${isKids ? "bg-purple-50 border border-purple-300 text-slate-700 placeholder-slate-500 focus:border-purple-600 focus:ring-purple-500" : "bg-slate-700 border border-slate-600 text-white placeholder-slate-400 focus:border-blue-500 focus:ring-blue-500"}`}
         />
         <p className={`text-xs mt-2 ${isKids ? "text-purple-600" : "text-slate-400"}`}>
           {isKids ? "Tell us what would make learning easier for you" : "Tell us what content or format would help"}

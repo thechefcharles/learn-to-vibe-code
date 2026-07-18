@@ -147,7 +147,7 @@ export default async function LessonPage(props: LessonPageProps) {
       return (
         <ModuleCompletionFlow moduleId={String(moduleId)} moduleName={pageTitle} nextModuleId={nextModuleId}>
           <CoursePageInteractive moduleNumber={moduleId} user={user}>
-            <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
+            <main className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
               <LessonViewToggle
                 moduleId={moduleId}
                 lessonTitle={pageTitle}
@@ -159,7 +159,7 @@ export default async function LessonPage(props: LessonPageProps) {
               >
                 <StepLessonViewer steps={steps} moduleId={moduleId} user={user} actualCurrentModule={actualCurrentModule} isModulePreview={isModulePreview} />
               </LessonViewToggle>
-            </div>
+            </main>
           </CoursePageInteractive>
         </ModuleCompletionFlow>
       );
@@ -172,7 +172,7 @@ export default async function LessonPage(props: LessonPageProps) {
   return (
     <ModuleCompletionFlow moduleId={String(moduleId)} moduleName={pageTitle} nextModuleId={nextModuleId}>
       <CoursePageInteractive moduleNumber={moduleId} user={user}>
-        <div className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
+        <main className={`min-h-screen ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
         {/* Header */}
         {!isKids && <CourseLessonHeader moduleId={String(moduleId)} lessonTitle={pageTitle} user={user} />}
 
@@ -275,7 +275,7 @@ export default async function LessonPage(props: LessonPageProps) {
             )}
             </div>
           </div>
-        </div>
+        </main>
       </CoursePageInteractive>
     </ModuleCompletionFlow>
   );

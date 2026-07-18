@@ -20,7 +20,7 @@ export default async function CapstonePage() {
   const moduleUnlocked = await isModuleUnlocked(15);
   if (!moduleUnlocked) {
     return (
-      <div className={`min-h-screen py-12 px-4 ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
+      <main className={`min-h-screen py-12 px-4 ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
         <div className="max-w-2xl mx-auto">
           <div className={`rounded-lg p-8 border ${isKids ? "bg-white border-purple-300" : "bg-slate-800 border-slate-700"}`}>
             <h1 className={`text-3xl font-bold mb-4 ${isKids ? "text-purple-700" : "text-white"}`}>
@@ -37,7 +37,7 @@ export default async function CapstonePage() {
             </Link>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -160,6 +160,6 @@ export default async function CapstonePage() {
           <CapstoneSubmitForm />
         )}
       </div>
-    </div>
+    </main>
   );
 }

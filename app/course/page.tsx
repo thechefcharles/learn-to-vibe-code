@@ -4,8 +4,10 @@ import { CourseLoading } from '@/components/course/CourseLoading';
 
 export default function CoursePage() {
   return (
-    <Suspense fallback={<CourseLoading />}>
-      <CourseContent />
-    </Suspense>
+    <main>
+      <Suspense fallback={<CourseLoading />}>
+        <CourseContent />
+      </Suspense>
+    </main>
   );
 }
