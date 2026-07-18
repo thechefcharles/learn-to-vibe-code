@@ -15,6 +15,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [version, setVersion] = useState<Version>("adult");
+  const [termsAccepted, setTermsAccepted] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -30,6 +31,11 @@ export default function SignUp() {
   async function handleSignUp(e: React.FormEvent) {
     e.preventDefault();
     setError("");
+
+    if (!termsAccepted) {
+      setError("You must agree to the Terms of Service, Privacy Policy, and Refund Policy to continue");
+      return;
+    }
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
@@ -195,10 +201,37 @@ export default function SignUp() {
               </div>
             ))}
 
+            {/* Terms Agreement Checkbox */}
+            <div className="mt-6 p-4 bg-white/5 backdrop-blur-md rounded-lg border border-white/20">
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={termsAccepted}
+                  onChange={(e) => setTermsAccepted(e.target.checked)}
+                  className="mt-1 w-5 h-5 rounded accent-cyan-400 cursor-pointer flex-shrink-0"
+                  required
+                />
+                <span className="text-sm text-gray-300">
+                  I agree to the{" "}
+                  <Link href="/legal/terms" target="_blank" className="text-cyan-400 hover:text-cyan-300 underline">
+                    Terms of Service
+                  </Link>
+                  ,{" "}
+                  <Link href="/legal/privacy" target="_blank" className="text-cyan-400 hover:text-cyan-300 underline">
+                    Privacy Policy
+                  </Link>
+                  , and{" "}
+                  <Link href="/legal/refund" target="_blank" className="text-cyan-400 hover:text-cyan-300 underline">
+                    Refund Policy
+                  </Link>
+                </span>
+              </label>
+            </div>
+
             {/* Submit Button with Gradient */}
             <motion.button
               type="submit"
-              disabled={loading}
+              disabled={loading || !termsAccepted}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className="w-full mt-6 py-3 rounded-lg font-bold text-white uppercase tracking-wider transition-all disabled:opacity-60"
