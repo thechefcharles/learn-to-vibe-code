@@ -53,6 +53,11 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/course/feedback" className="text-cyan-300 hover:text-cyan-200 transition">
+                  Feedback
+                </Link>
+              </li>
+              <li>
                 <Link href="/support" className="text-cyan-300 hover:text-cyan-200 transition">
                   Donate
                 </Link>
