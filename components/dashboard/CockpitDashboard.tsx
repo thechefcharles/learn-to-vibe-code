@@ -283,10 +283,10 @@ export function CockpitDashboard({
                       : 'border-slate-600/30 bg-slate-800/20 opacity-30 grayscale'
                   }`}
                 >
-                  <div className={`w-12 h-12 mb-2 ${!earned && 'opacity-40'}`}>
+                  <div className={`w-14 h-14 mb-3 ${!earned && 'opacity-40'}`}>
                     <Badge type={badgeConfig.type} tier={badgeConfig.tier} size="sm" />
                   </div>
-                  <p className={`text-xs font-bold text-center line-clamp-2 mb-1 ${earned ? 'text-white' : 'text-slate-500'}`}>
+                  <p className={`text-xs font-bold text-center line-clamp-2 mb-1.5 ${earned ? 'text-white' : 'text-slate-500'}`}>
                     {badge.name}
                   </p>
                   <p className={`text-xs text-center line-clamp-2 ${earned ? 'text-slate-400' : 'text-slate-600'}`}>
