@@ -520,6 +520,71 @@ Iterate until the agent is reliable across all cases.
 
 ---
 
+## Full Scenario Planning: Task Dependencies in Workflows
+
+### Scenario D: Task Complexity & the Critical Path
+
+You're building an **AI tutoring app** that helps students learn any subject through AI-generated quizzes and explanations. Your team has 5 critical tasks:
+
+**Task list with estimates:**
+- Task 1: User authentication (sign up/login) — **2 days**
+- Task 2: Build question database (store questions by topic) — **1 day**
+- Task 3: AI scoring engine (grade answers, generate explanations) — **3 days**
+- Task 4: Student dashboard (show progress, recommended topics) — **2 days**
+- Task 5: Mobile responsive design — **1 day**
+
+**Dependencies:**
+- Task 1 (Auth) must complete BEFORE tasks 2, 3, 4 (they all need to know whose data it is)
+- Task 2 (Database) must complete BEFORE task 3 (AI needs questions to score)
+- Task 3 (Scoring) must complete BEFORE task 4 (Dashboard needs scoring results)
+- Task 5 (Mobile) is independent — can happen in parallel with anything
+
+**Challenge:** What's the critical path (longest dependency chain)? Where are the bottlenecks?
+
+**Answer:**
+The critical path is: Task 1 (2 days) → Task 2 (1 day) → Task 3 (3 days) → Task 4 (2 days) = **8 days total**.
+
+Task 5 can run in parallel (while Task 1-2 are running), so total project time stays 8 days.
+
+**The bottleneck:** Task 3 (AI scoring) is the longest single task. If it takes longer, the whole project slips. 
+
+**Parallelization opportunity:** Task 5 and Task 3 can happen simultaneously. While one person builds scoring, another person works on mobile design.
+
+**Lesson learned:** Before you start coding, draw the dependency chain and identify the longest path. That's your critical path. Look for tasks that can run in parallel to compress time. 🎯
+
+---
+
+### Scenario E: Time Pressure & Scope Trade-Off
+
+Your CEO wants a **working demo in 3 days** for an investor meeting. Your original plan was 7 days. Both timelines use the same 6 tasks:
+
+**Original 7-day plan:**
+- Task 1: Database schema & Supabase setup — **1.5 days**
+- Task 2: User authentication (sign up/login) — **1.5 days**
+- Task 3: List view (show all users' data) — **1 day**
+- Task 4: Edit functionality — **1 day**
+- Task 5: Delete functionality — **0.5 day**
+- Task 6: Sort/filter features — **1 day**
+
+**Challenge:** How do you deliver a working app in 3 days? Which features are essential for the demo, and what can you defer to v1.1?
+
+**Analysis:**
+For the demo, the CEO just wants to say: *"Look, users can sign up, log in, and see their data."* They don't need editing, deleting, or fancy filtering. Those are nice-to-haves.
+
+**MVP for 3-day demo (achievable):**
+- Database + Auth (tasks 1-2: 3 days) — Everything depends on these
+- List view (task 3: 1 day, parallel with Auth) — Proves the app works
+
+**Total: 3 days.** Users can sign up, log in, see their data. Demo works! ✅
+
+**Defer to v1.1 (after investor meeting):**
+- Edit, Delete (tasks 4-5): Add next week
+- Sort/Filter (task 6): Add after feedback
+
+**Lesson learned:** When time is tight, cut features, not quality. Ship one thing great rather than everything broken. Ask: *"What's the minimum the user needs to see?"* Build that. Everything else is Phase 2. 🚀
+
+---
+
 **Rubric checklist (before you submit):**
 
 | Checkmark | What to check |
