@@ -1,6 +1,6 @@
 # Module 11: Deploying Applications (Vercel + GitHub)
 
-**Stage:** Production · **Level:** Advanced · **Duration:** ~5 contact hours (0.5 CEU)
+**Stage:** Production · **Level:** Advanced · **Duration:** ~5.5 contact hours (0.55 CEU)
 
 **Prerequisites:** Modules 7 & 9. Learners have the invoice-tracker on GitHub (Module 10) with Supabase auth + RLS (Module 8). Now it goes live on the internet.
 
@@ -100,7 +100,36 @@ You never test experiments in production, and every change is verifiable in a re
 
 ---
 
-## Lesson 11.4 — Custom domain & production config (~45 min)
+## Lesson 11.4 — A database per environment (dev / preview / production) (~30 min)
+
+Preview deploys (Lesson 11.3) solve half the problem: your *code* is isolated per branch. But if all those previews point at the **same Supabase project as production**, a test signup, a `delete`, or a half-finished migration in a preview touches **real user data**. Isolating code without isolating data is a trap.
+
+**The principle: one database per environment.** Dev and preview get throwaway data you can break; production is sacred and only your live `main` deploy touches it.
+
+**The beginner-practical setup — two Supabase projects:**
+
+1. Create a **second** Supabase project. Now you have two: `myapp-prod` (real users) and `myapp-dev` (throwaway/test data).
+2. In **Vercel → Settings → Environment Variables**, use the **same variable names with different values per environment**. Vercel scopes every variable to **Production / Preview / Development** separately:
+   - `NEXT_PUBLIC_SUPABASE_URL` + keys → **Production** = your `myapp-prod` values.
+   - Same variable names → **Preview** and **Development** = your `myapp-dev` values.
+3. Result: your `main` → production deploy uses the production database; **every PR preview uses the dev database**. You can break a preview freely — real users never see it and their data is untouched.
+
+[SCREENSHOT: Vercel Environment Variables page showing NEXT_PUBLIC_SUPABASE_URL scoped to Production vs Preview with different values]
+
+**Keep the schemas in sync with migrations (don't click twice).** Two databases must have the same tables and RLS policies, or code that works in dev breaks in prod. Don't build each one by hand — use **versioned SQL migrations** (Module 14): apply the same migration file to each project (`supabase db push` against each, or paste it into each project's SQL editor). Migrations are the source of truth, so dev and prod never drift.
+
+**Auth URLs are per-project too.** Each Supabase project needs its own **Site URL / Redirect URLs** (Lesson 11.5): the dev project points at your preview/`localhost` URLs, the prod project at your real domain. Set them once per project.
+
+**Grow into it (awareness — not required for the capstone):**
+
+- **Supabase local** — `supabase start` runs the entire stack (Postgres, Auth, Storage) on your machine via Docker, fully offline. Develop and test migrations locally, then `supabase db push` to a hosted project. Great once you're comfortable with the CLI; it needs Docker installed.
+- **Supabase branching** — Supabase can automatically spin up a fresh preview database for each git branch/PR, mirroring Vercel's preview deploys. It's the fully-automated version of "a database per environment" — reach for it when managing two projects by hand becomes the bottleneck.
+
+**Rule of thumb:** never let an experiment touch production data. At minimum, a separate dev project; ideally, automated per-branch databases as you scale.
+
+---
+
+## Lesson 11.5 — Custom domain & production config (~45 min)
 
 **In this lesson:** Two critical things separate a demo from a production app:
 
@@ -146,12 +175,12 @@ When you deploy to Vercel, auth breaks if Supabase doesn't know your production 
 
 [SCREENSHOT: Supabase URL Configuration page, showing Site URL and Redirect URLs filled in]
 
-> **Beyond the basics (awareness — not required for the capstone):** as a project grows you'll meet a few more Vercel features. (1) **Per-environment env vars** — Vercel scopes variables to Production / Preview / Development separately, so preview deploys can point at a *separate* Supabase project instead of touching real data. (2) **Instant rollback** — the Deployments list can promote a previous build back to production in one click when a deploy breaks. (3) **Staging branch → its own domain** — map a long-lived branch (e.g. `staging`) to a fixed URL for a stable pre-prod environment. (4) **Preview protection** — password-protect or auth-gate preview URLs so they aren't public. You don't need these to pass — just know they exist for when an app outgrows one-env-one-database.
+> **Beyond the basics (awareness — not required for the capstone):** as a project grows you'll meet a few more Vercel features. (1) **Per-environment env vars & a database per environment** — pointing preview deploys at a separate Supabase project so they never touch real data (walked through in Lesson 11.4). (2) **Instant rollback** — the Deployments list can promote a previous build back to production in one click when a deploy breaks. (3) **Staging branch → its own domain** — map a long-lived branch (e.g. `staging`) to a fixed URL for a stable pre-prod environment. (4) **Preview protection** — password-protect or auth-gate preview URLs so they aren't public. You don't need these to pass — just know they exist for when an app outgrows one-env-one-database.
 > 
 
 ---
 
-## Lesson 11.5 — Vercel vs. the alternatives (~30 min)
+## Lesson 11.6 — Vercel vs. the alternatives (~30 min)
 
 This delivers Objective 3.
 
@@ -216,7 +245,7 @@ This delivers Objective 3.
 ### Step 7: Test auth in production (3 min)
 1. On your live site, try to sign up with a new email
 2. You might see an error (auth not configured for production)
-3. This is normal — need to configure Supabase auth URLs (see Lesson 11.4)
+3. This is normal — need to configure Supabase auth URLs (see Lesson 11.5)
 
 ### Step 8: Configure Supabase Auth for production (5 min)
 1. In Supabase dashboard, go to **Authentication → URL Configuration**
@@ -323,7 +352,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 ## Tools & alternatives (this module)
 
-Default: **Vercel** from **GitHub**, with **Supabase** as the production backend. Alternatives in Lesson 11.5. Deployment is a great agentic task — Claude Code can configure build settings or debug a failed deploy from logs — but *you* own env-var and auth config (secrets and production URLs).
+Default: **Vercel** from **GitHub**, with **Supabase** as the production backend. Alternatives in Lesson 11.6. Deployment is a great agentic task — Claude Code can configure build settings or debug a failed deploy from logs — but *you* own env-var and auth config (secrets and production URLs).
 
 ---
 
