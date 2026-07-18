@@ -1,6 +1,6 @@
 # Module 6: Building Apps in Claude Code (Agentic)
 
-**Stage:** Building · **Level:** Intermediate · **Duration:** ~6 contact hours (0.6 CEU)
+**Stage:** Building · **Level:** Intermediate · **Duration:** ~6.5 contact hours (0.65 CEU)
 
 **Prerequisites:** Module 5. Learners have a running Next.js invoice-tracker with the clients feature (mock data) and know the in-editor (Cursor) workflow.
 
@@ -15,7 +15,8 @@ By the end of this module, the learner can:
 1. **Orchestrate** an agentic build or refactor across a repository from the terminal. *(Create)*
 2. **Direct** an agent with a written plan and review its multi-step output. *(Apply)*
 3. **Determine** which tasks suit agentic (Claude Code) vs. in-editor (Cursor) workflows. *(Analyze)*
-4. **Leverage** advanced terminal commands and visual workflows to optimize agentic development. *(Apply)*
+4. **Select** the right model tier (Opus / Sonnet / Haiku) for a task and switch between them mid-session. *(Analyze)*
+5. **Leverage** advanced terminal commands and visual workflows to optimize agentic development. *(Apply)*
 
 ---
 
@@ -155,7 +156,33 @@ Two habits:
 
 ---
 
-## Lesson 6.6 — Cursor vs. Claude Code: which for which task (~45 min)
+## Lesson 6.6 — Choosing and switching models (~20 min)
+
+The model is a dial, not a fixed setting. Claude comes in tiers, and matching the tier to the task is one of the highest-leverage habits in AI-assisted development — it changes your speed, your cost, and how good the output is.
+
+**The three tiers:**
+
+| Tier | Strengths | Reach for it when… |
+| --- | --- | --- |
+| **Opus** (most capable) | Deep reasoning, architecture, gnarly multi-file debugging, ambiguous problems | Planning a feature, designing a data model, "why is this *actually* breaking?" — anything you'd want a senior engineer for |
+| **Sonnet** (balanced default) | Strong coding, fast enough to stay in flow | Most day-to-day building: writing components, wiring routes, standard features |
+| **Haiku** (fastest, cheapest) | Speed and volume | Mechanical edits, renames, quick lookups, tight iteration loops |
+
+**The core habit: plan high, execute mid, grind low.** A strong workflow is to run **plan mode (Lesson 6.3) on Opus** — let the most capable model design the approach — then **switch to Sonnet to execute**, and drop to **Haiku for mechanical cleanup**. You get senior-level judgment where it matters and speed where it doesn't.
+
+**How to switch in Claude Code:** type `/model` and pick the tier. (Exact names and versions shift over time — check what's in the picker; the current families are the Claude 5 line plus Opus and Haiku tiers.) Some setups also expose a **fast mode** that keeps a capable model but returns output faster. You can switch mid-session freely — the model changes while your `CLAUDE.md` context and conversation stay intact.
+
+**In Cursor:** use the model picker in the chat/Composer panel (Module 5) — same principle, same tradeoff.
+
+**Rule of thumb:** stuck, confused, or designing → go *up* a tier. Task is obvious and repetitive → go *down* a tier. Don't pay Opus prices to rename a variable; don't ask Haiku to architect your auth.
+
+> ⚠️ **Cost & speed:** higher tiers cost more per token and respond slower. A common beginner mistake is running everything on the most powerful model "to be safe" — you burn budget and wait longer for edits a smaller model would nail instantly. Match the tool to the job.
+
+[SCREENSHOT: the Claude Code /model picker showing the available tiers]
+
+---
+
+## Lesson 6.7 — Cursor vs. Claude Code: which for which task (~45 min)
 
 Not competitors — complementary; skilled builders use both.
 
@@ -168,7 +195,7 @@ Not competitors — complementary; skilled builders use both.
 
 ---
 
-## Lesson 6.7 — Advanced terminal techniques: context, screenshots & voice (~60 min)
+## Lesson 6.8 — Advanced terminal techniques: context, screenshots & voice (~60 min)
 
 Power-user habits that make agentic development more efficient and accessible.
 
@@ -255,13 +282,15 @@ Claude Code: [executes, then proposes the filter]
 
 **Objective 3 — Choose the workflow:** for four tasks (rename `Client` to `Customer` everywhere; adjust one button's color; add a settings page; fix a heading typo), label each Cursor or Claude Code and justify in one line.
 
+**Objective 4 — Match the model:** for three tasks (design the data model for a new feature; rename a variable across two files; debug a race condition you can't explain), name which model tier you'd use (Opus / Sonnet / Haiku) and how you'd switch in Claude Code.
+
 *Pass mark: 80% and a working agentic feature submitted.*
 
 ---
 
 ## Tools & alternatives (this module)
 
-Default: **Claude Code** on the **Next.js** app. Alternatives compared in Lesson 6.6 (Codex CLI, Copilot agent mode, Cline/Continue). These pair with, not replace, the in-editor tool from Module 5 — real workflows use both.
+Default: **Claude Code** on the **Next.js** app. Alternatives compared in Lesson 6.7 (Codex CLI, Copilot agent mode, Cline/Continue). These pair with, not replace, the in-editor tool from Module 5 — real workflows use both.
 
 ---
 

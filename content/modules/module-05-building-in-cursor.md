@@ -59,6 +59,8 @@ npm run dev
 
 **Mental model:** Tab for keystrokes, Cmd+K for a block, Chat for thinking, Composer for a whole feature.
 
+**Picking the model:** the chat/Composer panel has a **model picker** — the same "match the model tier to the task" habit from Claude Code applies (Module 6, Lesson 6.6): a stronger model for planning and hard debugging, a faster one for mechanical edits. Switch it based on the task in front of you, not once-and-forget.
+
 ---
 
 [SCREENSHOT: Cursor Cmd+K inline edit showing a red/green diff with accept and reject buttons]
