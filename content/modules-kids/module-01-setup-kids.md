@@ -209,7 +209,7 @@ npm run dev
 
 ---
 
-## Lesson 0.7 — Secrets, APIs & Never Leaking Your Keys 🔐 (~45 min)
+## Lesson 0.6 — Secrets, APIs & Never Leaking Your Keys 🔐 (~60 min)
 
 **What happens if you don't learn this:** You accidentally commit a password or API key to GitHub. A bot finds it within minutes. Attackers use your exposed key to charge your credit card or steal data. You spend hours cleaning it up. It shows up on your GitHub profile forever. You learn the hard way — publicly.
 
@@ -424,7 +424,7 @@ grep -r "sk_live_" .  # Make sure no REAL Stripe keys!
 
 ---
 
-## Lesson 0.8 — Project Rules: Keeping Your Code Organized 📋
+## Lesson 0.7 — Project Rules: Keeping Your Code Organized 📋
 
 Before you start building, every good project needs **a few simple rules** to stay clean and organized. Think of these like the rules of a game — they keep everything running smoothly!
 
@@ -490,7 +490,7 @@ These three documents are like a game manual — they help you stay organized an
 
 ---
 
-## Lesson 0.9 — Where Does Your Project's Brain Live? (Repo vs. Notion) 🧠
+## Lesson 0.8 — Where Does Your Project's Brain Live? (Repo vs. Notion) 🧠
 
 You learned that some documentation (CLAUDE.md, decisions.md) lives in your project repository. But here's a secret: **not all documentation belongs in the same place!**
 
