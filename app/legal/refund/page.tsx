@@ -59,31 +59,49 @@ export default function RefundPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">How to Request a Refund</h2>
-              <p>
-                To request a refund within the 30-day window, please contact our support team with the following information:
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">Refund Request Process (30-Day Window)</h2>
+              <p className="mb-3">
+                <strong>Step 1: Email Support</strong>
               </p>
-              <ul className="list-disc list-inside mt-2 space-y-1">
-                <li>Your name and email address</li>
-                <li>Your Stripe receipt or transaction ID (if available)</li>
-                <li>The date of the donation</li>
-                <li>A brief explanation of why you are requesting a refund</li>
+              <p className="mb-3">
+                Send a refund request to <a href="mailto:support@learntovibe.code" className="text-blue-400 hover:text-blue-300">support@learntovibe.code</a> with:
+              </p>
+              <ul className="list-disc list-inside space-y-1 mb-3">
+                <li>Your full name and account email address</li>
+                <li>Your Stripe transaction ID (in your email receipt)</li>
+                <li>The exact donation amount and date</li>
+                <li>The reason for the refund request (duplicate charge, technical error, etc.)</li>
               </ul>
-              <p className="mt-3">
-                Send your request to:{" "}
-                <a href="mailto:support@learntovibe.code" className="text-blue-400 hover:text-blue-300">
-                  support@learntovibe.code
-                </a>
+              <p className="mb-3">
+                <strong>Step 2: Verification</strong>
               </p>
-              <p className="mt-2">
-                Approved refund requests will be processed within 5–10 business days. The funds will be returned to your original payment method.
+              <p className="mb-3">
+                Our support team will review your request within 2–3 business days. We may ask for additional information to verify the charge.
+              </p>
+              <p className="mb-3">
+                <strong>Step 3: Processing</strong>
+              </p>
+              <p className="mb-3">
+                Approved refunds are processed within 5–10 business days. Stripe will return funds to your original payment method (the timeframe depends on your bank).
+              </p>
+              <p className="bg-slate-700/50 p-3 rounded">
+                <strong>Important:</strong> Refund requests made after 30 days will be denied. You must contact us directly—do not initiate a chargeback first.
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">Chargeback Process</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">Chargebacks & Disputes</h2>
+              <p className="mb-3">
+                If you bypass our refund process and dispute a charge through your bank or payment provider (Stripe), it will be treated as a chargeback.
+              </p>
+              <p className="font-semibold mb-2">Chargeback Consequences:</p>
+              <ul className="list-disc list-inside space-y-1 mb-3">
+                <li>Your account may be flagged or suspended from future donations</li>
+                <li>Chargeback fees (typically $15–50) may apply through Stripe, which we cannot absorb</li>
+                <li>Repeated chargebacks may result in account termination</li>
+              </ul>
               <p>
-                If you dispute a donation charge through your bank or payment provider, it will be treated as a chargeback. Chargebacks may incur additional fees and could result in your account being flagged or suspended from future donations. We strongly encourage you to contact us first via email before initiating a chargeback, as we can often resolve issues more quickly.
+                <strong>Please contact our support team first.</strong> We can often resolve refund requests much faster than the chargeback process. Chargebacks take 30–60 days and are more costly for everyone.
               </p>
             </section>
 

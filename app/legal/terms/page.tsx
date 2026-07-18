@@ -53,30 +53,32 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">3. Certificate & Credential Disclaimer</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">3. Course Completion Badge & Non-Accreditation Disclaimer</h2>
               <p className="font-semibold text-amber-300 mb-3">IMPORTANT: Please read carefully.</p>
               <p className="mb-3">
-                Upon completing all 16 modules and passing your capstone project, you will receive a completion certificate from Learn to Vibe Code.
-                This certificate represents that you have completed our curriculum and demonstrated competency in AI-assisted development.
+                Upon completing all 16 modules and passing your capstone project, you will receive a <strong>Course Completion Badge</strong> from Learn to Vibe Code.
+                This badge represents that you have completed our curriculum and demonstrated competency in AI-assisted development.
+                <strong className="text-red-400"> This is NOT an accredited credential, degree, or professional certification.</strong>
               </p>
-              <p className="mb-3 font-semibold">Your certificate is:</p>
+              <p className="mb-3 font-semibold">Your Completion Badge is:</p>
               <ul className="list-disc list-inside space-y-1 mb-3">
                 <li>✓ Proof that you completed our 16-module curriculum</li>
                 <li>✓ Evidence of learning in AI-assisted full-stack development</li>
-                <li>✓ Shareable in your portfolio or on LinkedIn</li>
+                <li>✓ Shareable in your portfolio or on LinkedIn as proof of participation</li>
               </ul>
-              <p className="mb-3 font-semibold">Your certificate is NOT:</p>
+              <p className="mb-3 font-semibold">Your Completion Badge is NOT and does NOT:</p>
               <ul className="list-disc list-inside space-y-1 mb-3">
-                <li>✗ A professional license or degree</li>
-                <li>✗ Transferable for academic credit at universities</li>
-                <li>✗ A guarantee of employment or specific salary</li>
-                <li>✗ Issued by an accredited body (we are pursuing accreditation)</li>
-                <li>✗ A substitute for formal education or professional certification</li>
+                <li>✗ Constitute a professional license, degree, or academic credit</li>
+                <li>✗ Transfer to universities or other educational institutions</li>
+                <li>✗ Guarantee employment, a specific salary, or career advancement</li>
+                <li>✗ Come from an accredited institution (Learn to Vibe Code is pursuing accreditation but is currently unaccredited)</li>
+                <li>✗ Replace formal education or professional certifications required by law or regulation</li>
+                <li>✗ Entitle you to claim credentials that you have not earned through an accredited institution</li>
               </ul>
               <p className="bg-slate-700/50 p-3 rounded">
-                <strong>Your responsibility:</strong> You are responsible for assessing whether this course meets your career goals.
-                Some employers value self-directed learning; others may not. Your success depends on your effort, practice, and how
-                you apply these skills in real-world projects. We provide the curriculum and assessment; you drive your learning outcomes.
+                <strong>Your responsibility:</strong> You are responsible for assessing whether this course meets your career goals and verifying with employers whether they accept our completion badge.
+                Some employers value self-directed learning; others may not. Your success depends on your effort, practice, and how you apply these skills in real-world projects.
+                <strong> Misrepresenting this badge as an accredited credential may violate laws protecting credential holders.</strong>
               </p>
             </section>
 
@@ -117,7 +119,38 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">6. User Conduct</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">6. Refunds & Donation Disputes</h2>
+              <p className="mb-3">
+                <strong>For Donations:</strong> Donations are voluntary contributions to support Learn to Vibe Code.
+                Refund requests must be submitted in writing to <strong>support@learntovibe.code</strong> within <strong>30 days of your donation</strong>.
+              </p>
+              <ul className="list-disc list-inside space-y-1 mb-3">
+                <li>Refund requests made after 30 days will be denied</li>
+                <li>Refunds are processed via your original payment method (Stripe) within 5-10 business days</li>
+                <li>Disputed charges should be reported directly to your bank or payment provider</li>
+                <li>If you initiate a chargeback without requesting a refund first, your account may be suspended</li>
+              </ul>
+              <p className="bg-slate-700/50 p-3 rounded">
+                <strong>The course is free to use.</strong> Donations are optional and do not affect your access to course materials or the ability to earn a completion badge.
+                If you have concerns about a charge, contact <strong>support@learntovibe.code</strong> before disputing with your bank.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">7. Instructor Feedback & Grading</h2>
+              <p className="mb-3">
+                Instructor feedback on your quizzes, deliverables, and capstone project is <strong>educational opinion</strong>, not professional advice.
+              </p>
+              <ul className="list-disc list-inside space-y-1 mb-3">
+                <li>Feedback is intended to help you learn, not to guarantee career outcomes or employment</li>
+                <li>Instructors are not liable for any employment, salary, or career-related consequences of their feedback</li>
+                <li>If you believe a score is unfair, you may request a re-review by emailing <strong>support@learntovibe.code</strong> within 7 days</li>
+                <li>All grading decisions are final after re-review</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">8. User Conduct</h2>
               <p className="mb-3">You agree not to:</p>
               <ul className="list-disc list-inside space-y-1 mb-3">
                 <li>Share quiz answers or capstone solutions with other learners (violates academic integrity)</li>
@@ -133,7 +166,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">7. Intellectual Property</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">9. Intellectual Property</h2>
               <ul className="list-disc list-inside space-y-1">
                 <li><strong>Your Work:</strong> You retain all rights to your capstone project code and deliverables</li>
                 <li><strong>Our Content:</strong> All lessons, quizzes, and assessments are our property. Do not copy or redistribute without permission</li>
@@ -142,7 +175,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">8. Modifications</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">10. Modifications</h2>
               <p>
                 Learn to Vibe Code may revise these Terms of Service at any time without notice. By continuing to use this Service
                 after changes are posted, you agree to be bound by the updated Terms.
@@ -150,7 +183,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">9. Dispute Resolution & Governing Law</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">11. Dispute Resolution & Governing Law</h2>
               <p>
                 These Terms are governed by and construed in accordance with the laws of the jurisdiction in which Learn to Vibe Code operates.
                 Any legal dispute will be resolved through binding arbitration, not court proceedings.
@@ -158,7 +191,7 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">10. Severability</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">12. Severability</h2>
               <p>
                 If any provision of these Terms is found unenforceable, that provision is severed, and the remainder of these Terms continues
                 in full force.

@@ -123,7 +123,27 @@ export default function PrivacyPage() {
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">8. Contact Us Regarding Privacy</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">8. Children's Privacy (COPPA Compliance)</h2>
+              <p className="font-semibold mb-2">For Learners Under 13:</p>
+              <p className="mb-3">
+                Learn to Vibe Code offers a "kids" version of the course for learners ages 11–17.
+                If a learner identifies as under 13, we require verifiable parental consent before account creation.
+              </p>
+              <p className="font-semibold mb-2">Parental Rights:</p>
+              <ul className="list-disc list-inside space-y-1 mb-3">
+                <li>Parents can request a review of their child's information at any time</li>
+                <li>Parents can request deletion of their child's account and data (except learning records required for accreditation)</li>
+                <li>We do not use children's data for marketing or third-party advertising</li>
+                <li>We collect only the minimum data necessary (name, email, course progress)</li>
+              </ul>
+              <p className="text-sm text-slate-400">
+                For children's privacy requests, email: <a href="mailto:privacy@learntovibe.code" className="text-blue-400 hover:text-blue-300">privacy@learntovibe.code</a> with
+                "Children's Privacy Request" in the subject line and proof of guardianship.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">9. Contact Us Regarding Privacy</h2>
               <p>
                 If you have questions or comments about this Privacy Policy, please contact us at:{" "}
                 <a href="mailto:privacy@learntovibe.code" className="text-blue-400 hover:text-blue-300">
