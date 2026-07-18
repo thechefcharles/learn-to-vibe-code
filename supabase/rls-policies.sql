@@ -11,6 +11,7 @@ alter table xp enable row level security;
 alter table streaks enable row level security;
 alter table certificates enable row level security;
 alter table step_xp_claims enable row level security;
+alter table learner_feedback enable row level security;
 
 -- PROFILES TABLE POLICIES
 -- Users can insert their own row on signup
@@ -245,3 +246,24 @@ create policy "Instructors can view all certificates"
 create policy "Users can view their own step xp claims"
   on step_xp_claims for select
   using (auth.uid() = user_id);
+
+-- LEARNER FEEDBACK TABLE POLICIES
+-- Learners can view their own feedback
+create policy "Users can view their own feedback"
+  on learner_feedback for select
+  using (auth.uid() = user_id);
+
+-- Learners can insert their own feedback
+create policy "Users can insert their own feedback"
+  on learner_feedback for insert
+  with check (auth.uid() = user_id);
+
+-- Instructors can view all feedback
+create policy "Instructors can view all feedback"
+  on learner_feedback for select
+  using (
+    exists (
+      select 1 from profiles
+      where id = auth.uid() and role = 'instructor'
+    )
+  );

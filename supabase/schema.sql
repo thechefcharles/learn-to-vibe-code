@@ -151,6 +151,19 @@ create table if not exists certificates (
   unique(user_id)
 );
 
+-- Learner feedback table
+create table if not exists learner_feedback (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid not null references profiles(id) on delete cascade,
+  clarity text not null check (clarity in ('very-clear', 'mostly-clear', 'somewhat-unclear', 'not-clear')),
+  difficulty text not null check (difficulty in ('too-easy', 'just-right', 'too-hard')),
+  challenge text not null,
+  suggestions text not null,
+  would_recommend text not null check (would_recommend in ('yes', 'maybe', 'no')),
+  created_at timestamp with time zone default now(),
+  unique(user_id)
+);
+
 -- Create indexes for common queries
 create index if not exists idx_module_progress_user_id on module_progress(user_id);
 create index if not exists idx_module_progress_module_id on module_progress(module_id);
@@ -158,3 +171,4 @@ create index if not exists idx_quiz_attempts_user_id on quiz_attempts(user_id);
 create index if not exists idx_deliverables_user_id on deliverables(user_id);
 create index if not exists idx_badges_user_id on badges(user_id);
 create index if not exists idx_step_xp_claims_user_id on step_xp_claims(user_id);
+create index if not exists idx_learner_feedback_user_id on learner_feedback(user_id);
