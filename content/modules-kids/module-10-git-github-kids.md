@@ -1,8 +1,8 @@
-# Module 9: Git & GitHub (Save Your Code!) 💾
+# Module 10: Git & GitHub (Save Your Code!) 💾
 
 **Stage:** Production · **Level:** Intermediate · **Duration:** ~4 hours · **XP:** 400
 
-**What you need:** Modules 0-8
+**What you need:** Modules 0-9
 
 > **Why this matters:** GitHub is where you save your code online. It's like Google Drive for code. More importantly: GitHub is how you collaborate with other developers, how you deploy your app (Module 10), and how employers evaluate your skills. Every job-ready developer has a GitHub profile with real projects.
 
@@ -755,4 +755,4 @@ Here are your three quiz questions. Study these!
 - Clear commit messages matter forever—they're how you (and teammates) understand your project
 - Professional developers work in branches and use PRs, even solo
 
-**Next:** Module 10 — Deploying (Show the World!)
+**Next:** Module 11 — Deploying (Show the World!)
