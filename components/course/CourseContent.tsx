@@ -1,29 +1,76 @@
+'use client';
+
 import { getAllModuleProgress, isModuleUnlocked, getUserEnrolledVersion } from "@/lib/actions/course";
 import { getUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getModuleMetadata } from "@/lib/module-metadata";
 import type { Version } from "@/lib/VersionContext";
+import { useState, useEffect } from "react";
 
-export async function CourseContent() {
-  const user = await getUser();
-  if (!user) {
-    redirect("/auth/sign-in");
-  }
+const MODULE_LESSONS: Record<number, string[]> = {
+  1: ["System Requirements", "Cursor Setup", "Claude Code Setup", "GitHub Account"],
+  2: ["What is AI?", "How LLMs Work", "Prompting Basics", "Token Limits"],
+  3: ["Clear Instructions", "Few-Shot Examples", "Structured Output", "Iterating"],
+  4: ["Breaking Down Problems", "Spec Writing", "Requirements", "Edge Cases"],
+  5: ["Installing Cursor", "Command Palette", "Chat & Edit", "AI Pairs"],
+  6: ["Claude Code Intro", "Extensions", "Commands", "Workflows"],
+  7: ["Design Thinking", "Wireframes", "Color & Typography", "Accessibility"],
+  8: ["Database Design", "Auth Setup", "RLS Policies", "Migrations"],
+  9: ["Reading Code", "Debugging", "Error Messages", "DevTools"],
+  10: ["Git Basics", "Branches", "PRs & Reviews", "Collaboration"],
+  11: ["Vercel Intro", "Deployment", "Environment Vars", "Monitoring"],
+  12: ["Agent Patterns", "Multi-Step Tasks", "State Management", "Error Recovery"],
+  13: ["Performance", "Security", "Testing", "Documentation"],
+  14: ["CI/CD Pipelines", "Automation", "Scheduling", "Monitoring"],
+  15: ["Refactoring Legacy", "Tech Debt", "Migrations", "Testing Strategies"],
+  16: ["Current Tools", "What's Next?", "Continuing Learning", "Career Paths"],
+};
 
-  const progress = await getAllModuleProgress();
-  const version = (await getUserEnrolledVersion()) as Version || "adult";
-  const isKids = version === "kids";
+export function CourseContent() {
+  const [expandedModules, setExpandedModules] = useState<Set<number>>(new Set());
+  const [progress, setProgress] = useState<any[]>([]);
+  const [unlockedModules, setUnlockedModules] = useState<Record<number, boolean>>({});
+  const [version, setVersion] = useState<Version>("adult");
+  const [isKids, setIsKids] = useState(false);
 
-  // Fetch all unlock statuses in parallel (not sequentially)
-  const unlockedStatusesPromises = Array.from({ length: 16 }, (_, i) =>
-    isModuleUnlocked(i + 1).then(unlocked => ({ moduleId: i + 1, unlocked }))
-  );
-  const unlockedStatuses = await Promise.all(unlockedStatusesPromises);
-  const unlockedModules: Record<number, boolean> = {};
-  unlockedStatuses.forEach(({ moduleId, unlocked }) => {
-    unlockedModules[moduleId] = unlocked;
-  });
+  useEffect(() => {
+    const loadData = async () => {
+      const user = await getUser();
+      if (!user) {
+        redirect("/auth/sign-in");
+      }
+
+      const progressData = await getAllModuleProgress();
+      setProgress(progressData);
+
+      const enrolledVersion = (await getUserEnrolledVersion()) as Version || "adult";
+      setVersion(enrolledVersion);
+      setIsKids(enrolledVersion === "kids");
+
+      const unlockedStatusesPromises = Array.from({ length: 16 }, (_, i) =>
+        isModuleUnlocked(i + 1).then(unlocked => ({ moduleId: i + 1, unlocked }))
+      );
+      const unlockedStatuses = await Promise.all(unlockedStatusesPromises);
+      const unlockedMap: Record<number, boolean> = {};
+      unlockedStatuses.forEach(({ moduleId, unlocked }) => {
+        unlockedMap[moduleId] = unlocked;
+      });
+      setUnlockedModules(unlockedMap);
+    };
+
+    loadData();
+  }, []);
+
+  const toggleModule = (moduleId: number) => {
+    const newExpanded = new Set(expandedModules);
+    if (newExpanded.has(moduleId)) {
+      newExpanded.delete(moduleId);
+    } else {
+      newExpanded.add(moduleId);
+    }
+    setExpandedModules(newExpanded);
+  };
 
   const modules = [];
   for (let i = 1; i <= 16; i++) {
@@ -32,125 +79,141 @@ export async function CourseContent() {
   }
 
   return (
-    <div className={`min-h-screen py-12 px-4 ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
-      <div className="max-w-4xl mx-auto">
+    <div
+      className="min-h-screen py-8 px-4 relative"
+      style={{
+        backgroundImage: 'url(/course-map-bg.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      {/* Content container */}
+      <div className="max-w-5xl mx-auto relative z-10">
         {/* Navigation */}
-        <div className="flex justify-between items-center mb-12">
+        <div className="flex justify-between items-start mb-8 gap-6">
           <div>
-            <h1 className={`text-5xl font-bold mb-4 ${isKids ? "text-purple-600" : "text-white"}`}>
+            <h1 className="text-5xl font-bold mb-2 text-white drop-shadow-lg">
               {isKids ? "Course Map 🗺️" : "Course Map"}
             </h1>
-            <p className={`text-xl ${isKids ? "text-purple-700" : "text-slate-400"}`}>
+            <p className="text-lg text-white drop-shadow-md">
               {isKids
-                ? "Unlock 16 modules! 🎮 From hello-world to live apps on the internet! 🚀"
-                : "Learn to build with AI, step by step. 16 modules, from setup to production-ready apps."}
+                ? "Unlock 16 modules! 🎮 From hello-world to live apps! 🚀"
+                : "Learn to build with AI, step by step. 16 modules, from setup to production."}
             </p>
           </div>
-          <div className="flex gap-4">
-            <Link href="/dashboard" className={`px-4 py-2 rounded-lg transition font-bold ${isKids ? "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white" : "bg-blue-600 hover:bg-blue-700 text-white"}`}>
-              📊 {isKids ? "My Progress" : "Dashboard"}
-            </Link>
-          </div>
+          <Link
+            href="/dashboard"
+            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold rounded-lg transition-all shadow-lg hover:shadow-xl whitespace-nowrap"
+          >
+            {isKids ? "My Progress" : "→ Dashboard"}
+          </Link>
         </div>
 
-        <div className="space-y-4">
+        {/* Modules Grid */}
+        <div className="space-y-3">
           {modules.map((module) => {
             const isUnlocked = unlockedModules[module.id];
             const moduleProgress = progress.find((p: any) => p.module_id === module.id);
             const isCompleted = moduleProgress?.status === "completed";
+            const isExpanded = expandedModules.has(module.id);
+            const lessons = MODULE_LESSONS[module.id] || [];
 
             return (
-              <Link
-                key={module.id}
-                href={isUnlocked ? `/course/${module.id}` : "#"}
-                className={`block p-6 rounded-lg border-2 transition ${
-                  isKids
-                    ? !isUnlocked
-                      ? "border-gray-300 bg-gray-100/50 opacity-50 cursor-not-allowed"
+              <div key={module.id} className="group">
+                <button
+                  onClick={() => toggleModule(module.id)}
+                  disabled={!isUnlocked}
+                  className={`w-full text-left p-4 rounded-lg border-2 transition ${
+                    !isUnlocked
+                      ? "border-slate-600/30 bg-slate-900/30 opacity-40 cursor-not-allowed"
                       : isCompleted
-                      ? "border-green-400 bg-gradient-to-r from-green-100 to-emerald-100 hover:shadow-lg hover:shadow-green-300/40"
-                      : "border-purple-400 bg-gradient-to-r from-purple-100 to-pink-100 hover:shadow-lg hover:shadow-purple-300/40 cursor-pointer"
-                    : !isUnlocked
-                    ? "border-slate-700 bg-slate-800/50 opacity-60 cursor-not-allowed"
-                    : isCompleted
-                    ? "border-green-500 bg-slate-800 hover:bg-slate-700"
-                    : "border-blue-500 bg-slate-800 hover:bg-slate-700 hover:shadow-lg hover:shadow-blue-500/20 cursor-pointer"
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
+                      ? "border-green-500/60 bg-green-900/20 hover:bg-green-900/30"
+                      : "border-blue-500/60 bg-blue-900/20 hover:bg-blue-900/30 cursor-pointer"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3 flex-1">
                       <div
-                        className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${
-                          isKids
-                            ? isCompleted
-                              ? "bg-green-400 text-white"
-                              : "bg-purple-400 text-white"
-                            : isCompleted
-                            ? "bg-green-600/20 text-green-400"
-                            : "bg-blue-600/20 text-blue-400"
+                        className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 ${
+                          isCompleted
+                            ? "bg-green-500/30 text-green-300"
+                            : isUnlocked
+                            ? "bg-blue-500/30 text-blue-300"
+                            : "bg-slate-600/20 text-slate-400"
                         }`}
                       >
                         {isCompleted ? "✓" : module.id}
                       </div>
-                      <h3 className={`text-lg font-bold ${isKids ? "text-purple-900" : "text-white"}`}>
-                        {module.title}
-                      </h3>
+                      <div>
+                        <h3 className="text-base font-bold text-white">
+                          {module.title}
+                        </h3>
+                        <p className="text-xs text-slate-300 mt-1">
+                          {isCompleted
+                            ? "✓ Completed"
+                            : isUnlocked
+                            ? "🔓 Unlocked"
+                            : `🔒 Complete Module ${module.id - 1} first`}
+                        </p>
+                      </div>
                     </div>
-                    <p className={`text-sm ${isKids ? "text-purple-700" : "text-slate-400"}`}>
-                      {isCompleted
-                        ? isKids
-                          ? "✓ Level Complete! 🎉"
-                          : "✓ Completed"
-                        : isUnlocked
-                        ? isKids
-                          ? "🔓 Ready to Level Up!"
-                          : "🔓 Unlocked"
-                        : isKids
-                        ? `🔒 Complete Module ${module.id} first!`
-                        : `🔒 Complete Module ${module.id} to unlock`}
-                    </p>
+                    <div className={`text-xl flex-shrink-0 transition-transform ${isExpanded && isUnlocked ? 'rotate-180' : ''}`}>
+                      {isUnlocked ? (isCompleted ? "✓" : "▼") : "🔒"}
+                    </div>
                   </div>
-                  <div className={`text-4xl ${isKids && !isUnlocked ? "opacity-30" : ""}`}>
-                    {isCompleted ? "✓" : isUnlocked ? "→" : "🔒"}
+                </button>
+
+                {/* Expandable lessons */}
+                {isExpanded && isUnlocked && (
+                  <div className="mt-1 pl-4 pr-3 py-3 rounded-lg bg-slate-900/40 border-2 border-slate-700/40 space-y-2">
+                    {lessons.map((lesson, idx) => (
+                      <div key={idx} className="text-sm text-slate-300 flex items-start gap-2">
+                        <span className="text-slate-500 flex-shrink-0">→</span>
+                        <span>{lesson}</span>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              </Link>
+                )}
+              </div>
             );
           })}
 
           {/* Capstone */}
-          <Link
-            href="/capstone"
-            className={`block p-6 rounded-lg border-2 transition ${isKids ? "border-yellow-400 bg-gradient-to-r from-yellow-100 to-orange-100 hover:shadow-lg hover:shadow-yellow-300/40" : "border-purple-500 bg-slate-800 hover:bg-slate-700"} cursor-pointer`}
+          <button
+            onClick={() => {
+              window.location.href = "/capstone";
+            }}
+            className="w-full text-left p-4 rounded-lg border-2 border-purple-500/60 bg-purple-900/20 hover:bg-purple-900/30 transition cursor-pointer group"
           >
             <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg ${isKids ? "bg-yellow-400 text-white" : "bg-purple-600/20 text-purple-400"}`}>
-                    🎯
-                  </div>
-                  <h3 className={`text-lg font-bold ${isKids ? "text-yellow-900" : "text-white"}`}>
+              <div className="flex items-center gap-3 flex-1">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 bg-purple-500/30 text-purple-300">
+                  🎯
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-white">
                     {isKids ? "The Grand Challenge!" : "Capstone"}
                   </h3>
+                  <p className="text-xs text-slate-300 mt-1">
+                    {isKids ? "Build your masterpiece & earn a badge! 👑" : "Build & earn your credential"}
+                  </p>
                 </div>
-                <p className={`text-sm ${isKids ? "text-yellow-800" : "text-slate-400"}`}>
-                  {isKids ? "Build your masterpiece & earn a badge! 👑" : "Build, defend, and earn your credential"}
-                </p>
               </div>
-              <div className="text-3xl">→</div>
+              <div className="text-xl flex-shrink-0">→</div>
             </div>
-          </Link>
+          </button>
         </div>
 
-        <div className={`mt-12 p-6 rounded-lg border ${isKids ? "bg-pink-100/50 border-pink-300" : "bg-blue-500/10 border-blue-500/20"}`}>
-          <h3 className={`text-lg font-bold mb-2 ${isKids ? "text-pink-900" : "text-white"}`}>
+        {/* Info Box */}
+        <div className="mt-8 p-4 rounded-lg bg-slate-900/60 border border-slate-700/40 backdrop-blur-sm">
+          <h3 className="text-base font-bold text-white mb-2">
             {isKids ? "🎮 What You'll Learn" : "About This Course"}
           </h3>
-          <p className={`text-sm leading-relaxed ${isKids ? "text-pink-900" : "text-slate-300"}`}>
+          <p className="text-sm text-slate-300">
             {isKids
-              ? "16 levels to complete! You'll learn to build real apps using AI tools (Cursor, Claude Code), real frameworks (Next.js, Supabase), and real deployment (Vercel). By the end, you'll ship a live project and earn your Master Builder badge! 🚀"
-              : "This is the Accredited Vibe Coding Course — a hands-on path from zero to deployed app. You'll learn with real AI tools (Cursor, Claude Code), real frameworks (Next.js, Supabase), and real deployment (Vercel). By the end, you'll have shipped a live project and earned a verifiable credential."}
+              ? "16 levels to complete! You'll learn to build real apps using AI tools, frameworks, and deployment. By the end, you'll ship a live project! 🚀"
+              : "A hands-on path from zero to deployed app. You'll learn with Cursor, Claude Code, Next.js, Supabase, and Vercel. Ship a live project and earn a verifiable credential."}
           </p>
         </div>
       </div>
