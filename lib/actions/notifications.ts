@@ -1,25 +1,57 @@
 "use server";
 
 import { Resend } from "resend";
+import { getUser } from "@/lib/auth";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 /**
- * Send enrollment confirmation email
+ * Escape HTML special characters to prevent injection
+ */
+function escapeHtml(text: string): string {
+  const map: Record<string, string> = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;",
+  };
+  return text.replace(/[&<>"']/g, (char) => map[char] || char);
+}
+
+/**
+ * Send enrollment confirmation email (server action)
  */
 export async function sendEnrollmentEmail(
   email: string,
   name: string,
   version: string
 ) {
+  const user = await getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  // Verify user is sending email for themselves or is instructor
+  if (user.id !== email && user.role !== "instructor") {
+    throw new Error("Unauthorized");
+  }
+
+  // Validate email format
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    throw new Error("Invalid email address");
+  }
+
+  // Escape user input
+  const escapedName = escapeHtml(name);
+  const escapedVersion = escapeHtml(version);
+
   try {
     const result = await resend.emails.send({
       from: "Learn to Vibe Code <noreply@learntovibe.code>",
       to: email,
       subject: "Welcome to Learn to Vibe Code!",
       html: `
-        <h2>Welcome, ${name}!</h2>
-        <p>You've successfully enrolled in the <strong>Learn to Vibe Code</strong> course (${version === "kids" ? "Beginner" : "Advanced"} track).</p>
+        <h2>Welcome, ${escapedName}!</h2>
+        <p>You've successfully enrolled in the <strong>Learn to Vibe Code</strong> course (${escapedVersion === "kids" ? "Beginner" : "Advanced"} track).</p>
         <p>You're now ready to start learning AI-assisted full-stack development. Head to your dashboard to begin Module 1.</p>
         <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/course" style="background: #7C3AED; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; display: inline-block;">Start Learning</a></p>
         <p>Questions? Reply to this email or visit our support page.</p>
@@ -39,7 +71,7 @@ export async function sendEnrollmentEmail(
 }
 
 /**
- * Send quiz feedback email
+ * Send quiz feedback email (instructor only)
  */
 export async function sendQuizFeedbackEmail(
   email: string,
@@ -48,15 +80,35 @@ export async function sendQuizFeedbackEmail(
   score: number,
   passed: boolean
 ) {
+  const user = await getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  // Only instructors can send feedback emails
+  if (user.role !== "instructor") {
+    throw new Error("Unauthorized: only instructors can send feedback");
+  }
+
+  // Validate inputs
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    throw new Error("Invalid email address");
+  }
+  if (score < 0 || score > 100) {
+    throw new Error("Invalid score");
+  }
+
+  // Escape user input
+  const escapedName = escapeHtml(name);
+  const escapedModule = escapeHtml(moduleName);
+
   try {
     const result = await resend.emails.send({
       from: "Learn to Vibe Code <noreply@learntovibe.code>",
       to: email,
-      subject: `Quiz Results: ${moduleName}`,
+      subject: `Quiz Results: ${escapedModule}`,
       html: `
-        <h2>Quiz Results for ${moduleName}</h2>
-        <p>Hi ${name},</p>
-        <p>You scored <strong>${score}%</strong> on the ${moduleName} quiz.</p>
+        <h2>Quiz Results for ${escapedModule}</h2>
+        <p>Hi ${escapedName},</p>
+        <p>You scored <strong>${score}%</strong> on the ${escapedModule} quiz.</p>
         ${
           passed
             ? `<p style="color: #10b981;"><strong>✓ Passed!</strong> You're ready to move on to the next module.</p>`
@@ -79,7 +131,7 @@ export async function sendQuizFeedbackEmail(
 }
 
 /**
- * Send deliverable feedback email
+ * Send deliverable feedback email (instructor only)
  */
 export async function sendDeliverableFeedbackEmail(
   email: string,
@@ -88,22 +140,40 @@ export async function sendDeliverableFeedbackEmail(
   approved: boolean,
   feedback?: string
 ) {
+  const user = await getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  // Only instructors can send feedback emails
+  if (user.role !== "instructor") {
+    throw new Error("Unauthorized: only instructors can send feedback");
+  }
+
+  // Validate email
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    throw new Error("Invalid email address");
+  }
+
+  // Escape user input
+  const escapedName = escapeHtml(name);
+  const escapedModule = escapeHtml(moduleName);
+  const escapedFeedback = feedback ? escapeHtml(feedback) : "";
+
   try {
     const result = await resend.emails.send({
       from: "Learn to Vibe Code <noreply@learntovibe.code>",
       to: email,
-      subject: `Deliverable Review: ${moduleName}`,
+      subject: `Deliverable Review: ${escapedModule}`,
       html: `
-        <h2>Deliverable Review: ${moduleName}</h2>
-        <p>Hi ${name},</p>
+        <h2>Deliverable Review: ${escapedModule}</h2>
+        <p>Hi ${escapedName},</p>
         ${
           approved
-            ? `<p style="color: #10b981;"><strong>✓ Approved!</strong> Your deliverable for ${moduleName} has been approved.</p>`
-            : `<p style="color: #ef4444;"><strong>Needs Revision</strong>. Your deliverable for ${moduleName} needs some work.</p>`
+            ? `<p style="color: #10b981;"><strong>✓ Approved!</strong> Your deliverable for ${escapedModule} has been approved.</p>`
+            : `<p style="color: #ef4444;"><strong>Needs Revision</strong>. Your deliverable for ${escapedModule} needs some work.</p>`
         }
         ${
-          feedback
-            ? `<p><strong>Feedback:</strong></p><p>${feedback}</p>`
+          escapedFeedback
+            ? `<p><strong>Feedback:</strong></p><p>${escapedFeedback}</p>`
             : ""
         }
         <p><a href="${process.env.NEXT_PUBLIC_APP_URL}/course" style="background: #7C3AED; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; display: inline-block;">View Submission</a></p>
@@ -123,7 +193,7 @@ export async function sendDeliverableFeedbackEmail(
 }
 
 /**
- * Send capstone grading result email
+ * Send capstone grading result email (instructor only)
  */
 export async function sendCapstoneResultEmail(
   email: string,
@@ -131,6 +201,22 @@ export async function sendCapstoneResultEmail(
   passed: boolean,
   score?: number
 ) {
+  const user = await getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  // Only instructors can send grading emails
+  if (user.role !== "instructor") {
+    throw new Error("Unauthorized: only instructors can send results");
+  }
+
+  // Validate email
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    throw new Error("Invalid email address");
+  }
+
+  // Escape user input
+  const escapedName = escapeHtml(name);
+
   try {
     const result = await resend.emails.send({
       from: "Learn to Vibe Code <noreply@learntovibe.code>",
@@ -138,7 +224,7 @@ export async function sendCapstoneResultEmail(
       subject: "Capstone Project Results",
       html: `
         <h2>Capstone Project Graded</h2>
-        <p>Hi ${name},</p>
+        <p>Hi ${escapedName},</p>
         ${
           passed
             ? `<p style="color: #10b981;"><strong>✓ Congratulations!</strong> You've successfully completed the capstone project.</p>
