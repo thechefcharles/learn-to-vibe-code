@@ -133,7 +133,7 @@ export function CourseModuleList({
                     key={idx}
                     className="text-sm text-slate-100 flex items-start gap-2 drop-shadow-md"
                   >
-                    <span className="text-slate-400 flex-shrink-0">→</span>
+                    <span className="text-slate-400 flex-shrink-0">{idx + 1}.</span>
                     <span>{lesson}</span>
                   </div>
                 ))}
