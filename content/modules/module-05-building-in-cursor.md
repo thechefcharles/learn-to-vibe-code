@@ -23,9 +23,9 @@ By the end of this module, the learner can:
 
 ---
 
-## Lesson 4.1 — Setup: Cursor + a Next.js project (~45 min)
+## Lesson 5.1 — Setup: Cursor + a Next.js project (~45 min)
 
-**Step 1 — Install Cursor** from [cursor.com](http://cursor.com) and sign in. It's a VS Code fork, so extensions/keybindings carry over.
+**Step 1 — Install Cursor** from [cursor.com](https://cursor.com) and sign in. It's a VS Code fork, so extensions/keybindings carry over.
 
 **Step 2 — Install Node.js** (LTS).
 
@@ -38,90 +38,63 @@ cd invoice-tracker
 npm run dev
 ```
 
-**Step 4 — Open** [http://localhost:3000](http://localhost:3000) to confirm the starter app runs.
+**Step 4 — Open** http://localhost:3000 to confirm the starter app runs.
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Next.js Starter Page]**
-
-**What this screenshot should show:**
-- Browser window at http://localhost:3000
-- Default Next.js starter page visible (logo, "Get started by editing..." text, links to documentation)
-- Proof that Node, npm, and Cursor are all working together
-- No errors in the page or terminal visible
+[SCREENSHOT: Next.js starter page at http://localhost:3000 with no errors in page or terminal]
 
 ---
 
-**✓ Checkpoint:** Before you move on, make sure you have a running [localhost](http://localhost) server with no errors in the page or terminal. If you see errors here, they'll cascade through the rest of the module — take time to debug this checkpoint.
-> 
+**Checkpoint:** Before you move on, make sure you have a running localhost server with no errors in the page or terminal. If you see errors here, they'll cascade through the rest of the module — take time to debug this checkpoint.
 
 ---
 
-## Lesson 4.2 — The four ways to work with Cursor (~60 min)
+## Lesson 5.2 — The four ways to work with Cursor (~60 min)
 
 - **Tab (autocomplete)** — predicts your next edit; press Tab to accept. Best for small in-flow completions.
 - **Cmd+K (inline edit)** — select a block, describe a change in plain English, get a color-coded diff to accept/reject. Best for focused edits.
 - **Cmd+L (chat)** — a sidebar chat that understands your indexed project. Best for questions and planning.
-- **Cmd+I (Composer / Agent)** — describe a larger change. **Composer** makes a multi-file edit in one pass; **Agent** goes further — it runs commands, reads the output, and fixes errors until it works. Best for multi-file features and open-ended tasks (Lesson 4.5).
+- **Cmd+I (Composer / Agent)** — describe a larger change. **Composer** makes a multi-file edit in one pass; **Agent** goes further — it runs commands, reads the output, and fixes errors until it works. Best for multi-file features and open-ended tasks (Lesson 5.5).
 
 **Mental model:** Tab for keystrokes, Cmd+K for a block, Chat for thinking, Composer for a whole feature.
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Cmd+K Inline Edit Diff]**
-
-**What this screenshot should show:**
-- A code block is selected in Cursor editor
-- The Cmd+K dialog is open with a prompt (e.g., "Add error handling and return type annotation")
-- Below the prompt: a unified diff showing:
-  - Red lines (removed code)
-  - Green lines (added code)
-  - Accept button (checkmark)
-  - Reject button (X)
-- Shows the diff clearly so user can review before accepting
-- Proves: Cmd+K shows changes visually before applying them
+[SCREENSHOT: Cursor Cmd+K inline edit showing a red/green diff with accept and reject buttons]
 
 ---
 
----
-
-## Lesson 4.3 — Giving Cursor context (~45 min)
+## Lesson 5.3 — Giving Cursor context (~45 min)
 
 Module 2's "context is everything," made concrete:
 
 - **@-mentions** — type `@` to pin context: `@filename`, `@folder`, `@Docs`, `@Web`. Puts exactly what you want into the model's window.
-- **`.cursorrules`** — a project-root file of persistent instructions (stack, conventions) injected into every interaction. Example:
+- **Project rules (`.cursor/rules/*.mdc`)** — the current way to give Cursor persistent instructions (stack, conventions). Each rule is a `.mdc` file in the `.cursor/rules/` folder: a small frontmatter block (a description and when the rule applies) plus the rule body. Cursor injects matching rules into every interaction. Example `.cursor/rules/stack.mdc`:
 
 ```
-# .cursorrules
+---
+description: Project stack and conventions
+alwaysApply: true
+---
 This is a Next.js (App Router) + TypeScript + Tailwind app.
 Use server components by default; only "use client" when needed.
 Keep components small and typed.
 ```
 
----
-
-**[SCREENSHOT PLACEHOLDER: @-Mention Menu]**
-
-**What this screenshot should show:**
-- Cursor chat panel is open (Cmd+L)
-- User has typed "@" in the chat input
-- A dropdown menu appears showing options:
-  - @filename (specific file suggestions like `app/layout.tsx`, `lib/utils.ts`)
-  - @folder (folder suggestions like `app/`, `lib/`, `components/`)
-  - @Docs (link to documentation)
-  - @Web (web search)
-- One mention is being selected/highlighted
-- Shows: how @-mentions let you pin specific context without typing full paths
+- **`.cursorrules`** (legacy) — a single project-root file that does the same job. It's still supported, but as of 2026 it's the legacy format; new projects should use `.cursor/rules/*.mdc` instead.
 
 ---
 
-> **Cross-tool note ([AGENTS.md](http://AGENTS.md)):** `.cursorrules` is Cursor's file; there's also an emerging vendor-neutral convention, **`AGENTS.md`**, that many AI tools read (create-next-app now scaffolds one). Same idea, different filename per tool. You'll meet Claude Code's counterpart, `CLAUDE.md`, in Module 6.
-> 
+[SCREENSHOT: Cursor @-mention menu listing files, folders, Docs, and Web options]
 
 ---
 
-## Lesson 4.4 — Incremental Prompts for Cohesive Edits (~45 min)
+> **Cross-tool note (AGENTS.md):** Cursor's project rules live in `.cursor/rules/*.mdc` (with the legacy `.cursorrules` still supported); there's also an emerging vendor-neutral convention, **`AGENTS.md`**, that many AI tools read (create-next-app now scaffolds one). Same idea, different location per tool. You'll meet Claude Code's counterpart, `CLAUDE.md`, in Module 6.
+
+---
+
+## Lesson 5.4 — Incremental Prompts for Cohesive Edits (~45 min)
 
 **Use your Module 4 spec.** Open the spec.md and screens.md you created in Module 4. You're about to build real features from your own plan—not a generic example. This proves that planning works.
 
@@ -161,7 +134,7 @@ Use your *own* spec, data model, and screen descriptions. Cursor will build to y
 
 ```
 Based on this spec and build order:
-[PASTE YOUR MODULE 3 SPEC AND BUILD PLAN]
+[PASTE YOUR MODULE 4 SPEC AND BUILD PLAN]
 
 Build the complete "clients" slice for an invoice tracker:
 
@@ -216,22 +189,11 @@ npm run dev
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: /Clients Page with Table]**
-
-**What this screenshot should show:**
-- Browser at http://localhost:3000/clients
-- A Tailwind-styled table is visible with:
-  - Header row: "Name" and "Email" columns
-  - 3–5 sample rows with mock client data (e.g., "Acme Corp", "acme@example.com")
-  - A form below or to the side with "Create Client" button
-  - Clean, readable styling
-- Proof that the full feature works end-to-end from one Composer prompt
+[SCREENSHOT: /clients page showing a Tailwind table of mock clients plus a create form]
 
 ---
 
----
-
-## Lesson 4.5 — Multi-file editing with Composer (~45 min)
+## Lesson 5.5 — Multi-file editing with Composer (~45 min)
 
 This delivers Objective 2. Real features touch multiple files. Composer (Cmd+I) handles it: describe the change, it edits every relevant file and shows one unified diff.
 
@@ -239,19 +201,7 @@ This delivers Objective 2. Real features touch multiple files. Composer (Cmd+I) 
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Composer Unified Diff (Multi-File)]**
-
-**What this screenshot should show:**
-- Composer panel is open (after pressing Cmd+I and entering a multi-file prompt)
-- A unified diff displays changes across multiple files:
-  - File 1: `app/components/Header.tsx` (created or modified)
-    - Shows new `<nav>` with link to `/clients`
-  - File 2: `app/layout.tsx` (modified)
-    - Shows `<Header />` component imported and rendered
-- Red lines (removed), green lines (added)
-- Accept/Reject buttons at the bottom
-- Shows: Composer groups changes across files into one coherent diff
-- Proves: step-through-the-diff workflow prevents blind-accepting
+[SCREENSHOT: Composer unified diff spanning Header.tsx and layout.tsx with accept/reject buttons]
 
 ---
 
@@ -259,9 +209,11 @@ This delivers Objective 2. Real features touch multiple files. Composer (Cmd+I) 
 
 **Composer vs. Agent vs. Background (2026):** *Composer* applies a change you've specified; *Agent* adds autonomy — it runs terminal commands, reacts to errors, and iterates until tests pass (use it when the task has no obvious end state). **Background Agents** run in the cloud on a branch and return a pull request (queue a task, close your laptop). **Subagents** run several in parallel for big refactors. Turn on Settings → Agent → *require approval for destructive commands* so `rm -rf` / `DROP TABLE` / force-push need a click. These are the same agentic ideas the course teaches for Claude Code (Modules 5, 11, 13) — Cursor just brings them into the editor. (Fast-moving — check current docs.)
 
+**What "iterates until it works" looks like:** You ask Agent to add the `/clients` route. It writes `app/clients/page.tsx`, runs `npm run dev`, and the terminal throws `Module not found: Can't resolve '@/types/client'`. Agent reads that error, realizes it referenced a type file it never created, adds `types/client.ts`, re-runs the dev server, sees a clean compile, and only then reports back. You review one diff — the new type, the page, and a green build — instead of ping-ponging the error yourself.
+
 ---
 
-## Lesson 4.6 — Cursor vs. the alternatives (~45 min)
+## Lesson 5.6 — Cursor vs. the alternatives (~45 min)
 
 This delivers Objective 3.
 
@@ -276,9 +228,9 @@ This delivers Objective 3.
 
 ---
 
-## Lesson 4.7 — Pause and Reflect: Cursor vs. Claude Code (~30 min)
+## Lesson 5.7 — Pause and Reflect: Cursor vs. Claude Code (~30 min)
 
-You've spent ~3 hours in Cursor (Modules 4). You're about to enter Claude Code (Module 6). Before you do, reflect: which tool for which task?
+You've spent the last few hours in Cursor across this module (Module 5). You're about to enter Claude Code (Module 6). Before you do, reflect: which tool for which task?
 
 ### Decision Tree
 
@@ -319,14 +271,14 @@ Your preference + the task characteristics should guide your choice going forwar
 
 ### Knowledge Check
 
-**Q4-7:** "You need to fix a typo in one component and add error states to five components. What's your strategy?"
+**Q5-7:** "You need to fix a typo in one component and add error states to five components. What's your strategy?"
 
 a) Use Cursor for both—it's simpler
 b) Use Claude Code for both—it's faster
 c) Use Cursor for the typo (focused), Claude Code for the error states (multi-file)
 d) Ask a teammate
 
-**Correct:** c) — Match the tool to the scope. Local = Cursor. Cross-cutting = Claude Code.
+*Think it through:* Match the tool to the scope — local = Cursor, cross-cutting = Claude Code.
 
 ---
 
@@ -336,15 +288,19 @@ d) Ask a teammate
 
 ### Step-by-step instructions:
 
-1. **Create `.cursorrules`** at the project root:
+1. **Create a project rule** at `.cursor/rules/stack.mdc`:
    ```
-   # .cursorrules
+   ---
+   description: Project stack and conventions
+   alwaysApply: true
+   ---
    This is a Next.js App Router + TypeScript + Tailwind app.
    Use server components by default.
    Components go in app/components/.
    Mock data in lib/mockData.ts.
    Keep components small and focused.
    ```
+   (A legacy root `.cursorrules` file works too, but `.cursor/rules/*.mdc` is the current format.)
 
 2. **Define the Client type** (use Cmd+L to ask: "Create a Client type in types/client.ts with fields: id, name, email")
 
@@ -386,35 +342,35 @@ d) Ask a teammate
 
 These are the four questions you'll see on the quiz. Study these to prepare:
 
-**Q4-1:** Which Cursor mode is best for a change spanning multiple files?
+**Q5-1:** Which Cursor mode is best for a change spanning multiple files?
 - (a) Tab
 - (b) Cmd+K inline edit
-- (c) **Composer/Agent** ✓
+- (c) Composer/Agent
 - (d) find-and-replace
 
 *Why:* Composer/Agent mode handles multi-file changes and cross-file context. Cmd+K is for single blocks; Tab is autocomplete; find-and-replace is a last resort.
 
-**Q4-2:** What does a project rules file (e.g. `AGENTS.md`) do?
+**Q5-2:** What does a project rules file (e.g. `.cursor/rules/*.mdc` or `AGENTS.md`) do?
 - (a) Formats code
-- (b) **Injects persistent project context into every AI interaction** ✓
+- (b) Injects persistent project context into every AI interaction
 - (c) Deploys the app
 - (d) Runs tests
 
-*Why:* Rules files become system prompts for the AI, setting project norms and conventions. This is exactly the `.cursorrules` pattern from Lesson 4.3.
+*Why:* Rules files become system prompts for the AI, setting project norms and conventions. This is exactly the project-rules pattern from Lesson 5.3.
 
-**Q4-3:** `@`-mentions are used to:
+**Q5-3:** `@`-mentions are used to:
 - (a) Tag teammates
-- (b) **Pin specific context (files/docs/web) into the model's window** ✓
+- (b) Pin specific context (files/docs/web) into the model's window
 - (c) Comment code
 - (d) Undo changes
 
 *Why:* @-mentions let you include specific files or web pages as context for the AI, reducing the need to repeat yourself.
 
-**Q4-4:** You're building a React list component that fetches data from an API. Which Cursor mode is best?
+**Q5-4:** You're building a React list component that fetches data from an API. Which Cursor mode is best?
 - (a) Tab autocomplete (just keep typing)
 - (b) Cmd+K inline edit (describe changes to a block)
 - (c) Cmd+L chat (ask questions about the code)
-- (d) **Cmd+I Composer (build the whole component)** ✓
+- (d) Cmd+I Composer (build the whole component)
 
 *Why:* Composer (Cmd+I) is best for building a complete feature—it orchestrates the component, imports, and wiring together. This is a feature-level task, not an edit.
 
@@ -422,18 +378,18 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Build a working feature (Quiz Q4-4):**
-- Q4-4: "You're building a React list component that fetches from an API. Which mode is best?" ✅ Tests feature-building judgment
+**Objective 1 — Build a working feature (Quiz Q5-4):**
+- Q5-4: "You're building a React list component that fetches from an API. Which mode is best?" — Tests feature-building judgment
 - *Practical check:* Screenshot of the working /clients page (table + form) + the Cursor chat/Composer prompts you used
 
-**Objective 2 — Multi-file editing & context (Quiz Q4-1, Q4-2, Q4-3):**
-- Q4-1: "Which mode is best for multi-file changes?" ✅ Tests Composer knowledge
-- Q4-2: "What does `AGENTS.md` do?" ✅ Tests context/rules understanding
-- Q4-3: "`@`-mentions are used to:" ✅ Tests context-pinning knowledge
+**Objective 2 — Multi-file editing & context (Quiz Q5-1, Q5-2, Q5-3):**
+- Q5-1: "Which mode is best for multi-file changes?" — Tests Composer knowledge
+- Q5-2: "What does a project rules file do?" — Tests context/rules understanding
+- Q5-3: "`@`-mentions are used to:" — Tests context-pinning knowledge
 - *Practical check:* Describe a Composer change spanning 2+ files. Example:
   - "I used Composer to add a sidebar to the layout. It created `app/components/Sidebar.tsx`, imported it in `app/layout.tsx`, and styled both with Tailwind. I reviewed the diff file-by-file before accepting."
 
-**Objective 3 — Compare alternatives (Lesson 4.6 knowledge):**
+**Objective 3 — Compare alternatives (Lesson 5.6 knowledge):**
 - *Practical check:* For a scenario—"Your team standardizes on VS Code for backend. You're joining to build a frontend. Which editor?"—write a 3-sentence recommendation (Cursor, VS Code + Copilot, or Zed) with trade-offs.
   - **SAMPLE ANSWER:** "I'd recommend VS Code + Copilot for consistency with the backend team—no editor switching tax. Trade-off: Copilot's autocomplete is more limited than Cursor's Composer for multi-file refactors. However, if full-stack AI coding matters more than team standardization, Cursor's superior context-handling wins."
 
@@ -454,16 +410,14 @@ For each, decide which Cursor mode fits best and explain in one sentence why:
 
 ## Tools & alternatives (this module)
 
-Default: **Cursor** on a **Next.js** app. Editor alternatives compared in Lesson 4.6. The framework layer (Next.js vs. Remix, Astro, SvelteKit) is covered in Module 26 (Landscape); Next.js is used here for its zero-config path to Vercel later (Module 21).
+Default: **Cursor** on a **Next.js** app. Editor alternatives compared in Lesson 5.6. The framework layer (Next.js vs. Remix, Astro, SvelteKit) is covered in Module 16 (Landscape); Next.js is used here for its zero-config path to Vercel later (Module 11).
 
 ---
 
 ## Key takeaways
 
 - Cursor gives four modes — Tab, Cmd+K, Chat, Composer — matched to the size of the change.
-- Steer the model with `@`-mentions and a `.cursorrules` file (`AGENTS.md` is the cross-tool equivalent).
+- Steer the model with `@`-mentions and project rules in `.cursor/rules/*.mdc` (the root `.cursorrules` file is the legacy equivalent; `AGENTS.md` is the cross-tool one).
 - Build step by step: prompt → read → run → fix → next.
 - Composer handles multi-file changes; step through the diff, never blind-accept.
 - The core skills transfer to VS Code + Copilot, Zed, and others.
-
-[Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)
