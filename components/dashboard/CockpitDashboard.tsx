@@ -259,17 +259,17 @@ export function CockpitDashboard({
             <p className="text-xs text-pink-400 font-mono">{badges.length} / {badgeMetadata.length} EARNED</p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 pb-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 pb-4">
             {badgeMetadata.map((badge) => {
               const earned = badges.some((b) => b.badge_key === badge.key);
               const badgeTypeMap: Record<string, any> = {
-                first_quiz_passed: { type: 'quiz-first-try', tier: earned ? 'gold' : 'silver' },
-                rls_locked_down: { type: 'security-master', tier: earned ? 'platinum' : 'silver' },
-                went_live: { type: 'deployment', tier: earned ? 'gold' : 'silver' },
-                automation_engineer: { type: 'automation', tier: earned ? 'platinum' : 'silver' },
-                capstone_submitted: { type: 'capstone', tier: earned ? 'platinum' : 'silver' },
+                first_quiz_passed: { type: 'quiz-first-try', tier: 'gold' },
+                rls_locked_down: { type: 'security-master', tier: 'platinum' },
+                went_live: { type: 'deployment', tier: 'gold' },
+                automation_engineer: { type: 'automation', tier: 'platinum' },
+                capstone_submitted: { type: 'capstone', tier: 'platinum' },
               };
-              const badgeConfig = badgeTypeMap[badge.key] || { type: 'lesson', tier: 'silver' };
+              const badgeConfig = badgeTypeMap[badge.key] || { type: 'lesson', tier: 'gold' };
 
               return (
                 <motion.div
@@ -277,19 +277,19 @@ export function CockpitDashboard({
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   whileHover={earned ? { scale: 1.1 } : {}}
-                  className={`flex flex-col items-center px-4 py-5 rounded-lg border transition-all ${
+                  className={`relative flex flex-col items-center px-3 py-4 rounded-lg border transition-all ${
                     earned
                       ? 'border-pink-500/60 bg-pink-500/10 shadow-lg shadow-pink-500/30'
-                      : 'border-slate-600/40 bg-slate-900/40 opacity-50'
+                      : 'border-slate-600/30 bg-slate-800/20 opacity-30 grayscale'
                   }`}
                 >
-                  <div className="w-12 h-12 mb-3">
+                  <div className={`w-12 h-12 mb-2 ${!earned && 'opacity-40'}`}>
                     <Badge type={badgeConfig.type} tier={badgeConfig.tier} size="sm" />
                   </div>
-                  <p className="text-xs font-bold text-white text-center line-clamp-2 mb-2">
+                  <p className={`text-xs font-bold text-center line-clamp-2 mb-1 ${earned ? 'text-white' : 'text-slate-500'}`}>
                     {badge.name}
                   </p>
-                  <p className="text-xs text-slate-400 text-center line-clamp-2 mb-1">
+                  <p className={`text-xs text-center line-clamp-2 ${earned ? 'text-slate-400' : 'text-slate-600'}`}>
                     {badge.description}
                   </p>
                   {earned && (

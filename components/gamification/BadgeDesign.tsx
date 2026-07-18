@@ -9,6 +9,7 @@ interface BadgeProps {
   type: BadgeType;
   tier: BadgeTier;
   size?: 'sm' | 'md' | 'lg';
+  showTier?: boolean;
 }
 
 const BADGE_COLORS = {
@@ -47,7 +48,7 @@ const BADGE_LABELS: Record<BadgeType, Record<BadgeTier, string>> = {
   'automation': { silver: 'Built', gold: 'Automated', platinum: 'Master' },
 };
 
-export function Badge({ type, tier, size = 'md' }: BadgeProps) {
+export function Badge({ type, tier, size = 'md', showTier = false }: BadgeProps) {
   const sizePixels = BADGE_SIZES[size];
   const colors = BADGE_COLORS[tier];
   const icon = BADGE_ICONS[type];
@@ -113,7 +114,7 @@ export function Badge({ type, tier, size = 'md' }: BadgeProps) {
 
       <div className="text-center">
         <p className="font-bold text-sm text-gray-900">{label}</p>
-        <p className="text-xs text-gray-600 capitalize">{tier}</p>
+        {showTier && <p className="text-xs text-gray-600 capitalize">{tier}</p>}
       </div>
     </div>
   );
