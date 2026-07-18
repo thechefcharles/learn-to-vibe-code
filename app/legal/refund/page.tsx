@@ -21,9 +21,28 @@ export default function RefundPage() {
           <div className="space-y-6 text-sm leading-relaxed">
             <section>
               <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">Donations</h2>
+              <p className="mb-3">
+                The Learn to Vibe Code course is completely <strong>FREE</strong>. There are no tuition fees, enrollment fees, or access charges.
+                We accept <strong>voluntary donations</strong> to support ongoing course development, platform maintenance, and operations.
+              </p>
+              <p className="font-semibold mb-2">What Donations Fund:</p>
+              <ul className="list-disc list-inside space-y-1 mb-3">
+                <li>Server costs and infrastructure (Supabase, Vercel, Stripe)</li>
+                <li>Content development and curriculum updates</li>
+                <li>Instructor grading and learner support</li>
+                <li>Platform maintenance and security improvements</li>
+                <li>Pursuit of accreditation (application fees, audits, compliance)</li>
+              </ul>
+              <p className="font-semibold mb-2">Donations Do NOT Guarantee:</p>
+              <ul className="list-disc list-inside space-y-1 mb-3">
+                <li>Faster grading or priority support</li>
+                <li>Direct access to course developers</li>
+                <li>Input on curriculum decisions</li>
+                <li>Special perks or exclusive content</li>
+              </ul>
               <p>
-                The Accredited Vibe Coding Course itself is completely free. We accept voluntary donations to support course development, maintenance, and platform improvements. All donations are processed securely through Stripe and are{" "}
-                <strong>non-refundable</strong> except where required by applicable law.
+                All donations are processed securely through Stripe and are <strong>non-refundable</strong> except where required by applicable law.
+                Donations do not affect your course access in any way.
               </p>
             </section>
 
@@ -75,10 +94,17 @@ export default function RefundPage() {
               </p>
             </section>
 
-            <section>
-              <h2 className="text-xl font-bold text-white mb-3">Tax Deduction</h2>
+            <section className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+              <h2 className="text-xl font-bold text-red-400 mb-3">Tax Deduction</h2>
+              <p className="mb-2">
+                <strong>IMPORTANT: Learn to Vibe Code is NOT a nonprofit organization.</strong>
+              </p>
+              <p className="mb-2">
+                Donations are <strong>NOT tax-deductible</strong>. You cannot claim your donation as a charitable contribution on your taxes.
+              </p>
               <p>
-                Please note: Learn to Vibe Code is not currently a nonprofit organization. Donations are not tax-deductible. If you need tax documentation for a donation, we can provide a receipt showing the donation date and amount. For questions about tax treatment, please consult with your tax professional.
+                If you need documentation for your records, we can provide a receipt showing the donation date and amount.
+                For questions about how donations affect your taxes, consult with a tax professional.
               </p>
             </section>
 

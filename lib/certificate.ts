@@ -44,10 +44,10 @@ export function generateCertificateHTML(data: CertificateData): string {
       min-height: 100vh;
     }
     .certificate {
-      width: 800px;
-      height: 600px;
-      background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
-      border: 3px solid #1f2937;
+      width: 900px;
+      height: 650px;
+      background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+      border: 4px solid #1f2937;
       border-radius: 8px;
       padding: 60px;
       box-shadow: 0 10px 40px rgba(0,0,0,0.1);
@@ -55,41 +55,72 @@ export function generateCertificateHTML(data: CertificateData): string {
       flex-direction: column;
       justify-content: space-between;
       text-align: center;
+      position: relative;
+    }
+    .logo-area {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5em;
     }
     .header {
-      border-bottom: 2px solid #3b82f6;
+      border-bottom: 3px solid #7C3AED;
       padding-bottom: 20px;
       margin-bottom: 40px;
+      margin-top: 20px;
     }
     .header h1 {
       font-style: italic;
+      font-size: 2.8em;
+      color: #1f2937;
+      margin-bottom: 8px;
+    }
+    .header p {
+      font-size: 1.1em;
+      color: #7C3AED;
+      font-weight: 600;
     }
     .body {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 20px;
+      gap: 25px;
     }
     .statement {
-      font-size: 1.1em;
+      font-size: 1.2em;
       color: #374151;
       line-height: 1.6;
     }
     .learner-name {
-      font-size: 2.2em;
+      font-size: 2.5em;
       color: #1f2937;
       font-weight: bold;
-      margin: 20px 0;
+      margin: 15px 0;
       text-decoration: underline;
-      text-decoration-color: #3b82f6;
+      text-decoration-color: #7C3AED;
       text-decoration-thickness: 2px;
-      text-underline-offset: 8px;
+      text-underline-offset: 10px;
     }
     .achievement {
-      font-size: 1em;
-      color: #6b7280;
+      font-size: 1.05em;
+      color: #4b5563;
       line-height: 1.8;
+    }
+    .achievement strong {
+      color: #1f2937;
+      font-weight: 600;
+    }
+    .contact-hours {
+      font-size: 1.1em;
+      color: #7C3AED;
+      font-weight: 600;
+      margin-top: 10px;
     }
     .footer {
       display: flex;
@@ -104,7 +135,7 @@ export function generateCertificateHTML(data: CertificateData): string {
       text-align: left;
     }
     .signature-line {
-      width: 200px;
+      width: 180px;
       height: 1px;
       background: #1f2937;
       margin-bottom: 4px;
@@ -113,35 +144,41 @@ export function generateCertificateHTML(data: CertificateData): string {
       font-size: 0.85em;
       color: #6b7280;
     }
-    .cert-id {
+    .cert-info {
       flex: 1;
       text-align: right;
-      font-size: 0.8em;
+      font-size: 0.85em;
+    }
+    .cert-id {
       color: #9ca3af;
+      line-height: 1.6;
+      font-family: 'Courier New', monospace;
     }
     .seal {
       flex: 0;
-      font-size: 3em;
+      font-size: 3.5em;
       margin: 0 20px;
     }
   </style>
 </head>
 <body>
   <div class="certificate">
+    <div class="logo-area">🎓</div>
+
     <div class="header">
       <h1>Certificate of Completion</h1>
-      <p>Accredited Vibe Coding Course</p>
+      <p>Learn to Vibe Code</p>
     </div>
 
     <div class="body">
       <p class="statement">This is to certify that</p>
       <div class="learner-name">${escapeHtml(data.userName)}</div>
       <p class="achievement">
-        has successfully completed the<br/>
-        <strong>Accredited Vibe Coding Course</strong><br/>
+        has successfully completed<br/>
+        <strong>Learn to Vibe Code</strong><br/>
         and demonstrated competency in AI-assisted full-stack development
       </p>
-      <p class="achievement">
+      <p class="contact-hours">
         ${data.contactHours} Contact Hours · ${data.ceuCount} CEUs
       </p>
     </div>
@@ -152,9 +189,14 @@ export function generateCertificateHTML(data: CertificateData): string {
         <p class="signature-title">Authorized Signature</p>
       </div>
       <div class="seal">🏆</div>
-      <div class="cert-id">
-        Certificate ID: ${escapeHtml(data.certId)}<br/>
-        Issued: ${formattedDate}
+      <div class="cert-info">
+        <div class="cert-id">
+          Certificate ID:<br/>
+          ${escapeHtml(data.certId)}<br/>
+          <br/>
+          Completed:<br/>
+          ${formattedDate}
+        </div>
       </div>
     </div>
   </div>

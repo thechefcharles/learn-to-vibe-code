@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'About Charlie Foreman — Learn to Vibe Code',
-  description: 'Learn about Charlie Foreman and the vision behind the Accredited Vibe Coding Course.',
+  description: 'Learn about Charlie Foreman and the vision behind the Learn to Vibe Code.',
 };
 
 export default function AboutPage() {
@@ -39,7 +39,7 @@ export default function AboutPage() {
                 The Vision
               </h2>
               <p className="mb-4">
-                The Accredited Vibe Coding Course was born from a simple belief: learning to code should feel alive,
+                The Learn to Vibe Code was born from a simple belief: learning to code should feel alive,
                 immersive, and achievable for everyone. Not just another online tutorial, but a complete, accredited
                 program that teaches you to build real things with AI-assisted development.
               </p>

@@ -82,7 +82,7 @@ export default function ShowcasePage() {
             🚀 CAPSTONE SHOWCASE
           </h1>
           <p className="text-xl text-cyan-400">
-            Live projects by Accredited Vibe Coding Course graduates
+            Live projects by Learn to Vibe Code graduates
           </p>
         </motion.div>
 

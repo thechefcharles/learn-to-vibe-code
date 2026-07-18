@@ -54,7 +54,7 @@ function SupportPageContent() {
                 Why We Need Your Support
               </h2>
               <p className="mb-4">
-                The Accredited Vibe Coding Course is built to be freely accessible to learners everywhere. By keeping the platform free,
+                The Learn to Vibe Code is built to be freely accessible to learners everywhere. By keeping the platform free,
                 we're removing barriers for students who want to learn but can't afford expensive bootcamps or courses.
               </p>
               <p>

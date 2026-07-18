@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export const metadata = {
   title: 'Course Overview — Learn to Vibe Code',
-  description: 'Discover what you\'ll learn in the Accredited Vibe Coding Course. Choose between beginner and advanced tracks.',
+  description: 'Discover what you\'ll learn in the Learn to Vibe Code. Choose between beginner and advanced tracks.',
 };
 
 export default function CourseInfoPage() {
@@ -23,7 +23,7 @@ export default function CourseInfoPage() {
         {/* Header */}
         <div className="mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold text-white uppercase tracking-wide mb-4">
-            The Accredited Vibe Coding Course
+            The Learn to Vibe Code
           </h1>
           <p className="text-xl text-gray-300">
             A comprehensive, AI-first development program. 16 modules. 100 hours of content. Choose your level.

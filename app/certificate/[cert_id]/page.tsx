@@ -22,10 +22,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: `${certData.user.name}'s Certificate — Learn to Vibe Code`,
-    description: `Certificate of Completion for ${certData.user.name} - Accredited Vibe Coding Course`,
+    description: `Certificate of Completion for ${certData.user.name} - Learn to Vibe Code`,
     openGraph: {
       title: `${certData.user.name}'s Certificate — Learn to Vibe Code`,
-      description: "Certificate of Completion - Accredited Vibe Coding Course",
+      description: "Certificate of Completion - Learn to Vibe Code",
       type: "website",
     },
   };
@@ -92,7 +92,7 @@ export default async function PublicCertificatePage({ params }: PageProps) {
           </Link>
           <h1 className="text-4xl font-bold text-white mb-2">📜 Certificate of Completion</h1>
           <p className="text-slate-400">
-            Accredited Vibe Coding Course — {certData.user.name}
+            Learn to Vibe Code — {certData.user.name}
           </p>
         </div>
 
@@ -132,7 +132,7 @@ export default async function PublicCertificatePage({ params }: PageProps) {
                 if (navigator.share) {
                   await navigator.share({
                     title: `${certData.user.name}'s Certificate`,
-                    text: "Certificate of Completion - Accredited Vibe Coding Course",
+                    text: "Certificate of Completion - Learn to Vibe Code",
                     url: shareUrl,
                   });
                 } else {

@@ -23,57 +23,107 @@ export default function PrivacyPage() {
               <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">1. Introduction</h2>
               <p>
                 Learn to Vibe Code ("we," "us," "our," or "Company") is committed to protecting your privacy. This Privacy Policy
-                explains how we collect, use, disclose, and safeguard your information when you visit our website and use our
-                services.
+                explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">2.Information We Collect</h2>
-              <p>
-                We may collect information about you in a variety of ways. The information we may collect on the Site includes:
-              </p>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">2. Information We Collect</h2>
+              <p>We collect information about you in the following categories:</p>
               <ul className="list-disc list-inside mt-2 space-y-1">
                 <li><strong>Personal Data:</strong> Name, email address, password</li>
-                <li><strong>Learning Data:</strong> Course progress, quiz scores, module completion</li>
-                <li><strong>Technical Data:</strong> IP address, browser type, pages visited</li>
-                <li><strong>Payment Data:</strong> Stripe processes all payments (we do not store card data)</li>
+                <li><strong>Learning Data:</strong> Course progress, quiz scores, module completion, capstone submission, grading notes</li>
+                <li><strong>Technical Data:</strong> IP address, browser type, pages visited, login times</li>
+                <li><strong>Payment Data:</strong> Stripe processes donations (we do not store credit card data)</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">3. Use of Your Information</h2>
-              <p>Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the Site to:</p>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">3. Use of Your Information</h2>
+              <p>We use your information to:</p>
               <ul className="list-disc list-inside mt-2 space-y-1">
                 <li>Track course progress and generate completion certificates</li>
-                <li>Send you newsletters and updates about your course</li>
-                <li>Evaluate course effectiveness through learning analytics</li>
-                <li>Respond to your inquiries and fulfill your requests</li>
+                <li>Grade quizzes, deliverables, and capstone projects</li>
+                <li>Send course updates and support communications</li>
+                <li>Evaluate learning outcomes and course effectiveness</li>
+                <li>Respond to your inquiries and fulfill support requests</li>
+                <li>Share aggregate data with accreditors for compliance audits (your name is removed; only scores/pass rates shared)</li>
               </ul>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">4. Disclosure of Your Information</h2>
-              <p>
-                We may share your information with third parties in the following circumstances:
-              </p>
-              <ul className="list-disc list-inside mt-2 space-y-1">
-                <li><strong>Stripe:</strong> For payment processing (no card data stored by us)</li>
-                <li><strong>Supabase:</strong> For data storage and authentication</li>
-                <li><strong>Legal Compliance:</strong> When required by law or to protect rights</li>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">4. Data Retention & Your Rights</h2>
+              <p className="font-semibold mb-2">How Long We Keep Your Data:</p>
+              <ul className="list-disc list-inside space-y-1 mb-3">
+                <li><strong>Account Data (name, email, password):</strong> Retained while your account is active; deleted 30 days after account deletion</li>
+                <li><strong>Learning Records (quizzes, grades, capstone, certificate):</strong> Retained for 7 years to comply with accreditation audits</li>
+                <li><strong>Technical Logs (IP, browser, pages):</strong> Retained for 90 days, then deleted</li>
+                <li><strong>Donation Records (Stripe):</strong> Handled by Stripe; we keep a reference only</li>
               </ul>
-            </section>
-
-            <section>
-              <h2 className="text-xl font-bold text-white mb-3">5. Security of Your Information</h2>
-              <p>
-                We use administrative, technical, and physical security measures to protect your personal information. All data is
-                transmitted via secure HTTPS connections, and sensitive data is encrypted in our Supabase database.
+              <p className="font-semibold mb-2">Your Rights (GDPR & CCPA):</p>
+              <ul className="list-disc list-inside space-y-1 mb-3">
+                <li><strong>Right to Access:</strong> Request a copy of all your personal data</li>
+                <li><strong>Right to Correct:</strong> Update inaccurate information</li>
+                <li><strong>Right to Delete:</strong> Request deletion (except where we have legal/accreditation obligations)</li>
+                <li><strong>Right to Data Portability:</strong> Receive your data in a portable format</li>
+                <li><strong>Right to Restrict Processing:</strong> Limit how we use your data</li>
+              </ul>
+              <p className="text-sm text-slate-400">
+                To exercise any of these rights, email: <a href="mailto:privacy@learntovibe.code" className="text-blue-400 hover:text-blue-300">privacy@learntovibe.code</a>
+                (response within 30 days)
               </p>
             </section>
 
             <section>
-              <h2 className="text-xl font-bold text-white mb-3">6. Contact Us Regarding Privacy</h2>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">5. Data Access & Learner Records</h2>
+              <p className="font-semibold mb-2">Your Learning Record Includes:</p>
+              <ul className="list-disc list-inside space-y-1 mb-3">
+                <li>Enrollment date and course status</li>
+                <li>Module completion dates and status</li>
+                <li>Quiz attempt history: date, score (%), pass/fail status</li>
+                <li>Deliverable submissions: approval status, feedback</li>
+                <li>Capstone submission: project links, rubric scores, grader feedback</li>
+                <li>Certificate ID and issuance date (if applicable)</li>
+              </ul>
+              <p>
+                You can request your complete learning record at any time. Email <a href="mailto:privacy@learntovibe.code" className="text-blue-400 hover:text-blue-300">privacy@learntovibe.code</a> with
+                "Request Learning Record" in the subject line. We'll respond within 10 business days with a downloadable file.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">6. Disclosure of Your Information</h2>
+              <p className="font-semibold mb-2">We share your information only with:</p>
+              <ul className="list-disc list-inside space-y-1 mb-3">
+                <li><strong>Stripe:</strong> Payment processing (no card data stored by us)</li>
+                <li><strong>Supabase:</strong> Database and authentication (EU-based, GDPR compliant)</li>
+                <li><strong>Accreditors (CPD, IACET):</strong> Aggregate data only; your name is removed, only scores/completion data shared</li>
+                <li><strong>Legal/Law Enforcement:</strong> When required by law or to protect rights</li>
+              </ul>
+              <p className="text-sm text-slate-400">
+                We have data processing agreements in place with Supabase and Stripe. We do NOT sell or trade your data.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">7. Security of Your Information</h2>
+              <p>
+                We use administrative, technical, and physical security measures to protect your personal information:
+              </p>
+              <ul className="list-disc list-inside space-y-1 mt-2 mb-3">
+                <li>All data transmitted via encrypted HTTPS connections</li>
+                <li>Passwords hashed using industry-standard algorithms</li>
+                <li>Database encrypted at rest in Supabase</li>
+                <li>Regular security audits and vulnerability scans</li>
+                <li>No credit card data stored (Stripe handles all payment data)</li>
+              </ul>
+              <p className="text-sm text-amber-300">
+                <strong>Note:</strong> No security system is perfect. We commit to protecting your data, but we cannot guarantee absolute protection.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-bold text-cyan-400 mb-3 uppercase tracking-wide">8. Contact Us Regarding Privacy</h2>
               <p>
                 If you have questions or comments about this Privacy Policy, please contact us at:{" "}
                 <a href="mailto:privacy@learntovibe.code" className="text-blue-400 hover:text-blue-300">
