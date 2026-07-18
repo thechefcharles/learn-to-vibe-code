@@ -133,8 +133,21 @@ export async function POST(req: NextRequest) {
 
         // Send donation receipt email
         try {
-          await sendDonationEmail(donation.user_email, donation.amount_cents);
-          console.log(`Webhook: Donation receipt email sent to ${donation.user_email}`);
+          // Get user email from profiles table
+          const { data: profile, error: profileError } = await supabase
+            .from("profiles")
+            .select("email")
+            .eq("id", donation.user_id)
+            .single();
+
+          if (profileError || !profile?.email) {
+            console.error(
+              `Webhook: Failed to get user email for ${donation.user_id}: ${profileError?.message}`
+            );
+          } else {
+            await sendDonationEmail(profile.email, donation.amount_cents);
+            console.log(`Webhook: Donation receipt email sent to ${profile.email}`);
+          }
         } catch (emailError) {
           const errorMessage =
             emailError instanceof Error ? emailError.message : "Unknown error";
