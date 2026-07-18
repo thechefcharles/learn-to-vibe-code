@@ -12,7 +12,8 @@ By the end of this module, you'll be able to:
 
 1. **Set up** all your coding tools (like getting your equipment ready for a quest)
 2. **Understand** what each tool does and how they work together
-3. **Test** everything to make sure it's working
+3. **Protect** your API keys and secrets using environment variables and `.gitignore`
+4. **Test** everything to make sure it's working
 
 ---
 
@@ -208,7 +209,222 @@ npm run dev
 
 ---
 
-## Lesson 0.6 — Project Rules: Keeping Your Code Organized 📋
+## Lesson 0.7 — Secrets, APIs & Never Leaking Your Keys 🔐 (~45 min)
+
+**What happens if you don't learn this:** You accidentally commit a password or API key to GitHub. A bot finds it within minutes. Attackers use your exposed key to charge your credit card or steal data. You spend hours cleaning it up. It shows up on your GitHub profile forever. You learn the hard way — publicly.
+
+**What you'll learn:** How to keep secrets safe, so this *never* happens to you.
+
+---
+
+### Why Secrets Matter (The Real Deal)
+
+Every app you build will use **API keys** — secret passwords that let your app talk to Supabase, Stripe, or other services. These keys are like the keys to your house. If someone gets them, they can:
+- Drain your Stripe account (make fake charges)
+- Read all your database (user emails, passwords, private data)
+- Impersonate your app and trick users
+- Get you sued if you expose customer data
+
+**Real example:** A developer accidentally commits a Supabase key to GitHub. An attacker finds it, accesses the database, and steals 50,000 users' email addresses. The company spends weeks fixing it, and the developer's first job experience becomes a scandal.
+
+This lesson teaches you to *never* be that developer.
+
+---
+
+### Part 1: What Are API Keys?
+
+An **API key** is a secret password your code uses to authenticate to a service. Examples:
+
+- `STRIPE_SECRET_KEY` — Lets your code process payments (private! real money!)
+- `SUPABASE_ANON_KEY` — Lets your app read/write data (usually safe for browser)
+- `SUPABASE_SERVICE_ROLE_KEY` — Admin access to your entire database (VERY private!)
+- `SENDGRID_API_KEY` — Lets your code send emails
+
+**The rule:** Never hardcode these into your code. Never commit them to GitHub. Never show them in screenshots or share them in Slack.
+
+---
+
+### Part 2: Environment Variables — Keeping Secrets Out of Code
+
+An **environment variable** is a value that lives *outside* your code, not inside it.
+
+**Why?** Because the same code runs in three different places with *different* secrets:
+
+```
+Your Computer (Development)
+├─ STRIPE_SECRET_KEY=sk_test_xxx (test mode)
+├─ SUPABASE_URL=http://localhost:5432
+
+Production (Live Website)
+├─ STRIPE_SECRET_KEY=sk_live_zzz (real money!)
+├─ SUPABASE_URL=https://prod.supabase.co
+```
+
+Same code. Different secrets. Environment variables make this possible without changing the code.
+
+---
+
+### Part 3: The `.env.local` File (Local Setup)
+
+**Step 1: Create a `.env.local` file**
+
+In the root of your project, create a file called `.env.local` (note the dot at the start). Add your secrets:
+
+```bash
+# .env.local (THIS FILE IS NEVER COMMITTED TO GITHUB)
+
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=http://localhost:54321
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+SUPABASE_SERVICE_ROLE_KEY=your-secret-key-here
+
+# Stripe (development mode)
+NEXT_PUBLIC_STRIPE_PUBLIC_KEY=pk_test_123456
+STRIPE_SECRET_KEY=sk_test_abcdef
+```
+
+**Step 2: Use these secrets in your code**
+
+```typescript
+// In Next.js, access environment variables with process.env
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const stripeSecret = process.env.STRIPE_SECRET_KEY; // Only works on server!
+```
+
+**Critical rule:** Only variables starting with `NEXT_PUBLIC_` show up in the browser. Everything else stays server-side only.
+
+```typescript
+// ✅ SAFE — this is visible to the browser (public key, test mode only)
+NEXT_PUBLIC_STRIPE_PUBLIC_KEY=pk_test_xxx
+
+// ❌ WRONG — never do this! This will leak the secret!
+NEXT_PUBLIC_STRIPE_SECRET_KEY=sk_test_xxx
+```
+
+---
+
+### Part 4: The `.gitignore` File (Your Safety Net)
+
+**What's `.gitignore`?**
+
+A file that tells git "never commit these files." It's your last line of defense against accidentally uploading secrets.
+
+**Your `.gitignore` should include (at minimum):**
+
+```gitignore
+# Environment variables — CRITICAL! Never commit these!
+.env
+.env.local
+.env.*.local
+.env.production.local
+
+# Other stuff git should ignore
+node_modules/
+.next/
+.DS_Store
+*.log
+```
+
+**To check if it's working:**
+
+```bash
+git status
+```
+
+If `.env.local` doesn't appear in the list, you're good! If it does, fix `.gitignore` immediately before pushing.
+
+---
+
+### Part 5: What Happens If You Leak a Secret (Accident Recovery)
+
+**If you commit a secret to GitHub:**
+
+**Step 1: Don't panic.** It happens to everyone. GitHub detects it automatically and sends you an alert.
+
+**Step 2: Rotate the key immediately** (takes 5 minutes).
+- Go to Supabase → Settings → API Keys → Regenerate
+- Go to Stripe → Dashboard → API Keys → Revoke
+- Every service has a way to make the old key useless
+
+**Step 3: Delete the file** from your local code and commit a fix.
+
+**Step 4: Check git history** to make sure it's really gone:
+```bash
+git log --oneline  # See your commits
+git show HEAD  # See the latest commit's files
+```
+
+**The hardest part:** The internet is permanent. Even after you delete the file, git history keeps it forever. Future employers can see this. That's why prevention (step 0) is way better than recovery.
+
+---
+
+### Part 6: Real-World Examples
+
+**Supabase (Database)**
+
+```typescript
+// .env.local
+NEXT_PUBLIC_SUPABASE_URL=https://[project].supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...  // OK for browser
+SUPABASE_SERVICE_ROLE_KEY=eyJ...      // NEVER send to browser
+
+// Your code (server-side)
+const adminClient = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY  // ✅ Safe — server only
+);
+```
+
+**Stripe (Payments)**
+
+```typescript
+// .env.local
+NEXT_PUBLIC_STRIPE_PUBLIC_KEY=pk_test_xxx  // Safe (public)
+STRIPE_SECRET_KEY=sk_test_yyy              // NEVER send to browser
+
+// Client-side (safe)
+const stripe = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY);
+
+// Server API route (private key used here)
+export async function POST(req: Request) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY); // ✅ Server only
+  // Process payment...
+}
+```
+
+---
+
+### Part 7: The Checklist Before You Push Code
+
+Before you ever `git push`:
+
+- [ ] `.env.local` exists in your `.gitignore`
+- [ ] No `.env` file shows up in `git status`
+- [ ] No hardcoded API keys in your code
+- [ ] `NEXT_PUBLIC_*` variables only contain public keys (test Stripe, public Supabase keys)
+- [ ] Private API calls happen server-side only (in API routes)
+- [ ] Production secrets will be set in Vercel (not in code)
+
+**Quick verification:**
+```bash
+git status  # .env.local should NOT be listed
+grep -r "sk_test_" .  # Make sure no Stripe keys in your files
+grep -r "sk_live_" .  # Make sure no REAL Stripe keys!
+```
+
+---
+
+### Key Takeaways
+
+- **Secrets go in `.env.local`, never in code** — separation keeps you safe
+- **`.gitignore` prevents accidents** — add `.env.local` to it immediately
+- **`NEXT_PUBLIC_*` is visible to browsers** — only use it for public keys
+- **If you leak a key, rotate it immediately** — the old key becomes useless
+- **Prevent first, recover second** — good habits save you hours later
+
+---
+
+## Lesson 0.8 — Project Rules: Keeping Your Code Organized 📋
 
 Before you start building, every good project needs **a few simple rules** to stay clean and organized. Think of these like the rules of a game — they keep everything running smoothly!
 
@@ -274,7 +490,7 @@ These three documents are like a game manual — they help you stay organized an
 
 ---
 
-## Lesson 0.7 — Where Does Your Project's Brain Live? (Repo vs. Notion) 🧠
+## Lesson 0.9 — Where Does Your Project's Brain Live? (Repo vs. Notion) 🧠
 
 You learned that some documentation (CLAUDE.md, decisions.md) lives in your project repository. But here's a secret: **not all documentation belongs in the same place!**
 
@@ -385,7 +601,11 @@ All done? You're ready for Module 1! 🎮
 **Objective 2 — Understand the toolkit:**
 - *Practical:* In your own words, explain 2 tools and how they fit together. Example: "Node.js runs my code, Cursor is my AI helper inside the code editor"
 
-**Objective 3 — Verify everything works:**
+**Objective 3 — Protect secrets and API keys:**
+- *Practical:* Create a `.env.local` file with example Supabase and Stripe keys, verify `.gitignore` contains `.env.local`, run `git status` to confirm the file is ignored
+- *Short answer:* Explain in 2-3 sentences: Why shouldn't you commit API keys to GitHub? What should you do if you accidentally leak a secret?
+
+**Objective 4 — Verify everything works:**
 - *Practical:* Screenshot of terminal showing all version checks passed (node, npm, claude). Screenshot of localhost:3000 showing Next.js starter page
 
 ---
