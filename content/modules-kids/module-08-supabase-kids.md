@@ -16,7 +16,7 @@ By the end of this module, you'll be able to:
 
 ---
 
-## Lesson 7.0 — What's a Database? (Tables, Keys, and Rules) (~25 min)
+## Lesson 7.0 — What's a Database? (Tables, Keys, and Rules) (~45 min)
 
 Before you set up Supabase, know what you're doing.
 
@@ -44,30 +44,169 @@ In a real app with multiple people, each pet has a user_id. This says "this pet 
 
 If you have 100 users with 5 pets each, you have 500 pets. User IDs separate them: "show me all pets where user_id = 1" gets only MY pets.
 
-### What's Row-Level Security (RLS)?
+**Example:** User 1 (Alice) can have pets, and User 2 (Bob) can have pets. But Alice's app should only show Alice's pets, never Bob's. That's what user_id does.
 
-RLS is a security rule: "you can only see your own data."
+### What's Row-Level Security (RLS)? The Security Guard 🛡️
 
-Example: User 1 can only see pets where user_id = 1. User 2 can only see their own pets. No peeking at each other's data.
+RLS is like a security guard at a database door. Here's how it works:
 
-Supabase enforces this automatically.
+**Without RLS:** Anyone logged in can see EVERYTHING. User 2 can read User 1's pets just by asking. This is dangerous!
+
+**With RLS:** A security guard checks every question. The rule says: *"You can only see rows where user_id = your ID."*
+
+When User 2 asks "show me all pets," the guard checks:
+- Is this your data? (Does user_id match YOUR logged-in ID?)
+- If YES → show the row ✅
+- If NO → block it ❌
+
+Example: User 1 tries to read User 2's pet:
+```
+Request: "Show me pet with id=2"
+Guard checks: "Does this pet's user_id equal User 1's ID?"
+Database answer: NO (pet 2 belongs to user_id=2, not user_id=1)
+Guard says: "Blocked! That's not your data."
+```
+
+Supabase enforces this automatically. The database itself refuses to return rows that don't pass the RLS check.
+
+### Real Consequence: Why RLS Matters (Data Breach Risk) 💥
+
+Imagine an app WITHOUT RLS:
+
+**The Attack:**
+1. You have a notes app with users
+2. Alice and Bob both have accounts
+3. Alice writes a personal note: "I'm planning to quit tomorrow and apply at Company X"
+4. Bob logs in and queries the database: `SELECT * FROM notes WHERE user_id = 'alice_id'`
+5. **Without RLS:** The database has no security guard. It returns Alice's note.
+6. Bob reads Alice's private plans. **Data breach.**
+
+**With RLS enabled:**
+1. Bob is logged in as user_id = bob_id
+2. Bob tries the same query: `SELECT * FROM notes WHERE user_id = 'alice_id'`
+3. **RLS blocks it:** The database says: "You're bob_id, but these rows are alice_id. BLOCKED."
+4. Bob gets zero rows. Alice's data is safe.
+
+**Real-world impact:** Without RLS, hackers (or other users) could:
+- Read everyone's private messages
+- See confidential business data
+- Access passwords and payment info
+- Steal identity information
+
+RLS is not optional. It's the firewall protecting everyone's data.
+
+### How RLS Works: Default-Deny Security 🔒
+
+This is the critical concept:
+
+**Default-Deny means:** *"Deny everything unless explicitly allowed."*
+
+```
+With RLS ON and no policies set:
+User logged in? ❌ Can see ZERO rows
+```
+
+This is actually SAFE by default. Nothing leaks accidentally. You have to deliberately write a policy that says "allow this."
+
+Compare to default-allow (bad):
+```
+With NO RLS and no policies:
+User logged in? ✅ Can see EVERYTHING
+```
+
+This is dangerous. One mistake = huge data leak.
+
+**RLS principle:** When building secure apps, always default-deny. Make people earn access.
+
+### Concrete Example: Notes App with RLS 📝
+
+Let's say you're building a personal notes app. Two users: Alice and Bob.
+
+**The Database:**
+```sql
+CREATE TABLE notes (
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL,        -- Who owns this note
+  title TEXT,
+  content TEXT,
+  created_at TIMESTAMP
+);
+```
+
+**The RLS Policy:**
+```sql
+CREATE POLICY "users can read their own notes"
+  ON notes
+  FOR SELECT
+  USING (auth.uid() = user_id);
+```
+
+**Translation:**
+- `ON notes` — this rule applies to the notes table
+- `FOR SELECT` — this rule is about reading (SELECT queries)
+- `USING (auth.uid() = user_id)` — allow reading ONLY if the logged-in user's ID matches the row's user_id
+
+**What happens:**
+1. Alice logs in (auth.uid() = alice_id)
+2. Alice queries: "show me all notes"
+3. RLS checks every row:
+   - Row 1: user_id = alice_id → ✅ Show (Alice's note)
+   - Row 2: user_id = bob_id → ❌ Block (Bob's note, not Alice's)
+4. Alice sees only her notes ✅
+
+**If Bob logs in:**
+1. Bob logs in (auth.uid() = bob_id)
+2. Bob queries: "show me all notes"
+3. RLS checks every row:
+   - Row 1: user_id = alice_id → ❌ Block (Alice's note, not Bob's)
+   - Row 2: user_id = bob_id → ✅ Show (Bob's note)
+4. Bob sees only his notes ✅
+
+**Alice and Bob never see each other's data.** The database enforces it.
+
+### Per-User Data Isolation: The Golden Rule 👑
+
+**Rule:** *Every table should have a user_id column, and an RLS policy protecting it.*
+
+This ensures each user's data is completely isolated:
+
+```sql
+-- Correct pattern (SAFE):
+CREATE TABLE todos (
+  id UUID PRIMARY KEY,
+  user_id UUID NOT NULL,           -- User ID always present
+  title TEXT,
+  completed BOOLEAN
+);
+
+ALTER TABLE todos ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "users manage own todos"
+  ON todos
+  USING (auth.uid() = user_id)     -- Users see only their rows
+  WITH CHECK (auth.uid() = user_id); -- Users can only create rows for themselves
+```
+
+The `USING` clause is "read permission" and `WITH CHECK` is "write permission." Both should check `auth.uid() = user_id` so users can't write data for other people.
+
+**What if you forget RLS?** Anyone with database access reads everything. Not safe for production.
 
 ### The Pattern
 
 Every app table follows the same pattern:
 
-1. **id:** unique identifier (every pet gets a number)
-2. **user_id:** who owns this (so User 1 can't see User 2's pets)
-3. **Data columns:** what you actually care about (name, breed, age, food)
-4. **RLS rule:** "you can only see rows where user_id = your ID"
+1. **id:** unique identifier (every note gets a number)
+2. **user_id:** who owns this (so User 1 can't see User 2's notes)
+3. **Data columns:** what you actually care about (title, content, etc.)
+4. **RLS rule:** "you can only see/edit rows where user_id = your ID"
 
 That's it. Same pattern in every module.
 
 ### Knowledge Check
 
-1. **Q7-0a:** "Why does every pet need a user_id?"
+1. **Q7-0a:** "Why does every note need a user_id?"
    - a) Supabase requires it
-   - b) So the RLS rule can say "you can only see YOUR pets"
+   - b) So the RLS rule can say "you can only see YOUR notes"
    - c) To track when it was created
    - d) To make the database bigger
 
@@ -80,6 +219,14 @@ That's it. Same pattern in every module.
    - d) Reverse lookup system
 
    **Correct:** b) — RLS is the security guard: "is this your data? Yes? You can see it. No? Blocked."
+
+3. **Q7-0c:** "What's 'default-deny' security?"
+   - a) Everything is open, then you block things
+   - b) Everything is BLOCKED unless you explicitly ALLOW it (safer!)
+   - c) Same as default-allow
+   - d) You can allow some users
+
+   **Correct:** b) — Default-deny means nothing works until you say "allow this." It's safe by design.
 
 ---
 
@@ -257,18 +404,161 @@ You don't write these yourself — Cursor/Claude Code does. You just understand 
 
 ---
 
-## Lesson 7.6 — Security & Auth (~45 min)
+## Lesson 7.6 — Security & Auth (~60 min)
 
 Supabase has security rules (RLS = Row-Level Security).
 
-By default, it blocks everything. You have to allow:
-- Who can read data?
-- Who can write data?
-- Who can delete data?
+### The Three Questions RLS Answers
 
-For a pet tracker, you'd say: *"Users can only see/edit their own pets."*
+When you set up a table, ask:
+1. **Who can READ this data?** (SELECT permission)
+2. **Who can CREATE new rows?** (INSERT permission)
+3. **Who can UPDATE/DELETE?** (UPDATE/DELETE permission)
 
-Supabase has a built-in auth system (email/password). You can use it.
+For a pet tracker:
+- Read: *"Users can only see their own pets"* ✅
+- Create: *"Users can only create pets for themselves"* ✅
+- Update/Delete: *"Users can only modify their own pets"* ✅
+
+### How RLS Protects Three Operations
+
+**Example: Alice tries to delete Bob's pet**
+
+Without RLS:
+```
+Alice: DELETE pet with id=2
+Database: Deleted! (No one stops her)
+Bob: My pet is gone! (Data breach/sabotage)
+```
+
+With RLS:
+```
+Alice: DELETE pet with id=2
+RLS checks: Does pet 2 have user_id = alice_id? NO (it's bob_id)
+Database: BLOCKED! You can't delete someone else's data.
+Bob: My pet is safe!
+```
+
+Every read, write, and delete goes through the RLS check. The database is the security layer, not your code.
+
+### The Built-in Auth System
+
+Supabase has email/password authentication built in:
+- Users sign up with email + password
+- Supabase creates a session (logs them in)
+- Every query includes their auth.uid() (current user ID)
+- RLS uses auth.uid() to filter data
+
+You use it like this:
+1. Sign up → `supabase.auth.signUp({ email, password })`
+2. Sign in → `supabase.auth.signIn({ email, password })`
+3. Your logged-in ID is stored → `auth.uid()` in RLS policies
+4. Every query automatically filters by your user_id
+
+**Key insight:** You never manually pass user_id. The database knows who you are (via auth.uid()) and enforces RLS automatically.
+
+---
+
+## Lesson 7.7 — Understanding `auth.uid()` and Security Flow (~30 min)
+
+This is the glue between authentication and RLS. Let's demystify it.
+
+### What is `auth.uid()`?
+
+`auth.uid()` is a special function in Supabase that returns the currently logged-in user's unique ID.
+
+Think of it like asking the database: *"Who's currently logged in?"*
+
+```
+When Alice is logged in:
+auth.uid() returns: "uuid-for-alice"
+
+When Bob is logged in:
+auth.uid() returns: "uuid-for-bob"
+
+When nobody is logged in:
+auth.uid() returns: NULL (empty/null value)
+```
+
+### How RLS Uses `auth.uid()`
+
+The RLS policy uses `auth.uid()` to compare:
+
+```sql
+CREATE POLICY "users read own notes"
+  ON notes
+  USING (auth.uid() = user_id);
+```
+
+**This means:**
+- "Allow SELECT (read) on notes ONLY IF the current logged-in user's ID matches the row's user_id"
+
+**Step by step:**
+1. Alice logs in → `auth.uid()` becomes "uuid-for-alice"
+2. Alice queries: "SELECT * FROM notes"
+3. For each row in the database:
+   - Does `auth.uid() = user_id`?
+   - Alice's note: uuid-for-alice = uuid-for-alice ✅ YES → Include it
+   - Bob's note: uuid-for-alice = uuid-for-bob ❌ NO → Skip it
+4. Alice gets only her notes
+
+This happens automatically. You don't write the comparison yourself; Supabase does.
+
+### The Complete Security Flow
+
+Here's what happens when a user does something:
+
+```
+1. User signs in
+   ↓
+2. Supabase creates a session (a token proving they're logged in)
+   ↓
+3. Session is stored in the browser
+   ↓
+4. Every query sent to Supabase includes the session
+   ↓
+5. Supabase reads the session and sets auth.uid()
+   ↓
+6. RLS policy checks: (auth.uid() = user_id)?
+   ↓
+7. If YES: Return row. If NO: Block it.
+   ↓
+8. User gets only their data
+```
+
+**Key point:** The session travels with every query. That's how the database knows who's asking.
+
+### Why This Matters: App-Level vs Database-Level Security
+
+**BAD APPROACH (App-level filtering only):**
+```javascript
+// In your app code:
+const notes = await supabase
+  .from("notes")
+  .select()
+  .eq("user_id", currentUserId);  // Filtering in the app
+```
+
+**Problem:** If a hacker modifies the app code or uses a tool to bypass your app and query directly, they can change `currentUserId` to someone else's ID and read all notes. Your app-level filter is useless.
+
+**GOOD APPROACH (Database-level RLS):**
+```sql
+-- In the database (RLS policy):
+CREATE POLICY "users read own notes"
+  ON notes
+  USING (auth.uid() = user_id);
+```
+
+Then in your app, you can just query:
+```javascript
+const notes = await supabase
+  .from("notes")
+  .select();  // No user_id filter needed!
+```
+
+**Why it's safe:** Even if a hacker tries to query the database directly (bypassing your app), the RLS policy still blocks them. The database enforces security, not the app.
+
+**Rule:** Always trust the database, never trust the app for security. RLS is your shield.
 
 ---
 
