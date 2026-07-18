@@ -98,9 +98,20 @@ Fix stale claims: "3 MC questions per module (48 total)" → actual count; "reta
 ---
 
 ## Progress Ledger
-- [ ] Wave 1 (priority technical): M6, M8, M10, M12, M14, M16
-- [ ] Wave 2 (remaining modules): M1, M2, M3, M4, M5, M7, M9, M11, M13, M15
-- [ ] Task 17: brownfield-practice-repo
-- [ ] Task 18: quizzes.ts
-- [ ] Task 19: CLAUDE.md
-- [ ] Final review pass
+- [x] Wave 1 (priority technical): M6, M8, M10, M12, M14, M16 — commit 5504967
+- [x] Wave 2 (remaining modules): M1, M2, M3, M4, M5, M7, M9, M11, M13, M15 — commit 4ee7910
+- [x] Task 17: brownfield-practice-repo — commit 5504967
+- [x] Task 18: quizzes.ts — audited (no dup IDs); EXCEEDED with full expansion, every quiz now ≥5 questions — commit 5446f71
+- [x] Task 19: CLAUDE.md — stale quiz claims corrected — commit 4ee7910
+- [x] Tier 2 (credibility) — folded into per-module work: M6/M12 worked implementations, M15/M16 fleshed endings
+- [x] Final review pass — H1s/lesson IDs/cross-refs verified, M2 footer straggler swept
+
+### Beyond original plan (later requests)
+- [x] Module 6 Lesson 6.6 "Choosing and switching models" + Cursor picker note — commit e6dd642
+- [x] Module 11 Lesson 11.4 "A database per environment" (Supabase local + branching) — commit 31c24ce
+
+### Still open (NOT code — requires a human)
+- [ ] Human content read-through before merging PR #1 (AI-authored corrections back a credential — esp. the ~40 new quiz answer keys and the M8/M12/M14 code examples)
+- [ ] Optional: expand adult quizzes beyond 5 with a served random subset (currently all questions shown each attempt)
+
+**All three tiers COMPLETE. PR #1 (branch `fix/content-remediation`) holds everything — not merged; nothing deployed.**
