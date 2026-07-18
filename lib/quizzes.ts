@@ -1268,17 +1268,17 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
     questions: [
       {
         id: "k13-1",
-        text: "What lets Claude Code act on GitHub/Supabase/Vercel?",
-        options: ["CLAUDE.md", "A skill", "MCP (tool connectors)", "A comment"],
-        correctAnswer: 2,
-        explanation: "MCPs are connectors to external tools!",
+        text: "What do GitHub Actions do?",
+        options: ["Run automated tests and deploy when code is pushed", "Manually deploy code to Vercel", "Manage git branches", "Write code documentation"],
+        correctAnswer: 0,
+        explanation: "GitHub Actions automatically tests and deploys your code when you push!",
       },
       {
         id: "k13-2",
-        text: "A skill is best for:",
-        options: ["Storing secrets", "Procedural know-how that kicks in by context", "Hosting", "Database queries"],
-        correctAnswer: 1,
-        explanation: "Skills are on-demand procedural help!",
+        text: "When should you use auto-deploy to production?",
+        options: ["Only after tests pass", "Immediately on every commit", "Only on Friday afternoons", "Never—deploy manually"],
+        correctAnswer: 0,
+        explanation: "Deploy to production only after tests pass—it keeps your app safe!",
       },
       {
         id: "k13-3",
