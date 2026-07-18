@@ -155,6 +155,71 @@ The rule: **Decide what you're building and in what order BEFORE you ask the AI 
 
 ---
 
+## Lesson 3.2b — Recording Your Decisions as You Plan (~25 min)
+
+When Claude Code interviews you and builds your plan, you're making dozens of small choices:
+- "Should users be able to add multiple pets or just one?"
+- "Why did I pick Supabase instead of Firebase?"
+- "Why does the data model have a `tags` table instead of just text fields?"
+
+These **decisions matter**. Six months from now, when you're maintaining your code, or when a teammate joins, they'll ask "Why is it built this way?" If you don't have an answer, they might break something or rebuild it wrong.
+
+**That's why you create a `decisions.md` file** — a record of WHY you made each design choice. It's not a to-do list. It's a notebook of your thinking.
+
+### What Goes in decisions.md
+
+Each decision is simple: *What did I decide, and why?*
+
+**Example from a pet tracker:**
+
+```markdown
+# Pet Tracker — Design Decisions
+
+## Decision 1: Multiple pets per user
+**Chose:** Yes, users can track 2-3 pets.
+**Why:** My interview showed pet owners often have multiple pets. Tracking just one would feel too limited.
+**Alternative:** Start with one pet per user, add multi-pet later.
+**Impact:** Needs a link between `users` and `pets` tables.
+
+## Decision 2: Database choice
+**Chose:** Supabase (PostgreSQL).
+**Why:** We need real-time updates (live streak counts) and Row-Level Security. Supabase does both.
+**Alternative:** Firebase, which is simpler but harder to query complex data.
+**Impact:** SQL queries, not NoSQL. Data is relational.
+
+## Decision 3: Reminders (out of scope)
+**Chose:** NOT building reminders in MVP.
+**Why:** Keeps the project small. We can add reminders in Phase 2 after users give feedback.
+**Alternative:** Build reminders from the start (way more complex).
+**Impact:** Don't need a notifications table or email service yet.
+```
+
+### How to Ask Claude Code to Create decisions.md
+
+After Claude Code creates your `spec.md` and `decisions.md`, review it. But if Claude Code doesn't fully explain your decisions, you can ask it to be more explicit:
+
+```
+I want to improve my decisions.md file. 
+For each design choice we made (data model, screens, build order), write 1-2 sentences explaining:
+1. What we decided
+2. Why we decided it (what problem does it solve?)
+3. What alternative did we consider?
+
+Make it detailed enough that someone new to the project can understand our reasoning 6 months from now.
+```
+
+Claude Code will expand your decisions.md with clear reasoning for each choice. Perfect! 💡
+
+### Why This Matters
+
+When you ship code, **your code is a conversation between you and the next person who maintains it** — maybe that's future-you, a teammate, or someone hiring you.
+
+If they see a complex data model and ask "Why is it like this?" and you say "Uh... I don't remember," you've lost credibility. But if you say "Here's the spec we wrote, and here's why we chose this model," you look professional. You've *documented your thinking*.
+
+Also, writing down your decisions forces you to think clearly. If you can't explain why you chose something, maybe you shouldn't have! 🤔
+
+---
+
 ## Lesson 3.3 — Build Your Plan with Claude Code (~60 min)
 
 A spec is just a written description of what your app should do. Instead of manually writing it yourself, you'll **use Claude Code to interview you and build the entire plan automatically**. This saves time and makes sure you don't miss anything. 🚀
@@ -219,7 +284,7 @@ After each step, show me the output and ask if I want to change anything!
 
 ---
 
-## Lesson 3.4 — Your Technical Plan (Already Made!) (~30 min)
+## Lesson 3.4 — Your Technical Plan (Already Made!) (~60 min)
 
 Good news: **Claude Code already created your technical plan** when you ran the planning workflow in Lesson 3.2! 🎉
 
@@ -240,9 +305,128 @@ Your technical plan includes:
 
 Claude Code will revise the entire plan to match what you want. Easy! ✨
 
+### Worked Example: Pet Tracker from Spec to Technical Plan
+
+Let me walk you through a complete example so you see how the spec becomes a plan. Here's a real pet tracker spec:
+
+**THE SPEC (what the app does):**
+
+```
+PROBLEM: Pet owners forget when they last fed their pet.
+
+USERS: People with 1-2 pets who want a simple tracker.
+
+MVP FEATURES:
+1. Sign up and log in
+2. Add a pet (name, type, photo)
+3. Mark pet as fed (timestamp logged)
+4. See last fed time on dashboard
+5. Can edit pet details
+
+OUT OF SCOPE:
+- Reminders (phase 2)
+- Multiple pets per account (start with 1)
+- Sharing with family (future)
+
+SUCCESS: User adds a dog, feeds it, and sees "Last fed: 2 hours ago" on the dashboard.
+```
+
+**THE TECHNICAL PLAN Claude Code builds:**
+
+**1. Data Model (what we store):**
+
+```sql
+-- Users table (auth)
+users: id, name, email, password_hash, created_at
+
+-- Pets table (the thing we're tracking)
+pets: id, user_id, name, type (dog/cat), photo_url, created_at
+
+-- Feeding logs (history)
+feedings: id, pet_id, fed_at (timestamp), created_at
+```
+
+**Why this design?**
+- `pets` links to `users` so each user only sees their pets (privacy via database)
+- `feedings` is a separate table so you can have a history (see "fed 5 times this week" later)
+- We DON'T have a `last_fed` field in `pets` because we can calculate it from `feedings` (avoids data duplication)
+
+**2. Screens (what users see):**
+
+```
+Screen 1: Login/Sign Up
+  → Text field for email + password
+  → "Sign up" button
+
+Screen 2: Dashboard (main page after login)
+  → Shows: [Pet photo] [Pet name]
+  → Shows: "Last fed: 2 hours ago"
+  → Shows: "Mark as fed" button (big, green)
+  → Shows: "Edit pet" link
+
+Screen 3: Add Pet (reached from dashboard)
+  → Text field: Pet name
+  → Dropdown: Type (dog / cat)
+  → File upload: Pet photo
+  → "Save" button
+
+Screen 4: Edit Pet
+  → Same fields as Add Pet
+  → "Update" button
+  → "Delete pet" button (red, dangerous)
+```
+
+**Why these screens?**
+- Users only need to add 1 pet (MVP), so just 1 form
+- Dashboard is the main page (most used action: "mark as fed")
+- We're NOT building a history view (out of scope), just the last time
+
+**3. Build Order (what to build first):**
+
+```
+Task 1: Set up Supabase (auth + pets table + feedings table)
+   → Why first? Everything depends on the database
+
+Task 2: Build login/sign up flow
+   → Why second? Users can't access the app without this
+
+Task 3: Build dashboard (show pet name + last fed time)
+   → Why third? This is the main page, must work
+
+Task 4: Build "Mark as fed" button (writes to feedings table)
+   → Why fourth? Users can log feedings now
+
+Task 5: Build "Add pet" form (creates row in pets table)
+   → Why fifth? Users can set up their account
+
+Task 6: Build "Edit pet" page
+   → Why last? Nice-to-have; can ship without it at first
+```
+
+**Why this order?**
+- Can't show the dashboard (Task 3) before the database (Task 1) exists
+- Can't test "mark as fed" (Task 4) before the dashboard works (Task 3)
+- Adding pets (Task 5) can wait because Claude Code can pre-populate a test pet
+- Editing (Task 6) is the least critical
+
+### Critique Step: Does the plan match your vision?
+
+**You review Claude Code's plan and ask:**
+- "Does the data model look right?" → If not, say what's wrong
+- "Do these screens cover what users need?" → If not, suggest new screens or remove some
+- "Does the build order make sense?" → If not, tell Claude Code which tasks should move
+
+**Example critique:** "Wait, I want users to be able to track 2 pets, not just 1. And I want a history view so I can see 'fed 5 times this week.' Can you revise?"
+
+Claude Code updates the data model (no change, already supports 2 pets!), adds a history screen, and reorders tasks. It takes 30 seconds. 🚀
+
+This is the power of planning: **you catch scope/priority issues before writing a single line of code.** If Claude Code had just started coding, you'd be 3 hours in before realizing you need a history view!
+
 ---
 
-## Lesson 3.5 — Understand Your Build Order (~30 min)
+---
+
+## Lesson 3.5 — Understand Your Build Order (~60 min)
 
 You can't build everything at once. Some tasks depend on others. **Claude Code already figured this out for you!** 🎯
 
@@ -263,6 +447,113 @@ When Claude Code created your plan, it ordered the tasks logically. Here's why t
 - What would break if you did step 4 before step 3?
 
 **If the order looks wrong**, tell Claude Code! Example: "I want to build the login system first before the homework form." Claude Code will revise the order to match.
+
+### Understanding Dependencies: Real Scenarios
+
+Let's practice thinking about dependencies with three scenarios. For each one, figure out the right build order.
+
+**Scenario A: Task dependencies with independent work**
+
+You have these 6 tasks for your pet tracker:
+
+- Task A: Set up Supabase database
+- Task B: Build dashboard page (shows pet info)
+- Task C: Build login/sign up
+- Task D: Add "Mark as fed" button (calls database)
+- Task E: Build pet photo upload feature
+- Task F: Add email reminders (sends email)
+
+*Question: What's the safest build order?*
+
+**Think first:** Which of these MUST happen first? Which can happen independently?
+
+**Answer:**
+```
+Safe order:
+1. Task A (database) — everything depends on this
+2. Task C (auth) — users need to log in first
+3. Task B (dashboard) — needs auth + database to work
+4. Task D (mark as fed) — needs database + dashboard
+5. Task E (photo upload) — independent, can happen anytime after Task A
+6. Task F (reminders) — last, least critical
+
+Key insight: Tasks E and F could be done by someone else while you're doing B, C, D.
+If you're solo, do A→C→B→D first, then E and F.
+```
+
+**Scenario B: Deadline pressure and prioritization**
+
+Your client wants the pet tracker ready by Friday. It's Wednesday. You estimate:
+
+- Database setup: 1 day
+- Auth (login/sign up): 1 day
+- Dashboard: 1 day
+- "Mark as fed" button: 4 hours
+- Photo upload: 2 hours
+- Email reminders: 2 days
+
+*Question: What's your MVP for Friday? Which features do you cut?*
+
+**Think first:** What's the minimum the client needs to use the app?
+
+**Answer:**
+```
+Friday deadline (2 days available):
+
+MUST BUILD (day 1 + day 2):
+- Database setup (1 day) — foundation
+- Auth (1 day) — users can log in
+
+MUST BUILD (half of day 2):
+- Dashboard (1 day, but use Claude to speed it up) — users see their pet
+- "Mark as fed" button (4 hours) — main feature works
+
+SHIP FRIDAY with this. Users can: sign up → see their pet → mark it fed.
+
+MOVE TO v1.1 (next week):
+- Photo upload (2 hours) — nice to have
+- Email reminders (2 days) — complex, can wait
+
+This is prioritization: What's the CORE problem you're solving? Reminders are nice,
+but "I forgot to log that I fed my dog" is the core problem. Solve that first. 🎯
+```
+
+**Scenario C: Hidden dependencies**
+
+You plan to build these 5 tasks in this order:
+
+1. Build homepage
+2. Build dashboard
+3. Build settings page
+4. Connect to database
+5. Add login/sign up
+
+*Question: What's wrong with this order?*
+
+**Think first:** Does every task have what it needs?
+
+**Answer:**
+```
+This order is BROKEN:
+
+- Task 1 (homepage) — needs what from 2-5? Just styling. ✓ Can start.
+- Task 2 (dashboard) — needs database (Task 4) to show data. ✗ Can't start yet.
+- Task 3 (settings) — needs database to save settings. ✗ Can't start yet.
+- Task 4 (database) — needs auth (Task 5) to know whose data. ✗ Can't start yet.
+- Task 5 (login) — needs database set up first (Task 4). ✗ Wrong order.
+
+CORRECT ORDER:
+1. Build login/sign up (Task 5 first!)
+2. Connect to database (Task 4 — after auth is done)
+3. Build dashboard (Task 2 — now it has auth + database)
+4. Build settings (Task 3 — now it has auth + database)
+5. Build homepage (Task 1 last — just styling, no dependencies)
+
+Key lesson: Draw the dependency chain BEFORE you start. If Task X needs Task Y,
+Y must come first. This saves you from wasted work! 📊
+```
+
+---
 
 ## Next: Use Your Plan in Module 4
 
