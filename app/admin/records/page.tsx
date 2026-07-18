@@ -5,6 +5,7 @@ import {
   exportLearnerRecordsCSV,
   exportQuizAttemptRecordsCSV,
   exportCapstoneRecordsCSV,
+  exportDeliverablesRecordsCSV,
   exportAccreditationSummaryCSV,
 } from "@/lib/actions/records";
 import { useRouter } from "next/navigation";
@@ -132,6 +133,28 @@ export default function RecordsExport() {
             </button>
           </div>
 
+          {/* Deliverables Records */}
+          <div className="bg-white rounded-lg border border-violet-light/20 p-6 hover:border-violet/40 transition">
+            <h2 className="text-xl font-bold font-display text-ink mb-2">
+              📁 Deliverables Submissions
+            </h2>
+            <p className="text-slate text-sm mb-4">
+              All module deliverable submissions including repo/live URLs, approval status, and auto-checks
+            </p>
+            <button
+              onClick={() =>
+                downloadCSV(
+                  exportDeliverablesRecordsCSV,
+                  "deliverables-records"
+                )
+              }
+              disabled={loading}
+              className="w-full bg-violet hover:bg-violet-light disabled:opacity-60 text-paper font-bold py-2 rounded-lg transition"
+            >
+              {loading ? "Exporting..." : "Export CSV"}
+            </button>
+          </div>
+
           {/* Accreditation Summary */}
           <div className="bg-white rounded-lg border border-violet-light/20 p-6 hover:border-violet/40 transition">
             <h2 className="text-xl font-bold font-display text-ink mb-2">
@@ -169,6 +192,9 @@ export default function RecordsExport() {
             </li>
             <li>
               • <strong>Capstone Submissions:</strong> Project URLs, grading status, and submission date
+            </li>
+            <li>
+              • <strong>Deliverables Submissions:</strong> Module-by-module repo URLs, live URLs, approval status, and auto-check results
             </li>
             <li>
               • <strong>Accreditation Summary:</strong> Completion rates and aggregate metrics for accreditors

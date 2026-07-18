@@ -182,6 +182,72 @@ export async function exportCapstoneRecordsCSV(): Promise<string> {
 }
 
 /**
+ * Export deliverables submissions as CSV
+ */
+export async function exportDeliverablesRecordsCSV(): Promise<string> {
+  const user = await getUser();
+  if (!user) throw new Error("Not authenticated");
+
+  const supabase = await createClient();
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", user.id)
+    .single();
+
+  if (profile?.role !== "instructor") {
+    throw new Error("Only instructors can export records");
+  }
+
+  const { data, error } = await supabase
+    .from("deliverables")
+    .select(
+      `
+      user_id,
+      module_id,
+      repo_url,
+      live_url,
+      status,
+      auto_checks,
+      notes,
+      submitted_at,
+      reviewed_at,
+      target_audience,
+      profiles (name)
+    `
+    )
+    .order("submitted_at", { ascending: false });
+
+  if (error) throw error;
+
+  const deliverables = data?.map((delivery: any) => {
+    const autoChecks = delivery.auto_checks as Record<string, boolean> | null;
+    const checksStatus = autoChecks
+      ? Object.entries(autoChecks)
+          .map(([key, value]) => `${key}: ${value ? "✓" : "✗"}`)
+          .join(" | ")
+      : "Not checked";
+
+    return {
+      "Learner ID": delivery.user_id,
+      "Learner Name": delivery.profiles?.name || "Unknown",
+      Module: `Module ${delivery.module_id}`,
+      "Repository URL": delivery.repo_url || "—",
+      "Live URL": delivery.live_url || "—",
+      Status: delivery.status || "pending",
+      "Auto Checks": checksStatus,
+      "Submitted Date": delivery.submitted_at ? new Date(delivery.submitted_at).toLocaleDateString() : "—",
+      "Reviewed Date": delivery.reviewed_at ? new Date(delivery.reviewed_at).toLocaleDateString() : "—",
+      Notes: delivery.notes || "—",
+      Version: delivery.target_audience,
+    };
+  }) || [];
+
+  const headers = ["Learner ID", "Learner Name", "Module", "Repository URL", "Live URL", "Status", "Auto Checks", "Submitted Date", "Reviewed Date", "Notes", "Version"];
+  return convertToCSV(deliverables, headers);
+}
+
+/**
  * Export comprehensive accreditation summary
  */
 export async function exportAccreditationSummaryCSV(): Promise<string> {
