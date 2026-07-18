@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getUser } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
+import { sendFeedbackAlertEmail } from "@/lib/actions/notifications";
 
 /**
  * POST /api/course/feedback
@@ -97,6 +98,22 @@ export async function POST(req: NextRequest) {
         { error: "Failed to save feedback" },
         { status: 500 }
       );
+    }
+
+    // Send alert email to support team (don't block response if email fails)
+    try {
+      await sendFeedbackAlertEmail(
+        user.user_metadata?.name || user.email || "Unknown",
+        user.email || "",
+        clarity,
+        difficulty,
+        challenge,
+        suggestions,
+        would_recommend
+      );
+    } catch (emailError) {
+      console.error("Failed to send feedback alert email:", emailError);
+      // Don't fail the API response if email fails - feedback is already saved
     }
 
     return NextResponse.json({ success: true });

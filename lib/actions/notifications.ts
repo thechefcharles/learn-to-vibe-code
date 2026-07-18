@@ -249,6 +249,51 @@ export async function sendCapstoneResultEmail(
 }
 
 /**
+ * Send admin alert for new learner feedback
+ */
+export async function sendFeedbackAlertEmail(
+  learnerName: string,
+  learnerEmail: string,
+  clarity: string,
+  difficulty: string,
+  challenge: string,
+  suggestions: string,
+  wouldRecommend: string
+) {
+  try {
+    const result = await resend.emails.send({
+      from: "Learn to Vibe Code <noreply@learntovibe.code>",
+      to: "support@learntovibe.code",
+      subject: `New Learner Feedback from ${learnerName}`,
+      html: `
+        <h2>New Feedback Received</h2>
+        <p><strong>From:</strong> ${escapeHtml(learnerName)} (${escapeHtml(learnerEmail)})</p>
+        <hr/>
+        <p><strong>📚 Content Clarity:</strong> ${clarity.replace(/-/g, ' ')}</p>
+        <p><strong>⚙️ Difficulty Level:</strong> ${difficulty.replace(/-/g, ' ')}</p>
+        <p><strong>🚧 Biggest Challenge:</strong></p>
+        <p style="background: #f5f5f5; padding: 12px; border-left: 3px solid #7C3AED;">${escapeHtml(challenge).replace(/\n/g, '<br>')}</p>
+        <p><strong>✨ Suggestions:</strong></p>
+        <p style="background: #f5f5f5; padding: 12px; border-left: 3px solid #7C3AED;">${escapeHtml(suggestions).replace(/\n/g, '<br>')}</p>
+        <p><strong>🌟 Would Recommend:</strong> ${wouldRecommend}</p>
+        <hr/>
+        <p style="font-size: 12px; color: #666;">This is automated feedback from ${learnerName}. Review in Supabase dashboard.</p>
+      `,
+    });
+
+    if (result.error) {
+      console.error("Feedback alert email error:", result.error);
+      return false;
+    }
+
+    return true;
+  } catch (error) {
+    console.error("Failed to send feedback alert email:", error);
+    return false;
+  }
+}
+
+/**
  * Send donation receipt email
  */
 export async function sendDonationEmail(
