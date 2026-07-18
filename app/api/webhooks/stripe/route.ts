@@ -146,7 +146,7 @@ export async function POST(req: NextRequest) {
             );
           } else {
             await sendDonationEmail(profile.email, donation.amount_cents);
-            console.log(`Webhook: Donation receipt email sent to ${profile.email}`);
+            console.log(`Webhook: Donation receipt email sent`);
           }
         } catch (emailError) {
           const errorMessage =
