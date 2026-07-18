@@ -81,12 +81,12 @@ export function CourseModuleList({
                 toggleModule(module.id);
               }}
               disabled={!isUnlocked}
-              className={`w-full text-left p-3 rounded-lg border-2 transition ${
+              className={`w-full text-left p-3 rounded-lg border-2 transition backdrop-blur-sm ${
                 !isUnlocked
-                  ? "border-slate-600/40 bg-slate-900/50 opacity-50 cursor-not-allowed"
+                  ? "border-slate-600/50 bg-slate-900/60 cursor-not-allowed"
                   : isCompleted
-                  ? "border-green-500/70 bg-green-900/40 hover:bg-green-900/50 backdrop-blur-sm"
-                  : "border-blue-500/70 bg-blue-900/40 hover:bg-blue-900/50 cursor-pointer backdrop-blur-sm"
+                  ? "border-green-500/70 bg-green-900/50 hover:bg-green-900/60"
+                  : "border-blue-500/70 bg-blue-900/50 hover:bg-blue-900/60 cursor-pointer"
               }`}
             >
               <div className="flex items-center justify-between">
@@ -103,10 +103,14 @@ export function CourseModuleList({
                     {isCompleted ? "✓" : module.id}
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-white drop-shadow-md">
+                    <h3 className={`text-sm font-bold drop-shadow-md ${
+                      isUnlocked ? "text-white" : "text-slate-300"
+                    }`}>
                       {module.id}. {module.title}
                     </h3>
-                    <p className="text-xs text-slate-200 mt-0.5 drop-shadow-md">
+                    <p className={`text-xs mt-0.5 drop-shadow-md ${
+                      isUnlocked ? "text-slate-200" : "text-slate-400"
+                    }`}>
                       {isCompleted
                         ? "✓ Completed"
                         : isUnlocked
@@ -146,7 +150,7 @@ export function CourseModuleList({
       {/* Capstone */}
       <Link
         href="/capstone"
-        className="block p-3 rounded-lg border-2 border-purple-500/60 bg-purple-900/20 hover:bg-purple-900/30 transition cursor-pointer group"
+        className="block p-3 rounded-lg border-2 border-purple-500/70 bg-purple-900/50 hover:bg-purple-900/60 transition cursor-pointer group backdrop-blur-sm"
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 flex-1">
@@ -154,10 +158,10 @@ export function CourseModuleList({
               🎯
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white">
+              <h3 className="text-sm font-bold text-white drop-shadow-md">
                 {isKids ? "The Grand Challenge!" : "Capstone"}
               </h3>
-              <p className="text-xs text-slate-300 mt-1">
+              <p className="text-xs text-slate-200 mt-0.5 drop-shadow-md">
                 {isKids
                   ? "Build your masterpiece & earn a badge! 👑"
                   : "Build & earn your credential"}
