@@ -259,7 +259,7 @@ export function CockpitDashboard({
             <p className="text-xs text-pink-400 font-mono">{badges.length} / {badgeMetadata.length} EARNED</p>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 pb-4">
             {badgeMetadata.map((badge) => {
               const earned = badges.some((b) => b.badge_key === badge.key);
               const badgeTypeMap: Record<string, any> = {
@@ -277,19 +277,19 @@ export function CockpitDashboard({
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   whileHover={earned ? { scale: 1.1 } : {}}
-                  className={`flex flex-col items-center p-4 rounded-lg border transition-all ${
+                  className={`flex flex-col items-center px-4 py-5 rounded-lg border transition-all ${
                     earned
                       ? 'border-pink-500/60 bg-pink-500/10 shadow-lg shadow-pink-500/30'
                       : 'border-slate-600/40 bg-slate-900/40 opacity-50'
                   }`}
                 >
-                  <div className="w-12 h-12 mb-2">
+                  <div className="w-12 h-12 mb-3">
                     <Badge type={badgeConfig.type} tier={badgeConfig.tier} size="sm" />
                   </div>
-                  <p className="text-xs font-bold text-white text-center line-clamp-2">
+                  <p className="text-xs font-bold text-white text-center line-clamp-2 mb-2">
                     {badge.name}
                   </p>
-                  <p className="text-xs text-slate-400 text-center line-clamp-2 mt-1">
+                  <p className="text-xs text-slate-400 text-center line-clamp-2 mb-1">
                     {badge.description}
                   </p>
                   {earned && (
