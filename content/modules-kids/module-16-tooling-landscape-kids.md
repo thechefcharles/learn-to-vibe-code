@@ -57,71 +57,83 @@ This stack is production-ready and used by real companies. You can build anythin
 
 ## Lesson 15.2 — Other Frontend Frameworks (~45 min)
 
-**Next.js (what you learned):**
-- Pros: Full-stack, SEO, flexible
-- Cons: Lots of features, steeper curve
+**Next.js (what you learned)**
+- ✅ Full-stack, SEO, flexible
+- ⚠️ Lots of features, steeper curve
+→ Best for: Beginners, full-stack apps
 
-**React.js (just the frontend):**
-- Pros: Lightweight, very popular
-- Cons: Need separate backend
+**React.js (just the frontend)**
+- ✅ Lightweight, very popular
+- ⚠️ Needs separate backend
+→ Best for: Frontend-only projects
 
-**Vue.js:**
-- Pros: Easier than React, good docs
-- Cons: Smaller community
+**Vue.js**
+- ✅ Easier syntax, good docs
+- ⚠️ Smaller community
+→ Best for: Simpler projects
 
-**Svelte:**
-- Pros: Less boilerplate, super fast
-- Cons: Smaller ecosystem
+**Svelte**
+- ✅ Less boilerplate, super fast
+- ⚠️ Smaller ecosystem
+→ Best for: Performance-critical apps
 
-**Astro:**
-- Pros: Insanely fast for static content
-- Cons: Different paradigm
+**Astro**
+- ✅ Insanely fast static sites
+- ⚠️ Different paradigm
+→ Best for: Blogs, marketing sites
 
-**Bottom line:** Next.js is a great choice for beginners. You learn the others later if needed.
+**Key takeaway:** Next.js is perfect for beginners right now.
 
 ---
 
 ## Lesson 15.3 — Other Databases (~30 min)
 
-**Supabase (what you learned):**
-- Pros: Postgres + auth + real-time
-- Cons: Can be overkill for small projects
+**Supabase (what you learned)**
+- ✅ Postgres + auth + real-time
+- ⚠️ Can be overkill for tiny projects
+→ Best for: Learning, full-featured apps
 
-**Firebase (Google):**
-- Pros: Real-time, serverless, easy
-- Cons: Expensive, less control
+**Firebase (Google)**
+- ✅ Real-time, serverless, easy setup
+- ⚠️ Expensive, less data control
+→ Best for: Real-time collaboration
 
-**MongoDB:**
-- Pros: Flexible, document-based
-- Cons: Requires backend code
+**MongoDB**
+- ✅ Flexible, document-based
+- ⚠️ Requires backend code
+→ Best for: Flexible/unstructured data
 
 **SQL vs. NoSQL:**
-- **SQL (Postgres):** Tables with rows/columns (what you learned)
-- **NoSQL (MongoDB):** Documents (more flexible, less structured)
+- **SQL (Postgres):** Tables with rows/columns (structured, what you learned)
+- **NoSQL (MongoDB):** Documents (flexible, less structure)
 
-**Bottom line:** Supabase is perfect for learning. Firebase is easier but pricier.
+**Key takeaway:** Supabase is perfect for learning and most web apps.
 
 ---
 
 ## Lesson 15.4 — Other Deployment Platforms (~30 min)
 
-**Vercel (what you learned):**
-- Pros: Next.js-optimized, easy, free tier
-- Cons: Expensive at scale
+**Vercel (what you learned)**
+- ✅ Next.js-optimized, easy, free tier
+- ⚠️ Expensive at scale
+→ Best for: Next.js apps, fast setup
 
-**Netlify:**
-- Pros: Great for static sites, good UX
-- Cons: Serverless functions are clunky
+**Netlify**
+- ✅ Great for static sites, good UX
+- ⚠️ Serverless functions are limited
+→ Best for: Static blogs, marketing sites
 
-**AWS / Google Cloud:**
-- Pros: Powerful, cheaper at scale
-- Cons: Steep learning curve
+**AWS / Google Cloud**
+- ✅ Powerful, cheaper at scale
+- ⚠️ Steep learning curve
+→ Best for: Enterprise, massive scale
 
-**Heroku:**
-- Pros: Easy, good for beginners
-- Cons: Expensive, slower
+**Heroku**
+- ✅ Easy, beginner-friendly
+- ⚠️ Expensive, slower
+→ Best for: Simple prototypes
 
-**Bottom line:** Vercel is unbeatable for Next.js. Start there.
+**Key takeaway:** Vercel is unbeatable for Next.js beginners.
 
 ---
 
