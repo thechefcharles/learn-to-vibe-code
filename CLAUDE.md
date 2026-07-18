@@ -133,8 +133,8 @@ See `/Accredited Vibe Coding Course/START-HERE/SCREENSHOTS.md` for capture workf
 
 ### Phase 5: Quizzes ✓
 - `/course/[module]/quiz`
-- 3 MC questions per module (48 total)
-- Server-side scoring (80% to pass, retakes from shuffled pool)
+- MC questions per module: adult set (`quizzes`, modules 2–16, ~3–7 each; Module 1/setup is checklist-gated, no quiz) + kids set (`kidsQuizzes`, modules 1–16). ~63 adult questions total, all IDs unique.
+- Server-side scoring (80% to pass). NOTE: the quiz serves **all** questions in a module each attempt — there is no shuffled subset yet. Known gate issue: modules with <5 questions require a perfect score at 80% (see remediation plan Task 18 — expand every quiz to ≥5, ideally 6–8 with a served subset).
 - Instant feedback, `quiz_attempts` records
 
 ### Phase 6: Deliverables & Unlock Gates ✓

@@ -1,8 +1,8 @@
-# Module 21: Deploying Applications (Vercel + GitHub)
+# Module 11: Deploying Applications (Vercel + GitHub)
 
-**Stage:** Production · **Level:** Advanced · **Duration:** ~5 contact hours (0.5 CEU)
+**Stage:** Production · **Level:** Advanced · **Duration:** ~5.5 contact hours (0.55 CEU)
 
-**Prerequisites:** Modules 7 & 9. Learners have the invoice-tracker on GitHub (Module 20) with Supabase auth + RLS (Module 8). Now it goes live on the internet.
+**Prerequisites:** Modules 7 & 9. Learners have the invoice-tracker on GitHub (Module 10) with Supabase auth + RLS (Module 8). Now it goes live on the internet.
 
 > Where "my app on [localhost](http://localhost)" becomes "my app anyone can use at a URL." It's the first Production-stage module, so the trust dial from Module 2 turns down: mistakes here are public, and secrets and config matter. The reward is a real, shareable, deployed product — exactly what a portfolio and the capstone need.
 > 
@@ -20,119 +20,116 @@ By the end of this module, the learner can:
 
 ---
 
-## Lesson 10.1 — What deployment (and CI/CD) means (~30 min)
+## Lesson 11.1 — What deployment (and CI/CD) means (~30 min)
 
-Deployment puts your app on a server so anyone can reach it at a URL. **CI/CD** means this happens automatically: push to GitHub → it's built and deployed for you. That's the payoff of Module 20's GitHub setup: **push to `main` → Vercel builds and deploys.** Your repo is the source of truth; Vercel keeps the live site in sync.
+Deployment puts your app on a server so anyone can reach it at a URL. **CI/CD** means this happens automatically: push to GitHub → it's built and deployed for you. That's the payoff of Module 10's GitHub setup: **push to `main` → Vercel builds and deploys.** Your repo is the source of truth; Vercel keeps the live site in sync.
 
 ---
 
-## Lesson 10.2 — Deploy to Vercel with Claude Code & Vercel MCP (~60 min)
+## Lesson 11.2 — Deploy to Vercel (~60 min)
 
-Begins Objective 1. **Use Claude Code with Vercel MCP to orchestrate deployment and environment configuration:**
+Begins Objective 1. Vercel turns your GitHub repo into a live site. **The primary path in this module is the Vercel dashboard** — it's the clearest way to *see* what deployment does, and it keeps your secrets out of any chat window. You'll walk it end to end in the Hands-on activity below; here's the shape of it:
 
-### Automating Vercel deployment and configuration
+1. **Sign up** for Vercel with GitHub (one-time).
+2. **New Project → Import** your `invoice-tracker` repo. Vercel auto-detects Next.js — zero config.
+3. **Deploy.** You get a live URL (e.g., `invoice-tracker-abc123.vercel.app`).
+4. **Add env vars** in Settings → Environment Variables (your Supabase URL + publishable key), then **redeploy**.
 
-**Step 1 — Sign up for Vercel** (manual one-time):
-Go to [vercel.com](https://vercel.com) and click "Sign up" with GitHub. Authorize Vercel to access your GitHub repos.
+The full step-by-step — including the deliberate "empty table → add env vars → it works" arc — is in the Hands-on activity.
 
-**Step 2 — Generate a Vercel token** (manual, for Claude Code access):
-1. Go to Vercel account settings
-2. Click **Tokens**
-3. Create a new token, copy it
-4. Store it safely (you'll use it in Claude Code)
+### When a deploy fails, read the build logs first
 
-**Step 3 — Prompt Claude Code to deploy and configure with Vercel MCP:**
+Don't guess. Open **Vercel → Deployments**, click the failed deployment, and read the **Build Logs**. The error that stopped the build is printed there — a missing dependency, a type error, a bad import path. Fix exactly what the log names, push again, and Vercel rebuilds. Reading the log is always the first step; Claude Code can help interpret a log you paste in.
 
-```bash
-claude
+[SCREENSHOT: Vercel dashboard with deployment status Ready, the live URL displayed, and the GitHub repo connected]
+
+### Optional: accelerate with Claude Code + Vercel MCP (advanced)
+
+Once you've deployed manually and understand the moving parts, you can let Claude Code drive Vercel through the **Vercel MCP** — importing the repo, setting env vars, and redeploying in one pass. This is optional; the dashboard path above is all you need to pass.
+
+> **Warning:** Never paste a long-lived token (Vercel, Supabase, or any other) into a chat prompt — chat history can be logged or synced. Put the token in an environment variable and reference it *by name*.
+
+**Step 1 — Generate a Vercel token and store it in an environment variable:**
+1. Vercel account settings → **Tokens** → create a token, copy it.
+2. Add it to your shell environment or your MCP client's secret store — never to a file you commit:
+   ```bash
+   export VERCEL_TOKEN="your-token-here"
+   ```
+
+**Step 2 — Reference the variable *name* (not the value) in `.mcp.json`:**
+```json
+{
+  "mcpServers": {
+    "vercel": {
+      "command": "npx",
+      "args": ["-y", "@vercel/mcp"],
+      "env": { "VERCEL_TOKEN": "${VERCEL_TOKEN}" }
+    }
+  }
+}
+```
+`.mcp.json` holds only the placeholder `${VERCEL_TOKEN}`, never the secret itself — so it stays safe even though this file is often committed to the repo.
+
+**Step 3 — Prompt Claude Code (no secrets in the prompt):**
+```
+Use the Vercel MCP. My token is already in the VERCEL_TOKEN env var — do not ask me to paste it.
+1. Import my GitHub repo (invoice-tracker) to Vercel
+2. Read my Supabase env vars from .env.local and add them to the Vercel project:
+   - NEXT_PUBLIC_SUPABASE_URL
+   - NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+3. Trigger the first deployment
+4. Show me the live URL when done
 ```
 
-Add Vercel MCP to Claude Code:
-
-```
-Connect me to Vercel so you can deploy and configure my app.
-
-Use the Vercel MCP:
-1. Add the Vercel server to .mcp.json with my token (I'll provide it)
-2. Once connected, import my GitHub repo (invoice-tracker) to Vercel
-3. Add environment variables for Supabase:
-   - NEXT_PUBLIC_SUPABASE_URL: [from your Module 8 Supabase project]
-   - NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: [from Supabase]
-4. Trigger the first deployment
-5. Show me the live URL when done
-
-My Vercel token: [paste your token here]
-My Supabase credentials: [paste your keys here]
-```
-
-**Step 4 — Claude Code will orchestrate:**
-- Connect to Vercel via MCP
-- Import your GitHub repo (Next.js auto-detected)
-- Add environment variables to Vercel
-- Trigger the deployment
-- Return the live URL (e.g., `invoice-tracker-abc123.vercel.app`)
-
-**Step 5 — Test the live app:**
-1. Click the URL Claude Code provides
-2. Visit `/clients` page
-3. If you see your data, the app is working! ✅
-4. If empty, env vars might still be syncing (~1 min delay)
+**Why use the MCP path?** It coordinates repo import, env-var setup, and redeploy in one go, so "works locally, breaks in prod" is less likely. **What stays yours:** the secrets. They live in Vercel's env vars and your local environment — never in the prompt, never in git history.
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Vercel Dashboard with Deployment Ready]**
+## Lesson 11.3 — Preview deploys & the CI/CD workflow (~45 min)
 
-Vercel showing: deployment status "Ready ✓", live URL displayed, GitHub repo connected. Proof: app is live and reachable.
+Completes the CI/CD half of Objectives 1–2 and pays off Module 10's branch/PR habit. A happy side effect of linking Vercel to your GitHub repo (Lesson 11.2): **every branch and PR automatically gets its own preview URL** — a live copy you can test and share before it reaches production. No extra configuration is needed; Vercel's GitHub integration handles it. The full loop:
 
----
-
-**Why Claude Code + Vercel MCP for deployment?**
-
-- **Automation:** deployment boilerplate (repo import, env var setup, redeploy) is orchestrated in one go
-- **Vercel MCP access:** Claude Code can configure Vercel programmatically, not just via UI clicks
-- **Speed:** what takes 5-10 manual steps on the Vercel dashboard is coordinated by Claude Code
-- **Fewer mistakes:** env vars are set before the first real deploy, so "works locally, breaks in prod" is avoided
-
-**Important:** You still own the secrets (Supabase keys). Claude Code securely stores them in Vercel's env vars; they don't touch your git history or local machine in unsafe ways.
-
----
-
-## Lesson 10.3 — Preview deploys work automatically (~20 min)
-
-A happy side effect: because Vercel is linked to your GitHub repo (from Lesson 10.2), **every PR automatically gets a preview URL** — you don't need to do anything. This is the CI/CD payoff:
-
-1. You push a branch and open a PR (Module 20 workflow)
-2. GitHub notifies Vercel
-3. Vercel builds and deploys the branch to a preview URL (automatically)
-4. You see the preview link on the PR
-5. Test it live, then merge
-
-**No extra configuration needed.** Vercel's GitHub integration (set up by Claude Code in Lesson 10.2) handles the rest.
-
----
-
-## Lesson 10.4 — Preview deploys & the CI/CD workflow (~45 min)
-
-Completes the CI/CD half of Objectives 1–2 and pays off Module 20's branch/PR habit. Vercel deploys *every branch and PR* to its own **preview URL** — a live copy you can test and share before it reaches production. The full loop:
-
-1. Branch and make a change (Module 20).
-2. Open a PR → Vercel posts a **preview URL** on the PR.
-3. Test the preview; merge when good.
+1. Branch and make a change (Module 10).
+2. Push and open a PR → Vercel builds the branch and posts a **preview URL** on the PR.
+3. Test the preview live; merge when it's good.
 4. Merge to `main` → Vercel deploys to **production** automatically.
 
----
-
-**[SCREENSHOT PLACEHOLDER: GitHub PR with Preview Link]**
-
-GitHub PR page showing: Vercel bot comment with "Preview Ready" and link to live preview URL. Proof: PR has a testable preview deploy.
-
----
+[SCREENSHOT: GitHub PR page showing the Vercel bot comment with Preview Ready and a link to the live preview URL]
 
 You never test experiments in production, and every change is verifiable in a real environment first — the Module 2 verification principle at deployment scale.
 
 ---
 
-## Lesson 10.5 — Custom domain & production config (~45 min)
+## Lesson 11.4 — A database per environment (dev / preview / production) (~30 min)
+
+Preview deploys (Lesson 11.3) solve half the problem: your *code* is isolated per branch. But if all those previews point at the **same Supabase project as production**, a test signup, a `delete`, or a half-finished migration in a preview touches **real user data**. Isolating code without isolating data is a trap.
+
+**The principle: one database per environment.** Dev and preview get throwaway data you can break; production is sacred and only your live `main` deploy touches it.
+
+**The beginner-practical setup — two Supabase projects:**
+
+1. Create a **second** Supabase project. Now you have two: `myapp-prod` (real users) and `myapp-dev` (throwaway/test data).
+2. In **Vercel → Settings → Environment Variables**, use the **same variable names with different values per environment**. Vercel scopes every variable to **Production / Preview / Development** separately:
+   - `NEXT_PUBLIC_SUPABASE_URL` + keys → **Production** = your `myapp-prod` values.
+   - Same variable names → **Preview** and **Development** = your `myapp-dev` values.
+3. Result: your `main` → production deploy uses the production database; **every PR preview uses the dev database**. You can break a preview freely — real users never see it and their data is untouched.
+
+[SCREENSHOT: Vercel Environment Variables page showing NEXT_PUBLIC_SUPABASE_URL scoped to Production vs Preview with different values]
+
+**Keep the schemas in sync with migrations (don't click twice).** Two databases must have the same tables and RLS policies, or code that works in dev breaks in prod. Don't build each one by hand — use **versioned SQL migrations** (Module 14): apply the same migration file to each project (`supabase db push` against each, or paste it into each project's SQL editor). Migrations are the source of truth, so dev and prod never drift.
+
+**Auth URLs are per-project too.** Each Supabase project needs its own **Site URL / Redirect URLs** (Lesson 11.5): the dev project points at your preview/`localhost` URLs, the prod project at your real domain. Set them once per project.
+
+**Grow into it (awareness — not required for the capstone):**
+
+- **Supabase local** — `supabase start` runs the entire stack (Postgres, Auth, Storage) on your machine via Docker, fully offline. Develop and test migrations locally, then `supabase db push` to a hosted project. Great once you're comfortable with the CLI; it needs Docker installed.
+- **Supabase branching** — Supabase can automatically spin up a fresh preview database for each git branch/PR, mirroring Vercel's preview deploys. It's the fully-automated version of "a database per environment" — reach for it when managing two projects by hand becomes the bottleneck.
+
+**Rule of thumb:** never let an experiment touch production data. At minimum, a separate dev project; ideally, automated per-branch databases as you scale.
+
+---
+
+## Lesson 11.5 — Custom domain & production config (~45 min)
 
 **In this lesson:** Two critical things separate a demo from a production app:
 
@@ -178,12 +175,12 @@ When you deploy to Vercel, auth breaks if Supabase doesn't know your production 
 
 [SCREENSHOT: Supabase URL Configuration page, showing Site URL and Redirect URLs filled in]
 
-> **Beyond the basics (awareness — not required for the capstone):** as a project grows you'll meet a few more Vercel features. (1) **Per-environment env vars** — Vercel scopes variables to Production / Preview / Development separately, so preview deploys can point at a *separate* Supabase project instead of touching real data. (2) **Instant rollback** — the Deployments list can promote a previous build back to production in one click when a deploy breaks. (3) **Staging branch → its own domain** — map a long-lived branch (e.g. `staging`) to a fixed URL for a stable pre-prod environment. (4) **Preview protection** — password-protect or auth-gate preview URLs so they aren't public. You don't need these to pass — just know they exist for when an app outgrows one-env-one-database.
+> **Beyond the basics (awareness — not required for the capstone):** as a project grows you'll meet a few more Vercel features. (1) **Per-environment env vars & a database per environment** — pointing preview deploys at a separate Supabase project so they never touch real data (walked through in Lesson 11.4). (2) **Instant rollback** — the Deployments list can promote a previous build back to production in one click when a deploy breaks. (3) **Staging branch → its own domain** — map a long-lived branch (e.g. `staging`) to a fixed URL for a stable pre-prod environment. (4) **Preview protection** — password-protect or auth-gate preview URLs so they aren't public. You don't need these to pass — just know they exist for when an app outgrows one-env-one-database.
 > 
 
 ---
 
-## Lesson 10.6 — Vercel vs. the alternatives (~30 min)
+## Lesson 11.6 — Vercel vs. the alternatives (~30 min)
 
 This delivers Objective 3.
 
@@ -248,7 +245,7 @@ This delivers Objective 3.
 ### Step 7: Test auth in production (3 min)
 1. On your live site, try to sign up with a new email
 2. You might see an error (auth not configured for production)
-3. This is normal — need to configure Supabase auth URLs (see Lesson 10.5)
+3. This is normal — need to configure Supabase auth URLs (see Lesson 11.5)
 
 ### Step 8: Configure Supabase Auth for production (5 min)
 1. In Supabase dashboard, go to **Authentication → URL Configuration**
@@ -272,7 +269,7 @@ This delivers Objective 3.
 
 These are the three questions you'll see on the quiz. Study these to prepare:
 
-**Q10-1:** CI/CD here means:
+**Q11-1:** CI/CD here means:
 - (a) manual uploads
 - (b) **pushing to GitHub auto-builds and deploys** ✓
 - (c) copying files to a server
@@ -280,7 +277,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 *Why:* CI/CD automates the entire build-and-deploy cycle: push to `main` → GitHub triggers a build → Vercel deploys the result. That's the payoff of the workflow you built in Modules 9–10.
 
-**Q10-2:** Your app worked locally but breaks on Vercel until you:
+**Q11-2:** Your app worked locally but breaks on Vercel until you:
 - (a) restart your laptop
 - (b) **add the env vars to Vercel** ✓
 - (c) rewrite it
@@ -288,7 +285,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 *Why:* The `NEXT_PUBLIC_*` variables are inlined at build time, so they must exist in Vercel before the deploy. This is the classic "works locally, breaks in prod" trap — your `.env.local` never made it to Vercel.
 
-**Q10-3:** A preview deploy is:
+**Q11-3:** A preview deploy is:
 - (a) the production site
 - (b) **a live URL for a branch/PR to test before merging** ✓
 - (c) a screenshot
@@ -355,7 +352,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 ## Tools & alternatives (this module)
 
-Default: **Vercel** from **GitHub**, with **Supabase** as the production backend. Alternatives in Lesson 10.6. Deployment is a great agentic task — Claude Code can configure build settings or debug a failed deploy from logs — but *you* own env-var and auth config (secrets and production URLs).
+Default: **Vercel** from **GitHub**, with **Supabase** as the production backend. Alternatives in Lesson 11.6. Deployment is a great agentic task — Claude Code can configure build settings or debug a failed deploy from logs — but *you* own env-var and auth config (secrets and production URLs).
 
 ---
 
@@ -367,4 +364,4 @@ Default: **Vercel** from **GitHub**, with **Supabase** as the production backend
 - Every PR gets a preview URL; test there, then merge to `main` for production.
 - Set Supabase's production Site URL / redirect URLs, or auth breaks live.
 
-[Accredited Vibe Coding Course](https://app.notion.com/p/Accredited-Vibe-Coding-Course-391f6ea84e41819a8ac3c38ebdb12d04?pvs=21)
+[Accredited Vibe Coding Course](/course)

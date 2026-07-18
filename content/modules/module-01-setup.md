@@ -5,10 +5,8 @@
 **Prerequisites:** None — this comes before Module 2. A computer and an internet connection are all that's assumed.
 
 > Setup friction is where beginners quietly give up. This module installs and *verifies* every account and tool once, up front, so no later lesson stalls on "it won't install." It also gives learners the map of the whole stack before they touch any of it.
-> 
 
-> **📸 Screenshots:** Items marked *[SCREENSHOT: …]* are placeholders — capture them live when recording (install screens, dashboards, the hello-world app running).
-> 
+> **📸 Screenshots:** Items marked `[SCREENSHOT: …]` are placeholders — capture them live when recording (install screens, dashboards, the hello-world app running).
 
 ## Learning objectives
 
@@ -16,13 +14,13 @@ By the end of this module, the learner can:
 
 1. **Set up** all required accounts and tools for the course. *(Apply)*
 2. **Explain** what each tool in the stack is for and how the pieces connect. *(Understand)*
-5. **Protect** secrets and API keys using `.gitignore`, environment variables, and pre-commit hooks. *(Apply)*
 3. **Verify** the full toolchain works with a hello-world check. *(Apply)*
 4. **Arrange** their workspace for multi-screen workflow efficiency. *(Apply)*
+5. **Protect** secrets and API keys using `.gitignore`, environment variables, and pre-commit hooks. *(Apply)*
 
 ---
 
-## Lesson 0.1 — The stack, before you touch it (~20 min)
+## Lesson 1.1 — The stack, before you touch it (~20 min)
 
 Give learners the whole map first, so every tool has a place to land. Each maps to a later module:
 
@@ -32,14 +30,14 @@ Give learners the whole map first, so every tool has a place to land. Each maps 
 | Cursor | AI code editor (in-editor flow) | Module 5 |
 | Claude Code | Terminal AI agent (agentic flow) | Module 6 |
 | Supabase | Database + auth + security | Module 8 |
-| GitHub | Version control + code hosting | Module 20 |
-| Vercel | Deploys your app to a public URL | Module 21 |
+| GitHub | Version control + code hosting | Module 10 |
+| Vercel | Deploys your app to a public URL | Module 11 |
 
 **The one-sentence flow:** you *write* code in Cursor/Claude Code, make it *look good* (Module 7), *power* it with Supabase, *store* it on GitHub, and *ship* it on Vercel — with Node running it locally along the way.
 
 ---
 
-## Lesson 0.2 — Install the editors and runtime (~30 min)
+## Lesson 1.2 — Install the editors and runtime (~30 min)
 
 - **Node.js** — install the LTS version from [nodejs.org](http://nodejs.org). Verify in a terminal:
 
@@ -55,26 +53,25 @@ npm --version
 claude --version
 ```
 
-*[SCREENSHOT: a terminal showing successful node, npm, and claude version checks.]*
+[SCREENSHOT: a terminal showing successful node, npm, and claude version checks.]
 
 **⚠️ Troubleshooting tip:** If any version checks fail or show "command not found", it usually means a PATH issue. Take time to verify each command works before moving on — this is the #1 setup blocker.
-> 
 
 ---
 
-## Lesson 0.3 — Create your accounts (~30 min)
+## Lesson 1.3 — Create your accounts (~30 min)
 
 Sign up for all three now so nothing blocks you later. Use the same email for consistency.
 
-- **GitHub** — [github.com](http://github.com) (you'll create your first repo in Module 20).
+- **GitHub** — [github.com](http://github.com) (you'll create your first repo in Module 10).
 - **Supabase** — [supabase.com](http://supabase.com) (you'll create a project in Module 8).
-- **Vercel** — [vercel.com](http://vercel.com), and connect it to your GitHub account (this link enables auto-deploy in Module 21).
+- **Vercel** — [vercel.com](http://vercel.com), and connect it to your GitHub account (this link enables auto-deploy in Module 11).
 
-*[SCREENSHOT: the Vercel sign-up connecting to a GitHub account.]*
+[SCREENSHOT: the Vercel sign-up connecting to a GitHub account.]
 
 ---
 
-## Lesson 0.4 — Costs & free tiers (~15 min)
+## Lesson 1.4 — Costs & free tiers (~15 min)
 
 Set expectations honestly so nobody is surprised by a bill:
 
@@ -82,13 +79,12 @@ Set expectations honestly so nobody is surprised by a bill:
 - **Cursor & Claude Code** — free/trial tiers, with paid plans (commonly around $20/month each) for heavier use. Learners can complete the course on modest usage.
 
 > Pricing changes often — point learners to each tool's current pricing page rather than memorizing numbers.
-> 
 
 **Managing spend (so the bill doesn't surprise you):** AI coding tools bill by usage/credits, and heavy agentic runs (big multi-file builds, long sessions) burn faster than in-editor autocomplete. Habits: start on free/trial tiers; prefer scoped, specific prompts over "rebuild everything"; use `/compact` and fresh sessions to avoid paying for bloated context; and check your usage dashboard weekly at first to learn your own burn rate.
 
 ---
 
-## Lesson 0.5 — Verify everything works (~25 min)
+## Lesson 1.5 — Verify everything works (~25 min)
 
 Prove the whole toolchain runs *before* Module 2. Create a throwaway hello-world Next.js app:
 
@@ -100,69 +96,13 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) — if the starter page loads, Node + npm + your editor work. Then confirm you can sign in to Cursor, launch Claude Code in that folder, and that you're logged in to GitHub, Supabase, and Vercel. Delete the `hello-check` folder afterward.
 
-*[SCREENSHOT: the Next.js starter page running at [localhost:3000](http://localhost:3000).]*
+[SCREENSHOT: the Next.js starter page running at localhost:3000.]
 
 > **Version note (pin + concept):** the course's reference build uses **Next.js 16 + Tailwind v4** (Tailwind v4 has **no `tailwind.config.js`** — config lives in CSS via `@import "tailwindcss"` + `@theme`). These tools move fast: pin your project's versions, learn the concept, and check current docs.
-> 
 
 ---
 
-## Readiness checklist
-
-Tick every box before starting Module 2:
-
-| Item | Done when… |
-| --- | --- |
-| Node.js | `node --version` prints a version |
-| Cursor | Installed and signed in |
-| Claude Code | Launches from the terminal |
-| GitHub | Account created, logged in |
-| Supabase | Account created, logged in |
-| Vercel | Account created, connected to GitHub |
-| Hello-world | A create-next-app ran at [localhost:3000](http://localhost:3000) |
-| **Secrets setup** | `.env.local` created, `.gitignore` includes it, no secrets in git status |
-
----
-
-## Troubleshooting (common blockers)
-
-- **`command not found` after install** — close and reopen the terminal (PATH updates on restart); reinstall if it persists.
-- **`create-next-app` fails** — usually an old Node version; install the current LTS.
-- **`create-next-app` refuses to run in a non-empty folder** — even one stray file (or a hidden `.DS_Store`) blocks it. Start in an empty folder, or let it create a fresh subfolder.
-- **Port 3000 in use** — stop the other process or let Next.js use the next port it offers.
-- **Can't sign in to a tool** — check you're using the same email and that pop-ups/OAuth aren't blocked.
-
----
-
-## Knowledge check (mapped to objectives)
-
-**Objective 1 — Set up tools/accounts:** submit your completed readiness checklist (screenshots of each).
-
-**Objective 2 — Explain the stack:** in one sentence each, say what Cursor, GitHub, Supabase, and Vercel do.
-
-**Objective 3 — Verify the toolchain:** show a screenshot of a create-next-app running at [localhost:3000](http://localhost:3000).
-
-*This module is pass/complete (checklist done) rather than quiz-graded — it gates entry to Module 2.*
-
----
-
-## Tools & alternatives (this module)
-
-These are the course defaults; alternatives are discussed in their modules and consolidated in Module 26 (Landscape). A learner already on an alternative editor (VS Code + Copilot) can follow along, but the step-by-step screenshots assume the defaults — recommend beginners use them to avoid divergence.
-
----
-
-## Key takeaways
-
-- Set up and verify everything once, up front — don't let install friction derail a later lesson.
-- Know the stack map: write (Cursor/Claude Code) → design (Module 7) → power (Supabase) → store (GitHub) → ship (Vercel).
-- Free tiers cover the course; AI tools are metered, so heavy use costs more.
-- You're ready for Module 2 when every box on the readiness checklist is ticked.
-
-[Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)
----
-
-## Lesson 0.6 — Multi-screen workflow & window management (~20 min)
+## Lesson 1.6 — Multi-screen workflow & window management (~20 min)
 
 The course requires juggling multiple apps simultaneously: the course (lesson + quiz), terminal (Claude Code), editor (Cursor), and often a browser (Supabase console, GitHub, documentation). Small screens or poor window arrangement will slow you down. This lesson shows how to arrange your workspace efficiently on both Mac and Windows.
 
@@ -204,8 +144,6 @@ Shortcut: Hold the green maximize button in the top-left of any window → macOS
 
 Swipe 4 fingers horizontally to jump between them in seconds.
 
----
-
 ### Windows: Window management tricks
 
 **Snap Assist (built-in, easiest)**
@@ -232,8 +170,6 @@ Shortcut: Click-drag the window title bar to the left edge, or use **Win + Left 
 
 Switch with **Win + Ctrl + Left/Right**.
 
----
-
 ### Linux (GNOME, Wayland, etc.)
 
 **GNOME Workspaces**
@@ -247,8 +183,6 @@ Switch with **Win + Ctrl + Left/Right**.
 **Tiling Window Manager Alternative**
 
 If you're using a tiling WM (i3, sway, etc.), you likely manage windows via keyboard — no special setup needed. Configure your usual splits and workspaces.
-
----
 
 ### Recommended screen setup by device
 
@@ -278,8 +212,6 @@ Arrange 3 windows side-by-side:
 - **Middle third:** Terminal + dev preview stacked
 - **Right third:** Course + browser tabs
 
----
-
 ### Pro tips
 
 - **Pin your course/docs:** Use browser pinning or split-view to keep reference always visible.
@@ -289,30 +221,11 @@ Arrange 3 windows side-by-side:
 
 ---
 
-## Updated Readiness checklist
-
-| Item | Done when… |
-| --- | --- |
-| Node.js | `node --version` prints a version |
-| Cursor | Installed and signed in |
-| Claude Code | Launches from the terminal |
-| GitHub | Account created, logged in |
-| Supabase | Account created, logged in |
-| Vercel | Account created, connected to GitHub |
-| Hello-world | A create-next-app ran at [localhost:3000](http://localhost:3000) |
-| **Secrets setup** | `.env.local` created, `.gitignore` includes it, no secrets in git status |
-| **Window setup** | **You can split two windows side-by-side on your OS** |
-
-
----
-
-## Lesson 0.7 — Secrets, APIs & Never Leaking Your Keys (~60 min)
+## Lesson 1.7 — Secrets, APIs & Never Leaking Your Keys (~60 min)
 
 **What happens if you don't learn this:** You commit an API key to GitHub. GitHub detects it and alerts you. An attacker uses your exposed key to make API calls (or charge your credit card). You spend hours revoking the key and rotating credentials. Future employers see this in your GitHub profile. You learn the hard way.
 
 **What you'll learn:** The systems and habits that keep secrets safe, from development to production, so you never expose credentials publicly.
-
----
 
 ### Why This Matters (The Reality)
 
@@ -324,14 +237,12 @@ When a secret is committed:
 1. **GitHub detects it** (automated scanning) and sends you an alert
 2. **The internet is permanent** — even if you delete the file later, git history keeps it forever
 3. **Attackers find it** within minutes (there are bots that scan public repos for leaked keys)
-4. **You get charged** — if it's a Stripe API key, someone can make charges. If it's an AWS key, your bill skyrockets.
+4. **You get charged or breached** — a leaked Stripe secret key lets someone run charges; a leaked Supabase service-role key lets them read or wipe your entire database.
 5. **Your professional reputation** takes a hit — employers see this in code reviews and interviews.
 
 **Real example:** A developer commits a Supabase key with full database access. An attacker uses it to dump the entire user table (20k emails + hashed passwords). The company spends weeks in incident response mode.
 
 This lesson teaches you to *never* be that developer.
-
----
 
 ### Part 1: Understanding Environment Variables
 
@@ -351,7 +262,7 @@ Because the **same code runs in three places with different secrets:**
 ```
 Development (your computer)
 ├─ .env.local (gitignored — never uploaded)
-├─ SUPABASE_URL=http://localhost:5432
+├─ SUPABASE_URL=http://localhost:54321
 ├─ SUPABASE_KEY=test-key-123
 └─ STRIPE_SECRET_KEY=sk_test_xxx
 
@@ -370,7 +281,7 @@ Production (live app)
 
 Same code, different secrets at each stage. This is why environment variables exist.
 
----
+> **Port note:** Supabase's local API gateway listens on **`54321`** (that's what `SUPABASE_URL` points to); **`5432`** is the raw Postgres port underneath it. Use `54321` in your app's URL.
 
 ### Part 2: Local Development Setup (`.env.local`)
 
@@ -417,8 +328,6 @@ NEXT_PUBLIC_DATABASE_PASSWORD=my-secret-password
 // ✅ RIGHT — only server-side
 DATABASE_PASSWORD=my-secret-password
 ```
-
----
 
 ### Part 3: The `.gitignore` File (Your Safety Net)
 
@@ -482,8 +391,6 @@ git status
 # Fix it immediately before pushing.
 ```
 
----
-
 ### Part 4: Common Third-Party APIs (And How NOT to Leak Them)
 
 #### Supabase (Database & Auth)
@@ -494,10 +401,12 @@ NEXT_PUBLIC_SUPABASE_URL=https://[project].supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...  // OK for browser
 SUPABASE_SERVICE_ROLE_KEY=eyJ...      // NEVER send to browser
 
-// server-side only
+// ⚠️ SERVER-ONLY — the service-role key bypasses Row-Level Security.
+//    Import it only in server code (API routes, server actions).
+//    Never ship it to the browser or a client component.
 const client = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY  // ✅ Server-only
+  process.env.SUPABASE_SERVICE_ROLE_KEY  // ✅ Server-only, bypasses RLS
 );
 ```
 
@@ -550,8 +459,6 @@ const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
 });
 ```
 
----
-
 ### Part 5: If You Accidentally Commit a Secret
 
 **This will happen to someone.** Here's what to do:
@@ -593,8 +500,6 @@ git push --force-with-lease
 - Double-check `.gitignore` before your first push
 - Never ignore the GitHub secret scanning alert
 
----
-
 ### Part 6: Prevention: Pre-Commit Hooks
 
 **What's a pre-commit hook?**
@@ -607,16 +512,18 @@ A script that runs *before* you commit, checking for common mistakes (like `.env
 # Install git-secrets (catches accidental commits)
 brew install git-secrets
 
-# Enable it globally
+# Enable it for this repo, and as a template for new repos
+git secrets --install
 git secrets --install ~/.git-templates/hooks
 git config --global init.templatedir ~/.git-templates
 
-# Add patterns to search for
-git secrets --register-aws
-git secrets --add-provider 'echo $HOME/.aws/credentials'
+# Register patterns for the keys THIS course actually uses
+git secrets --add 'sk_live_[0-9a-zA-Z]+'       # Stripe live secret key
+git secrets --add 'sk_test_[0-9a-zA-Z]+'       # Stripe test secret key
+git secrets --add 'SUPABASE_SERVICE_ROLE_KEY'  # Supabase service-role key
 ```
 
-**Now, if you try to commit a file containing `sk_test_`, `pk_test_`, or AWS patterns, git will reject the commit:**
+**Now, if you try to commit a file containing `sk_test_`, `sk_live_`, or your registered Supabase key, git will reject the commit:**
 
 ```bash
 git add .env.local
@@ -624,12 +531,10 @@ git commit -m "Add env"
 
 # Output:
 # ❌ [ERROR] Matched one or more blacklisted patterns
-# secret_key=sk_test_xxx  <-- Detected!
+# STRIPE_SECRET_KEY=sk_test_xxx  <-- Detected!
 ```
 
-**Alternative on Windows:** Use GitHub's CodeQL or Dependabot secret scanning (built-in).
-
----
+**Alternative / belt-and-braces:** git-secrets runs under Git Bash on Windows too. You can also lean on GitHub's built-in **secret scanning with push protection** — a server-side safety net that blocks recognized secret formats when you push. Note it runs on GitHub's servers, *not* as a local pre-commit hook, and it is not the same as CodeQL or Dependabot (CodeQL is code scanning and Dependabot is dependency alerts — neither is secret scanning).
 
 ### Part 7: Production Environment Variables (Vercel)
 
@@ -651,8 +556,6 @@ git commit -m "Add env"
 - **Production** — live app secrets (real database, real Stripe account)
 
 **Never paste secrets into git. Always use the dashboard.**
-
----
 
 ### Part 8: Validation (Ensure Secrets Are Present Before Running)
 
@@ -687,8 +590,6 @@ export default function RootLayout({ children }) {
   return <html>{children}</html>;
 }
 ```
-
----
 
 ### Part 9: API Design (Not Leaking Secrets Through APIs)
 
@@ -731,8 +632,6 @@ export async function POST(req: Request) {
 
 **Pattern:** Client → Server (public request) → Third-party API (using server's secret)
 
----
-
 ### Part 10: Checklist Before You Push Code
 
 - [ ] `.env.local` is in `.gitignore`
@@ -750,9 +649,7 @@ git log -p --all -S 'sk_test_' # Make sure no Stripe keys in history
 git log -p --all -S 'SUPABASE_KEY' # Make sure no Supabase keys in history
 ```
 
----
-
-### Key Takeaways
+### Secrets lesson — key takeaways
 
 - **`.gitignore` is your safety net** — list `.env.local` and never commit it
 - **Environment variables separate secrets from code** — development, staging, and production each have their own
@@ -762,12 +659,65 @@ git log -p --all -S 'SUPABASE_KEY' # Make sure no Supabase keys in history
 - **Pre-commit hooks catch mistakes** — install git-secrets to prevent accidental commits
 - **Set production secrets in Vercel** — never paste them into code or git
 
----
-
-### Tools & References
+### Secrets lesson — tools & references
 
 - **git-secrets** — https://github.com/awslabs/git-secrets (pre-commit hook to catch secrets)
 - **BFG Repo-Cleaner** — https://rtyley.github.io/bfg-repo-cleaner/ (remove secrets from git history)
-- **GitHub Secret Scanning** — Built into all public repos; free for private repos too
+- **GitHub Secret Scanning** — built into public repos, with push protection available for private repos
 - **Vercel Environment Variables** — https://vercel.com/docs/concepts/projects/environment-variables
 
+---
+
+## Readiness checklist
+
+Tick every box before starting Module 2:
+
+| Item | Done when… |
+| --- | --- |
+| Node.js | `node --version` prints a version |
+| Cursor | Installed and signed in |
+| Claude Code | Launches from the terminal |
+| GitHub | Account created, logged in |
+| Supabase | Account created, logged in |
+| Vercel | Account created, connected to GitHub |
+| Hello-world | A create-next-app ran at [localhost:3000](http://localhost:3000) |
+| **Secrets setup** | `.env.local` created, `.gitignore` includes it, no secrets in git status |
+| **Window setup** | You can split two windows side-by-side on your OS |
+
+---
+
+## Troubleshooting (common blockers)
+
+- **`command not found` after install** — close and reopen the terminal (PATH updates on restart); reinstall if it persists.
+- **`create-next-app` fails** — usually an old Node version; install the current LTS.
+- **`create-next-app` refuses to run in a non-empty folder** — even one stray file (or a hidden `.DS_Store`) blocks it. Start in an empty folder, or let it create a fresh subfolder.
+- **Port 3000 in use** — stop the other process or let Next.js use the next port it offers.
+- **Can't sign in to a tool** — check you're using the same email and that pop-ups/OAuth aren't blocked.
+
+---
+
+## Knowledge check (mapped to objectives)
+
+**Objective 1 — Set up tools/accounts:** submit your completed readiness checklist (screenshots of each).
+
+**Objective 2 — Explain the stack:** in one sentence each, say what Cursor, GitHub, Supabase, and Vercel do.
+
+**Objective 3 — Verify the toolchain:** show a screenshot of a create-next-app running at [localhost:3000](http://localhost:3000).
+
+*This module is pass/complete (checklist done) rather than quiz-graded — it gates entry to Module 2.*
+
+---
+
+## Tools & alternatives (this module)
+
+These are the course defaults; alternatives are discussed in their modules and consolidated in Module 16 (Landscape). A learner already on an alternative editor (VS Code + Copilot) can follow along, but the step-by-step screenshots assume the defaults — recommend beginners use them to avoid divergence.
+
+---
+
+## Key takeaways
+
+- Set up and verify everything once, up front — don't let install friction derail a later lesson.
+- Know the stack map: write (Cursor/Claude Code) → design (Module 7) → power (Supabase) → store (GitHub) → ship (Vercel).
+- Free tiers cover the course; AI tools are metered, so heavy use costs more.
+- Arrange your workspace for side-by-side work, and lock down your secrets before your first push.
+- You're ready for Module 2 when every box on the readiness checklist is ticked.

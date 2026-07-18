@@ -5,10 +5,8 @@
 **Prerequisites:** Modules 4–7. Learners have a real app (Next.js + Supabase, auth + RLS) and will now learn to read it and fix it when it breaks — which, with AI-generated code, it regularly will.
 
 > Reading and debugging are the skills that separate people who *use* AI from people who can *ship* with it. AI generates code faster than you can read it and that code breaks; beginners freeze. This module builds the habit of understanding code you didn't write and a repeatable way to fix it. It uses bugs from the app the learner already built — including the RLS "empty list" trap from Module 8.
-> 
 
 > **📸 Screenshots:** the Next.js error overlay is auto-capturable (trigger a throwing route); the debugging-chat shot is manual.
-> 
 
 ## Learning objectives
 
@@ -37,9 +35,9 @@ Each step uses your own judgment. AI is your verification partner, not your debu
 
 ---
 
-## Lesson 8.1 — Reading code you didn't write (~45 min)
+## Lesson 9.1 — Reading code you didn't write (~45 min)
 
-This delivers Objective 1 — the skill the whole course's "don't ship what you can't explain" rule depends on. AI generates code faster than you can comfortably read it; the discipline is reading it *efficiently*. You can't debug — or defend at the capstone — code you can't read.
+This is the skill the whole course's "don't ship what you can't explain" rule depends on. AI generates code faster than you can comfortably read it; the discipline is reading it *efficiently*. You can't debug — or defend at the capstone — code you can't read.
 
 **A repeatable way to read unfamiliar (AI-generated) code:**
 
@@ -82,7 +80,7 @@ export async function updateInvoiceStatus(invoiceId: string, status: string) {
 
 ---
 
-## Lesson 8.2 — The debugging mindset (~30 min)
+## Lesson 9.2 — The debugging mindset (~30 min)
 
 Reframe bugs: they're the normal state of building software. Expert code breaks; AI code breaks *more*, because the model produces likely-looking code that may not fit your situation (Module 2). The goal isn't to avoid bugs — it's a calm, repeatable way to find and fix them.
 
@@ -90,9 +88,9 @@ Reframe bugs: they're the normal state of building software. Expert code breaks;
 
 ---
 
-## Lesson 8.3 — Read the error first (~45 min)
+## Lesson 9.3 — Read the error first (~45 min)
 
-This begins Objective 2. Beginners paste code at the AI and say "fix it." The better first move is to *read the error* — it usually names the problem and points near the line. Three places errors show up in our stack:
+Beginners paste code at the AI and say "fix it." The better first move is to *read the error* — it usually names the problem and points near the line. Three places errors show up in our stack:
 
 - **Terminal** — where `npm run dev` runs; server-side errors and build failures.
 - **Browser console** — (Inspect → Console) client-side JS errors.
@@ -100,28 +98,30 @@ This begins Objective 2. Beginners paste code at the AI and say "fix it." The be
 
 A stack trace reads top-down: the top line is usually *what* went wrong, and the file:line tells you *where*. Extract those two facts first.
 
+```
+TypeError: Cannot read properties of undefined (reading 'name')
+    at ClientCard (app/clients/ClientCard.tsx:12:20)          ← what failed + WHERE: your code, line 12 — start here
+    at ClientList (app/clients/page.tsx:34:14)                ← the caller that rendered it
+    at renderWithHooks (node_modules/react-dom/cjs/react-dom.development.js:11121:18)  ← framework internals — usually skip
+```
+
+Read it top-down: line 1 is *what* (a property read on `undefined`), the first frame that lands in *your* files is *where* to fix (line 12), and the deeper frames are the callers and framework internals you can usually ignore.
+
+[SCREENSHOT: Browser error overlay — red error message, file name and line number highlighted, stack trace below, showing exactly where and what went wrong.]
+
 ---
 
-**[SCREENSHOT PLACEHOLDER: Next.js Error Overlay]**
+## Lesson 9.4 — Reproduce and isolate (~45 min)
 
-Browser error overlay: red error message, file name and line number highlighted, stack trace below. Shows exactly where and what went wrong.
-
----
-
----
-
-## Lesson 8.4 — Reproduce and isolate (~45 min)
-
-Continues Objective 2. A bug you can't reproduce, you can't fix. Pin the exact trigger: *what did you click, with what input, and what happened vs. expected?* Then **isolate**: every user or one? On load or on submit? Logged in or out? A quick tool: add a `console.log` (or ask AI to) to check what a value actually is.
+A bug you can't reproduce, you can't fix. Pin the exact trigger: *what did you click, with what input, and what happened vs. expected?* Then **isolate**: every user or one? On load or on submit? Logged in or out? A quick tool: add a `console.log` (or ask AI to) to check what a value actually is. `console.log` isn't your only instrument — you can also set a **breakpoint** (or drop a `debugger;` statement) to pause execution and inspect every variable in scope, and **React DevTools** lets you inspect a component's props and state live in the browser.
 
 > **Worked example — the RLS "empty list" bug (from Module 8):** the clients page shows nothing, but there are rows in the Table Editor. No error. Reproduce: empty when logged out (or RLS is on and the query runs without a session). Isolate: log the query result — an empty array, not an error. Root cause: RLS is default-deny and the request carried no authenticated user. A bug with *no error message but a clear root cause* — it rewards understanding over pasting code at the AI.
-> 
 
 ---
 
-## Lesson 8.5 — Debugging with AI: give it what it needs (~60 min)
+## Lesson 9.5 — Debugging with AI: give it what it needs (~60 min)
 
-This delivers Objective 3. AI is excellent at debugging — *if* you give it context (Module 2). The anatomy of a good debugging prompt:
+AI is excellent at debugging — *if* you give it context (Module 2). The anatomy of a good debugging prompt:
 
 1. **The error message** — paste the actual text/stack trace.
 2. **The relevant code** — the file/function (in Cursor `@`-mention it; Claude Code reads the repo).
@@ -134,15 +134,11 @@ This delivers Objective 3. AI is excellent at debugging — *if* you give it con
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Debugging Chat]**
-
-Claude Code or Cursor chat: user pastes error message and mentions @app/clients/page.tsx, asks "why are clients empty?" → AI response identifies root cause ("RLS is on but no authenticated session").
+[SCREENSHOT: Claude Code or Cursor chat — user pastes the error and mentions @app/clients/page.tsx, asks "why are clients empty?", and the AI identifies the root cause ("RLS is on but no authenticated session").]
 
 ---
 
----
-
-## Lesson 8.6 — Common bug classes in our stack (~45 min)
+## Lesson 9.6 — Common bug classes in our stack (~45 min)
 
 A field guide so learners recognize patterns and diagnose quickly:
 
@@ -188,27 +184,26 @@ A field guide so learners recognize patterns and diagnose quickly:
 - **Fix:** Check the real docs; the correct function is usually similar but slightly different (e.g., `getUser()` not `getUserAsync()`)
 
 **6. Framework version deprecations**
-- **Symptom:** Warning like "middleware.ts is deprecated; use proxy.ts instead"
-- **Root cause:** The AI generated code for an older Next.js version
-- **Fix:** Read the warning, check the changelog for the current version, rename/move the file
+- **Symptom:** A deprecation warning such as "middleware.ts is deprecated; use proxy.ts instead." (Recent Next.js versions have begun renaming Middleware to Proxy — a newer, still-rolling-out convention, not a universally settled one, so confirm your exact version actually asks for it before changing anything.)
+- **Root cause:** The AI generated code targeting a different Next.js version than yours — a file or API convention that changed between releases.
+- **Fix:** Read the warning, check the upgrade guide/changelog for your exact version, and rename/move the file only if that version calls for it.
 
 **Recognizing the *class* of bug is most of diagnosing it.** If you see "undefined," think "env var or missing property." If you see no error but no data, think "RLS." If you see a function doesn't exist, think "hallucination — check the docs."
 
 ---
 
-## Lesson 8.7 — Assess the fix before applying it (~45 min)
+## Lesson 9.7 — Assess the fix before applying it (~45 min)
 
-This delivers Objective 4 — the safety net. An AI fix can be wrong, incomplete, or *make the symptom disappear while hiding the real problem*. Before accepting, ask:
+This is the safety net. An AI fix can be wrong, incomplete, or *make the symptom disappear while hiding the real problem*. Before accepting, ask:
 
 - **Root cause or symptom?** (Disabling RLS "fixes" the empty list — by removing your security. Wrong fix.)
 - **Do I understand why it works?** If not, ask for an explanation first.
 - **What could it break?**
-- **Does it match our stack and conventions?** ([CLAUDE.md](http://CLAUDE.md) / .cursorrules help.)
+- **Does it match our stack and conventions?** (CLAUDE.md / .cursorrules help.)
 
 Then **verify**: reproduce the original trigger and confirm it's gone; check the happy path still works.
 
 **Real-world pattern:** When you see a symptom (empty list), AI might suggest removing RLS as a "fix" — don't do it! Analyze why: is RLS actually the problem, or are you querying the wrong way? Learning to dig past the symptom to the root cause is what separates debugging from band-aids.
-> 
 
 ---
 
@@ -319,7 +314,7 @@ Then **verify**: reproduce the original trigger and confirm it's gone; check the
 
 These are the four questions you'll see on the quiz. Study these to prepare:
 
-**Q8-1:** The best first move when something breaks:
+**Q9-1:** The best first move when something breaks:
 - (a) paste code at the AI and say 'fix it'
 - (b) **read the actual error message** ✓
 - (c) rewrite everything
@@ -327,7 +322,7 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 
 *Why:* Error messages tell you exactly what failed and where. They're your best diagnostic tool. A stack trace reads top-down: top line = what went wrong, file:line = where. Always start there.
 
-**Q8-2:** If you can't explain a block of AI-generated code after reading it, you should:
+**Q9-2:** If you can't explain a block of AI-generated code after reading it, you should:
 - (a) ship it anyway
 - (b) **not ship it — simplify or get a version you understand** ✓
 - (c) delete the whole file
@@ -335,7 +330,7 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 
 *Why:* This is the capstone defense principle (Module 2). You own and maintain the code. Never ship what you don't understand. If you can't explain it, it's not ready.
 
-**Q8-3:** An AI "fix" that disables RLS to solve an empty list is:
+**Q9-3:** An AI "fix" that disables RLS to solve an empty list is:
 - (a) a good fix
 - (b) **a dangerous fix that removes security (symptom, not root cause)** ✓
 - (c) the only option
@@ -343,7 +338,7 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 
 *Why:* Disabling RLS treats the *symptom* (empty rows) but removes *security*. The real cause is usually unauthenticated request or missing policy. Distinguish root-cause from symptom every time.
 
-**Q8-4:** Before applying an AI-proposed fix, you should:
+**Q9-4:** Before applying an AI-proposed fix, you should:
 - (a) just apply it — the AI knows what it's doing
 - (b) **read the code, understand what it changes, ask the AI to explain any unclear lines, confirm against the bug** ✓
 - (c) skip it if it's too long to read
@@ -357,7 +352,7 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 
 ### Learner-First Approach: Core Principle
 
-**Q8-1 (Learner-first philosophy):** "You see an error: 'Cannot read property "email" of undefined.' What's your first step?"
+**Q9-K1 (Learner-first philosophy):** "You see an error: 'Cannot read property "email" of undefined.' What's your first step?"
 
 a) Copy the error and paste it to Claude
 b) Read the stack trace and find the line where "email" is being accessed
@@ -368,21 +363,21 @@ d) Add random null checks until it stops failing
 
 ---
 
-**Objective 1 — Read & explain (Quiz Q8-1):**
-- Q8-1: Tests understanding of reading code you don't own
+**Objective 1 — Read & explain (Quiz Q9-2):**
+- Q9-2: "If you can't explain a block of AI-generated code, don't ship it" — tests understanding and owning code you didn't write
 - *Practical:* Given an AI function, explain in 3 sentences + flag one risky line (auth, data, external call)
 
-**Objective 2 — Diagnose (Quiz Q8-2):**
-- Q8-2: "An AI 'fix' that disables RLS..." ✅ Tests root-cause vs. symptom understanding
+**Objective 2 — Diagnose (Quiz Q9-3):**
+- Q9-3: "An AI 'fix' that disables RLS..." ✅ Tests root-cause vs. symptom understanding
 - *Practical:* Given an error + code snippet, state root cause + file:line
 
-**Objective 3 — Use AI to debug (Quiz Q8-3):**
-- Q8-3: "Before applying an AI-proposed fix..." ✅ Tests verification discipline
+**Objective 3 — Use AI to debug (Quiz Q9-1):**
+- Q9-1: "The best first move when something breaks — read the actual error message" ✅ Tests the read-the-error habit that feeds a good debugging prompt
 - *Practical:* Write a strong debugging prompt with all 4 parts: error message, code (@-mention), expected vs. actual, what you tried
   - **SAMPLE:** "My /clients page shows empty table. Expected: my saved clients. Query: `supabase.from('clients').select()`. No error. RLS is on. Code: @app/clients/page.tsx. I tried refreshing and logging in/out — same empty result. What's the root cause?"
 
-**Objective 4 — Assess fix safety (Q8-4):**
-- Q8-4: Tests evaluating fix correctness
+**Objective 4 — Assess fix safety (Q9-4):**
+- Q9-4: "Before applying an AI-proposed fix, read/understand/verify it" ✅ Tests evaluating fix correctness
 - *Practical:* Given a bug + two fixes (one correct, one hides symptom), pick the right one + explain why the other is dangerous
   - **SAMPLE:** "Bug: empty client list. Fix A: add RLS policy so authenticated users see their clients. Fix B: set RLS to off. Answer: Fix A (correct). Fix B is dangerous because it removes security and exposes all users' data."
 
@@ -402,7 +397,7 @@ d) Add random null checks until it stops failing
 
 - **(c) AI gave you a function that doesn't exist:** You got "is not a function" error. How do you find the real function?
   - ✅ **Correct:** Search the official SDK docs for similar names. The real function is usually 90% the same name but slightly different.
-  - ❌ **Avoid:** Asking the AI to fix it blindly. It might halluci again. Read the real docs yourself.
+  - ❌ **Avoid:** Asking the AI to fix it blindly. It might hallucinate again. Read the real docs yourself.
 
 - **(d) You understand the fix, but it feels wrong:** AI proposes removing a security rule to "fix" an empty list bug.
   - ✅ **Correct:** Reject it. It treats the symptom, not the root cause. The real cause is a missing RLS policy, not "too much security."
@@ -446,5 +441,3 @@ Reading and debugging are tool-agnostic — the loops (read; reproduce → isola
 - Read the error first (terminal, console, network); a stack trace names the what and where.
 - Give AI real context to debug: actual error, relevant code, expected vs. actual, what you tried.
 - Assess every fix for root-cause vs. symptom before applying; then verify.
-
-[Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)

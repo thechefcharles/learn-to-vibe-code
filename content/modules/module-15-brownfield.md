@@ -1,4 +1,4 @@
-# Module 25: Working in Existing Codebases (Brownfield)
+# Module 15: Working in Existing Codebases (Brownfield)
 
 **Stage:** Production (Advanced) · **Level:** Advanced · **Duration:** ~6 contact hours (0.6 CEU)
 
@@ -23,13 +23,13 @@ By the end of this module, the learner can:
 
 ---
 
-## Lesson 14.1 — Greenfield vs. brownfield: the real-job reality (~30 min)
+## Lesson 15.1 — Greenfield vs. brownfield: the real-job reality (~30 min)
 
 Greenfield lets you choose everything; brownfield means living with others' choices, conventions, and tech debt. The skills flip — less "generate lots of code," more "understand before you touch, and change the minimum." The danger is different too: in a big codebase, a small change can break something far away.
 
 ---
 
-## Lesson 14.2 — Map the codebase with Claude Code (~60 min)
+## Lesson 15.2 — Map the codebase with Claude Code (~60 min)
 
 This delivers Objective 1. **Use Claude Code to quickly map an unfamiliar codebase, then you verify the map against the actual files.**
 
@@ -68,22 +68,25 @@ Then show me the file paths for key entry points.
 - Generate a summary like:
 
 ```
-This is a Next.js Reading List app.
+This is a Next.js + TypeScript "Reading List" app.
 Main layers:
-- UI: app/, components/ (React + TypeScript)
-- Data: lib/books.ts (in-memory array, no DB)
-- Auth: optional (Supabase setup exists but unused)
+- UI: app/page.tsx (page + search state), components/SearchBar.tsx,
+  components/BookCard.tsx (React + Tailwind classes)
+- Data: lib/books.ts (Book type + seeded array + searchBooks(); no live DB)
+- Auth: lib/supabase.ts is a STUB (getCurrentUser returns a fake user);
+  a real deployment would scope the list per-user via Supabase + RLS
 
 Feature trace (search):
-1. User types in app/search/page.tsx
-2. filter() runs against books array
-3. Results display below
+1. User types in components/SearchBar.tsx (controlled input)
+2. app/page.tsx holds the query in useState and calls
+   searchBooks(books, query) from lib/books.ts
+3. searchBooks filters the array; page.tsx renders a BookCard per result
 
 Conventions:
-- camelCase for functions and variables
-- PascalCase for components
+- camelCase for functions and variables (searchBooks, getCurrentUser)
+- PascalCase for components (SearchBar, BookCard)
 - No complex state management (just React hooks)
-- Tailwind for styling
+- className strings for styling (no CSS-in-JS)
 ```
 
 **Step 4 — Verify Claude Code's map** (you read the files):
@@ -100,15 +103,11 @@ find . -name "decisions.md" -o -name "DECISION_LOG.md"
 
 If found, read it. It explains *why* the code is the way it is — which trade-offs were made and what constraints shaped the system.
 
----
-
-**[SCREENSHOT PLACEHOLDER: Claude Code Architecture Summary]**
-
-Terminal showing Claude Code mapping the brownfield-practice-repo: "This is a Next.js Reading List app. Main layers: auth (Supabase), data (books.ts), UI (React + Tailwind)..." Proof: Claude Code can quickly orient you in an unfamiliar codebase.
+[SCREENSHOT: Terminal showing Claude Code mapping the brownfield-practice-repo — a Next.js + TypeScript Reading List with an auth stub in lib/supabase.ts, seed data plus searchBooks() in lib/books.ts, and a React/Tailwind UI in app/page.tsx and components/.]
 
 ---
 
-## Lesson 14.3-14.4 — Trace & fix with Claude Code assistance (~125 min)
+## Lesson 15.3-15.4 — Trace & fix with Claude Code assistance (~125 min)
 
 This delivers Objectives 2 & 3. **Use Claude Code to assist with debugging and tracing, but you drive the investigation and verification.**
 
@@ -124,9 +123,13 @@ npm run dev  # Start the app locally
 Verify everything works as expected. This is your baseline.
 
 **Step 2 — Reproduce the bug** (you do this):
-From the ticket, trigger the exact bug. For example:
-- If BUG-101 is "search crashes on special characters," type a special character in the search box
-- Confirm you see the exact error
+BUG-101 is "search crashes on special characters." Per `TICKET.md`, type an opening parenthesis `(` (or `[`, `*`, `+`) into the search box. The list disappears and the page throws. Open the browser console and confirm the exact error:
+
+```
+Uncaught SyntaxError: Invalid regular expression: /(/: Unterminated group
+```
+
+You now have a reliable repro. Never trust a fix for a bug you can't trigger on demand.
 
 **Step 3 — Prompt Claude Code to help trace** (Claude Code assists, you verify):
 
@@ -137,44 +140,54 @@ claude
 Send:
 
 ```
-I'm debugging BUG-101: [paste the bug report and error message]
+I'm debugging BUG-101: search crashes on special characters.
 
-I can reproduce it when [describe exact steps].
+I can reproduce it by typing "(" into the search box — the console shows
+"SyntaxError: Invalid regular expression: /(/: Unterminated group".
 
 Please help me:
-1. Search the codebase for the error ("Cannot read properties of undefined")
-2. Find the line where the crash happens
-3. Explain the data flow leading to that line
-4. Propose what's missing or wrong with the data
+1. Find where the search query is turned into something that could throw
+2. Show me the exact line and the file it's in
+3. Explain the data flow from the search box to that line
+4. Explain why "(" specifically triggers it
 
 Then I'll trace it myself to confirm your findings.
 ```
 
 **Step 4 — Claude Code will:**
-- Search for the error message in the code
-- Find the problematic line (e.g., `b.author.toLowerCase()`)
-- Show you the data model (where does `b.author` come from?)
-- Propose the root cause
+- Search the codebase and find `searchBooks()` in `lib/books.ts`
+- Point at the offending line: `const pattern = new RegExp(query, "i");`
+- Explain the flow: `SearchBar` → `query` state in `app/page.tsx` → `searchBooks(books, query)`
+- Explain the root cause: the raw user query is compiled as a **regex**, and `(` is an unbalanced regex metacharacter, so the `RegExp` constructor throws
 
 **Step 5 — Verify with the reading skill** (you do this):
-Read the files Claude Code points to. Confirm:
-- ✅ The error is where Claude Code said
-- ✅ The data model is what Claude Code described
-- ✅ You understand the root cause (not just the symptom)
+Open `lib/books.ts` yourself and confirm:
+- ✅ The crash is on `new RegExp(query, "i")`, exactly where Claude Code said
+- ✅ The data flow matches (`page.tsx` is the only caller of `searchBooks`)
+- ✅ You understand the *root cause* (raw input compiled as a regex), not just the symptom ("special characters break it")
 
 **Step 6 — Fix safely:**
-Make the smallest change:
+The feature only needs a case-insensitive substring match — it never needed regex power. So the smallest correct fix is to drop the regex entirely:
+
 ```typescript
-// ✅ SAFE: guard the optional field
-const filtered = books.filter(b =>
-  (b.author?.toLowerCase() ?? "").includes(query)
-);
+// lib/books.ts
+export function searchBooks(list: Book[], query: string): Book[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return list;
+  return list.filter(
+    (book) =>
+      book.title.toLowerCase().includes(q) ||
+      book.author.toLowerCase().includes(q)
+  );
+}
 ```
+
+(Escaping the query before `new RegExp` also works, but it's more code for no benefit. Choosing the simpler fix that matches the actual intent is the point.)
 
 **Step 7 — Verify the fix** (you do this):
 ```bash
 npm test     # All tests still pass? ✓
-npm run dev  # Reproduce the bug → gone? ✓
+npm run dev  # Type "(" again → no crash, just an empty result? ✓
 ```
 
 ### Making a scoped change
@@ -199,26 +212,98 @@ npm test     # Tests pass, nothing broke
 git diff     # Review your changes — is the diff tight and focused?
 ```
 
-**Step 5 — Open a small PR** (Module 20):
+**Step 5 — Open a small PR** (Module 10):
 The diff should be tight and easy to review. Reviewers should instantly understand what changed and why.
 
----
-
-**[SCREENSHOT PLACEHOLDER: Before/After Bug Trace]**
-
-Left: Claude Code's trace of the bug (showing the undefined error line, the data model, root cause). Right: The fixed code with a test. Proof: methodical debugging and scoped fixes.
+[SCREENSHOT: Side-by-side of Claude Code's trace of BUG-101 in lib/books.ts — the new RegExp(query) line, the searchBooks data flow, and the root cause — next to the fixed substring-match code plus its new test.]
 
 ---
 
-## Lesson 14.5 — Assessing risk before you change (~45 min)
+## Lesson 15.5 — Assessing risk before you change (~45 min)
 
-This delivers Objective 3. Before editing, ask: what depends on this code? Search for usages; understand the "blast radius." High-risk zones (auth, data models, shared utilities, payment) demand extra care, tests, and review. Low-risk, leaf-level changes are safe to move faster. This is the Module 2 trust dial applied to *someone else's* code, where a wrong assumption costs more.
+This delivers Objective 3. Before you edit a line, ask one question: **what else depends on this code?** The set of things a change could break is its **blast radius**. You cannot judge a fix's safety until you've traced its blast radius, and the good news is that tracing it is mechanical — you don't guess, you search.
+
+### Trace every caller before you touch a function
+
+Before changing `searchBooks`, find every place that calls it. Two reliable ways:
+
+**Option A — grep the repo** (works in any editor or terminal):
+
+```bash
+cd brownfield-practice-repo
+grep -rn "searchBooks" --include="*.ts" --include="*.tsx" .
+```
+
+Reading the results:
+
+```
+lib/books.ts:34:export function searchBooks(list: Book[], query: string): Book[] {
+lib/books.test.ts:2:import { books, searchBooks } from "./books";
+app/page.tsx:4:import { books, searchBooks } from "@/lib/books";
+app/page.tsx:13:  const results = searchBooks(books, query);
+```
+
+How to read that: line 34 is the **definition** (ignore it as a caller). The `import` lines just pull the symbol in — they tell you *which files* use it but not *how*. The one line that actually **invokes** it is `app/page.tsx:13`. So `searchBooks` has exactly **one production caller** (`page.tsx`) plus its test file. Nothing in `components/`, nothing in the auth stub, no database. The blast radius is tiny and fully contained — a correct change to `searchBooks` cannot ripple past the search feature.
+
+**Option B — "Find All References"** in your editor (right-click the function name in Cursor/VS Code). It resolves the symbol through TypeScript rather than matching text, so it won't get confused by a comment that happens to say "searchBooks." Use it to confirm the grep result: same single caller in `page.tsx`.
+
+### Turn the trace into a risk rating
+
+| What you found | Risk | Why |
+|----------------|------|-----|
+| One caller, leaf-level, no auth/data/shared code | **LOW–MEDIUM** | A localized function; regressions can only appear in search |
+| A shared utility called from 20 files | **HIGH** | One change reverberates everywhere; needs broad tests + review |
+| Auth, the `Book` data model, or a payment path | **HIGH** | A wrong assumption is expensive (locked-out users, corrupted data) |
+
+`searchBooks` lands at LOW–MEDIUM: important to users, but structurally isolated. Contrast it with the `Book` interface in `lib/books.ts` — if you changed *that* (say, made `author` optional), the blast radius would include `searchBooks`, `BookCard.tsx` (which renders `book.author`), and every seed row. Same file, very different risk. **The risk lives in the dependencies, not the line count.** This is the Module 2 trust dial applied to *someone else's* code, where a wrong assumption costs more — so you spend the two minutes to grep before you spend an hour debugging a regression.
 
 ---
 
-## Lesson 14.6 — Legacy patterns & tech debt (~45 min)
+## Lesson 15.6 — Legacy patterns & tech debt (~45 min)
 
-Real repos have old patterns, inconsistencies, and debt. Teach judgment: match the existing style even if you'd do it differently (consistency > preference), resist rewriting everything, and separate "the change I was asked for" from "cleanup I think it needs" (propose the latter separately). AI makes rewrites tempting and cheap — which is why restraint is the skill.
+Real repos carry old patterns, inconsistencies, and debt. The instinct — especially with an AI that can rewrite a file in seconds — is to "clean it up while you're here." Resist it. The skill this lesson builds is **restraint**: match the existing style even when you'd do it differently (consistency beats personal preference), and keep "the change I was asked for" strictly separate from "cleanup I think it needs" (propose the latter as its own PR).
+
+### Worked example: match the convention, don't rewrite it
+
+FEAT-102 asks for a genre filter. Look at how the existing code is shaped before you write anything. `searchBooks` in `lib/books.ts` is a **plain, pure function** — takes a list and a value, returns a filtered list, no classes, no hooks, no clever abstractions. That's the local convention, and it's what you match.
+
+**❌ Over-engineered rewrite (fights the codebase):**
+
+```typescript
+// Introduces a filtering "engine" nobody asked for, folds genre INTO
+// searchBooks, changes its signature, and breaks its one caller + tests.
+class BookQuery {
+  constructor(private books: Book[]) {}
+  search(q: string) { /* ...regex, options bag... */ return this; }
+  byGenre(g: string) { /* ... */ return this; }
+  results() { /* ... */ }
+}
+```
+
+Even if that class is "nicer" in the abstract, it's *inconsistent* with a repo built from small pure functions, it expands the blast radius (every caller and test of `searchBooks` must change), and it buries a one-line feature in a framework.
+
+**✅ Additive change that matches the surroundings:**
+
+```typescript
+// lib/books.ts — a new pure helper that mirrors searchBooks' shape.
+export type GenreFilter = Book["genre"] | "all";
+
+export function filterByGenre(list: Book[], genre: GenreFilter): Book[] {
+  if (genre === "all") return list;
+  return list.filter((book) => book.genre === genre);
+}
+```
+
+```tsx
+// app/page.tsx — compose the two, leave searchBooks untouched.
+const results = filterByGenre(searchBooks(books, query), genre);
+```
+
+Same style (pure function, same naming, same file), zero change to `searchBooks`, and the two concerns stay separate. The diff is small and obvious to a reviewer.
+
+### When you *do* spot real tech debt
+
+You will notice genuine debt along the way — say, the seed array duplicates data that "should" come from `lib/supabase.ts`. That may be worth fixing, but **not in this PR**. Note it, and either open a follow-up ticket or say so in the PR description: *"Out of scope here: the seed data could move behind the Supabase seam — happy to do that as a separate PR."* That keeps this change reviewable and lets someone decide on the cleanup on its own merits. Mixing a refactor into a bug fix is how a two-line change becomes an unreviewable, regression-prone diff.
 
 ---
 
@@ -232,7 +317,7 @@ Real repos have old patterns, inconsistencies, and debt. Teach judgment: match t
 
 These are the three questions you'll see on the quiz. Study these to prepare:
 
-**Q14-1:** Brownfield development means:
+**Q15-1:** Brownfield development means:
 - (a) building in dirt
 - (b) **working on an existing codebase with constraints** ✓
 - (c) always starting fresh
@@ -240,7 +325,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 *Why:* Greenfield = build from scratch, choose everything. Brownfield = inherit an existing system with its history, conventions, and tech debt. Most real jobs are brownfield.
 
-**Q14-2:** When reading unfamiliar code, start with:
+**Q15-2:** When reading unfamiliar code, start with:
 - (a) deleting it
 - (b) **the README or entry point** ✓
 - (c) asking for a rewrite
@@ -248,7 +333,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 *Why:* The README and entry points tell you what the app does and how it's organized — the architecture. With that foundation, the details make sense. Never read a codebase bottom-up; start at the top.
 
-**Q14-3:** Refactoring during brownfield work:
+**Q15-3:** Refactoring during brownfield work:
 - (a) always necessary
 - (b) **only touch what you need to change** ✓
 - (c) delete everything first
@@ -263,13 +348,13 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 ### Written checks:
 
 **Objective 1 — Orient:** Summarize the practice repo's architecture and trace how the search feature flows through it.
-- *Example answer:* "Next.js app with React components + TypeScript. Data layer: lib/books.ts. UI: app/search/page.tsx displays books and filters by search query. Auth: optional (Supabase). Flow: user types → filter() runs on books array → display results."
+- *Example answer:* "Next.js + TypeScript app. Data layer: lib/books.ts (Book type, seed array, searchBooks()). UI: app/page.tsx holds search state and renders components/SearchBar.tsx + components/BookCard.tsx. Auth: lib/supabase.ts is a stub. Flow: user types in SearchBar → page.tsx stores the query and calls searchBooks(books, query) → a BookCard renders per result."
 
 **Objective 2 — Scoped change:** Show a small, focused PR fixing BUG-101 (with a test) and adding FEAT-102, with no unrelated reformatting.
-- *Example answer:* "PR shows only the changed lines (optional chaining guard + type fix). Added a test: `it('handles missing author gracefully')`. No reformatting. Diff is tight and reviewable."
+- *Example answer:* "PR shows only the changed lines: searchBooks now does a substring match instead of `new RegExp(query)`, plus a new `filterByGenre` helper composed in page.tsx. Added tests: `it('does not throw on regex metacharacters')` and one for `filterByGenre`. No reformatting. Diff is tight and reviewable."
 
 **Objective 3 — Assess risk:** For your change, identify what depends on the affected code and rate the risk.
-- *Example answer:* "Changing the search filter affects: the search page (direct), book list (if shared), maybe export features. Risk: MEDIUM (search is important but not payment/auth critical). Mitigation: test the change, run full suite, keep the diff small."
+- *Example answer:* "`grep -rn searchBooks` shows one production caller (app/page.tsx:13) plus its test — no auth, data model, or shared util touches it. Blast radius is contained to the search feature. Risk: LOW–MEDIUM (important to users, but structurally isolated). Mitigation: add a test, run the full suite, keep the diff small."
 
 ### Scenario-based judgment checks:
 
@@ -288,7 +373,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
   - ❌ **Avoid:** Accepting helpful rewrites. Scope creep introduces bugs.
 
 - **(d) You're not sure what the code does. You change it anyway.** Guessing.
-  - ✅ **Better:** Read it (Module 9). Ask AI to explain it. Trace through with print statements. Understand before you change.
+  - ✅ **Better:** Read it (Module 9). Ask AI to explain it. Trace the runtime with `console.log` (or a `debugger` breakpoint in the browser devtools). Understand before you change.
   - ❌ **Avoid:** "It probably doesn't matter." Guessing in brownfield is expensive.
 
 - **(e) Your change works locally but breaks in CI.** Missed a dependency.
@@ -329,5 +414,3 @@ The skill is tool-agnostic. **Claude Code** shines here (repo-wide reading and s
 - Never fix what you can't reproduce — establish a baseline, reproduce, trace to root cause, then change.
 - Assess the blast radius before editing; high-risk zones (auth/data/shared) demand extra care.
 - Match existing conventions over preference; resist AI-tempting rewrites and scope creep; ship small, tested, focused PRs.
-
-[Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)

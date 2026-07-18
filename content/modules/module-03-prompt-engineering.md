@@ -21,7 +21,7 @@ By the end of this module, the learner can:
 
 ---
 
-## Lesson 2.1 — Why the prompt is your primary tool (~30 min)
+## Lesson 3.1 — Why the prompt is your primary tool (~30 min)
 
 In traditional coding you type the exact instructions the computer follows. In AI-assisted coding you *describe* what you want and the model produces the instructions. The prompt is now your main tool, and its quality determines the quality of the code you get back.
 
@@ -31,7 +31,7 @@ Tie back to Module 2: because the model outputs the *most likely* completion giv
 
 ---
 
-## Lesson 2.2 — The anatomy of a good prompt (~60 min)
+## Lesson 3.2 — The anatomy of a good prompt (~60 min)
 
 Teach the five ingredients of a strong coding prompt:
 
@@ -53,21 +53,11 @@ The strong prompt isn't longer for its own sake — every clause removes a wrong
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Weak vs. Strong Prompt Outputs]**
-
-**What this screenshot should show:**
-- Left panel: Claude/ChatGPT with weak prompt "make a login form"
-  - Shows the generated output (likely missing framework, validation, styling specifics)
-- Right panel: Same tools with strong five-ingredient prompt specifying Next.js, TypeScript, Tailwind, Supabase, validation rules
-  - Shows the generated output (correctly uses specified tools and includes all constraints)
-- Side-by-side comparison makes the difference visceral
-- Proves: precision in prompt structure directly improves code quality
+[SCREENSHOT: Weak vs. strong login-form prompts shown side by side, with the weak prompt's generic output on the left and the five-ingredient prompt's correct Next.js/TypeScript/Tailwind/Supabase output on the right]
 
 ---
 
----
-
-## Lesson 2.3 — Decomposing a task into promptable steps (~60 min)
+## Lesson 3.3 — Decomposing a task into promptable steps (~60 min)
 
 This delivers Objective 2. Beginners ask the AI to "build the whole app" in one prompt and get an unmaintainable, half-broken result. The fix is decomposition: break a big goal into small, ordered, individually-promptable steps.
 
@@ -86,7 +76,7 @@ Each line is a focused prompt you complete and confirm before the next. Teach th
 
 ---
 
-## Lesson 2.4 — Iterating: critique and refine (~60 min)
+## Lesson 3.4 — Iterating: critique and refine (~60 min)
 
 This delivers Objective 3. The first response is rarely perfect — that's normal. Skilled prompting is a loop:
 
@@ -97,26 +87,15 @@ This delivers Objective 3. The first response is rarely perfect — that's norma
 
 **Effective vs. ineffective feedback:** ineffective — "that didn't work, fix it." Effective — "That uses the Pages Router, but we're on the App Router — rewrite it as a server component and move the data fetch out of the client."
 
-Also teach *when to stop and re-scope*: if three rounds haven't converged, the prompt was under-specified or the task too big — go back to decomposition (Lesson 2.3) instead of piling on patches.
+Also teach *when to stop and re-scope*: if three rounds haven't converged, the prompt was under-specified or the task too big — go back to decomposition (Lesson 3.3) instead of piling on patches.
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Refinement Loop Exchange]**
-
-**What this screenshot should show:**
-- Panel 1: Initial AI response (e.g., a function using Pages Router when the app uses App Router)
-  - Visible code mistake or framework mismatch
-- Panel 2: User's refinement prompt (specific feedback naming the gap)
-  - Example: "We're using Next.js App Router, not Pages Router. Rewrite this as a server component with data fetch outside the component."
-- Panel 3: AI's corrected response (now uses correct framework and structure)
-- Shows: how precise feedback leads to immediate, correct fixes
-- Demonstrates: the iterative loop and when it converges vs. when to re-scope
+[SCREENSHOT: A three-panel refinement loop — an initial AI response using the wrong router, the user's specific corrective feedback naming the gap, and the AI's corrected App Router response]
 
 ---
 
----
-
-## Lesson 2.5 — Prompting across the default stack (~30 min)
+## Lesson 3.5 — Prompting across the default stack (~30 min)
 
 Connect prompting to the tools you'll use, concept-first:
 
@@ -127,7 +106,7 @@ Same five ingredients for both — the difference is scope, not technique.
 
 ---
 
-## Lesson 2.6 — Prompting with images (multimodal) (~45 min)
+## Lesson 3.6 — Prompting with images (multimodal) (~45 min)
 
 This delivers Objective 4 and unlocks a faster path than describing everything in words. Modern AI coding tools are **multimodal** — they can read images — so a picture often beats a paragraph.
 
@@ -138,7 +117,7 @@ This delivers Objective 4 and unlocks a faster path than describing everything i
 - A **diagram or whiteboard photo** of a data model or flow.
 - A **competitor/app screenshot** as a style reference ("match this look").
 
-**How (as of 2026 — check current docs):** in **Claude Code**, paste a screenshot with Ctrl+V (Mac), drag-and-drop in the desktop app, or give a file path; in **Cursor**, drag the image into the agent/chat.
+**How (as of 2026 — check current docs):** in **Claude Code**, paste a screenshot with Cmd+V (Mac), drag-and-drop in the desktop app, or give a file path; in **Cursor**, drag the image into the agent/chat.
 
 **Why it's powerful:** the model reads visual structure directly, so it's far faster and more accurate than translating a design into text. Then iterate: "compare your result to the mockup and fix the differences." You'll use this hard in Module 7 (match a design) and Module 9 (debug from a screenshot).
 
@@ -147,27 +126,15 @@ This delivers Objective 4 and unlocks a faster path than describing everything i
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Multimodal Prompt (Mockup → Generated UI)]**
-
-**What this screenshot should show:**
-- Left panel: A design mockup or wireframe pasted into Claude Code/Cursor
-  - Shows a simple UI layout (e.g., a card-based dashboard with a header, sidebar, content area)
-  - Image is clearly visible in the chat
-- Right panel (or below): The AI's generated React/UI code response
-  - Generated code reflects the layout structure, spacing, and hierarchy from the mockup
-  - Prompt was simply: "Build this UI based on the mockup I just pasted"
-- Shows: how an image eliminates 100 lines of text description
-- Demonstrates: multimodal prompting is faster and more accurate than text-only
-
----
+[SCREENSHOT: A design mockup pasted into Claude Code alongside the AI's generated React code that reproduces the mockup's layout, spacing, and hierarchy from the prompt "Build this UI based on the mockup I just pasted"]
 
 ---
 
 ## Hands-on activity (~40 min, folded in)
 
-**"Prompt rewrite gauntlet."** Learners rewrite five weak prompts using the five-ingredient anatomy, run both (weak and strong), and compare outputs. For each, they submit: rewritten prompt, before/after outputs, and one sentence on what improved. Rehearses Objectives 1 and 3.
+**"Prompt rewrite gauntlet."** Learners rewrite six weak prompts using the five-ingredient anatomy (with multimodal input for the last), run both (weak and strong), and compare outputs. For each, they submit: rewritten prompt, before/after outputs, and one sentence on what improved. Rehearses Objectives 1 and 3.
 
-### Five weak prompts to rewrite:
+### Six weak prompts to rewrite:
 
 **WEAK PROMPT 1:** "make a chart"
 
@@ -283,27 +250,30 @@ Here's a screenshot of my form [paste image]. The labels are stacked on top of t
 
 ---
 
-## Lesson 2.5 — Multimodal input: Video transcripts as knowledge imports (~45 min)
+## Lesson 3.7 — Multimodal input: Video transcripts as knowledge imports (~45 min)
 
-So far, your prompts have used text and screenshots. But there's a third powerful input type: **transcribed knowledge from external video sources**. This lesson teaches you to take videos (YouTube tutorials, conference talks, your own screen recordings, demo videos from competitors), transcribe them with tools like Whisper or YouTube's captions, and feed that knowledge *directly into Claude* to accelerate learning or inform code design.
+This lesson extends Objective 1 (writing context-rich prompts): sometimes the richest context lives in a video, not in text you can type. You'll take a learning video (a YouTube tutorial, a conference talk, or your own screen recording), transcribe it with tools like Whisper or YouTube's captions, and feed that transcript *directly into Claude* as context so it writes code that matches what you learned.
 
 Why this matters: Watching a 20-minute video to learn one concept takes 20 minutes. Extracting the transcript takes 2 minutes. Copying key points into a Claude prompt takes 1 minute. You've learned 20x faster, and Claude now has the exact context it needs to write code that matches what you learned.
 
-### 2.5.1 — Extracting transcripts from any video
+### 3.7.1 — Extracting transcripts from any video
 
 Three methods, ordered by speed:
 
 1. **YouTube auto-captions** (free, instant): Open any YouTube video → click "CC" button → click the three-dot menu on the player → select "Show transcript". Copy the full text (click "Show more" if needed). Paste directly into Claude.
 
-2. **Whisper transcription** (free, local or cloud): Use OpenAI's Whisper model to transcribe any audio file or video. If using Claude Code, you can run:
+2. **Whisper transcription** (free, local): Whisper transcribes a *local audio file*, so a video URL is a two-step job — first download the audio with `yt-dlp`, then run Whisper on that file:
    ```bash
-   ! npx whisper-cli https://youtube-url-here
+   # 1. Download the audio track from a video URL
+   yt-dlp -x --audio-format mp3 -o audio.mp3 "https://youtube-url-here"
+   # 2. Transcribe the local audio file with Whisper
+   whisper audio.mp3 --output_format txt
    ```
-   Whisper outputs a `.txt` file with the full transcript.
+   Whisper outputs a `.txt` file with the full transcript. (Install once with `pip install yt-dlp openai-whisper`.)
 
 3. **Browser captions + Claude**: Some videos (tutorials, podcasts) already have captions. Screenshot the caption section, or copy the text from the video player's transcript pane.
 
-### 2.5.2 — Feeding transcripts into prompts (the five ingredients revisited)
+### 3.7.2 — Feeding transcripts into prompts (the five ingredients revisited)
 
 Once you have a transcript, the prompt structure is the same as before, but richer:
 
@@ -343,36 +313,7 @@ Return only the code, with comments.
 
 This prompt is *much* stronger because Claude now understands not just what you want, but what the conceptual model is (from the video). It can fill gaps (class → hooks) because it grasps the underlying pattern.
 
-### 2.5.3 — Competitive learning: Extracting features from competitor videos
-
-A powerful vibe-coding workflow: watch a competitor's product demo video, transcribe it, ask Claude to identify the features shown, and then build similar features yourself.
-
-**Example workflow:**
-
-1. Watch competitor's demo video (5–10 min)
-2. Transcribe it (2 min)
-3. Screenshot key UI moments (1 min each)
-4. Prompt Claude:
-   ```
-   I watched a demo of [competitor product].
-   
-   Video transcript (key section):
-   [paste relevant excerpt about the feature]
-   
-   I also captured these screenshots of the UI:
-   [paste 2–3 screenshots]
-   
-   I want to build a similar feature in my Next.js + Supabase app.
-   The feature should:
-   1) [what the video showed you]
-   2) [what the screenshot shows]
-   
-   Please design the data model, write the component, and explain the logic.
-   ```
-
-This combines three inputs (transcript, screenshots, your context) into a single powerful prompt. Claude can now infer not just what to build, but *why* it's valuable (context from the transcript) and *how it looks* (from the screenshots).
-
-### 2.5.4 — Hands-on: Transcript → Code practice
+### 3.7.3 — Hands-on: Transcript → Code practice
 
 Pick any tutorial video on a topic you're curious about (AI, design, database design, etc.):
 
@@ -393,21 +334,21 @@ Document:
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Write context-rich prompts (Quiz Q2-1, Q2-2):**
-- Q2-1: "Which is NOT one of the five ingredients?" ✅ Tests knowledge of the five-ingredient model
-- Q2-2: "A strong prompt is better mainly because..." ✅ Tests understanding of why precision matters
+**Objective 1 — Write context-rich prompts (Quiz Q3-1, Q3-2):**
+- Q3-1: "Which is NOT one of the five ingredients?" — tests knowledge of the five-ingredient model
+- Q3-2: "A strong prompt is better mainly because..." — tests understanding of why precision matters
 - *Written check:* Given "build a signup form," write a complete prompt using all five ingredients (task, context, constraints, examples, output format) for a Next.js + Supabase app.
 
-**Objective 2 — Decompose tasks (Quiz Q2-5):**
-- Q2-5: "Which is the correct order to build a blog?" ✅ Tests dependency ordering
+**Objective 2 — Decompose tasks (Quiz Q3-5):**
+- Q3-5: "Which is the correct order to build a blog?" — tests dependency ordering
 - *Written check:* Break "build a simple blog with posts and comments" into an ordered list of 5–7 promptable steps. For each step, name its dependency (what must exist first).
 
-**Objective 3 — Critique & refine (Quiz Q2-3):**
-- Q2-3: "The right way to iterate when output is wrong..." ✅ Tests refinement strategy
+**Objective 3 — Critique & refine (Quiz Q3-3):**
+- Q3-3: "The right way to iterate when output is wrong..." — tests refinement strategy
 - *Written check:* Given a flawed prompt output (e.g., wrong framework, missing constraint), write the specific feedback prompt that fixes it.
 
-**Objective 4 — Prompt with images (Quiz Q2-4):**
-- Q2-4: "When building a complex UI, which approach is fastest?" ✅ Tests knowledge of multimodal prompting
+**Objective 4 — Prompt with images (Quiz Q3-4):**
+- Q3-4: "When building a complex UI, which approach is fastest?" — tests knowledge of multimodal prompting
 - *Written check:* Describe a scenario where an image/mockup is more efficient than a text description. Why?
 
 ---
@@ -438,5 +379,3 @@ Tool-agnostic — the five ingredients, decomposition, and the refine loop work 
 - Decompose big goals into small, ordered, verifiable steps: prompt → verify → next.
 - Refine with specific feedback, not "try again"; re-scope if it won't converge.
 - The skill transfers across every AI tool — scope changes, technique doesn't.
-
-[Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)

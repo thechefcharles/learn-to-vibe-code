@@ -83,10 +83,11 @@ Example RLS policy:
 CREATE POLICY "users can read their own invoices"
 ON invoices
 FOR SELECT
-USING (auth.uid() = user_id);
+TO authenticated
+USING ((select auth.uid()) = user_id);
 ```
 
-This means: "Allow SELECT on invoices only if the current logged-in user's ID matches the row's user_id."
+This means: "Allow SELECT on invoices only if the current logged-in user's ID matches the row's user_id." Two details of the current best practice: `TO authenticated` scopes the policy to logged-in users (never the anonymous role), and wrapping the call as `(select auth.uid())` lets Postgres evaluate it once per query instead of once per row — a real speedup on large tables.
 
 **Why?** Security. Without it, one user could read/write/delete other users' data. RLS is the enforcement mechanism—the database itself refuses to return rows that don't pass the policy.
 
@@ -109,21 +110,28 @@ CREATE TABLE todos (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
+-- Enable RLS FIRST. Without this line the policies below do nothing
+-- and the table stays wide open.
+ALTER TABLE todos ENABLE ROW LEVEL SECURITY;
+
 CREATE POLICY "users can read their own todos"
 ON todos
 FOR SELECT
-USING (auth.uid() = user_id);
+TO authenticated
+USING ((select auth.uid()) = user_id);
 
 CREATE POLICY "users can create their own todos"
 ON todos
 FOR INSERT
-WITH CHECK (auth.uid() = user_id);
+TO authenticated
+WITH CHECK ((select auth.uid()) = user_id);
 ```
 
 Translation:
 - `id`: unique todo identifier
 - `user_id`: who owns this todo
 - `title`, `completed`, `created_at`: todo data
+- `ALTER TABLE ... ENABLE ROW LEVEL SECURITY`: turns RLS on. Policies are inert until you run this — enabling RLS is the switch; policies are the rules.
 - First policy: you can only SELECT (read) todos where user_id = your ID
 - Second policy: you can only INSERT (create) todos where user_id = your ID
 
@@ -163,15 +171,9 @@ This continues Objective 2.
 
 **Step 1 — Create a Supabase project** at [supabase.com](http://supabase.com). Copy your project URL and **publishable key** from API settings.
 
----
+[SCREENSHOT: Supabase API settings dashboard showing Project URL, Publishable API Key, and Secret Key ready to copy]
 
-**[SCREENSHOT PLACEHOLDER: Supabase API Settings]**
-
-Dashboard showing: Project URL, Publishable API Key, Secret Key. Proof: credentials are visible and copyable.
-
----
-
-**Step 2 — Store them in `.env.local`** (never hard-code keys — previews Module 21's env handling):
+**Step 2 — Store them in `.env.local`** (never hard-code keys — previews Module 11's env handling):
 
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://YOUR-PROJECT.supabase.co
@@ -211,15 +213,72 @@ export const createClient = async () => {
       cookies: {
         getAll: () => cookieStore.getAll(),
         setAll: (cookiesToSet) => {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          );
+          try {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              cookieStore.set(name, value, options)
+            );
+          } catch {
+            // The `setAll` method was called from a Server Component.
+            // Safe to ignore if you have middleware refreshing sessions.
+          }
         },
       },
     }
   );
 };
 ```
+
+Why the `try/catch`? Server Components can't write cookies, so `cookieStore.set(...)` throws there. Wrapping `setAll` swallows that error, and the middleware below is what actually refreshes the session cookies on every request.
+
+**Session-refresh middleware** (required — without it sessions expire and server auth checks silently fail):
+
+```ts
+// middleware.ts
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
+
+export async function updateSession(request: NextRequest) {
+  let response = NextResponse.next({ request });
+
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+    {
+      cookies: {
+        getAll: () => request.cookies.getAll(),
+        setAll: (cookiesToSet) => {
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
+          );
+          response = NextResponse.next({ request });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          );
+        },
+      },
+    }
+  );
+
+  // IMPORTANT: revalidates the session against the Supabase Auth server
+  // and refreshes the cookies on the outgoing response.
+  await supabase.auth.getUser();
+
+  return response;
+}
+
+export async function middleware(request: NextRequest) {
+  return await updateSession(request);
+}
+
+export const config = {
+  matcher: [
+    // Run on all paths except static assets and images.
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
+};
+```
+
+**Checking auth on the server — use `getUser()`, not `getSession()`.** In server code always call `supabase.auth.getUser()`: it sends the token to the Supabase Auth server and revalidates it, so you can trust the returned user. Do **not** gate server logic on `getSession()` — it only reads the session from the cookie without verifying it, so a tampered or stale cookie would pass. `getSession()` is fine on the client (where the cookie is the browser's own state); on the server, `getUser()` is the source of truth.
 
 The **key difference:** browser clients are used in `"use client"` components and handle auth state; server clients run on the server and attach the user session to queries, so RLS can filter rows.
 
@@ -299,13 +358,7 @@ Check:
 - **Consistency:** every table gets user_id and created_at automatically, preventing oversights
 - **Speed:** less manual SQL to write, more time to verify and iterate
 
----
-
-**[SCREENSHOT PLACEHOLDER: Tables in Supabase Editor]**
-
-Table Editor showing: clients and invoices tables with columns (id, user_id, name, email, amount, due_date, status, created_at). Proof: schema is created and visible.
-
----
+[SCREENSHOT: Supabase Table Editor showing the clients and invoices tables with their columns (id, user_id, name, email, amount, due_date, status, created_at)]
 
 ---
 
@@ -366,7 +419,9 @@ export default function ClientForm() {
       setName("");
       setEmail("");
     } catch (err) {
-      alert("Error adding client: " + err.message);
+      // `err` is typed `unknown` in strict TS — narrow before reading .message.
+      const message = err instanceof Error ? err.message : "Something went wrong";
+      alert("Error adding client: " + message);
     }
   }
 
@@ -402,9 +457,9 @@ Address Objective 3 (auth + authorization). Instead of writing boilerplate manua
 ### Automating auth and RLS
 
 **Step 1 — Enable email/password auth in Supabase dashboard** (manual one-time):
-- Go to Supabase → Authentication → Providers
-- Enable "Email" provider
-- Optionally: in Settings → Auth, turn on "Enable email confirmations" or disable it for testing
+- Go to Supabase → Authentication → Providers → Email
+- Enable the "Email" provider
+- Optionally, in that same Email provider panel (Auth settings), toggle "Confirm email" off for course/demo testing so signups can log in without SMTP
 
 **Step 2 — Use Claude Code to generate auth components and RLS policies:**
 
@@ -430,9 +485,9 @@ Please generate:
 
 2. RLS POLICIES (for database security):
    For each table (clients, invoices):
-   - enable row level security
+   - enable row level security (alter table ... enable row level security)
    - create a policy allowing users to see/edit only their own rows
-   - use (auth.uid() = user_id) for filtering
+   - scope it "to authenticated" and use ((select auth.uid()) = user_id) for filtering
 
 3. FORM ACTIONS (wire auth to the app):
    - signUp(email, password) server action
@@ -455,7 +510,7 @@ For auth components, check:
 
 For RLS policies, check:
 - ✅ `alter table ... enable row level security;` for every table
-- ✅ Policy condition uses `auth.uid() = user_id`
+- ✅ Policy is scoped `to authenticated` and condition uses `(select auth.uid()) = user_id`
 - ✅ `using` and `with check` both set (not just one)
 - ✅ No typos in table/column names
 
@@ -479,12 +534,7 @@ If a user sees another user's data, RLS isn't enabled correctly. Debug with Clau
 - **Security-first:** it always includes the `with check` clause (prevents privilege escalation)
 - **Verification:** you test with two accounts (the real proof); Claude Code provided the machinery
 
----
-
-**[SCREENSHOT PLACEHOLDER: Auth flow and RLS verification]**
-
-Left: Sign-up and sign-in forms in the app.
-Right: Two users logged in, each seeing only their own clients (proof RLS is working).
+[SCREENSHOT: Left, the app's sign-up and sign-in forms; right, two users logged in side by side, each seeing only their own clients (proof RLS is working)]
 
 ---
 
@@ -492,37 +542,7 @@ Right: Two users logged in, each seeing only their own clients (proof RLS is wor
 
 Not all env vars are created equal. **Config** is anything you might change between environments — URLs, thresholds, feature flags, timeouts. **Secrets** are credentials you *never* share — API keys, passwords, signing keys. This distinction matters for security and deployment.
 
-### For kids
-
-Keep it simple: **Config = things you can show people. Secrets = things you never show anyone.**
-
-**Config examples:**
-- Where the database is (localhost for you, production server for others)
-- How many times to retry something
-- Timeouts (how long to wait before giving up)
-
-**Secret examples:**
-- Supabase API keys
-- Database passwords
-- Anything with "secret" or "key" in the name
-
-**The rule:** If it's an API key or password, **put it in `.env.local`** (a file you don't push to GitHub). Everything else can go in a config file and pushed to GitHub safely.
-
-Example:
-```
-# config.yaml (safe to commit)
-database_url: postgresql://localhost/invoice_tracker
-timeout_ms: 5000
-
-# .env.local (git-ignored, secret)
-SUPABASE_API_KEY=sb_secret_xxx
-```
-
-**Deliverable:** Check your `.gitignore` file has `.env.local`. If not, add it.
-
----
-
-### For adults
+The mental model: **config is what you can show people; secrets are what you never show anyone.** If it's an API key or password, it goes in `.env.local` (git-ignored). Everything else can live in a committed config file.
 
 **Config lives in files or environment vars that are okay to version-control** (or committed with safe values):
 - Database connection string (non-prod)
@@ -548,7 +568,7 @@ public_api_endpoint: https://api.example.com
 Example `.env.local`:
 ```
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_pub_xxx
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxx
 SUPABASE_SERVICE_ROLE_KEY=sb_secret_xxx  # ← never shared!
 STRIPE_SECRET_KEY=sk_live_xxx  # ← never shared!
 ```
@@ -557,7 +577,7 @@ STRIPE_SECRET_KEY=sk_live_xxx  # ← never shared!
 
 **Lifecycle:** Locally, secrets come from `.env.local` (loaded at dev/build time). In production, Vercel stores secrets in project settings (inaccessible except at deploy), injects them at build/runtime, and you never type them into code or screenshots. Commit `.env.local` to `.gitignore` and ensure CI/CD skips the local file—only production secrets come from Vercel env vars.
 
-**Audit trail:** Log which secrets are in use and when they rotate. For a capstone, documenting secrets management in your CLAUDE.md shows security discipline.
+**Audit trail:** Log which secrets are in use and when they rotate. For a capstone, documenting secrets management in your `CLAUDE.md` shows security discipline.
 
 ---
 
@@ -572,7 +592,7 @@ Address Objective 4 (comparison and justification).
 | Postgres + Prisma | Your own DB + typed ORM | Full control, comfortable managing the DB |
 | Neon / PlanetScale | Managed serverless SQL | You need the DB only and add auth separately |
 
-**Why Supabase is the default:** database, auth, and authorization in one beginner-friendly tool, on real Postgres, with a native Vercel path (Module 21). **Trade-offs:** Firebase is simpler for realtime/mobile but locks you into NoSQL/Google; Postgres + Prisma gives control at the cost of wiring auth/security yourself.
+**Why Supabase is the default:** database, auth, and authorization in one beginner-friendly tool, on real Postgres, with a native Vercel path (Module 11). **Trade-offs:** Firebase is simpler for realtime/mobile but locks you into NoSQL/Google; Postgres + Prisma gives control at the cost of wiring auth/security yourself.
 
 ---
 
@@ -589,7 +609,7 @@ Address Objective 4 (comparison and justification).
 6. Add them to `.env.local`:
    ```
    NEXT_PUBLIC_SUPABASE_URL=https://YOUR-PROJECT.supabase.co
-   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_pub_xxx
+   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxx
    ```
 7. Save and restart your dev server (`npm run dev`)
 
@@ -654,10 +674,10 @@ Tip: This is perfect for Claude Code (Module 6). Prompt: "Set up Supabase browse
 3. Test: add a client via the form, refresh the page—it's still there!
 
 ### Step 6: Enable authentication (5 min)
-1. In Supabase dashboard, go to **Authentication → Providers**
-2. Ensure **Email** is enabled
-3. Go to **Authentication → Auth Policies → Email Templates**
-4. For a course/demo, toggle **Enable Auto Confirm** so new users don't need email verification
+1. In Supabase dashboard, go to **Authentication → Providers → Email**
+2. Ensure the **Email** provider is enabled
+3. In that same Email provider panel (Auth settings), find the email-confirmation option
+4. For a course/demo, turn **off** "Confirm email" (auto-confirm) so new users don't need email verification to log in
 5. Create a sign-in page using `supabase.auth.signInWithPassword({ email, password })`
 
 ### Step 7: Enable Row Level Security (10 min)
@@ -667,15 +687,17 @@ Tip: This is perfect for Claude Code (Module 6). Prompt: "Set up Supabase browse
    
    create policy "users manage own clients"
      on clients for all
-     using (auth.uid() = user_id)
-     with check (auth.uid() = user_id);
+     to authenticated
+     using ((select auth.uid()) = user_id)
+     with check ((select auth.uid()) = user_id);
    
    alter table invoices enable row level security;
    
    create policy "users manage own invoices"
      on invoices for all
-     using (auth.uid() = user_id)
-     with check (auth.uid() = user_id);
+     to authenticated
+     using ((select auth.uid()) = user_id)
+     with check ((select auth.uid()) = user_id);
    ```
 2. Verify in the **Table Editor**: policies are listed under each table
 
@@ -799,5 +821,3 @@ Default: **Supabase** on **Next.js**, using `@supabase/ssr`. Alternatives in Les
 - Connect with `@supabase/ssr` (async `cookies()`) so sessions work server-side — required for RLS.
 - Auth identifies the user; RLS (default-deny, `auth.uid()`, `with check`) enforces who sees what — in the database.
 - Always verify RLS with two accounts; watch for IPv6 DB connections and email-confirm defaults.
-
-[Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)

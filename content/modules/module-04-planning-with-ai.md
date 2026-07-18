@@ -21,7 +21,7 @@ By the end of this module, the learner can:
 
 ---
 
-## Lesson 3.1 — From idea to infrastructure: Notion, repo structure, and features (~90 min)
+## Lesson 4.1 — From idea to infrastructure: Notion, repo structure, and features (~90 min)
 
 This lesson teaches you to scaffold a project properly *before* writing specs. It covers: clarifying a vague idea into a project vision, designing your Notion structure (where architectural thinking lives), scaffolding repository structure (where code and configuration live), and creating a feature list that becomes your living checklist.
 
@@ -130,7 +130,7 @@ For each, give me 2–3 examples of what I'd write there.
   └─ Considered: Linear vs GitHub Issues (chose GitHub for API maturity)
 ```
 
-**Create this structure in Notion.** Link: this is the *opposite* of Module 1.7 (repo vs. Notion). Notion keeps architectural thinking and research; your repo keeps versioned code.
+**Create this structure in Notion.** This is the repo-vs-Notion split in action: Notion keeps architectural thinking and research; your repo keeps versioned code.
 
 **Key insight:** If it belongs to *all phases* of the project and is rarely code, put it in Notion. If it's versioned, tested, or deployed, put it in the repo.
 
@@ -268,7 +268,7 @@ You now have four interconnected artifacts:
 - **Repo** holds: versioned code, configuration (CLAUDE.md, decisions.md, .mcp.json), feature list
 - **Both stay in sync** via the project brief and decisions.md (single source of truth for "why did we choose X?")
 
-**Before you move to Lesson 3.2 (spec writing),** you have:
+**Before you move to Lesson 4.2 (spec writing),** you have:
 - A clear project vision (brief)
 - Notion structure ready (for decisions and research)
 - Repo scaffolded (folder structure, config, CLAUDE.md)
@@ -281,13 +281,13 @@ You now have four interconnected artifacts:
 
 ## Knowledge check
 
-**Q3-1a:** You have a vague idea: "I want to build a fitness app." What's the first prompt you'd give Claude to clarify it? (Open-ended, then reveal good example)
+**Q4-1a:** You have a vague idea: "I want to build a fitness app." What's the first prompt you'd give Claude to clarify it? (Open-ended, then reveal good example)
 
-**Q3-1b:** You need to decide where to document these items — Notion or Repo?
-1. "We chose Supabase because of RLS" → **Repo** (`decisions.md`)
-2. "Our data model has users, workouts, and goals" → **Repo** (`FEATURES.md`, schema docs)
+**Q4-1b:** You need to decide where to document these items — Notion or Repo?
+1. "We chose Supabase because of RLS" → **Repo** (`decisions.md` — a logged decision, kept with the code as config)
+2. "Our data model has users, workouts, and goals" → **Notion** (architectural thinking that spans all phases; the eventual schema lives in the repo)
 3. "Design research: users want offline-first app" → **Notion**
-4. "Build order: auth first, then workouts, then analytics" → **Repo** (`decisions.md` / `FEATURES.md`)
+4. "Build order: auth first, then workouts, then analytics" → **Notion** (roadmap that spans all phases; the FEATURES.md checklist you tick off lives in the repo)
 5. "Architectural sketch: three layers (API, DB, UI)" → **Notion**
 6. "We won't support social features in MVP" → **Repo** (`FEATURES.md` out-of-scope section)
 
@@ -302,7 +302,7 @@ You now have four interconnected artifacts:
 
 ---
 
-## Lesson 3.2 — Why plan when AI writes code so fast? (~30 min)
+## Lesson 4.2 — Why plan when AI writes code so fast? (~30 min)
 
 The faster the tool, the more a bad plan costs. AI can generate a screen in seconds — but if you haven't decided what data it needs, how it connects to the next screen, or what "done" means, you'll generate ten screens that don't fit together and spend far longer untangling them than planning would have taken.
 
@@ -312,7 +312,7 @@ Reframe planning for the AI era: it's not overhead, it's **the context you'll fe
 
 ---
 
-## Lesson 3.3 — From raw idea to a spec, with Claude Code (~60 min)
+## Lesson 4.3 — From raw idea to a spec, with Claude Code (~60 min)
 
 This delivers Objective 2. A spec is a short written description of what the software should do — you don't need a formal template, you need clarity. **Use Claude Code as your planning orchestrator.**
 
@@ -369,15 +369,7 @@ After each step, show me the output and ask if I want to revise or move on.
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Claude Code Planning Session]**
-
-**What this screenshot should show:**
-- Terminal window with Claude Code running
-- Claude Code asking clarifying questions ("Who is your primary user? How many invoices per month?")
-- User's text answers visible
-- Claude Code's responses: drafted spec, data model, screen list, build order
-- Final output: a `spec.md` file and `decisions.md` file created in the project folder
-- Shows: how Claude Code orchestrates the entire planning workflow end-to-end
+[SCREENSHOT: Claude Code planning session in a terminal — clarifying questions, the learner's answers, and Claude Code's drafted spec, data model, screen list, and build order, with spec.md and decisions.md created in the project folder]
 
 ---
 
@@ -385,7 +377,7 @@ After each step, show me the output and ask if I want to revise or move on.
 
 ---
 
-## Lesson 3.4 — Translating the spec into a technical plan (~60 min)
+## Lesson 4.4 — Translating the spec into a technical plan (~60 min)
 
 This delivers Objective 3. A spec says *what*; a technical plan says *how*. Translate each feature into three things:
 
@@ -397,27 +389,7 @@ Prompt the AI for a first draft of each ("Given this spec, propose a simple data
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Technical Plan (Data Model + Screens)]**
-
-**What this screenshot should show:**
-- Top section: AI's proposed data model
-  - Table 1: `users` (id, name, email, created_at)
-  - Table 2: `invoices` (id, user_id, client_id, amount, due_date, status)
-  - Table 3: `clients` (id, user_id, name, email, phone)
-  - Clear relationships shown (user_id foreign keys)
-- Middle section: Proposed screens/views
-  - Screen 1: Dashboard (total invoices, revenue, overdue count)
-  - Screen 2: Clients list (add, edit, delete)
-  - Screen 3: Invoices list (filter by status, action links)
-  - Screen 4: New invoice form
-  - Screen 5: Invoice detail view (mark paid, edit, delete)
-- Bottom section: Milestones
-  - v0: Auth + clients CRUD
-  - v1: Invoices CRUD
-  - v2: Dashboard with analytics
-- Shows: how to translate spec into concrete technical plan with data, UI, and sequencing
-
----
+[SCREENSHOT: Technical plan translating a spec into a data model (users, invoices, clients with foreign-key relationships), a list of screens (dashboard, clients list, invoices list, new invoice form, invoice detail), and v0–v2 milestones]
 
 ---
 
@@ -547,7 +519,7 @@ These questions teach you to think like an architect: spec → plan → pressure
 
 ---
 
-## Lesson 3.5 — Sequencing: dependencies and build order (~60 min)
+## Lesson 4.5 — Sequencing: dependencies and build order (~60 min)
 
 This delivers Objective 4. Not all tasks are equal — some must come before others. Teach learners to spot **dependencies** and order work so they're never blocked.
 
@@ -790,13 +762,13 @@ votes
 
 ## Knowledge check (mapped to objectives)
 
-**Objective 1 — Clarify idea & scaffold infrastructure (Quiz Q3-1, Q3-2):**
-- Q3-1a: "You have a vague idea. What's the first prompt to Claude?" ✅ Tests clarification prompts
-- Q3-1b: "Which items belong in Notion vs repo?" ✅ Tests Notion vs repo judgment
+**Objective 1 — Clarify idea & scaffold infrastructure (Quiz Q4-1, Q4-2):**
+- Q4-1a: "You have a vague idea. What's the first prompt to Claude?" ✅ Tests clarification prompts
+- Q4-1b: "Which items belong in Notion vs repo?" ✅ Tests Notion vs repo judgment
 
-**Objective 2 — Produce a spec (Quiz Q3-3, Q3-4):**
-- Q3-3: "Why plan when AI writes code fast?" ✅ Tests value of planning
-- Q3-4: "A lightweight spec should include all EXCEPT:" ✅ Tests spec content
+**Objective 2 — Produce a spec (Quiz Q4-3, Q4-4):**
+- Q4-3: "Why plan when AI writes code fast?" ✅ Tests value of planning
+- Q4-4: "A lightweight spec should include all EXCEPT:" ✅ Tests spec content
 - *Written check:* From the scenario "a small gym wants an app to book classes," write a one-page MVP spec with: problem statement, target users, 4–5 core features, explicit out-of-scope items, and success criteria.
   - **SAMPLE OUTPUT (what good looks like):**
     ```
@@ -815,8 +787,8 @@ votes
     SUCCESS: Members book 80% of their classes through the app within first week.
     ```
 
-**Objective 3 — Translate to technical plan (Quiz Q3-5):**
-- Q3-5: "For a note-taking app, what should you plan first?" ✅ Tests technical planning order
+**Objective 3 — Translate to technical plan (Quiz Q4-5):**
+- Q4-5: "For a note-taking app, what should you plan first?" ✅ Tests technical planning order
 - *Written check:* For the gym booking app above, propose: (1) a data model (table names, key fields, relationships), (2) a screen list (5–7 screens), and (3) three milestones.
   - **SAMPLE DATA MODEL:**
     ```
@@ -835,8 +807,8 @@ votes
     - v1: Book class + my bookings
     - v2: Notifications + capacity alerts
 
-**Objective 4 — Sequence with dependencies (Quiz Q3-6):**
-- Q3-6: "A dependency means:" ✅ Tests dependency understanding
+**Objective 4 — Sequence with dependencies (Quiz Q4-6):**
+- Q4-6: "A dependency means:" ✅ Tests dependency understanding
 - *Written check:* For the gym booking app, list the build tasks in order (8–10 tasks) and for at least 3 tasks, state what must exist first.
   - **SAMPLE BUILD ORDER:**
     ```
@@ -869,7 +841,7 @@ For each scenario, decide what's wrong with the plan and explain how to fix it:
 
 Planning is tool-agnostic — any capable assistant (Claude Code, Cursor's chat, ChatGPT, Claude) works as a planning partner. The default is **Claude Code**, so you can keep the spec and plan as files alongside the code you'll build next. Alternatives (a chat window, a Notion doc, a text file) are fine — the deliverable is the *thinking*, not the tool that holds it.
 
-**Tip:** keep the spec *and a feature checklist* in **Notion** as your project's source of truth — and in Module 24 you'll connect Notion to Claude Code (via MCP) so the AI can read the checklist and tick items off as it ships them.
+**Tip:** keep the spec *and a feature checklist* in **Notion** as your project's source of truth — and in Module 14 you'll connect Notion to Claude Code (via MCP) so the AI can read the checklist and tick items off as it ships them.
 
 ---
 
@@ -879,7 +851,7 @@ As you build your spec, technical plan, and build order, you're making **importa
 
 ### Claude Code logs decisions automatically
 
-**During the planning session with Claude Code (Lesson 3.2),** prompt it to capture decisions as you make them:
+**During the planning session with Claude Code (Lesson 4.2),** prompt it to capture decisions as you make them:
 
 ```
 As we plan, whenever I mention a choice or reason, add it to a decisions.md file 
@@ -922,7 +894,7 @@ than invoices (no dependencies), so build that skill first. Invoices depend on b
 
 **Later:** a month from now, you'll ask yourself "why did we pick this?" Decisions.md saves you from re-deciding and prevents scope creep ("we considered this in planning and decided against it").
 
-**For your capstone (Module 26):** a well-governed project has a clear decision trail. This becomes part of the rubric — your capstone grader will want to see thoughtful choices, not just code.
+**For your capstone (Module 16):** a well-governed project has a clear decision trail. This becomes part of the rubric — your capstone grader will want to see thoughtful choices, not just code.
 
 **For teamwork:** if you onboard a teammate, they can read decisions.md and understand the architecture in minutes instead of asking you questions.
 
@@ -954,5 +926,3 @@ Storing both makes queries simpler. Revised the data model to add a due_date col
 ## Next: Use Your Plan in Module 5
 
 You now have a spec, data model, screens, and build order. In Module 5, you'll use these directly. When Module 5 asks you to build features, you'll open your spec and reference it—this is the proof that planning works.
-
-[Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)

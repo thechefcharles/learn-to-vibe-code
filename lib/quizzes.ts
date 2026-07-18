@@ -71,6 +71,18 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "Security and production code have the highest stakes — always verify thoroughly. Specs and boilerplate are lower-risk and can be reviewed more lightly.",
       },
+      {
+        id: "2-e1",
+        text: "You ask a raw LLM (no tools connected) to use a library feature that shipped last month. It confidently gives you an older, outdated API. Why?",
+        options: [
+          "The library doesn't actually exist",
+          "The base model's training has a cutoff date, so on its own it doesn't know changes made after that",
+          "The model is broken and needs reinstalling",
+          "Your prompt was too short to trigger the new version",
+        ],
+        correctAnswer: 1,
+        explanation: "This is the outdated-knowledge failure mode: a base model's knowledge is frozen at its training cutoff, which is why agentic tools offset it by retrieving current docs — and why you still verify.",
+      },
     ],
   },
   3: {
@@ -219,6 +231,18 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "Translate spec to technical plan by starting with the data model — it's the foundation. Screens and features all depend on knowing what data exists.",
       },
+      {
+        id: "4-e1",
+        text: "Using the repo-vs-Notion split, which item belongs in your Git repo rather than in Notion?",
+        options: [
+          "A design-research note: \"users want an offline-first app\"",
+          "The product roadmap of phases and priorities",
+          "decisions.md logging \"chose Supabase for its RLS\"",
+          "An architecture diagram sketching how the services connect",
+        ],
+        correctAnswer: 2,
+        explanation: "Versioned config that lives with the code — like decisions.md — goes in the repo; architectural thinking, research, and the roadmap span all phases and live in Notion.",
+      },
     ],
   },
   5: {
@@ -270,6 +294,18 @@ export const quizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 3,
         explanation:
           "Composer (Cmd+I) is best for building a complete feature—it orchestrates the component, imports, and wiring together.",
+      },
+      {
+        id: "5-e1",
+        text: "In Cursor, what distinguishes Agent from Composer?",
+        options: [
+          "Agent only autocompletes single lines; Composer writes whole files",
+          "Agent runs commands, reads the output, and fixes errors until the task works; Composer applies a change you've specified in one pass",
+          "Agent formats your code while Composer deploys it to production",
+          "They are two names for the exact same feature",
+        ],
+        correctAnswer: 1,
+        explanation: "Composer applies a specified change in a single pass; Agent adds autonomy — it runs terminal commands, reacts to errors, and iterates until the task actually works.",
       },
     ],
   },
@@ -443,6 +479,30 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "`auth.uid()` returns the ID of the currently authenticated user.",
       },
+      {
+        id: "8-e1",
+        text: "In server code, why check the user with supabase.auth.getUser() instead of getSession()?",
+        options: [
+          "getUser() is faster because it never touches the network",
+          "getUser() revalidates the token with the Supabase Auth server, so a tampered or stale cookie can't be trusted",
+          "getSession() only works inside client components",
+          "They are aliases — there is no difference",
+        ],
+        correctAnswer: 1,
+        explanation: "On the server, getUser() sends the token to the Auth server to verify it; getSession() only reads the cookie without checking it, so a forged cookie would pass.",
+      },
+      {
+        id: "8-e2",
+        text: "You wrote SELECT and INSERT policies for a table but forgot the `alter table ... enable row level security` line. What's the result?",
+        options: [
+          "The policies still protect the table",
+          "The table stays wide open — policies are inert until RLS is enabled",
+          "The table returns zero rows to everyone",
+          "Supabase throws an error the first time you query it",
+        ],
+        correctAnswer: 1,
+        explanation: "Enabling RLS is the switch; policies are the rules. Until you enable RLS the policies do nothing and the table has no protection.",
+      },
     ],
   },
   9: {
@@ -500,6 +560,18 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "Always review: read → understand → verify against the actual bug → then apply. You own what ships (Module 1).",
       },
+      {
+        id: "9-e1",
+        text: "Reading a stack trace top-down, which frame tells you where to start fixing?",
+        options: [
+          "The deepest frame, inside node_modules/react-dom internals",
+          "The first frame that lands in your own files",
+          "The very last line, regardless of which file it names",
+          "It doesn't matter — any frame works",
+        ],
+        correctAnswer: 1,
+        explanation: "The top line says what failed; the first frame pointing into your own code says where to fix it. Deeper framework frames are usually noise.",
+      },
     ],
   },
   10: {
@@ -544,6 +616,30 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "A merge conflict is Git asking for your decision when two branches edit the same lines.",
       },
+      {
+        id: "10-e1",
+        text: "When does Git actually raise a merge conflict?",
+        options: [
+          "Any time you merge two branches together",
+          "When two branches change the same lines after diverging, so Git can't pick a winner",
+          "Whenever your branch is behind main",
+          "When you forget to commit before merging",
+        ],
+        correctAnswer: 1,
+        explanation: "A conflict only happens when both sides edited the same lines after splitting from a common point; if changes don't overlap, Git merges them automatically.",
+      },
+      {
+        id: "10-e2",
+        text: "You see conflict markers (<<<<<<<, =======, >>>>>>>) in a file. What resolves the conflict correctly?",
+        options: [
+          "Run `git merge --abort` and never merge that branch",
+          "Edit the file to the version you want, delete all three marker lines, then stage and commit",
+          "Delete the whole file so the conflict disappears",
+          "Leave the markers in and push — Git cleans them up on the server",
+        ],
+        correctAnswer: 1,
+        explanation: "You choose the intended result, remove every conflict marker, then `git add` and commit the resolution — the markers must never remain in the file.",
+      },
     ],
   },
   11: {
@@ -587,6 +683,30 @@ export const quizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation:
           "Preview deploys give you a live URL for every PR, letting you test before merging.",
+      },
+      {
+        id: "11-e1",
+        text: "Why must NEXT_PUBLIC_ variables exist in Vercel BEFORE the build runs?",
+        options: [
+          "Vercel emails them to you after the build",
+          "They are inlined into the bundle at build time, so a missing value bakes in as undefined",
+          "They are only read when a user visits the page, not at build",
+          "They are stored in the repo, so pushing again fixes them",
+        ],
+        correctAnswer: 1,
+        explanation: "NEXT_PUBLIC_ values are baked into the build output, so if they aren't set when Vercel builds, the deploy ships with undefined values — the classic 'works locally, breaks in prod' trap.",
+      },
+      {
+        id: "11-e2",
+        text: "Env vars are set in Vercel and the app loads, but sign-in fails on the live site (it works locally). The most likely fix is:",
+        options: [
+          "Re-add the same env vars and redeploy",
+          "Set Supabase's Site URL and Redirect URLs to your production Vercel URL",
+          "Buy a custom domain",
+          "Downgrade to a previous deployment",
+        ],
+        correctAnswer: 1,
+        explanation: "Supabase sends its post-login redirect to whatever Site URL / Redirect URLs it knows; until those point at your Vercel URL, production sign-in redirects wrong and fails.",
       },
     ],
   },
@@ -644,6 +764,18 @@ export const quizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation:
           "Assess failure modes and add defensive patterns: retries, logging, fallbacks. Build workflows that degrade gracefully.",
+      },
+      {
+        id: "12-e1",
+        text: "In the Vercel AI SDK, what does `stopWhen: stepCountIs(6)` do in a generateText agent call?",
+        options: [
+          "Sets the model's temperature to 6",
+          "Lets the agent loop through reason-act-observe steps, but caps it at 6 so a stuck agent stops",
+          "Retries the request 6 times if the API errors",
+          "Limits each reply to 6 tokens",
+        ],
+        correctAnswer: 1,
+        explanation: "Without a stop condition a single generateText call runs one turn and stops; stopWhen turns it into a bounded loop across multiple tool calls so a looping or stuck agent can't run forever.",
       },
     ],
   },
@@ -775,6 +907,18 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "MCPs are the way to connect Claude Code to external APIs/tools. Skills are for reusable logic; CLAUDE.md for project context.",
       },
+      {
+        id: "14-e1",
+        text: "In the automated pipeline, which step should stay on the \"ask\" (require-approval) list rather than being auto-allowed?",
+        options: [
+          "Running npm run test",
+          "Reading the Vercel build logs",
+          "Merging the PR to main",
+          "Running the linter",
+        ],
+        correctAnswer: 2,
+        explanation: "Automate the reversible (tests, reading logs, lint) and gate the irreversible — merging to main and applying prod migrations must ask for approval.",
+      },
     ],
   },
   15: {
@@ -818,6 +962,30 @@ export const quizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation:
           "Brownfield refactoring should be minimal: change only what you must, leave the rest stable.",
+      },
+      {
+        id: "15-e1",
+        text: "Before editing searchBooks() in an unfamiliar repo, the highest-value first move is to:",
+        options: [
+          "Rewrite it in your preferred style so it's easier to work with",
+          "grep for every caller to trace its blast radius before you touch it",
+          "Increase the line count so the change is easier to spot in review",
+          "Skip tracing since it's only one function",
+        ],
+        correctAnswer: 1,
+        explanation: "Blast radius lives in the dependencies, not the line count — grepping the callers (one production caller here) tells you what a change can break before you make it.",
+      },
+      {
+        id: "15-e2",
+        text: "FEAT-102 asks for a genre filter in a repo built from small pure functions. The best approach is to:",
+        options: [
+          "Add a new pure filterByGenre() helper and compose it with searchBooks, leaving searchBooks untouched",
+          "Refactor searchBooks into a BookQuery class with chained .search().byGenre() methods",
+          "Fold genre handling into searchBooks and change its signature",
+          "Reformat the surrounding files to a cleaner style while you're in there",
+        ],
+        correctAnswer: 0,
+        explanation: "Match the existing convention: an additive pure helper keeps the change small, leaves searchBooks's one caller and tests untouched, and avoids expanding the blast radius.",
       },
     ],
   },
@@ -863,6 +1031,30 @@ export const quizzes: Record<number, ModuleQuiz> = {
         explanation:
           "Stay current by following the tools you actually use, not trying to know everything.",
       },
+      {
+        id: "16-e1",
+        text: "When choosing the model (LLM) layer for a feature, the most common way teams overspend is:",
+        options: [
+          "Streaming responses to the UI",
+          "Capping the maximum output length",
+          "Defaulting every call to the largest flagship model instead of matching the model to the job",
+          "Using prompt caching for a repeated system prompt",
+        ],
+        correctAnswer: 2,
+        explanation: "Match the model to the task — reserve the flagship for hard reasoning and use the small/fast tier for bulk classification or extraction; output tokens cost several times more than input.",
+      },
+      {
+        id: "16-e2",
+        text: "Using the six-criterion framework, a live multiplayer collaboration app might justify Firebase over the default Supabase because:",
+        options: [
+          "Lock-in (criterion 3) is no longer a downside for Firebase",
+          "Performance for high-fanout realtime (criterion 4) dominates and outweighs relational fit and lock-in",
+          "Firebase always scores higher across all six criteria",
+          "Relational fit (criterion 1) favors Firebase's document model",
+        ],
+        correctAnswer: 1,
+        explanation: "Same six criteria, different weights: when high-fanout realtime dominates, criterion 4 can flip the choice — you accept more lock-in in exchange for realtime performance.",
+      },
     ],
   },
 };
@@ -893,6 +1085,30 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation: "GitHub is where you save and backup your code!",
       },
+      {
+        id: "1-ke1",
+        text: "Where should you put secret API keys so they never get uploaded to GitHub?",
+        options: [
+          "Right inside your code files",
+          "In a `.env.local` file that's listed in `.gitignore`",
+          "In a screenshot you post online",
+          "In your commit message",
+        ],
+        correctAnswer: 1,
+        explanation: "Secrets go in `.env.local`, and `.gitignore` makes sure that file is never uploaded to GitHub.",
+      },
+      {
+        id: "1-ke2",
+        text: "What's the simple rule for deciding if something goes in your repo or in Notion?",
+        options: [
+          "Ask \"Is it colorful?\"",
+          "Ask \"If I change this, will my app break or stop working?\" — YES means repo, NO means Notion",
+          "Ask \"Is it a long document?\"",
+          "Ask \"Did Claude write it?\"",
+        ],
+        correctAnswer: 1,
+        explanation: "Things that would break your app if changed (code and rules) get locked down in the repo; helpful info that won't break anything goes in Notion.",
+      },
     ],
   },
   2: {
@@ -918,6 +1134,30 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         options: ["Never read the code, just vibes", "Use AI to code fast, BUT understand everything before it goes live", "Only use one tool", "Skip testing"],
         correctAnswer: 1,
         explanation: "You're the boss—use AI to code fast, but always check your work!",
+      },
+      {
+        id: "2-ke1",
+        text: "Why does telling the AI \"I'm using React and TypeScript\" make its code better?",
+        options: [
+          "It makes the AI type faster",
+          "Context is everything — the more the AI knows about your project, the better it guesses",
+          "It doesn't change anything",
+          "It makes the AI show off",
+        ],
+        correctAnswer: 1,
+        explanation: "The AI only knows what you tell it plus what it learned in training, so good context leads to way better answers.",
+      },
+      {
+        id: "2-ke2",
+        text: "For which task should you check the AI's code the MOST carefully?",
+        options: [
+          "A fun throwaway script that doesn't really matter",
+          "Code that handles passwords or money (high stakes!)",
+          "A quick note you're writing to yourself",
+          "Picking a name for a variable",
+        ],
+        correctAnswer: 1,
+        explanation: "The higher the stakes, the more you verify — passwords and money need careful line-by-line checking.",
       },
     ],
   },
@@ -985,6 +1225,30 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation: "A dependency is when one task needs another task done first.",
       },
+      {
+        id: "4-ke1",
+        text: "What is the `decisions.md` file for?",
+        options: [
+          "A to-do list of features left to build",
+          "A record of WHY you made each choice, so future-you (or a teammate) remembers",
+          "A list of bugs to fix",
+          "A place to store your app's passwords",
+        ],
+        correctAnswer: 1,
+        explanation: "decisions.md is a notebook of your thinking — it records the reasoning behind your choices so they make sense months later.",
+      },
+      {
+        id: "4-ke2",
+        text: "You're building an app where users log in and save data. Which part should you build FIRST?",
+        options: [
+          "The fancy homepage design",
+          "The database and login — everything else depends on them",
+          "The settings page",
+          "The share-with-friends feature",
+        ],
+        correctAnswer: 1,
+        explanation: "Build the foundation first: the database and login. You can't show or save a user's data until those exist.",
+      },
     ],
   },
   5: {
@@ -1010,6 +1274,30 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         options: ["Tag teammates", "Pin specific files/links into the AI's memory", "Add comments", "Undo changes"],
         correctAnswer: 1,
         explanation: "@-mentions pin context so the AI doesn't forget it.",
+      },
+      {
+        id: "5-ke1",
+        text: "You want to add a new feature that changes several files at once. Which Cursor mode is best?",
+        options: [
+          "Tab (autocomplete)",
+          "Cmd+I Composer — it edits multiple files and shows all the changes in one combined diff",
+          "Retype everything by hand",
+          "Cmd+K on a single line",
+        ],
+        correctAnswer: 1,
+        explanation: "Composer (Cmd+I) is the power move for multi-file changes — it updates every file and shows one unified diff to review.",
+      },
+      {
+        id: "5-ke2",
+        text: "Your delete button doesn't work. What's the BEST thing to tell Cursor?",
+        options: [
+          "\"Fix it.\"",
+          "\"The delete button doesn't work — the pet stays in the list. Here's the error: [paste it]. What's wrong?\"",
+          "\"This is broken, ugh.\"",
+          "Nothing — just run the same prompt again",
+        ],
+        correctAnswer: 1,
+        explanation: "Telling Cursor what went wrong, what you expected, and the actual error message gets a much better fix than a vague \"fix it.\"",
       },
     ],
   },
@@ -1117,6 +1405,30 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation: "auth.uid() tells you who's logged in!",
       },
+      {
+        id: "8-ke1",
+        text: "Why does every table need a `user_id` column?",
+        options: [
+          "To make the database bigger",
+          "So the security rule (RLS) can say 'you can only see YOUR rows'",
+          "To store the user's password",
+          "Because Supabase won't run without it",
+        ],
+        correctAnswer: 1,
+        explanation: "user_id marks who owns each row, so RLS can keep your data separate from everyone else's.",
+      },
+      {
+        id: "8-ke2",
+        text: "Where is the SAFEST place to enforce 'users can only see their own data'?",
+        options: [
+          "In your app code, by filtering the list before you show it",
+          "In the database, with an RLS policy",
+          "In the web browser",
+          "You don't need to — it happens automatically",
+        ],
+        correctAnswer: 1,
+        explanation: "If security lives only in your app code, someone can skip the app and query the database directly. An RLS policy in the database blocks them no matter what.",
+      },
     ],
   },
   9: {
@@ -1142,6 +1454,30 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         options: ["A good fix", "Dangerous (it hides the real problem)", "The only way", "Fine"],
         correctAnswer: 1,
         explanation: "That's a band-aid, not a real fix!",
+      },
+      {
+        id: "9-ke1",
+        text: "You wrote `const pets = supabase.from('pets').select()` and printed it, but got `{ then: ... }` instead of your pets. What went wrong?",
+        options: [
+          "The pets table is empty",
+          "You forgot `await` — the query returns a Promise you have to wait for",
+          "Supabase is broken",
+          "You need to restart your computer",
+        ],
+        correctAnswer: 1,
+        explanation: "Supabase queries return a Promise. Without `await` you get the Promise object instead of the real data — add `await`.",
+      },
+      {
+        id: "9-ke2",
+        text: "You add a pet with `pets.push(newPet)` but the page doesn't update. What's the fix?",
+        options: [
+          "Refresh the whole website every time",
+          "Use `setPets([...pets, newPet])` so React knows to re-render",
+          "Delete the pets list and start over",
+          "Nothing — React will update on its own eventually",
+        ],
+        correctAnswer: 1,
+        explanation: "React only re-renders when you update state with setState. Changing the array directly with `.push()` doesn't tell React to redraw.",
       },
     ],
   },
@@ -1169,6 +1505,30 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation: "Merge conflicts just need you to pick which change to keep!",
       },
+      {
+        id: "10-ke1",
+        text: "When does Git give you a 'merge conflict'?",
+        options: [
+          "Every single time you merge two branches",
+          "When two branches changed the SAME line differently, so Git can't tell which one you want",
+          "When your code has a bug in it",
+          "When you close your laptop before saving",
+        ],
+        correctAnswer: 1,
+        explanation: "A conflict just means two versions of the same line disagree — Git is asking you to pick, not showing an error.",
+      },
+      {
+        id: "10-ke2",
+        text: "Oops! You accidentally pushed your secret keys (.env.local) to GitHub. What should you do?",
+        options: [
+          "Nothing — nobody will notice",
+          "Treat the keys as leaked: get new keys right away, then remove the file from Git",
+          "Delete your whole GitHub account",
+          "Rename the file and push again",
+        ],
+        correctAnswer: 1,
+        explanation: "Once a secret is public, assume it's stolen — make new keys immediately, then stop tracking the file so it's never committed again.",
+      },
     ],
   },
   11: {
@@ -1195,6 +1555,30 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation: "Preview deploys let you test before going live!",
       },
+      {
+        id: "11-ke1",
+        text: "Your Vercel deploy failed and shows a red X. What's the smartest first move?",
+        options: [
+          "Guess and change random code",
+          "Open the deployment and read the Build Logs — they say exactly what broke",
+          "Delete the project and start over",
+          "Restart your computer",
+        ],
+        correctAnswer: 1,
+        explanation: "The build logs name the exact problem (a typo, a missing import) — read them first instead of guessing.",
+      },
+      {
+        id: "11-ke2",
+        text: "Your app is live and env vars are set, but logging in doesn't work on the real site (it works at home). Why?",
+        options: [
+          "You need a faster internet connection",
+          "Supabase still thinks your app lives at localhost — you must tell it your new live web address",
+          "Vercel is broken",
+          "You need to buy a domain name",
+        ],
+        correctAnswer: 1,
+        explanation: "Supabase sends you back to the address it knows after login; update its Site URL / Redirect URLs to your live Vercel link so sign-in lands in the right place.",
+      },
     ],
   },
   12: {
@@ -1220,6 +1604,30 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         options: ["Use more agents", "Have a human check/approve it first", "Use a bigger AI model", "Run it faster"],
         correctAnswer: 1,
         explanation: "Human approval is the best safety net!",
+      },
+      {
+        id: "12-ke1",
+        text: "Why does an AI agent loop need a 'stop rule' (like 'up to 6 steps')?",
+        options: [
+          "To make the AI answer in a funny voice",
+          "So a confused agent can't loop forever or get stuck — it has to stop",
+          "To make it run faster than other apps",
+          "Because rules are just for grownups",
+        ],
+        correctAnswer: 1,
+        explanation: "Without a stop rule an agent could keep calling tools endlessly; a step limit makes a stuck agent give up safely.",
+      },
+      {
+        id: "12-ke2",
+        text: "In the invoice reminder helper, which tool should the AI agent NOT be allowed to use on its own?",
+        options: [
+          "Looking up which invoices are overdue",
+          "Writing a draft reminder email",
+          "Actually SENDING the email — a human should approve first",
+          "Reading a customer's name",
+        ],
+        correctAnswer: 2,
+        explanation: "Reading and drafting are safe and undoable, but sending is the real, hard-to-undo action — a person approves it, and the agent never holds the send tool.",
       },
     ],
   },
@@ -1287,6 +1695,30 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation: "Automate safe stuff, gate the dangerous stuff!",
       },
+      {
+        id: "14-ke1",
+        text: "Your pipeline runs your tests and one test FAILS. What happens next?",
+        options: [
+          "It deploys anyway and hopes for the best",
+          "It stops and does NOT deploy, so broken code never reaches your users",
+          "It deletes your code",
+          "It skips the test and keeps going",
+        ],
+        correctAnswer: 1,
+        explanation: "A failing test stops the pipeline before deploy — that's the whole point: catch the bug before it ships.",
+      },
+      {
+        id: "14-ke2",
+        text: "Why turn on 'require status checks to pass' (branch protection) on main?",
+        options: [
+          "To make your repo look official",
+          "So you CAN'T merge to main until the tests are green — no broken code sneaks in",
+          "To slow everyone down on purpose",
+          "So only the owner can push code",
+        ],
+        correctAnswer: 1,
+        explanation: "Branch protection blocks merging until GitHub Actions passes, so broken code can't reach production.",
+      },
     ],
   },
   15: {
@@ -1313,6 +1745,30 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         correctAnswer: 1,
         explanation: "One-line fixes shouldn't touch 40 files!",
       },
+      {
+        id: "15-ke1",
+        text: "You open a codebase you've never seen before. Where do you start reading?",
+        options: [
+          "Read every file top to bottom",
+          "Find the entry point (the file that runs first) and follow its imports",
+          "Start with the biggest file",
+          "Change something and see what breaks",
+        ],
+        correctAnswer: 1,
+        explanation: "Start at the entry point and trace outward through its imports — that maps the structure before you dive into details.",
+      },
+      {
+        id: "15-ke2",
+        text: "Claude Code says the delete button calls deletePet(), but your manual trace said removeItem(). What should you do?",
+        options: [
+          "Trust Claude Code — it's always right",
+          "Trust yourself — you're always right",
+          "Open the code and find the truth; a disagreement is a signal to investigate",
+          "Ignore it, both are probably fine",
+        ],
+        correctAnswer: 2,
+        explanation: "A disagreement means someone misread — go to the actual code and check. Learning happens at the disagreements.",
+      },
     ],
   },
   16: {
@@ -1338,6 +1794,30 @@ export const kidsQuizzes: Record<number, ModuleQuiz> = {
         options: ["You stop there", "You name what it depends on AND decide", "You pick randomly", "You avoid choosing"],
         correctAnswer: 1,
         explanation: "After 'it depends', explain what it depends on!",
+      },
+      {
+        id: "16-ke1",
+        text: "A friend says 'You should have used Vue instead of React.' The smart move is to:",
+        options: [
+          "Panic — you picked the wrong tool",
+          "Agree both work well, but stick with what you learned for consistency",
+          "Rewrite your whole project in Vue",
+          "Quit and start over",
+        ],
+        correctAnswer: 1,
+        explanation: "Both tools work. You learned yours deeply — consistency and depth beat switching tools and second-guessing.",
+      },
+      {
+        id: "16-ke2",
+        text: "You need an app that runs on iPhone AND Android. Should you use the course's Next.js stack?",
+        options: [
+          "Yes, Next.js is the best tool for every project",
+          "No — a mobile app needs a mobile framework like React Native or Flutter, but your skills still transfer",
+          "No, it's impossible to build mobile apps",
+          "Yes, just add more Tailwind",
+        ],
+        correctAnswer: 1,
+        explanation: "Match the tool to the job: native mobile calls for React Native or Flutter, but the skills you built carry over.",
       },
     ],
   },

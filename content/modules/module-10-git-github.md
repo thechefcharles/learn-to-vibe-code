@@ -1,14 +1,10 @@
-# Module 20: Git & Version Control (GitHub)
+# Module 10: Git & Version Control (GitHub)
 
 **Stage:** Building · **Level:** Intermediate · **Duration:** ~4 contact hours (0.4 CEU)
 
-**Prerequisites:** Modules 4–7. Learners have a working invoice-tracker and will now put it under version control and onto GitHub — the prerequisite for deploying in Module 21.
+**Prerequisites:** Modules 4–7. Learners have a working invoice-tracker and will now put it under version control and onto GitHub — the prerequisite for deploying in Module 11.
 
-> Beginners treat their code as a pile of files they're afraid to change. Version control removes that fear: you can experiment freely because you can always go back. It's also how you collaborate and how your app reaches Vercel (Module 21). Lighter on new app code, heavier on a workflow habit that pays off forever.
-> 
-
-> **📸 Screenshots:** the GitHub repo and PR-diff shots are auto-capturable (public pages); the in-editor merge conflict is manual.
-> 
+Beginners treat their code as a pile of files they're afraid to change. Version control removes that fear: you can experiment freely because you can always go back. It's also how you collaborate and how your app reaches Vercel (Module 11). Lighter on new app code, heavier on a workflow habit that pays off forever.
 
 ## Learning objectives
 
@@ -20,7 +16,7 @@ By the end of this module, the learner can:
 
 ---
 
-## Lesson 9.1 — Why version control (~40 min)
+## Lesson 10.1 — Why version control (~40 min)
 
 This delivers Objective 1. Version control records the history of your project so you can see what changed, when, and why — and undo anything. Git is the tool; GitHub hosts your Git repositories online. Vocabulary:
 
@@ -32,9 +28,42 @@ This delivers Objective 1. Version control records the history of your project s
 
 **Why it matters:** experiment fearlessly (revert if it breaks), off-machine backup, collaboration, and — next module — pushing to GitHub triggers deployment.
 
+### The three commands you run constantly
+
+Before you commit anything, three read-only commands tell you exactly what Git sees. Get comfortable with these — you'll run them dozens of times a day.
+
+- **`git status`** — the "where am I?" command. Shows your current branch, which files changed, which are staged for the next commit, and which are untracked (new files Git isn't following yet). Run it before every commit.
+
+  ```bash
+  git status
+  # On branch main
+  # Changes not staged for commit:
+  #   modified:   app/invoices/page.tsx
+  # Untracked files:
+  #   app/lib/sort.ts
+  ```
+
+- **`git diff`** — the "what exactly changed?" command. Shows the line-by-line changes in your files. By default it shows unstaged changes; `git diff --staged` shows what's staged for commit. Always skim the diff before committing so you know what you're saving (and can catch a stray secret).
+
+  ```bash
+  git diff
+  # -  const status = "unpaid";
+  # +  const status = "pending";
+  ```
+
+- **`git log`** — the "what happened before?" command. Shows the commit history, newest first. `git log --oneline` gives a compact one-line-per-commit view; `git log -p` shows the full diff of each commit (the capstone rubric asks you to run this to prove no secrets were committed).
+
+  ```bash
+  git log --oneline
+  # a1b2c3d Add sorting by due date on invoices list
+  # e4f5g6h Initial commit: invoice tracker
+  ```
+
+**The habit:** `git status` → `git diff` → `git add` → `git commit`. Look before you save.
+
 ---
 
-## Lesson 9.2 — Initialize Git & push to GitHub with Claude Code (~50 min)
+## Lesson 10.2 — Initialize Git & push to GitHub with Claude Code (~50 min)
 
 Begins Objective 2. **Use Claude Code to manage the Git initialization and first push:**
 
@@ -88,21 +117,20 @@ Verify that .env.local is NOT included (should be gitignored).
 3. Click "Create Repository"
 4. Copy the URL GitHub shows
 
-**Step 5 — Follow Claude Code's push instructions.** It will have shown you:
+**Step 5 — Name your main branch, then follow Claude Code's push instructions.** It will have shown you:
 ```bash
+git branch -M main
 git remote add origin https://github.com/YOU/invoice-tracker.git
 git push -u origin main
 ```
 
-Run these in your terminal.
+Run these in your terminal. The `git branch -M main` line renames your current branch to `main` before the first push, so your local and GitHub branch names match. (Older Git installs and some tools still default the first branch to `master`. If yours does, this one line standardizes it to `main`; if you'd rather keep `master`, just push `master` instead — pick one and be consistent.)
 
 **Step 6 — Verify on GitHub.** Refresh [github.com/YOU/invoice-tracker](https://github.com/YOU/invoice-tracker) — your code is there! ✅
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: GitHub Repo Page]**
-
-GitHub showing: repo name, file tree (app/, lib/, package.json, etc.), commit history. Proof: code is pushed and visible.
+[SCREENSHOT: GitHub repo page showing repo name, file tree (app/, lib/, package.json), and commit history]
 
 ---
 
@@ -115,7 +143,7 @@ GitHub showing: repo name, file tree (app/, lib/, package.json, etc.), commit hi
 
 ---
 
-## Lesson 9.3 — Branches and pull requests with Claude Code (~50 min)
+## Lesson 10.3 — Branches and pull requests with Claude Code (~50 min)
 
 **In this lesson:** You'll learn the professional workflow — instead of editing `main` directly, you'll use Claude Code to orchestrate feature branches and pull requests. This is how real teams ship code safely:
 
@@ -181,7 +209,7 @@ On GitHub, refresh `main` — your feature is now live! ✅
 
 ---
 
-**[SCREENSHOT: a GitHub pull request showing the diff and merge button]**
+[SCREENSHOT: a GitHub pull request showing the diff and merge button]
 
 ---
 
@@ -238,11 +266,11 @@ Where `<type>` is one of:
 6. Merge when approved
 ```
 
-This becomes part of your project governance (like CLAUDE.md from Module 1) and makes onboarding teammates (or future-you) much smoother.
+This becomes part of your project governance (like `CLAUDE.md` from Module 1) and makes onboarding teammates (or future-you) much smoother.
 
 ---
 
-## Lesson 9.4 — Merge conflicts and collaboration (~40 min)
+## Lesson 10.4 — Merge conflicts and collaboration (~40 min)
 
 This delivers Objective 3. A **merge conflict** happens when two changes touch the same lines and Git can't decide. Not an error — Git asking you to choose. Routine, not scary.
 
@@ -291,11 +319,23 @@ Now the merge is complete! ✅
 
 **Collaboration basics:** pull others' changes before starting (`git pull`), work on your own branch, open a PR, resolve conflicts if they arise.
 
+**Two helpers you'll meet along the way:**
+
+- **`git stash`** — temporarily shelves your uncommitted changes so your working directory is clean (useful when you need to switch branches but aren't ready to commit). `git stash` puts the changes aside; `git stash pop` brings them back. Think of it as a clipboard for work-in-progress.
+
+  ```bash
+  git stash        # shelve current changes
+  git checkout main
+  git stash pop    # bring the changes back
+  ```
+
+- **`git rebase`** — replays your branch's commits on top of the latest `main`, giving a cleaner, linear history than a merge. Beginners can stick with merges; just know that "rebasing" means "re-applying my commits onto an updated base," and it can surface the same conflicts a merge would. When in doubt, merge — it's simpler and safer while you're learning.
+
 ---
 
-## Lesson 9.4b (Optional) — Collaborating on a Shared Branch (~30 min)
+## Lesson 10.4b (Optional) — Collaborating on a Shared Branch (~30 min)
 
-Module 20.4 covered merge conflicts in a solo scenario (you edit the same file twice, create a conflict). This lesson is a step up: **what if two teammates edit the same file?**
+Module 10.4 covered merge conflicts in a solo scenario (you edit the same file on two branches and create a conflict). This lesson is a step up: **what if two teammates edit the same file?**
 
 ### Scenario: Two Developers, One Branch
 
@@ -375,7 +415,7 @@ Conflicts in team settings require **communication**. The code conflict is mecha
 
 ### Knowledge Check
 
-**Q9-4b:** "You and a teammate both edited `/config/api.ts`. Git shows a conflict. Your version sets timeout=30, their version sets timeout=60. What should you do?"
+**Q10-4b:** "You and a teammate both edited `/config/api.ts`. Git shows a conflict. Your version sets timeout=30, their version sets timeout=60. What should you do?"
 
 a) Always pick your version (you wrote it first)
 b) Always pick their version (they pushed last)
@@ -386,12 +426,12 @@ d) Just pick one at random
 
 ---
 
-## Lesson 9.5 — Git with AI, safely (~20 min)
+## Lesson 10.5 — Git with AI, safely (~20 min)
 
 - **Commit messages & PR descriptions** — AI writes good ones from your diff.
 - **Explaining history** — ask AI what a commit or diff changed.
-- **Conflict help** — AI can propose resolutions (Lesson 9.4).
-- **The one hard rule:** never let any tool commit secrets. Double-check `.gitignore` and scan diffs for keys before pushing. If a secret is ever committed, rotate it — assume it's compromised. (Reinforced in Module 21 and Module 23's security pass.)
+- **Conflict help** — AI can propose resolutions (Lesson 10.4).
+- **The one hard rule:** never let any tool commit secrets. Double-check `.gitignore` and scan diffs for keys before pushing. If a secret is ever committed, rotate it — assume it's compromised. (Reinforced in Module 11 and Module 13's security pass.)
 
 ---
 
@@ -475,26 +515,43 @@ You've shipped a change the professional way! ✅
 
 ### Step 5: Create and resolve a merge conflict (10 min)
 
+The key to forcing a *real* conflict is to change the **same line** on **two branches that both grew from the same starting point** — then merge them. If you only change the line on a branch that stays ahead of `main`, Git just fast-forwards and there's nothing to resolve. So we deliberately edit the same line on the branch *and* on `main`.
+
 **5a. Create a conflict intentionally:**
 
-1. On `main`, go to `/clients` page and change the title from "Clients" to "Client List"
-2. Commit: `git add app/clients/page.tsx && git commit -m "Rename to Client List"`
-3. Create a branch: `git checkout -b improve-clients`
-4. On the branch, change the same title to "All Clients"
-5. Commit: `git add app/clients/page.tsx && git commit -m "Improve label for clarity"`
-6. Try to merge back to main: `git checkout main && git merge improve-clients`
+1. Make sure you're on `main` with a clean working tree: `git checkout main` then `git status` (should say "nothing to commit").
+2. Create and switch to a branch: `git checkout -b improve-clients`
+3. On the branch, open `/clients` page and change the title from "Clients" to "All Clients"
+4. Commit on the branch: `git add app/clients/page.tsx && git commit -m "Rename clients title to All Clients"`
+5. Switch back to `main`: `git checkout main`
+6. On `main`, open the **same** `/clients` page and change the **same** title line — this time to "Client List"
+7. Commit on `main`: `git add app/clients/page.tsx && git commit -m "Rename clients title to Client List"`
+8. Now merge the branch into `main`: `git merge improve-clients`
 
-Git will say: **CONFLICT!**
+Because `main` and `improve-clients` both changed the same line after they diverged, Git can't pick a winner:
+
+```
+CONFLICT (content): Merge conflict in app/clients/page.tsx
+Automatic merge failed; fix conflicts and then commit the result.
+```
 
 **5b. Resolve it:**
-1. Open `/clients/page.tsx` in your editor
-2. Find the conflict markers (<<<<<<, =======, >>>>>>>)
-3. Decide which version you want (or combine: "Clients - View All")
-4. Delete the markers
-5. Save
-6. Commit: `git add app/clients/page.tsx && git commit -m "Resolve conflict: use 'Clients' title"`
+1. Run `git status` — it lists `app/clients/page.tsx` under "Unmerged paths"
+2. Open `/clients/page.tsx` in your editor
+3. Find the conflict markers Git inserted:
+   ```
+   <<<<<<< HEAD
+   <h1>Client List</h1>
+   =======
+   <h1>All Clients</h1>
+   >>>>>>> improve-clients
+   ```
+4. Decide which version you want (or combine, e.g. "All Clients")
+5. Delete all three markers (`<<<<<<<`, `=======`, `>>>>>>>`) and leave only the final title
+6. Save
+7. Stage and commit the resolution: `git add app/clients/page.tsx && git commit -m "Resolve conflict: use 'All Clients' title"`
 
-Conflict resolved! ✅
+Run `git log --oneline` and you'll see your resolution commit sitting on top of both earlier changes. Conflict resolved! ✅
 
 ### Deliverable:
 - GitHub repo link with your code
@@ -508,7 +565,7 @@ Conflict resolved! ✅
 
 These are the three questions you'll see on the quiz. Study these to prepare:
 
-**Q9-1:** A commit is best described as:
+**Q10-1:** A commit is best described as:
 - (a) a deployed app
 - (b) **a saved snapshot of changes with a message** ✓
 - (c) a branch
@@ -516,7 +573,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 *Why:* A commit is exactly this: you select which files changed, write a message explaining WHY you changed them (not what—the diff shows that), and save the snapshot. Each commit is a save point you can revert to.
 
-**Q9-2:** Why work on branches + pull requests even solo?
+**Q10-2:** Why work on branches + pull requests even solo?
 - (a) required
 - (b) **`main` stays working and each change is isolated and reviewable** ✓
 - (c) faster typing
@@ -524,7 +581,7 @@ These are the three questions you'll see on the quiz. Study these to prepare:
 
 *Why:* Branches protect your production code (`main`); PRs let you review your own changes (and practice the habit for when you collaborate). This is the professional workflow—build it now.
 
-**Q9-3:** A merge conflict is:
+**Q10-3:** A merge conflict is:
 - (a) an unfixable error
 - (b) **Git asking you to choose between two changes to the same lines** ✓
 - (c) a deploy failure
@@ -601,5 +658,3 @@ Default: **GitHub** (industry-standard host, best Vercel integration). **Alterna
 - Work on branches, merge via PRs — `main` stays working, changes stay reviewable.
 - Merge conflicts are routine: edit to the version you want, remove markers, commit.
 - Never commit secrets — keep `.env.local` gitignored and scan diffs before pushing.
-
-[Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)
