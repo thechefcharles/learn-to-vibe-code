@@ -9980,29 +9980,29 @@ Live at your URL
 
 Here are your three quiz questions. Study these!
 
-**Q13-k1:** What lets Claude Code act on GitHub/Supabase/Vercel?
-- (a) CLAUDE.md
-- (b) A skill
-- (c) **MCP (tool connectors)** ✓
-- (d) A comment
+**Q14-k1:** CI/CD stands for:
+- (a) Code inside Containers Development
+- (b) **Continuous Integration / Continuous Deployment** ✓
+- (c) Code In Computer Database
+- (d) Checking If Code Deployed
 
-*Why:* MCPs are special connectors that let Claude Code talk to external systems (GitHub, Supabase, Vercel, etc.). Think of them as bridges—Claude Code on one side, the service on the other.
+*Why:* CI = tests run automatically when you push. CD = deploy automatically if tests pass. It's the automation pipeline that catches bugs before they go live.
 
-**Q13-k2:** A skill is best for:
-- (a) Storing secrets
-- (b) **Procedural know-how that kicks in by context** ✓
-- (c) Hosting
-- (d) Database queries
+**Q14-k2:** What happens when your GitHub Actions workflow fails?
+- (a) The code still deploys to Vercel
+- (b) **You can't merge to main (if branch protection is on)** ✓
+- (c) All your files get deleted
+- (d) Nothing — it's just a warning
 
-*Why:* Skills are step-by-step instructions for how to do things. When Claude Code sees you need those steps, it loads the skill automatically. Like having a recipe book it can pull from!
+*Why:* Failed tests are a safety net. If the workflow fails, you shouldn't merge broken code to main. Branch protection enforces this rule.
 
-**Q13-k3:** The safe rule for automation is:
-- (a) Automate everything
-- (b) **Automate the reversible, protect the irreversible** ✓
-- (c) Never automate
-- (d) Skip permissions
+**Q14-k3:** Why does Vercel auto-deploy after GitHub Actions passes?
+- (a) It's magic
+- (b) **Because your code passed tests, so it's safe to deploy** ✓
+- (c) Vercel reads your mind
+- (d) You have to manually trigger it
 
-*Why:* Automate things you can undo (run tests, format code, build). Gate things you can't (deploying to production, deleting data, spending money). You always review the dangerous stuff before it happens.
+*Why:* The pipeline order matters: push → tests run → if pass, deploy automatically. You get fast feedback and safer production.
 
 ## Knowledge Check (Quiz & Scenarios)
 
