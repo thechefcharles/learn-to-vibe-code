@@ -1,4 +1,4 @@
-# Module 24: Automating Your Dev Pipeline with Claude Code (Optional, Post-Capstone)
+# Module 14: Automating Your Dev Pipeline with Claude Code (Optional, Post-Capstone)
 
 **Stage:** Production (Advanced) · **Level:** Advanced · **Duration:** ~7 contact hours (0.7 CEU)
 
@@ -17,14 +17,14 @@
 
 This module is **optional**. It covers advanced automation with MCP servers, skills, subagents, and plugins.
 
-**Why optional?** The capstone (Module 26) doesn't require it. Many projects are polished and shipped without automation. Learning to ship first, automate later, is wise.
+**Why optional?** The capstone (Module 16) doesn't require it. Many projects are polished and shipped without automation. Learning to ship first, automate later, is wise.
 
 **When to take this module:**
 - After you've shipped your capstone
 - If you're building frequently and want to reduce repetitive work
 - If you want to explore Claude Code's advanced features
 
-**For now:** Focus on shipping your capstone (Modules 1-12 + 14-16). Come back to Module 24 after graduation if you want to level up.
+**For now:** Focus on shipping your capstone (Modules 1-13 + 15-16). Come back to Module 14 after graduation if you want to level up.
 
 ---
 
@@ -35,30 +35,30 @@ By the end of this module, the learner can:
 1. **Configure** MCP connections and CLIs so Claude Code can act on GitHub, Supabase, Vercel, and Notion. *(Apply)*
 2. **Build and install** skills (including from GitHub) and subagents, and package them as a plugin. *(Create)*
 3. **Orchestrate** an end-to-end automated pipeline (commit → PR → migrate → deploy → debug) with guardrails. *(Create)*
-4. **Choose** the right extension type ([CLAUDE.md](http://CLAUDE.md), skill, subagent, MCP, plugin) for a given need. *(Evaluate)*
+4. **Choose** the right extension type (`CLAUDE.md`, skill, subagent, MCP, plugin) for a given need. *(Evaluate)*
 
 ---
 
-## Lesson 13.1 — The extension mental model (~45 min)
+## Lesson 14.1 — The extension mental model (~45 min)
 
 Delivers Objective 4 — and prevents the #1 confusion here. Five ways to extend Claude Code, each for a different job:
 
 | Extension | What it's for | Use when… |
 | --- | --- | --- |
-| [**CLAUDE.md**](http://CLAUDE.md) | Always-on project rules/context | A rule applies to almost every task ("use conventional commits") |
+| **`CLAUDE.md`** | Always-on project rules/context | A rule applies to almost every task ("use conventional commits") |
 | **Skill** | On-demand procedural know-how, activates by context | A specific workflow only matters sometimes (PR-review checklist) |
 | **MCP** | Access to external systems (read + act) | You need to query/fetch/act on GitHub, a DB, Vercel, an API |
 | **Subagent** | A specialist with its own context + tool permissions | You need isolation or parallel work (a dedicated reviewer) |
 | **Plugin** | A bundle of the above, installable in one command | You want to package and share a whole setup |
 
-**One-line test:** rules → [CLAUDE.md](http://CLAUDE.md); how-to → skill; access/actions → MCP; isolated specialist → subagent; share-the-bundle → plugin. Most real setups use several. (Hooks, in 13.7, automate the session.)
+**One-line test:** rules → `CLAUDE.md`; how-to → skill; access/actions → MCP; isolated specialist → subagent; share-the-bundle → plugin. Most real setups use several. (Hooks, in 14.7, automate the session.)
 
 > **Cross-tool note:** `CLAUDE.md` is Claude Code's project-instructions file; **`AGENTS.md`** is the vendor-neutral equivalent many tools (and create-next-app) now use. Working across tools, keep an `AGENTS.md` as the shared source and let tool-specific files point to it.
 > 
 
 ---
 
-## Lesson 13.2 — MCP setup: give Claude Code hands (~75 min)
+## Lesson 14.2 — MCP setup: give Claude Code hands (~75 min)
 
 Delivers Objective 1 — the core of "control everything." MCP servers let Claude Code *act* on external systems. Add servers via the CLI (or a project `.mcp.json` so the team shares them):
 
@@ -75,17 +75,17 @@ claude mcp add --transport http --scope user notion https://mcp.notion.com/mcp
 
 Confirm with `claude mcp list`.
 
+> **Never paste tokens into chat or commit them.** Where a server needs a secret, pass it via an environment variable (e.g. `--project-ref=$SUPABASE_PROJECT_REF`) and keep the value in `.env.local` or your OS secret store. A shared `.mcp.json` should reference env var *names*, never literal token values — anything committed to the repo is effectively public. See Lesson 14.2's security note below.
+
 **Notion as your project's source of truth:** after connecting Notion (run `/mcp` for the OAuth flow, then share the pages you want Claude to access), Claude Code can **read a feature checklist, tick items off as it ships them, and write specs/decisions back** — so your plan (Module 4) and your automation live in one place. Great for a solo builder keeping a living TODO the agent actually maintains.
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: MCP List Output]**
-
-Terminal showing: `claude mcp list` with three connected servers: supabase (schema access), github (PR/issues), vercel (deploys). Proof: Claude Code can act on all systems.
+*[SCREENSHOT: Terminal showing `claude mcp list` with three connected servers — supabase (schema access), github (PR/issues), vercel (deploys) — proof Claude Code can act on all systems.]*
 
 ---
 
-### 13.2a — Worked example: MCP configuration for the invoice-tracker (~45 min)
+### 14.2a — Worked example: MCP configuration for the invoice-tracker (~45 min)
 
 **Scenario:** You've built the invoice-tracker (Modules 4–12) on Supabase + Next.js + Vercel. Now you want Claude Code to:
 - Query the Supabase schema and data to understand structure
@@ -94,14 +94,19 @@ Terminal showing: `claude mcp list` with three connected servers: supabase (sche
 
 **Step 1: Connect Supabase** (schema access, scoped token):
 ```bash
-# Generate a scoped Supabase token (read-only for schema/queries)
-supabase login --token
-# (Paste your personal access token)
+# Authenticate the Supabase CLI once. It prompts for a personal access token
+# and stores it in the CLI's own config — never type the token into a script.
+supabase login
 
-# Add Supabase MCP
+# Keep secrets in the environment, not in the command or in .mcp.json.
+# Put these in .env.local (gitignored), then load them into your shell:
+#   SUPABASE_PROJECT_REF=abc12345def67890
+#   SUPABASE_DB_URL=postgresql://postgres:...@db.abc12345.supabase.co/postgres
+
+# Add Supabase MCP, referencing the env vars (values never appear in the repo)
 claude mcp add supabase -- npx -y @supabase/mcp-server-supabase@latest \
-  --project-ref=abc12345def67890 \
-  --db-url="postgresql://postgres:YOUR_PASSWORD@db.abc12345.supabase.co/postgres"
+  --project-ref="$SUPABASE_PROJECT_REF" \
+  --db-url="$SUPABASE_DB_URL"
 ```
 
 **Step 2: Connect GitHub** (PRs, issues, repo actions):
@@ -150,13 +155,13 @@ claude mcp list
 → MCP queries Vercel API, returns deployment status + Lighthouse metrics
 ```
 
-This setup is the foundation of the automated pipeline (Lesson 13.6). Claude Code can now inspect, create, and monitor the entire system without you copy-pasting between dashboards.
+This setup is the foundation of the automated pipeline (Lesson 14.6). Claude Code can now inspect, create, and monitor the entire system without you copy-pasting between dashboards.
 
 > **For kids:**
 > This wires your tools together so Claude Code can use them. You don't need to do this yet (it's advanced), but see how the pieces connect: Claude talks to Supabase (to understand your data), GitHub (to open PRs), and Vercel (to deploy). It's like giving Claude hands to act on the systems you use.
 
 > **For adults:**
-> This is the operational pattern for Phase 8+. Wiring MCP servers is how you build production automation — it's the infrastructure layer that enables end-to-end pipeline orchestration (Lesson 13.6). Every production system needs this setup: ChatOps without the chat UI, or an agentic CI/CD that can reason about your entire stack.
+> This is the operational pattern for Phase 8+. Wiring MCP servers is how you build production automation — it's the infrastructure layer that enables end-to-end pipeline orchestration (Lesson 14.6). Every production system needs this setup: ChatOps without the chat UI, or an agentic CI/CD that can reason about your entire stack.
 
 ---
 
@@ -165,12 +170,12 @@ This setup is the foundation of the automated pipeline (Lesson 13.6). Claude Cod
 > **Build-verified fallback (important):** MCP OAuth can fail for a given provider — in the reference build the Supabase MCP returned "Unrecognized client_id" and we fell back to the CLI. Teach the **CLI + personal-access-token** path (`supabase login --token`, `gh auth login`, a Vercel token) as the reliable default; treat MCP OAuth as the convenience when it works.
 > 
 
-> **Security first (Module 23):** give MCP servers scoped, least-privilege tokens, start read-only, and never paste tokens into the repo — use environment variables.
+> **Security first (Module 13):** give MCP servers scoped, least-privilege tokens, start read-only, and never paste tokens into the repo — use environment variables.
 > 
 
 ---
 
-## Lesson 13.3 — Skills: reusable know-how (incl. from GitHub) (~50 min)
+## Lesson 14.3 — Skills: reusable know-how (incl. from GitHub) (~50 min)
 
 Begins Objective 2. A **skill** is a folder with a `SKILL.md` describing a task Claude should know; it loads automatically when context matches.
 
@@ -204,19 +209,15 @@ Use this workflow when shipping a new feature or fix. It ensures testing and goo
 
 **Installing skills from GitHub:** skills are portable, shared as repos. Install via a skills CLI or plugin marketplace — e.g. `npx skills add owner/repo` — to adopt vetted workflows without writing them. 
 
-**Skill vs. [CLAUDE.md](http://CLAUDE.md):** applies to nearly every task → [CLAUDE.md](http://CLAUDE.md); occasional workflow → skill.
+**Skill vs. `CLAUDE.md`:** applies to nearly every task → `CLAUDE.md`; occasional workflow → skill.
 
 ---
 
-**[SCREENSHOT PLACEHOLDER: Skill Install]**
-
-Left: `.claude/skills/ship-feature/SKILL.md` file open with detailed workflow steps. Right: Terminal showing `npx skills add owner/repo` and skill loaded. Proof: skills automate known workflows.
+*[SCREENSHOT: `.claude/skills/ship-feature/SKILL.md` open with its workflow steps, next to a terminal showing `npx skills add owner/repo` and the skill loaded — proof skills automate known workflows.]*
 
 ---
 
----
-
-## Lesson 13.4 — Subagents: isolated specialists (~40 min)
+## Lesson 14.4 — Subagents: isolated specialists (~40 min)
 
 Continues Objective 2. A **subagent** is a separate Claude session with its own context and tool permissions, for a focused job — to keep heavy work from polluting your main context and to run specialists in parallel.
 
@@ -228,7 +229,7 @@ Continues Objective 2. A **subagent** is a separate Claude session with its own 
 name: reviewer
 description: Reviews code diffs for bugs, security, and style violations. Read-only, strict.
 tools: Read, Grep, Glob
-effort: high
+model: opus
 ---
 
 You are a strict security and code-quality reviewer. Your job: examine a code diff
@@ -253,26 +254,25 @@ MEDIUM: [filename:line] Missing null check on user_id
 
 Claude Code can hand a finished change to `reviewer` before you merge — the capstone review gate, automated. Note the **least-privilege** `tools:` list — the reviewer can't edit, only report.
 
-**Invoking a subagent in the pipeline:**
+**Invoking a subagent in the pipeline.** There is no `subagent()` function you import or call — a subagent is a Markdown file at `.claude/agents/<name>.md`, and you invoke it by *asking Claude Code in your session* to delegate to it. Claude Code launches the agent through its built-in Task/agent tool. You trigger it in plain language:
 
-```typescript
-// When you're ready to merge, but want a final check:
-const reviewResult = await subagent("reviewer", {
-  diff: gitDiff,
-  context: "Adding new invoice endpoint with RLS policies"
-});
+```text
+You:  Run the reviewer subagent on my staged diff before I merge.
+      Context: adding a new invoice endpoint with RLS policies.
 
-// If HIGH issues, ask Claude to fix them; if only MEDIUM/LOW, you can approve
-if (reviewResult.includes("HIGH:")) {
-  // Loop back, fix issues, re-run
-} else {
-  // Ready to merge
-}
+Claude Code:  [launches the `reviewer` agent in its own context, with only
+               Read/Grep/Glob, and returns the agent's report]
+
+  HIGH:   app/api/invoices/route.ts:42  user_id read from request body,
+          not from the authenticated session — RLS can be bypassed
+  MEDIUM: app/api/invoices/route.ts:55  missing null check on amount
 ```
+
+Claude will often invoke the reviewer on its own if your `CLAUDE.md` or `ship-feature` skill says "run the reviewer before merging." Then you read the report and decide: **HIGH** findings → have Claude fix them and re-review; only **MEDIUM/LOW** → your call to approve. The gate is a human reading an agent's report, not an automated pass/fail — the model can miss things, so you stay the approver.
 
 ---
 
-## Lesson 13.5 — Plugins: bundle and share (~30 min)
+## Lesson 14.5 — Plugins: bundle and share (~30 min)
 
 **In this lesson:** You'll learn how to bundle your tools into a reusable package. A **plugin** packages skills + MCP + subagents + commands + hooks into one installable unit that you (and others) can use repeatedly.
 
@@ -287,30 +287,87 @@ You can also *author* a plugin (a repo with a `.claude-plugin/marketplace.json` 
 
 ---
 
-## Lesson 13.6 — The automated pipeline, end to end (~90 min)
+## Lesson 14.6 — The automated pipeline, end to end (~90 min)
 
-Delivers Objective 3 — the payoff. Have Claude Code take a feature from idea to deployed, with you approving the risky steps.
+Delivers Objective 3 — the payoff. Everything so far (MCP, skill, subagent, permissions, hooks) exists to make this one moment work: hand Claude Code a feature and watch it go from idea to deployed, while you approve only the risky steps. Let's walk one all the way through with realistic output so you can see exactly where the gates fall.
 
-**Worked example — "Add a `paid_at` timestamp to invoices and ship it":**
+**The task.** You want to record when an invoice was paid. Your one instruction:
 
-1. **Plan** (Module 6 plan mode) — Claude proposes migration, code change, tests, PR, deploy.
-2. **Migrate** — Claude generates a Supabase migration via the CLI (versioned); you **approve** applying it. Inspect via the Supabase MCP.
-3. **Code + test** — updates the app; a **hook** runs the tests (13.7).
-4. **Commit + PR** — conventional commit, PR via GitHub MCP / `gh`; the `reviewer` subagent checks the diff.
-5. **Deploy** — merge triggers the Vercel deploy (Module 21); Claude monitors build status via the Vercel MCP.
-6. **Debug** — if it fails, Claude reads Vercel/Supabase logs via MCP and loops — the Module 9 debugging loop, automated.
+```text
+Ship this end-to-end: add a `paid_at` timestamp to the invoices table,
+update the app to set it when status flips to "paid", add a test, open a PR,
+and after I merge, confirm the Vercel deploy is green. Use the ship-feature
+skill and run the reviewer before merge.
+```
+
+**Step 1 — Plan (Module 6 plan mode).** Claude enters plan mode and proposes the whole sequence *before touching anything*:
+
+```text
+Plan:
+  1. supabase migration: add paid_at timestamptz null to invoices
+  2. app: set paid_at = now() in updateInvoiceStatus() when status -> 'paid'
+  3. test: paid_at is stamped on transition, stays null otherwise
+  4. branch add-paid-at, conventional commit, gh pr create
+  5. run reviewer subagent on the diff
+  6. after your merge, poll Vercel deploy status
+Gated steps (I'll pause for your approval): applying the migration, merging.
+```
+
+You read it, it's sane, you say go.
+
+**Step 2 — Migrate (you approve).** Claude writes a *versioned* migration file via the Supabase CLI rather than editing the DB directly, so the change is tracked in git:
+
+```text
+Claude: created supabase/migrations/20260718_add_paid_at.sql
+        + alter table invoices add column paid_at timestamptz;
+        Run `supabase db push` to apply? [needs approval]
+```
+
+`supabase db push` is on your **ask** list (it's irreversible-ish against a real DB), so Claude stops. You approve. It then reads the live schema back through the **Supabase MCP** to confirm the column exists — CLI to *change*, MCP to *verify* current state.
+
+**Step 3 — Code + test (auto, hook-guarded).** Claude edits `updateInvoiceStatus()` and adds a test. When it runs `npm run test`, your **PreToolUse hook** (Lesson 14.7) fires the suite first:
+
+```text
+> npm run test
+  ✓ stamps paid_at when status -> paid
+  ✓ leaves paid_at null for draft invoices
+  12 passed
+```
+
+Green, so the pipeline continues. Had a test failed, the hook's non-zero exit blocks the step and Claude loops back to fix it — the Module 9 debugging loop, automated.
+
+**Step 4 — Commit + PR + review.** Conventional commit, branch pushed, PR opened via the GitHub MCP (or `gh pr create`). Per your skill, Claude then delegates to the **`reviewer` subagent**:
+
+```text
+reviewer report:
+  MEDIUM: lib/invoices.ts:40  no guard against re-stamping paid_at on an
+          already-paid invoice (idempotency)
+  (no HIGH findings)
+```
+
+Only MEDIUM — you decide it's fine for now (or ask Claude to add the guard). No HIGH means the review gate is clear.
+
+**Step 5 — Deploy (you merge, Claude watches).** Merging to main is on your **ask** list. You approve the squash-merge; that push triggers the Vercel deploy (Module 11). Claude polls build status through the **Vercel MCP**:
+
+```text
+Claude: Vercel deploy dpl_9f3a... building... READY ✓
+        Production: https://invoice-tracker.vercel.app
+        Migration applied, PR #42 merged, deploy green.
+```
+
+**Step 6 — Debug if it breaks.** If the build had failed, Claude would read the Vercel build logs and Supabase logs via MCP, diagnose (e.g. a missing env var or a migration that didn't run in prod), and loop — same debugging discipline as Module 9, now with the agent doing the log-reading.
 
 *[SCREENSHOT: Claude Code opening a PR and reporting a successful deploy from the terminal.]*
 
-One instruction, a full pipeline — but you stayed in control at the migration and merge gates. That balance is the whole skill.
+One instruction, a full pipeline — but you stayed in control at exactly two points: applying the migration and merging to main. That balance — automate the reversible, gate the irreversible — is the whole skill.
 
 ---
 
-## Lesson 13.7 — Guardrails: permissions & hooks (~40 min)
+## Lesson 14.7 — Guardrails: permissions & hooks (~40 min)
 
 Secures Objective 3. Automation without guardrails is how you drop a production table at 2 a.m.
 
-**Permissions** (`/permissions`) — allow/ask/deny list. Auto-allow safe, reversible actions (run tests, read logs); **always require approval** for destructive ones (prod migration, merge to main, delete data, spend money). The Module 22 human-in-the-loop principle, configured.
+**Permissions** (`/permissions`) — allow/ask/deny list. Auto-allow safe, reversible actions (run tests, read logs); **always require approval** for destructive ones (prod migration, merge to main, delete data, spend money). The Module 12 human-in-the-loop principle, configured.
 
 **Concrete permissions config:**
 
@@ -344,35 +401,68 @@ Secures Objective 3. Automation without guardrails is how you drop a production 
 }
 ```
 
-**Hooks** — scripts that run at points in the session. For example, run tests before committing, or block a commit if it contains secrets:
+**Hooks** — shell commands Claude Code runs automatically at defined lifecycle events (e.g. `PreToolUse`, `PostToolUse`). Unlike permissions, hooks run *your* code, so they can run tests, scan for secrets, or log. A hook decides the outcome by how it exits, **not** by a made-up `failureAction` field (there is no such key — the schema below is the real one).
 
-**Concrete hooks config:**
+**How hooks actually communicate:**
+- Hooks are grouped by event, then by a `matcher` that matches the **tool name** (e.g. `"Bash"`), not the full command. To act only on `git commit`, the hook command inspects the tool input, which Claude Code passes as JSON on **stdin**.
+- **Exit code 0** = allow/success. **Exit code 2** = block the tool call; whatever the hook wrote to **stderr** is fed back to Claude as the reason. Any other non-zero = non-blocking error (surfaced but doesn't stop the action).
+- Alternatively a hook can print **JSON** to stdout to decide explicitly, e.g. `{"decision": "block", "reason": "secret detected"}` (or, for `PreToolUse`, `{"hookSpecificOutput": {"permissionDecision": "deny", "permissionDecisionReason": "..."}}`).
+
+**Concrete hooks config (`.claude/settings.json`):**
 
 ```json
 {
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Bash(git commit*)",
-        "command": "npm run test && npm run lint && ./scripts/check-secrets.sh",
-        "failureAction": "block"
-      },
-      {
-        "matcher": "Bash(git push*)",
-        "command": "echo 'Pushing to remote. Verify the PR will pass CI.'",
-        "failureAction": "warn"
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/scripts/pre-commit-guard.sh"
+          }
+        ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "Bash(supabase db push)",
-        "command": "echo 'Migration applied. Verify in Supabase dashboard: https://app.supabase.com/project/YOUR_REF/sql/migrations'",
-        "failureAction": "log"
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$CLAUDE_PROJECT_DIR/scripts/post-migrate-note.sh"
+          }
+        ]
       }
     ]
   }
 }
 ```
+
+The matcher is just `"Bash"`; the *scripts* decide whether they care. `scripts/pre-commit-guard.sh` reads the JSON on stdin, checks whether the command is a `git commit`, and if so runs the suite and a secret scan — exiting `2` (with a message on stderr) to block, or `0` to allow:
+
+```bash
+#!/usr/bin/env bash
+# pre-commit-guard.sh — block commits that fail tests/lint or contain secrets
+input=$(cat)                         # tool input arrives as JSON on stdin
+cmd=$(echo "$input" | jq -r '.tool_input.command // ""')
+
+case "$cmd" in
+  *"git commit"*)
+    if ! npm run test --silent || ! npm run lint --silent; then
+      echo "Tests or lint failed — commit blocked." >&2
+      exit 2                          # exit 2 => block, stderr shown to Claude
+    fi
+    if ! ./scripts/check-secrets.sh; then
+      echo "Possible secret in staged changes — commit blocked." >&2
+      exit 2
+    fi
+    ;;
+esac
+exit 0                                # anything else: allow
+```
+
+> **⚡ Hooks schema moves fast.** The event names, the stdin JSON shape, and the JSON-decision fields are the current contract but do change — confirm against the official Claude Code hooks docs before you rely on the exact keys.
 
 **The rule:** automate the reversible, gate the irreversible. Everything about security and "you own every line" (Modules 1, 7, 12) applies double when an agent has hands on your infrastructure.
 
@@ -432,7 +522,7 @@ Concretely:
 
 These are the four questions you'll see on the quiz. Study these to prepare:
 
-**Q13-1:** A pipeline automates all EXCEPT:
+**Q14-1:** A pipeline automates all EXCEPT:
 - (a) running tests
 - (b) deploying
 - (c) **understanding the business need** ✓
@@ -440,7 +530,7 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 
 *Why:* Pipelines are for technical automation: test runs, lints, builds, migrations, deploys. Understanding *why* you're building something is a human job — no tool can do that for you.
 
-**Q13-2:** GitHub Actions runs on:
+**Q14-2:** GitHub Actions runs on:
 - (a) your laptop
 - (b) **GitHub's servers** ✓
 - (c) your database
@@ -448,7 +538,7 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 
 *Why:* GitHub Actions (and CI/CD in general) run on remote infrastructure, triggered by events (push, PR). Your laptop just kicks it off. That's why you can walk away and the build finishes without your machine being on.
 
-**Q13-3:** A pipeline failing before deploy is:
+**Q14-3:** A pipeline failing before deploy is:
 - (a) a disaster
 - (b) **good — it prevented pushing broken code** ✓
 - (c) slow
@@ -456,7 +546,7 @@ These are the four questions you'll see on the quiz. Study these to prepare:
 
 *Why:* Pipeline failures are *success*. The whole point is to catch bugs before they ship. A failure that stops a broken deploy to production is exactly what you want.
 
-**Q13-4:** You want Claude Code to export GitHub data on every build. You should use:
+**Q14-4:** You want Claude Code to export GitHub data on every build. You should use:
 - (a) a CLAUDE.md instruction
 - (b) a skill (reusable, needs testing)
 - (c) **an MCP server (connects Claude to GitHub's API)** ✓
@@ -540,10 +630,8 @@ Portable pattern: **MCP** is the emerging open standard for tool/data access, **
 
 ## Key takeaways
 
-- Five extensions, five jobs: [CLAUDE.md](http://CLAUDE.md) (rules), skills (how-to), MCP (access/actions), subagents (specialists), plugins (bundles).
+- Five extensions, five jobs: `CLAUDE.md` (rules), skills (how-to), MCP (access/actions), subagents (specialists), plugins (bundles).
 - MCP gives Claude Code hands on GitHub/Supabase/Vercel; CLIs complement it (and are the reliable fallback when OAuth fails).
 - Skills install from GitHub; subagents run isolated specialists; plugins package it all.
 - You can automate the full pipeline: migrate → commit → PR → deploy → debug, from one instruction.
 - Guardrails are non-negotiable: permissions + hooks. Automate the reversible; gate the irreversible.
-
-[Accredited Vibe Coding Course](../Accredited%20Vibe%20Coding%20Course%20391f6ea84e41819a8ac3c38ebdb12d04.md)
