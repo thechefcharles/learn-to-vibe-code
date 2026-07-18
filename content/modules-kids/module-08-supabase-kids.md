@@ -1,4 +1,4 @@
-# Module 7: Supabase (Your App's Brain!) 🧠
+# Module 8: Supabase (Your App's Brain!) 🧠
 
 **Stage:** Production · **Level:** Intermediate · **Duration:** ~6.5 hours · **XP:** 600
 
@@ -204,7 +204,7 @@ That's it. Same pattern in every module.
 
 ### Knowledge Check
 
-1. **Q7-0a:** "Why does every note need a user_id?"
+1. **Q8-0a:** "Why does every note need a user_id?"
    - a) Supabase requires it
    - b) So the RLS rule can say "you can only see YOUR notes"
    - c) To track when it was created
@@ -212,7 +212,7 @@ That's it. Same pattern in every module.
 
    **Correct:** b) — user_id is how RLS knows which data is yours.
 
-2. **Q7-0b:** "What does RLS mean?"
+2. **Q8-0b:** "What does RLS mean?"
    - a) Really long sentences
    - b) A security rule: "you can only read/write your own data"
    - c) Rust language something
@@ -220,7 +220,7 @@ That's it. Same pattern in every module.
 
    **Correct:** b) — RLS is the security guard: "is this your data? Yes? You can see it. No? Blocked."
 
-3. **Q7-0c:** "What's 'default-deny' security?"
+3. **Q8-0c:** "What's 'default-deny' security?"
    - a) Everything is open, then you block things
    - b) Everything is BLOCKED unless you explicitly ALLOW it (safer!)
    - c) Same as default-allow
@@ -639,7 +639,7 @@ Follow these steps to move from local (mock) data to real cloud data!
 
 Here are your three quiz questions. Study them now!
 
-**Q7-k1:** A database does everything EXCEPT:
+**Q8-k1:** A database does everything EXCEPT:
 - (a) Save your data permanently
 - (b) Create user accounts
 - (c) Control who can see what data
@@ -647,7 +647,7 @@ Here are your three quiz questions. Study them now!
 
 *Why:* Databases store data, manage users, and control access. But they don't make you type faster—that's your editor's job! This is about what databases DO vs don't do.
 
-**Q7-k2:** With RLS security on and NO rules set, what happens?
+**Q8-k2:** With RLS security on and NO rules set, what happens?
 - (a) Everyone can see everything
 - (b) **Nobody can see anything (locked by default, safe!)** ✓
 - (c) Only new data shows
@@ -655,7 +655,7 @@ Here are your three quiz questions. Study them now!
 
 *Why:* RLS defaults to LOCKED. Super safe! Nothing works until you say "allow this." You can't accidentally expose data.
 
-**Q7-k3:** In a security rule, `auth.uid()` gives you:
+**Q8-k3:** In a security rule, `auth.uid()` gives you:
 - (a) A random ID
 - (b) **The logged-in user's unique ID** ✓
 - (c) The table name
@@ -732,4 +732,4 @@ Here are your three quiz questions. Study them now!
 - Save/load from cloud, not just your computer
 - Security rules control who sees what
 
-**Next:** Module 8 — Reading & Debugging Code!
+**Next:** Module 9 — Agent Workflows
