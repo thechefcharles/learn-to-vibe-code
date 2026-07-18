@@ -71,8 +71,7 @@ export function CourseModuleList({
 
         return (
           <div key={module.id} className="group">
-            <Link
-              href={isUnlocked ? `/course/${module.id}` : "#"}
+            <button
               onClick={(e) => {
                 if (!isUnlocked) {
                   e.preventDefault();
@@ -81,12 +80,13 @@ export function CourseModuleList({
                 e.preventDefault();
                 toggleModule(module.id);
               }}
-              className={`block p-4 rounded-lg border-2 transition ${
+              disabled={!isUnlocked}
+              className={`w-full text-left p-4 rounded-lg border-2 transition ${
                 !isUnlocked
-                  ? "border-slate-600/30 bg-slate-900/30 opacity-40 cursor-not-allowed"
+                  ? "border-slate-600/40 bg-slate-900/50 opacity-50 cursor-not-allowed"
                   : isCompleted
-                  ? "border-green-500/60 bg-green-900/20 hover:bg-green-900/30"
-                  : "border-blue-500/60 bg-blue-900/20 hover:bg-blue-900/30 cursor-pointer"
+                  ? "border-green-500/70 bg-green-900/40 hover:bg-green-900/50 backdrop-blur-sm"
+                  : "border-blue-500/70 bg-blue-900/40 hover:bg-blue-900/50 cursor-pointer backdrop-blur-sm"
               }`}
             >
               <div className="flex items-center justify-between">
@@ -94,19 +94,19 @@ export function CourseModuleList({
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 ${
                       isCompleted
-                        ? "bg-green-500/30 text-green-300"
+                        ? "bg-green-500/40 text-green-100"
                         : isUnlocked
-                        ? "bg-blue-500/30 text-blue-300"
-                        : "bg-slate-600/20 text-slate-400"
+                        ? "bg-blue-500/40 text-blue-100"
+                        : "bg-slate-600/30 text-slate-300"
                     }`}
                   >
                     {isCompleted ? "✓" : module.id}
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-white">
-                      {module.title}
+                    <h3 className="text-base font-bold text-white drop-shadow-md">
+                      {module.id}. {module.title}
                     </h3>
-                    <p className="text-xs text-slate-300 mt-1">
+                    <p className="text-xs text-slate-200 mt-1 drop-shadow-md">
                       {isCompleted
                         ? "✓ Completed"
                         : isUnlocked
@@ -123,17 +123,17 @@ export function CourseModuleList({
                   {isUnlocked ? (isCompleted ? "✓" : "▼") : "🔒"}
                 </div>
               </div>
-            </Link>
+            </button>
 
             {/* Expandable lessons */}
             {isExpanded && isUnlocked && (
-              <div className="mt-1 pl-4 pr-3 py-3 rounded-lg bg-slate-900/40 border-2 border-slate-700/40 space-y-2">
+              <div className="mt-1 pl-4 pr-3 py-3 rounded-lg bg-slate-900/60 border-2 border-slate-700/50 space-y-2 backdrop-blur-sm">
                 {lessons.map((lesson, idx) => (
                   <div
                     key={idx}
-                    className="text-sm text-slate-300 flex items-start gap-2"
+                    className="text-sm text-slate-100 flex items-start gap-2 drop-shadow-md"
                   >
-                    <span className="text-slate-500 flex-shrink-0">→</span>
+                    <span className="text-slate-400 flex-shrink-0">→</span>
                     <span>{lesson}</span>
                   </div>
                 ))}
