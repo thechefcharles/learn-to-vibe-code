@@ -57,6 +57,15 @@ export function generateCertificateHTML(data: CertificateData): string {
       text-align: center;
       position: relative;
     }
+    .logo-area {
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+    }
+    .logo-area svg {
+      width: 60px;
+      height: 60px;
+    }
     .header {
       border-bottom: 3px solid #7C3AED;
       padding-bottom: 20px;
@@ -146,6 +155,19 @@ export function generateCertificateHTML(data: CertificateData): string {
 </head>
 <body>
   <div class="certificate">
+    <div class="logo-area">
+      <svg width="60" height="60" viewBox="0 0 96 96" role="img" xmlns="http://www.w3.org/2000/svg">
+        <title>Learn To Vibe Code mark</title>
+        <desc>App icon: rising soundwave bars on an indigo tile, top bar in lime.</desc>
+        <rect x="0" y="0" width="96" height="96" rx="22" fill="#1E1B4B"/>
+        <rect x="14" y="52" width="8" height="20" rx="4" fill="#7C3AED"/>
+        <rect x="29" y="42" width="8" height="30" rx="4" fill="#7C3AED"/>
+        <rect x="44" y="30" width="8" height="42" rx="4" fill="#A78BFA"/>
+        <rect x="59" y="46" width="8" height="26" rx="4" fill="#A78BFA"/>
+        <rect x="74" y="22" width="8" height="50" rx="4" fill="#C4F542"/>
+      </svg>
+    </div>
+
     <div class="header">
       <h1>Certificate of Completion</h1>
       <p>Learn to Vibe Code</p>
