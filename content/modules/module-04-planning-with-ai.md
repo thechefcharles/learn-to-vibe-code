@@ -421,6 +421,132 @@ Prompt the AI for a first draft of each ("Given this spec, propose a simple data
 
 ---
 
+## Worked Example: Pet Tracker — From Spec to Technical Plan
+
+Here's a complete example showing spec → technical plan translation: **Pet Tracker**, an app for logging pet feedings and vaccine schedules.
+
+### The Spec: Pet Tracker
+
+**PROBLEM & USERS**
+
+Pet owners juggle multiple pets and forget feeding schedules and vaccine dates. A busy household with two dogs and a cat has no central place to track when each pet last ate, what vaccines they've had, or when boosters are due. Vets send reminder postcards, but they get lost.
+
+Users: pet owners (age 25–65) managing 1–5 pets, often consulting with household members about feeding.
+
+**CORE FEATURES (MVP)**
+
+1. Sign up and log in (email/password)
+2. Create a pet profile (name, species, breed, birth date, photo)
+3. Log a feeding (pet, date, time, meal type: breakfast/lunch/dinner)
+4. View feeding history (last 7 days, per pet)
+5. Manage vaccine records (pet, vaccine name, date given, next booster due)
+6. Dashboard showing today's feeding schedule and upcoming vaccine dates
+
+**OUT OF SCOPE**
+
+- Multi-user sharing (v2 — for now, one owner per account)
+- Vet integration / automated reminders (v2)
+- Medical records (v2 — just vaccines, not full vet notes)
+- Photo gallery (v1 — just one photo per pet)
+- Expense tracking (future)
+
+**SUCCESS**
+
+A pet owner signs in, adds pets, logs meals, and sees a dashboard showing today's feedings and upcoming vaccines.
+
+---
+
+### The Technical Plan: Data Model and Structure
+
+**DATA MODEL (Postgres schema)**
+
+```sql
+users
+  - id (uuid, primary key)
+  - email (unique)
+  - created_at
+
+pets
+  - id (uuid)
+  - user_id (foreign key → users) *ensures pet belongs to a user*
+  - name (string)
+  - species (string: "dog", "cat", "rabbit", etc.)
+  - breed (string, nullable)
+  - birth_date (date)
+  - photo_url (string, nullable)
+  - created_at
+
+feedings
+  - id (uuid)
+  - pet_id (foreign key → pets)
+  - date (date)
+  - meal_type (string: "breakfast", "lunch", "dinner")
+  - logged_at (timestamp, when the user recorded it)
+
+vaccines
+  - id (uuid)
+  - pet_id (foreign key → pets)
+  - vaccine_name (string: "rabies", "DHPP", etc.)
+  - date_given (date)
+  - next_booster_due (date, nullable)
+  - created_at
+```
+
+**DESIGN RATIONALE**
+
+- **`user_id` on `pets`:** Ensures one user can't see another's pets. Makes queries fast ("show my pets").
+- **Separate `feedings` table:** Multiple feedings per pet per day. Storing each one enables historical analysis.
+- **`meal_type` as string:** Simpler than enum. No migration needed if v2 adds "snack."
+- **`logged_at` on feedings:** We track *when recorded*, not when the pet ate. Prevents false back-dating.
+
+**ROW-LEVEL SECURITY (RLS) POLICY**
+
+Supabase will enforce: users can only see/edit their own pets, feedings, and vaccines.
+
+```sql
+-- Learners will write this in Module 8
+-- On pets table: users can SELECT only rows where user_id = auth.uid()
+-- On feedings table: users can SELECT/INSERT/UPDATE only feedings for pets they own
+-- On vaccines table: same rule
+```
+
+**SCREENS TO BUILD**
+
+1. **Auth screens** (login, sign up)
+2. **Dashboard** (today's feeding status, upcoming vaccine dates)
+3. **Add pet** (form: name, species, breed, birth date, photo upload)
+4. **Pet list** (all my pets, links to detail/edit)
+5. **Pet detail** (photo, info, list of recent feedings, list of vaccines, edit button)
+6. **Log feeding** (dropdown: select pet, date, meal type, confirm)
+7. **Vaccine manager** (add vaccine form, vaccine history per pet, edit/delete)
+
+**BUILD ORDER (with dependencies)**
+
+1. **Auth** (users table, sign up/login screens) — foundation; everything else needs to know who's logged in
+2. **Create pet** (pets table + form) — depends on auth
+3. **List pets** (dashboard with pet count) — depends on pets table
+4. **Pet detail view** (show one pet's info) — depends on pets table
+5. **Log feeding** (feedings table + form) — depends on pets table (need pet to feed)
+6. **View feeding history** (table on pet detail) — depends on feedings table populated
+7. **Add vaccine record** (vaccines table + form) — depends on pets table
+8. **Calculate next vaccine date** (show upcoming boosters on dashboard) — depends on vaccines table populated
+
+---
+
+### Questions to Ask Claude Code (Critique Your Plan)
+
+Pressure-test your design by asking Claude Code:
+
+- **"If a user deletes a pet, what happens to feedings and vaccines?"** (Tests cascading logic and data retention.)
+- **"How do I know if a vaccine booster is overdue?"** (Tests business logic; might need a computed column.)
+- **"How do I prevent one user from seeing another's pets?"** (Tests your RLS policy understanding.)
+- **"Can I build the vaccine manager before the feeding logger?"** (Tests dependency independence; yes, they don't depend on each other.)
+- **"Should I store who logged the feeding, or just that it was logged?"** (Surfaces optional v2 features; keep v1 simple.)
+
+These questions teach you to think like an architect: spec → plan → pressure-test → refine. Claude Code can answer them all and surface questions you missed. Log decisions in `decisions.md`.
+
+---
+
 ## Lesson 3.5 — Sequencing: dependencies and build order (~60 min)
 
 This delivers Objective 4. Not all tasks are equal — some must come before others. Teach learners to spot **dependencies** and order work so they're never blocked.
