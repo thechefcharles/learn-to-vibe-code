@@ -57,22 +57,10 @@ export function generateCertificateHTML(data: CertificateData): string {
       text-align: center;
       position: relative;
     }
-    .logo-area {
-      position: absolute;
-      top: 30px;
-      left: 30px;
-      width: 60px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5em;
-    }
     .header {
       border-bottom: 3px solid #7C3AED;
       padding-bottom: 20px;
       margin-bottom: 40px;
-      margin-top: 20px;
     }
     .header h1 {
       font-style: italic;
@@ -154,17 +142,10 @@ export function generateCertificateHTML(data: CertificateData): string {
       line-height: 1.6;
       font-family: 'Courier New', monospace;
     }
-    .seal {
-      flex: 0;
-      font-size: 3.5em;
-      margin: 0 20px;
-    }
   </style>
 </head>
 <body>
   <div class="certificate">
-    <div class="logo-area">🎓</div>
-
     <div class="header">
       <h1>Certificate of Completion</h1>
       <p>Learn to Vibe Code</p>
@@ -188,7 +169,6 @@ export function generateCertificateHTML(data: CertificateData): string {
         <div class="signature-line"></div>
         <p class="signature-title">Authorized Signature</p>
       </div>
-      <div class="seal">🏆</div>
       <div class="cert-info">
         <div class="cert-id">
           Certificate ID:<br/>
