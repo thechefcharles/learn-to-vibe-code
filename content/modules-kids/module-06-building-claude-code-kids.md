@@ -145,6 +145,21 @@ Now the AI always remembers your stack and patterns. No more repeating "I'm usin
 
 ---
 
+### Quick Tip: Showing Claude Code Screenshots
+
+**When you need to show Claude Code a screenshot** (like an error, a design you want to copy, or a bug), use the **Read tool**:
+
+```
+Claude, use the Read tool to look at /path/to/screenshot.png
+```
+
+Claude Code runs in the terminal and can't see images the way a web chat can. The Read tool is how you load screenshots so Claude Code can look at them and help you debug or build. Use it for:
+- **Bug hunting:** screenshot of the broken screen
+- **Design matching:** screenshot of the design you want to build
+- **Copying UIs:** screenshot of something you like
+
+---
+
 ## Lesson 5.4 — Plan Mode: Propose Before Doing (~30 min)
 
 Before Claude Code makes big changes, use **Plan mode** to see what it *plans* to do before it does it.

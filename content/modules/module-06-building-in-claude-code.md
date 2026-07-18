@@ -62,6 +62,21 @@ Pointing the agent at existing code (`app/clients`) makes new features match wha
 
 ---
 
+### Quick Tip: Reading Screenshots in Claude Code
+
+**When you need to show Claude Code a screenshot** (e.g., a broken UI to debug, a design to match), use the **Read tool**:
+
+```
+Claude, use the Read tool to look at /path/to/screenshot.png
+```
+
+Claude Code runs in the terminal and doesn't automatically see image files the way web chat does. The Read tool explicitly loads the screenshot so the agent can analyze it visually. This works for:
+- Error overlays or browser screenshots (Module 9 debugging)
+- UI designs you want to match (Module 7 styling)
+- Any visual reference you want the agent to see
+
+---
+
 ## Lesson 5.3 — Plan mode: propose before doing (~45 min)
 
 The single most important agentic habit for beginners. Before a big change, use plan mode (`/plan`) so the agent proposes an approach *before* editing anything. You review, correct, then let it execute — preventing the classic failure where the agent confidently does the wrong thing across ten files.
