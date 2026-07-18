@@ -130,6 +130,11 @@ See [`docs/superpowers/plans/2026-07-18-screenshot-and-documentation-plan.md`](.
 **Submission:** Optional, after each module completion  
 **Purpose:** Gather qualitative insights on content clarity, difficulty, and engagement
 
+**Screenshots:**
+- [Empty form](/figures/admin-dashboards/feedback-form-empty.png) — Initial state when learner navigates to feedback page
+- [Filled form](/figures/admin-dashboards/feedback-form-filled.png) — Example completed response
+- [Submitted confirmation](/figures/admin-dashboards/feedback-form-submitted.png) — Success state after submission
+
 ### Form Questions
 
 **1. How clear was this module's content?** (Likert 1–5)

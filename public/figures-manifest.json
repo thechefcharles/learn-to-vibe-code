@@ -235,6 +235,18 @@
     "m12-tests": {
       "path": "/figures/screenshots/m12/m12-tests.png",
       "alt": "Terminal showing npm test output with test results summary and passing/failing test counts"
+    },
+    "feedback-form-empty": {
+      "path": "/figures/admin-dashboards/feedback-form-empty.png",
+      "alt": "Learner feedback form in empty state with all 5 fields: clarity rating, difficulty rating, biggest challenge textarea, improvement suggestions textarea, and course recommendation"
+    },
+    "feedback-form-filled": {
+      "path": "/figures/admin-dashboards/feedback-form-filled.png",
+      "alt": "Completed learner feedback form showing sample responses: 'Mostly clear' clarity, 'Just right' difficulty, challenge explanation, improvement suggestions, and 'Yes' recommendation selected"
+    },
+    "feedback-form-submitted": {
+      "path": "/figures/admin-dashboards/feedback-form-submitted.png",
+      "alt": "Confirmation message after successful feedback submission with checkmark icon and thank you message"
     }
   }
 }
