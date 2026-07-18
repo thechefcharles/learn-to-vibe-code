@@ -7,10 +7,4 @@ Sentry.init({
   debug: process.env.NODE_ENV === "development",
   replaysSessionSampleRate: process.env.NODE_ENV === "production" ? 0.1 : 1.0,
   replaysOnErrorSampleRate: 1.0,
-  integrations: [
-    new Sentry.Replay({
-      maskAllText: true,
-      blockAllMedia: true,
-    }),
-  ],
 });
