@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
 import { useTheme } from '@/lib/ThemeContext';
 
 const VIDEO_SOURCES: Record<string, string> = {
@@ -10,30 +9,8 @@ const VIDEO_SOURCES: Record<string, string> = {
 };
 
 export function VideoBackground() {
-  const videoRefs = {
-    violet: useRef<HTMLVideoElement>(null),
-    sage: useRef<HTMLVideoElement>(null),
-    sunset: useRef<HTMLVideoElement>(null),
-  };
   const { currentTheme } = useTheme();
-
-  useEffect(() => {
-    const themes = Object.keys(videoRefs) as Array<keyof typeof videoRefs>;
-    themes.forEach((theme) => {
-      const video = videoRefs[theme].current;
-      if (!video) return;
-
-      if (theme === currentTheme) {
-        video.style.visibility = 'visible';
-        video.style.opacity = '1';
-        video.play().catch(() => {});
-      } else {
-        video.style.visibility = 'hidden';
-        video.style.opacity = '0';
-        video.pause();
-      }
-    });
-  }, [currentTheme]);
+  const src = VIDEO_SOURCES[currentTheme] ?? VIDEO_SOURCES.violet;
 
   const videoStyle = {
     position: 'fixed' as const,
@@ -43,23 +20,26 @@ export function VideoBackground() {
     height: '100%',
     objectFit: 'cover' as const,
     zIndex: -10,
-    visibility: 'hidden' as const,
-    opacity: 0,
-    transition: 'opacity 0.5s ease-in-out',
     filter: 'blur(8px) brightness(0.4)',
   };
 
+  // Render a single <video> for the active theme. `key={src}` forces a fresh
+  // element whenever the theme changes, so the new source starts cleanly.
+  // `autoPlay muted playsInline` means the browser begins playback on EVERY
+  // mount — including client-side navigation back to a page — instead of
+  // relying on a post-mount effect calling .play(), which raced on remount and
+  // left the background blank until a theme toggle forced a re-render.
   return (
-    <>
-      <video ref={videoRefs.violet} muted loop playsInline style={videoStyle}>
-        <source src={VIDEO_SOURCES.violet} type="video/mp4" />
-      </video>
-      <video ref={videoRefs.sage} muted loop playsInline style={videoStyle}>
-        <source src={VIDEO_SOURCES.sage} type="video/mp4" />
-      </video>
-      <video ref={videoRefs.sunset} muted loop playsInline style={videoStyle}>
-        <source src={VIDEO_SOURCES.sunset} type="video/mp4" />
-      </video>
-    </>
+    <video
+      key={src}
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="auto"
+      style={videoStyle}
+    >
+      <source src={src} type="video/mp4" />
+    </video>
   );
 }

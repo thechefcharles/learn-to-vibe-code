@@ -64,11 +64,7 @@ export default async function FeedbackPage() {
         </div>
 
         {/* Feedback Form */}
-        <FeedbackForm onSuccess={() => {
-          setTimeout(() => {
-            window.location.href = "/dashboard";
-          }, 2000);
-        }} />
+        <FeedbackForm />
       </div>
     </div>
   );

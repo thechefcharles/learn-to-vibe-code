@@ -1,13 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useVersion } from "@/lib/VersionContext";
 
-interface FeedbackFormProps {
-  onSuccess?: () => void;
-}
-
-export default function FeedbackForm({ onSuccess }: FeedbackFormProps) {
+export default function FeedbackForm() {
+  const router = useRouter();
   const { version } = useVersion();
   const isKids = version === "kids";
 
@@ -52,9 +50,7 @@ export default function FeedbackForm({ onSuccess }: FeedbackFormProps) {
       }
 
       setSubmitted(true);
-      if (onSuccess) {
-        setTimeout(onSuccess, 2000);
-      }
+      setTimeout(() => router.push("/dashboard"), 2000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to save feedback");
     } finally {
