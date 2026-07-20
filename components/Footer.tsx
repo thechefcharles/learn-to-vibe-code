@@ -9,7 +9,7 @@ export function Footer() {
   const isKids = version === "kids";
 
   return (
-    <footer className="text-paper mt-12 pt-12 pb-8 bg-slate-900/95 backdrop-blur-sm border-t border-cyan-500/20">
+    <footer className="text-paper mt-12 pt-12 pb-8 bg-black/40 backdrop-blur-2xl border-t border-white/15 shadow-[0_-8px_32px_rgba(0,0,0,0.3)]">
       <div className="max-w-6xl mx-auto px-4">
         {/* Main footer content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
@@ -94,7 +94,7 @@ export function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-cyan-500/20 pt-8">
+        <div className="border-t border-white/15 pt-8">
           <p className="text-xs text-cyan-300/70 text-center">
             © {new Date().getFullYear()} Learn To Vibe Code. All rights reserved. | Made with{" "}
             <span className="text-cyan-400">💙</span> for learners.

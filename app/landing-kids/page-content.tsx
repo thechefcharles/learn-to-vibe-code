@@ -13,7 +13,7 @@ import { FloatingCTA } from '@/components/kids-landing/FloatingCTA';
 import { VideoBackground } from '@/components/kids-landing/VideoBackground';
 import { MouseTrail } from '@/components/kids-landing/MouseTrail';
 import { Header } from '@/components/kids-landing/Header';
-import Link from 'next/link';
+import { Footer } from '@/components/Footer';
 
 interface KidsLandingPageContentProps {
   isSignedIn?: boolean;
@@ -81,17 +81,7 @@ export default function KidsLandingPageContent({ isSignedIn = false }: KidsLandi
       </section>
 
       {/* ============ FOOTER ============ */}
-      <footer className="border-t border-slate-800/50 py-1.5 sm:py-2 px-2 sm:px-4 mt-1.5 text-center">
-        <p className="text-xs sm:text-xs text-gray-600 mb-1 sm:mb-1.5">© 2026 Vibe Coding. Learn to code with AI. Ship real apps.</p>
-        <div className="flex gap-3 sm:gap-6 justify-center flex-wrap">
-          <Link href="/about" className="text-xs sm:text-sm font-medium text-gray-500 hover:text-cyan-400 transition">
-            About
-          </Link>
-          <Link href="/support" className="text-xs sm:text-sm font-medium text-gray-500 hover:text-cyan-400 transition">
-            Support
-          </Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }

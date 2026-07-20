@@ -19,17 +19,27 @@ export default async function FeedbackPage() {
   const isKids = version === "kids";
 
   return (
-    <div className={`min-h-screen py-12 px-4 ${isKids ? "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50" : "bg-gradient-to-br from-slate-900 to-slate-800"}`}>
+    <div
+      className="min-h-screen py-12 px-4"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.6)), url(/crayons-bg.png)",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="mb-12">
-          <Link href="/dashboard" className={`text-sm mb-6 inline-block transition ${isKids ? "text-purple-600 hover:text-purple-800" : "text-blue-400 hover:text-blue-300"}`}>
+          <Link href="/dashboard" className="text-sm mb-6 inline-block transition text-cyan-300 hover:text-cyan-200 drop-shadow">
             ← Back to Dashboard
           </Link>
-          <h1 className={`text-5xl font-bold mb-4 ${isKids ? "text-purple-700" : "text-white"}`}>
+          <h1 className="text-5xl font-bold mb-4 text-white drop-shadow-lg">
             {isKids ? "💬 Tell Us Your Thoughts!" : "Course Feedback"}
           </h1>
-          <p className={`text-lg ${isKids ? "text-purple-600" : "text-slate-400"}`}>
+          <p className="text-lg text-gray-100 drop-shadow">
             {isKids
               ? "Help us make the course even better with your honest feedback! 🌟"
               : "Your feedback helps us continuously improve the course for all learners"}
