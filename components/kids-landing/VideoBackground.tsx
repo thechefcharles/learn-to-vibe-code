@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { useTheme } from '@/lib/ThemeContext';
 
 const VIDEO_SOURCES: Record<string, string> = {
@@ -10,9 +11,23 @@ const VIDEO_SOURCES: Record<string, string> = {
 
 export function VideoBackground() {
   const { currentTheme } = useTheme();
-  const src = VIDEO_SOURCES[currentTheme] ?? VIDEO_SOURCES.violet;
+  const refs = useRef<Record<string, HTMLVideoElement | null>>({});
 
-  const videoStyle = {
+  // Pure optimization: keep the active theme's video playing and pause the
+  // rest so we don't decode three videos at once. Crucially, this effect does
+  // NOT control visibility — opacity is set declaratively below from
+  // currentTheme — so even if a play() call rejects on remount, the correct
+  // video is still shown. That's what fixes the "blank background after
+  // re-navigation" bug while preserving the crossfade.
+  useEffect(() => {
+    Object.entries(refs.current).forEach(([theme, video]) => {
+      if (!video) return;
+      if (theme === currentTheme) video.play().catch(() => {});
+      else video.pause();
+    });
+  }, [currentTheme]);
+
+  const baseStyle = {
     position: 'fixed' as const,
     top: 0,
     left: 0,
@@ -21,25 +36,27 @@ export function VideoBackground() {
     objectFit: 'cover' as const,
     zIndex: -10,
     filter: 'blur(8px) brightness(0.4)',
+    transition: 'opacity 0.6s ease-in-out',
   };
 
-  // Render a single <video> for the active theme. `key={src}` forces a fresh
-  // element whenever the theme changes, so the new source starts cleanly.
-  // `autoPlay muted playsInline` means the browser begins playback on EVERY
-  // mount — including client-side navigation back to a page — instead of
-  // relying on a post-mount effect calling .play(), which raced on remount and
-  // left the background blank until a theme toggle forced a re-render.
   return (
-    <video
-      key={src}
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="auto"
-      style={videoStyle}
-    >
-      <source src={src} type="video/mp4" />
-    </video>
+    <>
+      {Object.entries(VIDEO_SOURCES).map(([theme, src]) => (
+        <video
+          key={theme}
+          ref={(el) => {
+            refs.current[theme] = el;
+          }}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          style={{ ...baseStyle, opacity: currentTheme === theme ? 1 : 0 }}
+        >
+          <source src={src} type="video/mp4" />
+        </video>
+      ))}
+    </>
   );
 }
