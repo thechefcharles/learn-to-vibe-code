@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
+import { signOutAction } from '@/lib/actions/auth';
 
 interface AuthPanelProps {
   userName?: string;
@@ -130,21 +131,34 @@ export function AuthPanel({ userName, isSignedIn = false }: AuthPanelProps) {
         </motion.p>
       </div>
 
-      {/* Sign In / Sign Up Buttons */}
-      <div className="flex gap-4 w-full">
-        <Link
-          href="/auth/sign-in"
-          className="flex-1 bg-white/15 hover:bg-white/25 backdrop-blur border border-white/30 hover:border-white/40 text-white font-bold py-3 rounded-xl text-center transition-all shadow-lg hover:shadow-xl text-base"
-        >
-          Sign In
-        </Link>
-        <Link
-          href="/auth/sign-up"
-          className="flex-1 bg-white/15 hover:bg-white/25 backdrop-blur border border-white/30 hover:border-white/40 text-white font-bold py-3 rounded-xl text-center transition-all shadow-lg hover:shadow-xl text-base"
-        >
-          Sign Up
-        </Link>
-      </div>
+      {/* Auth Buttons — Sign Out when signed in, otherwise Sign In / Sign Up */}
+      {isSignedIn ? (
+        <div className="w-full">
+          <button
+            onClick={async () => {
+              await signOutAction();
+            }}
+            className="w-full bg-white/15 hover:bg-white/25 backdrop-blur border border-white/30 hover:border-white/40 text-white font-bold py-3 rounded-xl text-center transition-all shadow-lg hover:shadow-xl text-base"
+          >
+            Sign Out
+          </button>
+        </div>
+      ) : (
+        <div className="flex gap-4 w-full">
+          <Link
+            href="/auth/sign-in"
+            className="flex-1 bg-white/15 hover:bg-white/25 backdrop-blur border border-white/30 hover:border-white/40 text-white font-bold py-3 rounded-xl text-center transition-all shadow-lg hover:shadow-xl text-base"
+          >
+            Sign In
+          </Link>
+          <Link
+            href="/auth/sign-up"
+            className="flex-1 bg-white/15 hover:bg-white/25 backdrop-blur border border-white/30 hover:border-white/40 text-white font-bold py-3 rounded-xl text-center transition-all shadow-lg hover:shadow-xl text-base"
+          >
+            Sign Up
+          </Link>
+        </div>
+      )}
 
       {/* Scratch to Reveal Lottery Ticket */}
       <div className="flex flex-col items-center gap-4 w-full">

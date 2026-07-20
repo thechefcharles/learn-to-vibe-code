@@ -17,10 +17,12 @@ import { Footer } from '@/components/Footer';
 
 interface KidsLandingPageContentProps {
   isSignedIn?: boolean;
+  userName?: string;
 }
 
-export default function KidsLandingPageContent({ isSignedIn = false }: KidsLandingPageContentProps) {
-  const [userName, setUserName] = useState('');
+export default function KidsLandingPageContent({ isSignedIn = false, userName: initialUserName = '' }: KidsLandingPageContentProps) {
+  // Pre-fill with the signed-in user's name/email; still editable via the greet input.
+  const [userName, setUserName] = useState(initialUserName);
 
   return (
     <div
