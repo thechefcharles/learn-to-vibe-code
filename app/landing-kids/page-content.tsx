@@ -32,7 +32,7 @@ export default function KidsLandingPageContent({ isSignedIn = false }: KidsLandi
     >
       <VideoBackground />
       <MouseTrail />
-      <FloatingCTA />
+      <FloatingCTA isSignedIn={isSignedIn} />
 
       {/* ============ HEADER ============ */}
       <Header />

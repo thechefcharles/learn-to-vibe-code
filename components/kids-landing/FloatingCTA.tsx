@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { useEffect, useState, useRef } from 'react';
 
-export function FloatingCTA() {
+export function FloatingCTA({ isSignedIn = false }: { isSignedIn?: boolean }) {
   const prefersReducedMotion = useReducedMotion();
   const [mounted, setMounted] = useState(false);
   const [initialPos] = useState(() => {
@@ -86,7 +86,7 @@ export function FloatingCTA() {
       }}
     >
       <Link
-        href="/auth/sign-up"
+        href={isSignedIn ? '/support' : '/auth/sign-up'}
         data-testid="floating-cta-button"
         className={`
           inline-block px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-bold text-sm sm:text-base text-white
@@ -99,7 +99,7 @@ export function FloatingCTA() {
           boxShadow: '0 0 20px rgba(6, 182, 212, 0.5), inset 0 0 20px rgba(168, 85, 247, 0.1)',
         }}
       >
-        Enroll Free
+        {isSignedIn ? 'Support' : 'Enroll Free'}
       </Link>
     </div>
   );
