@@ -59,6 +59,10 @@ export function ProgressFlowWidget() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const joystickRef = useRef<HTMLDivElement>(null);
   const joystickContainerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const offsetRef = useRef({ x: 0, y: 0 });
+  const scrollPosRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
   const prefersReducedMotion = useReducedMotion();
 
   const handleMouseDown = () => {
@@ -84,13 +88,8 @@ export function ProgressFlowWidget() {
     setJoystickX(constrainedX);
     setJoystickY(constrainedY);
 
-    // Scroll based on drag position
-    if (scrollContainerRef.current) {
-      const scrollXAmount = (constrainedX / maxOffset) * 15;
-      const scrollYAmount = (constrainedY / maxOffset) * 8;
-      scrollContainerRef.current.scrollLeft += scrollXAmount;
-      scrollContainerRef.current.scrollTop += scrollYAmount;
-    }
+    // Record deflection; the rAF loop below scrolls continuously while held.
+    offsetRef.current = { x: constrainedX, y: constrainedY };
   };
 
   const handleMouseMove = (e: MouseEvent) => {
@@ -107,12 +106,14 @@ export function ProgressFlowWidget() {
     setIsDragging(false);
     setJoystickX(0);
     setJoystickY(0);
+    offsetRef.current = { x: 0, y: 0 };
   };
 
   const handleTouchEnd = () => {
     setIsDragging(false);
     setJoystickX(0);
     setJoystickY(0);
+    offsetRef.current = { x: 0, y: 0 };
   };
 
   useEffect(() => {
@@ -129,6 +130,31 @@ export function ProgressFlowWidget() {
         window.removeEventListener('touchend', handleTouchEnd);
       };
     }
+  }, [isDragging]);
+
+  // Continuously scroll the flow while the joystick is held, proportional to
+  // how far it's pushed. A real joystick keeps scrolling when held steady —
+  // a mousemove-only handler can't do that (nothing fires while you hold).
+  useEffect(() => {
+    if (!isDragging) return;
+    const tick = () => {
+      const { x } = offsetRef.current;
+      const content = contentRef.current;
+      const viewport = scrollContainerRef.current;
+      if (content && viewport) {
+        const maxScroll = Math.max(0, content.scrollWidth - viewport.clientWidth);
+        scrollPosRef.current = Math.min(
+          0,
+          Math.max(-maxScroll, scrollPosRef.current - (x / 40) * 6)
+        );
+        content.style.transform = `translateX(${scrollPosRef.current}px)`;
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, [isDragging]);
 
   return (
@@ -160,10 +186,7 @@ export function ProgressFlowWidget() {
       {/* Flow Container */}
       <div
         ref={scrollContainerRef}
-        className="w-full overflow-auto scrollbar-hide max-h-64"
-        onMouseDown={handleMouseDown}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
+        className="w-full overflow-hidden scrollbar-hide max-h-64"
       >
         <svg className="absolute top-20 left-0 w-full h-12 pointer-events-none" style={{ zIndex: 1 }}>
           <defs>
@@ -179,7 +202,7 @@ export function ProgressFlowWidget() {
           <line x1="420" y1="24" x2="480" y2="24" stroke="url(#connectorGradient)" strokeWidth="2" strokeDasharray="5,5" />
           <line x1="540" y1="24" x2="600" y2="24" stroke="url(#connectorGradient)" strokeWidth="2" strokeDasharray="5,5" />
         </svg>
-        <div className="flex justify-center min-w-min px-4 relative pb-8" style={{ zIndex: 2 }}>
+        <div ref={contentRef} className="flex justify-start min-w-min px-4 relative pb-8 will-change-transform" style={{ zIndex: 2 }}>
           {/* Stage Items with connecting arrows */}
           {stages.map((stage, index) => (
             <motion.div
