@@ -12,12 +12,6 @@ jobs:
           node-version: 22
       - run: npm install --prefer-offline --no-audit
       - run: npm run test:unit
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-          NEXT_PUBLIC_STRIPE_PUBLIC_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLIC_KEY }}
-          NEXT_PUBLIC_SITE_URL: http://localhost:3008
+      # E2E (Playwright) is intentionally NOT run in CI: the suite is large,
+      # includes many local-only debug specs, and writes to a real Supabase
+      # project. Run it locally with `npm run test:e2e` against a dev database.
